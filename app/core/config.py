@@ -30,6 +30,14 @@ class Settings(BaseSettings):
     chunk_overlap: int = 80
     top_k: int = 4
 
+    # 하이브리드 검색: 벡터·키워드 결과 혼합 가중치 (0.0~1.0, 1.0=벡터만)
+    hybrid_vector_weight: float = 0.6
+    # 세션 단기 기억: 최근 대화 몇 턴을 컨텍스트에 포함할지
+    session_memory_turns: int = 5
+    # 장기 기억 pgvector 유사도 임계값 (코사인 거리 기준, 낮을수록 유사)
+    long_term_memory_threshold: float = 0.4
+    long_term_memory_top_k: int = 3
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property

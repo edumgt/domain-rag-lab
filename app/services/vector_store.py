@@ -8,7 +8,11 @@ from app.core.config import settings
 
 class VectorStore:
     def __init__(self):
-        self.client = QdrantClient(host=settings.qdrant_host, port=settings.qdrant_port)
+        self.client = QdrantClient(
+            host=settings.qdrant_host,
+            port=settings.qdrant_port,
+            check_compatibility=False,
+        )
         self.collection_name = settings.qdrant_collection
         self.vector_size = settings.embedding_dim
         self._ensure_collection()

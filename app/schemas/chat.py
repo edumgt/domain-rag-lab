@@ -30,3 +30,4 @@ class ChatResponse(BaseModel):
     references: List[RetrievedChunk]
     domain: str = "general"
     session_id: Optional[str] = None
+    context_meta: Optional[dict] = None

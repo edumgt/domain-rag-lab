@@ -1,6 +1,8 @@
-from fastapi import APIRouter, File, Form, UploadFile, HTTPException
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from sqlalchemy.orm import Session
 from typing import Optional
 
+from app.core.database import get_db
 from app.schemas.chat import DomainType
 from app.schemas.ingest import IngestTextRequest
 from app.services.rag_service import RAGService
@@ -10,8 +12,9 @@ rag_service = RAGService()
 
 
 @router.post("/text")
-def ingest_text(payload: IngestTextRequest):
+def ingest_text(payload: IngestTextRequest, db: Session = Depends(get_db)):
     count = rag_service.ingest_text(
+        db=db,
         document_id=payload.document_id,
         title=payload.title,
         content=payload.content,
@@ -29,6 +32,7 @@ def ingest_text(payload: IngestTextRequest):
 async def ingest_file(
     file: UploadFile = File(...),
     domain: Optional[DomainType] = Form(DomainType.general),
+    db: Session = Depends(get_db),
 ):
     filename = file.filename or "uploaded_file"
 
@@ -38,6 +42,7 @@ async def ingest_file(
     content = await file.read()
     saved_path = rag_service.save_upload_file(filename=filename, file_bytes=content)
     result = rag_service.ingest_file(
+        db=db,
         saved_path=saved_path,
         original_filename=filename,
         domain=domain.value if domain else "general",

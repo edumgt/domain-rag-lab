@@ -34,30 +34,61 @@ class LLMService:
         self.model = settings.vllm_model
         self.api_key = settings.vllm_api_key
 
-    def generate_answer(self, question: str, chunks: list[dict], domain: str = "general") -> str:
-        if not chunks:
+    def generate_answer(
+        self,
+        question: str,
+        chunks: list[dict],
+        domain: str = "general",
+        session_history: list[dict] | None = None,
+        long_term_hits: list[dict] | None = None,
+        routing_priority: str = "vector",
+    ) -> str:
+        """
+        프롬프트 조립 순서 (우선순위 반영):
+        ① 시스템 프롬프트 (도메인 규칙)
+        ② 장기 기억 (pgvector 유사 기억, 있으면 포함)
+        ③ 단기 세션 이력 (최근 대화, session 우선일 때 먼저)
+        ④ 검색된 문서 청크 (vector 우선일 때 먼저)
+        ⑤ 현재 질문
+        """
+        if not chunks and not session_history and not long_term_hits:
             return "관련 문서를 찾지 못했습니다. 문서를 먼저 등록하거나 질문을 더 구체적으로 입력해 주세요."
-
-        context = "\n\n".join(
-            [
-                f"[문서 {i}] 제목: {chunk['title']}\n내용: {chunk['content']}"
-                for i, chunk in enumerate(chunks, start=1)
-            ]
-        )
 
         system_prompt = DOMAIN_SYSTEM_PROMPTS.get(domain, DOMAIN_SYSTEM_PROMPTS["general"])
 
-        user_prompt = (
-            f"질문:\n{question}\n\n"
-            f"참고 문맥:\n{context}\n\n"
-            "위 문맥만 근거로 답변하고, 마지막에 핵심 참고 문서 제목을 짧게 언급하세요."
-        )
+        user_parts: list[str] = []
+
+        # ── 장기 기억 블록 ────────────────────────────────────────
+        if long_term_hits:
+            lt_block = "\n".join(
+                f"[장기 기억 {i}] {hit['content']}"
+                for i, hit in enumerate(long_term_hits, 1)
+            )
+            user_parts.append(f"=== 관련 장기 기억 ===\n{lt_block}")
+
+        # ── 세션 이력 블록 vs 문서 청크 블록: 우선순위에 따라 순서 결정 ─
+        session_block = self._build_session_block(session_history)
+        doc_block = self._build_doc_block(chunks)
+
+        if routing_priority == "session":
+            if session_block:
+                user_parts.append(session_block)
+            if doc_block:
+                user_parts.append(doc_block)
+        else:
+            if doc_block:
+                user_parts.append(doc_block)
+            if session_block:
+                user_parts.append(session_block)
+
+        user_parts.append(f"=== 현재 질문 ===\n{question}")
+        user_parts.append("위 문맥만 근거로 답변하고, 마지막에 핵심 참고 출처를 짧게 언급하세요.")
 
         payload = {
             "model": self.model,
             "messages": [
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
+                {"role": "user", "content": "\n\n".join(user_parts)},
             ],
             "temperature": 0.2,
             "max_tokens": 700,
@@ -79,8 +110,28 @@ class LLMService:
                 data = response.json()
                 return data["choices"][0]["message"]["content"].strip()
         except Exception as e:
-            titles = ", ".join(sorted(set(chunk["title"] for chunk in chunks)))
+            titles = ", ".join(sorted(set(c["title"] for c in chunks))) if chunks else "없음"
             return (
                 f"LLM 호출에 실패했습니다: {e}\n\n"
                 f"대신 검색 결과 기준으로 보면, 관련 문서는 {titles} 입니다."
             )
+
+    # ── 내부 헬퍼 ────────────────────────────────────────────────
+
+    def _build_session_block(self, session_history: list[dict] | None) -> str:
+        if not session_history:
+            return ""
+        turns = "\n".join(
+            f"사용자: {t['question']}\n어시스턴트: {t['answer']}"
+            for t in session_history
+        )
+        return f"=== 최근 대화 이력 (단기 기억) ===\n{turns}"
+
+    def _build_doc_block(self, chunks: list[dict]) -> str:
+        if not chunks:
+            return ""
+        docs = "\n\n".join(
+            f"[문서 {i}] 제목: {c['title']}\n내용: {c['content']}"
+            for i, c in enumerate(chunks, 1)
+        )
+        return f"=== 참고 문서 (벡터·키워드 검색) ===\n{docs}"

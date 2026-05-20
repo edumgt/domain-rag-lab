@@ -4,6 +4,7 @@ pydantic==2.11.7
 pydantic-settings==2.10.1
 sqlalchemy==2.0.43
 psycopg2-binary==2.9.10
+pgvector==0.3.6
 redis==6.4.0
 qdrant-client==1.15.1
 numpy==2.3.2

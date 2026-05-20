@@ -5,7 +5,7 @@ services:
     build: .
     container_name: domain-rag-api
     ports:
-      - "8000:8000"
+      - "8895:8000"
     env_file:
       - .env
     volumes:
@@ -13,8 +13,6 @@ services:
       - ./frontend:/app/frontend
       - ./data:/app/data
     depends_on:
-      qdrant:
-        condition: service_healthy
       postgres:
         condition: service_healthy
       redis:
@@ -26,24 +24,12 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
-
-  qdrant:
-    image: qdrant/qdrant:latest
-    container_name: domain-rag-qdrant
-    ports:
-      - "6333:6333"
-      - "6334:6334"
-    volumes:
-      - qdrant_data:/qdrant/storage
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
+    networks:
+      - default
+      - shared-net   # infra qdrant 접근용
 
   postgres:
-    image: postgres:16
+    image: pgvector/pgvector:pg16
     container_name: domain-rag-postgres
     environment:
       POSTGRES_DB: ragdb
@@ -53,6 +39,7 @@ services:
       - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U raguser -d ragdb"]
       interval: 10s
@@ -75,6 +62,10 @@ services:
     restart: unless-stopped
 
 volumes:
-  qdrant_data:
   pg_data:
   redis_data:
+
+networks:
+  default: {}
+  shared-net:
+    external: true   # infra에서 이미 생성된 네트워크

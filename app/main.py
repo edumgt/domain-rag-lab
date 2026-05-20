@@ -3,11 +3,18 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
 
+from pgvector.sqlalchemy import Vector  # noqa: F401 — SQLAlchemy type 등록
+
 from app.api.routes.chat import router as chat_router
 from app.api.routes.health import router as health_router
 from app.api.routes.ingest import router as ingest_router
 from app.core.config import settings
 from app.core.database import Base, engine
+
+# 모든 모델을 import해야 Base.metadata가 테이블을 인식함
+import app.models.chat_log          # noqa: F401
+import app.models.document_chunk    # noqa: F401
+import app.models.long_term_memory  # noqa: F401
 
 Base.metadata.create_all(bind=engine)
 

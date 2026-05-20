@@ -12,9 +12,11 @@ rag_service = RAGService()
 
 @router.post("", response_model=ChatResponse)
 def chat(payload: ChatRequest, db: Session = Depends(get_db)):
-    answer, chunks = rag_service.ask(
+    answer, chunks, context_meta = rag_service.ask(
+        db=db,
         question=payload.question,
         domain=payload.domain.value,
+        session_id=payload.session_id,
         top_k=payload.top_k,
     )
 
@@ -32,4 +34,5 @@ def chat(payload: ChatRequest, db: Session = Depends(get_db)):
         references=[RetrievedChunk(**chunk) for chunk in chunks],
         domain=payload.domain.value,
         session_id=payload.session_id,
+        context_meta=context_meta,
     )
