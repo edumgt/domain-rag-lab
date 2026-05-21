@@ -31,3 +31,25 @@ class ChatResponse(BaseModel):
     domain: str = "general"
     session_id: Optional[str] = None
     context_meta: Optional[dict] = None
+
+
+# ── Orchestrator schemas ──────────────────────────────────────────
+
+class OrchestrateRequest(BaseModel):
+    question: str
+    domain: DomainType = DomainType.general
+    session_id: Optional[str] = None
+
+
+class ToolCallTrace(BaseModel):
+    tool: str
+    arguments: dict
+    result_preview: str
+
+
+class OrchestrateResponse(BaseModel):
+    answer: str
+    tool_calls: List[ToolCallTrace]
+    iterations: int
+    domain: str
+    session_id: Optional[str] = None

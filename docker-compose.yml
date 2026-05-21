@@ -1,22 +1,30 @@
 version: "3.9"
 
+# infra 네트워크(shared-net)에서 이미 실행 중인 서비스를 그대로 사용합니다.
+#   postgres  → container name: postgres  (내부 포트 5432, 호스트 15432)
+#   redis     → container name: redis     (내부 포트 6379)
+#   qdrant    → container name: qdrant    (내부 포트 6333)
+
 services:
   api:
     build: .
     container_name: domain-rag-api
     ports:
-      - "8895:8000"
+      - "8000:8000"
     env_file:
       - .env
+    environment:
+      # infra 컨테이너 이름으로 접근 (컨테이너 간 통신은 내부 포트 사용)
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
     volumes:
       - ./app:/app/app
       - ./frontend:/app/frontend
       - ./data:/app/data
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -26,44 +34,26 @@ services:
     restart: unless-stopped
     networks:
       - default
-      - shared-net   # infra qdrant 접근용
+      - shared-net   # infra postgres / redis / qdrant 접근용
 
-  postgres:
-    image: pgvector/pgvector:pg16
-    container_name: domain-rag-postgres
+  streamlit:
+    build: .
+    container_name: domain-rag-streamlit
+    ports:
+      - "8600:8501"
+    env_file:
+      - .env
     environment:
-      POSTGRES_DB: ragdb
-      POSTGRES_USER: raguser
-      POSTGRES_PASSWORD: ragpass
-    ports:
-      - "5432:5432"
+      - API_BASE_URL=http://api:8000
     volumes:
-      - pg_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U raguser -d ragdb"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - ./streamlit_app.py:/app/streamlit_app.py
+    depends_on:
+      api:
+        condition: service_healthy
+    command: streamlit run /app/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
     restart: unless-stopped
-
-  redis:
-    image: redis:7
-    container_name: domain-rag-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
-volumes:
-  pg_data:
-  redis_data:
+    networks:
+      - default   # api 서비스에만 접근하면 되므로 internal 네트워크만 사용
 
 networks:
   default: {}

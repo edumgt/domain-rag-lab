@@ -116,6 +116,53 @@ class LLMService:
                 f"대신 검색 결과 기준으로 보면, 관련 문서는 {titles} 입니다."
             )
 
+    def call_with_tools(
+        self,
+        messages: list[dict],
+        tools: list[dict] | None = None,
+    ) -> dict:
+        """
+        Call LLM with an explicit message list and optional tool definitions.
+        Returns the raw API response dict so the orchestrator can inspect
+        finish_reason and tool_calls.
+        """
+        payload: dict = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": 0.2,
+            "max_tokens": 1000,
+        }
+        if tools:
+            payload["tools"] = tools
+            payload["tool_choice"] = "auto"
+
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.api_key}",
+        }
+
+        try:
+            with httpx.Client(timeout=60.0) as client:
+                response = client.post(
+                    f"{self.base_url}/chat/completions",
+                    json=payload,
+                    headers=headers,
+                )
+                response.raise_for_status()
+                return response.json()
+        except Exception as e:
+            return {
+                "choices": [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "content": f"LLM 호출 실패: {e}",
+                        },
+                        "finish_reason": "stop",
+                    }
+                ]
+            }
+
     # ── 내부 헬퍼 ────────────────────────────────────────────────
 
     def _build_session_block(self, session_history: list[dict] | None) -> str:
