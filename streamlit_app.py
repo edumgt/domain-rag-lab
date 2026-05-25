@@ -12,7 +12,7 @@ import uuid
 import requests
 import streamlit as st
 
-API_BASE = os.getenv("API_BASE_URL", "http://localhost:8895")
+API_BASE = os.getenv("API_BASE_URL", "http://localhost:8190")
 
 # ── 페이지 설정 ────────────────────────────────────────────────────
 st.set_page_config(
@@ -22,13 +22,247 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ── 글로벌 스타일 (검정·노랑 테마, Pretendard, FontAwesome) ─────────
+st.markdown("""
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+:root {
+  --bg:         #0a0a0a;
+  --surface:    #111111;
+  --surface2:   #1a1a1a;
+  --border:     #2a2a2a;
+  --accent:     #F5C518;
+  --accent-hov: #FFD740;
+  --accent-dim: rgba(245,197,24,0.12);
+  --text:       #F0F0F0;
+  --text-muted: #777777;
+  --danger:     #FF4444;
+  --success:    #22C55E;
+  --font:       'Pretendard Variable','Pretendard',-apple-system,sans-serif;
+}
+
+/* 전체 폰트·배경 */
+html, body, [data-testid="stApp"], .stApp {
+  font-family: var(--font) !important;
+  font-size: 18px !important;
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 사이드바 */
+[data-testid="stSidebar"] {
+  background: var(--surface) !important;
+  border-right: 2px solid var(--border) !important;
+}
+[data-testid="stSidebar"] * { font-family: var(--font) !important; }
+[data-testid="stSidebarContent"] { padding: 1rem 1rem !important; }
+
+/* 메인 영역 */
+.main .block-container {
+  background: var(--bg) !important;
+  padding-top: 1.5rem !important;
+  max-width: 100% !important;
+}
+
+/* 헤더 텍스트 */
+h1 { font-size: 26px !important; font-weight: 800 !important; color: var(--text) !important; letter-spacing: -0.02em !important; }
+h2 { font-size: 22px !important; font-weight: 700 !important; color: var(--text) !important; }
+h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text) !important; }
+p, li, span, div, label { font-family: var(--font) !important; color: var(--text) !important; }
+
+/* 캡션·작은 글씨 */
+[data-testid="stCaptionContainer"] p,
+.stCaption, small {
+  font-size: 13px !important;
+  color: var(--text-muted) !important;
+}
+
+/* 탭 */
+[data-baseweb="tab-list"] {
+  background: var(--surface) !important;
+  border-bottom: 2px solid var(--border) !important;
+  gap: 2px !important;
+}
+[data-baseweb="tab"] {
+  background: transparent !important;
+  color: var(--text-muted) !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  font-family: var(--font) !important;
+  padding: 10px 22px !important;
+  border: none !important;
+  border-radius: 4px 4px 0 0 !important;
+}
+[aria-selected="true"][data-baseweb="tab"] {
+  background: var(--surface2) !important;
+  color: var(--accent) !important;
+  border-bottom: 3px solid var(--accent) !important;
+}
+[data-baseweb="tab-panel"] {
+  background: var(--bg) !important;
+  padding-top: 1.5rem !important;
+}
+
+/* 버튼 */
+.stButton > button {
+  background: var(--accent) !important;
+  color: #000 !important;
+  border: none !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  font-family: var(--font) !important;
+  border-radius: 5px !important;
+  padding: 10px 22px !important;
+  transition: background 0.15s !important;
+}
+.stButton > button:hover { background: var(--accent-hov) !important; }
+
+/* 셀렉박스 */
+[data-baseweb="select"] > div {
+  background: var(--surface2) !important;
+  border: 1.5px solid var(--border) !important;
+  color: var(--text) !important;
+  font-size: 17px !important;
+  font-family: var(--font) !important;
+  border-radius: 5px !important;
+}
+[data-baseweb="select"] > div:focus-within { border-color: var(--accent) !important; }
+[data-baseweb="popover"] ul { background: var(--surface2) !important; }
+[role="option"] { background: var(--surface2) !important; color: var(--text) !important; font-family: var(--font) !important; }
+[role="option"]:hover { background: var(--accent-dim) !important; color: var(--accent) !important; }
+[aria-selected="true"][role="option"] { background: var(--accent-dim) !important; color: var(--accent) !important; }
+
+/* 텍스트 인풋 */
+[data-testid="stTextInput"] input,
+[data-testid="stTextArea"] textarea {
+  background: var(--surface2) !important;
+  border: 1.5px solid var(--border) !important;
+  color: var(--text) !important;
+  font-size: 17px !important;
+  font-family: var(--font) !important;
+  border-radius: 5px !important;
+}
+[data-testid="stTextInput"] input:focus,
+[data-testid="stTextArea"] textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px rgba(245,197,24,0.18) !important;
+}
+
+/* 채팅 메시지 */
+[data-testid="stChatMessage"] {
+  background: var(--surface2) !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: 8px !important;
+  font-size: 18px !important;
+  font-family: var(--font) !important;
+  padding: 14px 18px !important;
+}
+[data-testid="stChatMessage"] p { font-size: 18px !important; line-height: 1.75 !important; }
+
+/* 채팅 입력창 */
+[data-testid="stChatInput"] {
+  background: var(--surface) !important;
+  border-top: 2px solid var(--border) !important;
+}
+[data-testid="stChatInput"] textarea {
+  background: var(--surface2) !important;
+  border: 1.5px solid var(--border) !important;
+  color: var(--text) !important;
+  font-size: 18px !important;
+  font-family: var(--font) !important;
+  border-radius: 6px !important;
+}
+[data-testid="stChatInput"] textarea:focus { border-color: var(--accent) !important; }
+[data-testid="stChatInputSubmitButton"] button {
+  background: var(--accent) !important;
+  color: #000 !important;
+  border-radius: 5px !important;
+}
+
+/* 메트릭 */
+[data-testid="stMetric"] {
+  background: var(--surface2) !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: 8px !important;
+  padding: 18px 22px !important;
+}
+[data-testid="stMetricValue"] {
+  color: var(--accent) !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+}
+[data-testid="stMetricLabel"] {
+  color: var(--text-muted) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* 익스팬더 */
+[data-testid="stExpander"] {
+  background: var(--surface2) !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: 8px !important;
+}
+[data-testid="stExpander"] summary {
+  color: var(--text) !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  font-family: var(--font) !important;
+}
+[data-testid="stExpander"] summary:hover { color: var(--accent) !important; }
+
+/* 구분선 */
+hr { border-color: var(--border) !important; border-width: 1.5px !important; }
+
+/* 알림 */
+[data-testid="stAlert"] { border-radius: 6px !important; font-size: 16px !important; font-family: var(--font) !important; }
+
+/* 슬라이더 */
+[data-baseweb="slider"] [role="slider"] {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+[data-baseweb="slider"] [data-testid="stThumbValue"] { color: var(--accent) !important; }
+
+/* 파일 업로더 */
+[data-testid="stFileUploader"] {
+  background: var(--surface2) !important;
+  border: 2px dashed var(--border) !important;
+  border-radius: 8px !important;
+}
+
+/* JSON 뷰 */
+[data-testid="stJson"] { background: var(--surface2) !important; border-radius: 6px !important; }
+
+/* 코드 블록 */
+[data-testid="stCode"], .stCodeBlock {
+  background: var(--surface2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+}
+
+/* 스크롤바 */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+</style>
+""", unsafe_allow_html=True)
+
 # ── 사이드바 ───────────────────────────────────────────────────────
 with st.sidebar:
-    st.title("⚙️ 설정")
+    st.markdown('<h2 style="color:#F5C518;font-size:22px;font-weight:800;margin-bottom:4px"><i class="fa-solid fa-brain"></i> Domain RAG</h2><p style="color:#777;font-size:13px;margin-top:0">도메인 특화 AI 에이전트</p>', unsafe_allow_html=True)
+    st.divider()
+    st.markdown('<p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#777">도메인 선택</p>', unsafe_allow_html=True)
     domain = st.selectbox(
-        "도메인",
+        "",
         ["general", "medical", "english"],
         format_func=lambda x: {"general": "🌐 일반", "medical": "🏥 의학", "english": "📖 고교 영어"}[x],
+        label_visibility="collapsed",
     )
 
     if "session_id" not in st.session_state:
@@ -44,7 +278,7 @@ with st.sidebar:
         st.rerun()
 
     st.divider()
-    st.markdown("**API 연결**")
+    st.markdown('<p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#777"><i class="fa-solid fa-signal"></i> API 연결</p>', unsafe_allow_html=True)
     try:
         health = requests.get(f"{API_BASE}/health", timeout=3).json()
         st.success(f"✅ 연결됨 — {health.get('status', 'ok')}")
@@ -52,9 +286,7 @@ with st.sidebar:
         st.error("❌ API 서버 연결 실패")
 
     st.divider()
-
-    # 문서 등록 섹션
-    st.markdown("**📁 문서 등록**")
+    st.markdown('<p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#777"><i class="fa-solid fa-folder-open"></i> 문서 등록</p>', unsafe_allow_html=True)
     uploaded = st.file_uploader("파일 업로드 (TXT/PDF)", type=["txt", "pdf"])
     if uploaded and st.button("업로드"):
         with st.spinner("등록 중..."):
@@ -106,7 +338,7 @@ for key, default in [
 
 # ── 탭 ────────────────────────────────────────────────────────────
 tab_orch, tab_report, tab_rag = st.tabs(
-    ["🤖 오케스트레이터 채팅", "📊 결과 리포트", "📄 일반 RAG 채팅"]
+    ["🤖  오케스트레이터 채팅", "📊  결과 리포트", "📄  일반 RAG 채팅"]
 )
 
 # ══════════════════════════════════════════════════════════════════

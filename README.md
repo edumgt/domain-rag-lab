@@ -141,10 +141,10 @@ docker compose up --build
 
 | 서비스 | 주소 |
 |--------|------|
-| Streamlit 데모 UI | http://localhost:8600 |
-| FastAPI (REST API) | http://localhost:8000 |
-| Swagger API 문서 | http://localhost:8000/docs |
-| 상태 확인 | http://localhost:8000/health |
+| Streamlit 데모 UI | http://localhost:8290 |
+| FastAPI (REST API) | http://localhost:8190 |
+| Swagger API 문서 | http://localhost:8190/docs |
+| 상태 확인 | http://localhost:8190/health |
 
 ---
 
@@ -153,7 +153,7 @@ docker compose up --build
 ### 메인 오케스트레이터 (Tool Calling)
 
 ```bash
-curl -X POST http://localhost:8000/chat/orchestrate \
+curl -X POST http://localhost:8190/chat/orchestrate \
   -H "Content-Type: application/json" \
   -d '{
     "question": "고혈압의 1차 치료 원칙은 무엇인가요?",
@@ -182,7 +182,7 @@ curl -X POST http://localhost:8000/chat/orchestrate \
 ### 일반 RAG 채팅 (고정 파이프라인)
 
 ```bash
-curl -X POST http://localhost:8000/chat \
+curl -X POST http://localhost:8190/chat \
   -H "Content-Type: application/json" \
   -d '{
     "question": "What is the difference between since and for?",
@@ -194,7 +194,7 @@ curl -X POST http://localhost:8000/chat \
 ### 텍스트 등록 (의학 도메인)
 
 ```bash
-curl -X POST http://localhost:8000/ingest/text \
+curl -X POST http://localhost:8190/ingest/text \
   -H "Content-Type: application/json" \
   -d '{
     "document_id": "med-001",
@@ -207,7 +207,7 @@ curl -X POST http://localhost:8000/ingest/text \
 ### 파일 업로드
 
 ```bash
-curl -X POST http://localhost:8000/ingest/file \
+curl -X POST http://localhost:8190/ingest/file \
   -F "file=@./data/samples/english_grammar.txt" \
   -F "domain=english"
 ```
@@ -233,16 +233,26 @@ curl -X POST http://localhost:8000/ingest/file \
 
 ```bash
 docker compose up --build
-# → http://localhost:8600 에서 접속
+# → http://localhost:8290 에서 접속
 ```
 
 **로컬 직접 실행** (FastAPI 서버가 이미 실행 중인 경우)
 
 ```bash
-pip install streamlit requests
-API_BASE_URL=http://localhost:8000 streamlit run streamlit_app.py
-# → http://localhost:8600
+# 1. 의존성 설치 (streamlit을 포함한 모든 패키지)
+pip install -r requirements.txt
+
+# 2. Streamlit UI 실행
+streamlit run streamlit_app.py
+# → http://localhost:8501 에서 접속
+
+# FastAPI 서버가 다른 주소에 있다면 환경 변수로 지정
+API_BASE_URL=http://other-host:8000 streamlit run streamlit_app.py
 ```
+
+> **`streamlit` 명령이 가능한 이유**
+> `pip install streamlit` 시 Python이 실행 파일(`~/.local/bin/streamlit` 또는 `/usr/local/bin/streamlit`)을 자동 생성하여 PATH에 등록합니다.
+> `requirements.txt`에 `streamlit==1.45.1`이 명시되어 있으므로 `pip install -r requirements.txt`만으로 명령어가 활성화됩니다.
 
 **환경 변수**
 

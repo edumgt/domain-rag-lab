@@ -10,7 +10,7 @@ services:
     build: .
     container_name: domain-rag-api
     ports:
-      - "8000:8000"
+      - "8190:8000"
     env_file:
       - .env
     environment:
@@ -40,7 +40,7 @@ services:
     build: .
     container_name: domain-rag-streamlit
     ports:
-      - "8600:8501"
+      - "8290:8501"
     env_file:
       - .env
     environment:

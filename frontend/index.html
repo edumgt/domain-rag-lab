@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>도메인 특화 RAG AI 에이전트</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
@@ -11,7 +14,7 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <h1 class="logo">🧠 Domain RAG</h1>
+        <h1 class="logo"><i class="fa-solid fa-brain"></i> Domain RAG</h1>
         <p class="logo-sub">도메인 특화 AI 에이전트</p>
       </div>
 
@@ -32,23 +35,29 @@
         <p class="nav-label">문서 등록</p>
         <div class="upload-area" id="uploadArea">
           <input type="file" id="fileInput" accept=".txt,.pdf" hidden />
-          <div class="upload-icon">📁</div>
-          <p>TXT / PDF 파일을 여기에 끌어다 놓거나<br /><span class="upload-link" id="uploadTrigger">클릭하여 선택</span></p>
+          <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+          <p>TXT / PDF 파일을 끌어다 놓거나<br /><span class="upload-link" id="uploadTrigger">클릭하여 선택</span></p>
         </div>
         <div id="uploadStatus" class="upload-status hidden"></div>
 
         <div class="text-ingest">
-          <p class="nav-label" style="margin-top:16px">텍스트 직접 등록</p>
+          <p class="nav-label" style="margin-top:20px">텍스트 직접 등록</p>
           <input type="text" id="textDocId" placeholder="문서 ID" class="input-field" />
           <input type="text" id="textTitle" placeholder="제목" class="input-field" />
           <textarea id="textContent" placeholder="내용을 입력하세요..." class="textarea-field" rows="4"></textarea>
-          <button class="btn-primary" id="ingestTextBtn">등록</button>
+          <button class="btn-primary" id="ingestTextBtn">
+            <i class="fa-solid fa-plus"></i> 등록
+          </button>
         </div>
       </div>
 
       <div class="sidebar-footer">
-        <a href="/docs" target="_blank" class="docs-link">📚 API 문서 (Swagger)</a>
-        <a href="/health" target="_blank" class="docs-link">❤️ 상태 확인</a>
+        <a href="/docs" target="_blank" class="docs-link">
+          <i class="fa-solid fa-book-open"></i> API 문서 (Swagger)
+        </a>
+        <a href="/health" target="_blank" class="docs-link">
+          <i class="fa-solid fa-heart-pulse"></i> 상태 확인
+        </a>
       </div>
     </aside>
 
@@ -57,17 +66,19 @@
       <header class="chat-header">
         <div class="domain-badge" id="domainBadge">🏥 의학 전문 모드</div>
         <div class="header-actions">
-          <button class="btn-ghost" id="clearChatBtn" title="대화 초기화">🗑️ 초기화</button>
+          <button class="btn-ghost" id="clearChatBtn" title="대화 초기화">
+            <i class="fa-solid fa-trash-can"></i> 초기화
+          </button>
         </div>
       </header>
 
       <div class="messages" id="messages">
         <div class="welcome-msg">
-          <div class="welcome-icon">🤖</div>
+          <div class="welcome-icon"><i class="fa-solid fa-robot"></i></div>
           <h2>도메인 특화 RAG AI 에이전트</h2>
           <p>왼쪽에서 도메인을 선택하고 문서를 등록한 뒤 질문해 보세요.</p>
           <div class="quick-examples" id="quickExamples">
-            <p class="examples-label">빠른 예시:</p>
+            <p class="examples-label">빠른 예시</p>
             <button class="example-chip" data-q="고혈압의 1차 치료 원칙은 무엇인가요?">고혈압 치료 원칙</button>
             <button class="example-chip" data-q="당뇨병 진단 기준을 설명해 주세요.">당뇨병 진단 기준</button>
             <button class="example-chip" data-q="심근경색의 주요 증상은 무엇인가요?">심근경색 증상</button>
@@ -80,25 +91,24 @@
           <textarea
             id="questionInput"
             class="question-input"
-            placeholder="질문을 입력하세요... (Enter로 전송, Shift+Enter로 줄바꿈)"
+            placeholder="질문을 입력하세요... (Enter 전송 / Shift+Enter 줄바꿈)"
             rows="1"
           ></textarea>
           <button class="send-btn" id="sendBtn" title="전송">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
+            <i class="fa-solid fa-paper-plane"></i>
           </button>
         </div>
-        <p class="input-hint">현재 도메인: <span id="currentDomainLabel">의학 전문</span> | Top-K: <span id="topKLabel">4</span></p>
+        <p class="input-hint">
+          도메인: <span id="currentDomainLabel">의학 전문</span> &nbsp;·&nbsp; Top-K: <span id="topKLabel">4</span>
+        </p>
       </div>
     </main>
 
     <!-- Right panel: references -->
     <aside class="ref-panel" id="refPanel">
       <div class="ref-header">
-        <h3>📎 참고 문서</h3>
-        <button class="btn-ghost" id="closeRefBtn">✕</button>
+        <h3><i class="fa-solid fa-paperclip"></i> 참고 문서</h3>
+        <button class="btn-ghost" id="closeRefBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div id="refList" class="ref-list">
         <p class="ref-empty">질문 후 참고 문서가 여기에 표시됩니다.</p>

@@ -93,11 +93,11 @@
     const meta = DOMAIN_META[state.domain];
     const html = `
       <div class="welcome-msg">
-        <div class="welcome-icon">🤖</div>
+        <div class="welcome-icon"><i class="fa-solid fa-robot"></i></div>
         <h2>도메인 특화 RAG AI 에이전트</h2>
         <p>왼쪽에서 도메인을 선택하고 문서를 등록한 뒤 질문해 보세요.</p>
         <div class="quick-examples" id="quickExamples">
-          <p class="examples-label">빠른 예시:</p>
+          <p class="examples-label">빠른 예시</p>
           ${meta.examples.map(q => `<button class="example-chip" data-q="${escHtml(q)}">${escHtml(q)}</button>`).join('')}
         </div>
       </div>`;
@@ -178,12 +178,12 @@
     const time = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
 
     const refBtnHtml = (!isUser && chunks.length)
-      ? `<button class="ref-btn" data-msgid="${id}">📎 참고 ${chunks.length}건</button>`
+      ? `<button class="ref-btn" data-msgid="${id}"><i class="fa-solid fa-paperclip"></i> 참고 ${chunks.length}건</button>`
       : '';
 
     const html = `
       <div class="msg ${role}" id="${id}">
-        <div class="msg-avatar">${isUser ? '👤' : '🤖'}</div>
+        <div class="msg-avatar">${isUser ? '<i class="fa-solid fa-user"></i>' : '<i class="fa-solid fa-robot"></i>'}</div>
         <div>
           <div class="msg-bubble">${formatContent(content)}</div>
           <div class="msg-meta">
@@ -209,7 +209,7 @@
     const id = 'typing-' + Date.now();
     const html = `
       <div class="msg bot" id="${id}">
-        <div class="msg-avatar">🤖</div>
+        <div class="msg-avatar"><i class="fa-solid fa-robot"></i></div>
         <div class="msg-bubble">
           <div class="typing-dots"><span></span><span></span><span></span></div>
         </div>
