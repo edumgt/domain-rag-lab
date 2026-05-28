@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
 # 도메인 특화 RAG AI 에이전트
 
 **FastAPI + Qdrant + PostgreSQL + Redis + vLLM** 기반의 도메인 특화 RAG(검색 증강 생성) 서비스입니다.
@@ -9,16 +11,16 @@
 
 | 기능 | 설명 |
 |------|------|
-| 🤖 메인 오케스트레이터 | LLM이 도구를 스스로 선택·호출하여 답변 생성 (Tool Calling 기반 AI 에이전트) |
-| 🏥 의학 도메인 | 고혈압·당뇨병 등 의학 문서 기반 전문 답변, 안전장치(전문의 상담 권고) 내장 |
-| 📖 고교 영어 도메인 | 수능 영어 문법·독해·어휘 문서 기반 학습 지원 답변 |
-| 🌐 일반 도메인 | 범용 문서 기반 RAG 응답 |
-| 📁 파일 업로드 | TXT / PDF 파일 업로드 후 자동 청킹·임베딩·벡터 저장 |
-| ✏️ 텍스트 직접 등록 | API 또는 UI에서 텍스트 직접 등록 |
-| 💬 멀티턴 채팅 | 세션 기반 단기 기억 + pgvector 장기 기억 관리 |
-| 🔍 하이브리드 검색 | Qdrant(벡터) + PostgreSQL(키워드) RRF 병합 검색 |
-| 📊 실행 리포트 | 오케스트레이터 도구 호출 이력 및 흐름 시각화 (Streamlit) |
-| 🖥️ 웹 UI | Streamlit 기반 데모 UI (별도 빌드 불필요) |
+| <i class="fa-solid fa-robot"></i> 메인 오케스트레이터 | LLM이 도구를 스스로 선택·호출하여 답변 생성 (Tool Calling 기반 AI 에이전트) |
+| <i class="fa-solid fa-hospital"></i> 의학 도메인 | 고혈압·당뇨병 등 의학 문서 기반 전문 답변, 안전장치(전문의 상담 권고) 내장 |
+| <i class="fa-solid fa-book"></i> 고교 영어 도메인 | 수능 영어 문법·독해·어휘 문서 기반 학습 지원 답변 |
+| <i class="fa-solid fa-globe"></i> 일반 도메인 | 범용 문서 기반 RAG 응답 |
+| <i class="fa-solid fa-folder"></i> 파일 업로드 | TXT / PDF 파일 업로드 후 자동 청킹·임베딩·벡터 저장 |
+| <i class="fa-solid fa-pen"></i> 텍스트 직접 등록 | API 또는 UI에서 텍스트 직접 등록 |
+| <i class="fa-solid fa-comment"></i> 멀티턴 채팅 | 세션 기반 단기 기억 + pgvector 장기 기억 관리 |
+| <i class="fa-solid fa-magnifying-glass"></i> 하이브리드 검색 | Qdrant(벡터) + PostgreSQL(키워드) RRF 병합 검색 |
+| <i class="fa-solid fa-chart-bar"></i> 실행 리포트 | 오케스트레이터 도구 호출 이력 및 흐름 시각화 (Streamlit) |
+| <i class="fa-solid fa-desktop"></i>️ 웹 UI | Streamlit 기반 데모 UI (별도 빌드 불필요) |
 
 ---
 
@@ -264,11 +266,11 @@ API_BASE_URL=http://other-host:8000 streamlit run streamlit_app.py
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  사이드바 (⚙️ 설정)          │  메인 영역 (탭)            │
+│  사이드바 (<i class="fa-solid fa-gear"></i>️ 설정)          │  메인 영역 (탭)            │
 │  ─────────────────          │  ─────────────────────    │
-│  · 도메인 선택              │  🤖 오케스트레이터 채팅     │
-│  · 세션 ID 표시             │  📊 결과 리포트             │
-│  · 새 세션 시작 버튼         │  📄 일반 RAG 채팅           │
+│  · 도메인 선택              │  <i class="fa-solid fa-robot"></i> 오케스트레이터 채팅     │
+│  · 세션 ID 표시             │  <i class="fa-solid fa-chart-bar"></i> 결과 리포트             │
+│  · 새 세션 시작 버튼         │  <i class="fa-solid fa-file"></i> 일반 RAG 채팅           │
 │  · API 연결 상태            │                            │
 │  · 파일 업로드 (TXT/PDF)    │                            │
 │  · 텍스트 직접 등록          │                            │
@@ -283,23 +285,23 @@ API_BASE_URL=http://other-host:8000 streamlit run streamlit_app.py
 
 | 선택값 | 표시 | 설명 |
 |--------|------|------|
-| `general` | 🌐 일반 | 범용 RAG |
-| `medical` | 🏥 의학 | 의학 문서 기반, 전문의 상담 권고 안전장치 포함 |
-| `english` | 📖 고교 영어 | 수능 영어 문법·독해 학습 지원 |
+| `general` | <i class="fa-solid fa-globe"></i> 일반 | 범용 RAG |
+| `medical` | <i class="fa-solid fa-hospital"></i> 의학 | 의학 문서 기반, 전문의 상담 권고 안전장치 포함 |
+| `english` | <i class="fa-solid fa-book"></i> 고교 영어 | 수능 영어 문법·독해 학습 지원 |
 
 #### 세션 관리
 
 - 앱 최초 접속 시 **UUID 기반 세션 ID가 자동 생성**됩니다.
 - 세션 ID는 FastAPI 백엔드로 전달되어 단기 기억(세션 이력) 및 장기 기억(pgvector) 연결에 사용됩니다.
-- **"🔄 새 세션 시작"** 버튼을 누르면 새 UUID가 발급되고 채팅 이력이 초기화됩니다.
+- **"<i class="fa-solid fa-rotate"></i> 새 세션 시작"** 버튼을 누르면 새 UUID가 발급되고 채팅 이력이 초기화됩니다.
 
 #### API 연결 상태
 
 사이드바 로드 시 `GET /health`를 호출하여 백엔드 연결 상태를 자동으로 표시합니다.
 
 ```
-✅ 연결됨 — ok      ← FastAPI 정상
-❌ API 서버 연결 실패  ← 서버 미실행 또는 URL 오류
+<i class="fa-solid fa-circle-check"></i> 연결됨 — ok      ← FastAPI 정상
+<i class="fa-solid fa-circle-xmark"></i> API 서버 연결 실패  ← 서버 미실행 또는 URL 오류
 ```
 
 #### 문서 등록
@@ -309,7 +311,7 @@ API_BASE_URL=http://other-host:8000 streamlit run streamlit_app.py
 **파일 업로드 (TXT / PDF)**
 1. "파일 업로드" 위젯에서 파일 선택
 2. "업로드" 버튼 클릭
-3. 성공 시 `✅ N개 청크 등록 완료` 표시
+3. 성공 시 `<i class="fa-solid fa-circle-check"></i> N개 청크 등록 완료` 표시
 4. 내부적으로 `POST /ingest/file` 호출 → 파싱 → 청킹 → 임베딩 → Qdrant 저장
 
 **텍스트 직접 등록**
@@ -318,7 +320,7 @@ API_BASE_URL=http://other-host:8000 streamlit run streamlit_app.py
 3. "텍스트 등록" 버튼 클릭
 4. 내부적으로 `POST /ingest/text` 호출 → UUID 문서 ID 자동 생성
 
-### 탭 1 — 🤖 오케스트레이터 채팅
+### 탭 1 — <i class="fa-solid fa-robot"></i> 오케스트레이터 채팅
 
 **역할**: `POST /chat/orchestrate`를 호출하는 메인 채팅 탭. LLM이 도구를 스스로 선택·호출하여 답변을 생성합니다.
 
@@ -328,7 +330,7 @@ API_BASE_URL=http://other-host:8000 streamlit run streamlit_app.py
 1. 채팅 입력창에 질문 입력 (Enter 또는 전송)
 2. "오케스트레이터 실행 중..." 스피너 표시
 3. 답변 렌더링 + 하단에 "반복 N회 · 도구 M개 호출" 메타 캡션 표시
-4. 마지막 응답 결과는 자동으로 📊 리포트 탭에 저장
+4. 마지막 응답 결과는 자동으로 <i class="fa-solid fa-chart-bar"></i> 리포트 탭에 저장
 ```
 
 **표시 요소**
@@ -347,11 +349,11 @@ Body: { "question": "...", "domain": "medical", "session_id": "uuid" }
 
 Response:
   answer       → 최종 답변 텍스트
-  tool_calls   → 호출된 도구 목록 (📊 리포트 탭으로 전달)
+  tool_calls   → 호출된 도구 목록 (<i class="fa-solid fa-chart-bar"></i> 리포트 탭으로 전달)
   iterations   → 오케스트레이터 루프 반복 횟수
 ```
 
-### 탭 2 — 📊 결과 리포트
+### 탭 2 — <i class="fa-solid fa-chart-bar"></i> 결과 리포트
 
 **역할**: 오케스트레이터 채팅 탭에서 가장 최근에 실행된 응답의 내부 동작을 시각화합니다.
 채팅 탭과 연결되어 있어 별도 조작 없이 자동 갱신됩니다.
@@ -365,15 +367,15 @@ Response:
 │  최종 답변                                            │
 │  "고혈압의 1차 치료는 생활습관 교정부터 ..."           │
 ├──────────────────────────────────────────────────────┤
-│  🔧 도구 호출 이력                                    │
+│  <i class="fa-solid fa-wrench"></i> 도구 호출 이력                                    │
 │  ▶ Step 1 — `search_documents`   [펼치기]            │
 │    입력 인자          │  결과 미리보기                 │
 │    { "query": "..." } │  {"documents": [...]}        │
 │  ▶ Step 2 — `get_long_term_memory` [펼치기]           │
 ├──────────────────────────────────────────────────────┤
-│  ⚡ 실행 흐름                                         │
-│  🧑 사용자 질문 → 🔧 search_documents                │
-│               → 🔧 get_long_term_memory → 💬 최종 답변│
+│  <i class="fa-solid fa-bolt"></i> 실행 흐름                                         │
+│  <i class="fa-solid fa-user"></i> 사용자 질문 → <i class="fa-solid fa-wrench"></i> search_documents                │
+│               → <i class="fa-solid fa-wrench"></i> get_long_term_memory → <i class="fa-solid fa-comment"></i> 최종 답변│
 └──────────────────────────────────────────────────────┘
 ```
 
@@ -385,9 +387,9 @@ Response:
 
 **실행 흐름 다이어그램**
 
-`🧑 사용자 질문 → 🔧 tool1 → 🔧 tool2 → 💬 최종 답변` 형태로 호출 순서를 한눈에 파악할 수 있습니다.
+`<i class="fa-solid fa-user"></i> 사용자 질문 → <i class="fa-solid fa-wrench"></i> tool1 → <i class="fa-solid fa-wrench"></i> tool2 → <i class="fa-solid fa-comment"></i> 최종 답변` 형태로 호출 순서를 한눈에 파악할 수 있습니다.
 
-### 탭 3 — 📄 일반 RAG 채팅
+### 탭 3 — <i class="fa-solid fa-file"></i> 일반 RAG 채팅
 
 **역할**: `POST /chat`을 호출하는 고정 파이프라인 채팅 탭. 오케스트레이터 없이 하이브리드 검색 → LLM의 순서로 실행됩니다.
 
@@ -469,11 +471,11 @@ Response:
 
 | 도메인 | 핵심 | 주요 고려사항 |
 |--------|------|--------------|
-| 🏥 의료 | 정확성·근거·책임 경계 | RAG 중심, 진료 가이드라인·약물 정보 연동, "전문의 확인 필요" 안전장치 |
-| ⚖️ 법률 | 조문·판례·최신 개정 여부 | 법령·계약서 템플릿 연동, 조항 근거 제시, 최신 개정 반영 |
-| 🏭 제조 | 설비·공정·품질·유지보수 | 설비 매뉴얼·SOP·점검 이력 활용, 문서+구조화 데이터 연계 |
-| 💰 금융 | 규제·컴플라이언스·설명 책임 | 상품 설명서·약관 연동, 금지 표현 통제(예: 수익 보장) |
-| 📚 교육 | 학습 수준별 설명·개인화 | 교안·문제은행 연동, 난이도별 설명, 첨삭 피드백 |
+| <i class="fa-solid fa-hospital"></i> 의료 | 정확성·근거·책임 경계 | RAG 중심, 진료 가이드라인·약물 정보 연동, "전문의 확인 필요" 안전장치 |
+| <i class="fa-solid fa-scale-balanced"></i>️ 법률 | 조문·판례·최신 개정 여부 | 법령·계약서 템플릿 연동, 조항 근거 제시, 최신 개정 반영 |
+| <i class="fa-solid fa-industry"></i> 제조 | 설비·공정·품질·유지보수 | 설비 매뉴얼·SOP·점검 이력 활용, 문서+구조화 데이터 연계 |
+| <i class="fa-solid fa-coins"></i> 금융 | 규제·컴플라이언스·설명 책임 | 상품 설명서·약관 연동, 금지 표현 통제(예: 수익 보장) |
+| <i class="fa-solid fa-book-open"></i> 교육 | 학습 수준별 설명·개인화 | 교안·문제은행 연동, 난이도별 설명, 첨삭 피드백 |
 
 ### 도메인 특화 LLM 구축 체크리스트
 
@@ -559,9 +561,9 @@ Response:
 │   ├── schemas/
 │   │   └── chat.py               # ChatRequest/Response + OrchestrateRequest/Response
 │   ├── services/
-│   │   ├── orchestrator.py       # ★ 메인 오케스트레이터 (Tool Calling 루프)
-│   │   ├── tool_registry.py      # ★ 도구 스키마 정의
-│   │   ├── tool_executor.py      # ★ 도구 실행기
+│   │   ├── orchestrator.py       # <i class="fa-solid fa-star"></i> 메인 오케스트레이터 (Tool Calling 루프)
+│   │   ├── tool_registry.py      # <i class="fa-solid fa-star"></i> 도구 스키마 정의
+│   │   ├── tool_executor.py      # <i class="fa-solid fa-star"></i> 도구 실행기
 │   │   ├── rag_service.py        # 고정 파이프라인 RAG
 │   │   ├── llm_service.py        # LLM 호출 (generate_answer + call_with_tools)
 │   │   ├── hybrid_search.py      # 하이브리드 검색 (Qdrant + PostgreSQL)
@@ -641,21 +643,21 @@ Response:
 
 ### 품질 · 기능 개선 (우선순위 높음)
 
-- 🔁 Reranker 모델 추가 (BGE-reranker 등) — 검색 결과 재정렬
-- 🧩 토큰 기반 정교한 청킹 — 현재 문자 수 기준 → 토큰 수 기준으로 전환
-- 🏷️ 문서 메타데이터 저장 — 버전·작성자·업로드일 추적
-- 🔍 권한 기반 검색 필터 — 사용자 역할별 접근 가능 문서 제한
-- 🛠️ 오케스트레이터 도구 추가 — 웹 검색, 계산기, 외부 API 등
-- 🔀 병렬 도구 호출 (Parallel Tool Calling) 지원
+- <i class="fa-solid fa-repeat"></i> Reranker 모델 추가 (BGE-reranker 등) — 검색 결과 재정렬
+- <i class="fa-solid fa-puzzle-piece"></i> 토큰 기반 정교한 청킹 — 현재 문자 수 기준 → 토큰 수 기준으로 전환
+- <i class="fa-solid fa-tag"></i>️ 문서 메타데이터 저장 — 버전·작성자·업로드일 추적
+- <i class="fa-solid fa-magnifying-glass"></i> 권한 기반 검색 필터 — 사용자 역할별 접근 가능 문서 제한
+- <i class="fa-solid fa-screwdriver-wrench"></i> 오케스트레이터 도구 추가 — 웹 검색, 계산기, 외부 API 등
+- <i class="fa-solid fa-shuffle"></i> 병렬 도구 호출 (Parallel Tool Calling) 지원
 
 ### 운영 · 보안 강화
 
-- 🔐 JWT 인증 및 권한 기반 문서 접근 제어
-- 📈 Prometheus + Grafana 모니터링 연동
-- 🌊 SSE(Server-Sent Events) 기반 스트리밍 답변
-- 🗃️ 문서 버전 관리 및 삭제 API
-- 📋 평가셋 기반 품질 점검 — 정확성·관련성·완전성 지표 자동 측정
-- 🔒 금칙어 필터 및 출력 안전장치 강화
+- <i class="fa-solid fa-lock"></i> JWT 인증 및 권한 기반 문서 접근 제어
+- <i class="fa-solid fa-chart-line"></i> Prometheus + Grafana 모니터링 연동
+- <i class="fa-solid fa-water"></i> SSE(Server-Sent Events) 기반 스트리밍 답변
+- <i class="fa-solid fa-boxes-stacked"></i>️ 문서 버전 관리 및 삭제 API
+- <i class="fa-solid fa-clipboard-list"></i> 평가셋 기반 품질 점검 — 정확성·관련성·완전성 지표 자동 측정
+- <i class="fa-solid fa-lock"></i> 금칙어 필터 및 출력 안전장치 강화
 
 ### 한 줄 로드맵
 

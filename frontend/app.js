@@ -16,19 +16,19 @@
   };
 
   const DOMAIN_META = {
-    medical: { label: '🏥 의학 전문', badge: 'medical', examples: [
+    medical: { label: '<i class="fa-solid fa-hospital"></i> 의학 전문', badge: 'medical', examples: [
       '고혈압의 1차 치료 원칙은 무엇인가요?',
       '당뇨병 진단 기준을 설명해 주세요.',
       '심근경색의 주요 증상은 무엇인가요?',
       'ACE 억제제의 작용 기전은?',
     ]},
-    english: { label: '📖 고교 영어', badge: 'english', examples: [
+    english: { label: '<i class="fa-solid fa-book"></i> 고교 영어', badge: 'english', examples: [
       'What is the difference between "since" and "for"?',
       '관계대명사 that과 which의 차이를 설명해 주세요.',
       'Subjunctive mood examples for high school.',
       '수능 영어 빈칸 추론 전략을 알려주세요.',
     ]},
-    general: { label: '🌐 일반', badge: 'general', examples: [
+    general: { label: '<i class="fa-solid fa-globe"></i> 일반', badge: 'general', examples: [
       '이 시스템은 어떻게 동작하나요?',
       '등록된 문서 목록을 보여주세요.',
       'RAG란 무엇인가요?',
@@ -154,7 +154,7 @@
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        appendMessage('bot', `⚠️ 오류: ${err.detail || res.statusText}`);
+        appendMessage('bot', `<i class="fa-solid fa-triangle-exclamation"></i> 오류: ${err.detail || res.statusText}`);
         return;
       }
 
@@ -163,7 +163,7 @@
       updateRefPanel(data.references || []);
     } catch (err) {
       removeTyping(typingId);
-      appendMessage('bot', `⚠️ 네트워크 오류: ${err.message}`);
+      appendMessage('bot', `<i class="fa-solid fa-triangle-exclamation"></i> 네트워크 오류: ${err.message}`);
     } finally {
       state.loading = false;
       setInputDisabled(false);
@@ -277,11 +277,11 @@
   async function handleFileUpload(file) {
     const allowed = file.name.toLowerCase().endsWith('.txt') || file.name.toLowerCase().endsWith('.pdf');
     if (!allowed) {
-      showUploadStatus('error', '⚠️ TXT 또는 PDF 파일만 지원합니다.');
+      showUploadStatus('error', '<i class="fa-solid fa-triangle-exclamation"></i> TXT 또는 PDF 파일만 지원합니다.');
       return;
     }
 
-    showUploadStatus('loading', `⏳ "${escHtml(file.name)}" 업로드 중…`);
+    showUploadStatus('loading', `<i class="fa-solid fa-spinner fa-spin"></i> "${escHtml(file.name)}" 업로드 중…`);
 
     const form = new FormData();
     form.append('file', file);
@@ -291,15 +291,15 @@
       const res = await fetch('/ingest/file', { method: 'POST', body: form });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        showUploadStatus('error', `❌ 오류: ${err.detail || res.statusText}`);
+        showUploadStatus('error', `<i class="fa-solid fa-circle-xmark"></i> 오류: ${err.detail || res.statusText}`);
         return;
       }
       const data = await res.json();
       showUploadStatus('success',
-        `✅ "${escHtml(data.title)}" 등록 완료 (${data.chunks}개 청크, 도메인: ${data.domain})`
+        `<i class="fa-solid fa-circle-check"></i> "${escHtml(data.title)}" 등록 완료 (${data.chunks}개 청크, 도메인: ${data.domain})`
       );
     } catch (err) {
-      showUploadStatus('error', `❌ 네트워크 오류: ${err.message}`);
+      showUploadStatus('error', `<i class="fa-solid fa-circle-xmark"></i> 네트워크 오류: ${err.message}`);
     }
   }
 
@@ -310,12 +310,12 @@
     const content = $textContent.value.trim();
 
     if (!docId || !title || !content) {
-      showUploadStatus('error', '⚠️ 문서 ID, 제목, 내용을 모두 입력하세요.');
+      showUploadStatus('error', '<i class="fa-solid fa-triangle-exclamation"></i> 문서 ID, 제목, 내용을 모두 입력하세요.');
       return;
     }
 
     $ingestTextBtn.disabled = true;
-    showUploadStatus('loading', '⏳ 등록 중…');
+    showUploadStatus('loading', '<i class="fa-solid fa-spinner fa-spin"></i> 등록 중…');
 
     try {
       const res = await fetch('/ingest/text', {
@@ -326,15 +326,15 @@
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        showUploadStatus('error', `❌ 오류: ${err.detail || res.statusText}`);
+        showUploadStatus('error', `<i class="fa-solid fa-circle-xmark"></i> 오류: ${err.detail || res.statusText}`);
         return;
       }
 
       const data = await res.json();
-      showUploadStatus('success', `✅ "${escHtml(data.document_id)}" 등록 완료 (${data.chunks}개 청크)`);
+      showUploadStatus('success', `<i class="fa-solid fa-circle-check"></i> "${escHtml(data.document_id)}" 등록 완료 (${data.chunks}개 청크)`);
       $textDocId.value = $textTitle.value = $textContent.value = '';
     } catch (err) {
-      showUploadStatus('error', `❌ 네트워크 오류: ${err.message}`);
+      showUploadStatus('error', `<i class="fa-solid fa-circle-xmark"></i> 네트워크 오류: ${err.message}`);
     } finally {
       $ingestTextBtn.disabled = false;
     }
