@@ -28,6 +28,12 @@
       'Subjunctive mood examples for high school.',
       '수능 영어 빈칸 추론 전략을 알려주세요.',
     ]},
+    finance: { label: '<i class="fa-solid fa-chart-line"></i> 금융·투자', badge: 'finance', examples: [
+      'PER과 PBR의 차이와 활용법을 설명해 주세요.',
+      '자산배분에서 리밸런싱이 중요한 이유는 무엇인가요?',
+      'ETF와 일반 펀드의 차이를 알려주세요.',
+      '외국인 순매수 동향은 어디서 확인할 수 있나요?',
+    ]},
     general: { label: '<i class="fa-solid fa-globe"></i> 일반', badge: 'general', examples: [
       '이 시스템은 어떻게 동작하나요?',
       '등록된 문서 목록을 보여주세요.',

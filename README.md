@@ -3,7 +3,7 @@
 # 도메인 특화 RAG AI 에이전트
 
 **FastAPI + Qdrant + PostgreSQL + Redis + vLLM** 기반의 도메인 특화 RAG(검색 증강 생성) 서비스입니다.
-의학과 고교 영어 두 가지 도메인에 특화된 AI 에이전트로, **메인 오케스트레이터(Tool Calling)** 및 **Streamlit 데모 UI**가 포함된 완성형 구조입니다.
+의학·고교 영어·금융/투자 세 가지 도메인에 특화된 AI 에이전트로, **메인 오케스트레이터(Tool Calling)** 및 **Streamlit 데모 UI**가 포함된 완성형 구조입니다.
 
 ---
 
@@ -14,6 +14,7 @@
 | <i class="fa-solid fa-robot"></i> 메인 오케스트레이터 | LLM이 도구를 스스로 선택·호출하여 답변 생성 (Tool Calling 기반 AI 에이전트) |
 | <i class="fa-solid fa-hospital"></i> 의학 도메인 | 고혈압·당뇨병 등 의학 문서 기반 전문 답변, 안전장치(전문의 상담 권고) 내장 |
 | <i class="fa-solid fa-book"></i> 고교 영어 도메인 | 수능 영어 문법·독해·어휘 문서 기반 학습 지원 답변 |
+| <i class="fa-solid fa-chart-line"></i> 금융·투자 도메인 | 재무제표·밸류에이션·거시경제·기술적분석·자산배분 문서 기반 투자 분석 답변, 투자 책임 안내 안전장치 내장 |
 | <i class="fa-solid fa-globe"></i> 일반 도메인 | 범용 문서 기반 RAG 응답 |
 | <i class="fa-solid fa-folder"></i> 파일 업로드 | TXT / PDF 파일 업로드 후 자동 청킹·임베딩·벡터 저장 |
 | <i class="fa-solid fa-pen"></i> 텍스트 직접 등록 | API 또는 UI에서 텍스트 직접 등록 |
@@ -214,6 +215,28 @@ curl -X POST http://localhost:8190/ingest/file \
   -F "domain=english"
 ```
 
+### 금융·투자 도메인 문서 일괄 등록
+
+`data/samples/finance_*.txt`는 `investment-analysis` 프로젝트의 퀀트·투자분석 학습 자료(회계·세무, 거시경제, 산업분석, 재무제표, 밸류에이션, 기술적분석, 포트폴리오 이론, 자산배분, 외국인 수급 등 17개 문서)를 옮겨온 것입니다. 아래 반복문으로 한 번에 등록할 수 있습니다.
+
+```bash
+for f in ./data/samples/finance_*.txt; do
+  curl -X POST http://localhost:8190/ingest/file \
+    -F "file=@${f}" \
+    -F "domain=finance"
+done
+```
+
+```bash
+curl -X POST http://localhost:8190/chat \
+  -H "Content-Type: application/json" \
+  -d '{
+    "question": "PER과 PBR의 차이를 설명해 주세요.",
+    "domain": "finance",
+    "top_k": 4
+  }'
+```
+
 ---
 
 ## Streamlit 데모 UI (`streamlit_app.py`)
@@ -281,13 +304,14 @@ API_BASE_URL=http://other-host:8000 streamlit run streamlit_app.py
 
 #### 도메인 선택
 
-세 도메인 중 하나를 선택하면 이후 모든 채팅·문서 등록에 적용됩니다.
+네 도메인 중 하나를 선택하면 이후 모든 채팅·문서 등록에 적용됩니다.
 
 | 선택값 | 표시 | 설명 |
 |--------|------|------|
 | `general` | <i class="fa-solid fa-globe"></i> 일반 | 범용 RAG |
 | `medical` | <i class="fa-solid fa-hospital"></i> 의학 | 의학 문서 기반, 전문의 상담 권고 안전장치 포함 |
 | `english` | <i class="fa-solid fa-book"></i> 고교 영어 | 수능 영어 문법·독해 학습 지원 |
+| `finance` | <i class="fa-solid fa-chart-line"></i> 금융·투자 | 재무제표·밸류에이션·자산배분 문서 기반, 투자 책임 안내 안전장치 포함 |
 
 #### 세션 관리
 
@@ -529,6 +553,7 @@ Response:
 |--------|-----|-------------------|
 | 의학 | `medical` | 근거 기반 답변, 전문의 상담 권고 안전장치 |
 | 고교 영어 | `english` | 학습 친화적 설명, 예문 제공, 한/영 혼용 지원 |
+| 금융·투자 | `finance` | 재무제표·밸류에이션·거시경제·기술적분석·자산배분 문서 기반, 투자 책임 안내 안전장치 |
 | 일반 | `general` | 범용 RAG 답변 |
 
 ---
@@ -543,6 +568,23 @@ Response:
 | `medical_diabetes.txt` | 의학 | 당뇨병 진단 및 관리 |
 | `english_grammar.txt` | 고교 영어 | 핵심 문법 (시제, 관계대명사, 가정법) |
 | `english_reading_writing.txt` | 고교 영어 | 독해·작문·어휘 전략 |
+| `finance_accounting_tax_basics.txt` | 금융·투자 | 개인·법인·세무·회계 기초 상식 |
+| `finance_economic_indicators.txt` | 금융·투자 | 경제지표 분석 (물가, 유가 등) |
+| `finance_macro_analysis_practice.txt` | 금융·투자 | 거시경제 상황 분석 실습 |
+| `finance_industry_analysis.txt` | 금융·투자 | 산업 분석 (Porter's 5 Forces, SWOT, PEST) |
+| `finance_industry_analysis_practice.txt` | 금융·투자 | 산업 분석 실습 (KPI, Peer Comparison) |
+| `finance_financial_statements_1.txt` | 금융·투자 | 재무제표 분석 I (손익계산서 & 대차대조표) |
+| `finance_financial_statements_2.txt` | 금융·투자 | 재무제표 분석 II (현금흐름표 & 기업가치) |
+| `finance_valuation_multiples.txt` | 금융·투자 | 상대가치 평가 (PER, PBR 등 밸류에이션 멀티플) |
+| `finance_technical_analysis_1.txt` | 금융·투자 | 기술적 분석 I (추세 & 지표) |
+| `finance_technical_analysis_2.txt` | 금융·투자 | 기술적 분석 II (패턴 & 엘리어트 파동) |
+| `finance_stock_dividend_basics.txt` | 금융·투자 | 주식·배당·금융상품 기초 상식 |
+| `finance_financial_products_classification.txt` | 금융·투자 | 금융상품의 구분 (자본시장법 기준) |
+| `finance_etf_deep_dive.txt` | 금융·투자 | ETF 심화 (일반펀드 vs ETF 비교) |
+| `finance_portfolio_theory.txt` | 금융·투자 | 포트폴리오 이론 및 성과 분석 |
+| `finance_asset_allocation.txt` | 금융·투자 | 자산배분 모델 |
+| `finance_foreign_investor_flows.txt` | 금융·투자 | 외국인 매수·매도 및 자본 국적 확인 방법 |
+| `finance_glossary.txt` | 금융·투자 | 투자분석 핵심 용어집 |
 
 ---
 

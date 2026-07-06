@@ -1,0 +1,1066 @@
+# 상대가치 평가 (밸류에이션 멀티플)
+
+> **모듈 7: 투자분석 기초 방법론** | 8/10일차 | 💹 | 학습시간: 8시간
+
+---
+
+> 📺 **YouTube 강의**: [🎬 밸류에이션 멀티플 PER PBR](https://www.youtube.com/results?search_query=밸류에이션+멀티플+PER+PBR+주식+한국어)
+>
+> 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
+
+## 오늘 배울 것 (아주 쉽게)
+
+
+
+- PER (주가수익비율) 개념과 활용
+- PBR, EV/EBITDA, PSR 멀티플
+- 업종별 적정 멀티플 기준
+- 실습: 국내 종목 멀티플 스크리닝 및 비교
+
+---
+
+## 🗓 세부 일정 (1일 8시간)
+
+
+
+> **강의 5시간** (5개 단락 × 50분 + 도입·마무리 50분) + **실습 3시간** = 총 8시간
+
+| 시간 | 구분 | 내용 | 형태 |
+|------|------|------|------|
+| 09:00 – 09:10 | 도입 | 오늘 학습 목표 확인 | 강의 |
+| 09:10 – 09:30 | **1단락** 설명 20분 | 티커(Ticker) 개념 & PER(주가수익비율) 개요 | 강의 |
+| 09:30 – 10:00 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
+| 10:00 – 10:20 | **2단락** 설명 20분 | PBR, EV/EBITDA, PSR 멀티플 | 강의 |
+| 10:20 – 10:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
+| 10:50 – 11:00 | ☕ 휴식 | — | — |
+| 11:00 – 11:20 | **3단락** 설명 20분 | 업종별 적정 멀티플 기준 | 강의 |
+| 11:20 – 11:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
+| 11:50 – 12:10 | **4단락** 설명 20분 | 멀티플 스크리닝 방법론 및 데이터 원천 | 강의 |
+| 12:10 – 12:40 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
+| 12:40 – 13:00 | **5단락** 설명 20분 | 시각화 및 데이터 품질 유의사항 | 강의 |
+| 13:00 – 13:30 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
+| 13:30 – 14:00 | 강의 마무리 | Q&A · 핵심 복습 | 강의 |
+| 14:00 – 15:00 | 💻 **실습 1부** 60분 | yfinance로 국내 종목 멀티플 수집 및 표준 데이터셋 생성 | 실습 |
+| 15:00 – 15:10 | ☕ 휴식 | — | — |
+| 15:10 – 16:00 | 💻 **실습 2부** 50분 | 멀티플 스크리닝 필터 · 비교 차트 시각화 구현 | 실습 |
+| 16:00 – 16:10 | ☕ 휴식 | — | — |
+| 16:10 – 17:00 | 💻 **실습 발표 & 리뷰** 50분 | 코드 리뷰 · 발표 · 피드백 | 실습 |
+
+> 강의 5시간: 도입 10분 + 단락 5개×50분 + 마무리 30분 = **300분**  
+> 실습 3시간: 1부 60분 + 휴식 10분 + 2부 50분 + 휴식 10분 + 발표·리뷰 50분 = **180분**
+
+---
+
+## 🔗 참고 사이트 & 데이터 원천
+
+
+
+> 이 문서(상대가치 평가 — PER·PBR·EV/EBITDA·PSR 멀티플)의 실습에 필요한 공식 데이터 출처와 참고 사이트입니다. ⚿ 는 API 키 또는 승인이 필요한 항목입니다.
+
+### 📊 국내 공식 데이터
+
+| 기관 | URL | API 키 | 제공 데이터 |
+|------|-----|--------|-------------|
+| DART(전자공시시스템) | <https://opendart.fss.or.kr> | ⚿ 필요 | EPS·BPS 산출용 재무제표, 주식수 공시 |
+| KRX 한국거래소 | <https://www.krx.co.kr> | 불필요(웹 조회) | 업종별 PER·PBR 통계, 시가총액 |
+| KRX Data Marketplace | <https://openapi.krx.co.kr> | ⚿ 필요 | 시장 통계·멀티플 API |
+| KIND(상장공시시스템) | <https://kind.krx.co.kr> | 불필요(웹 조회) | 종목별 재무 요약·멀티플 참고 |
+| 금융투자협회(KOFIA) | <https://www.kofia.or.kr> | 불필요(웹 조회) | 자본시장 밸류에이션 통계 |
+| 금융감독원(FSS) | <https://www.fss.or.kr> | 불필요(웹 조회) | 금융회사 자산·수익 통계 |
+
+### 🌍 해외 공식 데이터
+
+| 기관 | URL | API 키 | 제공 데이터 |
+|------|-----|--------|-------------|
+| yfinance (PyPI) | <https://pypi.org/project/yfinance> | 불필요 | 국내외 종목 PER·PBR·EV/EBITDA |
+| pykrx (PyPI) | <https://pypi.org/project/pykrx> | 불필요 | 국내 종목 시장 데이터·멀티플 |
+| SEC EDGAR API | <https://data.sec.gov/api/xbrl/companyfacts> | 불필요 | 미국 기업 EPS·BPS 원시 데이터 |
+
+### 📈 리서치·차트·포탈 참고
+
+| 분류 | 사이트 | URL | 활용 용도 |
+|------|--------|-----|-----------|
+| 리서치 플랫폼 | FnGuide 데이터 | <https://comp.fnguide.com> | 종목별 PER·PBR·EV/EBITDA 현황 |
+| 차트 플랫폼 | TradingView | <https://www.tradingview.com> | 멀티플 비교 차트·업종 필터 |
+| 차트 플랫폼 | Investing.com | <https://www.investing.com> | 글로벌 종목 멀티플 비교 |
+| 금융 포탈 | 네이버 금융 | <https://finance.naver.com> | 종목별 PER·PBR·ROE 요약 |
+| 금융 포탈 | 다음 금융 | <https://finance.daum.net> | 종목 재무·밸류에이션 현황 |
+| 금융 미디어 | 머니투데이 방송(MTN) | <https://mtn.co.kr> | 밸류에이션·주가 분석 뉴스 |
+| 금융 미디어 | 연합인포맥스 | <https://news.einfomax.co.kr> | 종목·업종 멀티플 속보 |
+| 증권사 리서치 | 삼성증권 | <https://www.samsungpop.com> | PER·PBR 기반 목표주가 리포트 |
+| 증권사 리서치 | KB증권 | <https://www.kbsec.com> | 업종별 밸류에이션 분석 리포트 |
+
+---
+
+# 주식 투자 용어 해설: 티커(Ticker)
+
+주식 시장에서 **티커(Ticker)**는 특정 종목을 빠르고 정확하게 식별하기 위해 부여된 **고유의 약자(심볼)**를 의미합니다.
+
+## 1. 유래
+
+> 📺 [🎬 유래](https://www.youtube.com/results?search_query=유래+한국어)
+
+과거에는 주식 시세를 종이 띠(**Ticker Tape**)에 인쇄하여 전달했습니다. 이때 회사 이름을 모두 기입하기에는 지면이 부족하고 시간이 오래 걸렸기 때문에, 짧은 알파벳 기호로 표시하던 습관에서 유래되었습니다.
+
+---
+
+## 2. 국가별 티커의 형태
+
+> 📺 [🎬 국가별 티커의 형태](https://www.youtube.com/results?search_query=국가별+티커의+형태+한국어)
+
+국가마다 티커를 구성하는 방식에는 차이가 있습니다.
+
+### 미국 (문자 중심)
+영문 알파벳 대문자로 구성되며, 보통 회사 이름과 연관성이 높습니다.
+* **AAPL**: 애플 (Apple)
+* **TSLA**: 테슬라 (Tesla)
+* **MSFT**: 마이크로소프트 (Microsoft)
+* **O**: 리얼티 인컴 (Realty Income) - *단일 철자를 사용하는 경우도 있음*
+
+### 한국 (숫자 중심)
+한국에서는 '티커'라는 말 대신 주로 **'종목코드'**라고 부르며, 6자리의 숫자로 구성됩니다.
+* **005930**: 삼성전자
+* **035420**: NAVER
+* **373220**: LG에너지솔루션
+
+---
+
+## 3. 티커 사용의 장점
+
+> 📺 [🎬 티커 사용의 장점](https://www.youtube.com/results?search_query=티커+사용의+장점+한국어)
+
+1.  **정확성**: 이름이 유사한 기업 간의 혼동을 방지합니다. (예: Zoom Video Communications의 티커는 `ZM`)
+2.  **신속성**: 긴 회사명 대신 짧은 코드를 입력하여 빠르게 검색 및 매매가 가능합니다.
+3.  **범용성**: 전 세계 투자자와 시스템이 동일한 기호를 사용하므로 정보 전달이 명확합니다.
+
+---
+
+## 💡 참고사항
+
+> 📺 [🎬 참고사항](https://www.youtube.com/results?search_query=참고사항+한국어)
+
+해외 주식 시장에서는 티커 대신 **'심볼(Symbol)'**이라는 용어를 혼용해서 사용하기도 합니다. HTS나 MTS에서 종목을 찾을 때 이 티커를 활용하면 가장 정확한 검색 결과를 얻을 수 있습니다.
+
+### 1. PER (주가수익비율) 개념과 활용
+
+> 📖 **Wikipedia**: [주가수익비율](https://ko.wikipedia.org/wiki/주가수익비율)
+
+> 📺 [🎬 PER 주가수익비율 뜻 활용법](https://www.youtube.com/results?search_query=PER+주가수익비율+뜻+활용법+한국어)
+
+**PER 계산 공식**
+
+```
+PER = 주가 / 주당순이익(EPS)
+    = 시가총액 / 당기순이익
+```
+
+**Python 코드 예시**
+
+```python
+# PER / PBR 계산 예시
+def calc_per(price: float, eps: float) -> float:
+    """주가수익비율 계산. eps <= 0 이면 None 반환 (적자 기업)."""
+    if eps <= 0:
+        return None
+    return round(price / eps, 2)
+
+def calc_pbr(price: float, bps: float) -> float:
+    """주가순자산비율 계산."""
+    if bps <= 0:
+        return None
+    return round(price / bps, 2)
+
+def calc_psr(market_cap: float, revenue: float) -> float:
+    """주가매출비율 계산."""
+    if revenue <= 0:
+        return None
+    return round(market_cap / revenue, 2)
+
+# 삼성전자 예시 (가상 수치)
+samsung = {"price": 75_000, "eps": 5_000, "bps": 50_000, "revenue": 300_000_000}
+samsung_market_cap = samsung["price"] * 5_969_782_550  # 발행주식수
+
+per = calc_per(samsung["price"], samsung["eps"])   # → 15.0
+pbr = calc_pbr(samsung["price"], samsung["bps"])   # → 1.5
+psr = calc_psr(samsung_market_cap, samsung["revenue"])
+
+print(f"PER: {per}배  |  PBR: {pbr}배  |  PSR: {psr:.1f}배")
+```
+
+- PER 20배 = 지금 이익 수준이라면 20년이 지나야 투자금을 회수한다는 뜻
+- 높은 PER: 시장이 미래 고성장을 기대 / 낮은 PER: 저평가이거나 성장 정체·위험 반영
+- **적자 기업에는 PER 계산 불가**, 일회성 이익이 섞이면 왜곡될 수 있습니다.
+
+#### 1-1. 한국 PER vs 미국 PER 차이 (비교 시 주의점)
+
+같은 업종이라도 **한국 PER와 미국 PER를 1:1로 단순 비교하면 왜곡**될 수 있습니다.
+
+| 비교 축 | 한국 시장(예시) | 미국 시장(예시) | 왜 중요한가 |
+|--------|----------------|----------------|-------------|
+| **시장 구조** | 제조·수출 대형주 비중 높음 | 플랫폼·소프트웨어 등 고성장주 비중 높음 | 성장주 비중이 높을수록 시장 평균 PER이 높아지기 쉬움 |
+| **EPS 기준 표기** | 사이트별 TTM/최근연환산 혼재 | TTM·Forward 구분 표기가 비교적 명확 | 분모(EPS) 기준이 다르면 PER 숫자 자체가 달라짐 |
+| **주주환원 정책** | 배당·자사주 소각 강도 기업별 편차 큼 | 자사주 매입·소각이 활발한 기업 다수 | 동일 이익이어도 주식 수 변화로 EPS/PER 해석 차이 발생 |
+| **금리·할인율 환경** | 국내 금리와 원화 리스크 반영 | 미 연준 금리·달러 사이클 반영 | 할인율이 높아지면 적정 PER은 낮아지는 경향 |
+| **세금·회계 차이** | 한국 법인세·K-IFRS 환경 | 미국 법인세·US GAAP 환경 | 세후이익·회계 인식 차이로 국가 간 단순 비교 왜곡 가능 |
+
+**실무 체크리스트**
+
+1. **같은 업종·같은 성장 단계** 기업만 비교합니다.
+2. **TTM vs Forward PER**를 반드시 구분합니다.
+3. 환율·금리·세율 차이를 함께 보고, 최종 판단은 **PER 단일 지표가 아니라 ROE·FCF·성장률**과 같이 확인합니다.
+
+**멀티플 레벨별 해석 (PER 기준)**
+
+```mermaid
+quadrantChart
+    title PER 수준 vs 성장률 — 밸류에이션 포지셔닝
+    x-axis 낮은 성장률 --> 높은 성장률
+    y-axis 낮은 PER --> 높은 PER
+    quadrant-1 고성장 프리미엄 (정당한 높은 PER)
+    quadrant-2 버블 위험 (성장 없는 고PER)
+    quadrant-3 가치주 구간 (저PER·저성장)
+    quadrant-4 숨겨진 저평가 (고성장·저PER)
+    플랫폼IT: [0.85, 0.80]
+    바이오성장주: [0.90, 0.90]
+    반도체: [0.70, 0.65]
+    소비재: [0.45, 0.40]
+    은행금융: [0.30, 0.25]
+    전통제조: [0.20, 0.30]
+    과열성장주: [0.30, 0.85]
+    가치저평가: [0.75, 0.20]
+```
+
+### 2. PBR, EV/EBITDA, PSR 멀티플
+
+> 📖 **Wikipedia**: [주가순자산비율](https://ko.wikipedia.org/wiki/주가순자산비율) · [기업가치](https://ko.wikipedia.org/wiki/기업가치) · [EBITDA](https://ko.wikipedia.org/wiki/EBITDA)
+
+> 📺 [🎬 PBR EV EBITDA PSR 멀티플 비교](https://www.youtube.com/results?search_query=PBR+EV+EBITDA+PSR+멀티플+비교+한국어)
+
+| 멀티플 | 공식 | 언제 유용한가 |
+|--------|------|---------------|
+| **PBR** | 주가 / 주당순자산(BPS) | 자산 중심 업종 (은행, 부동산), 해산 가치 비교 |
+| **EV/EBITDA** | 기업가치 / EBITDA | 부채 구조 비교, 인수합병 가치 평가 |
+| **PSR** | 시가총액 / 매출액 | 적자 성장 기업, 매출이 핵심인 초기 기업 |
+
+- 이익이 불안정한 기업은 PER보다 **PSR이나 EV/EBITDA**가 더 유용할 수 있습니다.
+- 어떤 멀티플이 맞는지는 기업 특성(성장 단계·자산 구조·이익 안정성)에 따라 달라집니다.
+
+**EV/EBITDA를 조금 더 풀어서 보기**
+
+```python
+def calc_ev_ebitda(
+    market_cap: float,
+    total_debt: float,
+    cash: float,
+    ebitda: float
+) -> float:
+    """
+    EV = 시가총액 + 순차입금(총차입금 - 현금성자산)
+    EV/EBITDA = 사업 전체 가치 ÷ 감가상각 전 영업현금창출력
+    """
+    ev = market_cap + (total_debt - cash)
+    if ebitda <= 0:
+        return None
+    return round(ev / ebitda, 2)
+
+# 예시: A사(무차입) vs B사(고차입) — 시가총액 동일
+ev_a = calc_ev_ebitda(market_cap=1_000_000, total_debt=50_000,  cash=200_000, ebitda=80_000)
+ev_b = calc_ev_ebitda(market_cap=1_000_000, total_debt=500_000, cash=50_000,  ebitda=80_000)
+# ev_a → 10.6배,  ev_b → 18.1배  ← 같은 시총이어도 EV/EBITDA 크게 다름
+```
+
+- **시가총액만 보면 놓치는 것**: 부채가 많은 회사와 무차입 회사는 같은 시가총액이어도 실제 인수 부담이 다릅니다.
+- **EBITDA가 유용한 이유**: 감가상각, 이자, 세금 영향을 덜 받아 업종 내 비교가 쉬워집니다.
+- **주의점**: 설비투자 부담이 큰 업종은 EBITDA가 실제 현금창출력보다 좋아 보일 수 있으니 Capex도 함께 봐야 합니다.
+
+### 3. 업종별 적정 멀티플 기준
+
+> 📖 **Wikipedia**: [기업 가치 평가](https://ko.wikipedia.org/wiki/기업_가치_평가)
+
+> 📺 [🎬 업종별 적정 PER PBR 기준](https://www.youtube.com/results?search_query=업종별+적정+PER+PBR+기준+한국어+주식)
+
+| 업종 | 주요 멀티플 | 대략적 범위 | 이유 |
+|------|-------------|-------------|------|
+| 은행·금융 | PBR | 0.5~1.5배 | 자산 가치 중심 |
+| 반도체 | EV/EBITDA | 10~25배 | 사이클 평탄화 목적 |
+| 플랫폼·IT | PER 또는 PSR | 20~50배+ | 고성장 프리미엄 |
+| 소비재·유통 | PER | 10~20배 | 안정적 이익 |
+| 바이오 | PSR | 적자라 PER 미사용 | 파이프라인 가치 |
+
+- 멀티플이 낮다고 무조건 저평가가 아니라, **성장 둔화나 재무 위험이 반영된 결과**일 수도 있습니다.
+
+**업종별 멀티플 선택 프로세스**
+
+```mermaid
+flowchart TD
+    A([기업 분석 시작]) --> B{이익이 흑자인가?}
+    B -- 아니오 --> C{매출 성장 중인가?}
+    C -- 예 --> D[PSR 적용\n초기 성장 기업·바이오]
+    C -- 아니오 --> E[투자 부적합 재검토\n또는 자산가치 분석]
+    B -- 예 --> F{자산 집약 업종인가?\n은행·부동산·보험}
+    F -- 예 --> G[PBR 적용\n자산 해산가치 비교]
+    F -- 아니오 --> H{부채 구조가\n복잡한가?}
+    H -- 예 --> I[EV/EBITDA 적용\nM&A·사이클 업종]
+    H -- 아니오 --> J{고성장 기대주인가?\nPER > 30배 가능성}
+    J -- 예 --> K[PER + PEG 병행\n성장률 대비 멀티플 확인]
+    J -- 아니오 --> L[PER 적용\n업종 평균과 비교]
+    D --> M([비교 대상 선정 및 스크리닝])
+    E --> M
+    G --> M
+    I --> M
+    K --> M
+    L --> M
+```
+
+### 4. 실습: 국내 종목 멀티플 스크리닝 및 비교
+
+**쉽게 이해하기**
+- 스크리닝은 많은 종목 중에서 원하는 조건에 맞는 후보를 빠르게 추리는 과정입니다.
+- 예를 들어 같은 업종 안에서 PER은 낮고 영업이익률은 높은 기업을 찾으면, "실적 대비 저평가 후보"를 골라볼 수 있습니다.
+
+**장표에서 볼 포인트**
+- 이 장표는 멀티플 개념을 실제 종목 선택 과정으로 연결하는 역할을 합니다.
+- 조건을 너무 많이 걸면 좋은 기업을 놓칠 수 있으니, 먼저 2~3개의 핵심 기준으로 좁힌 뒤 추가로 검토하는 방식이 효율적입니다.
+
+**기업가치 분석용 비교 체크리스트**
+
+| 확인 항목 | 왜 필요한가 | 실무 해석 |
+|-----------|-------------|-----------|
+| **동일 업종·유사 비즈니스 모델** | 멀티플 비교의 출발점 | 은행과 플랫폼 기업을 같은 기준으로 비교하면 왜곡 |
+| **성장률 차이** | 높은 성장 기업은 프리미엄 가능 | 멀티플이 높아도 성장으로 설명되는지 확인 |
+| **부채 구조** | EV/EBITDA 해석에 직접 영향 | 차입 급증 기업은 EV가 빠르게 높아질 수 있음 |
+| **일회성 이익/손실** | PER, EBITDA 왜곡 방지 | 자산 매각 이익이 포함됐는지 점검 |
+| **현금흐름과 Capex** | 숫자의 질 확인 | EBITDA가 좋아도 FCF가 약하면 할인 필요 |
+
+---
+
+#### 4-1. 레퍼런스 사이트 찾기 및 데이터 원천 정리
+
+국내 종목의 멀티플(PER·PBR·EV/EBITDA 등)은 여러 사이트에서 제공하는데, 정의와 기준이 조금씩 다릅니다. 아래 표로 원천별 특징을 먼저 정리하고, 수집할 사이트를 결정합니다.
+
+| 구분 | 사이트 | 가입/인증 | 확인할 데이터 | 실습 포인트 |
+|------|--------|-----------|---------------|-------------|
+| 국내 증권 원천 | [KRX 정보데이터시스템](https://data.krx.co.kr/) | 무료 회원가입 | 업종별 PER/PBR/배당수익률 통계 | 코스피·코스닥 전 종목의 공식 멀티플 제공 |
+| 국내 공시 원천 | [DART 전자공시시스템](https://dart.fss.or.kr/) | Open API 인증키 필요 | 사업보고서·분기보고서 재무수치 | EPS·BPS·EV 계산의 기초 데이터 |
+| 국내 포털 | [NAVER Finance 종목 분석](https://finance.naver.com/) | 로그인 불필요 | 종목별 PER·PBR·ROE 요약 | 빠른 참고용, 스크린 기준 확인 |
+| 전문 금융 데이터 | [FnGuide (Dataguide)](https://www.fnguide.com/) | 유료 구독 | 업종 평균 멀티플, 컨센서스 EPS | 기관·운용사 수준의 상세 멀티플 |
+| Python 라이브러리 | [yfinance](https://pypi.org/project/yfinance/) | 별도 키 없음 | 상장 종목 PER·PBR·EV/EBITDA | KS 티커로 국내 종목 직접 조회 가능 |
+| 거시 통계 보강 | [한국은행 ECOS](https://ecos.bok.or.kr/) | Open API 인증키 필요 | 기업 금융통계, 산업별 매출·이익 집계 | 업종별 평균 멀티플 보완 |
+
+**가입 및 키 발급 체크리스트**
+
+1. **KRX 정보데이터시스템**: `data.krx.co.kr` 접속 → 회원가입 → 주식 → 종목정보 → 업종별 PER/PBR 메뉴에서 CSV 다운로드 가능.
+2. **DART OpenAPI**: `opendart.fss.or.kr` 접속 → 인증키 신청 → 발급 키를 `.env`의 `DART_API_KEY`에 저장.
+3. **ECOS**: `ecos.bok.or.kr` 접속 → 회원가입/로그인 → Open API → 인증키 신청 → `.env`의 `BOK_API_KEY`에 저장.
+4. **yfinance**: 별도 가입 없이 `pip install yfinance`로 설치 후 바로 사용 가능. KS(코스피)·KQ(코스닥) 티커 형식 사용.
+
+**유사 정보 비교: 같은 종목의 PER이 사이트마다 다른 이유**
+
+| 비교 항목 | NAVER Finance | yfinance | 확인 질문 |
+|-----------|---------------|----------|-----------|
+| EPS 기준 | 최근 12개월(TTM) | TTM 또는 Forward | 과거 실적 기준인가, 컨센서스 예상인가? |
+| 주식 수 | 보통주 발행 주식 수 기준 | 가중평균 희석 주식 수 포함 가능 | 자사주·우선주 처리 방법은? |
+| 통화 처리 | 원화 | 원화(한국 상장) | 외화 환산이 포함됐는가? |
+| 업데이트 주기 | 실시간~당일 | 거래소 반영 지연 가능 | 수집 시점의 주가와 EPS 기준일이 맞는가? |
+
+---
+
+#### 4-2. yfinance로 국내 종목 멀티플 수집
+
+`yfinance`는 별도 API Key 없이 바로 사용할 수 있어 실습 진입 장벽이 낮습니다. 한국 상장 종목은 코스피 `.KS`, 코스닥 `.KQ`를 티커에 붙입니다.
+
+**추가 패키지 설치**
+
+```bash
+pip install yfinance pandas matplotlib seaborn
+```
+
+**국내 업종 대표 종목 티커 정의**
+
+```python
+# 업종별 대표 종목 (실습용 가상 구성)
+SECTOR_PEERS = {
+    "반도체": {
+        "삼성전자":  "005930.KS",
+        "SK하이닉스": "000660.KS",
+        "DB하이텍":  "000990.KS",
+    },
+    "인터넷·플랫폼": {
+        "NAVER":   "035420.KS",
+        "카카오":   "035720.KS",
+        "카카오페이": "377300.KS",
+    },
+    "은행": {
+        "KB금융":  "105560.KS",
+        "신한지주":  "055550.KS",
+        "하나금융지주": "086790.KS",
+    },
+    "바이오": {
+        "셀트리온":  "068270.KS",
+        "삼성바이오로직스": "207940.KS",
+        "한미약품":  "128940.KS",
+    },
+}
+```
+
+**멀티플 수집 함수**
+
+```python
+import math
+import yfinance as yf
+import pandas as pd
+
+def safe_float(value, multiplier=1.0):
+    """None·NaN 입력은 None을 반환하고, 유효한 숫자는 multiplier를 곱한 뒤 반올림하여 반환합니다."""
+    try:
+        if value is None or (isinstance(value, float) and math.isnan(value)):
+            return None
+        return round(float(value) * multiplier, 2)
+    except Exception:
+        return None
+
+def fetch_multiples(sector_peers: dict) -> pd.DataFrame:
+    """
+    섹터별 종목 딕셔너리를 받아 PER·PBR·PSR·EV/EBITDA·ROE·영업이익률을 수집합니다.
+    yfinance.info 필드는 결측이 있을 수 있으므로 safe_float 처리를 합니다.
+    """
+    rows = []
+    for sector, companies in sector_peers.items():
+        for name, ticker in companies.items():
+            try:
+                info = yf.Ticker(ticker).info
+                rows.append({
+                    "섹터":          sector,
+                    "기업":          name,
+                    "티커":          ticker,
+                    "시가총액(억)":   safe_float(info.get("marketCap"), 1e-8),
+                    "PER":           safe_float(info.get("trailingPE")),
+                    "Forward PER":   safe_float(info.get("forwardPE")),
+                    "PBR":           safe_float(info.get("priceToBook")),
+                    "PSR":           safe_float(info.get("priceToSalesTrailing12Months")),
+                    "EV/EBITDA":     safe_float(info.get("enterpriseToEbitda")),
+                    "ROE(%)":        safe_float(info.get("returnOnEquity"), 100),
+                    "영업이익률(%)":  safe_float(info.get("operatingMargins"), 100),
+                    "매출성장률(%)":  safe_float(info.get("revenueGrowth"), 100),
+                    "부채비율":       safe_float(info.get("debtToEquity")),
+                })
+            except Exception as exc:
+                print(f"[skip] {name} ({ticker}): {exc}")
+    return pd.DataFrame(rows)
+
+df_all = fetch_multiples(SECTOR_PEERS)
+df_all.to_csv("multiples_raw.csv", index=False, encoding="utf-8-sig")
+print(df_all.to_string(index=False))
+```
+
+---
+
+#### 4-3. 표준 데이터 스키마
+
+출처가 달라도 아래 구조로 통일하면 스크리닝·시각화·보고서에서 재사용하기 쉽습니다.
+
+| 컬럼 | 예시 | 설명 |
+|------|------|------|
+| `sector` | `반도체` | GICS 업종 또는 직접 분류 |
+| `company` | `삼성전자` | 기업 이름 |
+| `ticker` | `005930.KS` | yfinance 티커 |
+| `market_cap` | `4200000` | 시가총액 (억 원) |
+| `per` | `13.5` | 주가수익비율 (TTM) |
+| `forward_per` | `11.2` | 선행 PER (컨센서스 기준) |
+| `pbr` | `1.1` | 주가순자산비율 |
+| `psr` | `1.8` | 주가매출비율 |
+| `ev_ebitda` | `8.4` | EV/EBITDA |
+| `roe_pct` | `8.5` | 자기자본이익률 (%) |
+| `op_margin_pct` | `12.3` | 영업이익률 (%) |
+| `revenue_growth_pct` | `5.1` | 매출 성장률 (%) |
+| `debt_to_equity` | `42.0` | 부채비율 (D/E) |
+| `source` | `yfinance` | 데이터 원천 |
+| `fetch_date` | `2025-01-31` | 수집일 |
+
+---
+
+#### 4-4. 멀티플 스크리닝 필터 구현
+
+조건 기반 필터로 후보 종목을 좁힙니다. 먼저 2~3개 핵심 조건으로 시작한 뒤, 추가 조건을 붙이는 방식이 실무적입니다.
+
+```python
+def screen_multiples(
+    df: pd.DataFrame,
+    sector: str | None = None,
+    per_max: float | None = 20.0,
+    pbr_max: float | None = 2.0,
+    roe_min: float | None = 8.0,
+    op_margin_min: float | None = 5.0,
+    ev_ebitda_max: float | None = 15.0,
+) -> pd.DataFrame:
+    """
+    멀티플 조건 기반 스크리닝 함수.
+    조건을 None으로 전달하면 해당 필터는 건너뜁니다.
+    """
+    result = df.copy()
+
+    if sector:
+        result = result[result["섹터"] == sector]
+    if per_max is not None:
+        result = result[result["PER"].notna() & (result["PER"] <= per_max)]
+    if pbr_max is not None:
+        result = result[result["PBR"].notna() & (result["PBR"] <= pbr_max)]
+    if roe_min is not None:
+        result = result[result["ROE(%)"].notna() & (result["ROE(%)"] >= roe_min)]
+    if op_margin_min is not None:
+        result = result[result["영업이익률(%)"].notna() & (result["영업이익률(%)"] >= op_margin_min)]
+    if ev_ebitda_max is not None:
+        result = result[result["EV/EBITDA"].notna() & (result["EV/EBITDA"] <= ev_ebitda_max)]
+
+    return result.sort_values("PER").reset_index(drop=True)
+
+# 예시 1: 전체 섹터에서 저PER·고ROE 후보
+candidates_value = screen_multiples(
+    df_all,
+    per_max=15.0,
+    pbr_max=1.5,
+    roe_min=10.0,
+    op_margin_min=8.0,
+    ev_ebitda_max=None,  # EV/EBITDA 필터 생략
+)
+print("=== 저PER·고ROE 후보 ===")
+print(candidates_value[["기업", "섹터", "PER", "PBR", "ROE(%)", "영업이익률(%)"]].to_string(index=False))
+
+# 예시 2: 은행 섹터 — PBR 중심 스크리닝 (적자 없는 경우 PER 의미 있음)
+candidates_bank = screen_multiples(
+    df_all,
+    sector="은행",
+    per_max=None,        # 은행은 PBR이 더 유의미
+    pbr_max=0.8,
+    roe_min=7.0,
+    op_margin_min=None,
+    ev_ebitda_max=None,
+)
+print("\n=== 은행 저PBR 후보 ===")
+print(candidates_bank[["기업", "PBR", "ROE(%)"]].to_string(index=False))
+```
+
+**스크리닝 조건 선택 가이드**
+
+| 스크리닝 목적 | 핵심 조건 | 참고 조건 |
+|--------------|-----------|----------|
+| 가치주 발굴 | PER ≤ 업종 평균, PBR ≤ 1.5 | ROE ≥ 8%, 부채비율 낮음 |
+| 성장주 발굴 | 매출성장률 ≥ 15%, Forward PER 확인 | ROE 높음, PBR 프리미엄 허용 |
+| 자산주 발굴 | PBR ≤ 0.7, 부채비율 낮음 | 배당수익률 확인 |
+| M&A 대상 | EV/EBITDA ≤ 8, 순현금 기업 | FCF 양호 여부 함께 확인 |
+
+---
+
+#### 4-5. 시각화: 멀티플 비교 차트
+
+수집한 데이터를 세 가지 방식으로 시각화합니다.
+
+**① 섹터별 PER·PBR 막대 차트 비교**
+
+```python
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+
+# 한글 폰트 설정 (macOS: AppleGothic, Windows: Malgun Gothic, Linux: NanumGothic)
+plt.rcParams["font.family"] = "NanumGothic"
+plt.rcParams["axes.unicode_minus"] = False
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+for ax, metric in zip(axes, ["PER", "PBR"]):
+    sector_mean = (
+        df_all.dropna(subset=[metric])
+        .groupby("섹터")[metric]
+        .mean()
+        .sort_values()
+    )
+    sector_mean.plot(kind="barh", ax=ax, color="steelblue", edgecolor="white")
+    ax.set_title(f"섹터별 평균 {metric}", fontsize=13)
+    ax.set_xlabel(f"{metric} (배)")
+    median_val = sector_mean.median()
+    ax.axvline(median_val, color="crimson", linestyle="--", linewidth=1.2,
+               label=f"중앙값 {median_val:.1f}배")
+    ax.legend(fontsize=9)
+    ax.grid(axis="x", alpha=0.3)
+
+plt.suptitle("국내 업종별 평균 밸류에이션 멀티플", fontsize=14, y=1.01)
+plt.tight_layout()
+plt.savefig("sector_multiples_bar.png", dpi=150, bbox_inches="tight")
+plt.show()
+```
+
+**② ROE vs PBR 산점도 — "성장 대비 저평가" 식별**
+
+```python
+fig, ax = plt.subplots(figsize=(9, 6))
+
+for sector, grp in df_all.dropna(subset=["ROE(%)", "PBR"]).groupby("섹터"):
+    ax.scatter(grp["ROE(%)"], grp["PBR"], label=sector, s=100, alpha=0.8)
+    for _, row in grp.iterrows():
+        ax.annotate(row["기업"], (row["ROE(%)"], row["PBR"]),
+                    textcoords="offset points", xytext=(5, 3), fontsize=8)
+
+# PBR = ROE / 기대수익률 (이론 기준선, 기대수익률 10% 가정)
+import numpy as np
+roe_clean = df_all["ROE(%)"].dropna()
+roe_range = np.linspace(roe_clean.min(), roe_clean.max(), 100)
+ax.plot(roe_range, roe_range / 10, color="gray", linestyle="--",
+        linewidth=1.2, label="이론선 (기대수익률 10%)")
+
+ax.set_xlabel("ROE (%)")
+ax.set_ylabel("PBR (배)")
+ax.set_title("ROE vs PBR — 이론선 아래: 저평가 후보")
+ax.legend(fontsize=8, loc="upper left")
+ax.grid(alpha=0.3)
+plt.tight_layout()
+plt.savefig("roe_vs_pbr_scatter.png", dpi=150, bbox_inches="tight")
+plt.show()
+```
+
+**③ 멀티플 히트맵 — 종목 간 지표 한눈에 비교**
+
+```python
+import seaborn as sns
+
+heatmap_cols = ["PER", "PBR", "PSR", "EV/EBITDA", "ROE(%)", "영업이익률(%)"]
+hm_data = (
+    df_all.dropna(subset=heatmap_cols, how="all")
+    .set_index("기업")[heatmap_cols]
+)
+
+# 표준화(Z-score)로 척도 통일
+hm_norm = (hm_data - hm_data.mean()) / hm_data.std()
+
+plt.figure(figsize=(10, max(4, len(hm_norm) * 0.55)))
+sns.heatmap(
+    hm_norm,
+    annot=hm_data.round(1),
+    fmt=".1f",
+    cmap="RdYlGn_r",   # 낮을수록 녹색(저평가), 높을수록 빨간색
+    linewidths=0.5,
+    cbar_kws={"label": "Z-score (낮을수록 상대적 저평가)"},
+)
+plt.title("국내 종목 멀티플 비교 히트맵 (원본 수치 표기, 색상=Z-score)")
+plt.tight_layout()
+plt.savefig("multiples_heatmap.png", dpi=150, bbox_inches="tight")
+plt.show()
+```
+
+**최종 산출물 목록**
+
+```text
+multiples_raw.csv          ← 수집된 원본 멀티플 데이터
+sector_multiples_bar.png   ← 섹터별 PER/PBR 막대 차트
+roe_vs_pbr_scatter.png     ← ROE vs PBR 산점도
+multiples_heatmap.png      ← 종목 간 멀티플 히트맵
+```
+
+---
+
+#### 4-6. 데이터 품질 및 해석 유의사항
+
+- **yfinance TTM EPS는 부정확할 수 있습니다.** 특히 분기 실적이 최근 반영되지 않거나 일회성 손익이 섞인 경우 PER이 왜곡될 수 있으므로, 중요한 종목은 DART 공시 원문으로 EPS를 재확인합니다.
+- **업종이 달라지면 비교 기준도 달라집니다.** PER이 5배인 은행주와 PER이 50배인 바이오주를 같은 기준으로 비교하면 의미 없는 순위가 나옵니다. 섹터 필터를 먼저 적용한 뒤 비교합니다.
+- **PER 미산출(NaN) 기업은 적자이거나 EPS가 음수입니다.** 이 경우 PSR이나 EV/EBITDA로 대체해 평가합니다.
+- **EV/EBITDA에서 고차입 기업은 EV가 과대계상될 수 있습니다.** 순차입금(총차입금 − 현금성자산)을 함께 보고, Capex가 큰 업종은 EBITDA가 실제 현금창출력을 과장할 수 있습니다.
+- **수집일 기준 주가와 재무 기준일을 맞춰야 합니다.** 분기 실적 발표 전후로 PER이 크게 달라질 수 있으므로, 데이터에 `fetch_date`를 반드시 기록합니다.
+- **보고서에는 원천·수집일·EPS 기준(TTM/Forward)·결측 처리 방법을 표시합니다.**
+
+---
+
+## 🔗 Python 소스 연계
+
+> 📺 [🎬 Python 소스 연계](https://www.youtube.com/results?search_query=Python+소스+연계+한국어)
+
+이 문서에서 학습한 멀티플 개념은 **`valuation.js`** 프론트엔드 모듈로 직접 구현되어 있습니다.
+
+**valuation.js 탭 구조**
+
+```mermaid
+flowchart LR
+    A[valuation.js\n기업가치 분석 모듈] --> T1[Tab 1\n기업선정\n분석 대상 기업 입력]
+    A --> T2[Tab 2\nFCF 계산기\n5년 CFO/Capex 입력\n→ 막대차트]
+    A --> T3[Tab 3\nDCF 밸류에이터\nWACC·성장률 입력\n→ PV + 터미널밸류]
+    A --> T4[Tab 4\nEVA 계산기\nNOPAT·IC·Ke·Kd\n→ EVA 산출]
+    A --> T5[Tab 5\n종합 투자 리포트\nBUY / HOLD / SELL]
+
+    style T1 fill:#e8f4fd,stroke:#2196F3
+    style T2 fill:#e8f5e9,stroke:#4CAF50
+    style T3 fill:#fff3e0,stroke:#FF9800
+    style T4 fill:#fce4ec,stroke:#E91E63
+    style T5 fill:#f3e5f5,stroke:#9C27B0
+```
+
+**Tab 2 (FCF) ↔ Tab 3 (DCF) 연계 흐름**
+
+```mermaid
+flowchart TD
+    In1[5년 CFO 입력] --> FCF[FCF = CFO - Capex\nTab 2 막대차트 시각화]
+    In2[5년 Capex 입력] --> FCF
+    FCF --> DCF[Tab 3: DCF 계산\nPV = FCF ÷ 1+WACC^t]
+    WACC[WACC 입력] --> DCF
+    GR[장기 성장률 입력] --> TV[Terminal Value\n= FCF_5 × 1+g ÷ WACC-g]
+    TV --> DCF
+    DCF --> IV[내재가치 = Σ PV + TV]
+    IV --> RPT[Tab 5: 종합 리포트\n현재주가 대비 상승여력\n→ BUY / HOLD / SELL]
+```
+
+**Tab 4 EVA 계산 핵심 공식**
+
+```python
+# valuation.js의 EVA 계산 로직 (Python 등가 표현)
+def calc_eva(nopat: float, ic: float, ke: float, kd: float,
+             debt_ratio: float, tax_rate: float) -> dict:
+    """
+    NOPAT  = 세후 영업이익
+    IC     = 투하자본 (영업자산 - 영업부채)
+    WACC   = Ke × E/(D+E) + Kd × (1-t) × D/(D+E)
+    EVA    = NOPAT - WACC × IC
+    """
+    equity_ratio = 1 - debt_ratio
+    wacc = ke * equity_ratio + kd * (1 - tax_rate) * debt_ratio
+    cost_of_capital = wacc * ic
+    eva = nopat - cost_of_capital
+    return {
+        "WACC": round(wacc * 100, 2),
+        "자본비용": round(cost_of_capital, 0),
+        "EVA": round(eva, 0),
+        "평가": "가치창출" if eva > 0 else "가치훼손"
+    }
+
+# 예시 (가상 수치)
+result = calc_eva(
+    nopat=500_000,       # 5억 원
+    ic=3_000_000,        # 30억 원
+    ke=0.10,             # 자기자본비용 10%
+    kd=0.04,             # 타인자본비용 4%
+    debt_ratio=0.40,     # 부채비율 40%
+    tax_rate=0.22        # 법인세율 22%
+)
+# → {'WACC': 7.05, '자본비용': 211500, 'EVA': 288500, '평가': '가치창출'}
+```
+
+**`/api/quant/pipeline` 과의 연계**
+
+`valuation.js`는 순수 프론트엔드 계산 모듈이며, 백엔드 `/api/quant/pipeline` API의 **Stage 4 Portfolio Construction**과 개념적으로 연결됩니다. DCF/EVA로 내재가치를 산출한 뒤 포지션 사이징 로직으로 넘기는 흐름입니다.
+
+```mermaid
+flowchart LR
+    V[valuation.js\n내재가치 산출] -- "BUY 신호 종목" --> P[/api/quant/pipeline\nStage 4: Portfolio\nConstruction]
+    P -- "포지션 비중·리스크" --> D[최종 투자 결정]
+```
+
+---
+
+## 📌 멀티플에 영향을 주는 외부 요인
+
+### 기준금리 (Base Rate) — 적정 PER의 기준선이 바뀐다
+
+> 📺 [🎬 기준금리 주식 영향 쉽게](https://www.youtube.com/results?search_query=기준금리+주식+PER+영향+한국어)
+
+주식의 **적정 PER**은 금리 수준에 따라 달라집니다.
+
+```
+적정 PER (대략) = 1 / 무위험수익률(Rf)
+
+금리 2%  → 적정 PER ≈ 50배
+금리 4%  → 적정 PER ≈ 25배
+금리 6%  → 적정 PER ≈ 17배
+금리 10% → 적정 PER ≈ 10배
+```
+
+| 금리 방향 | 멀티플 영향 | 투자 시사점 |
+|----------|------------|------------|
+| **기준금리 인상** | PER 기준 부담 ↑ → 적정 주가 ↓ | 성장주 부담, 가치주·배당주 상대적 유리 |
+| **기준금리 인하** | PER 기준 여유 ↑ → 적정 주가 ↑ | 성장주 부양, 장기채·부동산도 수혜 |
+
+> 💡 DCF에서 WACC = Rf + 위험프리미엄. 기준금리 1%p 상승 → WACC 1%p 상승 → 적정주가 평균 10~20% 하락 가능.
+
+**데이터 확인**: [한국은행 ECOS](https://ecos.bok.or.kr) → 기준금리 시계열 / [FRED](https://fred.stlouisfed.org) → 미국 연방기금 목표금리
+
+---
+
+### 시장금리 (Market Rate) — 기준금리보다 빠른 선행 지표
+
+> 📺 [🎬 국고채 금리 주가 관계](https://www.youtube.com/results?search_query=국고채금리+주가관계+시장금리+한국어)
+
+시장금리는 기준금리 결정 이전에 경기 기대를 선반영합니다.
+
+| 시장금리 지표 | 설명 | 투자 활용 |
+|-------------|------|----------|
+| **국고채 10년물** | 무위험수익률 기준 · DCF 할인율 | 장기 금리 방향성 파악 |
+| **국고채 3년물** | 중기 정책 기대 반영 | 기준금리 전망 선행지표 |
+| **회사채 신용스프레드** | 회사채 − 국고채 수익률 차이 | 확대 시 경기 우려·신용 경색 신호 |
+| **CD금리(91일물)** | 변동금리 기준 · 단기 자금 지표 | 주담대·기업 단기차입 금리와 연동 |
+| **장단기 금리차** | 10년물 − 2년물 (역전 시 주의) | 경기침체 6~18개월 선행 지표 |
+
+```mermaid
+flowchart LR
+    A["국고채 금리 ↑"] --> B["PER 적정 기준 ↓"]
+    B --> C["주가 하락 압력"]
+    A --> D["회사채 스프레드 ↑"]
+    D --> E["기업 차입비용 ↑\n이자보상배율 ↓"]
+    E --> C
+```
+
+**장단기 금리차 역전 → 경기침체 선행 신호**
+
+```
+미국 장단기 금리차(10Y-2Y) 역전 역사
+2000년 → 닷컴 버블 붕괴
+2007년 → 금융위기
+2019년 → 코로나 침체 선행
+```
+
+**데이터 확인**: [금융투자협회 채권정보](https://www.kofiabond.or.kr) / [KRX 채권](https://www.krx.co.kr)
+
+---
+
+### 투자자 심리 (Investor Sentiment) — 단기 주가를 움직이는 감정
+
+> 📺 [🎬 투자자 심리 공포탐욕 역발상 전략](https://www.youtube.com/results?search_query=투자자심리+공포탐욕지수+역발상전략+한국어)
+
+**"시장은 단기적으로 투표 기계, 장기적으로 저울이다."** — 벤저민 그레이엄
+
+기업 펀더멘탈이 좋아도 심리가 극공포 상태이면 주가가 펀더멘탈 이하로 떨어지고,
+반대로 심리가 극탐욕이면 펀더멘탈 이상으로 올라갑니다.
+
+**주요 심리 지표**
+
+| 지표 | 설명 | 해석 기준 |
+|------|------|----------|
+| **공포탐욕지수** | CNN Fear & Greed 0~100 | 0~20: 극공포(역발상 매수 검토) / 80~100: 극탐욕(비중 축소 검토) |
+| **VIX (공포지수)** | S&P500 30일 변동성 기대 | 20 초과: 불안 / 30 초과: 패닉 |
+| **VKOSPI (코스피 변동성지수)** | KOSPI200 옵션 기반 30일 변동성 기대 | 20 내외: 안정 / 25 초과: 경계 / 30 초과: 국내 패닉 구간 |
+| **투자자 수급** | 외국인·기관·개인 순매수 | 외국인 지속 순매수: 긍정 신호 |
+| **신용잔고** | 개인 투자자 빚투 규모 | 급증 → 레버리지 과열 → 조정 시 낙폭 확대 위험 |
+| **공매도 비율** | 거래량 대비 공매도 비중 | 급증 → 약세 심리 과열 / 감소 → 숏커버링 기대 |
+
+**VIX (CBOE Volatility Index) 상세 설명**
+
+VIX는 **시카고 옵션거래소(CBOE)** 가 산출하는 변동성 지수로, S&P500 지수 옵션의 **내재변동성(Implied Volatility)** 을 가중 평균하여 향후 **30일간의 시장 변동성을 연율화(%)**한 수치입니다.
+
+- 티커: `^VIX` (yfinance), `VIXCLS` (FRED)
+- 수치 해석: "시장 참여자들이 향후 30일간 S&P500이 얼마나 흔들릴 것으로 예상하는가"
+- VIX 20 = 연간 기준 ±20% 변동을 예상 (월 기준 약 ±5.8%)
+
+**VIX 구간별 해석**
+
+| VIX 수치 | 시장 상태 | 투자자 행동 시사점 |
+|----------|----------|------------------|
+| 10 미만 | 극저 변동성 / 과도한 낙관 | 과열·안일 경계, 변동성 상승 리스크 주시 |
+| 10 ~ 20 | 안정 구간 (정상 범위) | 일반적 추세 투자 환경 |
+| 20 ~ 25 | 불확실성 증가 | 포지션 점검, 리스크 관리 시작 |
+| 25 ~ 30 | 주의 / 리스크오프 초입 | 비중 축소 또는 헤지 검토 |
+| 30 ~ 40 | 공포 구간 | 역발상 분할 매수 검토 시작 |
+| 40 이상 | 패닉 / 시장 위기 | 역사적 저점 형성 가능성↑, 단기 극심한 변동 |
+
+**역사적 VIX 급등 사례**
+
+| 시기 | 사건 | VIX 고점 |
+|------|------|---------|
+| 1998 | 러시아 디폴트 · LTCM 위기 | 약 45 |
+| 2001 | 9·11 테러 | 약 43 |
+| 2008 | 글로벌 금융위기 (리먼 사태) | **약 80** (역사적 최고) |
+| 2010 | 유럽 재정위기 (그리스) | 약 45 |
+| 2011 | 미국 신용등급 강등 | 약 48 |
+| 2015 | 중국 위안화 평가절하 | 약 40 |
+| 2018 | 볼마겟돈 (VIX ETF 폭발) | 약 37 |
+| 2020 | COVID-19 팬데믹 | **약 82** (역대 최고 수준) |
+| 2022 | 러시아-우크라이나, 미국 급격한 금리인상 | 약 36 |
+
+**VIX와 주가의 역상관 관계**
+
+VIX와 S&P500은 **일반적으로 음(-)의 상관관계**를 가집니다.
+
+```
+S&P500↓ (공포 확산) → 투자자들이 풋옵션 매수 급증 → 옵션 내재변동성↑ → VIX↑
+S&P500↑ (안정 회복) → 풋옵션 수요 감소 → 옵션 내재변동성↓ → VIX↓
+```
+
+> ⚠️ 역상관이 항상 성립하지는 않습니다. 상승 국면에서도 불확실성이 크면 VIX가 동반 상승할 수 있습니다.
+
+**VIX 활용 투자 포인트**
+
+| 상황 | 해석 | 활용 전략 |
+|------|------|---------|
+| VIX < 15 (장기 저점) | 시장 자기만족·과열 | 안일함 경계, 헤지 비용 저렴할 때 풋옵션/방어 ETF 고려 |
+| VIX 30~40 급등 | 공포 극대화 | 역발상 분할 매수 검토 (단, 추가 하락 가능성 열어둬야) |
+| VIX 40~50 이상 | 패닉·시스템 리스크 | 분할 매수 강화, 현금 비중 확보와 병행 |
+| VIX 급락 전환 | 공포 완화·반등 신호 | 모멘텀 회복 초입, 포지션 확대 신호 |
+
+**VIX ETF/상품 투자 주의사항**
+
+VIX 자체는 직접 매매 불가 — VIX 연계 상품(ETF/ETP) 투자 시 주의:
+
+- **콘탱고(Contango) 손실**: VIX 선물은 만기가 짧아 월별 롤오버 시 지속적인 비용 발생 → 장기 보유 시 큰 손실 가능
+- **VXX, UVXY 등**: 단기 헤지·트레이딩 목적으로만 활용, 장기 보유 비적합
+- **인버스 VIX (SVXY 등)**: VIX 하락에 베팅하는 상품, 2018년 볼마겟돈처럼 VIX 급등 시 단기간 90% 이상 손실 가능
+
+**VIX vs VKOSPI 빠른 비교**
+
+| 구분 | VIX | VKOSPI |
+|------|-----|--------|
+| 정식 명칭 | CBOE Volatility Index | 코스피 변동성지수 |
+| 대표 시장 | 미국(S&P500) | 한국(KOSPI200) |
+| 산출 기관 | CBOE (시카고 옵션거래소) | KRX (한국거래소) |
+| 산출 기반 | S&P500 옵션 내재변동성 | KOSPI200 옵션 내재변동성 |
+| 주 활용 맥락 | 글로벌 위험회피 심리 | 국내 증시 단기 스트레스 |
+| 함께 볼 지표 | 달러인덱스, 미 국채금리 | 원/달러 환율, 외국인 수급 |
+| 2020 팬데믹 고점 | 약 82 | 약 80 |
+
+> 실무에서는 VIX만 보지 말고 VKOSPI를 같이 확인해 **글로벌 리스크와 국내 수급 충격을 분리해서 해석**하는 것이 좋습니다.
+> - VIX만 급등 + VKOSPI 안정 → 글로벌 충격이지만 국내 영향 제한적
+> - VIX 안정 + VKOSPI 급등 → 국내 수급/정치/경제 이벤트 중심 충격
+> - 두 지수 동반 급등 → 글로벌 리스크가 국내로 전이, 외국인 이탈 가능성 높음
+
+**버블 경고 신호 vs 저점 신호**
+
+| 버블 경고 (탐욕 극단) | 저점 신호 (공포 극단) |
+|---------------------|---------------------|
+| PER 역대 상위 10% | PER 역대 하위 10% |
+| 신용잔고 급증 | 개인 패닉 매도 |
+| IPO 청약 폭발, 주변인 모두 주식 | 증시 퇴출 종목 속출 |
+| 코인·부동산 동반 급등 | 기관·외국인 저가 매집 |
+
+```mermaid
+flowchart LR
+    A["펀더멘탈 분석\n재무제표·멀티플·DCF"] --> D["투자 결정"]
+    B["매크로 분석\n기준금리·시장금리"] --> D
+    C["심리·수급 분석\n공포탐욕·VIX·VKOSPI·수급"] --> D
+
+    style A fill:#E3F2FD
+    style B fill:#FFF3E0
+    style C fill:#FFE4E6
+    style D fill:#E8F5E9,color:#000
+```
+
+> ⚠️ 심리 지표는 타이밍 도구입니다. 펀더멘탈 분석 없이 심리만 보고 투자하면 위험합니다.
+
+---
+
+## 해보기 활동
+
+> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
+
+멀티플 비교는 "숫자 읽기"보다 "비교 이유 설명하기"가 더 중요합니다.
+
+1. 같은 업종 기업 3개를 골라 PER, PBR, EV/EBITDA 중 확인 가능한 값들을 표로 정리해보세요.
+2. 어떤 기업은 왜 PER보다 PBR이나 PSR이 더 적합한지 한 줄로 써보세요.
+3. 업종 평균보다 높은 멀티플을 받는 기업 1개를 고르고, 시장이 왜 프리미엄을 주는지 추정해보세요.
+4. EV/EBITDA가 낮아 보여도 실제로는 위험할 수 있는 이유를 순부채·Capex 관점에서 적어보세요.
+5. 마지막으로 "지금 가장 먼저 추가 확인하고 싶은 기업"을 1개 고르고 이유를 적어보세요.
+
+---
+
+# 주식 시장의 실적 발표: 어닝 서프라이즈와 어닝 쇼크 이해하기
+
+주식 시장에서 **‘어닝(Earning)’**은 기업의 **실적 발표**를 뜻합니다. 기업들은 보통 분기별, 연도별로 장사를 얼마나 잘했는지 성적표를 공개합니다.
+
+이때 시장의 예상치(증권가 전망치 평균, 이를 '컨센서스'라고 합니다)와 비교해 실제 실적이 어떻게 나왔느냐에 따라 **어닝 서프라이즈**와 **어닝 쇼크**로 나뉩니다.
+
+---
+
+## 1. 어닝 서프라이즈 (Earning Surprise)
+> 💡 **한 줄 요약:** 시장의 기대를 훌쩍 뛰어넘은 **'대박 성적표'**
+
+* **의미:** 기업이 발표한 실제 영업이익이나 순이익이 시장에서 예상했던 것보다 **훨씬 더 좋게 나온 경우**를 말합니다.
+* **시험 비유:** 평소에 80점 정도 받을 줄 알았던 아이가 시험에서 100점을 맞아와서 모두를 깜짝 놀라게 한 상황입니다.
+* **주가에 미치는 영향:** 대개 호재로 작용하여 **주가가 상승**하는 경향이 있습니다. 기업의 미래 성장성이 높게 평가되면서 투자자들이 몰리기 때문입니다.
+
+---
+
+## 2. 어닝 쇼크 (Earning Shock)
+> 💡 **한 줄 요약:** 시장의 기대에 한참 못 미친 **'충격적인 성적표'**
+
+* **의미:** 기업의 실적이 단순히 줄어든 것을 넘어, 시장이 예상했던 기대치보다 **훨씬 낮게 나온 경우**를 말합니다. (※ 단순히 적자를 낸 것뿐만 아니라, '예상보다 훨씬 못했다'는 점이 핵심입니다.)
+* **시험 비유:** 공부를 잘해서 당연히 90점은 나올 줄 알았던 아이가 50점을 받아와서 모두에게 충격을 준 상황입니다.
+* **주가에 미치는 영향:** 악재로 작용하여 **주가가 급락**하는 경우가 많습니다. 시장의 신뢰를 잃고 실망한 투자자들이 매물을 쏟아내기 때문입니다.
+
+---
+
+## 📌 한눈에 비교하기
+
+| 구분 | 실제 실적 vs 시장 예상치 | 주가 영향 (일반적) | 투자자 반응 |
+| :--- | :--- | :--- | :--- |
+| **어닝 서프라이즈** | 실제 실적 **>** 시장 예상치 | 📈 **상승** | "와, 생각보다 돈을 훨씬 잘 버네! 사자!" |
+| **어닝 쇼크** | 실제 실적 **<** 시장 예상치 | 📉 **하락** | "앗, 이 정도로 장사를 못 했을 줄이야... 팔자!" |
+
+> ⚠️ **주의할 점 (주식 시장의 특성)**
+> 실적이 좋게 나왔는데도 주가가 떨어지거나(재료 소멸로 인한 차익 실현), 실적이 나쁜데도 주가가 오르는 경우가 있습니다. 주가는 '미래의 가치'를 선반영하는 특성이 있기 때문에, 실적 발표 이후 기업이 제시하는 **향후 전망(가이던스)**이 어떠한지도 함께 확인하는 것이 중요합니다.
+
+---
+
+# 주식 종목명 구분 및 배당 제도 총정리
+
+## 1. 주식 종목명 뒤에 붙는 '우', 'A', 'B'의 의미
+
+### 1.1 보통주 vs 우선주(우)
+* **보통주 (예: 삼성전자)**
+    * **특징:** 주주총회에 참여해 표를 던질 수 있는 **의결권**이 있습니다.
+    * **대상:** 회사의 경영에 참여하고 싶거나, 일반적인 주가 상승 차익을 노리는 투자자에게 적합합니다.
+* **우선주 (예: 삼성전자우)**
+    * **특징:** 의결권이 없는 대신, 보통주보다 **배당금을 더 많이(우선해서)** 받습니다.
+    * **대상:** 경영권에는 관심 없고, 안정적인 배당 수익을 원하는 투자자에게 적합합니다.
+
+### 1.2 우선주 뒤의 숫자 (예: 현대차2우B, 현대차3우B)
+우선주를 여러 번 발행했을 때, 발행한 순서대로 숫자를 붙입니다. 숫자가 클수록 나중에 발행된 주식이며, 발행 시기마다 배당률이나 조건이 조금씩 다를 수 있습니다.
+* **현대차우:** 1번째로 발행한 우선주
+* **현대차2우B:** 2번째로 발행한 우선주
+* **현대차3우B:** 3번째로 발행한 우선주
+
+### 1.3 알파벳 A, B, C의 의미 (국내 vs 해외)
+* **국내 주식에서의 'B' (예: CJ4우B):** **'신형 우선주'**를 뜻합니다. (영어 'Bond-like'에서 유래). 일반 우선주와 달리 **"최하 이 정도 배당률(예: 연 2%)은 무조건 보장해 주겠다"**는 채권형 조건이 붙어 있습니다.
+* **해외 주식에서의 A, B, C (예: 구글 알파벳 Class A / C):** 주식의 **'등급(Class)'**을 나누어 의결권에 차등을 둘 때 사용합니다.
+    * **알파벳 Class A (GOOGL):** 1주당 1개의 의결권 있음 (일반 투자자 거래용)
+    * **알파벳 Class B:** 1주당 10개의 의결권 있음 (창업주 및 내부 경영진 보유, 거래 불가)
+    * **알파벳 Class C (GOOG):** 의결권이 없음 (배당 및 주가 이익만 향유)
+
+---
+
+## 2. 주식배당의 조건과 일정
+
+### 2.1 주식배당을 받기 위한 3가지 조건
+1.  **회사의 이익 발생:** 당기순이익이 발생하여 배당 재원이 있어야 합니다.
+2.  **이사회 및 주주총회 결의:** 주주총회에서 최종 승인을 받아야 합니다.
+3.  **배당기준일까지 주식 보유:** 회사가 지정한 배당기준일에 주주명부에 등재되어 있어야 합니다.
+
+### 2.2 배당을 받기 위한 매수 타이밍 (12월 결산법인 예시)
+국내 주식 시장은 매수 후 실제 입고까지 **2영업일(D+2)**이 소요되므로, 배당기준일보다 최소 2영업일 전에 매수해야 합니다.
+
+| 단계 | 명칭 | 설명 | 예시 일정 |
+| :--- | :--- | :--- | :--- |
+| **1** | **주식 매수 마감일** | 배당을 받기 위해 무조건 주식을 사야 하는 마지막 날 | 12월 28일 |
+| **2** | **배당락일** | 배당받을 권리가 사라지는 날 (이날 매수 시 배당 불가, 주가 인위적 하락) | 12월 29일 |
+| **3** | **배당기준일** | 주주명부에 내 이름이 올라가 있어야 하는 기준일 | 12월 30일 |
+
+> ⚠️ **주의:** 최근 상법 개정으로 **"배당액 선확정 후 배당기준일 지정"** 방식을 채택하는 기업이 늘었습니다. 연말 일괄 매수보다는 개별 기업의 공시를 확인해야 합니다.
+
+### 2.3 실제 주식 입고 프로세스
+1.  **배당기준일 확정:** 주주 명부 마감
+2.  **정기 주주총회 개최 (보통 3월):** 주식배당 안건 승인 (승인일로부터 1개월 이내 지급 의무)
+3.  **주식 실제 입고 (보통 4월):** 증권 계좌로 주식이 자동 입고됨
+
+---
+
+## 3. 현금배당 vs 주식배당 장단점 및 비교
+
+### 3.1 종합 비교
+
+| 구분 | 현금배당 (Cash Dividend) | 주식배당 (Stock Dividend) |
+| :--- | :--- | :--- |
+| **개념** | 회사의 이익을 **현금(돈)**으로 지급 | 회사의 이익을 **새로운 주식**으로 지급 |
+| **장점** | · 즉시 현금 확보 가능 (재투자/생활비)<br>· 배당 소득이 확실하고 직관적임 | · 세금(배당소득세) 이연 효과 (매도 시까지)<br>· 기업이 현금을 유보하여 미래 성장에 재투자 가능 |
+| **단점** | · **15.4%의 배당소득세** 원천징수<br>· 금융소득종합과세 위험 노출 | · **배당락**으로 인해 초기 자산 총액 변동 없음<br>· 주식 수 증가로 주당 가치 희석 가능성 |
+
+### 3.2 투자자 성향별 유리한 상황
+
+#### 💡 현금배당이 유리한 경우
+* **현금 흐름이 필요할 때:** 배당금으로 제2의 월급을 만들거나 다른 자산에 재투자하고자 할 때
+* **성숙기 기업 투자 시:** 은행, 통신, 유틸리티 등 대규모 투자가 끝나고 안정적 이익을 내는 대기업 투자 시
+* **소액 투자자:** 연간 금융소득이 2,000만 원 이하로 배당소득세 부담이 상대적으로 적을 때
+
+#### 💡 주식배당이 유리한 경우
+* **고성장 기업 투자 시:** 회사가 현금을 유보하여 R&D나 설비에 재투자하고, 주주는 향후 기업 성장에 따른 주가 상승(복리 효과)을 노릴 때
+* **절세 및 세금 이연이 필요할 때:** 현금배당과 달리 주식을 매도하기 전까지 과세가 유예되므로 고액 자산가의 금융소득종합과세 회피 대안으로 활용
+* **유통 주식 수 확대가 필요할 때:** 거래량이 너무 적은 숨은 우량주의 경우, 주식 수 증가로 거래가 활성화되어 주가에 호재로 작용 가능

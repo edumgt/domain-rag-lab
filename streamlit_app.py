@@ -260,8 +260,8 @@ with st.sidebar:
     st.markdown('<p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#777">도메인 선택</p>', unsafe_allow_html=True)
     domain = st.selectbox(
         "",
-        ["general", "medical", "english"],
-        format_func=lambda x: {"general": "🌐 일반", "medical": "🏥 의학", "english": "📖 고교 영어"}[x],
+        ["general", "medical", "english", "finance"],
+        format_func=lambda x: {"general": "🌐 일반", "medical": "🏥 의학", "english": "📖 고교 영어", "finance": "📈 금융·투자"}[x],
         label_visibility="collapsed",
     )
 

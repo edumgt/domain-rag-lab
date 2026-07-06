@@ -20,7 +20,7 @@ TOOL_DEFINITIONS: list[dict] = [
                     },
                     "domain": {
                         "type": "string",
-                        "enum": ["medical", "english", "general"],
+                        "enum": ["medical", "english", "finance", "general"],
                         "description": "검색 대상 도메인"
                     },
                     "top_k": {
@@ -70,7 +70,7 @@ TOOL_DEFINITIONS: list[dict] = [
                     },
                     "domain": {
                         "type": "string",
-                        "enum": ["medical", "english", "general"],
+                        "enum": ["medical", "english", "finance", "general"],
                         "description": "검색 대상 도메인"
                     }
                 },

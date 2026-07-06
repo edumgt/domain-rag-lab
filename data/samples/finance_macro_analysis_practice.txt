@@ -1,0 +1,1279 @@
+# 거시경제 상황 분석 실습
+
+
+> 📺 **YouTube 강의**: [🎬 거시경제 상황 분석 실습](https://www.youtube.com/results?search_query=거시경제+분석+실습+경제지표+파이썬+한국어)
+>
+> 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
+
+## 오늘 배울 것
+
+
+
+- 경기 사이클(Expansion, Peak, Contraction, Trough) 이해
+- 경기 선행/동행/후행 지표
+- 통화량(M1, M2)과 유동성 분석
+- 실습: 거시경제 대시보드 구성 및 현황 분석
+
+---
+
+## 🗓 세부 일정 (1일 8시간)
+
+
+
+> **강의 5시간** (5개 단락 × 50분 + 도입·마무리 50분) + **실습 3시간** = 총 8시간
+
+| 시간 | 구분 | 내용 | 형태 |
+|------|------|------|------|
+| 09:00 – 09:10 | 도입 | 오늘 학습 목표 확인 | 강의 |
+| 09:10 – 09:30 | **1단락** 설명 20분 | 경기 사이클(Expansion, Peak, Contraction, Trough) 이해 | 강의 |
+| 09:30 – 10:00 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
+| 10:00 – 10:20 | **2단락** 설명 20분 | 경기 선행/동행/후행 지표 | 강의 |
+| 10:20 – 10:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
+| 10:50 – 11:00 | ☕ 휴식 | — | — |
+| 11:00 – 11:20 | **3단락** 설명 20분 | 통화량(M1, M2)과 유동성 분석 | 강의 |
+| 11:20 – 11:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
+| 11:50 – 12:10 | **4단락** 설명 20분 | 거시경제 대시보드 설계 및 지표 선정 | 강의 |
+| 12:10 – 12:40 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
+| 12:40 – 13:00 | **5단락** 설명 20분 | 경기국면 점수화 및 위험 경보 시스템 | 강의 |
+| 13:00 – 13:30 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
+| 13:30 – 14:00 | 강의 마무리 | Q&A · 핵심 복습 | 강의 |
+| 14:00 – 15:00 | 💻 **실습 1부** 60분 | 대시보드 1~3단계 구현 (시장 데이터·변화율·FRED 지표 수집) | 실습 |
+| 15:00 – 15:10 | ☕ 휴식 | — | — |
+| 15:10 – 16:00 | 💻 **실습 2부** 50분 | 경기국면 점수화·위험 경보·대시보드 레이아웃 구현 | 실습 |
+| 16:00 – 16:10 | ☕ 휴식 | — | — |
+| 16:10 – 17:00 | 💻 **실습 발표 & 리뷰** 50분 | 코드 리뷰 · 발표 · 피드백 | 실습 |
+
+> 강의 5시간: 도입 10분 + 단락 5개×50분 + 마무리 30분 = **300분**  
+> 실습 3시간: 1부 60분 + 휴식 10분 + 2부 50분 + 휴식 10분 + 발표·리뷰 50분 = **180분**
+
+---
+
+## 🔗 참고 사이트 & 데이터 원천
+
+
+
+> 이 문서(거시경제 상황 분석·경기사이클·통화량)의 실습에 필요한 공식 데이터 출처와 참고 사이트입니다. ⚿ 는 API 키 또는 승인이 필요한 항목입니다.
+
+### 📊 국내 공식 데이터
+
+| 기관 | URL | API 키 | 제공 데이터 |
+|------|-----|--------|-------------|
+| 한국은행 ECOS | <https://ecos.bok.or.kr> | ⚿ 필요 | M1/M2 통화량, 경기종합지수, 기준금리 |
+| 통계청 KOSIS | <https://kosis.kr> | ⚿ 권장 | GDP 성장률, 고용, 산업생산지수 |
+| 기획재정부 경제통계 | <https://www.moef.go.kr> | 불필요(웹 조회) | 경기동향·재정 현황 |
+| 공공데이터포털 | <https://www.data.go.kr> | ⚿ 필요 | 경기선행·동행·후행지수 API |
+| 금융위원회 | <https://www.fsc.go.kr> | 불필요(웹 조회) | 금융안정 보고서, 거시건전성 지표 |
+| 금융감독원(FSS) | <https://www.fss.or.kr> | 불필요(웹 조회) | 거시 금융 감독 통계 |
+
+### 🌍 해외 공식 데이터
+
+| 기관 | URL | API 키 | 제공 데이터 |
+|------|-----|--------|-------------|
+| FRED (St. Louis Fed) | <https://fred.stlouisfed.org> | ⚿ 권장 | M1/M2, 경기선행지수, 실업률, ISM 지수 |
+| OECD Composite Leading Indicators | <https://data.oecd.org> | 불필요 | 국가별 경기선행지수(CLI) |
+| World Bank | <https://data.worldbank.org> | 불필요 | GDP·성장률·국제수지 장기 시계열 |
+| IMF Data (WEO) | <https://www.imf.org/en/Data> | 불필요 | 세계경제전망, 국가별 경기사이클 |
+| Conference Board (미국) | <https://www.conference-board.org> | 불필요(웹 조회) | 미국 경기선행지수(LEI) |
+
+### 📈 차트 & 뉴스 참고
+
+| 분류 | 사이트 | URL | 활용 용도 |
+|------|--------|-----|-----------|
+| 차트 플랫폼 | TradingView | <https://www.tradingview.com> | 경기지표·시장 종합 차트 |
+| 차트 플랫폼 | Investing.com | <https://www.investing.com> | 경제 캘린더·경기지표 발표 일정 |
+| 금융 포탈 | 네이버 금융 | <https://finance.naver.com> | 국내 경기·지수 현황 |
+| 금융 미디어 | 머니투데이 방송(MTN) | <https://mtn.co.kr> | 경기사이클·통화량 뉴스 해설 |
+| 금융 미디어 | 한국경제TV(WOW TV) | <https://www.wowtv.co.kr> | 거시경제 분석 방송 |
+| 연구기관 | 한국개발연구원(KDI) | <https://www.kdi.re.kr> | 경기 전망·분석 보고서 |
+| 연구기관 | 한국금융연구원(KIF) | <https://www.kif.re.kr> | 금융·거시경제 연구 보고서 |
+
+---
+
+
+
+
+
+### 1. 경기 사이클(Expansion, Peak, Contraction, Trough) 이해
+
+> 📖 **Wikipedia**: [경기 순환](https://ko.wikipedia.org/wiki/경기_순환) · [경기침체](https://ko.wikipedia.org/wiki/경기침체)
+
+경기는 끊임없이 순환합니다. 이 사이클을 이해하면 **지금이 어느 국면인지** 파악해 투자 전략을 조정할 수 있습니다.
+
+**4단계 경기 사이클**
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> Trough
+
+    Trough --> Expansion : 정부 부양 · 금리 인하\n경기민감주 선매수 기회
+    Expansion --> Peak   : GDP↑ 고용↑ 기업실적↑\n주식·원자재·부동산 유리
+    Peak --> Contraction : 성장 둔화 시작 · 물가 고점\n인플레 자산·현금 비중 확대
+    Contraction --> Trough : GDP↓ 실업↑ 기업이익↓\n채권·금·방어주 유리
+
+    note right of Expansion
+        유리한 자산:
+        주식, 원자재, 부동산
+    end note
+    note right of Contraction
+        유리한 자산:
+        채권, 금, 방어주
+    end note
+```
+
+**국면별 투자 전략 요약**
+
+| 국면 | 경제 특징 | 유리한 자산 |
+|------|-----------|-------------|
+| **Expansion(확장)** | GDP↑, 고용↑, 기업실적↑ | 주식, 원자재, 부동산 |
+| **Peak(정점)** | 성장 둔화 시작, 물가 고점 | 인플레 자산, 현금 비중 확대 |
+| **Contraction(수축)** | GDP↓, 실업↑, 기업이익↓ | 채권, 금, 방어주 |
+| **Trough(저점)** | 침체 바닥, 정부 부양 시작 | 경기민감주 선매수 기회 |
+
+> 📺 [🎬 경기 사이클 투자 전략](https://www.youtube.com/results?search_query=경기사이클+투자전략+확장+수축+한국어)
+
+**경기 사이클별 섹터 로테이션**
+
+```mermaid
+flowchart LR
+    subgraph EX_E["확장 초기"]
+        direction TB
+        E1["소재"] & E2["에너지"] & E3["산업재"]
+    end
+    subgraph EX_L["확장 후기"]
+        direction TB
+        L1["에너지"] & L2["금융"]
+    end
+    subgraph CON["수축"]
+        direction TB
+        C1["헬스케어"] & C2["유틸리티"] & C3["필수소비재"]
+    end
+    subgraph TRO["저점"]
+        direction TB
+        T1["IT"] & T2["경기소비재"]
+    end
+
+    EX_E --> EX_L --> CON --> TRO --> EX_E
+```
+
+| 국면 | 유리한 섹터 | 불리한 섹터 |
+|------|-------------|-------------|
+| 확장 초기 | 소재, 에너지, 산업재 | 유틸리티, 필수소비재 |
+| 확장 후기 | 에너지, 금융 | 기술, 소비재 |
+| 수축 | 헬스케어, 유틸리티, 필수소비재 | 에너지, 소재, 금융 |
+| 저점 | IT, 경기소비재 | 필수소비재 |
+
+> 📺 [🎬 섹터 로테이션 경기 사이클](https://www.youtube.com/results?search_query=섹터로테이션+경기사이클+주식투자+한국어)
+
+#### 🔗 Python 소스 연계
+
+웹앱의 **거시경제현황 2 (시뮬레이션)** 탭은 GBM 기반 4단계 경기 사이클을 직접 시뮬레이션합니다. 각 국면은 `mu` 배수로 구현됩니다.
+
+```mermaid
+flowchart TD
+    A["/api/macro/simulation 호출"] --> B["4단계 경기 사이클 GBM 생성"]
+    B --> C1["상승기\nmu × 1.0"]
+    B --> C2["과열기\nmu × 0.5"]
+    B --> C3["침체기\nmu × -0.5"]
+    B --> C4["회복기\nmu × 1.2"]
+    C1 & C2 & C3 & C4 --> D["6개 지표 시계열 반환\n기준금리 · CPI · WTI\nUSD/KRW · KOSPI · S&P500"]
+
+    style A fill:#2980b9,color:#fff
+    style D fill:#27ae60,color:#fff
+```
+
+```python
+# 웹앱 시뮬레이션 API 호출 예시
+import requests
+
+# 1년(252 영업일) 시뮬레이션
+response = requests.post("http://localhost:8000/api/macro/simulation", json={
+    "n_days": 252,
+    "seed": 42       # 동일 seed → 재현 가능
+})
+data = response.json()
+# data["image"] : 6개 지표 멀티 패널 차트 (base64 PNG)
+```
+
+### 위의 BE 소스를 찾고, BE 모듈 실행 및 검증 하세요.
+
+---
+
+### 2. 경기 선행/동행/후행 지표
+
+> 📖 **Wikipedia**: [경기종합지수](https://ko.wikipedia.org/wiki/경기종합지수) · [구매관리자지수](https://ko.wikipedia.org/wiki/구매관리자지수)
+
+경기지표는 **언제 경기를 반영하는지**에 따라 세 가지로 나뉩니다.
+
+**3종 지표의 시간 관계**
+
+```mermaid
+flowchart LR
+    A["선행지표\n(Leading)\n경기보다 먼저 움직임"] -->|수개월 선행| B["실제 경기 변화"]
+    B -->|동시 반영| C["동행지표\n(Coincident)\n현재 경기 상태"]
+    B -->|수개월 후행| D["후행지표\n(Lagging)\n추세 확인용"]
+
+    style A fill:#8e44ad,color:#fff
+    style C fill:#2980b9,color:#fff
+    style D fill:#7f8c8d,color:#fff
+```
+
+**선행지표 (Leading Indicators)**
+
+경기보다 먼저 움직이는 지표 — 미래 경기를 예측하는 데 활용합니다.
+
+| 지표 | 설명 |
+|------|------|
+| 주가지수 | 미래 기업 실적 기대를 반영 |
+| 건축허가 건수 | 미래 건설투자 선행 |
+| ISM 제조업 PMI | 기업 구매관리자 경기 전망 |
+| 소비자 기대지수 | 향후 소비 의향 반영 |
+| 장단기 금리 스프레드 | 역전 시 경기침체 신호 |
+
+**장단기 금리 역전 → 경기침체 경로**
+
+```mermaid
+flowchart LR
+    A["단기금리 > 장기금리\n(금리 역전)"] --> B["은행 대출 수익성 감소"]
+    A --> C["투자자 경기침체 우려 반영"]
+    B --> D["대출 위축 → 기업투자 감소"]
+    C & D --> E["실제 경기침체\n(6~18개월 후)"]
+
+    style A fill:#c0392b,color:#fff
+    style E fill:#922b21,color:#fff
+```
+
+> 📺 [🎬 경기선행지수 PMI 금리스프레드 설명](https://www.youtube.com/results?search_query=경기선행지수+PMI+금리스프레드+경기예측+한국어)
+
+**동행지표 (Coincident Indicators)**
+
+현재 경기 상황을 나타내는 지표입니다.
+
+| 지표 | 설명 |
+|------|------|
+| GDP | 현재 경제 규모 |
+| 산업생산지수 | 실제 생산량 현황 |
+| 취업자 수 | 노동시장 실제 상태 |
+| 소매판매 | 실제 소비 상황 |
+
+**후행지표 (Lagging Indicators)**
+
+경기 변화 후 나중에 반영되는 지표 — 추세 확인용입니다.
+
+| 지표 | 설명 |
+|------|------|
+| 실업률 | 해고 후 한참 지나서 반영 |
+| 대출 잔액 | 경기 이후 금융 반응 |
+| CPI | 물가는 경기 후행 |
+
+> 📺 [🎬 경기 선행 동행 후행 지표 차이](https://www.youtube.com/results?search_query=경기+선행지표+동행지표+후행지표+투자+한국어)
+
+
+---
+
+### https://www.data.go.kr/ 에서 아래 조건으로 API 사용 예시를 test 폴더에 py 소스로 만드세요.
+
+![alt text](image.png)
+
+### 예시는 test 폴더에 0301.py 로 있습니다. 참고하세요.
+
+### 아래 이미지와 같이 본인의 이용 현황 중 API 이용 건을 10회 이상으로 하여, 화면 캡쳐 및 공유 하세요.
+
+![alt text](image-1.png)
+
+---
+
+#### 🔗 Python 소스 연계
+
+장단기 금리 스프레드(경기침체 선행 신호)를 실시간으로 조회하는 방법입니다.
+
+```mermaid
+sequenceDiagram
+    participant F as Frontend<br/>(macroRealtime.js)
+    participant A as /api/macro/realtime
+    participant Y as yfinance
+
+    F->>A: POST {tickers: ["^TNX", "^IRX"], period: "2y"}
+    Note over A: ^TNX = 10년채, ^IRX = 3개월채<br/>스프레드 = 10년 - 3개월
+    A->>Y: yf.download(["^TNX","^IRX"], period="2y")
+    Y-->>A: 금리 시계열
+    A-->>F: {summary: {"^TNX": {current:4.35}, "^IRX": {current:5.20}}}
+    Note over F: 스프레드 = 4.35 - 5.20 = -0.85%<br/>음수 → 경기침체 경보
+```
+
+---
+
+### 3. 통화량(M1, M2)과 유동성 분석
+
+> 📖 **Wikipedia**: [통화량](https://ko.wikipedia.org/wiki/통화량) · [유동성](https://ko.wikipedia.org/wiki/유동성_(경제학)) · [양적 완화](https://ko.wikipedia.org/wiki/양적_완화)
+
+**통화량의 종류**
+
+중앙은행은 얼마나 많은 돈이 경제에 돌아다니는지를 단계별로 측정합니다.
+
+```mermaid
+flowchart TD
+    M0["본원통화 M0\n중앙은행 발행 화폐\n(가장 좁은 범위)"]
+    M1["M1 협의통화\nM0 + 요구불예금\n(즉시 사용 가능)"]
+    M2["M2 광의통화\nM1 + 저축예금 + 단기 금융상품\n(일반적 통화량 기준)"]
+
+    M0 -->|포함| M1
+    M1 -->|포함| M2
+
+    style M0 fill:#2980b9,color:#fff
+    style M1 fill:#8e44ad,color:#fff
+    style M2 fill:#27ae60,color:#fff
+```
+
+| 구분 | 포함 내용 | 특징 |
+|------|-----------|------|
+| **본원통화(M0)** | 중앙은행이 발행한 화폐 | 가장 좁은 범위 |
+| **M1 (협의통화)** | 현금 + 요구불예금 | 즉시 사용 가능한 돈 |
+| **M2 (광의통화)** | M1 + 저축예금 + 단기 금융상품 | 일반적인 통화량 기준 |
+
+> 📺 [🎬 통화량 M1 M2 유동성 설명](https://www.youtube.com/results?search_query=통화량+M1+M2+유동성+중앙은행+한국어)
+
+**양적완화(QE)와 양적긴축(QT) 파급 경로**
+
+```mermaid
+flowchart TD
+    subgraph QE["양적완화 (QE)"]
+        QE1["중앙은행\n국채·MBS 매입"] --> QE2["시중 유동성 증가\n(M2 급증)"]
+        QE2 --> QE3["자산 가격 상승 압력\n주식·부동산·원자재"]
+        QE3 --> QE4["경기 부양\n대출·투자 활성화"]
+    end
+
+    subgraph QT["양적긴축 (QT)"]
+        QT1["중앙은행\n보유 채권 만기 미재투자"] --> QT2["시중 유동성 감소\n(M2 축소)"]
+        QT2 --> QT3["자산 가격 하락 압력\n금리 상승"]
+        QT3 --> QT4["경기 냉각\n대출 비용 증가"]
+    end
+
+    style QE fill:#eafaf1
+    style QT fill:#fdecea
+    style QE1 fill:#27ae60,color:#fff
+    style QT1 fill:#c0392b,color:#fff
+```
+
+> 📺 [🎬 양적완화 양적긴축 차이 주식](https://www.youtube.com/results?search_query=양적완화+양적긴축+QE+QT+주식시장+한국어)
+
+**M2 증가율과 자산 시장 관계**
+
+```mermaid
+flowchart LR
+    A["M2 급증\n(QE, 재정 확장)"] -->|유동성 넘침| B["위험자산 선호\n주식·원자재 상승"]
+    C["M2 감소\n(QT, 금리 인상)"] -->|유동성 회수| D["안전자산 선호\n채권·달러 강세"]
+
+    style A fill:#27ae60,color:#fff
+    style B fill:#1e8449,color:#fff
+    style C fill:#c0392b,color:#fff
+    style D fill:#922b21,color:#fff
+```
+
+#### 🔗 Python 소스 연계
+
+통화량 M2 데이터는 yfinance가 아닌 FRED(연방준비은행 경제 데이터)에서 제공됩니다. 웹앱 시뮬레이션은 M2 효과를 GBM의 드리프트 파라미터(mu)로 모델링합니다.
+
+```mermaid
+sequenceDiagram
+    participant F as Frontend<br/>(macroSimulation.js)
+    participant A as /api/macro/simulation
+
+    F->>A: POST {n_days: 504, seed: 7}
+    Note over A: 504일 = 약 2년치 영업일<br/>4단계 경기 사이클 × 2회 반복 가능
+    A-->>F: {<br/>  image: base64_png,<br/>  지표: [기준금리, CPI, WTI, USD/KRW, KOSPI, S&P500]<br/>}
+    Note over F: QE 국면(회복기 mu×1.2) vs<br/>QT 국면(침체기 mu×-0.5) 비교 가능
+```
+
+---
+
+### 4. 실습: 거시경제 대시보드 구성 및 현황 분석
+
+이번 실습은 단순한 6개 차트 모음에서 출발해, **경기국면 판정·위험 경보·시나리오 분석·웹 대시보드·리포트 출력**까지 확장할 수 있는 형태로 고도화합니다.
+
+---
+
+#### 4-1. 완성 목표
+
+최종 산출물은 아래와 같습니다.
+
+| 산출물 | 파일/화면 | 설명 |
+|---|---|---|
+| 원천 데이터 | `macro_dashboard_raw.csv` | yfinance/FRED/ECOS 등에서 수집한 원자료 |
+| 분석 데이터 | `macro_dashboard_features.csv` | 변화율, 이동평균, z-score, 스프레드, 경기 점수 |
+| 이미지 대시보드 | `macro_dashboard.png` | 주요 지표 6~9개 패널 차트 |
+| 신호 테이블 | `macro_signal_table.csv` | 선행/동행/후행 지표별 상태와 점수 |
+| 리포트 | `macro_dashboard_report.md` | 현재 경기국면 해석, 위험요인, 투자 아이디어 |
+| 웹 API 설계 | `/api/macro/dashboard` | 대시보드 데이터·차트·경보 반환 |
+
+**핵심 질문**
+
+1. 지금은 확장, 정점, 수축, 저점 중 어느 국면에 가까운가?
+2. 선행지표는 경기 둔화 또는 회복을 먼저 말하고 있는가?
+3. 금리, 유가, 달러, VIX 중 위험 신호가 강한 것은 무엇인가?
+4. 유동성(M2)과 위험자산(S&P500/KOSPI)은 같은 방향으로 움직이는가?
+5. 대시보드의 결론을 투자 행동으로 연결한다면 무엇을 줄이고 무엇을 늘릴 것인가?
+
+---
+
+#### 4-2. 대시보드 지표 설계
+
+대시보드는 지표를 많이 넣는 것보다 **선행·동행·후행·시장심리·유동성**으로 역할을 나누는 것이 중요합니다.
+
+| 분류 | 지표 | 예시 코드/티커 | 주기 | 해석 포인트 |
+|---|---|---|---|---|
+| 선행 | 장단기 금리차 | FRED `T10Y2Y`, `T10Y3M` | 일별 | 음수면 경기침체 경보 |
+| 선행 | VIX | yfinance `^VIX`, FRED `VIXCLS` | 일별 | 급등 시 위험회피 심리 |
+| 선행 | 주가지수 | `^GSPC`, `^KS11` | 일별 | 미래 이익 기대 반영 |
+| 선행 | 소비심리 | FRED `UMCSENT` | 월별 | 소비 둔화/회복 확인 |
+| 동행 | 산업생산 | FRED `INDPRO` | 월별 | 현재 생산활동 |
+| 동행 | 고용 | FRED `PAYEMS` | 월별 | 현재 경기 체력 |
+| 후행 | 실업률 | FRED `UNRATE` | 월별 | 경기 악화 확인 |
+| 후행 | CPI | FRED `CPIAUCSL` | 월별 | 물가 압력과 정책 제약 |
+| 유동성 | M2 | FRED `M2SL` | 월별 | QE/QT, 유동성 환경 |
+| 원자재 | WTI, 금 | `CL=F`, `GC=F` | 일별 | 인플레/위험회피 신호 |
+| 환율 | 달러인덱스, USD/KRW | `DX-Y.NYB`, `KRW=X` | 일별 | 달러 유동성·외국인 수급 |
+
+한국 중심 대시보드로 확장할 때는 ECOS/KOSIS에서 기준금리, 원/달러 환율, M2, CPI, 실업률, 수출입, 산업생산 코드를 찾아 같은 구조로 붙입니다.
+
+---
+
+#### 4-3. 환경 변수와 추가 패키지
+
+빠른 실습은 `yfinance`만으로 가능하지만, 경기국면 판정을 고도화하려면 FRED API Key를 추가합니다.
+
+```bash
+FRED_API_KEY=발급받은_FRED_KEY
+BOK_API_KEY=발급받은_ECOS_KEY
+KOSIS_API_KEY=발급받은_KOSIS_KEY
+```
+
+```bash
+pip install requests seaborn plotly statsmodels reportlab
+```
+
+---
+
+#### 4-4. 1단계: 시장 데이터 대시보드 만들기
+
+API Key 없이 바로 실행할 수 있는 기본 버전입니다.
+
+```python
+import yfinance as yf
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+
+MARKET_INDICATORS = {
+    "SP500": "^GSPC",
+    "KOSPI": "^KS11",
+    "US10Y": "^TNX",
+    "WTI": "CL=F",
+    "Gold": "GC=F",
+    "DollarIndex": "DX-Y.NYB",
+    "USDKRW": "KRW=X",
+    "VIX": "^VIX",
+}
+
+def fetch_yfinance_panel(tickers, start="2022-01-01", end="2025-12-31"):
+    data = {}
+    for name, ticker in tickers.items():
+        raw = yf.download(ticker, start=start, end=end, auto_adjust=True, progress=False)
+        if raw.empty:
+            print(f"skip: {name} ({ticker})")
+            continue
+        data[name] = raw["Close"]
+    return pd.DataFrame(data).sort_index()
+
+market_df = fetch_yfinance_panel(MARKET_INDICATORS)
+market_df.to_csv("macro_dashboard_raw.csv", encoding="utf-8-sig")
+
+fig = plt.figure(figsize=(16, 12))
+fig.suptitle("Macro Dashboard: Market Indicators", fontsize=16, fontweight="bold")
+gs = gridspec.GridSpec(4, 2, figure=fig, hspace=0.45, wspace=0.25)
+
+colors = ["steelblue", "navy", "crimson", "darkorange", "goldenrod", "seagreen", "purple", "gray"]
+for idx, col in enumerate(market_df.columns):
+    ax = fig.add_subplot(gs[idx // 2, idx % 2])
+    series = market_df[col].dropna()
+    ax.plot(series.index, series.values, color=colors[idx % len(colors)], linewidth=1.2)
+    ax.set_title(col)
+    ax.grid(True, alpha=0.3)
+    ax.tick_params(axis="x", rotation=25, labelsize=8)
+
+plt.savefig("macro_dashboard.png", dpi=150, bbox_inches="tight")
+plt.show()
+```
+
+---
+
+#### 4-5. 2단계: 변화율·변동성·z-score 계산
+
+대시보드는 단순 현재값보다 “최근 변화가 평소보다 큰가?”를 보여줘야 합니다.
+
+```python
+def make_market_features(df):
+    monthly = df.resample("M").last()
+    returns_1m = monthly.pct_change(1)
+    returns_3m = monthly.pct_change(3)
+    returns_12m = monthly.pct_change(12)
+    vol_3m = df.pct_change().rolling(63).std() * (252 ** 0.5)
+    zscore = (monthly - monthly.rolling(36).mean()) / monthly.rolling(36).std()
+
+    latest_rows = []
+    for col in monthly.columns:
+        latest_rows.append({
+            "indicator": col,
+            "latest": monthly[col].dropna().iloc[-1],
+            "return_1m": returns_1m[col].dropna().iloc[-1],
+            "return_3m": returns_3m[col].dropna().iloc[-1],
+            "return_12m": returns_12m[col].dropna().iloc[-1],
+            "vol_3m": vol_3m[col].dropna().iloc[-1] if col in vol_3m else None,
+            "zscore_36m": zscore[col].dropna().iloc[-1],
+        })
+    return pd.DataFrame(latest_rows), monthly, returns_1m, zscore
+
+signal_table, monthly_market, monthly_returns, market_zscore = make_market_features(market_df)
+signal_table.to_csv("macro_signal_table.csv", index=False, encoding="utf-8-sig")
+print(signal_table)
+```
+
+**z-score 해석**
+
+| z-score | 해석 |
+|---|---|
+| `2 이상` | 과열 또는 극단적 강세 |
+| `1 ~ 2` | 평균보다 강함 |
+| `-1 ~ 1` | 보통 범위 |
+| `-2 ~ -1` | 평균보다 약함 |
+| `-2 이하` | 극단적 약세 또는 스트레스 |
+
+---
+
+#### 4-6. 3단계: FRED로 경기·유동성 지표 추가
+
+FRED 지표를 붙이면 시장 가격뿐 아니라 경기의 실제 체력까지 볼 수 있습니다.
+
+```python
+import os
+import requests
+
+FRED_API_KEY = os.getenv("FRED_API_KEY")
+
+FRED_SERIES = {
+    "YieldSpread_10Y2Y": "T10Y2Y",
+    "YieldSpread_10Y3M": "T10Y3M",
+    "M2": "M2SL",
+    "CPI": "CPIAUCSL",
+    "Unemployment": "UNRATE",
+    "IndustrialProduction": "INDPRO",
+    "Payrolls": "PAYEMS",
+    "ConsumerSentiment": "UMCSENT",
+    "VIX_FRED": "VIXCLS",
+}
+
+def fetch_fred(series_id, start="2022-01-01", end="2025-12-31"):
+    url = "https://api.stlouisfed.org/fred/series/observations"
+    params = {
+        "series_id": series_id,
+        "api_key": FRED_API_KEY,
+        "file_type": "json",
+        "observation_start": start,
+        "observation_end": end,
+    }
+    data = requests.get(url, params=params, timeout=20).json()
+    rows = data.get("observations", [])
+    frame = pd.DataFrame(rows)
+    if frame.empty:
+        return pd.Series(dtype="float64", name=series_id)
+    values = pd.to_numeric(frame["value"].replace(".", pd.NA), errors="coerce")
+    return pd.Series(values.values, index=pd.to_datetime(frame["date"]), name=series_id).dropna()
+
+fred_df = pd.DataFrame({
+    name: fetch_fred(series_id)
+    for name, series_id in FRED_SERIES.items()
+})
+
+fred_monthly = fred_df.resample("M").last().ffill()
+fred_monthly.to_csv("macro_fred_dashboard.csv", encoding="utf-8-sig")
+```
+
+---
+
+#### 4-7. 4단계: 경기국면 점수화
+
+아래 규칙은 학습용 예시입니다. 실제 운용에서는 기준값과 가중치를 검증해야 합니다.
+
+| 항목 | 확장 신호 | 수축 신호 |
+|---|---|---|
+| 주식 | S&P500 6개월 수익률 `> 0` | S&P500 6개월 수익률 `< 0` |
+| 변동성 | VIX `< 20` | VIX `> 25` |
+| 금리차 | `T10Y2Y > 0` | `T10Y2Y < 0` |
+| 물가 | CPI YoY 둔화 | CPI YoY 가속 |
+| 고용 | 실업률 하락 | 실업률 상승 |
+| 유동성 | M2 YoY 상승 | M2 YoY 둔화/감소 |
+
+```python
+def classify_cycle(market_monthly, fred_monthly):
+    features = pd.DataFrame(index=fred_monthly.index)
+    features["sp500_6m"] = market_monthly["SP500"].pct_change(6)
+    features["vix"] = market_monthly["VIX"].resample("M").last()
+    features["spread_10y2y"] = fred_monthly["YieldSpread_10Y2Y"]
+    features["cpi_yoy"] = fred_monthly["CPI"].pct_change(12)
+    features["cpi_yoy_diff"] = features["cpi_yoy"].diff()
+    features["unrate_diff_3m"] = fred_monthly["Unemployment"].diff(3)
+    features["m2_yoy"] = fred_monthly["M2"].pct_change(12)
+
+    score = pd.Series(0, index=features.index, dtype="float64")
+    score += (features["sp500_6m"] > 0).astype(int)
+    score += (features["vix"] < 20).astype(int)
+    score += (features["spread_10y2y"] > 0).astype(int)
+    score += (features["cpi_yoy_diff"] < 0).astype(int)
+    score += (features["unrate_diff_3m"] < 0).astype(int)
+    score += (features["m2_yoy"] > 0).astype(int)
+
+    features["macro_score"] = score
+    features["cycle"] = pd.cut(
+        score,
+        bins=[-1, 1, 3, 4, 6],
+        labels=["Contraction", "Trough/Recovery", "Expansion", "Peak/Overheat"],
+    )
+    return features
+
+cycle_df = classify_cycle(monthly_market, fred_monthly)
+cycle_df.to_csv("macro_dashboard_features.csv", encoding="utf-8-sig")
+print(cycle_df.tail(12)[["macro_score", "cycle"]])
+```
+
+**점수 해석**
+
+| 점수 | 국면 후보 | 대시보드 메시지 |
+|---|---|---|
+| `0~1` | 수축 | 위험자산 방어, 현금·채권·금 점검 |
+| `2~3` | 저점/회복 | 경기민감주와 주식 비중 회복 검토 |
+| `4` | 확장 | 주식·원자재 우호, 과열 지표 감시 |
+| `5~6` | 정점/과열 | 인플레·금리·VIX 급등 위험 관리 |
+
+---
+
+#### 4-8. 5단계: 위험 경보 만들기
+
+대시보드에는 사용자가 바로 볼 수 있는 경보가 필요합니다.
+
+```python
+def build_alerts(latest):
+    alerts = []
+    if latest.get("spread_10y2y", 0) < 0:
+        alerts.append({"level": "warning", "message": "장단기 금리차가 역전되어 경기 둔화 위험이 높습니다."})
+    if latest.get("vix", 0) > 25:
+        alerts.append({"level": "danger", "message": "VIX가 25를 넘어 시장 스트레스가 높습니다."})
+    if latest.get("cpi_yoy_diff", 0) > 0:
+        alerts.append({"level": "warning", "message": "CPI YoY 상승세가 재가속되고 있습니다."})
+    if latest.get("m2_yoy", 0) < 0:
+        alerts.append({"level": "warning", "message": "M2 증가율이 음수로 유동성 축소 압력이 있습니다."})
+    if not alerts:
+        alerts.append({"level": "normal", "message": "주요 위험 경보가 제한적입니다."})
+    return alerts
+
+latest_features = cycle_df.dropna().iloc[-1].to_dict()
+alerts = build_alerts(latest_features)
+print(alerts)
+```
+
+---
+
+#### 4-9. 6단계: 고도화 대시보드 레이아웃
+
+웹 화면은 차트를 많이 쌓기보다, 반복적으로 판단하기 쉬운 정보 구조가 좋아야 합니다.
+
+```text
+상단 컨트롤
+  - 국가: US / KR / Global
+  - 기간: 1Y / 3Y / 5Y / 10Y
+  - 기준 빈도: D / M / Q
+  - 보기 모드: 시장 / 경기 / 유동성 / 전체
+
+1행: 현재 국면 요약
+  - 경기국면 배지: Expansion, Peak, Contraction, Trough
+  - Macro Score
+  - 주요 경보 3개
+  - 데이터 기준일
+
+2행: KPI 카드
+  - S&P500 6M
+  - 10Y-2Y Spread
+  - CPI YoY
+  - Unemployment
+  - M2 YoY
+  - VIX
+
+3행: 시계열 차트
+  - 주식/금리/유가/달러/VIX
+  - M2와 주가지수 비교
+  - CPI와 금리 비교
+
+4행: 분석 차트
+  - 경기국면 점수 추이
+  - 상관관계 히트맵
+  - 롤링 상관관계
+  - 시나리오별 시뮬레이션 비교
+
+출력
+  - CSV 다운로드
+  - PNG 저장
+  - Markdown/PDF 리포트 생성
+```
+
+---
+
+#### 4-10. 웹앱/API 고도화 설계
+
+현재 웹앱의 `/api/macro/realtime`, `/api/macro/simulation`을 아래처럼 확장합니다.
+
+| 엔드포인트 | 메서드 | 역할 |
+|---|---|---|
+| `/api/macro/dashboard` | `POST` | 대시보드 전체 데이터, KPI, 경보 반환 |
+| `/api/macro/cycle-score` | `POST` | 경기국면 점수와 국면 후보 반환 |
+| `/api/macro/liquidity` | `POST` | M2, 금리, 주가지수 유동성 분석 |
+| `/api/macro/alerts` | `POST` | 위험 경보만 빠르게 반환 |
+| `/api/macro/dashboard/report` | `POST` | Markdown/PDF 리포트 생성 |
+
+**요청 예시**
+
+```python
+import requests
+
+payload = {
+    "country": "US",
+    "start": "2020-01-01",
+    "end": "2024-12-31",
+    "frequency": "M",
+    "market_indicators": ["SP500", "US10Y", "WTI", "Gold", "DollarIndex", "VIX"],
+    "macro_indicators": ["T10Y2Y", "M2SL", "CPIAUCSL", "UNRATE", "INDPRO"],
+}
+
+result = requests.post("http://localhost:8000/api/macro/dashboard", json=payload).json()
+print(result["cycle"])
+print(result["alerts"])
+```
+
+**응답 예시**
+
+```python
+{
+    "as_of": "2024-12-31",
+    "cycle": {"score": 3, "label": "Trough/Recovery"},
+    "kpis": {
+        "sp500_6m": 0.08,
+        "spread_10y2y": -0.25,
+        "cpi_yoy": 0.032,
+        "unemployment": 3.9,
+        "m2_yoy": 0.015,
+        "vix": 16.5
+    },
+    "alerts": [
+        {"level": "warning", "message": "장단기 금리차가 역전되어 경기 둔화 위험이 높습니다."}
+    ],
+    "charts": {
+        "dashboard_png": "static/reports/macro_dashboard.png",
+        "cycle_score_png": "static/reports/macro_cycle_score.png"
+    }
+}
+```
+
+**권장 파일 구조**
+
+```text
+app
+├── backend
+│   ├── services
+│   │   ├── macro_sources.py       # yfinance/FRED/ECOS/KOSIS 수집
+│   │   ├── macro_features.py      # 변화율, z-score, 스프레드
+│   │   ├── macro_cycle.py         # 경기국면 점수화
+│   │   ├── macro_alerts.py        # 위험 경보 생성
+│   │   └── macro_report.py        # 리포트 생성
+│   └── main.py
+└── frontend
+    └── js
+        └── views
+            └── macroDashboard.js
+```
+
+---
+
+#### 4-11. 시뮬레이션 탭 고도화
+
+`/api/macro/simulation`은 학습용으로 매우 좋습니다. 고도화 방향은 사용자가 경기 충격을 직접 조정하게 만드는 것입니다.
+
+| 파라미터 | 예시 | 의미 |
+|---|---|---|
+| `n_days` | `504` | 시뮬레이션 기간 |
+| `seed` | `42` | 재현 가능한 난수 |
+| `inflation_shock` | `0.3` | 물가 충격 강도 |
+| `rate_shock` | `0.2` | 금리 충격 강도 |
+| `oil_shock` | `-0.15` | 유가 충격 |
+| `risk_aversion` | `0.4` | VIX/주가 변동성 확대 |
+
+```python
+import requests
+
+scenarios = {
+    "base": {"n_days": 504, "seed": 42},
+    "inflation_reacceleration": {"n_days": 504, "seed": 42, "inflation_shock": 0.3, "rate_shock": 0.2},
+    "growth_slowdown": {"n_days": 504, "seed": 42, "oil_shock": -0.15, "risk_aversion": 0.4},
+}
+
+for name, payload in scenarios.items():
+    result = requests.post("http://localhost:8000/api/macro/simulation", json=payload).json()
+    print(name, result.keys())
+```
+
+---
+
+#### 4-12. 현황 분석 리포트 템플릿
+
+`macro_dashboard_report.md`는 아래 형식으로 작성합니다.
+
+```markdown
+# 거시경제 대시보드 현황 분석
+
+## 1. 분석 조건
+
+> 📺 [🎬 분석 조건](https://www.youtube.com/results?search_query=분석+조건+한국어)
+
+- 기준일:
+- 기간:
+- 데이터 출처:
+- 사용 지표:
+- 결측 처리:
+
+## 2. 현재 경기국면
+
+> 📺 [🎬 현재 경기국면](https://www.youtube.com/results?search_query=현재+경기국면+한국어)
+
+- Macro Score:
+- 추정 국면:
+- 근거 지표:
+
+## 3. 선행/동행/후행 지표 점검
+
+> 📺 [🎬 선행 동행 후행 지표](https://www.youtube.com/results?search_query=선행+동행+후행+지표+점검+한국어)
+
+- 선행지표:
+- 동행지표:
+- 후행지표:
+
+## 4. 위험 경보
+
+> 📺 [🎬 위험 경보](https://www.youtube.com/results?search_query=위험+경보+한국어)
+
+- 금리:
+- 물가:
+- 유동성:
+- 변동성:
+- 환율:
+
+## 5. 투자 관점 요약
+
+> 📺 [🎬 투자 관점 요약](https://www.youtube.com/results?search_query=투자+관점+요약+한국어)
+
+- 주식:
+- 채권:
+- 원자재:
+- 달러/환율:
+- 현금 비중:
+
+## 6. 한계
+
+> 📺 [🎬 한계](https://www.youtube.com/results?search_query=한계+한국어)
+
+- 점수화 규칙은 학습용이며 검증이 필요함
+- 시장 데이터와 공식 통계의 발표 시차가 다름
+- 국면 판정은 확률적 판단이며 단정이 아님
+```
+
+---
+
+#### 4-13. 실습 체크리스트
+
+- [ ] `macro_dashboard_raw.csv` 생성
+- [ ] `macro_fred_dashboard.csv` 생성
+- [ ] `macro_dashboard_features.csv` 생성
+- [ ] `macro_signal_table.csv` 생성
+- [ ] `macro_dashboard.png` 생성
+- [ ] 경기국면 점수화 규칙 6개 이상 작성
+- [ ] 위험 경보 규칙 4개 이상 작성
+- [ ] `/api/macro/dashboard` 요청/응답 설계
+- [ ] `macro_dashboard_report.md` 작성
+
+---
+
+## 웹앱 실습 연계
+
+> 📺 [🎬 웹앱 실습 연계](https://www.youtube.com/results?search_query=웹앱+실습+연계+한국어)
+
+이 챕터의 개념은 Python Quant Lab 웹앱의 두 거시경제 탭으로 직접 체험할 수 있습니다.
+
+### 거시경제현황 1 (실시간) — `/api/macro/realtime`
+
+실제 Yahoo Finance 데이터를 이용해 선행·동행·후행 지표를 한 번에 조회합니다.
+
+```mermaid
+sequenceDiagram
+    participant U as 사용자 (브라우저)
+    participant JS as macroRealtime.js
+    participant API as /api/macro/realtime
+    participant YF as Yahoo Finance
+
+    U->>JS: 선행지표 티커 선택 후 "조회"
+    JS->>API: POST /api/macro/realtime<br/>{tickers: ["^TNX","^IRX","^VIX"], period: "2y"}
+    API->>YF: yf.download(tickers, period="2y")
+    alt 정상 응답
+        YF-->>API: 금리 · VIX 시계열
+        API-->>JS: {is_simulated: false, summary: {...}}
+    else Rate-limited
+        API-->>JS: {is_simulated: true, warning: "GBM 시뮬레이션 사용 중"}
+    end
+    JS-->>U: 차트 + 요약 테이블 렌더링
+```
+
+**경기 사이클 국면별 추천 티커 조합**
+
+| 분석 목적 | tickers | period |
+|---|---|---|
+| 선행지표 모니터링 | `["^TNX", "^IRX", "^VIX", "^GSPC"]` | `"2y"` |
+| 동행지표 확인 | `["^GSPC", "^KS11", "CL=F"]` | `"1y"` |
+| 후행지표 추적 | `["^TNX", "GC=F", "KRW=X"]` | `"3y"` |
+| QE/QT 영향 분석 | `["^GSPC", "GC=F", "^TNX", "DX-Y.NYB"]` | `"5y"` |
+
+### 거시경제현황 2 (시뮬레이션) — `/api/macro/simulation`
+
+GBM 4단계 경기 사이클 시뮬레이션으로 섹터 로테이션 전략을 연습합니다.
+
+```mermaid
+flowchart TD
+    A["시뮬레이션 차트 분석"] --> B{"KOSPI·S&P\n방향은?"}
+    B -->|상승 추세| C{"CPI(물가)\n수준은?"}
+    B -->|하락 추세| D["수축기 또는 침체기\n→ 채권·금 비중 확대 검토"]
+    C -->|낮음·안정| E["상승기(Expansion)\n→ 주식·원자재 선호"]
+    C -->|높음·가속| F["과열기(Peak)\n→ 현금·인플레 자산 비중 확대"]
+    D --> G{"WTI·금리\n반등 신호?"}
+    G -->|있음| H["회복기(Trough)\n→ 경기민감주 선매수 기회"]
+    G -->|없음| I["침체 지속\n→ 방어주·채권 유지"]
+
+    style A fill:#2980b9,color:#fff
+    style E fill:#27ae60,color:#fff
+    style F fill:#e67e22,color:#fff
+    style H fill:#8e44ad,color:#fff
+    style D fill:#c0392b,color:#fff
+```
+
+---
+
+## 해보기 활동
+
+> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
+
+1. yfinance 기본 대시보드에서 `S&P500`, `KOSPI`, `US10Y`, `WTI`, `Gold`, `DollarIndex`, `USDKRW`, `VIX`를 수집하고 `macro_dashboard.png`를 생성하세요.
+2. FRED에서 `T10Y2Y`, `M2SL`, `CPIAUCSL`, `UNRATE`, `INDPRO`, `PAYEMS`를 수집해 `macro_fred_dashboard.csv`를 만드세요.
+3. 경기국면 점수화 규칙을 최소 6개 만들고, 최근 12개월의 `macro_score`와 `cycle`을 표로 출력하세요.
+4. 위험 경보 규칙을 최소 4개 만들고, 현재 경보를 `normal`, `warning`, `danger`로 분류하세요.
+5. 현재 경기가 확장·정점·수축·저점 중 어느 국면에 가깝다고 생각하는지, 선행/동행/후행 지표를 각각 1개 이상 근거로 설명하세요.
+6. `/api/macro/dashboard`를 만든다고 가정하고 요청 JSON, 응답 JSON, 필요한 서비스 파일 목록을 작성하세요.
+7. 최종 결과를 `macro_dashboard_report.md`에 정리하고, 투자 관점에서 주식·채권·원자재·달러·현금 비중에 대한 결론을 작성하세요.
+
+---
+
+## 최근 10년 이내 한국이 경제 강국으로 평가받는 거시경제적 원인
+
+1. **수출 경쟁력 고도화**
+   - 반도체, 배터리, 자동차, 조선 등 고부가가치 산업 중심으로 수출 구조가 강화되었습니다.
+   - 글로벌 공급망 재편 과정에서 핵심 중간재·완성재 공급국 역할이 커졌습니다.
+
+2. **대외건전성 개선**
+   - 경상수지 흑자 기조와 충분한 외환보유액이 대외 충격 대응력을 높였습니다.
+   - 단기 외채 비중 관리와 금융시스템 안정화로 외환위기 재발 위험을 낮췄습니다.
+
+3. **통화·재정 정책 대응력**
+   - 한국은행의 물가·경기 균형 대응과 정부의 확장·긴축 재정 운용이 경기 변동 완화에 기여했습니다.
+   - 팬데믹, 고금리, 고물가 국면에서 정책 공조가 비교적 신속하게 작동했습니다.
+
+4. **제조업 기반 + 디지털 전환 동시 진행**
+   - 강한 제조업 기반 위에서 AI, 플랫폼, 바이오, 첨단소재 등 신산업 투자가 병행되었습니다.
+   - 생산성 향상과 산업 포트폴리오 다변화가 중장기 성장 기대를 높였습니다.
+
+5. **인프라·교육·기술 축적**
+   - 고속 통신망, 물류, 전력 인프라와 높은 교육 수준이 기술 확산 속도를 높였습니다.
+   - 연구개발(R&D) 투자와 숙련 인력이 혁신 역량을 뒷받침했습니다.
+
+6. **자본시장 성숙과 기업 지배구조 개선 압력**
+   - 연기금·기관투자자 비중 확대, 주주환원 강화 흐름이 기업가치 제고를 촉진했습니다.
+   - ESG, 공시 투명성, 이사회 독립성 요구가 글로벌 투자자 신뢰에 긍정적으로 작용했습니다.
+
+> 정리하면, 한국의 경제 강국화는 단일 요인보다 **수출 경쟁력·정책 대응력·대외건전성·기술혁신**이 결합된 결과로 볼 수 있습니다.
+
+---
+
+# 블랙록(BlackRock)과 알라딘(Aladdin) 플랫폼 개요
+
+블랙록(BlackRock)은 전 세계 금융 시장을 움직이는 **세계 최대의 자산운용사**입니다. 워낙 규모가 크고 영향력이 막강하다 보니 "자본시장의 그림자 정부", "세상을 지배하는 회사" 같은 거창한 수식어가 따라붙기도 합니다.
+
+---
+
+## 1. 블랙록은 얼마나 큰 회사인가요?
+* **운용 자산(AUM):** 2020년대 중반 기준, 블랙록이 굴리는 자산은 **약 10조 달러(한화 약 1경 3,000조~1경 4,000조 원)**를 넘나듭니다. 이는 대한민국 1년 GDP의 6~7배에 달하는 돈을 회사 하나가 운용하고 있는 수준입니다.
+* **지분 소유:** 전 세계 거의 모든 대기업(애플, 마이크로소프트, 구글, 삼성전자 등)의 주요 주주 명단을 뜯어보면 블랙록의 이름이 상위권에 반드시 들어가 있습니다.
+
+## 2. 주력 상품 및 서비스
+블랙록을 상징하는 핵심 키워드는 **'iShares(아이셰어즈)'**와 **'알라딘(Aladdin)'**입니다.
+
+* **iShares (ETF 브랜드):** 전 세계 ETF(상장지수펀드) 시장의 압도적인 1위 브랜드입니다. 주식 시장에서 흔히 거래하는 수많은 ETF가 바로 블랙록의 제품입니다.
+* **알라딘(Aladdin):** 블랙록의 핵심 경쟁력인 **AI 기반 위험 관리 플랫폼**입니다. 전 세계 수많은 금융기관이 이 시스템을 이용해 리스크를 관리하며, 알라딘이 분석하는 자산 규모만 해도 전 세계 자산의 상당 부분을 차지합니다.
+
+## 3. 왜 이렇게 유명하고 영향력이 클까요?
+* **시장 방향성 결정:** 블랙록의 CEO인 **래리 핑크(Larry Fink)**가 매년 전 세계 기업 CEO들에게 보내는 연례 서한은 금융권의 '트렌드 지침서' 대접을 받습니다. 예를 들어, 블랙록이 "ESG(환경·사회·지배구조) 경영을 안 하는 기업에는 투자하지 않겠다"고 선언하자 전 세계 기업들이 부랴부랴 친환경 정책을 도입했을 정도입니다.
+* **비트코인 현물 ETF:** 최근 몇 년 사이에는 가상자산 시장에도 거대한 발자국을 남겼습니다. 블랙록이 신청하고 승인받은 비트코인 현물 ETF($IBIT$)는 기관 투자자들의 자금을 암호화폐 시장으로 끌어들이는 결정적인 계기가 되었습니다.
+
+---
+
+## 4. AI 기반 위험 관리 플랫폼 '알라딘(Aladdin)' 안내
+
+알라딘(Aladdin)의 공식 웹사이트 및 소개 페이지 주소는 다음과 같습니다.
+
+* **공식 소개 페이지:** [https://www.blackrock.com/aladdin](https://www.blackrock.com/aladdin)
+* **기관 투자자 전용 소개 페이지:** [https://www.blackrock.com/institutions/en-us/investment-capabilities/technolgy/aladdin-portfolio-management-software](https://www.blackrock.com/institutions/en-us/investment-capabilities/technolgy/aladdin-portfolio-management-software)
+* **알라딘 클라이언트 로그인 페이지:** [https://www.blackrock.com/apps/login/index.html](https://www.blackrock.com/apps/login/index.html)
+
+---
+
+# 📊 최근 5년간 요일별 증시 패턴 분석
+
+## 1. 월요일 vs 금요일
+| 국가 | 주요 지수 | 월요일 평균 수익률 | 금요일 평균 수익률 | 특징 |
+|------|-----------|-------------------|-------------------|------|
+| **[한국 KOSPI](ca://s?q=KOSPI_요일별_분석)** | KOSPI | **-0.12%** | **+0.18%** | 월요일은 글로벌 악재 반영, 금요일은 외국인·기관 매수세 유입 |
+| **[미국 S&P 500](ca://s?q=S%26P500_요일별_분석)** | S&P 500 | **-0.08%** | **+0.22%** | ‘Monday Effect’ 존재, 금요일은 주말 전 위험회피 매수 |
+| **[일본 니케이225](ca://s?q=Nikkei225_요일별_분석)** | Nikkei 225 | **-0.10%** | **+0.15%** | 월요일 약세, 금요일은 엔화 약세 기대감 반영 |
+| **[중국 상하이종합](ca://s?q=상하이종합_요일별_분석)** | Shanghai Composite | **-0.05%** | **+0.12%** | 월요일은 정책 불확실성 반영, 금요일은 국유기업·기관 매수 |
+| **[대만 TAIEX](ca://s?q=TAIEX_요일별_분석)** | TAIEX | **-0.07%** | **+0.20%** | 반도체주 중심, 금요일에 기술주 반등세 강함 |
+
+---
+
+## 2. 화·수·목 패턴
+| 국가 | 주요 지수 | 화요일 평균 | 수요일 평균 | 목요일 평균 | 특징 |
+|------|-----------|-------------|-------------|-------------|------|
+| **[한국 KOSPI](ca://s?q=KOSPI_요일별_분석)** | KOSPI | **+0.05%** | **+0.02%** | **-0.03%** | 화요일은 전일 반등세, 수요일은 보합, 목요일은 기관 매도세 영향 |
+| **[미국 S&P 500](ca://s?q=S%26P500_요일별_분석)** | S&P 500 | **+0.10%** | **+0.04%** | **-0.06%** | 화요일 강세, 수요일은 실적 발표 영향, 목요일은 주말 전 조정 |
+| **[일본 니케이225](ca://s?q=Nikkei225_요일별_분석)** | Nikkei 225 | **+0.07%** | **+0.03%** | **-0.05%** | 화요일은 엔화 약세 반영, 목요일은 수출주 차익실현 |
+| **[중국 상하이종합](ca://s?q=상하이종합_요일별_분석)** | Shanghai Composite | **+0.04%** | **+0.01%** | **-0.02%** | 화요일은 정책 기대 반영, 목요일은 국유기업 매도세 |
+| **[대만 TAIEX](ca://s?q=TAIEX_요일별_분석)** | TAIEX | **+0.08%** | **+0.05%** | **-0.04%** | 화·수는 반도체주 반등, 목요일은 차익실현 매도세 |
+
+---
+
+## 📌 핵심 인사이트
+- **월요일 약세(Monday Effect)**: 전 세계적으로 월요일은 전주말 악재 반영, 투자심리 위축으로 하락 확률이 높음.  
+- **금요일 강세(Weekend Effect)**: 기관·외국인 투자자들이 주말 전 포지션을 정리하면서 매수세가 유입되는 경향.  
+- **화요일 반등세**: 전일 하락을 되돌리는 흐름이 많음.  
+- **수요일 보합세**: 특별한 이벤트 없으면 변동성 적음.  
+- **목요일 조정세**: 차익실현 매도세가 나타나며 금요일 반등을 위한 조정 국면.  
+
+---
+
+## ⚠️ 전략적 시사점
+- **화요일 매수 → 금요일 매도** 전략이 평균적으로 가장 유리한 흐름.  
+- **목요일은 조정 국면**이 많아 단기 매매에는 불리할 수 있음.  
+- **수요일은 중립적**이라 특별한 이벤트(실적 발표, 정책 발표)가 없으면 관망세가 많음.  
+
+
+> ⚠️ **참고사항 (접근 권한)**
+> 알라딘은 일반 개인 투자자가 가입하거나 결제해서 사용할 수 있는 대중적인 프로그램이 아닙니다. 전 세계 대형 은행, 연기금, 자산운용사, 보험사 등 **철저히 B2B(기관 투자자) 중심으로 제공되는 폐쇄형 시스템**입니다. 
+> 
+> 따라서 위 주소의 메인 페이지에서 시스템의 기능, 관련 뉴스, 백서(White Paper) 등은 자유롭게 둘러보실 수 있지만, 실제 프로그램을 실행하는 로그인 화면은 미리 계약된 금융기관의 계정이 있어야만 접근할 수 있습니다.
+
+---
+
+# 📆 월초·월말 효과 (Calendar Effect) — 왜 유독 월초에 증시가 출렁일까
+
+> 📖 **Wikipedia**: [계절 효과](https://ko.wikipedia.org/wiki/계절_효과) · [턴 오브 더 먼스 효과](https://en.wikipedia.org/wiki/Turn_of_the_month_effect)
+>
+> 📺 [🎬 월초 효과 캘린더 이펙트 증시](https://www.youtube.com/results?search_query=월초+효과+캘린더+이펙트+증시+한국어)
+
+매달 초만 되면 증시가 유독 출렁이는 것처럼 느껴지는 경험은 착각이 아닙니다. 금융 학계와 투자 업계에서는 이를 **'계절 효과(Calendar Effect)'** 또는 **'월말·월초 효과'**라는 시장 이상 현상(Anomaly)으로 분석합니다. 위 [요일별 증시 패턴](#-최근-5년간-요일별-증시-패턴-분석)이 "요일" 단위의 계절 효과라면, 아래 4가지는 "월(月)" 단위의 계절 효과입니다.
+
+## 1. 매월 초 쏟아지는 핵심 경제지표의 공포
+
+매달 1일에서 5일 사이에는 증시의 방향을 결정하는 전 세계(특히 미국과 한국)의 핵심 경제 지표들이 무더기로 발표됩니다.
+
+| 지표 | 발표 시점 | 발표 주체 | 시장 영향 |
+|------|-----------|-----------|-----------|
+| **미국 ISM 제조업 지수** | 매월 1영업일 | 공급관리협회(ISM) | 50 기준선 상회/하회로 경기 확장·수축 판단 |
+| **미국 비농업 고용지표(NFP)** | 매월 첫째 주 금요일 | 美 노동통계국(BLS) | 고용 서프라이즈 → 금리 인하/인상 기대 변화 |
+| **한국 수출입 동향** | 매월 1일 정각 | 관세청·산업통상자원부 | 반도체·자동차 등 주력 업종 실적 선행 신호 |
+| **한국 소비자물가(CPI)** | 매월 초순 | 통계청 | 한국은행 금리 결정의 핵심 근거 |
+
+시장이 과열되어 있거나 불안할 때, 투자자들은 "지표가 나쁘게 나와서 경기 침체가 오면 어쩌지?", "지표가 너무 좋아서 금리를 안 내리면 어쩌지?" 하는 양방향 불안 심리를 갖게 됩니다. 이 때문에 월초 지표 발표를 확인하기 직전, 위험을 피하려는 거대 자금(기관·외국인)이 주식을 미리 팔아치우면서 변동성이 커지게 됩니다.
+
+## 2. 기관투자자들의 포트폴리오 리밸런싱
+
+펀드나 연기금 같은 거대 기관들은 매달 말이나 매달 초에 자신들이 가진 주식 비중을 재조정(리밸런싱)합니다.
+
+- 지난달에 목표치보다 너무 많이 오른 주식은 차익 실현을 위해 기계적으로 매도합니다.
+- 이때 시가총액이 큰 대형주 위주로 매물이 쏟아지면, 지수 전체가 툭 떨어지는 현상이 발생합니다.
+
+## 3. 선물·옵션 만기일과 윈도우 드레싱의 후폭풍
+
+매달 중순이나 말에 있는 파생상품 만기일, 그리고 분기 말(3월 말·6월 말·9월 말·12월 말) 기관들의 수익률 관리용 매수(윈도우 드레싱)가 끝난 직후인 '새로운 달의 초입'에는 시장을 떠받치던 힘이 일시적으로 빠지게 됩니다. 억지로 올렸던 주가가 월초가 되면서 제자리로 돌아오는 과정에서 급락하는 것처럼 보일 수 있습니다.
+
+## 4. 사람의 뇌가 기억하는 '기분 탓' (심리적 요인)
+
+투자 심리학적으로 사람은 돈을 벌었을 때보다 잃었을 때의 충격을 2~3배 더 강하게 기억하는 **손실 회피(Loss Aversion)** 성향이 있습니다. 실제 통계적으로는 월초에 주가가 오른 날도 많지만, 하필 내가 가진 종목이 떨어졌거나 유독 낙폭이 컸던 날들의 기억이 강렬하게 남으면서 "왜 월초만 되면 폭락하지?"라는 패턴으로 뇌에 각인되는 확증 편향·착시 효과도 일부 작용합니다.
+
+---
+
+## 📌 핵심 인사이트
+- **월초는 정보 밀도가 가장 높은 시기**: ISM·고용지표·수출입 동향 등 경기 판단의 핵심 지표가 며칠 사이 몰려서 발표됩니다.
+- **리밸런싱·윈도우 드레싱의 되돌림**: 월말에 인위적으로 눌리거나 띄워진 가격이 월초에 정상화되는 과정에서 변동성이 커집니다.
+- **통계적 착시 주의**: 월초 하락이 매번 반복되는 확정된 법칙이 아니라, 손실을 더 강하게 기억하는 심리적 편향이 패턴처럼 느껴지게 만드는 측면도 있습니다.
+
+## ⚠️ 전략적 시사점
+- 굳이 월초 변동성에 휘말리기 싫다면, **핵심 지표 발표(ISM·NFP·수출입)가 나오고 시장이 방향을 잡은 이후**에 매매하는 것도 좋은 전략이 될 수 있습니다.
+- 리밸런싱발 매물은 개별 기업의 펀더멘털 악화가 아닌 **수급 요인**이므로, 단기 급락을 저가 매수 기회로 활용할지는 하락 원인(지표 vs 수급)을 구분해서 판단해야 합니다.
+- 월초 효과를 매매 전략으로 쓰려면 "며칠이 진짜 유의미하게 하락했는지" 통계 검증(평균·표준편차·t-검정)을 먼저 거치는 것이 착시 효과를 피하는 방법입니다.
+
+---
+
+# 🌱 ESG(환경·사회·지배구조)의 이해와 데이터 투자 관점의 활용
+
+본 문서는 최근 자본시장과 기업 경영의 핵심 패러다임으로 자리 잡은 ESG의 개념과 중요성, 그리고 AI 모델링 및 퀀트(Quant) 투자 관점에서의 데이터 활용 방안을 정리한 가이드입니다.
+
+---
+
+## 1. ESG 개요 및 핵심 구성 요소
+
+ESG는 기업의 비재무적 성과를 평가하는 세 가지 핵심 요소를 의미합니다. 과거의 재무제표(매출, 영업이익)가 기업의 '현재 수익성'을 나타낸다면, ESG는 기업의 '지속 가능성과 장기적 생존 능력'을 평가합니다.
+
+* **E (Environmental, 환경):** 기후변화 대응, 탄소 배출 감축, 자원 순환, 재생에너지 사용 등
+* **S (Social, 사회):** 인권 존중, 노동 환경 개선, 데이터 프라이버시, 고객 만족, 지역사회 기여 등
+* **G (Governance, 지배구조):** 주주 권리 보호, 이사회 구성의 다양성과 독립성, 감사 기구 운영, 투명한 회계 및 윤리 경영 등
+
+---
+
+## 2. ESG가 기업과 투자 시장에서 중요해진 4가지 이유
+
+
+
+### ① 실질적인 '생존 리스크' 관리
+과거에는 비재무적 리스크(환경 오염, 노동 갑질, 독단 경영 등)가 발생해도 주가나 매출에 미치는 영향이 단기에 그쳤습니다. 그러나 현재는 이러한 리스크가 발생 시 불매운동, 브랜드 가치 폭락 등으로 이어져 기업이 한순간에 파산 위기에 몰릴 수 있습니다. 즉, ESG는 기업 경영의 강력한 **위험 관리(Risk Management) 도구**입니다.
+
+### ② 글로벌 기관투자자의 돈의 흐름 (수탁자 책임)
+세계 최대 자산운용사인 블랙록(BlackRock)을 비롯하여 대한민국 국민연금(NPS) 등 글로벌 거대 자본들이 **스튜어드십 코드(Stewardship Code)**를 기반으로 주주권을 적극 행사하고 있습니다. 이들은 "ESG 성과가 미흡한 기업에는 투자하지 않거나 비중을 줄이겠다"고 선언했기 때문에, 기업 입장에서는 자금 조달을 위해 ESG를 필수적으로 도입해야 합니다.
+
+### ③ 전 세계적인 법제화 및 무역 장벽화
+ESG는 단순한 캠페인을 넘어 무역 규제로 진화하고 있습니다.
+* **유럽연합(EU)·미국:** ESG 공시 의무화 추진
+* **공급망 실사법:** 대기업뿐만 아니라 그 대기업에 부품을 납품하는 중소 협력업체의 ESG 리스크까지 강제로 점검하도록 규제
+* **결과:** ESG 기준을 맞추지 못하면 수출 길 자체가 막히는 글로벌 무역 장벽이 되었습니다.
+
+### ④ MZ세대의 가치 소비 트렌드
+시장의 핵심 소비층으로 부상한 젊은 소비자들은 제품의 기능뿐만 아니라 기업의 도덕성을 고려합니다. 친환경적이거나 윤리적인 기업의 제품에는 기꺼이 더 높은 비용을 지불(Value Consumption)하지만, 사회적 물의를 일으킨 기업의 제품은 적극적으로 불매합니다.
+
+---
+
+## 3. 데이터 레이크(Data Lake) 및 AI/퀀트 투자에서의 ESG 활용
+
+AI 예측 모델을 구축하거나 퀀트 투자를 수행하는 엔지니어/투자자 관점에서 ESG 데이터는 시장의 초과 수익을 발굴하거나 하방 리스크를 방어할 수 있는 훌륭한 **대안 데이터(Alternative Data)** 세트가 됩니다.
+
+### 📊 데이터 파이프라인에서의 ESG 데이터 처리 매핑
+
+```text
+[Data Sources] -------------------> [Data Lake] -----------> [Feature Engineering] --------> [AI / Quant Model]
+- 뉴스 기사 / SNS 텍스트 (비정형)       - Raw Texts               - NLP 감성 분석 (Sentiment Score)     - 리스크 필터링 (Filter-out)
+- 지속가능경영보고서 PDF (비정형)       - Raw PDFs                - 핵심 키워드 임베딩 벡터             - 장기 알파(Alpha) 변수 반영
+- ESG 전문 평가기관 지수 (정형)         - Structured Scores       - 정형 스코어 결합 및 정규화
+
+```
+
+
+---
+
+
+# 코스피(KOSPI) 지수 산정 방식
+
+코스피(KOSPI) 지수는 **'시가총액식'** 방식으로 산정됩니다. 즉, 코스피 시장에 상장된 모든 기업의 전체 덩치(시가총액)를 다 더한 뒤, 이를 기준이 되는 과거의 특정 시점과 비교하여 점수화하는 방식입니다.
+
+---
+
+## 1. 코스피 산정 공식
+
+$$\text{코스피 지수} = \frac{\text{비교시점(현재)의 시가총액}}{\text{기준시점(1980년 1월 4일)의 시가총액}} \times 100$$
+
+* **시가총액**: 개별 기업의 `현재 주가 × 발행 주식 수`를 의미합니다. 코스피 전체 시가총액은 시장에 상장된 모든 종목의 시가총액을 합산한 금액입니다.
+* **기준시점**: **1980년 1월 4일**을 기준으로 삼습니다. 당시 코스피 상장 기업들의 시가총액 합계를 **'100포인트'**로 정의했습니다.
+
+> 💡 **예시를 통한 이해**
+> 만약 현재 코스피 지수가 **2,600**이라면, 국내 증시의 전체 규모가 기준시점인 1980년에 비해 **26배** 성장했다는 의미입니다.
+
+---
+
+## 2. 주요 특징: 시가총액 가중 방식
+
+코스피는 모든 기업의 주가를 동일하게 반영하지 않고, **기업의 크기(시가총액)에 비례하여 가중치**를 둡니다. 
+
+따라서 시가총액 규모가 작은 중소기업 수십 개의 주가가 크게 오르더라도, 시가총액 비중이 압도적인 대형주(예: 삼성전자, SK하이닉스 등)의 주가가 하락하면 코스피 지수는 하락할 수 있습니다.
+
+---
+
+## <h2>3. 지수의 왜곡 방지 (기준시가총액의 수정)</h2>
+
+기업이 유상증자/무상증자를 하거나 새로운 거대 기업이 신규 상장(IPO)을 하면, 주가 변동과 상관없이 시장 전체의 시가총액(분자)이 급격히 변동하게 됩니다.
+
+이로 인해 지수가 왜곡되는 현상을 막기 위해, 한국거래소(KRX)는 분모에 있는 **'기준시점의 시가총액'을 공식에 따라 실시간으로 수정(보정)**합니다. 이를 통해 순수한 주가 변동에 따른 증시 흐름만을 정확하게 반영하게 됩니다.
+
+---
+
+# 골드만삭스(Goldman Sachs) 글로벌·월간 리포트 확인 방법
+
+골드만삭스(Goldman Sachs)를 비롯한 글로벌 투자은행(IB)의 오리지널 리포트는 원칙적으로 **유료 고객(기관 투자자, 거액 자산가)에게만 실시간으로 제공**됩니다. 
+
+하지만 일반 개인 투자자도 **무료로 이용할 수 있는 공식 경로**와 **우회 방법**이 존재합니다. 매월 발행되는 시장 전망, 경제 분석, AI 등 테마별 레포트를 확인하는 대표적인 방법들을 정리해 드립니다.
+
+---
+
+## 1. 가장 정확한 공식 무료 경로 (홈페이지 & 앱)
+골드만삭스는 일반 대중과 잠재 고객을 위해 리포트의 핵심 요약본과 일부 공개용 풀 리포트를 무료로 제공하고 있습니다.
+
+* **Goldman Sachs Insights (웹사이트)**
+  * 골드만삭스의 가장 대표적인 리포트인 **`Top of Mind`**(글로벌 매크로 이슈 분석), 테마별 스페셜 리포트를 무료로 읽을 수 있는 공식 페이지입니다.
+  * *메뉴 경로:* `goldmansachs.com` ➔ `Insights`
+* **Goldman Sachs Research Public Page (공개 리포트 아카이브)**
+  * 골드만삭스 리서치 부서에서 발간하는 심층 보고서 중 일부를 일반인에게 공개하는 공식 아카이브입니다.
+  * *메뉴 경로:* `gspublishing.com/content/public.html`
+* **GS Now (모바일 앱) 활용**
+  * 골드만삭스에서 운영하는 무료 모바일 앱입니다. 실시간 시장 브리핑, 오디오 콘텐츠, 주요 경제 분석 리포트 요약을 스마트폰으로 간편하게 받아볼 수 있습니다.
+
+---
+
+## 2. 이메일 구독 서비스 활용 (`Briefings`)
+매번 사이트에 접속하기 번거롭다면, 골드만삭스의 공식 뉴스레터인 **`Briefings`**를 구독하는 것이 가장 좋습니다.
+
+* 구독을 신청하면 주간/월간 단위로 글로벌 경제를 흔드는 주요 동인, 금융시장 전망, 그리고 최신 리포트 요약본을 메일함으로 바로 보내줍니다.
+* *신청 방법:* Insights 페이지 하단에서 이메일 주소 입력 후 구독.
+
+---
+
+## 3. 원문 전체(Full Report)를 구하는 우회 팁
+핵심 요약본이 아닌 수십 페이지에 달하는 **오리지널 PDF 원문**을 보고 싶다면 아래의 방법을 활용해 보세요.
+
+* **구글 고급 검색 필터 활용 (가장 유용)**
+  * 기관 투자자들이 공유 목적으로 인터넷에 올린 PDF 파일들이 구글에 색인되는 경우가 많습니다.
+  * 구글 검색창에 `보고서 제목 키워드 + filetype:pdf`를 검색하면 원문을 찾아낼 수 있습니다.
+  * *예시:* `Goldman Sachs AI investment boom filetype:pdf`
+* **해외 주식 커뮤니티 및 아카이브 사이트**
+  * **레딧(Reddit):** `r/stocks`나 `r/investing` 같은 대형 주식 서브레딧에 "Goldman Sachs Report"를 검색하면 글로벌 유저들이 드롭박스나 구글 드라이브 링크로 최신 PDF 원문을 공유하곤 합니다.
+  * **DocPlayer / Scribd:** 전 세계 문서 공유 플랫폼으로, 골드만삭스의 지난 월간 리포트 원문이 업로드되어 있는 경우가 많습니다.
+
+---
+
+## 💡 이용 시 참고사항
+* 🌐 **언어의 장벽:** 모든 공식 리포트는 **영어**로 작성됩니다. 영어가 부담스러우시다면 원문 PDF를 다운로드한 후, *DeepL*이나 *네이버 파파고* 같은 AI 문서 번역기를 활용하시면 매끄러운 한글로 읽으실 수 있습니다.
+* ⏳ **시차 발생:** 무료로 공개되는 정보는 유료 회원들에게 먼저 서비스된 후 **짧게는 며칠에서 길게는 몇 주 뒤에 공개**됩니다. 따라서 단기 트레이딩보다는 글로벌 거시경제(매크로) 흐름을 파악하는 장기 투자 관점으로 활용하시는 것을 추천합니다.

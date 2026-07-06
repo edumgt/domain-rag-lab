@@ -6,6 +6,7 @@ from pydantic import BaseModel
 class DomainType(str, Enum):
     medical = "medical"
     english = "english"
+    finance = "finance"
     general = "general"
 
 
