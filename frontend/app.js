@@ -679,8 +679,6 @@
     const magazine = renderDailyMarketMagazine(lesson.day);
     const koreaEquityExtra = lesson.day === 2 ? renderKoreaMarketMagazine() : '';
     const dayVisual = renderDayInfographic(lesson.day);
-    const previous = lesson.day > 1 ? lesson.day - 1 : null;
-    const next = lesson.day < THEORY_DAYS.length ? lesson.day + 1 : null;
     $messages.innerHTML = `
       <article class="content-page theory-page theory-detail-page theory-day-${lesson.day}">
         <div class="theory-detail-heading">
@@ -701,8 +699,8 @@
         <section class="theory-keywords"><strong>핵심 단어</strong><div>${lesson.keywords.map(word => `<span>${escHtml(word)}</span>`).join('')}</div></section>
         <div class="theory-actions">
           <button class="content-cta" data-theory-rag="${escHtml(lesson.ragPrompt)}"><i class="fa-solid fa-comments"></i> 이 내용 RAG에게 질문하기</button>
-          ${previous ? `<button class="content-secondary" data-theory-day-link="${previous}"><i class="fa-solid fa-arrow-left"></i> ${previous}일차</button>` : '<span></span>'}
-          ${next ? `<button class="content-secondary" data-theory-day-link="${next}">${next}일차 <i class="fa-solid fa-arrow-right"></i></button>` : '<button class="content-secondary" data-go="quiz">퀴즈 풀기 <i class="fa-solid fa-arrow-right"></i></button>'}
+          <button class="content-secondary" data-go="simulation"><i class="fa-solid fa-chart-pie"></i> 자산배분 실습으로</button>
+          <button class="content-secondary" data-go="quiz">핵심 퀴즈 풀기 <i class="fa-solid fa-arrow-right"></i></button>
         </div>
       </article>`;
     bindViewLinks();
@@ -817,7 +815,7 @@
     const edition = editions[day];
     if (!edition) return '';
     return `<section class="daily-market-magazine" aria-label="${edition.eyebrow}">
-      <header class="daily-magazine-hero"><div><span>${edition.eyebrow}</span><h2>${edition.title}</h2><p>${edition.deck}</p></div><div class="daily-pulse"><span>MARKET LENS</span>${edition.pulse.map(([label, value]) => `<div><b>${label}</b><i><em style="height:${value}%"></em></i><small>${value}</small></div>`).join('')}<p>막대 수치는 수익률이 아닌<br>학습용 관찰 우선순위입니다.</p></div></header>
+      <header class="daily-magazine-hero"><div class="daily-hero-copy"><span>${edition.eyebrow}</span><div class="hero-orbit"><b>0${day}</b><i class="fa-solid fa-arrow-down"></i><em>READ<br>THE<br>MARKET</em></div><h2>${edition.title}</h2><p>${edition.deck}</p><div class="hero-signal"><span><i class="fa-solid fa-circle"></i> 기업의 사업</span><b><i class="fa-solid fa-arrow-right"></i></b><span><i class="fa-solid fa-square"></i> 핵심 변수</span><b><i class="fa-solid fa-arrow-right"></i></b><span><i class="fa-solid fa-diamond"></i> 위험 점검</span></div></div><div class="daily-pulse"><span>MARKET LENS</span>${edition.pulse.map(([label, value]) => `<div><b>${label}</b><i><em style="height:${value}%"></em></i><small>${value}</small></div>`).join('')}<p>막대 수치는 수익률이 아닌<br>학습용 관찰 우선순위입니다.</p></div></header>
       <div class="daily-magazine-story"><article><span>WHY IT MATTERS</span><h3>${edition.storyTitle}</h3><p>${edition.story}</p></article><aside><i class="fa-solid fa-magnifying-glass-chart"></i><b>읽는 순서</b><ol><li>사업과 상품의 구조</li><li>다음 분기 핵심 변수</li><li>가장 나쁜 경우의 위험</li></ol><p>${edition.note}</p></aside></div>
       <section class="market-file-grid">${edition.files.map(([name, category, body, check], index) => `<article class="market-file"><span>FILE ${String(index + 1).padStart(2, '0')}</span><h3>${name}</h3><b>${category}</b><p>${body}</p><div><i class="fa-solid fa-eye"></i><small>${check}</small></div></article>`).join('')}</section>
       <section class="market-comparison"><div><span>COMPARE BEFORE YOU BUY</span><h3>이름이 비슷해도, 확인할 항목은 다릅니다.</h3></div><div class="comparison-table">${edition.matrix.map(([name, meaning, check]) => `<p><b>${name}</b><span>${meaning}</span><em>${check}</em></p>`).join('')}</div></section>
