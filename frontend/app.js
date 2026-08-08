@@ -468,23 +468,12 @@
   }
 
   function updateSimulation() {
-    const raw = {
-      stock: Number($stockWeight.value),
-      bond: Number($bondWeight.value),
-      alt: Number($altWeight.value),
-    };
-    const total = Math.max(raw.stock + raw.bond + raw.alt, 1);
-    const weights = {
-      stock: raw.stock / total,
-      bond: raw.bond / total,
-      alt: raw.alt / total,
-    };
-    const hedgeRatio = Number($hedgeRatio.value) / 100;
-    const model = MODEL_META[$modelSelect.value];
+    const snapshot = getSimulationSnapshot();
+    const { weights, hedgeRatio, model } = snapshot;
 
-    document.getElementById('stockWeightLabel').textContent = `${raw.stock}%`;
-    document.getElementById('bondWeightLabel').textContent = `${raw.bond}%`;
-    document.getElementById('altWeightLabel').textContent = `${raw.alt}%`;
+    document.getElementById('stockWeightLabel').textContent = `${percent(weights.stock)} (정규화)`;
+    document.getElementById('bondWeightLabel').textContent = `${percent(weights.bond)} (정규화)`;
+    document.getElementById('altWeightLabel').textContent = `${percent(weights.alt)} (정규화)`;
     document.getElementById('hedgeRatioLabel').textContent = `${Math.round(hedgeRatio * 100)}%`;
 
     const returns = SIMULATION_ASSUMPTIONS.expectedReturns;
@@ -535,10 +524,30 @@
   }
 
   function buildSimulationPrompt() {
-    const model = MODEL_META[$modelSelect.value].label;
-    const allocation = $simAllocation.textContent.replace(/\s+/g, ' ').trim();
+    const snapshot = getSimulationSnapshot();
+    const model = snapshot.model.label;
+    const allocation = `정규화 비중은 주식/ETF ${percent(snapshot.weights.stock)}, 채권 ${percent(snapshot.weights.bond)}, 대체·현금 ${percent(snapshot.weights.alt)}, 파생 헤지 강도 ${Math.round(snapshot.hedgeRatio * 100)}%입니다.`;
     const meta = TOPIC_META[state.activeTopic];
     return `${model} 기준 실습 포트폴리오를 설명해줘. ${allocation}. ${meta.label} 관점에서 개요, 운용 전략, 주요 리스크 지표, 리밸런싱 포인트를 정리해줘.`;
+  }
+
+  function getSimulationSnapshot() {
+    const raw = {
+      stock: Number($stockWeight.value),
+      bond: Number($bondWeight.value),
+      alt: Number($altWeight.value),
+    };
+    const total = Math.max(raw.stock + raw.bond + raw.alt, 1);
+    return {
+      raw,
+      hedgeRatio: Number($hedgeRatio.value) / 100,
+      model: MODEL_META[$modelSelect.value],
+      weights: {
+        stock: raw.stock / total,
+        bond: raw.bond / total,
+        alt: raw.alt / total,
+      },
+    };
   }
 
   function formatContent(text) {
