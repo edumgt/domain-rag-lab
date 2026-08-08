@@ -288,7 +288,7 @@ KOSPI|셀트리온|바이오
 KOSPI|KB금융|금융
 KOSPI|신한지주|금융
 KOSPI|하나금융지주|금융
-KOSPI|우리금융지주|금융
+KOSDAQ|HK이노엔|바이오
 KOSDAQ|알테오젠|바이오
 KOSDAQ|HLB|바이오
 KOSDAQ|에코프로비엠|배터리소재
@@ -305,7 +305,7 @@ KOSDAQ|스튜디오드래곤|콘텐츠
 KOSDAQ|카카오게임즈|게임
 KOSDAQ|펄어비스|게임
 KOSDAQ|SOOP|플랫폼
-KOSDAQ|더존비즈온|소프트웨어
+KOSPI|더존비즈온|소프트웨어
 KOSDAQ|코난테크놀로지|AI소프트웨어
 KOSDAQ|루닛|의료AI
 KOSDAQ|레인보우로보틱스|로봇`,
@@ -470,6 +470,17 @@ KOSDAQ|컴투스|게임
 KOSDAQ|넥슨게임즈|게임
 KOSDAQ|웹젠|게임`,
   }).map(([day, rows]) => [day, rows.trim().split('\n').map(row => row.split('|'))]));
+
+  const COMPANY_TICKERS = Object.fromEntries(Object.entries({
+    1: '005930 000660 066570 006400 373220 005380 000270 267250 012330 005490 051910 011170 009830 034020 207940 068270 105560 055550 086790 195940 196170 028300 247540 086520 141080 087010 000250 145020 214150 214450 035900 041510 253450 293490 263750 067160 012510 402030 328130 277810',
+    2: '009150 011070 042700 000150 012450 064350 079550 047810 010140 042660 009540 010620 010120 298040 267260 001440 103590 010060 010130 103140 240810 036930 005290 357780 166090 095340 403870 064760 031980 036540 046890 213420 058470 039030 064290 089030 084370 078600 278280 336570',
+    3: '096770 010950 078930 034730 001040 030200 032640 035420 035720 251270 036570 259960 383220 090430 051900 004170 139480 008770 271560 004370 257720 018290 241710 237880 086900 064550 096530 036220 358570 298380 310210 174900 039200 372320 085660 086450 078160 095700 206650 237690',
+    4: '028260 000720 375500 006360 047040 052690 015760 033780 017670 000810 032830 001450 005830 006800 071050 039490 016360 005940 138040 088350 365340 282880 372170 101360 121600 259630 382840 290670 089980 299030 383310 452200 178320 082920 137400 348370 272290 033100 417200 354320',
+    5: '023530 069960 282330 007070 003490 020560 011200 028670 006040 000080 001680 003230 280360 005180 161890 021240 298020 020000 111770 105630 035760 140860 098460 108490 348340 090360 056080 058610 117730 140670 090710 322510 338220 315640 038290 376300 112040 078340 225570 069080',
+  }).map(([day, codes]) => [day, codes.split(' ')]));
+
+  const TICKER_BY_COMPANY = new Map(Object.entries(COMPANY_ATLAS).flatMap(([day, companies]) => companies.map(([, name], index) => [name, COMPANY_TICKERS[day][index]])));
+  TICKER_BY_COMPANY.set('HD현대중공업', '329180');
 
   const ATLAS_PROFILES = {
     '반도체': ['메모리·시스템 반도체와 전방 IT 수요가 연결되는 산업입니다.', 'AI 서버·제품 믹스·가격 사이클', '수요 둔화·재고·대규모 설비투자'],
@@ -956,6 +967,7 @@ KOSDAQ|웹젠|게임`,
     bindViewLinks();
     bindTheoryLinks();
     bindAtlasFilters();
+    addTickerLabels();
     $messages.querySelector('[data-theory-rag]')?.addEventListener('click', () => {
       setView('learn');
       $questionInput.value = lesson.ragPrompt;
@@ -1084,7 +1096,8 @@ KOSDAQ|웹젠|게임`,
       <div class="atlas-arrow-line"><span>시장</span><i></i><span>산업</span><i></i><span>핵심 변수</span><i></i><span>위험</span></div>
       <div class="atlas-grid">${companies.map(([market, name, sector], index) => {
         const [summary, watch, risk] = ATLAS_PROFILES[sector] || ATLAS_PROFILES.기본;
-        return `<article class="atlas-card" data-atlas-market="${market}"><div class="atlas-card-top"><span>${market}</span><b>${String(index + 1).padStart(2, '0')}</b></div><h3>${name}</h3><p class="atlas-sector">${sector}</p><p class="atlas-summary">${name}은(는) ${summary}</p><div class="atlas-watch"><i class="fa-solid fa-eye"></i><span><b>관찰</b>${watch}</span></div><div class="atlas-risk"><i class="fa-solid fa-triangle-exclamation"></i><span><b>위험</b>${risk}</span></div></article>`;
+        const ticker = COMPANY_TICKERS[day]?.[index] || '—';
+        return `<article class="atlas-card" data-atlas-market="${market}"><div class="atlas-card-top"><span>${market}</span><b>${String(index + 1).padStart(2, '0')}</b></div><h3>${name} <small class="atlas-ticker">${ticker}</small></h3><p class="atlas-sector">${sector}</p><p class="atlas-summary">${name}은(는) ${summary}</p><div class="atlas-watch"><i class="fa-solid fa-eye"></i><span><b>관찰</b>${watch}</span></div><div class="atlas-risk"><i class="fa-solid fa-triangle-exclamation"></i><span><b>위험</b>${risk}</span></div></article>`;
       }).join('')}</div>
       <footer class="atlas-footer"><div><i class="fa-solid fa-file-lines"></i><strong>공시 읽기 원칙</strong><span>사업보고서 → 분기보고서·잠정실적 → 주요사항보고서 순으로 원문을 확인하세요.</span></div><div><i class="fa-solid fa-chart-column"></i><strong>숫자 읽기 원칙</strong><span>매출만 보지 말고 수익성, 현금흐름, 부채·자본, 고객·산업 집중도를 함께 점검하세요.</span></div></footer>
     </section>`;
@@ -1098,6 +1111,19 @@ KOSDAQ|웹젠|게임`,
       buttons.forEach(item => item.classList.toggle('active', item === button));
       cards.forEach(card => { card.hidden = filter !== 'all' && card.dataset.atlasMarket !== filter; });
     }));
+  }
+
+  function addTickerLabels() {
+    $messages.querySelectorAll('.market-file h3, .company-feature h3').forEach(heading => {
+      const name = heading.textContent.trim();
+      const ticker = TICKER_BY_COMPANY.get(name);
+      if (!ticker || heading.querySelector('.company-ticker')) return;
+      const label = document.createElement('small');
+      label.className = 'company-ticker';
+      label.textContent = ticker;
+      heading.append(' ');
+      heading.append(label);
+    });
   }
 
   function renderKoreaMarketMagazine() {
