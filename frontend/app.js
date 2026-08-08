@@ -51,6 +51,45 @@
     },
   ];
 
+  const PRODUCT_EXPLAINERS = [
+    {
+      icon: 'fa-piggy-bank', title: '예금·적금',
+      oneLine: '은행에 돈을 맡기고 약속한 이자를 받는 가장 기본적인 금융상품입니다.',
+      analogy: '안전한 저금통에 돈을 넣고, 기다린 시간에 따라 작은 보상을 받는 방식이에요.',
+      check: '이자율, 만기, 중도해지 시 받는 이자, 예금자보호 여부를 확인하세요.',
+    },
+    {
+      icon: 'fa-building-columns', title: '채권',
+      oneLine: '정부나 기업에 돈을 빌려주고 이자와 원금을 받기로 한 ‘차용증’입니다.',
+      analogy: '친구에게 돈을 빌려주고 “언제, 얼마를 돌려줄지” 적은 약속장과 비슷해요.',
+      check: '금리가 오르면 채권 가격은 내려갈 수 있고, 기업 채권은 돈을 못 돌려받을 위험도 있습니다.',
+    },
+    {
+      icon: 'fa-chart-line', title: '주식',
+      oneLine: '기업의 아주 작은 주인이 되는 증서로, 기업 성과에 따라 가격과 배당이 달라집니다.',
+      analogy: '좋아하는 가게의 지분을 조금 갖고 가게가 잘되면 함께 성장하는 것과 같아요.',
+      check: '가격이 크게 오르내릴 수 있으며, 한 기업에만 투자하면 위험이 커집니다.',
+    },
+    {
+      icon: 'fa-boxes-stacked', title: 'ETF',
+      oneLine: '여러 주식이나 채권을 한 바구니에 담아 거래소에서 사고파는 상품입니다.',
+      analogy: '과일을 하나씩 고르기보다 여러 과일이 담긴 선물 세트를 사는 것과 비슷해요.',
+      check: '무엇을 담는 ETF인지, 총보수·거래량·추적오차·괴리율을 함께 살펴보세요.',
+    },
+    {
+      icon: 'fa-folder-tree', title: '펀드',
+      oneLine: '투자자들의 돈을 모아 전문 운용사가 정한 기준에 따라 투자하는 상품입니다.',
+      analogy: '반 친구들이 회비를 모아 대표가 정한 여행 계획을 함께 실행하는 모습과 같아요.',
+      check: '운용 전략, 비용, 환매 가능 시점, 과거 성과가 미래를 보장하지 않는다는 점을 확인하세요.',
+    },
+    {
+      icon: 'fa-shield-halved', title: '파생상품',
+      oneLine: '주식·금리·환율 등의 가격 변화를 바탕으로 약속을 사고파는 고난도 상품입니다.',
+      analogy: '비가 올 때를 대비해 우산을 미리 준비하는 ‘보험’처럼 위험을 줄이는 데 쓸 수 있어요.',
+      check: '손실이 빠르게 커질 수 있어 구조와 최대 손실을 충분히 이해하기 전에는 접근하지 마세요.',
+    },
+  ];
+
   const TOPIC_META = {
     products: {
       label: '금융상품 이해',
@@ -342,6 +381,14 @@
       <button class="home-module" data-go="learn">
         <i class="fa-solid ${icon}"></i><strong>${title}</strong><span>${copy}</span><em>학습 시작 <i class="fa-solid fa-arrow-right"></i></em>
       </button>`).join('');
+    const explainers = PRODUCT_EXPLAINERS.map(item => `
+      <article class="product-explainer">
+        <i class="fa-solid ${item.icon}"></i>
+        <h3>${item.title}</h3>
+        <p>${item.oneLine}</p>
+        <div><strong>쉽게 말하면</strong><span>${item.analogy}</span></div>
+        <div><strong>확인할 점</strong><span>${item.check}</span></div>
+      </article>`).join('');
 
     $messages.innerHTML = `
       <article class="content-page home-page">
@@ -358,6 +405,7 @@
           <div><strong>3</strong><span>배분 모델<br>MVO · BL · RP</span></div>
         </section>
         <section class="content-section"><div class="section-heading"><span>01</span><h2>학습 로드맵</h2></div><div class="home-module-grid">${modules}</div></section>
+        <section class="content-section"><div class="section-heading"><span>02</span><h2>금융상품, 쉽게 시작하기</h2></div><p class="section-intro">투자는 ‘얼마나 많이 버는가’보다 <strong>내 돈이 어디에 쓰이고 어떤 상황에서 줄어들 수 있는가</strong>를 이해하는 일에서 시작합니다.</p><div class="product-explainer-grid">${explainers}</div></section>
         <section class="markdown-card">
           <p class="markdown-label">LEARNING NOTE</p>
           <h2>좋은 포트폴리오는 ‘정답’보다<br>위험을 감당할 수 있는 구조에 가깝습니다.</h2>

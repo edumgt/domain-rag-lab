@@ -145,6 +145,7 @@ done
 
 | 파일 | 활용 예 |
 |---|---|
+| `finance_high_school_product_guide.txt` | 고등학생 눈높이의 예금·채권·주식·ETF·펀드·파생상품 설명 |
 | `finance_financial_products_classification.txt` | 금융투자상품 분류, 주식·ETF·펀드 기초 |
 | `finance_etf_deep_dive.txt` | 일반펀드와 ETF의 비용·유동성·추적오차 비교 |
 | `finance_portfolio_theory.txt` | MPT, 효율적 투자선, CAGR·MDD·샤프 비율 |

@@ -422,6 +422,16 @@ html, body {
 .home-module strong { font-size: 17px; margin-bottom: 8px; }
 .home-module span { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
 .home-module em { color: var(--accent); font-size: 13px; font-style: normal; font-weight: 700; margin-top: 18px; }
+.section-intro { max-width: 760px; margin: -4px 0 20px; color: var(--text-2); font-size: 16px; }
+.section-intro strong { color: var(--accent); }
+.product-explainer-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.product-explainer { padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.product-explainer > i { color: var(--accent); font-size: 22px; margin-bottom: 13px; }
+.product-explainer h3 { font-size: 18px; margin-bottom: 7px; }
+.product-explainer > p { min-height: 66px; color: var(--text-2); font-size: 14px; line-height: 1.65; }
+.product-explainer > div { margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--border); display: grid; gap: 3px; }
+.product-explainer strong { color: var(--accent); font-size: 12px; }
+.product-explainer span { color: var(--text-muted); font-size: 13px; line-height: 1.55; }
 
 .markdown-card { padding: 28px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: var(--radius); }
 .markdown-label { color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .1em; }
@@ -943,6 +953,7 @@ html, body {
   .hero-layout,
   .course-grid,
   .home-module-grid,
+  .product-explainer-grid,
   .simulation-steps { grid-template-columns: 1fr; }
   .chat-header { align-items: flex-start; gap: 12px; }
   .brand-nav { flex-wrap: wrap; }
