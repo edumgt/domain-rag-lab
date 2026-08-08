@@ -299,6 +299,8 @@
   const $simNarrative = document.getElementById('simNarrative');
   const $simCompare = document.getElementById('simCompare');
   const $simScenarioResult = document.getElementById('simScenarioResult');
+  const $simDonut = document.getElementById('simDonut');
+  const $simRiskBars = document.getElementById('simRiskBars');
   const $simSaveBtn = document.getElementById('simSaveBtn');
   const $simScenarioButtons = Array.from(document.querySelectorAll('.sim-scenario'));
   const $chatInputArea = document.querySelector('.chat-input-area');
@@ -674,6 +676,8 @@
         <div><h2>${escHtml(heading)}</h2>${paragraphs.map(text => `<p>${escHtml(text)}</p>`).join('')}</div>
       </section>
     `).join('');
+    const magazine = lesson.day === 2 ? renderKoreaMarketMagazine() : '';
+    const dayVisual = renderDayInfographic(lesson.day);
     const previous = lesson.day > 1 ? lesson.day - 1 : null;
     const next = lesson.day < THEORY_DAYS.length ? lesson.day + 1 : null;
     $messages.innerHTML = `
@@ -688,6 +692,8 @@
         <div class="theory-progress" aria-label="5일 학습 중 ${lesson.day}일차">${THEORY_DAYS.map(item => `<i class="${item.day <= lesson.day ? 'done' : ''}"></i>`).join('')}</div>
         <section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section>
         <section class="lesson-dashboard" aria-label="오늘의 학습 대시보드"><div><span>READ</span><strong>${lesson.lessons.length}</strong><small>개념 카드</small></div><div><span>KEYWORDS</span><strong>${lesson.keywords.length}</strong><small>핵심 용어</small></div><div><span>CHECK</span><strong><i class="fa-solid fa-pen"></i></strong><small>마무리 질문</small></div></section>
+        ${dayVisual}
+        ${magazine}
         <div class="theory-lesson-list">${lessonBlocks}</div>
         <section class="theory-check"><i class="fa-solid fa-pen-to-square"></i><div><strong>오늘의 확인</strong><p>${escHtml(lesson.check)}</p></div></section>
         <section class="theory-keywords"><strong>핵심 단어</strong><div>${lesson.keywords.map(word => `<span>${escHtml(word)}</span>`).join('')}</div></section>
@@ -705,6 +711,36 @@
       resizeInput();
       $questionInput.focus();
     });
+  }
+
+  function renderDayInfographic(day) {
+    const visuals = {
+      1: `<section class="day-infographic market-map-card"><div class="info-heading"><span>KOREA MARKET MAP</span><h2>누가 상품을 만들고, 누가 거래를 돕나요?</h2></div><div class="institution-grid"><article><i class="fa-solid fa-building-columns"></i><b>은행</b><span>예·적금 · 대출 · 일부 채권</span><small>국민·신한·하나·우리 등</small></article><article><i class="fa-solid fa-mobile-screen-button"></i><b>증권사</b><span>주식 · ETF · 채권 · 계좌</span><small>삼성·미래·NH·KB·키움 등</small></article><article><i class="fa-solid fa-layer-group"></i><b>자산운용사</b><span>ETF · 펀드의 설계와 운용</span><small>KODEX·TIGER·RISE·ACE 등</small></article></div><div class="money-flow"><span>투자자</span><i class="fa-solid fa-arrow-right"></i><span>증권사 앱</span><i class="fa-solid fa-arrow-right"></i><span>KRX 시장·펀드</span><i class="fa-solid fa-arrow-right"></i><span>주식·채권·ETF</span></div></section>`,
+      2: `<section class="day-infographic company-strip"><div class="info-heading"><span>STOCKS AT A GLANCE</span><h2>한국 대표 기업을 산업별로 읽기</h2></div><div><article><b>반도체</b><span>삼성전자 · SK하이닉스</span><i style="width:88%"></i></article><article><b>자동차·산업재</b><span>현대차 · HD현대중공업 · 한화에어로스페이스</span><i style="width:72%"></i></article><article><b>플랫폼·바이오</b><span>NAVER · 카카오 · 셀트리온</span><i style="width:61%"></i></article><article><b>금융·소재</b><span>KB금융 · LG에너지솔루션 · POSCO홀딩스</span><i style="width:67%"></i></article></div></section>`,
+      3: `<section class="day-infographic derivative-map"><div class="info-heading"><span>KRX PRODUCT MAP</span><h2>금리·채권·파생상품을 한 장으로</h2></div><div class="derivative-grid"><article><i class="fa-solid fa-landmark"></i><b>채권</b><span>국채 · 회사채 · 채권 ETF</span><small>금리와 만기가 핵심</small></article><article><i class="fa-solid fa-chart-line"></i><b>지수 선물·옵션</b><span>KOSPI 200 · KOSDAQ 150</span><small>증거금 · 만기 확인</small></article><article><i class="fa-solid fa-dollar-sign"></i><b>FICC</b><span>달러 · 3년·10년 국채 · 금</span><small>환율·금리·원자재 변수</small></article></div><div class="rate-meter"><span>한국은행 기준금리<br><b>2.75%</b><small>2026.07.16 기준</small></span><i><b style="width:55%"></b></i><em>금리 변화 → 채권 가격·대출·예금·환율에 영향</em></div></section>`,
+      4: `<section class="day-infographic risk-radar"><div class="info-heading"><span>RISK LENS</span><h2>수익률 하나만 보지 않는 4가지 지표</h2></div><div class="risk-four"><article><i class="fa-solid fa-chart-line"></i><b>수익률</b><span>얼마나 늘었나</span></article><article><i class="fa-solid fa-wave-square"></i><b>변동성</b><span>얼마나 흔들렸나</span></article><article><i class="fa-solid fa-arrow-trend-down"></i><b>MDD</b><span>얼마나 크게 빠졌나</span></article><article><i class="fa-solid fa-scale-balanced"></i><b>샤프 비율</b><span>위험 대비 성과는?</span></article></div><div class="concentration-meter"><span>예시: 반도체 ETF + 삼성전자 직접 보유</span><i><b style="width:82%"></b></i><strong>겹치는 노출을 확인하세요</strong></div></section>`,
+      5: `<section class="day-infographic allocation-map"><div class="info-heading"><span>PORTFOLIO BLUEPRINT</span><h2>자산배분은 종목 맞히기보다 역할 나누기</h2></div><div class="allocation-pyramid"><article><b>성장</b><span>국내·해외 주식 ETF</span></article><article><b>완충</b><span>국채 · 우량채 · 채권 ETF</span></article><article><b>유동성</b><span>현금성 자산 · 단기 목적자금</span></article></div><div class="rebalancing-line"><span>목표 비중 설정</span><i></i><span>정기 점검</span><i></i><span>기준 벗어나면 조정</span></div></section>`,
+    };
+    return visuals[day] || '';
+  }
+
+  function renderKoreaMarketMagazine() {
+    const companies = [
+      ['삼성전자', 'AI 메모리 · 파운드리 · 디바이스', 'HBM·서버 메모리 수요, 파운드리 수율과 고객 구성을 함께 확인'],
+      ['SK하이닉스', 'D램 · 낸드 · HBM', 'AI 메모리 제품 전환, 가격 사이클과 고객 인증이 핵심 변수'],
+      ['현대차', '완성차 · 하이브리드 · EV', '지역별 판매, 인센티브, 환율과 전동화 제품 구성을 점검'],
+      ['HD현대중공업', '상선 · 특수선 · 엔진', '수주잔고가 매출·이익으로 전환되는 시점과 원가를 확인'],
+      ['NAVER', '광고 · 커머스 · 콘텐츠 · AI', '광고 회복, 커머스 수익성, AI 서비스의 수익화가 관찰 포인트'],
+      ['셀트리온', '바이오시밀러 · 직접판매', '허가·출시 일정, 경쟁약 가격, 판매망 확대를 함께 확인'],
+      ['KB금융', '은행 · 증권 · 보험 · 자산운용', '대손비용, CET1, 비이자이익과 주주환원 지속성을 점검'],
+      ['LG에너지솔루션', '배터리 · ESS', '전기차·ESS 수요, 고객 주문, 가동률과 투자 규모가 중요'],
+    ];
+    return `<section class="market-magazine" aria-label="한국 주식 시장 매거진">
+      <header class="magazine-hero"><div><span>KOREA EQUITY ATLAS · 2026</span><h2>산업의 흐름으로<br><em>기업을 읽는 법</em></h2><p>종목 이름을 외우기보다, 어떤 사업이 어떤 변수로 움직이는지부터 살펴보는 한국시장 리딩 가이드입니다.</p></div><div class="market-pulse"><span>SECTOR PULSE</span><div><b>AI 반도체</b><i style="height:82%"></i></div><div><b>자동차</b><i style="height:63%"></i></div><div><b>조선·방산</b><i style="height:72%"></i></div><div><b>금융</b><i style="height:55%"></i></div><small>막대 높이는 수익률이 아닌<br>학습용 산업 관찰 강도입니다.</small></div></header>
+      <div class="magazine-lead-grid"><article class="lead-story"><span>LEAD STORY</span><h3>AI는 반도체 한 종목의 이야기가 아닙니다.</h3><p>메모리, 파운드리, 서버, 전력·냉각, 데이터센터 투자까지 연결된 공급망을 함께 봐야 합니다. 삼성전자와 SK하이닉스는 HBM·서버 메모리라는 공통 변수를 공유하지만 사업 구조와 제품 포트폴리오는 다릅니다.</p><div class="mini-compare"><span>수요</span><i></i><span>제품 믹스</span><i></i><span>가격</span><i></i><span>설비</span></div></article><article class="market-check"><span>INVESTOR CHECK</span><strong>3가지 질문</strong><ol><li>회사는 무엇을 팔아 매출을 만드나?</li><li>다음 분기 숫자를 바꿀 변수는 무엇인가?</li><li>가장 나쁜 경우의 위험은 무엇인가?</li></ol></article></div>
+      <div class="company-card-grid">${companies.map(([name, sector, note], index) => `<article class="company-feature"><span>0${index + 1}</span><h3>${name}</h3><b>${sector}</b><p>${note}</p><i class="fa-solid ${['fa-microchip','fa-memory','fa-car-side','fa-ship','fa-network-wired','fa-flask','fa-building-columns','fa-battery-three-quarters'][index]}"></i></article>`).join('')}</div>
+      <section class="sector-lens"><div><span>HOW TO READ</span><h3>업종별로 다른 ‘전망’의 뜻</h3></div><div class="sector-lens-grid"><p><b>반도체</b><span>가격·재고·고객 인증</span></p><p><b>자동차</b><span>판매·인센티브·환율</span></p><p><b>조선·방산</b><span>수주·납기·원가</span></p><p><b>플랫폼·바이오</b><span>수익화·허가·경쟁</span></p><p><b>금융·배터리</b><span>자본·대손·가동률</span></p></div></section>
+    </section>`;
   }
 
   function bindTheoryLinks() {
@@ -955,6 +991,8 @@
       $simNarrative.innerHTML = '<strong>실습 안내</strong><br>주식/ETF, 채권, 대체·현금 중 하나 이상에 비중을 배분하면 리스크와 성과 지표를 계산합니다.';
       $simScenarioResult.innerHTML = '';
       $simCompare.innerHTML = '';
+      $simDonut.style.background = '#e2e8f0';
+      $simRiskBars.innerHTML = '';
       return;
     }
 
@@ -1015,6 +1053,17 @@
       </div>
       <small>파생 헤지 강도 ${Math.round(hedgeRatio * 100)}%</small>
     `;
+    const stockStop = weights.stock * 100;
+    const bondStop = stockStop + weights.bond * 100;
+    $simDonut.style.background = `conic-gradient(#2563eb 0 ${stockStop}%, #14b8a6 ${stockStop}% ${bondStop}%, #f59e0b ${bondStop}% 100%)`;
+    $simDonut.innerHTML = `<div><strong>${Math.round(hedgeRatio * 100)}%</strong><span>헤지 강도</span></div>`;
+    const riskScale = Math.min(100, volatility * 400);
+    const returnScale = Math.min(100, Math.max(0, expectedReturn * 600));
+    const stressScale = Math.min(100, Math.abs(drawdown) * 300);
+    $simRiskBars.innerHTML = `
+      <div><span>기대수익</span><i><b style="width:${returnScale}%"></b></i><strong>${percent(expectedReturn)}</strong></div>
+      <div><span>예상변동성</span><i><b style="width:${riskScale}%"></b></i><strong>${percent(volatility)}</strong></div>
+      <div class="loss"><span>스트레스 손실</span><i><b style="width:${stressScale}%"></b></i><strong>${percent(drawdown)}</strong></div>`;
 
     // 정규화 비중 기준의 학습용 분류: 대략적인 성향 비교를 위한 규칙입니다.
     const tilt = weights.stock >= 0.55 ? '공격형' : weights.bond >= 0.4 ? '방어형' : '균형형';

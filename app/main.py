@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
@@ -19,6 +19,17 @@ import app.models.long_term_memory  # noqa: F401
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title=settings.app_name)
+
+
+@app.middleware("http")
+async def prevent_frontend_cache(request: Request, call_next):
+    """Always refresh the client shell and its mutable local assets."""
+    response = await call_next(request)
+    if request.url.path in {"/", "/static/app.js", "/static/style.css"}:
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
 
 app.include_router(health_router)
 app.include_router(ingest_router)

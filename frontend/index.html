@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/static/style.css?v=20260808-9" />
+  <link rel="stylesheet" href="/static/style.css?v=20260808-12" />
 </head>
 <body>
   <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
@@ -123,6 +123,10 @@
           도메인: <span>금융·투자</span> &nbsp;·&nbsp; 근거 문서 기반 답변 &nbsp;·&nbsp; Top-K: <span id="topKLabel">4</span>
         </p>
       </div>
+      <footer class="app-footer">
+        <span>© (주)에듀엠지티</span>
+        <span>금융상품·자산배분 학습 플랫폼</span>
+      </footer>
     </main>
 
     <aside class="ref-panel" id="referencePanel" aria-label="RAG 자료 등록과 참고 문서">
@@ -216,6 +220,11 @@
               </div>
             </div>
 
+            <div class="sim-visual-stage" aria-label="포트폴리오 시각화">
+              <div class="allocation-donut" id="simDonut"><div><strong>100%</strong><span>배분 합계</span></div></div>
+              <div class="risk-bar-chart" id="simRiskBars"></div>
+            </div>
+
             <div class="sim-allocation" id="simAllocation"></div>
             <div class="sim-note" id="simNarrative"></div>
             <div class="sim-compare" id="simCompare"></div>
@@ -261,6 +270,6 @@
     </section>
   </div>
 
-  <script src="/static/app.js?v=20260808-9"></script>
+  <script src="/static/app.js?v=20260808-12"></script>
 </body>
 </html>
