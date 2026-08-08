@@ -945,10 +945,21 @@ KOSDAQ|웹젠|게임`,
       const response = await fetch('/backtests/run', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || '백테스트를 실행하지 못했습니다.');
-      result.innerHTML = `<div class="backtest-result-head"><span>${escHtml(data.engine)}</span><h2>${escHtml(data.ticker)} 결과</h2></div><div class="backtest-metrics"><article><span>백테스트 수익률</span><strong class="${data.strategy_return_pct >= 0 ? 'up' : 'down'}">${data.strategy_return_pct >= 0 ? '+' : ''}${data.strategy_return_pct}%</strong></article><article><span>비교 기간 수익률</span><strong class="${data.comparison_return_pct >= 0 ? 'up' : 'down'}">${data.comparison_return_pct >= 0 ? '+' : ''}${data.comparison_return_pct}%</strong></article><article><span>기간 차이</span><strong class="${data.outperformance_pct >= 0 ? 'up' : 'down'}">${data.outperformance_pct >= 0 ? '+' : ''}${data.outperformance_pct}%p</strong></article><article><span>최대 낙폭</span><strong class="down">${data.max_drawdown_pct}%</strong></article></div><canvas id="backtestChart" width="900" height="250" aria-label="자산 곡선"></canvas><p class="backtest-disclaimer">${escHtml(data.disclaimer)}</p><details><summary>LEAN 실행 로그 보기</summary><pre>${escHtml(data.lean_log || '결과 로그 없음')}</pre></details>`;
+      result.innerHTML = `<div class="backtest-result-head"><span>${escHtml(data.engine)}</span><h2>${escHtml(data.ticker)} 결과</h2></div>${buildBacktestSummary(data)}<div class="backtest-metrics"><article><span>백테스트 수익률</span><strong class="${data.strategy_return_pct >= 0 ? 'up' : 'down'}">${data.strategy_return_pct >= 0 ? '+' : ''}${data.strategy_return_pct}%</strong></article><article><span>비교 기간 수익률</span><strong class="${data.comparison_return_pct >= 0 ? 'up' : 'down'}">${data.comparison_return_pct >= 0 ? '+' : ''}${data.comparison_return_pct}%</strong></article><article><span>기간 차이</span><strong class="${data.outperformance_pct >= 0 ? 'up' : 'down'}">${data.outperformance_pct >= 0 ? '+' : ''}${data.outperformance_pct}%p</strong></article><article><span>최대 낙폭</span><strong class="down">${data.max_drawdown_pct}%</strong></article></div><canvas id="backtestChart" width="900" height="250" aria-label="자산 곡선"></canvas><p class="backtest-disclaimer">${escHtml(data.disclaimer)}</p><details><summary>LEAN 실행 로그 보기</summary><pre>${escHtml(data.lean_log || '결과 로그 없음')}</pre></details>`;
       drawBacktestChart(data.points);
     } catch (error) { result.innerHTML = `<div class="backtest-error"><i class="fa-solid fa-triangle-exclamation"></i>${escHtml(error.message)}</div>`; }
     finally { button.disabled = false; button.innerHTML = '<i class="fa-solid fa-play"></i> 백테스트 실행'; }
+  }
+
+  function buildBacktestSummary(data) {
+    const returnText = `${data.strategy_return_pct >= 0 ? '+' : ''}${data.strategy_return_pct}%`;
+    const comparisonGap = Math.abs(data.outperformance_pct).toFixed(2);
+    const comparisonText = data.outperformance_pct >= 0
+      ? `비교 기간보다 ${comparisonGap}%p 높았습니다.`
+      : `비교 기간보다 ${comparisonGap}%p 낮았습니다.`;
+    const drawdown = Math.abs(data.max_drawdown_pct).toFixed(2);
+    const direction = data.strategy_return_pct >= 0 ? '상승' : '하락';
+    return `<section class="backtest-summary" aria-label="결과 해석"><span><i class="fa-solid fa-lightbulb"></i> 결과 한눈에 보기</span><strong>이 기간 ${escHtml(data.ticker)}의 매수·보유 결과는 <em>${returnText}</em> ${direction}했습니다.</strong><p>${comparisonText} 다만 진행 중 최고점 대비 최대 <b>${drawdown}%</b> 하락 구간이 있었습니다.</p><small>과거 특정 기간의 가격 변화를 설명한 교육용 결과이며, 미래 수익이나 실제 투자 성과를 뜻하지 않습니다.</small></section>`;
   }
 
   function drawBacktestChart(points) { const canvas = document.getElementById('backtestChart'); if (!canvas || !points?.length) return; const ctx = canvas.getContext('2d'); const values = points.map(p => p.value), min = Math.min(...values), max = Math.max(...values), pad = 24, w = canvas.width - pad * 2, h = canvas.height - pad * 2; ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.strokeStyle = '#dbeafe'; ctx.beginPath(); ctx.moveTo(pad, canvas.height - pad); ctx.lineTo(canvas.width - pad, canvas.height - pad); ctx.stroke(); ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 3; ctx.beginPath(); points.forEach((p, i) => { const x = pad + w * i / Math.max(1, points.length - 1), y = pad + (max - p.value) / Math.max(1, max - min) * h; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); }
