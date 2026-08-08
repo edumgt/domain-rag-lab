@@ -1,0 +1,24 @@
+(function () {
+  'use strict';
+
+  const lessons = window.THEORY_DAYS || [];
+  const day = Number(document.body.dataset.day || 0);
+  const $app = document.getElementById('app');
+  const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
+  const fileFor = (number) => `${String(number).padStart(2, '0')}.html`;
+  const nav = (active) => `<nav aria-label="5일 학습 목차"><a class="brand" href="index.html">5일 금융 이론</a><div class="day-nav">${lessons.map((item) => `<a class="${active === item.day ? 'active' : ''}" href="${fileFor(item.day)}"><b>${String(item.day).padStart(2, '0')}</b><span>${escapeHtml(item.title)}</span></a>`).join('')}</div></nav>`;
+  const footer = '<footer>금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.</footer>';
+
+  function renderIndex() {
+    $app.innerHTML = `${nav(0)}<section class="hero"><p class="eyebrow">5-DAY FINANCE THEORY</p><h1>상품 이해에서<br><em>자산배분 설계</em>까지</h1><p>하루 한 주제씩, 금융상품의 구조와 위험을 읽고 내 기준으로 비교하는 5일 학습입니다.</p></section><section class="curriculum">${lessons.map((item) => `<a class="day-card" href="${fileFor(item.day)}"><p>DAY ${String(item.day).padStart(2, '0')}</p><h2>${escapeHtml(item.title)}</h2><span>${escapeHtml(item.subtitle)}</span><strong>학습 시작 →</strong></a>`).join('')}</section>${footer}`;
+  }
+
+  function renderDay(lesson) {
+    if (!lesson) { renderIndex(); return; }
+    const next = lessons.find((item) => item.day === lesson.day + 1);
+    const previous = lessons.find((item) => item.day === lesson.day - 1);
+    $app.innerHTML = `${nav(lesson.day)}<article><header class="lesson-head"><p class="eyebrow">DAY ${String(lesson.day).padStart(2, '0')} / 05</p><h1>${escapeHtml(lesson.title)}</h1><p>${escapeHtml(lesson.subtitle)}</p><div class="progress" aria-label="${lesson.day}일차 진행"><i style="width:${lesson.day * 20}%"></i></div></header><section class="goal"><p>오늘의 학습 목표</p><strong>${escapeHtml(lesson.goal)}</strong></section><section class="keywords"><p>핵심 단어</p><div>${lesson.keywords.map((word) => `<span>${escapeHtml(word)}</span>`).join('')}</div></section><section class="lesson-list">${lesson.lessons.map(([heading, paragraphs], index) => `<section class="lesson"><span>${String(index + 1).padStart(2, '0')}</span><div><h2>${escapeHtml(heading)}</h2>${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div></section>`).join('')}</section><aside class="check"><p>오늘의 확인</p><strong>${escapeHtml(lesson.check)}</strong></aside><div class="pager">${previous ? `<a href="${fileFor(previous.day)}">← DAY ${String(previous.day).padStart(2, '0')}</a>` : '<span></span>'}${next ? `<a href="${fileFor(next.day)}">DAY ${String(next.day).padStart(2, '0')} →</a>` : '<a href="index.html">목차로 돌아가기 →</a>'}</div></article>${footer}`;
+  }
+
+  day ? renderDay(lessons.find((item) => item.day === day)) : renderIndex();
+}());

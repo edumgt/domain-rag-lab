@@ -84,7 +84,7 @@
         <div class="brand-nav" aria-label="학습 서비스 메뉴">
           <button class="brand-nav-btn active" data-view="home"><i class="fa-solid fa-house"></i> 홈</button>
           <button class="brand-nav-btn" data-view="learn"><i class="fa-solid fa-comments"></i> RAG 질문</button>
-          <button class="brand-nav-btn" data-view="theory"><i class="fa-solid fa-calendar-days"></i> 5일 이론</button>
+          <a class="brand-nav-btn brand-nav-link" href="static/theory/index.html"><i class="fa-solid fa-calendar-days"></i> 5일 이론</a>
           <button class="brand-nav-btn" data-view="simulation"><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</button>
           <button class="brand-nav-btn" data-view="backtest"><i class="fa-solid fa-flask"></i> LEAN 백테스트</button>
         </div>
@@ -160,9 +160,9 @@
             </select>
 
             <div class="preset-grid" aria-label="투자 성향 프리셋">
-              <button class="sim-preset" data-stock="35" data-bond="45" data-alt="20" data-hedge="10">안정형</button>
-              <button class="sim-preset" data-stock="50" data-bond="30" data-alt="20" data-hedge="12">균형형</button>
-              <button class="sim-preset" data-stock="65" data-bond="20" data-alt="15" data-hedge="8">성장형</button>
+              <button class="sim-preset" data-stock="35" data-bond="45" data-alt="20">안정형</button>
+              <button class="sim-preset" data-stock="50" data-bond="30" data-alt="20">균형형</button>
+              <button class="sim-preset" data-stock="65" data-bond="20" data-alt="15">성장형</button>
             </div>
 
             <div class="sim-control">
@@ -189,13 +189,43 @@
               <input type="range" id="altWeight" min="0" max="100" value="20" />
             </div>
 
-            <div class="sim-control">
-              <div class="sim-control-head">
-                <span>파생 헤지 강도</span>
-                <strong id="hedgeRatioLabel">12%</strong>
+            <section class="sim-derivative-box" aria-labelledby="derivativeSimulatorTitle">
+              <div class="sim-derivative-heading">
+                <div>
+                  <p class="sim-label">DERIVATIVE HEDGE</p>
+                  <h4 id="derivativeSimulatorTitle">선물·풋옵션 헤지 실습</h4>
+                </div>
+                <span>교육용</span>
               </div>
-              <input type="range" id="hedgeRatio" min="0" max="30" value="12" />
-            </div>
+              <label class="sim-number-label" for="portfolioCapital">포트폴리오 금액 (원)
+                <input type="number" id="portfolioCapital" min="1000000" step="1000000" value="100000000" />
+              </label>
+              <label class="sim-number-label" for="futuresIndexLevel">가정한 지수 수준
+                <input type="number" id="futuresIndexLevel" min="100" step="1" value="400" />
+              </label>
+              <div class="sim-control">
+                <div class="sim-control-head">
+                  <span>지수선물 매도 계약 수</span>
+                  <strong id="futuresContractsLabel">0계약</strong>
+                </div>
+                <input type="range" id="futuresContracts" min="0" max="5" value="0" />
+              </div>
+              <div class="sim-control">
+                <div class="sim-control-head">
+                  <span>풋옵션 보호 비중 (주식/ETF 노출 기준)</span>
+                  <strong id="putCoverageLabel">0%</strong>
+                </div>
+                <input type="range" id="putCoverage" min="0" max="100" value="0" />
+              </div>
+              <div class="sim-control">
+                <div class="sim-control-head">
+                  <span>풋옵션 권리금 가정</span>
+                  <strong id="putPremiumLabel">3.0%</strong>
+                </div>
+                <input type="range" id="putPremium" min="1" max="10" value="3" />
+              </div>
+              <p class="sim-derivative-help">KOSPI 200과 유사한 지수, 계약승수 25만원, 등가격 풋옵션을 가정합니다. 개별 주가를 움직이게 하는 모형이 아니라, 보유 주식/ETF 포트폴리오의 손익 완충 효과를 살펴보는 실습입니다.</p>
+            </section>
 
             <button class="sim-save-btn" id="simSaveBtn"><i class="fa-solid fa-bookmark"></i> 현재 설정 저장·비교</button>
           </section>
@@ -247,8 +277,19 @@
           <div class="scenario-result" id="simScenarioResult"></div>
         </section>
 
+        <section class="option-chain-lab" aria-labelledby="optionChainTitle">
+          <div class="scenario-lab-heading">
+            <div>
+              <p class="sim-label">OPTION CHAIN · SAMPLE</p>
+              <h4 id="optionChainTitle">콜·풋 옵션 표, 이렇게 읽어요</h4>
+            </div>
+            <p><span class="sample-badge">샘플 교육용</span> 실시간 시세가 아닙니다.</p>
+          </div>
+          <div id="optionChainSample"></div>
+        </section>
+
         <div class="sim-footer">
-          <p><i class="fa-solid fa-circle-info"></i> 교육용 가정에 따른 계산이며 실시간 가격, 세금, 수수료 및 개별 상품 제약은 반영하지 않습니다.</p>
+          <p><i class="fa-solid fa-circle-info"></i> 교육용 가정에 따른 계산입니다. 실시간 지수·옵션가격, 변동성, 만기, 증거금, 세금·수수료 및 개별 상품 제약은 반영하지 않습니다.</p>
           <button class="btn-primary sim-ask-btn" id="simPromptBtn">
             <i class="fa-solid fa-wand-magic-sparkles"></i> 이 설정으로 RAG 질문 만들기
           </button>
@@ -270,6 +311,6 @@
     </section>
   </div>
 
-  <script src="/static/app.js?v=20260808-19"></script>
+  <script src="/static/app.js?v=20260808-21"></script>
 </body>
 </html>
