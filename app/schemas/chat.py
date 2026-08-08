@@ -60,7 +60,7 @@ class OrchestrateResponse(BaseModel):
 
 
 class BacktestRequest(BaseModel):
-    ticker: str = Field(min_length=1, max_length=12, examples=["SPY"])
+    ticker: str = Field(min_length=1, max_length=12, examples=["005930.KS"])
     start_date: date
     end_date: date
     compare_start_date: date
