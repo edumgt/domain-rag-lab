@@ -1,4 +1,4 @@
-name: domain-rag-lab-prod
+name: domain-rag-lab
 
 services:
   postgres:
