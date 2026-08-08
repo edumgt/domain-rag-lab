@@ -105,6 +105,17 @@
     },
   };
 
+  // 학습용 시뮬레이션 가정치: 무위험수익률, 헤지 비용/완충 효과, 스트레스 손실 보정치
+  const SIMULATION_ASSUMPTIONS = {
+    riskFreeRate: 0.02,
+    diversificationBonusScale: 0.004,
+    hedgeCostPerUnit: 0.01,
+    hedgeVolatilityReduction: 0.35,
+    stressVolatilityMultiplier: 1.55,
+    equityStressPenalty: 0.08,
+    hedgeStressOffset: 0.025,
+  };
+
   const $messages = document.getElementById('messages');
   const $questionInput = document.getElementById('questionInput');
   const $sendBtn = document.getElementById('sendBtn');
@@ -298,7 +309,7 @@
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        appendMessage('bot', `오류: ${err.detail || res.statusText}`);
+        appendMessage('bot', `⚠️ 오류: ${err.detail || res.statusText}`);
         return;
       }
 
@@ -307,7 +318,7 @@
       updateRefPanel(data.references || []);
     } catch (err) {
       removeTyping(typingId);
-      appendMessage('bot', `네트워크 오류: ${err.message}`);
+      appendMessage('bot', `⚠️ 네트워크 오류: ${err.message}`);
     } finally {
       state.loading = false;
       setInputDisabled(false);
@@ -487,10 +498,20 @@
 
     const baseReturn = vector.reduce((sum, value, idx) => sum + value * returns[idx], 0);
     const diversification = 1 - Math.max(...vector);
-    const expectedReturn = baseReturn + model.returnBoost - hedgeRatio * 0.01 + diversification * 0.004;
-    const volatility = Math.max(0.03, Math.sqrt(variance) * model.volMultiplier * (1 - hedgeRatio * 0.35));
-    const sharpe = (expectedReturn - 0.02) / volatility;
-    const drawdown = -(volatility * 1.55 + Math.max(0, weights.stock - 0.5) * 0.08 - hedgeRatio * 0.025);
+    const expectedReturn = baseReturn
+      + model.returnBoost
+      - hedgeRatio * SIMULATION_ASSUMPTIONS.hedgeCostPerUnit
+      + diversification * SIMULATION_ASSUMPTIONS.diversificationBonusScale;
+    const volatility = Math.max(
+      0.03,
+      Math.sqrt(variance) * model.volMultiplier * (1 - hedgeRatio * SIMULATION_ASSUMPTIONS.hedgeVolatilityReduction),
+    );
+    const sharpe = (expectedReturn - SIMULATION_ASSUMPTIONS.riskFreeRate) / volatility;
+    const drawdown = -(
+      volatility * SIMULATION_ASSUMPTIONS.stressVolatilityMultiplier
+      + Math.max(0, weights.stock - 0.5) * SIMULATION_ASSUMPTIONS.equityStressPenalty
+      - hedgeRatio * SIMULATION_ASSUMPTIONS.hedgeStressOffset
+    );
 
     document.getElementById('simReturn').textContent = percent(expectedReturn);
     document.getElementById('simVolatility').textContent = percent(volatility);
