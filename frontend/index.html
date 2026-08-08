@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/style.css?v=20260808-9" />
 </head>
 <body>
   <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
@@ -133,87 +133,119 @@
       <div id="refList" class="ref-list">
         <p class="ref-empty">질문 후 참고 문서가 여기에 표시됩니다.</p>
       </div>
+    </aside>
 
+    <div id="simulationStaging" hidden>
       <div class="simulation-panel" id="simulationPanel">
         <div class="ref-header simulation-header">
-          <h3><i class="fa-solid fa-calculator"></i> 실습 시뮬레이션</h3>
+          <div>
+            <p class="simulation-eyebrow">INTERACTIVE WORKBENCH</p>
+            <h3><i class="fa-solid fa-calculator"></i> 자산배분 실습</h3>
+          </div>
+          <span class="simulation-live"><i class="fa-solid fa-circle"></i> 실시간 계산</span>
         </div>
         <div class="sim-body">
-          <p class="section-copy">평균분산, 블랙-리터만, Risk-Parity 관점으로 자산배분과 헤지 강도를 비교해 보세요.</p>
+          <section class="sim-settings" aria-label="포트폴리오 설정">
+            <p class="section-copy">모델과 자산 비중을 바꾸며 기대 성과와 위험, 충격 상황의 차이를 직접 비교해 보세요.</p>
 
-          <label class="sim-label" for="modelSelect">자산배분 모델</label>
-          <select id="modelSelect" class="sim-select">
-            <option value="mean_variance">평균분산</option>
-            <option value="black_litterman">블랙-리터만</option>
-            <option value="risk_parity">Risk-Parity</option>
-          </select>
+            <label class="sim-label" for="modelSelect">자산배분 모델</label>
+            <select id="modelSelect" class="sim-select">
+              <option value="mean_variance">평균분산</option>
+              <option value="black_litterman">블랙-리터만</option>
+              <option value="risk_parity">Risk-Parity</option>
+            </select>
 
-          <div class="preset-grid">
-            <button class="sim-preset" data-stock="35" data-bond="45" data-alt="20" data-hedge="10">안정형</button>
-            <button class="sim-preset" data-stock="50" data-bond="30" data-alt="20" data-hedge="12">균형형</button>
-            <button class="sim-preset" data-stock="65" data-bond="20" data-alt="15" data-hedge="8">성장형</button>
+            <div class="preset-grid" aria-label="투자 성향 프리셋">
+              <button class="sim-preset" data-stock="35" data-bond="45" data-alt="20" data-hedge="10">안정형</button>
+              <button class="sim-preset" data-stock="50" data-bond="30" data-alt="20" data-hedge="12">균형형</button>
+              <button class="sim-preset" data-stock="65" data-bond="20" data-alt="15" data-hedge="8">성장형</button>
+            </div>
+
+            <div class="sim-control">
+              <div class="sim-control-head">
+                <span>주식 / ETF</span>
+                <strong id="stockWeightLabel">50%</strong>
+              </div>
+              <input type="range" id="stockWeight" min="0" max="100" value="50" />
+            </div>
+
+            <div class="sim-control">
+              <div class="sim-control-head">
+                <span>채권</span>
+                <strong id="bondWeightLabel">30%</strong>
+              </div>
+              <input type="range" id="bondWeight" min="0" max="100" value="30" />
+            </div>
+
+            <div class="sim-control">
+              <div class="sim-control-head">
+                <span>대체 / 현금</span>
+                <strong id="altWeightLabel">20%</strong>
+              </div>
+              <input type="range" id="altWeight" min="0" max="100" value="20" />
+            </div>
+
+            <div class="sim-control">
+              <div class="sim-control-head">
+                <span>파생 헤지 강도</span>
+                <strong id="hedgeRatioLabel">12%</strong>
+              </div>
+              <input type="range" id="hedgeRatio" min="0" max="30" value="12" />
+            </div>
+
+            <button class="sim-save-btn" id="simSaveBtn"><i class="fa-solid fa-bookmark"></i> 현재 설정 저장·비교</button>
+          </section>
+
+          <section class="sim-results" aria-label="시뮬레이션 결과">
+            <div class="sim-metrics">
+              <div class="sim-metric">
+                <span>기대수익률</span>
+                <strong id="simReturn">-</strong>
+              </div>
+              <div class="sim-metric">
+                <span>예상 변동성</span>
+                <strong id="simVolatility">-</strong>
+              </div>
+              <div class="sim-metric">
+                <span>샤프 비율</span>
+                <strong id="simSharpe">-</strong>
+              </div>
+              <div class="sim-metric">
+                <span>스트레스 손실</span>
+                <strong id="simDrawdown">-</strong>
+              </div>
+            </div>
+
+            <div class="sim-allocation" id="simAllocation"></div>
+            <div class="sim-note" id="simNarrative"></div>
+            <div class="sim-compare" id="simCompare"></div>
+          </section>
+        </div>
+
+        <section class="sim-scenario-lab" aria-labelledby="scenarioLabTitle">
+          <div class="scenario-lab-heading">
+            <div>
+              <p class="sim-label">STRESS TEST</p>
+              <h4 id="scenarioLabTitle">시장 충격을 가정해 보세요</h4>
+            </div>
+            <p>선택한 시나리오는 교육용 가정입니다.</p>
           </div>
-
-          <div class="sim-control">
-            <div class="sim-control-head">
-              <span>주식 / ETF</span>
-              <strong id="stockWeightLabel">50%</strong>
-            </div>
-            <input type="range" id="stockWeight" min="0" max="100" value="50" />
+          <div class="scenario-actions" role="group" aria-label="스트레스 시나리오 선택">
+            <button class="sim-scenario active" data-scenario="equity"><i class="fa-solid fa-arrow-trend-down"></i> 주식 급락</button>
+            <button class="sim-scenario" data-scenario="rates"><i class="fa-solid fa-percent"></i> 금리 급등</button>
+            <button class="sim-scenario" data-scenario="inflation"><i class="fa-solid fa-fire"></i> 인플레이션</button>
           </div>
+          <div class="scenario-result" id="simScenarioResult"></div>
+        </section>
 
-          <div class="sim-control">
-            <div class="sim-control-head">
-              <span>채권</span>
-              <strong id="bondWeightLabel">30%</strong>
-            </div>
-            <input type="range" id="bondWeight" min="0" max="100" value="30" />
-          </div>
-
-          <div class="sim-control">
-            <div class="sim-control-head">
-              <span>대체 / 현금</span>
-              <strong id="altWeightLabel">20%</strong>
-            </div>
-            <input type="range" id="altWeight" min="0" max="100" value="20" />
-          </div>
-
-          <div class="sim-control">
-            <div class="sim-control-head">
-              <span>파생 헤지 강도</span>
-              <strong id="hedgeRatioLabel">12%</strong>
-            </div>
-            <input type="range" id="hedgeRatio" min="0" max="30" value="12" />
-          </div>
-
-          <div class="sim-metrics">
-            <div class="sim-metric">
-              <span>기대수익률</span>
-              <strong id="simReturn">-</strong>
-            </div>
-            <div class="sim-metric">
-              <span>예상 변동성</span>
-              <strong id="simVolatility">-</strong>
-            </div>
-            <div class="sim-metric">
-              <span>샤프 비율</span>
-              <strong id="simSharpe">-</strong>
-            </div>
-            <div class="sim-metric">
-              <span>스트레스 손실</span>
-              <strong id="simDrawdown">-</strong>
-            </div>
-          </div>
-
-          <div class="sim-allocation" id="simAllocation"></div>
-          <div class="sim-note" id="simNarrative"></div>
-
+        <div class="sim-footer">
+          <p><i class="fa-solid fa-circle-info"></i> 교육용 가정에 따른 계산이며 실시간 가격, 세금, 수수료 및 개별 상품 제약은 반영하지 않습니다.</p>
           <button class="btn-primary sim-ask-btn" id="simPromptBtn">
             <i class="fa-solid fa-wand-magic-sparkles"></i> 이 설정으로 RAG 질문 만들기
           </button>
         </div>
       </div>
-    </aside>
+    </div>
   </div>
 
   <div class="glossary-modal" id="glossaryModal" role="dialog" aria-modal="true" aria-labelledby="glossaryTitle" aria-hidden="true">
@@ -229,6 +261,6 @@
     </section>
   </div>
 
-  <script src="/static/app.js"></script>
+  <script src="/static/app.js?v=20260808-9"></script>
 </body>
 </html>

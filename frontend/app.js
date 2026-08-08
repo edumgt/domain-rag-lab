@@ -11,6 +11,9 @@
     activeTheoryDay: 1,
     quizIndex: 0,
     quizAnswers: [],
+    activeScenario: 'equity',
+    savedSimulation: null,
+    currentSimulation: null,
   };
 
   const QUIZ_QUESTIONS = [
@@ -97,14 +100,15 @@
       title: '금융상품과 투자 기초',
       subtitle: '돈을 쓰는 목적과 위험의 크기를 먼저 정하면 상품 선택이 쉬워집니다.',
       goal: '저축과 투자의 차이, 수익률·위험·유동성의 의미를 설명할 수 있어요.',
-      keywords: ['원금', '수익률', '위험', '유동성', '분산투자'],
+      keywords: ['원금', '수익률', '위험', '유동성', '분산투자', '증권사'],
       lessons: [
         ['저축과 투자는 무엇이 다른가요?', ['저축은 가까운 미래에 쓸 돈을 비교적 안전하게 보관하는 데 알맞습니다. 예금·적금이 대표적입니다.', '투자는 시간이 지나며 자산을 키우기 위해 가격 변동을 감수하는 선택입니다. 주식, 채권, 펀드, ETF 등이 여기에 해당합니다.', '둘 중 하나만 고르는 문제가 아닙니다. 생활비와 비상금은 먼저 확보하고, 남는 돈의 기간과 목표에 맞춰 투자 여부를 판단합니다.']],
         ['상품을 고를 때 보는 세 가지', ['수익률은 돈이 얼마나 늘어날 가능성이 있는지, 위험은 예상과 다르게 줄어들 수 있는 정도를 뜻합니다.', '유동성은 필요할 때 현금으로 바꾸기 쉬운 정도입니다. 수익률이 높아 보여도 급하게 돈이 필요할 때 팔기 어렵다면 내 상황에는 맞지 않을 수 있습니다.', '“높은 수익률, 낮은 위험, 높은 유동성”을 동시에 모두 얻기는 어렵다는 점을 기억하세요.']],
         ['기본 금융상품 지도', ['예금·적금은 안정성과 목적자금 관리에, 주식은 기업 성장에 참여하는 데 쓰입니다.', '채권은 정부나 기업에 돈을 빌려주고 이자와 원금을 받는 구조입니다. ETF·펀드는 여러 자산을 한 상품에 담아 분산투자를 쉽게 합니다.', '상품 이름보다 “무엇에 투자하는지, 비용은 얼마인지, 어떤 위험이 있는지”를 먼저 확인하세요.']],
+        ['한국 투자자가 만나는 기관들', ['한국의 개인 투자자는 은행의 예·적금과 채권 상품, 증권사의 주식·ETF·채권·파생상품 계좌, 자산운용사의 펀드·ETF를 주로 이용합니다. 삼성증권·미래에셋증권·NH투자증권·KB증권·키움증권 등은 거래 서비스를 제공하는 증권사 예시이며, 실제 지원 계좌·수수료·상품은 회사와 계좌 유형별로 다릅니다.', '자산운용사는 투자 상품을 설계·운용하고, 증권사는 그 상품의 매매를 중개하는 역할이 기본입니다. 같은 ETF라도 운용사는 상품설명서와 운용을 맡고, 앱에서 주문을 받는 곳은 증권사라는 점을 구분해 보세요.', '처음 계좌를 고를 때는 “어느 앱이 유명한가?”보다 내가 필요한 시장(국내주식·해외주식·채권·연금·파생상품)을 지원하는지, 비용표와 위험고지를 읽기 쉬운지부터 확인하는 편이 좋습니다.']],
       ],
       check: '내가 1년 안에 꼭 써야 하는 돈과 5년 이상 기다릴 수 있는 돈을 나누어 적어 보세요.',
-      ragPrompt: '저축과 투자의 차이, 수익률·위험·유동성의 관계를 고등학생 수준의 예시로 설명해줘.',
+      ragPrompt: '한국 투자자가 은행·증권사·자산운용사를 통해 만나는 금융상품을 예로 들어, 저축과 투자 및 수익률·위험·유동성의 관계를 설명해줘.',
     },
     {
       day: 2,
@@ -112,14 +116,20 @@
       title: '주식 · ETF · 펀드',
       subtitle: '기업 한 곳에 투자할지, 여러 자산을 묶은 바구니를 고를지 이해합니다.',
       goal: '주식, ETF, 펀드의 구조와 확인할 비용·유동성 항목을 구분할 수 있어요.',
-      keywords: ['주주', '배당', 'ETF', '총보수', '괴리율'],
+      keywords: ['주주', '배당', 'ETF', '총보수', '괴리율', 'KOSPI 200'],
       lessons: [
         ['주식은 기업의 작은 주인이 되는 증서', ['주식을 사면 그 기업의 지분 일부를 갖게 됩니다. 기업의 성과와 기대에 따라 가격이 오르내리고, 일부 기업은 이익을 배당으로 나눕니다.', '좋은 회사라고 해서 언제나 좋은 투자 결과를 주는 것은 아닙니다. 이미 비싼 가격에 거래되고 있거나 산업 환경이 바뀔 수 있기 때문입니다.', '한 기업에만 돈이 몰리면 그 기업의 문제에 크게 흔들릴 수 있습니다.']],
         ['ETF와 펀드는 왜 바구니라고 부르나요?', ['ETF와 펀드는 여러 주식·채권 등을 한데 묶어 투자할 수 있게 합니다. 하나의 상품만 사도 여러 자산에 나누어 투자하는 효과를 기대할 수 있습니다.', 'ETF는 거래소에서 주식처럼 장중에 사고팔 수 있고, 펀드는 보통 하루 한 번 기준가격으로 가입·환매가 처리됩니다.', '바구니라고 해서 위험이 사라지는 것은 아닙니다. 특정 국가·산업에만 담긴 ETF는 여전히 크게 움직일 수 있습니다.']],
         ['구매 전 확인표', ['ETF는 무엇을 추종하는지, 총보수, 거래량, 호가 차이(스프레드), 시장가격과 순자산가치의 차이(괴리율)를 봅니다.', '펀드는 운용 전략, 보수, 환매에 걸리는 시간, 편입 자산을 살핍니다.', '과거 수익률은 참고 자료일 뿐 미래 성과를 보장하지 않습니다.']],
+        ['한국 주식·ETF로 보는 실제 사례', ['한국 대표 지수인 KOSPI 200은 시장대표성·업종대표성·유동성을 고려해 고른 200개 종목으로 구성됩니다. 삼성전자, SK하이닉스, 현대차, KB금융, NAVER처럼 대형주가 지수에 큰 영향을 줄 수 있으므로, 지수 ETF를 사도 특정 기업·산업에 대한 노출이 완전히 사라지는 것은 아닙니다.', '국내에서는 KODEX(삼성자산운용), TIGER(미래에셋자산운용), RISE(KB자산운용), ACE(한국투자신탁운용), PLUS(한화자산운용), SOL(신한자산운용), KOSEF(키움투자자산운용) 등 여러 ETF 브랜드를 만날 수 있습니다. 같은 “200 ETF”라도 추적 지수, 총보수, 규모, 거래량, 분배 방식이 다를 수 있습니다.', '예를 들어 KODEX 200·TIGER 200·RISE 200·ACE 200처럼 KOSPI 200을 추종하는 상품을 비교할 때는 이름만 보지 말고 종목코드, 기초지수, 운용사, 총보수, 순자산가치(NAV), 호가 스프레드와 괴리율을 함께 확인하세요. ETF와 ETN은 법적 구조도 다르므로 ETN은 발행 증권사의 신용위험도 추가로 살펴야 합니다.']],
+        ['MARKET FILE 01 · AI 반도체: 삼성전자와 SK하이닉스', ['삼성전자는 메모리 반도체·파운드리·스마트폰·가전 등 사업 포트폴리오가 넓은 기업입니다. SK하이닉스는 D램·낸드 등 메모리 사업의 비중이 큰 편입니다. 두 기업 모두 AI 데이터센터에서 쓰이는 고대역폭메모리(HBM), 서버 D램, 기업용 SSD 수요가 중요한 관찰 대상입니다.', '2026년에는 삼성전자가 HBM4 양산 출하를 발표했고, SK하이닉스는 차세대 HBM4E 샘플을 주요 고객에게 공급했다고 알렸습니다. 이것은 기술·제품 개발의 사례이지, 미래 실적이 확정됐다는 뜻은 아닙니다.', '읽을 때는 ① AI 서버 투자와 메모리 가격 사이클 ② 고객 인증과 제품 믹스 ③ 수율·설비투자 ④ 파운드리 경쟁 ⑤ 환율을 함께 보세요. 반도체 ETF를 선택할 때도 두 기업의 편입 비중이 얼마나 되는지 꼭 확인해야 합니다.']],
+        ['MARKET FILE 02 · 자동차·조선·방산: 수주와 인도 사이', ['현대차는 내연기관·하이브리드·전기차를 함께 판매하는 완성차 기업입니다. 차종 판매 구성, 미국·유럽 등 지역별 판매, 환율, 재고와 인센티브, 전동화 투자 속도가 실적을 읽는 핵심입니다. 현대차는 2026년에도 하이브리드·전기차 라인업 확대와 관련한 자료를 공개하고 있습니다.', 'HD현대중공업은 상선·특수선·엔진·해양 분야를, 한화에어로스페이스는 항공엔진·방산·우주 관련 사업을 주요 축으로 봅니다. 이 업종은 계약 뉴스만으로 판단하기보다 수주 잔고가 실제 매출과 이익으로 전환되는 시점, 원가, 납기, 환율을 함께 봐야 합니다.', '산업 전망을 볼 때는 “수주가 늘었다”와 “올해 이익이 바로 늘어난다”를 구분하세요. 조선·방산은 계약 기간이 길고, 국가별 승인·예산·조달 일정의 영향을 받기 때문에 공시의 계약 조건과 회사 IR 자료를 함께 읽는 습관이 필요합니다.']],
+        ['MARKET FILE 03 · 플랫폼·바이오: 숫자 외에 봐야 할 것', ['NAVER는 검색·광고·커머스·콘텐츠·클라우드와 AI 서비스를 연결하는 플랫폼 기업입니다. 이용자 수나 화제성만 보기보다 광고 매출, 커머스 거래액, 콘텐츠 비용, AI 서비스의 수익화, 해외 사업의 성과를 분리해서 읽는 편이 좋습니다. 카카오도 광고·커머스·콘텐츠·모빌리티 등 여러 사업이 연결돼 있어 사업부별 지표를 나눠 볼 필요가 있습니다.', '셀트리온은 바이오시밀러의 개발·생산·판매가 핵심인 기업입니다. 2026년에는 해외 규제 변화와 피하주사(SC) 제형 개발, 제품 포트폴리오 확대가 회사가 제시한 주요 이슈입니다. 바이오 기업은 허가·임상·출시 시점과 경쟁약 가격을 함께 확인해야 합니다.', '플랫폼과 바이오는 “성장 산업”이라는 한 단어로 묶기 어렵습니다. 플랫폼은 경쟁과 수익화, 바이오는 규제·임상·특허·판매망이 핵심이므로, 매출 성장률 하나보다 사업별 비용과 실행 일정을 함께 읽어야 합니다.']],
+        ['MARKET FILE 04 · 금융·소재: 금리와 자본의 언어', ['KB금융·신한지주·하나금융지주·우리금융지주 같은 금융지주는 은행뿐 아니라 증권·보험·카드·자산운용 계열사의 성과를 함께 봅니다. 기준금리와 예대금리차, 대손비용, 부동산·기업대출 건전성, 비이자 수수료, 보통주자본비율(CET1), 배당·자사주 정책이 주요 지표입니다.', 'KB금융은 2026년 상반기 실적 발표에서 은행·비은행 포트폴리오와 주주환원 계획을 함께 제시했습니다. 금융주는 배당만 보지 말고, 배당을 계속할 수 있는 자본 여력과 경기 악화 때 대손충당금이 어떻게 변하는지도 확인해야 합니다.', 'LG에너지솔루션은 전기차·에너지저장장치용 배터리, POSCO홀딩스는 철강과 이차전지 소재 관련 사업을 함께 살펴볼 수 있는 사례입니다. 이들 기업은 전기차 수요·원재료 가격·고객사 주문·공장 가동률·투자 규모가 복합적으로 작용하므로, “친환경 테마”라는 말만으로 같은 위험이라고 보기는 어렵습니다.']],
+        ['MARKET FILE 05 · 투자자처럼 읽는 기업 노트', ['기업 하나를 고를 때는 먼저 “무엇을 팔아 돈을 버는가?”를 한 문장으로 써 보세요. 다음으로 매출을 움직이는 가격·물량·환율·금리·원재료·규제 중 세 가지를 골라 분기 실적 발표 때마다 확인합니다.', '회사 홈페이지의 IR 자료, 사업보고서, 한국거래소 KIND 공시에서는 실적자료·주요 계약·유상증자·자사주·배당 관련 정보를 확인할 수 있습니다. 뉴스 제목은 출발점일 뿐이며, 숫자와 가정은 원문 공시로 되돌아가 확인해야 합니다.', '아래 기업들은 모두 학습 사례일 뿐 추천 목록이 아닙니다. 삼성전자, SK하이닉스, 현대차, HD현대중공업, 한화에어로스페이스, NAVER, 카카오, 셀트리온, KB금융, 신한지주, LG에너지솔루션, POSCO홀딩스 중 하나를 골라 “사업·성장 동력·위험·확인할 공시” 네 칸으로 정리해 보세요.']],
       ],
       check: '관심 있는 ETF 하나를 골라 “무엇을 담는지”와 “연간 총보수”를 찾아 보세요.',
-      ragPrompt: '주식, ETF, 펀드의 차이를 투자 초보자가 이해할 수 있게 비교해줘. ETF 확인 항목도 알려줘.',
+      ragPrompt: 'KOSPI 200과 국내 ETF 브랜드·상품을 예로 들어 주식, ETF, 펀드의 차이와 ETF 확인 항목을 설명해줘. 특정 상품 매수 추천은 하지 마.',
     },
     {
       day: 3,
@@ -127,14 +137,27 @@
       title: '채권 · 금리 · 파생상품',
       subtitle: '빌려준 돈의 약속과 가격 변동, 그리고 위험을 줄이기 위한 도구를 살펴봅니다.',
       goal: '채권 가격과 금리의 관계, 파생상품의 헤지 목적과 위험을 설명할 수 있어요.',
-      keywords: ['만기', '이자', '금리', '신용위험', '헤지'],
+      keywords: ['만기', '이자', '금리', '신용위험', '헤지', '증거금'],
       lessons: [
         ['채권은 돈을 빌려준 약속장', ['채권을 산다는 것은 정부나 기업에 돈을 빌려주고 정해진 이자와 만기 원금을 받기로 하는 것입니다.', '국채는 정부가 발행하고, 회사채는 기업이 발행합니다. 발행자가 약속한 돈을 갚지 못할 가능성은 신용위험이라고 합니다.', '만기가 길수록 금리 변화에 가격이 더 민감해지는 경향이 있습니다. 이를 설명할 때 듀레이션이라는 지표를 사용합니다.']],
         ['금리가 오르면 채권 가격은 왜 내려갈까요?', ['새로 나온 채권의 이자가 더 높아지면, 기존의 낮은 이자를 주는 채권은 같은 가격으로는 매력이 줄어듭니다. 그래서 기존 채권 가격이 조정될 수 있습니다.', '반대로 금리가 내려가면 기존에 높은 이자를 약속한 채권의 매력이 커져 가격이 오를 수 있습니다.', '채권도 중간에 팔면 손익이 생길 수 있으므로 “항상 안전하다”고 단정할 수는 없습니다.']],
-        ['파생상품은 보험처럼도 쓰입니다', ['선물·옵션 같은 파생상품은 주가, 금리, 환율 등의 움직임을 바탕으로 한 계약입니다.', '가격 하락이 걱정될 때 손실을 일부 줄이는 헤지에 활용할 수 있지만, 구조가 복잡하고 손실이 빠르게 커질 수도 있습니다.', '학습 단계에서는 “어떤 위험을 줄이려는 계약인지, 최대 손실은 얼마인지”를 먼저 묻는 습관이 중요합니다.']],
+        ['한국 금리·채권시장 사례', ['한국은행 기준금리는 2026년 7월 16일 기준 연 2.75%입니다. 기준금리 변화는 예·적금 금리, 대출금리, 국고채 수익률과 채권 ETF 가격에 영향을 줄 수 있지만, 각각이 같은 폭·같은 시점에 움직이지는 않습니다.', '개인 투자자가 한국 채권시장을 접하는 방법에는 국채·회사채 직접 매매, 개인투자용 국채 청약, 채권형 펀드·ETF 등이 있습니다. 국채는 정부가 발행하고, 회사채는 삼성전자·현대자동차 같은 기업을 포함한 다양한 기업이 발행할 수 있습니다. 발행 주체가 다르면 신용위험과 수익률도 달라집니다.', '금리 방향을 맞히려 하기보다 만기와 듀레이션을 먼저 확인하세요. 특히 장기 국채·장기채 ETF는 금리 변화에 가격이 더 민감할 수 있고, “국채”라는 이름만으로 중도 매매 가격 위험이 사라지는 것은 아닙니다.']],
+        ['파생상품은 보험처럼도 쓰입니다', ['선물·옵션 같은 파생상품은 주가, 금리, 환율 등의 움직임을 바탕으로 한 계약입니다. 국내에서는 KOSPI 200 선물·옵션, 해외에서는 나스닥 100 지수·원유·금 등을 기초자산으로 한 선물이 예시입니다.', '가격 하락이 걱정될 때 손실을 일부 줄이는 헤지에 활용할 수 있지만, 구조가 복잡하고 손실이 빠르게 커질 수도 있습니다.', '학습 단계에서는 “어떤 위험을 줄이려는 계약인지, 최대 손실은 얼마인지”를 먼저 묻는 습관이 중요합니다.']],
+        ['KRX에서 실제로 거래되는 파생상품', ['한국거래소(KRX)에는 KOSPI 200·미니 KOSPI 200·KOSDAQ 150 선물과 옵션, 미국달러선물, 3년·10년 국채선물, 금선물 등이 있습니다. KOSPI 200 선물은 지수의 현물을 주고받는 대신 만기에 현금으로 결제하는 구조입니다.', 'KOSPI 200 선물의 거래승수는 25만 원이고, 미니 KOSPI 200 선물은 이를 5만 원으로 낮춘 상품입니다. “미니”라는 이름은 1계약의 금액이 더 작다는 뜻일 뿐, 레버리지와 증거금 위험이 없다는 뜻은 아닙니다.', 'KRX는 ETF 자체를 기초자산으로 하는 ETF선물도 운영합니다. 상품 목록과 거래시간·결제월·증거금은 바뀔 수 있으므로, 실제 주문 전에는 KRX 상품명세와 이용 증권사의 주문 화면을 함께 확인하세요.']],
+        ['주식 앱으로도 거래할 수 있나요?', ['많은 증권사 MTS·HTS는 한 앱 안에서 주식과 선물·옵션 메뉴를 함께 제공합니다. 하지만 주식 계좌만으로 바로 거래하는 것은 아닙니다. 일반 위탁계좌와 별도로 파생상품 거래가 가능한 계좌를 열고 거래 권한을 받아야 합니다.', '국내에서는 KOSPI 200·KOSDAQ 150 지수 선물·옵션, 통화·금속 선물 등을 볼 수 있습니다. 해외에서는 나스닥 100 지수, 원유, 금 등 다양한 선물이 있지만, 증권사에 따라 별도 해외선물 앱·계좌·메뉴가 필요할 수 있습니다.', '앱에 “선물/옵션” 메뉴가 보여도 거래가 허용됐다는 뜻은 아닙니다. 계좌 개설, 투자자 정보, 교육·모의거래, 예탁금, 거래 가능 단계가 모두 완료됐는지 차례로 확인해야 합니다.']],
+        ['거래를 시작하기 전의 준비', ['주식 거래용 위탁계좌와 별도로 파생상품 거래가 가능한 계좌를 개설해야 합니다. 이용 중인 증권사 앱에서 계좌를 추가하고, 해당 증권사가 제공하는 국내·해외 파생상품 메뉴와 지원 범위를 확인합니다.', '일반 개인이 국내 장내 파생상품을 처음 거래할 때는 투자성향·거래경험 확인, 사전교육과 모의거래 이수, 기본예탁금 요건이 적용됩니다. 현재 최소 기준은 사전교육 1시간, 모의거래 3시간이며, 처음에는 선물(변동성지수선물 제외)과 옵션 매수부터 단계적으로 거래할 수 있습니다.', '예탁금과 가능한 상품 범위는 단계와 증권사 내부 기준에 따라 달라집니다. 예를 들어 일반 개인의 1단계 최소 기본예탁금은 1,000만 원, 전체 선물·옵션 거래는 2,000만 원이며 미결제약정 10거래일 이상 보유 경험도 필요합니다. 실제 신청 전에는 증권사의 최신 안내를 반드시 확인하세요.']],
+        ['사전교육 신청: KIFIN에서 무엇을 하나요?', ['첫 단계는 금융투자교육원(KIFIN, kifin.or.kr)에서의 온라인 사전교육입니다. PC에서 회원가입·로그인한 뒤 이러닝의 과정 안내 및 신청 메뉴에서 “국내외 파생상품거래 사전교육”을 검색합니다.', '증권사가 투자성향과 과거 거래경험을 바탕으로 안내한 과정 시간을 선택합니다. 일반적으로 1시간·3시간·10시간 과정이 제공되며, 임의로 짧은 과정을 고르기보다 내가 거래할 증권사의 안내에 맞춰 신청해야 합니다. 신청 후 수강료 결제와 학습 시작 절차를 진행합니다.', '각 차시를 끝까지 수강해 진도율 100%를 채우면 수료 처리됩니다. My KIFIN의 수강이력·수료증 메뉴에서 수료증과 수료(이수)번호를 확인해 저장합니다. 계좌 명의와 교육 수강자 명의가 일치하는지도 확인하세요.']],
+        ['모의거래 신청: KRX 또는 증권사 시스템', ['두 번째 단계는 실제 돈을 쓰지 않는 모의거래입니다. KRX 파생상품 모의거래 인증시스템(trn.krx.co.kr)에 가입해 전용 모의거래 프로그램을 이용하거나, 증권사가 제공하는 “파생상품 이수용 모의거래” 메뉴를 이용할 수 있습니다.', 'KRX 시스템을 쓸 때는 회원가입 후 사용 안내에 따라 모의 HTS를 설치·로그인하고, 운영 시간에 맞춰 선물·옵션 주문과 체결을 연습합니다. 증권사 모의투자는 이수 결과가 해당 증권사 계좌와 자동 연동될 수 있지만, 모든 일반 모의투자가 이수용인 것은 아니므로 “이수 인정용”인지 먼저 확인해야 합니다.', '모의거래는 최소 3시간 이상이 기본이지만 증권사와 투자자 유형에 따라 더 긴 시간이 적용될 수 있습니다. 단순 접속 시간만으로 인정되는지, 실제 주문·체결 참여가 필요한지, 이수시간 집계 기준이 무엇인지는 선택한 시스템의 최신 안내를 따릅니다.']],
+        ['이수증 등록과 계좌 활성화', ['교육과 모의거래를 마쳤다면 거래하려는 증권사 MTS 또는 HTS에서 “파생상품 적격투자자 등록”, “사전교육·모의거래 이수 등록” 등의 메뉴를 찾습니다. 메뉴 명칭은 증권사마다 다를 수 있습니다.', 'KIFIN 사전교육 수료번호와 KRX 또는 증권사 모의거래 이수번호를 각각 입력하거나, 증권사가 안내한 방식으로 제출합니다. 등록 상태가 승인되었는지 확인하고, 파생상품 전용 계좌가 정상 개설됐는지와 허용된 거래 단계를 함께 확인합니다.', '마지막으로 해당 단계의 기본예탁금을 계좌에 예탁하고, 주문 전 계약 단위·위탁증거금·거래 가능 상품을 점검합니다. 수료증만 있어도 예탁금이나 투자자 정보 요건이 충족되지 않으면 주문할 수 없다는 점을 기억하세요.']],
+        ['신청 전·후 체크리스트', ['신청 전에는 ① 거래하려는 대상이 국내 장내 파생상품인지, 해외선물인지 ② 증권사가 요구한 교육·모의거래 시간은 얼마인지 ③ 계좌 개설과 기본예탁금 요건은 무엇인지 확인합니다. 해외선물은 별도 계좌·교육·위험관리 기준이 적용될 수 있습니다.', '이수 중에는 수료증 번호와 이수증 번호를 저장하고, 계좌 명의·휴대전화 정보가 증권사 정보와 일치하는지 확인합니다. 이수 뒤에는 앱의 등록 완료 화면, 거래 가능 단계, 주문증거금·유지증거금 기준을 다시 확인합니다.', '일부 자격 보유자·금융투자업계 경력자·전문투자자 등은 교육 또는 모의거래가 면제될 수 있습니다. 다만 면제 대상과 인정 서류는 증권사 심사에 따라 달라질 수 있으므로, 스스로 면제라고 판단하지 말고 거래 증권사에 먼저 확인하세요.']],
+        ['거래 단계와 옵션 매도 요건', ['일반 개인의 국내 장내 파생상품 거래는 단계적으로 열립니다. 1단계에서는 변동성지수선물을 제외한 선물과 옵션 매수가 가능하며 최소 기본예탁금은 1,000만 원입니다. 2단계에서는 옵션 매도와 변동성지수선물을 포함한 전체 선물·옵션 거래가 가능하며 최소 기본예탁금은 2,000만 원입니다.', '2단계로 올라가려면 계좌 개설 뒤 미결제약정을 10거래일 이상 보유한 경험과 기본예탁금 요건이 필요합니다. 증권사는 투자성향·거래경험·내부 위험관리 기준에 따라 더 엄격한 조건을 적용하거나 주문을 제한할 수 있습니다.', '옵션 매수자는 프리미엄을 내고 권리를 사므로 최대 손실이 보통 그 프리미엄으로 제한됩니다. 반면 옵션 매도자는 프리미엄을 받고 의무를 지므로 큰 손실 위험을 집니다. 특히 콜옵션 매도는 이론상 손실 상한이 없고, 풋옵션 매도도 기초자산 가격 하락 때 매우 큰 손실이 날 수 있습니다.']],
+        ['증거금은 “계약 보증금”입니다', ['주식은 보통 사려는 금액 전체를 내지만, 선물·옵션은 계약 금액의 일부인 증거금으로 거래를 시작합니다. 적은 돈으로 큰 계약을 움직일 수 있는 이유이자, 손익이 빠르게 커지는 이유입니다.', '계약 총금액은 대략 “가격 또는 지수 × 거래승수”로 생각할 수 있습니다. 위탁증거금은 처음 포지션을 열 때 필요한 보증금이고, 유지증거금은 포지션을 계속 보유하기 위해 계좌에 남아 있어야 하는 최소 금액입니다.', '증거금률과 거래승수는 상품과 시장 상황에 따라 달라집니다. 따라서 주문 화면에서 보이는 필요 증거금과 계약 단위를 매번 확인해야 하며, 기본예탁금과 실제 주문에 필요한 위탁증거금은 서로 다른 개념임을 구분해야 합니다.']],
+        ['마진콜은 어떻게 발생할까요?', ['예를 들어 계좌에 1,600만 원이 있고 어떤 선물 1계약을 사는 데 위탁증거금 1,575만 원이 필요하다고 가정해 보세요. 거래는 가능하지만 남는 여유 자금은 매우 작습니다.', '이후 가격이 내려 평가손실이 600만 원 발생하면 계좌 평가금액은 1,000만 원이 됩니다. 이 금액이 유지증거금보다 낮아지면 증권사는 추가증거금 납부를 요구할 수 있습니다. 이것이 흔히 말하는 마진콜입니다.', '정해진 기한까지 돈을 채우지 못하면 증권사가 포지션을 반대매매로 강제 청산할 수 있습니다. 필요한 추가 금액, 납부 기한, 청산 방식은 상품·증권사별로 다르므로 알림과 거래설명서를 반드시 확인해야 합니다.']],
+        ['반대매매를 피하기 위한 초보자 원칙', ['필요 증거금에 딱 맞춰 최대 계약 수량을 거래하면 작은 가격 변동에도 위험해집니다. 처음에는 계약 수량을 아주 작게 잡고, 증거금과 별도로 손실을 견딜 여유 현금을 남겨 두는 것이 중요합니다.', '주문을 내기 전에 “이 가격까지 불리하게 움직이면 정리한다”는 손실 한도를 정하세요. 일부 MTS·HTS의 조건주문·자동감시주문을 활용할 수 있지만, 급변동 때는 지정한 가격과 실제 체결 가격이 달라질 수 있습니다.', '장 마감 뒤나 해외 시장이 움직이는 동안에도 가격은 크게 변할 수 있습니다. 초보자는 밤새 포지션을 보유하는 위험을 특히 조심하고, 손실 한도·계약 수량·추가증거금 대응 가능 여부를 먼저 점검해야 합니다.']],
+        ['증거금·만기·강제청산을 먼저 이해하세요', ['파생상품은 계약 금액 전부가 아니라 증거금으로 거래해 레버리지가 커집니다. 기본예탁금은 거래 자격을 위한 최소 잔고이고, 실제 주문을 내면 포지션별 위탁증거금이 사용 가능 금액에서 반영됩니다.', '가격이 불리하게 움직여 계좌가 유지증거금 기준에 미달하면 추가증거금 납부를 요구받을 수 있습니다. 정해진 기한 안에 채우지 못하면 증권사가 반대매매로 포지션을 강제 청산할 수 있으며, 이때 손실이 예치금보다 커질 가능성도 있습니다.', '선물과 옵션에는 만기일도 있으므로, 만기 전 청산하거나 다음 만기로 이월(롤오버)할지 계획해야 합니다. 주문 전에는 계약 단위, 증거금·수수료, 만기일, 최악의 손실 시나리오를 확인하세요. 이해하지 못한 구조의 파생상품은 거래하지 않는 것이 원칙입니다.']],
       ],
-      check: '금리가 오를 때 기존 채권 가격이 왜 달라질 수 있는지 자신의 말로 한 문장 써 보세요.',
-      ragPrompt: '채권 가격과 금리의 관계, 듀레이션, 파생상품 헤지의 기본을 쉬운 예시로 설명해줘.',
+      check: '금리가 오를 때 기존 채권 가격이 왜 달라질 수 있는지, 파생상품 거래 전 어떤 요건과 위험을 확인해야 하는지 자신의 말로 적어 보세요.',
+      ragPrompt: '한국은행 기준금리, 국채·회사채, KOSPI 200 선물·옵션을 예로 들어 채권 가격과 금리, 듀레이션, 파생상품 거래 전 확인할 요건·위험을 쉬운 말로 설명해줘. 특정 매매를 권유하지 마.',
     },
     {
       day: 4,
@@ -142,14 +165,15 @@
       title: '포트폴리오와 위험 지표',
       subtitle: '한 종목의 성과보다 여러 자산을 함께 봐야 하는 이유를 배웁니다.',
       goal: '분산투자, 상관관계, 변동성, MDD, 샤프 비율의 역할을 말할 수 있어요.',
-      keywords: ['상관관계', '변동성', 'MDD', '샤프 비율', '위험기여도'],
+      keywords: ['상관관계', '변동성', 'MDD', '샤프 비율', '위험기여도', '집중위험'],
       lessons: [
         ['분산투자는 왜 필요한가요?', ['서로 다른 방식으로 움직이는 자산을 섞으면 한 자산의 하락이 전체 포트폴리오에 미치는 충격을 줄일 수 있습니다.', '이를 판단할 때 상관관계를 봅니다. 상관관계가 낮다는 것은 두 자산이 같은 방향으로만 움직이지 않을 가능성이 있다는 뜻입니다.', '자산을 많이 담는 것만으로는 충분하지 않습니다. 비슷한 산업·국가에 몰려 있으면 실제로는 한 방향으로 움직일 수 있습니다.']],
         ['위험을 읽는 네 가지 숫자', ['변동성은 수익률이 평소에 얼마나 크게 흔들렸는지 보여 줍니다. 숫자가 크면 오르내림도 큰 편입니다.', 'MDD(최대낙폭)는 최고점에서 가장 크게 떨어진 폭입니다. 내가 실제로 견딜 수 있는 손실을 생각하는 데 도움이 됩니다.', '샤프 비율은 감수한 변동성에 비해 수익이 어느 정도였는지 비교하는 지표입니다. 하나의 숫자만으로 투자 결정을 내리면 안 됩니다.']],
         ['수익률보다 먼저 물어볼 질문', ['“얼마나 벌었나?”와 함께 “얼마나 크게, 얼마나 오래 손실을 견뎠나?”를 봐야 합니다.', '같은 수익률이라도 손실 폭이 작고 회복 과정이 안정적인 포트폴리오가 어떤 사람에게는 더 적합할 수 있습니다.', '내 투자 기간, 목표, 손실 허용 범위가 위험 지표를 해석하는 기준입니다.']],
+        ['한국 ETF 시장에서 위험을 읽는 법', ['KRX ETP 시장에는 2026년 기준 1,000개가 넘는 ETF와 여러 운용사의 상품이 상장되어 있습니다. 상품이 많다는 것은 선택지가 많다는 뜻이지, 비슷한 이름의 ETF를 여러 개 사면 자동으로 분산된다는 뜻은 아닙니다.', '예를 들어 반도체·2차전지·방산·조선·금융처럼 특정 산업을 담은 ETF는 관련 업황과 몇 개 대형 종목에 함께 흔들릴 수 있습니다. 단일종목 레버리지·인버스 ETF는 일간 수익률을 목표 배수로 추적하므로 장기 보유 때 기초자산의 단순 누적 수익률과 차이가 커질 수 있습니다.', '실제 매수 전에는 KRX ETF/ETN 정보에서 기초자산, 추적배수, 운용사, NAV·iNAV, 거래량과 괴리율을 확인하세요. 괴리율이 양수면 시장가격이 순자산가치보다 높게 거래될 수 있다는 뜻이며, 특히 장 마감 무렵이나 해외자산 ETF에서는 주의가 필요합니다.']],
       ],
       check: '수익률이 같다면 변동성과 MDD가 더 작은 포트폴리오를 선호할 이유를 생각해 보세요.',
-      ragPrompt: '분산투자와 상관관계, 변동성, MDD, 샤프 비율을 고등학생도 이해할 수 있게 설명해줘.',
+      ragPrompt: '국내 시장대표·섹터·레버리지 ETF를 예로 들어 분산투자, 상관관계, 변동성, MDD, 샤프 비율과 집중위험을 설명해줘. 특정 상품 매수 추천은 하지 마.',
     },
     {
       day: 5,
@@ -157,14 +181,16 @@
       title: '자산배분과 리밸런싱',
       subtitle: '목표와 위험 수준에 맞게 비중을 정하고, 흔들리지 않도록 규칙을 세웁니다.',
       goal: '자산배분의 의미와 리밸런싱 원칙을 자신의 투자 계획에 적용할 수 있어요.',
-      keywords: ['자산배분', '리밸런싱', '목표수익률', '위험허용도', '투자기간'],
+      keywords: ['자산배분', '리밸런싱', '목표수익률', '위험허용도', '투자기간', '연금계좌'],
       lessons: [
         ['자산배분은 비중을 정하는 일', ['자산배분은 주식, 채권, 현금성 자산 등 어디에 얼마씩 나눌지 정하는 과정입니다.', '정답 비중은 사람마다 다릅니다. 투자 기간이 길고 가격 변동을 견딜 수 있는지, 언제 돈을 써야 하는지가 기준이 됩니다.', '평균분산, 블랙-리터만, Risk Parity 같은 모델은 생각을 돕는 도구입니다. 미래를 정확히 맞히는 기계는 아닙니다.']],
         ['리밸런싱은 원래 계획으로 돌아오는 규칙', ['시간이 지나면 많이 오른 자산의 비중이 커져 처음 계획보다 위험이 커질 수 있습니다.', '리밸런싱은 일정 기간마다 또는 목표 비중에서 일정 폭 벗어났을 때 비중을 조정하는 방법입니다.', '매일 자주 바꾸기보다, 미리 정한 규칙과 거래비용·세금을 함께 고려하는 것이 좋습니다.']],
         ['나만의 한 장 투자 원칙', ['목표: 언제 어떤 목적으로 돈을 쓸지 적습니다.', '범위: 감당할 수 있는 최대 손실과 각 자산의 목표 비중을 정합니다.', '점검: 분기 또는 반기처럼 점검 시점과 리밸런싱 조건을 미리 기록합니다.']],
+        ['한국시장으로 만드는 가상 포트폴리오', ['학습용으로는 “국내 주식시장 전체를 따르는 ETF”, “국고채 또는 우량채 중심 ETF”, “현금성 자산”처럼 역할이 다른 자산군을 먼저 구분해 볼 수 있습니다. 그 뒤 KODEX·TIGER·RISE·ACE 등에서 비슷한 기초지수를 추종하는 실제 상품의 설명서와 비용을 비교해 보세요.', '국내 주식 ETF 안에서도 KOSPI 200 같은 시장대표형, 고배당·금융·반도체·방산 같은 섹터형, 코리아 밸류업 지수처럼 규칙 기반 지수형은 역할이 다릅니다. “국내 ETF를 여러 개 샀다”보다 각 ETF가 어떤 종목과 산업에 겹쳐 있는지가 더 중요합니다.', '연금저축·IRP 계좌는 장기 자산배분을 생각해 볼 수 있는 한국의 대표적 제도권 계좌입니다. 다만 투자 가능 상품, 위험자산 한도, 수수료, 세제 적용은 계좌·금융회사·개인 상황에 따라 달라질 수 있으므로 실제 가입 전에는 해당 금융회사와 국세청·금융감독원 안내를 확인하세요.']],
+        ['리밸런싱 실습: 한국 ETF 비교표 만들기', ['관심 있는 시장대표 ETF 하나, 채권 ETF 하나, 섹터 ETF 하나를 골라 표를 만들어 보세요. 표에는 종목명·종목코드·운용사·기초지수·총보수·상위 편입종목·최근 괴리율·거래량을 적습니다.', '예를 들어 시장대표형 ETF와 반도체 테마 ETF를 함께 담는다면 두 상품에 삼성전자·SK하이닉스가 얼마나 겹치는지 확인합니다. 채권 ETF는 만기구조와 듀레이션을 확인해 금리 변화에 어느 정도 민감한지도 써 봅니다.', '목표 비중에서 5%포인트 이상 벗어났을 때만 점검하는 식으로 가상 규칙을 정해 보세요. 이 실습의 목적은 특정 상품을 고르는 것이 아니라, 실제 상품의 구성·비용·집중위험을 근거로 내 비중을 설명하는 것입니다.']],
       ],
       check: '목표, 투자기간, 손실 허용 범위, 점검 주기 네 줄로 나만의 가상 투자 원칙을 작성해 보세요.',
-      ragPrompt: '자산배분과 리밸런싱이 왜 필요한지, 평균분산·블랙-리터만·Risk Parity를 학습용으로 비교해줘.',
+      ragPrompt: '한국 ETF의 기초지수·운용사·상위 편입종목·비용을 비교하는 방법을 포함해, 자산배분과 리밸런싱 및 평균분산·블랙-리터만·Risk Parity를 학습용으로 설명해줘.',
     },
   ];
 
@@ -271,6 +297,10 @@
   const $simPromptBtn = document.getElementById('simPromptBtn');
   const $simAllocation = document.getElementById('simAllocation');
   const $simNarrative = document.getElementById('simNarrative');
+  const $simCompare = document.getElementById('simCompare');
+  const $simScenarioResult = document.getElementById('simScenarioResult');
+  const $simSaveBtn = document.getElementById('simSaveBtn');
+  const $simScenarioButtons = Array.from(document.querySelectorAll('.sim-scenario'));
   const $chatInputArea = document.querySelector('.chat-input-area');
   const $viewButtons = Array.from(document.querySelectorAll('.brand-nav-btn'));
   const $offcanvasBackdrop = document.getElementById('offcanvasBackdrop');
@@ -281,7 +311,6 @@
   const $learningPanel = document.getElementById('learningPanel');
   const $ragPanel = document.getElementById('ragPanel');
   const $simulationPanel = document.getElementById('simulationPanel');
-  const $sidebarFooter = $learningPanel.querySelector('.sidebar-footer');
   const $openSimulationPanel = document.getElementById('openSimulationPanel');
   const $glossaryModal = document.getElementById('glossaryModal');
   const $glossaryTitle = document.getElementById('glossaryTitle');
@@ -289,9 +318,8 @@
   const $glossarySummary = document.getElementById('glossarySummary');
   const $glossaryDetail = document.getElementById('glossaryDetail');
 
-  // 좌측은 학습·실습, 우측은 RAG 자료와 참고 문서에만 집중합니다.
+  // 좌측은 학습 메뉴, 우측은 RAG 자료와 참고 문서에만 집중합니다.
   $referencePanel.insertBefore($ragPanel, $refList);
-  $learningPanel.insertBefore($simulationPanel, $sidebarFooter);
 
   document.querySelectorAll('.sim-preset').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -378,6 +406,20 @@
     input.addEventListener('input', updateSimulation);
   });
 
+  $simScenarioButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      state.activeScenario = button.dataset.scenario;
+      $simScenarioButtons.forEach(item => item.classList.toggle('active', item === button));
+      updateSimulation();
+    });
+  });
+
+  $simSaveBtn.addEventListener('click', () => {
+    if (!state.currentSimulation) return;
+    state.savedSimulation = { ...state.currentSimulation };
+    updateSimulation();
+  });
+
   $simPromptBtn.addEventListener('click', () => {
     setView('learn');
     $questionInput.value = buildSimulationPrompt();
@@ -397,7 +439,7 @@
     if (view === 'quiz') renderQuiz();
     if (view === 'simulation') {
       renderSimulationGuide();
-      setPanel('left', true);
+      closePanels();
       requestAnimationFrame(() => $simulationPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }));
     }
   }
@@ -529,6 +571,7 @@
           <div><strong>5</strong><span>핵심 지표<br>CAGR · 변동성 · MDD 등</span></div>
           <div><strong>3</strong><span>배분 모델<br>MVO · BL · RP</span></div>
         </section>
+        <section class="learning-map" aria-label="학습 흐름 인포그래픽"><div class="map-heading"><span>LEARNING FLOW</span><strong>읽고 → 확인하고 → 직접 비교합니다</strong></div><div class="map-steps"><div><i class="fa-solid fa-book-open"></i><b>이론</b><small>상품과 시장 구조</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-circle-question"></i><b>퀴즈</b><small>핵심 개념 점검</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-chart-pie"></i><b>실습</b><small>비중과 위험 비교</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-comments"></i><b>RAG</b><small>문서 근거로 확장</small></div></div></section>
         <section class="content-section"><div class="section-heading"><span>01</span><h2>학습 메뉴</h2></div><div class="home-module-grid">${modules}</div></section>
         <section class="content-section"><div class="section-heading"><span>02</span><h2>금융상품, 쉽게 시작하기</h2></div><p class="section-intro">투자는 ‘얼마나 많이 버는가’보다 <strong>내 돈이 어디에 쓰이고 어떤 상황에서 줄어들 수 있는가</strong>를 이해하는 일에서 시작합니다.</p><div class="product-explainer-grid">${explainers}</div></section>
         <section class="markdown-card">
@@ -553,12 +596,12 @@
         localStorage.setItem('finance-rag-quiz-results', JSON.stringify(saved.slice(0, 10)));
         state.quizAnswers.saved = true;
       }
-      $messages.innerHTML = `<article class="content-page quiz-page quiz-result"><div class="content-kicker">QUIZ RESULT</div><div class="result-ring"><strong>${score}</strong><span>/ ${QUIZ_QUESTIONS.length}</span></div><h1>${score >= 4 ? '훌륭합니다. 핵심 개념을 잘 이해하고 있어요.' : '풀이를 바탕으로 핵심 개념을 다시 연결해 보세요.'}</h1><p class="content-lead">정답과 해설을 복습한 뒤 시뮬레이션에서 자산 비중을 바꿔 보세요.</p><div class="quiz-review">${QUIZ_QUESTIONS.map((item, i) => `<div class="review-row ${state.quizAnswers[i] === item.answer ? 'correct' : 'incorrect'}"><span>${i + 1}</span><div><strong>${state.quizAnswers[i] === item.answer ? '정답' : '복습 필요'} · ${item.category}</strong><p>${item.explanation}</p></div></div>`).join('')}</div><div class="home-actions"><button class="content-cta" data-reset-quiz><i class="fa-solid fa-rotate-right"></i> 다시 풀기</button><button class="content-secondary" data-go="simulation">시뮬레이션으로 이동</button></div></article>`;
+      $messages.innerHTML = `<article class="content-page quiz-page quiz-result"><div class="content-kicker">QUIZ RESULT</div><div class="result-ring"><strong>${score}</strong><span>/ ${QUIZ_QUESTIONS.length}</span></div><h1>${score >= 4 ? '훌륭합니다. 핵심 개념을 잘 이해하고 있어요.' : '풀이를 바탕으로 핵심 개념을 다시 연결해 보세요.'}</h1><p class="content-lead">정답과 해설을 복습한 뒤 시뮬레이션에서 자산 비중을 바꿔 보세요.</p><section class="quiz-skill-map" aria-label="영역별 퀴즈 결과">${QUIZ_QUESTIONS.map((item, i) => `<div class="${state.quizAnswers[i] === item.answer ? 'good' : 'needs'}"><span>${item.category}</span><i style="width:${state.quizAnswers[i] === item.answer ? 100 : 38}%"></i><b>${state.quizAnswers[i] === item.answer ? '이해 완료' : '복습 추천'}</b></div>`).join('')}</section><div class="quiz-review">${QUIZ_QUESTIONS.map((item, i) => `<div class="review-row ${state.quizAnswers[i] === item.answer ? 'correct' : 'incorrect'}"><span>${i + 1}</span><div><strong>${state.quizAnswers[i] === item.answer ? '정답' : '복습 필요'} · ${item.category}</strong><p>${item.explanation}</p></div></div>`).join('')}</div><div class="home-actions"><button class="content-cta" data-reset-quiz><i class="fa-solid fa-rotate-right"></i> 다시 풀기</button><button class="content-secondary" data-go="simulation">시뮬레이션으로 이동</button></div></article>`;
       $messages.querySelector('[data-reset-quiz]').addEventListener('click', () => { state.quizIndex = 0; state.quizAnswers = []; renderQuiz(); });
       bindViewLinks();
       return;
     }
-    $messages.innerHTML = `<article class="content-page quiz-page"><div class="quiz-topline"><span class="content-kicker">${question.category.toUpperCase()} QUIZ</span><span>${state.quizIndex + 1} / ${QUIZ_QUESTIONS.length}</span></div><div class="quiz-progress"><i style="width:${((state.quizIndex + 1) / QUIZ_QUESTIONS.length) * 100}%"></i></div><h1>${question.question}</h1><p class="content-lead">가장 적절한 답을 하나 선택하세요.</p><div class="quiz-choices">${question.choices.map((choice, index) => `<button class="quiz-choice" data-answer="${index}"><span>${String.fromCharCode(65 + index)}</span>${choice}</button>`).join('')}</div><div id="quizFeedback"></div></article>`;
+    $messages.innerHTML = `<article class="content-page quiz-page"><div class="quiz-topline"><span class="content-kicker">${question.category.toUpperCase()} QUIZ</span><span>${state.quizIndex + 1} / ${QUIZ_QUESTIONS.length}</span></div><div class="quiz-progress"><i style="width:${((state.quizIndex + 1) / QUIZ_QUESTIONS.length) * 100}%"></i></div><div class="quiz-dot-map" aria-label="퀴즈 진행도">${QUIZ_QUESTIONS.map((_, index) => `<i class="${index < state.quizIndex ? 'done' : index === state.quizIndex ? 'current' : ''}"></i>`).join('')}</div><h1>${question.question}</h1><p class="content-lead">가장 적절한 답을 하나 선택하세요.</p><div class="quiz-choices">${question.choices.map((choice, index) => `<button class="quiz-choice" data-answer="${index}"><span>${String.fromCharCode(65 + index)}</span>${choice}</button>`).join('')}</div><div id="quizFeedback"></div></article>`;
     $messages.querySelectorAll('[data-answer]').forEach(button => button.addEventListener('click', () => answerQuiz(Number(button.dataset.answer))));
   }
 
@@ -577,7 +620,9 @@
   }
 
   function renderSimulationGuide() {
-    $messages.innerHTML = `<article class="content-page simulation-page"><div class="content-kicker">ALLOCATION SIMULATOR</div><h1>비중을 바꾸며 위험과<br><mark>수익의 균형</mark>을 살펴보세요.</h1><p class="content-lead">오른쪽 시뮬레이터에서 주식/ETF·채권·대체/현금 비중과 헤지 강도를 조정하면 학습용 가정에 따른 기대수익률, 변동성, 샤프 비율, 스트레스 손실을 확인할 수 있습니다.</p><div class="simulation-steps"><div><span>01</span><h3>모델 선택</h3><p>평균분산, 블랙-리터만, Risk Parity의 관점을 선택합니다.</p></div><div><span>02</span><h3>비중 조정</h3><p>투자 성향 프리셋을 출발점으로 자산 비중과 헤지 강도를 수정합니다.</p></div><div><span>03</span><h3>RAG로 해석</h3><p>‘이 설정으로 RAG 질문 만들기’로 결과와 리스크를 문서 근거로 검토합니다.</p></div></div><section class="markdown-card warning-card"><h2><i class="fa-solid fa-circle-info"></i> 시뮬레이션 가정</h2><p>표시 수치는 교육을 위한 단순화된 가정과 상관관계 행렬을 사용한 예시이며, 실시간 가격·세금·수수료·상품별 제약을 반영하지 않습니다.</p></section></article>`;
+    $messages.innerHTML = `<article class="content-page simulation-page"><div class="content-kicker">ALLOCATION WORKBENCH</div><h1>직접 설계하고 비교하는<br><mark>자산배분 실습</mark></h1><p class="content-lead">한 화면에서 자산 비중과 헤지를 조절하고, 모델별 결과·시장 충격·저장한 설정을 비교해 보세요.</p><div class="simulation-steps"><div><span>01</span><h3>설계</h3><p>프리셋을 출발점으로 자산 비중과 헤지 강도를 조절합니다.</p></div><div><span>02</span><h3>검증</h3><p>성과 지표와 세 가지 스트레스 시나리오를 함께 읽습니다.</p></div><div><span>03</span><h3>비교</h3><p>현재 설정을 저장하고 이전 설정과 차이를 확인합니다.</p></div></div><div class="simulation-workbench" id="simulationMount"></div></article>`;
+    document.getElementById('simulationMount').appendChild($simulationPanel);
+    updateSimulation();
   }
 
   function renderTheoryIndex() {
@@ -602,6 +647,7 @@
           <div><strong>고등학생 수준</strong><span>어려운 용어는 쉬운 말로 풉니다</span></div>
           <div><strong>실천 질문</strong><span>매일 한 가지 확인 과제가 있습니다</span></div>
         </section>
+        <section class="theory-roadmap" aria-label="5일 이론 흐름"><div class="roadmap-label"><span>CURRICULUM MAP</span><strong>상품 이해에서 포트폴리오 설계까지</strong></div><div>${THEORY_DAYS.map(item => `<button data-theory-day-link="${item.day}"><b>${String(item.day).padStart(2, '0')}</b><i class="fa-solid ${item.icon}"></i><span>${escHtml(item.title)}</span></button>`).join('')}</div></section>
         <section class="theory-index-grid">${dayCards}</section>
         <p class="content-disclaimer">학습용 콘텐츠이며 특정 상품의 매수·매도를 권유하지 않습니다.</p>
       </article>`;
@@ -631,8 +677,7 @@
     const previous = lesson.day > 1 ? lesson.day - 1 : null;
     const next = lesson.day < THEORY_DAYS.length ? lesson.day + 1 : null;
     $messages.innerHTML = `
-      <article class="content-page theory-page theory-detail-page">
-        <button class="theory-back" data-go="theory"><i class="fa-solid fa-arrow-left"></i> 5일 이론 전체 보기</button>
+      <article class="content-page theory-page theory-detail-page theory-day-${lesson.day}">
         <div class="theory-detail-heading">
           <span class="theory-day-number">DAY ${lesson.day} / ${THEORY_DAYS.length}</span>
           <i class="fa-solid ${lesson.icon}"></i>
@@ -642,6 +687,7 @@
         <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄 용어를 누르면 상세 용어 설명이 열립니다.</p>
         <div class="theory-progress" aria-label="5일 학습 중 ${lesson.day}일차">${THEORY_DAYS.map(item => `<i class="${item.day <= lesson.day ? 'done' : ''}"></i>`).join('')}</div>
         <section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section>
+        <section class="lesson-dashboard" aria-label="오늘의 학습 대시보드"><div><span>READ</span><strong>${lesson.lessons.length}</strong><small>개념 카드</small></div><div><span>KEYWORDS</span><strong>${lesson.keywords.length}</strong><small>핵심 용어</small></div><div><span>CHECK</span><strong><i class="fa-solid fa-pen"></i></strong><small>마무리 질문</small></div></section>
         <div class="theory-lesson-list">${lessonBlocks}</div>
         <section class="theory-check"><i class="fa-solid fa-pen-to-square"></i><div><strong>오늘의 확인</strong><p>${escHtml(lesson.check)}</p></div></section>
         <section class="theory-keywords"><strong>핵심 단어</strong><div>${lesson.keywords.map(word => `<span>${escHtml(word)}</span>`).join('')}</div></section>
@@ -686,6 +732,8 @@
         <div class="welcome-icon"><i class="fa-solid fa-graduation-cap"></i></div>
         <h2>금융·투자 RAG 질문</h2>
         <p>5일 이론에서 읽은 내용을 바탕으로 궁금한 점을 자유롭게 질문하세요. 답변에 사용한 참고 문서도 함께 확인할 수 있습니다.</p>
+
+        <section class="rag-flow" aria-label="RAG 답변 과정"><div><i class="fa-solid fa-keyboard"></i><b>질문</b><span>궁금한 점을 입력</span></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-file-lines"></i><b>문서 탐색</b><span>등록 자료에서 근거 찾기</span></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-lightbulb"></i><b>답변</b><span>핵심 내용과 참고 문서</span></div></section>
 
         <div class="quick-examples" id="quickExamples">
           <p class="examples-label">추천 RAG 질문</p>
@@ -898,12 +946,15 @@
     $hedgeRatioLabel.textContent = `${Math.round(hedgeRatio * 100)}%`;
 
     if (total === 0) {
+      state.currentSimulation = null;
       $simReturn.textContent = '-';
       $simVolatility.textContent = '-';
       $simSharpe.textContent = '-';
       $simDrawdown.textContent = '-';
       $simAllocation.innerHTML = '<span>자산 비중 합계가 0%입니다. 슬라이더를 조정해 포트폴리오를 구성하세요.</span>';
       $simNarrative.innerHTML = '<strong>실습 안내</strong><br>주식/ETF, 채권, 대체·현금 중 하나 이상에 비중을 배분하면 리스크와 성과 지표를 계산합니다.';
+      $simScenarioResult.innerHTML = '';
+      $simCompare.innerHTML = '';
       return;
     }
 
@@ -943,10 +994,27 @@
     $simSharpe.textContent = sharpe.toFixed(2);
     $simDrawdown.textContent = percent(drawdown);
 
-    $simAllocation.innerHTML = [
-      `정규화 비중 · 주식/ETF ${percent(weights.stock)} / 채권 ${percent(weights.bond)} / 대체·현금 ${percent(weights.alt)}`,
-      `헤지 강도 · ${Math.round(hedgeRatio * 100)}%`,
-    ].map(line => `<span>${line}</span>`).join('');
+    state.currentSimulation = {
+      expectedReturn,
+      volatility,
+      sharpe,
+      drawdown,
+      weights: { ...weights },
+      hedgeRatio,
+      model: model.label,
+    };
+
+    $simAllocation.innerHTML = `
+      <div class="allocation-bar" aria-label="정규화 자산 비중">
+        <i style="width:${weights.stock * 100}%"></i><i style="width:${weights.bond * 100}%"></i><i style="width:${weights.alt * 100}%"></i>
+      </div>
+      <div class="allocation-legend">
+        <span><b></b>주식/ETF ${percent(weights.stock)}</span>
+        <span><b></b>채권 ${percent(weights.bond)}</span>
+        <span><b></b>대체·현금 ${percent(weights.alt)}</span>
+      </div>
+      <small>파생 헤지 강도 ${Math.round(hedgeRatio * 100)}%</small>
+    `;
 
     // 정규화 비중 기준의 학습용 분류: 대략적인 성향 비교를 위한 규칙입니다.
     const tilt = weights.stock >= 0.55 ? '공격형' : weights.bond >= 0.4 ? '방어형' : '균형형';
@@ -955,6 +1023,29 @@
       ${model.note}<br>
       현재 설정은 기대수익률 ${percent(expectedReturn)}, 예상 변동성 ${percent(volatility)}, 샤프 비율 ${sharpe.toFixed(2)} 수준으로 계산됩니다.
     `;
+    renderScenarioResult(state.currentSimulation);
+    renderSavedComparison(state.currentSimulation);
+  }
+
+  function renderScenarioResult(snapshot) {
+    const scenarios = {
+      equity: { title: '주식 급락', detail: '주식/ETF가 크게 하락하고 채권의 완충 효과가 일부 나타나는 상황', loss: snapshot.weights.stock * 0.22 + snapshot.weights.alt * 0.08 - snapshot.weights.bond * 0.04 - snapshot.hedgeRatio * 0.10 },
+      rates: { title: '금리 급등', detail: '채권 가격 하락과 위험자산 약세가 동시에 발생하는 상황', loss: snapshot.weights.bond * 0.12 + snapshot.weights.stock * 0.07 + snapshot.weights.alt * 0.03 - snapshot.hedgeRatio * 0.03 },
+      inflation: { title: '인플레이션 재확산', detail: '채권 부담과 자산 전반의 변동성이 높아지는 상황', loss: snapshot.weights.bond * 0.09 + snapshot.weights.stock * 0.08 + snapshot.weights.alt * 0.02 - snapshot.hedgeRatio * 0.05 },
+    };
+    const scenario = scenarios[state.activeScenario];
+    const estimatedLoss = -Math.max(0, scenario.loss);
+    $simScenarioResult.innerHTML = `<div><span>${scenario.title} 가정 손실</span><strong>${percent(estimatedLoss)}</strong></div><p>${scenario.detail}입니다. 헤지는 손실을 줄이는 가정이지만 비용과 모든 위험을 없애지는 못합니다.</p>`;
+  }
+
+  function renderSavedComparison(snapshot) {
+    if (!state.savedSimulation) {
+      $simCompare.innerHTML = '<span><i class="fa-regular fa-bookmark"></i> 현재 설정을 저장하면 다음 조정안과 수익률·변동성을 비교할 수 있습니다.</span>';
+      return;
+    }
+    const saved = state.savedSimulation;
+    const diff = (value, previous) => `${value - previous >= 0 ? '+' : ''}${percent(value - previous)}`;
+    $simCompare.innerHTML = `<strong><i class="fa-solid fa-code-compare"></i> 저장한 설정과 비교</strong><div><span>기대수익률 ${diff(snapshot.expectedReturn, saved.expectedReturn)}</span><span>변동성 ${diff(snapshot.volatility, saved.volatility)}</span><span>스트레스 손실 ${diff(snapshot.drawdown, saved.drawdown)}</span></div><small>기준: ${saved.model} · 주식/ETF ${percent(saved.weights.stock)} · 채권 ${percent(saved.weights.bond)}</small>`;
   }
 
   function buildSimulationPrompt() {

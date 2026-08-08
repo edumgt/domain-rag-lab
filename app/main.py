@@ -31,4 +31,9 @@ if os.path.isdir(_frontend_dir):
 
     @app.get("/", include_in_schema=False)
     def serve_index():
-        return FileResponse(os.path.join(_frontend_dir, "index.html"))
+        # The client shell references versioned static assets, but the HTML itself
+        # must also be refreshed so a deployed UI immediately picks up new assets.
+        return FileResponse(
+            os.path.join(_frontend_dir, "index.html"),
+            headers={"Cache-Control": "no-store, max-age=0"},
+        )
