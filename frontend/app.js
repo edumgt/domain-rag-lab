@@ -114,6 +114,13 @@
     stressVolatilityMultiplier: 1.55,
     equityStressPenalty: 0.08,
     hedgeStressOffset: 0.025,
+    expectedReturns: [0.082, 0.038, 0.052],
+    annualVolatility: [0.19, 0.065, 0.11],
+    correlationMatrix: [
+      [1.0, 0.18, 0.42],
+      [0.18, 1.0, 0.10],
+      [0.42, 0.10, 1.0],
+    ],
   };
 
   const $messages = document.getElementById('messages');
@@ -450,7 +457,7 @@
       }
 
       const data = await res.json();
-      showUploadStatus('success', `"${escHtml(data.document_id)}" 등록 완료 (${data.chunks}개 청크)`);
+      showUploadStatus('success', `"${escHtml(data.title || data.document_id)}" 등록 완료 (${data.chunks}개 청크)`);
       $textTitle.value = '';
       $textContent.value = '';
     } catch (err) {
@@ -480,13 +487,9 @@
     document.getElementById('altWeightLabel').textContent = `${raw.alt}%`;
     document.getElementById('hedgeRatioLabel').textContent = `${Math.round(hedgeRatio * 100)}%`;
 
-    const returns = [0.082, 0.038, 0.052];
-    const vols = [0.19, 0.065, 0.11];
-    const corr = [
-      [1.0, 0.18, 0.42],
-      [0.18, 1.0, 0.10],
-      [0.42, 0.10, 1.0],
-    ];
+    const returns = SIMULATION_ASSUMPTIONS.expectedReturns;
+    const vols = SIMULATION_ASSUMPTIONS.annualVolatility;
+    const corr = SIMULATION_ASSUMPTIONS.correlationMatrix;
     const vector = [weights.stock, weights.bond, weights.alt];
 
     let variance = 0;
