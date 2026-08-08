@@ -149,6 +149,10 @@
   const $bondWeightLabel = document.getElementById('bondWeightLabel');
   const $altWeightLabel = document.getElementById('altWeightLabel');
   const $hedgeRatioLabel = document.getElementById('hedgeRatioLabel');
+  const $simReturn = document.getElementById('simReturn');
+  const $simVolatility = document.getElementById('simVolatility');
+  const $simSharpe = document.getElementById('simSharpe');
+  const $simDrawdown = document.getElementById('simDrawdown');
   const $simPromptBtn = document.getElementById('simPromptBtn');
   const $simAllocation = document.getElementById('simAllocation');
   const $simNarrative = document.getElementById('simNarrative');
@@ -483,10 +487,10 @@
     $hedgeRatioLabel.textContent = `${Math.round(hedgeRatio * 100)}%`;
 
     if (total === 0) {
-      document.getElementById('simReturn').textContent = '-';
-      document.getElementById('simVolatility').textContent = '-';
-      document.getElementById('simSharpe').textContent = '-';
-      document.getElementById('simDrawdown').textContent = '-';
+      $simReturn.textContent = '-';
+      $simVolatility.textContent = '-';
+      $simSharpe.textContent = '-';
+      $simDrawdown.textContent = '-';
       $simAllocation.innerHTML = '<span>자산 비중 합계가 0%입니다. 슬라이더를 조정해 포트폴리오를 구성하세요.</span>';
       $simNarrative.innerHTML = '<strong>실습 안내</strong><br>주식/ETF, 채권, 대체·현금 중 하나 이상에 비중을 배분하면 리스크와 성과 지표를 계산합니다.';
       return;
@@ -523,10 +527,10 @@
       - hedgeRatio * SIMULATION_ASSUMPTIONS.hedgeStressOffset
     ));
 
-    document.getElementById('simReturn').textContent = percent(expectedReturn);
-    document.getElementById('simVolatility').textContent = percent(volatility);
-    document.getElementById('simSharpe').textContent = sharpe.toFixed(2);
-    document.getElementById('simDrawdown').textContent = percent(drawdown);
+    $simReturn.textContent = percent(expectedReturn);
+    $simVolatility.textContent = percent(volatility);
+    $simSharpe.textContent = sharpe.toFixed(2);
+    $simDrawdown.textContent = percent(drawdown);
 
     $simAllocation.innerHTML = [
       `정규화 비중 · 주식/ETF ${percent(weights.stock)} / 채권 ${percent(weights.bond)} / 대체·현금 ${percent(weights.alt)}`,
@@ -557,7 +561,7 @@
       alt: Number($altWeight.value),
     };
     const total = raw.stock + raw.bond + raw.alt;
-    const safeTotal = Math.max(total, 1);
+    const safeTotal = total || 0.001;
     return {
       raw,
       total,
