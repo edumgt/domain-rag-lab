@@ -57,12 +57,18 @@ services:
       REDIS_PORT: 6379
       QDRANT_HOST: qdrant
       QDRANT_PORT: 6333
+      LEAN_SSH_HOST: ${LEAN_SSH_HOST:-}
+      LEAN_SSH_USER: ${LEAN_SSH_USER:-ubuntu}
+      LEAN_SSH_KEY_PATH: ${LEAN_SSH_KEY_PATH:-}
+      LEAN_REMOTE_WORKDIR: ${LEAN_REMOTE_WORKDIR:-/home/ubuntu/lean-workflows}
+      LEAN_DOCKER_IMAGE: ${LEAN_DOCKER_IMAGE:-quantconnect/lean:latest}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
       - ./app:/app/app
       - ./frontend:/app/frontend
       - ./data:/app/data
+      - ${LEAN_SSH_KEY_HOST_PATH:-/dev/null}:${LEAN_SSH_KEY_PATH:-/run/secrets/lean.pem}:ro
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       postgres:

@@ -765,6 +765,7 @@ KOSDAQ|웹젠|게임`,
       closePanels();
       requestAnimationFrame(() => $simulationPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }));
     }
+    if (view === 'backtest') renderBacktestWorkflow();
   }
 
   function togglePanel(panel) {
@@ -958,6 +959,30 @@ KOSDAQ|웹젠|게임`,
     document.getElementById('simulationMount').appendChild($simulationPanel);
     updateSimulation();
   }
+
+  function renderBacktestWorkflow() {
+    const today = new Date().toISOString().slice(0, 10);
+    $messages.innerHTML = `<article class="content-page backtest-page"><div class="content-kicker">QUANTCONNECT LEAN · YFINANCE WORKFLOW</div><h1>입력 → 데이터 → LEAN →<br><mark>수익률 비교</mark></h1><p class="content-lead">일봉 데이터를 yfinance에서 가져와 원격 QuantConnect LEAN 엔진에서 매수·보유 예시를 실행합니다.</p><section class="backtest-canvas" aria-label="백테스트 워크플로우"><div class="workflow-node input"><span>01 · 종목</span><input id="btTicker" value="SPY" maxlength="12" aria-label="종목 티커" /><small>예: SPY, AAPL, MSFT</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>02 · 백테스트 기간</span><div><input id="btStart" type="date" value="2023-01-01" /><input id="btEnd" type="date" value="${today}" /></div><small>전략 성과를 계산할 기간</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>03 · 비교 기간</span><div><input id="btCompareStart" type="date" value="2022-01-01" /><input id="btCompareEnd" type="date" value="2022-12-31" /></div><small>이전 기간과 수익률 비교</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node engine"><span>04 · 실행 엔진</span><strong><i class="fa-brands fa-docker"></i> LEAN</strong><small>yfinance → 원격 Docker</small></div></section><div class="backtest-actions"><button class="content-cta" id="runBacktest"><i class="fa-solid fa-play"></i> 백테스트 실행</button><span>교육용 매수·보유 예시이며 투자 권유가 아닙니다.</span></div><section class="backtest-result" id="backtestResult"><div class="backtest-empty"><i class="fa-solid fa-diagram-project"></i><p>워크플로우의 입력값을 설정한 뒤 실행하세요.</p></div></section></article>`;
+    document.getElementById('runBacktest').addEventListener('click', runBacktest);
+  }
+
+  async function runBacktest() {
+    const button = document.getElementById('runBacktest');
+    const result = document.getElementById('backtestResult');
+    const payload = { ticker: document.getElementById('btTicker').value, start_date: document.getElementById('btStart').value, end_date: document.getElementById('btEnd').value, compare_start_date: document.getElementById('btCompareStart').value, compare_end_date: document.getElementById('btCompareEnd').value, initial_cash: 10000 };
+    button.disabled = true; button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> LEAN 실행 중';
+    result.innerHTML = '<div class="backtest-empty"><i class="fa-solid fa-spinner fa-spin"></i><p>yfinance 데이터를 정리하고 원격 LEAN 컨테이너를 실행하고 있습니다.</p></div>';
+    try {
+      const response = await fetch('/backtests/run', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || '백테스트를 실행하지 못했습니다.');
+      result.innerHTML = `<div class="backtest-result-head"><span>${escHtml(data.engine)}</span><h2>${escHtml(data.ticker)} 결과</h2></div><div class="backtest-metrics"><article><span>백테스트 수익률</span><strong class="${data.strategy_return_pct >= 0 ? 'up' : 'down'}">${data.strategy_return_pct >= 0 ? '+' : ''}${data.strategy_return_pct}%</strong></article><article><span>비교 기간 수익률</span><strong class="${data.comparison_return_pct >= 0 ? 'up' : 'down'}">${data.comparison_return_pct >= 0 ? '+' : ''}${data.comparison_return_pct}%</strong></article><article><span>기간 차이</span><strong class="${data.outperformance_pct >= 0 ? 'up' : 'down'}">${data.outperformance_pct >= 0 ? '+' : ''}${data.outperformance_pct}%p</strong></article><article><span>최대 낙폭</span><strong class="down">${data.max_drawdown_pct}%</strong></article></div><canvas id="backtestChart" width="900" height="250" aria-label="자산 곡선"></canvas><p class="backtest-disclaimer">${escHtml(data.disclaimer)}</p><details><summary>LEAN 실행 로그 보기</summary><pre>${escHtml(data.lean_log || '결과 로그 없음')}</pre></details>`;
+      drawBacktestChart(data.points);
+    } catch (error) { result.innerHTML = `<div class="backtest-error"><i class="fa-solid fa-triangle-exclamation"></i>${escHtml(error.message)}</div>`; }
+    finally { button.disabled = false; button.innerHTML = '<i class="fa-solid fa-play"></i> 백테스트 실행'; }
+  }
+
+  function drawBacktestChart(points) { const canvas = document.getElementById('backtestChart'); if (!canvas || !points?.length) return; const ctx = canvas.getContext('2d'); const values = points.map(p => p.value), min = Math.min(...values), max = Math.max(...values), pad = 24, w = canvas.width - pad * 2, h = canvas.height - pad * 2; ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.strokeStyle = '#dbeafe'; ctx.beginPath(); ctx.moveTo(pad, canvas.height - pad); ctx.lineTo(canvas.width - pad, canvas.height - pad); ctx.stroke(); ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 3; ctx.beginPath(); points.forEach((p, i) => { const x = pad + w * i / Math.max(1, points.length - 1), y = pad + (max - p.value) / Math.max(1, max - min) * h; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); }
 
   function renderTheoryIndex() {
     const dayCards = THEORY_DAYS.map(item => `

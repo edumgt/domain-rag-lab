@@ -38,6 +38,14 @@ class Settings(BaseSettings):
     long_term_memory_threshold: float = 0.4
     long_term_memory_top_k: int = 3
 
+    # 원격 QuantConnect LEAN 실행기. 키 파일·호스트는 배포 환경에서만 설정한다.
+    lean_ssh_host: str = ""
+    lean_ssh_user: str = "ubuntu"
+    lean_ssh_key_path: str = ""
+    lean_remote_workdir: str = "/home/ubuntu/lean-workflows"
+    lean_docker_image: str = "quantconnect/lean:latest"
+    lean_timeout_seconds: int = 300
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property
