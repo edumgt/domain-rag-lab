@@ -1,0 +1,14 @@
+.git
+.env
+.env.*
+!.env.local.example
+!.env.prod.example
+*.pem
+__pycache__
+*.py[cod]
+.pytest_cache
+.mypy_cache
+.ruff_cache
+venv
+.venv
+data/uploads

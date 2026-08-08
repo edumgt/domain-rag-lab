@@ -1,3 +1,5 @@
+name: domain-rag-lab-local
+
 services:
   postgres:
     image: pgvector/pgvector:pg16
@@ -49,7 +51,7 @@ services:
     ports:
       - "8190:8000"
     env_file:
-      - .env
+      - ${APP_ENV_FILE:-.env.local}
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
@@ -90,7 +92,7 @@ services:
     ports:
       - "8290:8501"
     env_file:
-      - .env
+      - ${APP_ENV_FILE:-.env.local}
     environment:
       API_BASE_URL: http://api:8000
     volumes:

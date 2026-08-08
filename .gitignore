@@ -5,6 +5,8 @@ __pycache__/
 *.pyo
 *.pyd
 .env
+.env.local
+.env.prod
 *.egg-info/
 dist/
 build/
