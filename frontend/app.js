@@ -277,11 +277,20 @@
   const $openLeftPanel = document.getElementById('openLeftPanel');
   const $openRightPanel = document.getElementById('openRightPanel');
   const $closeLeftPanel = document.getElementById('closeLeftPanel');
+  const $learningPanel = document.getElementById('learningPanel');
+  const $ragPanel = document.getElementById('ragPanel');
+  const $simulationPanel = document.getElementById('simulationPanel');
+  const $sidebarFooter = $learningPanel.querySelector('.sidebar-footer');
+  const $openSimulationPanel = document.getElementById('openSimulationPanel');
   const $glossaryModal = document.getElementById('glossaryModal');
   const $glossaryTitle = document.getElementById('glossaryTitle');
   const $glossaryNames = document.getElementById('glossaryNames');
   const $glossarySummary = document.getElementById('glossarySummary');
   const $glossaryDetail = document.getElementById('glossaryDetail');
+
+  // 좌측은 학습·실습, 우측은 RAG 자료와 참고 문서에만 집중합니다.
+  $referencePanel.insertBefore($ragPanel, $refList);
+  $learningPanel.insertBefore($simulationPanel, $sidebarFooter);
 
   document.querySelectorAll('.sim-preset').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -303,6 +312,9 @@
 
   $openLeftPanel.addEventListener('click', () => togglePanel('left'));
   $openRightPanel.addEventListener('click', () => togglePanel('right'));
+  $openSimulationPanel.addEventListener('click', () => {
+    setView('simulation');
+  });
   $closeLeftPanel.addEventListener('click', () => setPanel('left', false));
   $offcanvasBackdrop.addEventListener('click', () => closePanels());
   $messages.addEventListener('click', event => {
@@ -382,7 +394,11 @@
     if (view === 'learn') showWelcome();
     if (view === 'theory') renderTheoryIndex();
     if (view === 'quiz') renderQuiz();
-    if (view === 'simulation') renderSimulationGuide();
+    if (view === 'simulation') {
+      renderSimulationGuide();
+      setPanel('left', true);
+      requestAnimationFrame(() => $simulationPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    }
   }
 
   function togglePanel(panel) {

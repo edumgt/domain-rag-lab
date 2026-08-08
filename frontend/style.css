@@ -1063,6 +1063,19 @@ body.right-panel-open .ref-panel { transform: translateX(0); }
 }
 .topic-btn.theory-menu-btn.active .day-menu-number { background: var(--accent); color: #fff; }
 
+/* 좌측: 학습과 계산 실습 / 우측: RAG 자료와 답변 근거 */
+.sidebar .simulation-panel { border-top: 1px solid var(--border); }
+.sidebar .simulation-panel .sim-body { padding-bottom: 26px; }
+.ref-panel .rag-panel {
+  flex: 0 0 auto;
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.ref-panel .rag-panel .section-copy { margin-bottom: 14px; }
+.ref-panel .rag-panel .text-ingest { margin-top: 4px; }
+.ref-panel .ref-list { min-height: 180px; }
+
 .theory-overview {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

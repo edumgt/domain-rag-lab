@@ -39,9 +39,14 @@
           <span class="day-menu-number">5일차</span> 자산배분과 리밸런싱
         </button>
 
+        <p class="nav-label">실습 도구</p>
+        <button class="topic-btn theory-menu-btn" id="openSimulationPanel">
+          <i class="fa-solid fa-calculator"></i> 자산배분 시뮬레이션
+        </button>
+
       </nav>
 
-      <div class="sidebar-section">
+      <div class="sidebar-section rag-panel" id="ragPanel">
         <p class="nav-label">RAG 자료 등록</p>
         <p class="section-copy">주식/ETF, 채권, 파생상품, 자산배분 교재를 TXT 또는 PDF로 등록하세요.</p>
         <div class="upload-area" id="uploadArea">
@@ -88,8 +93,8 @@
           <button class="btn-ghost" id="clearChatBtn" title="대화 초기화">
             <i class="fa-solid fa-trash-can"></i> 초기화
           </button>
-          <button class="panel-toggle panel-toggle-right" id="openRightPanel" aria-controls="referencePanel" aria-label="도구 패널 열기">
-            <i class="fa-solid fa-sliders"></i><span>도구</span>
+          <button class="panel-toggle panel-toggle-right" id="openRightPanel" aria-controls="referencePanel" aria-label="RAG 패널 열기">
+            <i class="fa-solid fa-database"></i><span>RAG</span>
           </button>
         </div>
       </header>
@@ -120,16 +125,16 @@
       </div>
     </main>
 
-    <aside class="ref-panel" id="referencePanel" aria-label="참고 문서와 자산배분 시뮬레이션">
+    <aside class="ref-panel" id="referencePanel" aria-label="RAG 자료 등록과 참고 문서">
       <div class="ref-header">
-        <h3><i class="fa-solid fa-paperclip"></i> 참고 문서</h3>
+        <h3><i class="fa-solid fa-database"></i> RAG 도구</h3>
         <button class="btn-ghost" id="closeRefBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div id="refList" class="ref-list">
         <p class="ref-empty">질문 후 참고 문서가 여기에 표시됩니다.</p>
       </div>
 
-      <div class="simulation-panel">
+      <div class="simulation-panel" id="simulationPanel">
         <div class="ref-header simulation-header">
           <h3><i class="fa-solid fa-calculator"></i> 실습 시뮬레이션</h3>
         </div>
