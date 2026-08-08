@@ -1131,7 +1131,26 @@ body.right-panel-open .ref-panel { transform: translateX(0); }
 .ref-card-score { color: #fff; }
 .msg.user .msg-bubble { color: var(--text); }
 .domain-badge { border-color: #bfdbfe; }
-.messages { padding: 28px clamp(18px, 4vw, 56px); }
+.chat-area {
+  height: 100vh;
+  min-height: 0;
+}
+
+/* 본문은 중앙의 좁은 컬럼이 아니라, 헤더 아래 사용 가능한 전체 폭을 사용합니다. */
+.messages {
+  min-height: 0;
+  padding: 0;
+  overscroll-behavior: contain;
+}
+
+.content-page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 36px clamp(20px, 2.5vw, 48px) 72px;
+}
+
+.theory-detail-page { padding-top: 52px; }
 .msg.bot .msg-bubble,
 .course-card,
 .hero-focus,
@@ -1151,6 +1170,8 @@ body.right-panel-open .ref-panel { transform: translateX(0); }
   .brand-nav { gap: 2px; }
   .brand-nav-btn { padding: 7px 6px; }
   .header-actions { gap: 5px; }
+  .content-page { padding: 28px 16px 52px; }
+  .theory-detail-page { padding-top: 34px; }
   .theory-overview, .theory-index-grid { grid-template-columns: 1fr; }
   .theory-overview div { border-right: 0; border-bottom: 1px solid var(--border); }
   .theory-overview div:last-child { border-bottom: 0; }
