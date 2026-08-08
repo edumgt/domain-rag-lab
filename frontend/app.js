@@ -145,6 +145,10 @@
   const $bondWeight = document.getElementById('bondWeight');
   const $altWeight = document.getElementById('altWeight');
   const $hedgeRatio = document.getElementById('hedgeRatio');
+  const $stockWeightLabel = document.getElementById('stockWeightLabel');
+  const $bondWeightLabel = document.getElementById('bondWeightLabel');
+  const $altWeightLabel = document.getElementById('altWeightLabel');
+  const $hedgeRatioLabel = document.getElementById('hedgeRatioLabel');
   const $simPromptBtn = document.getElementById('simPromptBtn');
   const $simAllocation = document.getElementById('simAllocation');
   const $simNarrative = document.getElementById('simNarrative');
@@ -469,12 +473,23 @@
 
   function updateSimulation() {
     const snapshot = getSimulationSnapshot();
-    const { weights, hedgeRatio, model } = snapshot;
+    const { weights, hedgeRatio, model, total } = snapshot;
+    const normalizedSuffix = total === 100 ? '' : ' (정규화)';
 
-    document.getElementById('stockWeightLabel').textContent = `${percent(weights.stock)} (정규화)`;
-    document.getElementById('bondWeightLabel').textContent = `${percent(weights.bond)} (정규화)`;
-    document.getElementById('altWeightLabel').textContent = `${percent(weights.alt)} (정규화)`;
-    document.getElementById('hedgeRatioLabel').textContent = `${Math.round(hedgeRatio * 100)}%`;
+    $stockWeightLabel.textContent = `${percent(weights.stock)}${normalizedSuffix}`;
+    $bondWeightLabel.textContent = `${percent(weights.bond)}${normalizedSuffix}`;
+    $altWeightLabel.textContent = `${percent(weights.alt)}${normalizedSuffix}`;
+    $hedgeRatioLabel.textContent = `${Math.round(hedgeRatio * 100)}%`;
+
+    if (total === 0) {
+      document.getElementById('simReturn').textContent = '-';
+      document.getElementById('simVolatility').textContent = '-';
+      document.getElementById('simSharpe').textContent = '-';
+      document.getElementById('simDrawdown').textContent = '-';
+      $simAllocation.innerHTML = '<span>자산 비중 합계가 0%입니다. 슬라이더를 조정해 포트폴리오를 구성하세요.</span>';
+      $simNarrative.innerHTML = '<strong>실습 안내</strong><br>주식/ETF, 채권, 대체·현금 중 하나 이상에 비중을 배분하면 리스크와 성과 지표를 계산합니다.';
+      return;
+    }
 
     const returns = SIMULATION_ASSUMPTIONS.expectedReturns;
     const vols = SIMULATION_ASSUMPTIONS.annualVolatility;
@@ -499,11 +514,11 @@
       Math.sqrt(variance) * model.volMultiplier * (1 - hedgeRatio * SIMULATION_ASSUMPTIONS.hedgeVolatilityReduction),
     );
     const sharpe = (expectedReturn - SIMULATION_ASSUMPTIONS.riskFreeRate) / volatility;
-    const drawdown = -(
+    const drawdown = Math.min(0, -(
       volatility * SIMULATION_ASSUMPTIONS.stressVolatilityMultiplier
       + Math.max(0, weights.stock - 0.5) * SIMULATION_ASSUMPTIONS.equityStressPenalty
       - hedgeRatio * SIMULATION_ASSUMPTIONS.hedgeStressOffset
-    );
+    ));
 
     document.getElementById('simReturn').textContent = percent(expectedReturn);
     document.getElementById('simVolatility').textContent = percent(volatility);
@@ -537,15 +552,17 @@
       bond: Number($bondWeight.value),
       alt: Number($altWeight.value),
     };
-    const total = Math.max(raw.stock + raw.bond + raw.alt, 1);
+    const total = raw.stock + raw.bond + raw.alt;
+    const safeTotal = Math.max(total, 1);
     return {
       raw,
+      total,
       hedgeRatio: Number($hedgeRatio.value) / 100,
       model: MODEL_META[$modelSelect.value],
       weights: {
-        stock: raw.stock / total,
-        bond: raw.bond / total,
-        alt: raw.alt / total,
+        stock: raw.stock / safeTotal,
+        bond: raw.bond / safeTotal,
+        alt: raw.alt / safeTotal,
       },
     };
   }
