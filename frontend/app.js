@@ -505,6 +505,7 @@
     }
 
     const baseReturn = vector.reduce((sum, value, idx) => sum + value * returns[idx], 0);
+    // 가장 큰 자산 집중도를 제외한 나머지 비중을 단순 분산효과로 보는 학습용 휴리스틱
     const diversification = 1 - Math.max(...vector);
     const expectedReturn = baseReturn
       + model.returnBoost
@@ -515,6 +516,7 @@
       Math.sqrt(variance) * model.volMultiplier * (1 - hedgeRatio * SIMULATION_ASSUMPTIONS.hedgeVolatilityReduction),
     );
     const sharpe = (expectedReturn - SIMULATION_ASSUMPTIONS.riskFreeRate) / volatility;
+    // 스트레스 손실은 학습자에게 손실값으로 보이도록 음수로 표기합니다.
     const drawdown = -Math.max(0, (
       volatility * SIMULATION_ASSUMPTIONS.stressVolatilityMultiplier
       + Math.max(0, weights.stock - 0.5) * SIMULATION_ASSUMPTIONS.equityStressPenalty
