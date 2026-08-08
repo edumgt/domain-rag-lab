@@ -7,7 +7,6 @@
     topK: 4,
     loading: false,
     chatHistory: [],
-    activeTopic: 'products',
     activeView: 'home',
     activeTheoryDay: 1,
     quizIndex: 0,
@@ -169,80 +168,6 @@
     },
   ];
 
-  const TOPIC_META = {
-    products: {
-      label: '금융상품 이해',
-      icon: 'fa-layer-group',
-      summary: '주식/ETF, 채권, 파생상품의 개요와 운용 전략을 연결해 이해합니다.',
-      bullets: ['주식과 ETF 구조 비교', '채권 듀레이션·크레딧 포인트', '파생상품 헤지 목적과 리스크'],
-      prompts: [
-        '주식과 ETF의 차이, 장단점, 운용 전략을 학습자 관점에서 설명해줘.',
-        '채권 상품의 기본 구조와 금리 변화에 따른 운용 전략을 설명해줘.',
-        '파생상품의 개요와 헤지 중심 운용 전략을 예시와 함께 설명해줘.',
-      ],
-    },
-    'stocks-etf': {
-      label: '주식 / ETF',
-      icon: 'fa-chart-line',
-      summary: '주식과 ETF의 구조, 비용, 추적 방식, 운용 전략을 비교합니다.',
-      bullets: ['직접 투자와 패시브 투자 비교', '추적오차·괴리율·유동성 점검', '리밸런싱과 적립식 활용'],
-      prompts: [
-        '주식 직접투자와 ETF 투자 전략의 차이를 설명하고 학습 포인트를 정리해줘.',
-        'ETF를 평가할 때 추적오차, 괴리율, 유동성을 어떻게 봐야 하는지 설명해줘.',
-      ],
-    },
-    bonds: {
-      label: '채권 상품',
-      icon: 'fa-landmark',
-      summary: '채권 가격, 금리, 듀레이션, 신용스프레드가 운용 전략에 미치는 영향을 학습합니다.',
-      bullets: ['표면금리와 만기수익률', '듀레이션과 금리 민감도', '국채·회사채·하이일드 비교'],
-      prompts: [
-        '채권 가격과 금리의 관계를 설명하고 듀레이션 관점의 운용 전략을 알려줘.',
-        '국채와 회사채의 차이, 신용위험, 금리 사이클별 전략을 설명해줘.',
-      ],
-    },
-    derivatives: {
-      label: '파생상품',
-      icon: 'fa-wave-square',
-      summary: '선물, 옵션, 스왑의 구조를 이해하고 헤지와 위험관리 목적의 활용법을 정리합니다.',
-      bullets: ['선물과 현물의 차이', '콜·풋 옵션의 손익 구조', '헤지 비율과 롤오버 리스크'],
-      prompts: [
-        '선물과 옵션의 차이, 주요 리스크, 헤지 중심 운용 전략을 설명해줘.',
-        '파생상품을 투기가 아니라 리스크 관리 도구로 사용할 때의 원칙을 정리해줘.',
-      ],
-    },
-    'portfolio-theory': {
-      label: '포트폴리오 이론',
-      icon: 'fa-chart-column',
-      summary: '수익률과 위험의 균형, 성과 분석, 리스크 지표를 함께 이해합니다.',
-      bullets: ['분산투자와 상관관계', 'CAGR·변동성·MDD·샤프 비율', '성과를 위험 대비로 해석하기'],
-      prompts: [
-        '포트폴리오 이론의 핵심과 샤프 비율, MDD, 변동성을 함께 설명해줘.',
-        '성과 분석에서 CAGR과 변동성, 최대낙폭을 왜 같이 봐야 하는지 알려줘.',
-      ],
-    },
-    'allocation-models': {
-      label: '자산배분 모델',
-      icon: 'fa-sliders',
-      summary: '평균분산, 블랙-리터만, Risk-Parity 모델의 차이와 활용 상황을 비교합니다.',
-      bullets: ['평균분산의 입력 민감도', '블랙-리터만의 균형수익률 + 뷰 반영', 'Risk-Parity의 위험기여도 균등화'],
-      prompts: [
-        '평균분산, 블랙-리터만, Risk-Parity 모델을 비교해서 설명해줘.',
-        '블랙-리터만이 평균분산의 어떤 한계를 보완하는지 사례 중심으로 설명해줘.',
-      ],
-    },
-    'case-practice': {
-      label: '사례 분석 실습',
-      icon: 'fa-flask',
-      summary: '시장 시나리오별 자산배분과 금융상품 선택을 실습 질문으로 연결합니다.',
-      bullets: ['금리 인하·인상 시나리오', '방어형/균형형/공격형 포트폴리오', '리밸런싱과 헤지 아이디어'],
-      prompts: [
-        '금리 하락 국면에서 주식/ETF, 채권, 파생 헤지를 어떻게 조합할지 사례로 설명해줘.',
-        '균형형 투자자의 사례를 두고 평균분산과 Risk-Parity 결과 차이를 설명해줘.',
-      ],
-    },
-  };
-
   const MODEL_META = {
     mean_variance: {
       label: '평균분산',
@@ -285,8 +210,6 @@
   const $messages = document.getElementById('messages');
   const $questionInput = document.getElementById('questionInput');
   const $sendBtn = document.getElementById('sendBtn');
-  const $domainBadge = document.getElementById('domainBadge');
-  const $currentTrackLabel = document.getElementById('currentTrackLabel');
   const $topKLabel = document.getElementById('topKLabel');
   const $refList = document.getElementById('refList');
   const $fileInput = document.getElementById('fileInput');
@@ -298,7 +221,6 @@
   const $textContent = document.getElementById('textContent');
   const $clearChatBtn = document.getElementById('clearChatBtn');
   const $closeRefBtn = document.getElementById('closeRefBtn');
-  const $topicButtons = Array.from(document.querySelectorAll('.topic-btn'));
   const $theoryDayButtons = Array.from(document.querySelectorAll('[data-theory-day]'));
   const $modelSelect = document.getElementById('modelSelect');
   const $stockWeight = document.getElementById('stockWeight');
@@ -330,17 +252,6 @@
       $altWeight.value = btn.dataset.alt;
       $hedgeRatio.value = btn.dataset.hedge;
       updateSimulation();
-    });
-  });
-
-  $topicButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (btn.dataset.theoryDay) return;
-      $topicButtons.forEach(item => item.classList.remove('active'));
-      btn.classList.add('active');
-      state.activeTopic = btn.dataset.topic;
-      if (state.activeView !== 'learn') setView('learn');
-      updateTopicUI();
     });
   });
 
@@ -415,13 +326,6 @@
     $questionInput.focus();
   });
 
-  function updateTopicUI() {
-    const meta = TOPIC_META[state.activeTopic];
-    $domainBadge.innerHTML = `<i class="fa-solid ${meta.icon}"></i> ${meta.label} 학습 모드`;
-    $currentTrackLabel.textContent = meta.label;
-    if (!state.chatHistory.length && state.activeView === 'learn') showWelcome();
-  }
-
   function setView(view) {
     state.activeView = view;
     $viewButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
@@ -460,11 +364,11 @@
 
   function renderHome() {
     const modules = [
-      ['금융상품 이해', '주식·ETF·채권·파생상품의 구조, 비용, 위험을 비교합니다.', 'fa-layer-group'],
-      ['포트폴리오 이론', '분산투자와 상관관계, 변동성·MDD·샤프 비율을 해석합니다.', 'fa-chart-column'],
-      ['자산배분 실습', '평균분산·블랙-리터만·Risk Parity를 같은 포트폴리오에 적용합니다.', 'fa-sliders'],
-    ].map(([title, copy, icon]) => `
-      <button class="home-module" data-go="learn">
+      ['5일 이론 학습', '금융상품부터 자산배분·리밸런싱까지 하루 한 주제씩 읽습니다.', 'fa-calendar-days', 'theory'],
+      ['개념 퀴즈', 'ETF, 채권, 분산투자와 위험 지표의 핵심을 확인합니다.', 'fa-circle-question', 'quiz'],
+      ['자산배분 실습', '평균분산·블랙-리터만·Risk Parity를 같은 포트폴리오에 적용합니다.', 'fa-sliders', 'simulation'],
+    ].map(([title, copy, icon, target]) => `
+      <button class="home-module" data-go="${target}">
         <i class="fa-solid ${icon}"></i><strong>${title}</strong><span>${copy}</span><em>학습 시작 <i class="fa-solid fa-arrow-right"></i></em>
       </button>`).join('');
     const explainers = PRODUCT_EXPLAINERS.map(item => `
@@ -483,7 +387,7 @@
         <p class="content-lead">교재형 콘텐츠, 개념 퀴즈, 학습용 포트폴리오 시뮬레이션과 근거 문서 기반 RAG를 한 흐름으로 제공합니다.</p>
         <div class="home-actions">
           <button class="content-cta" data-go="theory"><i class="fa-solid fa-calendar-days"></i> 5일 이론 학습 시작</button>
-          <button class="content-cta" data-go="learn"><i class="fa-solid fa-book-open"></i> 학습 트랙 둘러보기</button>
+          <button class="content-cta" data-go="learn"><i class="fa-solid fa-comments"></i> RAG에게 질문하기</button>
           <button class="content-secondary" data-go="quiz"><i class="fa-solid fa-circle-question"></i> 5문제 퀴즈 풀기</button>
         </div>
         <section class="home-stats">
@@ -491,7 +395,7 @@
           <div><strong>5</strong><span>핵심 지표<br>CAGR · 변동성 · MDD 등</span></div>
           <div><strong>3</strong><span>배분 모델<br>MVO · BL · RP</span></div>
         </section>
-        <section class="content-section"><div class="section-heading"><span>01</span><h2>학습 로드맵</h2></div><div class="home-module-grid">${modules}</div></section>
+        <section class="content-section"><div class="section-heading"><span>01</span><h2>학습 메뉴</h2></div><div class="home-module-grid">${modules}</div></section>
         <section class="content-section"><div class="section-heading"><span>02</span><h2>금융상품, 쉽게 시작하기</h2></div><p class="section-intro">투자는 ‘얼마나 많이 버는가’보다 <strong>내 돈이 어디에 쓰이고 어떤 상황에서 줄어들 수 있는가</strong>를 이해하는 일에서 시작합니다.</p><div class="product-explainer-grid">${explainers}</div></section>
         <section class="markdown-card">
           <p class="markdown-label">LEARNING NOTE</p>
@@ -632,37 +536,20 @@
   }
 
   function showWelcome() {
-    const active = TOPIC_META[state.activeTopic];
-    const cards = Object.entries(TOPIC_META).map(([key, meta]) => `
-      <button class="course-card ${key === state.activeTopic ? 'active' : ''}" data-topic-card="${key}">
-        <div class="course-card-head">
-          <span class="course-card-icon"><i class="fa-solid ${meta.icon}"></i></span>
-          <strong>${escHtml(meta.label)}</strong>
-        </div>
-        <p>${escHtml(meta.summary)}</p>
-      </button>
-    `).join('');
-
-    const bullets = active.bullets.map(item => `<li>${escHtml(item)}</li>`).join('');
-    const prompts = active.prompts.map(prompt => `
+    const prompts = [
+      '주식, ETF, 펀드의 차이를 고등학생도 이해할 수 있게 설명해줘.',
+      '채권 가격과 금리의 관계를 쉬운 예시로 설명해줘.',
+      '분산투자와 자산배분, 리밸런싱이 왜 필요한지 알려줘.',
+      '평균분산, 블랙-리터만, Risk Parity의 차이를 비교해줘.',
+    ].map(prompt => `
       <button class="example-chip" data-q="${escHtml(prompt)}">${escHtml(prompt)}</button>
     `).join('');
 
     $messages.innerHTML = `
       <div class="welcome-msg">
         <div class="welcome-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-        <h2>금융상품·자산배분 RAG 학습랩</h2>
-        <p>설명형 RAG, 참고 문서, 자산배분 시뮬레이션을 연결해 금융 학습 콘텐츠를 탐색합니다.</p>
-
-        <div class="hero-layout">
-          <section class="hero-focus">
-            <div class="hero-focus-badge">현재 학습 트랙</div>
-            <h3>${escHtml(active.label)}</h3>
-            <p>${escHtml(active.summary)}</p>
-            <ul class="hero-bullets">${bullets}</ul>
-          </section>
-          <section class="course-grid">${cards}</section>
-        </div>
+        <h2>금융·투자 RAG 질문</h2>
+        <p>5일 이론에서 읽은 내용을 바탕으로 궁금한 점을 자유롭게 질문하세요. 답변에 사용한 참고 문서도 함께 확인할 수 있습니다.</p>
 
         <div class="quick-examples" id="quickExamples">
           <p class="examples-label">추천 RAG 질문</p>
@@ -673,14 +560,6 @@
 
     $messages.querySelectorAll('.example-chip').forEach(chip => {
       chip.addEventListener('click', () => sendQuestion(chip.dataset.q));
-    });
-    $messages.querySelectorAll('[data-topic-card]').forEach(card => {
-      card.addEventListener('click', () => {
-        const key = card.dataset.topicCard;
-        state.activeTopic = key;
-        $topicButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.topic === key));
-        updateTopicUI();
-      });
     });
   }
 
@@ -946,8 +825,7 @@
     const snapshot = getSimulationSnapshot();
     const model = snapshot.model.label;
     const allocation = `정규화 비중은 주식/ETF ${percent(snapshot.weights.stock)}, 채권 ${percent(snapshot.weights.bond)}, 대체·현금 ${percent(snapshot.weights.alt)}, 파생 헤지 강도 ${Math.round(snapshot.hedgeRatio * 100)}%입니다.`;
-    const meta = TOPIC_META[state.activeTopic];
-    return `${model} 기준 실습 포트폴리오를 설명해줘. ${allocation}. ${meta.label} 관점에서 개요, 운용 전략, 주요 리스크 지표, 리밸런싱 포인트를 정리해줘.`;
+    return `${model} 기준 실습 포트폴리오를 설명해줘. ${allocation}. 금융상품과 자산배분 관점에서 개요, 주요 리스크 지표, 리밸런싱 포인트를 정리해줘.`;
   }
 
   function getSimulationSnapshot() {
@@ -1014,7 +892,6 @@
       .replace(/"/g, '&quot;');
   }
 
-  updateTopicUI();
   updateSimulation();
   setView('home');
   $topKLabel.textContent = state.topK;

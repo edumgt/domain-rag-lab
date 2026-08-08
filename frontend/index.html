@@ -39,28 +39,6 @@
           <span class="day-menu-number">5일차</span> 자산배분과 리밸런싱
         </button>
 
-        <p class="nav-label">학습 트랙</p>
-        <button class="topic-btn active" data-topic="products">
-          <i class="fa-solid fa-layer-group"></i> 금융상품 이해
-        </button>
-        <button class="topic-btn" data-topic="stocks-etf">
-          <i class="fa-solid fa-chart-line"></i> 주식 / ETF
-        </button>
-        <button class="topic-btn" data-topic="bonds">
-          <i class="fa-solid fa-landmark"></i> 채권 상품
-        </button>
-        <button class="topic-btn" data-topic="derivatives">
-          <i class="fa-solid fa-wave-square"></i> 파생상품
-        </button>
-        <button class="topic-btn" data-topic="portfolio-theory">
-          <i class="fa-solid fa-chart-column"></i> 포트폴리오 이론
-        </button>
-        <button class="topic-btn" data-topic="allocation-models">
-          <i class="fa-solid fa-sliders"></i> 자산배분 모델
-        </button>
-        <button class="topic-btn" data-topic="case-practice">
-          <i class="fa-solid fa-flask"></i> 사례 분석 실습
-        </button>
       </nav>
 
       <div class="sidebar-section">
@@ -100,13 +78,13 @@
         </button>
         <div class="brand-nav" aria-label="학습 서비스 메뉴">
           <button class="brand-nav-btn active" data-view="home"><i class="fa-solid fa-house"></i> 홈</button>
-          <button class="brand-nav-btn" data-view="learn"><i class="fa-solid fa-book-open"></i> 학습</button>
+          <button class="brand-nav-btn" data-view="learn"><i class="fa-solid fa-comments"></i> RAG 질문</button>
           <button class="brand-nav-btn" data-view="theory"><i class="fa-solid fa-calendar-days"></i> 5일 이론</button>
           <button class="brand-nav-btn" data-view="quiz"><i class="fa-solid fa-circle-question"></i> 퀴즈</button>
           <button class="brand-nav-btn" data-view="simulation"><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</button>
         </div>
         <div class="header-actions">
-          <div class="domain-badge" id="domainBadge"><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분 학습 모드</div>
+          <div class="domain-badge"><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분</div>
           <button class="btn-ghost" id="clearChatBtn" title="대화 초기화">
             <i class="fa-solid fa-trash-can"></i> 초기화
           </button>
@@ -120,7 +98,7 @@
         <div class="welcome-msg">
           <div class="welcome-icon"><i class="fa-solid fa-robot"></i></div>
           <h2>금융상품·자산배분 RAG 학습랩</h2>
-          <p>학습 트랙을 선택하고 설명형 RAG 질문과 실습 시뮬레이션을 함께 활용해 보세요.</p>
+          <p>5일 이론, 개념 퀴즈, 설명형 RAG 질문과 실습 시뮬레이션을 함께 활용해 보세요.</p>
         </div>
       </div>
 
@@ -137,7 +115,7 @@
           </button>
         </div>
         <p class="input-hint">
-          도메인: <span>금융·투자</span> &nbsp;·&nbsp; 학습 트랙: <span id="currentTrackLabel">금융상품 이해</span> &nbsp;·&nbsp; Top-K: <span id="topKLabel">4</span>
+          도메인: <span>금융·투자</span> &nbsp;·&nbsp; 근거 문서 기반 답변 &nbsp;·&nbsp; Top-K: <span id="topKLabel">4</span>
         </p>
       </div>
     </main>
