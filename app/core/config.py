@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     redis_host: str = "localhost"
     redis_port: int = 6379
 
-    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+    embedding_model: str = "hashing-384"
     embedding_dim: int = 384
 
     vllm_base_url: str = "http://localhost:8001/v1"

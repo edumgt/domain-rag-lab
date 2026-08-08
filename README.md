@@ -1,223 +1,135 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+# 금융상품·자산배분 RAG 에이전트
 
-# 도메인 특화 RAG AI 에이전트
+금융상품과 자산배분 방법론을 학습·탐색하기 위한 도메인 특화 RAG(Retrieval-Augmented Generation) 서비스입니다. 등록한 금융 문서를 근거로 주식·ETF·채권·파생상품의 구조와 위험을 설명하고, 포트폴리오 이론·성과지표·자산배분 모델을 대화형으로 검토합니다.
 
-**FastAPI + Qdrant + PostgreSQL + Redis + vLLM** 기반의 도메인 특화 RAG(검색 증강 생성) 서비스입니다.
-의학·고교 영어·금융/투자 세 가지 도메인에 특화된 AI 에이전트로, **메인 오케스트레이터(Tool Calling)** 및 **Streamlit 데모 UI**가 포함된 완성형 구조입니다.
+> 이 프로젝트는 금융 교육 및 분석 보조 목적의 예제입니다. 특정 상품이나 종목의 매수·매도를 권유하지 않으며, 투자 판단과 책임은 투자자 본인에게 있습니다.
 
----
+## 다루는 주제
+
+| 영역 | 주요 내용 |
+|---|---|
+| 금융상품 | 주식, ETF, 일반펀드, 채권, 파생상품, 배당, 금융투자상품 분류 |
+| 상품 비교 | 총보수·수수료·스프레드, 유동성, 추적오차, 괴리율, 계좌 목적별 고려사항 |
+| 포트폴리오 이론 | 분산투자, 상관관계, 효율적 투자선, 기대수익률과 공분산 |
+| 성과·위험 분석 | CAGR, 변동성, MDD, 샤프 비율, 소르티노 비율 |
+| 자산배분 | 평균-분산 최적화, 블랙-리터만, Risk Parity, 60/40·All Weather 등 사례 |
+| 투자 분석 기초 | 재무제표, 밸류에이션, 거시경제, 산업 분석, 기술적 분석 |
 
 ## 주요 기능
 
-| 기능 | 설명 |
-|------|------|
-| <i class="fa-solid fa-robot"></i> 메인 오케스트레이터 | LLM이 도구를 스스로 선택·호출하여 답변 생성 (Tool Calling 기반 AI 에이전트) |
-| <i class="fa-solid fa-hospital"></i> 의학 도메인 | 고혈압·당뇨병 등 의학 문서 기반 전문 답변, 안전장치(전문의 상담 권고) 내장 |
-| <i class="fa-solid fa-book"></i> 고교 영어 도메인 | 수능 영어 문법·독해·어휘 문서 기반 학습 지원 답변 |
-| <i class="fa-solid fa-chart-line"></i> 금융·투자 도메인 | 재무제표·밸류에이션·거시경제·기술적분석·자산배분 문서 기반 투자 분석 답변, 투자 책임 안내 안전장치 내장 |
-| <i class="fa-solid fa-globe"></i> 일반 도메인 | 범용 문서 기반 RAG 응답 |
-| <i class="fa-solid fa-folder"></i> 파일 업로드 | TXT / PDF 파일 업로드 후 자동 청킹·임베딩·벡터 저장 |
-| <i class="fa-solid fa-pen"></i> 텍스트 직접 등록 | API 또는 UI에서 텍스트 직접 등록 |
-| <i class="fa-solid fa-comment"></i> 멀티턴 채팅 | 세션 기반 단기 기억 + pgvector 장기 기억 관리 |
-| <i class="fa-solid fa-magnifying-glass"></i> 하이브리드 검색 | Qdrant(벡터) + PostgreSQL(키워드) RRF 병합 검색 |
-| <i class="fa-solid fa-chart-bar"></i> 실행 리포트 | 오케스트레이터 도구 호출 이력 및 흐름 시각화 (Streamlit) |
-| <i class="fa-solid fa-desktop"></i>️ 웹 UI | Streamlit 기반 데모 UI (별도 빌드 불필요) |
-
----
-
-## 메인 오케스트레이터와 툴 콜링 (Tool Calling)
-
-### 개념
-
-기존 RAG 파이프라인은 **고정된 순서**로 검색 → LLM을 실행합니다.
-메인 오케스트레이터를 도입하면 LLM이 **스스로 어떤 도구를, 어떤 순서로 호출할지 판단**합니다.
-
-```
-기존 방식 (고정 파이프라인)
-  사용자 질문 → [벡터검색] → [세션기억조회] → [LLM 답변]  ← 순서 고정
-
-오케스트레이터 방식 (Tool Calling 루프)
-  사용자 질문
-       │
-  ┌────▼─────────────────────────────────────────┐
-  │  LLM (오케스트레이터): 어떤 도구가 필요한가?    │
-  └────┬─────────────────────────────────────────┘
-       │ tool_calls 반환
-  ┌────▼──────────────────┐
-  │  도구 실행              │  search_documents
-  │  (Tool Executor)       │  get_session_history
-  │                        │  get_long_term_memory
-  └────┬──────────────────┘
-       │ 결과를 messages에 추가 (루프 반복)
-  ┌────▼─────────────────────────────────────────┐
-  │  LLM: 수집된 정보로 최종 답변 생성              │
-  └──────────────────────────────────────────────┘
-```
-
-### 사용 가능한 도구 (Tool Registry)
-
-| 도구 이름 | 설명 |
-|-----------|------|
-| `search_documents` | 하이브리드 검색(벡터+키워드)으로 도메인 문서 청크 조회 |
-| `get_session_history` | 현재 세션의 최근 대화 이력 조회 (단기 기억) |
-| `get_long_term_memory` | pgvector 기반 의미 유사 장기 기억 검색 |
-
-### 오케스트레이터 작동 흐름 예시
-
-사용자: "아까 설명한 고혈압 1차 치료 원칙을 당뇨 환자에게도 적용할 수 있나요?"
-
-```
-Step 1: LLM → get_session_history 호출 (이전 대화 확인)
-Step 2: LLM → search_documents(query="고혈압 당뇨 치료 병용", domain="medical") 호출
-Step 3: LLM → get_long_term_memory(query="당뇨 환자 고혈압 치료") 호출
-Step 4: LLM → 수집된 정보를 종합하여 최종 답변 생성
-```
-
----
+- 금융 문서 기반 하이브리드 검색: Qdrant 벡터 검색과 PostgreSQL 키워드 검색 결과를 RRF로 결합합니다.
+- 금융 교육형 응답 정책: 제공 문서 근거를 우선하며, 단정적 매매 추천 대신 상품 구조·운용 관점·위험을 설명합니다.
+- 멀티턴 대화: 세션 단기 기억과 pgvector 장기 기억을 함께 활용합니다.
+- 오케스트레이터: LLM이 문서 검색, 세션 이력, 장기 기억 조회 도구를 필요에 따라 호출합니다.
+- 문서 수집: TXT/PDF 업로드 또는 텍스트 직접 등록 후 청킹·임베딩·저장을 수행합니다.
+- Streamlit UI: 금융 도메인을 선택해 대화하고, 일반 RAG와 도구 호출 방식의 결과를 비교할 수 있습니다.
 
 ## 아키텍처
 
-```
-사용자 브라우저 (Streamlit UI — 포트 8501)
+```text
+사용자 / Streamlit UI
         │
         ▼
-  FastAPI (포트 8000)
-  ├── POST /chat            → 고정 파이프라인 RAG 답변
-  ├── POST /chat/orchestrate → 메인 오케스트레이터 (Tool Calling)
-  ├── POST /ingest/text     → 텍스트 등록
-  ├── POST /ingest/file     → 파일 업로드 및 등록
-  └── GET  /health          → 상태 확인
+FastAPI
+ ├─ POST /chat               고정 RAG: 검색 → 답변
+ ├─ POST /chat/orchestrate   도구 호출 기반 오케스트레이션
+ └─ POST /ingest/*           금융 문서 등록
         │
-   ┌────┴────────────────────┬────────────┐
-   ▼                         ▼            ▼
-Qdrant                   PostgreSQL     Redis
-(벡터 DB)                (채팅 로그     (캐시/확장)
-                          장기 기억
-                          문서 청크)
-        │
-        ▼
-  vLLM / OpenAI 호환 API
-  (외부 LLM 서버 — Tool Calling 지원)
+        ├─ Qdrant       금융 문서 임베딩·유사도 검색
+        ├─ PostgreSQL   문서 청크, 대화 로그, 장기 기억(pgvector)
+        ├─ Redis        확장용 캐시 인프라
+        └─ OpenAI 호환 LLM API (vLLM 등)
 ```
 
-### 서비스 레이어 구조
+### 응답 흐름
 
-```
-app/services/
-├── orchestrator.py        ← 메인 오케스트레이터 (Tool Calling 루프)
-├── tool_registry.py       ← 도구 스키마 정의 (OpenAI function-calling 형식)
-├── tool_executor.py       ← 도구 실행기
-├── rag_service.py         ← 고정 파이프라인 RAG (기존)
-├── llm_service.py         ← LLM 호출 (generate_answer + call_with_tools)
-├── hybrid_search.py       ← Qdrant + PostgreSQL RRF 병합 검색
-├── context_router.py      ← SQL vs Vector 우선순위 라우터
-├── session_memory.py      ← 단기 기억 (세션 이력)
-├── long_term_memory_service.py ← 장기 기억 (pgvector)
-├── embedder.py            ← 임베딩 서비스
-├── vector_store.py        ← Qdrant 벡터 저장/조회
-├── chunker.py             ← 텍스트 청킹
-└── file_parser.py         ← TXT/PDF 파싱
+```text
+질문
+  → 금융 도메인 규칙 적용
+  → 벡터 검색 + 키워드 검색(RRF 병합)
+  → 세션/장기 기억 결합
+  → LLM 답변
+  → 근거 문서 및 투자 유의사항 제공
 ```
 
----
+`/chat/orchestrate`는 위 흐름에서 LLM이 다음 도구를 선택적으로 호출합니다.
+
+| 도구 | 용도 |
+|---|---|
+| `search_documents` | 금융 문서 청크를 하이브리드 검색 |
+| `get_session_history` | 같은 세션의 최근 대화 확인 |
+| `get_long_term_memory` | 의미적으로 유사한 과거 대화·기억 조회 |
 
 ## 빠른 시작
 
-### 1. 환경 변수 설정
+### 1. 사전 조건
 
-`.env` 파일을 프로젝트 루트에 생성하거나 기존 파일을 수정합니다:
+- Docker 및 Docker Compose
+- OpenAI 호환 Chat Completions API를 제공하는 LLM 서버(vLLM, LM Studio, Ollama 등)
+
+`docker-compose.yml`은 이 저장소 전용 PostgreSQL(pgvector)·Redis·Qdrant를 함께 실행합니다. 다른 프로젝트의 컨테이너나 외부 Docker 네트워크는 필요하지 않습니다.
+
+| 서비스 | 컨테이너 이름 | 내부 포트 |
+|---|---|---:|
+| PostgreSQL | `postgres` 서비스 | 5432 |
+| Redis | `redis` 서비스 | 6379 |
+| Qdrant | `qdrant` 서비스 | 6333 |
+
+PostgreSQL 초기화 시 [init.sql](/home/ubuntu/domain-rag-lab/init.sql)이 자동 실행되어 pgvector 확장이 활성화됩니다.
+
+### 2. 환경 변수 설정
+
+프로젝트 루트에 `.env`를 만들고 LLM 및 필요 시 데이터베이스 설정을 입력합니다.
 
 ```env
+# OpenAI 호환 LLM API
 VLLM_BASE_URL=http://host.docker.internal:8001/v1
 VLLM_MODEL=Qwen/Qwen2.5-7B-Instruct
 VLLM_API_KEY=EMPTY
+
+# 아래 값은 기본값과 다를 때만 지정
+POSTGRES_DB=ragdb
+POSTGRES_USER=raguser
+POSTGRES_PASSWORD=ragpass
+QDRANT_COLLECTION=domain_docs
+EMBEDDING_MODEL=hashing-384
 ```
 
-> vLLM이 없는 경우 OpenAI 호환 엔드포인트(예: OpenAI API, LM Studio, Ollama)로 대체 가능합니다.
-> 오케스트레이터의 Tool Calling 기능을 사용하려면 **Function Calling을 지원하는 모델**이 필요합니다.
+오케스트레이터를 쓰려면 LLM 서버와 모델이 Function/Tool Calling을 지원해야 합니다.
 
-### 2. Docker로 실행
+### 3. 실행
 
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
 
 | 서비스 | 주소 |
-|--------|------|
-| Streamlit 데모 UI | http://localhost:8290 |
-| FastAPI (REST API) | http://localhost:8190 |
-| Swagger API 문서 | http://localhost:8190/docs |
+|---|---|
+| Streamlit UI | http://localhost:8290 |
+| FastAPI | http://localhost:8190 |
+| API 문서 | http://localhost:8190/docs |
 | 상태 확인 | http://localhost:8190/health |
+| Qdrant 대시보드 | http://localhost:6335/dashboard |
+| PostgreSQL (호스트 접속) | `localhost:15433` |
+| Redis (호스트 접속) | `localhost:6380` |
 
----
-
-## API 사용 예시
-
-### 메인 오케스트레이터 (Tool Calling)
-
-```bash
-curl -X POST http://localhost:8190/chat/orchestrate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "question": "고혈압의 1차 치료 원칙은 무엇인가요?",
-    "domain": "medical",
-    "session_id": "user-session-001"
-  }'
-```
-
-**응답 예시:**
-```json
-{
-  "answer": "고혈압의 1차 치료는 ...",
-  "tool_calls": [
-    {
-      "tool": "search_documents",
-      "arguments": {"query": "고혈압 1차 치료", "domain": "medical", "top_k": 4},
-      "result_preview": "{\"documents\": [{\"title\": \"고혈압 치료 가이드라인\", ..."
-    }
-  ],
-  "iterations": 2,
-  "domain": "medical",
-  "session_id": "user-session-001"
-}
-```
-
-### 일반 RAG 채팅 (고정 파이프라인)
+처음 실행할 때는 임베딩 모델 초기화 때문에 API가 준비 상태가 되기까지 잠시 걸릴 수 있습니다. 다음 명령으로 상태를 확인합니다.
 
 ```bash
-curl -X POST http://localhost:8190/chat \
-  -H "Content-Type: application/json" \
-  -d '{
-    "question": "What is the difference between since and for?",
-    "domain": "english",
-    "top_k": 4
-  }'
+docker compose ps
+curl http://localhost:8190/health
 ```
 
-### 텍스트 등록 (의학 도메인)
+로컬에서 UI만 실행할 때는 API 주소를 지정할 수 있습니다.
 
 ```bash
-curl -X POST http://localhost:8190/ingest/text \
-  -H "Content-Type: application/json" \
-  -d '{
-    "document_id": "med-001",
-    "title": "고혈압 치료 가이드라인",
-    "content": "고혈압의 1차 치료는 생활습관 교정(나트륨 제한, 운동, 금연)부터 시작하며 ...",
-    "domain": "medical"
-  }'
+pip install -r requirements.txt
+API_BASE_URL=http://localhost:8190 streamlit run streamlit_app.py
 ```
 
-### 파일 업로드
+## 금융 지식 베이스 준비
 
-```bash
-curl -X POST http://localhost:8190/ingest/file \
-  -F "file=@./data/samples/english_grammar.txt" \
-  -F "domain=english"
-```
-
-### 금융·투자 도메인 문서 일괄 등록
-
-`data/samples/finance_*.txt`는 `investment-analysis` 프로젝트의 퀀트·투자분석 학습 자료(회계·세무, 거시경제, 산업분석, 재무제표, 밸류에이션, 기술적분석, 포트폴리오 이론, 자산배분, 외국인 수급 등 17개 문서)를 옮겨온 것입니다. 아래 반복문으로 한 번에 등록할 수 있습니다.
+기본 샘플은 `data/samples/finance_*.txt`에 포함되어 있습니다. 금융상품 분류, ETF 심화, 포트폴리오 이론, 자산배분 모델, 성과 분석, 재무제표·밸류에이션 자료를 한 번에 등록하려면 다음을 실행하세요.
 
 ```bash
 for f in ./data/samples/finance_*.txt; do
@@ -227,480 +139,114 @@ for f in ./data/samples/finance_*.txt; do
 done
 ```
 
+등록 가능한 파일 형식은 TXT와 PDF입니다. UI의 사이드바에서도 업로드하거나 텍스트를 직접 등록할 수 있습니다.
+
+### 핵심 샘플 문서
+
+| 파일 | 활용 예 |
+|---|---|
+| `finance_financial_products_classification.txt` | 금융투자상품 분류, 주식·ETF·펀드 기초 |
+| `finance_etf_deep_dive.txt` | 일반펀드와 ETF의 비용·유동성·추적오차 비교 |
+| `finance_portfolio_theory.txt` | MPT, 효율적 투자선, CAGR·MDD·샤프 비율 |
+| `finance_asset_allocation.txt` | 평균-분산, 블랙-리터만, Risk Parity, 자산배분 사례 |
+| `finance_stock_dividend_basics.txt` | 주식·배당 및 금융상품 기초 |
+| `finance_valuation_multiples.txt` | PER·PBR 등 상대가치 평가 |
+
+## 사용 예시
+
+### 금융상품 비교
+
 ```bash
 curl -X POST http://localhost:8190/chat \
   -H "Content-Type: application/json" \
   -d '{
-    "question": "PER과 PBR의 차이를 설명해 주세요.",
+    "question": "일반펀드와 ETF를 비교할 때 비용과 유동성 측면에서 확인할 항목을 정리해 주세요.",
     "domain": "finance",
+    "session_id": "finance-study-001",
     "top_k": 4
   }'
 ```
 
----
-
-## Streamlit 데모 UI (`streamlit_app.py`)
-
-### 역할
-
-`streamlit_app.py`는 FastAPI 백엔드와 HTTP로 통신하는 **독립적인 브라우저 UI**입니다.
-별도 빌드 없이 Python만으로 실행되며, 다음 세 가지 목적으로 사용합니다.
-
-| 목적 | 설명 |
-|------|------|
-| **데모·시연** | 오케스트레이터의 도구 호출 흐름을 실시간으로 시각화 |
-| **개발·검증** | 문서 등록 후 즉시 질의해 RAG 파이프라인 동작 확인 |
-| **비교 테스트** | 오케스트레이터 방식 vs 고정 파이프라인 답변 품질 비교 |
-
-### 실행 방법
-
-**Docker Compose (권장)**
+### 자산배분 질의
 
 ```bash
-docker compose up --build
-# → http://localhost:8290 에서 접속
+curl -X POST http://localhost:8190/chat/orchestrate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "question": "60/40 포트폴리오와 Risk Parity의 차이를 위험 기여도 관점에서 설명해 주세요.",
+    "domain": "finance",
+    "session_id": "allocation-study-001"
+  }'
 ```
 
-**로컬 직접 실행** (FastAPI 서버가 이미 실행 중인 경우)
+### 직접 문서 등록
 
 ```bash
-# 1. 의존성 설치 (streamlit을 포함한 모든 패키지)
-pip install -r requirements.txt
-
-# 2. Streamlit UI 실행
-streamlit run streamlit_app.py
-# → http://localhost:8501 에서 접속
-
-# FastAPI 서버가 다른 주소에 있다면 환경 변수로 지정
-API_BASE_URL=http://other-host:8000 streamlit run streamlit_app.py
+curl -X POST http://localhost:8190/ingest/text \
+  -H "Content-Type: application/json" \
+  -d '{
+    "document_id": "allocation-policy-v1",
+    "title": "자산배분 정책 초안",
+    "content": "투자 목적, 투자 기간, 허용 가능한 손실 범위, 리밸런싱 기준을 기록합니다.",
+    "domain": "finance"
+  }'
 ```
 
-> **`streamlit` 명령이 가능한 이유**
-> `pip install streamlit` 시 Python이 실행 파일(`~/.local/bin/streamlit` 또는 `/usr/local/bin/streamlit`)을 자동 생성하여 PATH에 등록합니다.
-> `requirements.txt`에 `streamlit==1.45.1`이 명시되어 있으므로 `pip install -r requirements.txt`만으로 명령어가 활성화됩니다.
+## API 요약
 
-**환경 변수**
+| 메서드 | 경로 | 설명 |
+|---|---|---|
+| `GET` | `/health` | 서비스 상태 확인 |
+| `POST` | `/ingest/text` | 텍스트 문서 등록 |
+| `POST` | `/ingest/file` | TXT/PDF 문서 업로드·등록 |
+| `POST` | `/chat` | 고정 RAG 파이프라인 질의 |
+| `POST` | `/chat/orchestrate` | 도구 호출 기반 질의 |
 
-| 변수 | 기본값 | 설명 |
-|------|--------|------|
-| `API_BASE_URL` | `http://localhost:8000` | FastAPI 서버 주소 (Docker 내부: `http://api:8000`) |
+`domain`에는 `finance`를 지정합니다. 구현상 `general`, `medical`, `english`도 선택할 수 있지만, 이 저장소의 주된 지식 베이스와 사용 목적은 금융상품 및 자산배분입니다.
 
-### 화면 구성 개요
+## Streamlit UI
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  사이드바 (<i class="fa-solid fa-gear"></i>️ 설정)          │  메인 영역 (탭)            │
-│  ─────────────────          │  ─────────────────────    │
-│  · 도메인 선택              │  <i class="fa-solid fa-robot"></i> 오케스트레이터 채팅     │
-│  · 세션 ID 표시             │  <i class="fa-solid fa-chart-bar"></i> 결과 리포트             │
-│  · 새 세션 시작 버튼         │  <i class="fa-solid fa-file"></i> 일반 RAG 채팅           │
-│  · API 연결 상태            │                            │
-│  · 파일 업로드 (TXT/PDF)    │                            │
-│  · 텍스트 직접 등록          │                            │
-└─────────────────────────────────────────────────────────┘
-```
+UI에서 도메인을 `금융·투자`로 선택한 뒤 다음 기능을 사용할 수 있습니다.
 
-### 사이드바 상세
+- 오케스트레이터 채팅: 문서 검색·대화 기억 도구의 호출 이력까지 확인
+- 결과 리포트: 반복 횟수, 호출 도구, 도구별 입력·결과 미리보기 확인
+- 일반 RAG 채팅: Top-K를 조정하고 검색된 참고 문서를 확인
+- 문서 등록: 금융 리서치, 상품 설명서, 자산배분 정책 등 TXT/PDF 추가
 
-#### 도메인 선택
+질문 예시는 다음과 같습니다.
 
-네 도메인 중 하나를 선택하면 이후 모든 채팅·문서 등록에 적용됩니다.
-
-| 선택값 | 표시 | 설명 |
-|--------|------|------|
-| `general` | <i class="fa-solid fa-globe"></i> 일반 | 범용 RAG |
-| `medical` | <i class="fa-solid fa-hospital"></i> 의학 | 의학 문서 기반, 전문의 상담 권고 안전장치 포함 |
-| `english` | <i class="fa-solid fa-book"></i> 고교 영어 | 수능 영어 문법·독해 학습 지원 |
-| `finance` | <i class="fa-solid fa-chart-line"></i> 금융·투자 | 재무제표·밸류에이션·자산배분 문서 기반, 투자 책임 안내 안전장치 포함 |
-
-#### 세션 관리
-
-- 앱 최초 접속 시 **UUID 기반 세션 ID가 자동 생성**됩니다.
-- 세션 ID는 FastAPI 백엔드로 전달되어 단기 기억(세션 이력) 및 장기 기억(pgvector) 연결에 사용됩니다.
-- **"<i class="fa-solid fa-rotate"></i> 새 세션 시작"** 버튼을 누르면 새 UUID가 발급되고 채팅 이력이 초기화됩니다.
-
-#### API 연결 상태
-
-사이드바 로드 시 `GET /health`를 호출하여 백엔드 연결 상태를 자동으로 표시합니다.
-
-```
-<i class="fa-solid fa-circle-check"></i> 연결됨 — ok      ← FastAPI 정상
-<i class="fa-solid fa-circle-xmark"></i> API 서버 연결 실패  ← 서버 미실행 또는 URL 오류
-```
-
-#### 문서 등록
-
-채팅 전에 지식 베이스를 구성하는 기능입니다.
-
-**파일 업로드 (TXT / PDF)**
-1. "파일 업로드" 위젯에서 파일 선택
-2. "업로드" 버튼 클릭
-3. 성공 시 `<i class="fa-solid fa-circle-check"></i> N개 청크 등록 완료` 표시
-4. 내부적으로 `POST /ingest/file` 호출 → 파싱 → 청킹 → 임베딩 → Qdrant 저장
-
-**텍스트 직접 등록**
-1. "제목" 입력
-2. "텍스트 직접 등록" 영역에 내용 입력
-3. "텍스트 등록" 버튼 클릭
-4. 내부적으로 `POST /ingest/text` 호출 → UUID 문서 ID 자동 생성
-
-### 탭 1 — <i class="fa-solid fa-robot"></i> 오케스트레이터 채팅
-
-**역할**: `POST /chat/orchestrate`를 호출하는 메인 채팅 탭. LLM이 도구를 스스로 선택·호출하여 답변을 생성합니다.
-
-**사용 흐름**
-
-```
-1. 채팅 입력창에 질문 입력 (Enter 또는 전송)
-2. "오케스트레이터 실행 중..." 스피너 표시
-3. 답변 렌더링 + 하단에 "반복 N회 · 도구 M개 호출" 메타 캡션 표시
-4. 마지막 응답 결과는 자동으로 <i class="fa-solid fa-chart-bar"></i> 리포트 탭에 저장
-```
-
-**표시 요소**
-
-| 요소 | 설명 |
-|------|------|
-| 채팅 버블 | 사용자(파란색) / 어시스턴트(회색) 구분 |
-| 메타 캡션 | 각 답변 하단에 `반복 N회 · 도구 M개 호출` 표시 |
-| 멀티턴 | 이전 대화가 `st.session_state.orch_messages`에 유지되어 화면에 계속 표시 |
-
-**API 연동**
-
-```
-POST /chat/orchestrate
-Body: { "question": "...", "domain": "medical", "session_id": "uuid" }
-
-Response:
-  answer       → 최종 답변 텍스트
-  tool_calls   → 호출된 도구 목록 (<i class="fa-solid fa-chart-bar"></i> 리포트 탭으로 전달)
-  iterations   → 오케스트레이터 루프 반복 횟수
-```
-
-### 탭 2 — <i class="fa-solid fa-chart-bar"></i> 결과 리포트
-
-**역할**: 오케스트레이터 채팅 탭에서 가장 최근에 실행된 응답의 내부 동작을 시각화합니다.
-채팅 탭과 연결되어 있어 별도 조작 없이 자동 갱신됩니다.
-
-**표시 요소**
-
-```
-┌──────────────────────────────────────────────────────┐
-│  반복 횟수: 2   │  도구 호출 수: 2   │  도메인: MEDICAL  │  ← 요약 메트릭
-├──────────────────────────────────────────────────────┤
-│  최종 답변                                            │
-│  "고혈압의 1차 치료는 생활습관 교정부터 ..."           │
-├──────────────────────────────────────────────────────┤
-│  <i class="fa-solid fa-wrench"></i> 도구 호출 이력                                    │
-│  ▶ Step 1 — `search_documents`   [펼치기]            │
-│    입력 인자          │  결과 미리보기                 │
-│    { "query": "..." } │  {"documents": [...]}        │
-│  ▶ Step 2 — `get_long_term_memory` [펼치기]           │
-├──────────────────────────────────────────────────────┤
-│  <i class="fa-solid fa-bolt"></i> 실행 흐름                                         │
-│  <i class="fa-solid fa-user"></i> 사용자 질문 → <i class="fa-solid fa-wrench"></i> search_documents                │
-│               → <i class="fa-solid fa-wrench"></i> get_long_term_memory → <i class="fa-solid fa-comment"></i> 최종 답변│
-└──────────────────────────────────────────────────────┘
-```
-
-**각 도구 호출 카드 (Step N)**
-
-- **입력 인자**: LLM이 도구에 전달한 파라미터 (`st.json`으로 렌더링)
-- **결과 미리보기**: 도구 실행 결과의 앞 400자 (`st.code`로 JSON 하이라이팅)
-- 첫 번째 Step은 기본 펼침, 이후는 접힌 상태로 표시
-
-**실행 흐름 다이어그램**
-
-`<i class="fa-solid fa-user"></i> 사용자 질문 → <i class="fa-solid fa-wrench"></i> tool1 → <i class="fa-solid fa-wrench"></i> tool2 → <i class="fa-solid fa-comment"></i> 최종 답변` 형태로 호출 순서를 한눈에 파악할 수 있습니다.
-
-### 탭 3 — <i class="fa-solid fa-file"></i> 일반 RAG 채팅
-
-**역할**: `POST /chat`을 호출하는 고정 파이프라인 채팅 탭. 오케스트레이터 없이 하이브리드 검색 → LLM의 순서로 실행됩니다.
-
-**오케스트레이터 탭과의 차이**
-
-| 항목 | 오케스트레이터 탭 | 일반 RAG 탭 |
-|------|-----------------|-------------|
-| 엔드포인트 | `POST /chat/orchestrate` | `POST /chat` |
-| 도구 선택 | LLM이 자율 결정 | 고정 순서 |
-| Top-K 조정 | 없음 (LLM이 결정) | 슬라이더로 1~10 조정 가능 |
-| 참고 문서 표시 | 없음 | 있음 (제목·점수·내용 미리보기) |
-| 라우팅 메타 표시 | 없음 | 있음 (라우팅 전략·청크 수·세션 턴) |
-
-**표시 요소**
-
-| 요소 | 설명 |
-|------|------|
-| Top-K 슬라이더 | 검색할 문서 청크 수 (1~10, 기본값 4) |
-| 참고 문서 펼침 | 답변 하단에 `참고 문서 N건` 접이식 패널 — 각 문서 제목·유사도 점수·내용 200자 표시 |
-| 라우팅 메타 캡션 | `라우팅: vector · 벡터 청크: 3 · 세션 턴: 2` 형태로 내부 파이프라인 정보 표시 |
-
-### 내부 상태 관리 (`st.session_state`)
-
-| 키 | 타입 | 설명 |
-|----|------|------|
-| `session_id` | `str` | UUID — 백엔드 단기·장기 기억과 연결되는 세션 식별자 |
-| `orch_messages` | `list[dict]` | 오케스트레이터 탭 채팅 이력 (`role`, `content`, `iterations`, `tool_count`) |
-| `rag_messages` | `list[dict]` | 일반 RAG 탭 채팅 이력 (`role`, `content`, `refs`) |
-| `last_report` | `dict \| None` | 오케스트레이터 마지막 응답 전체 — 리포트 탭에서 읽음 |
-
-새 세션 시작 버튼을 누르면 위 네 가지 상태가 모두 초기화됩니다.
-
-### 호출하는 API 엔드포인트 요약
-
-| 기능 | 메서드 | 경로 |
-|------|--------|------|
-| 연결 상태 확인 | `GET` | `/health` |
-| 파일 업로드 | `POST` | `/ingest/file` |
-| 텍스트 등록 | `POST` | `/ingest/text` |
-| 오케스트레이터 채팅 | `POST` | `/chat/orchestrate` |
-| 일반 RAG 채팅 | `POST` | `/chat` |
-
----
-
-## 도메인 특화 LLM 개념 정리
-
-### 도메인 특화 LLM이란
-
-범용 LLM을 특정 산업·업무·주제에 맞게 더 정확하고 실무적으로 활용하도록 최적화하는 것입니다.
-쉽게 말하면 **똑똑한 일반인을 특정 분야의 실무형 전문가처럼 활용**하는 접근입니다.
-
-**범용 LLM의 한계**
-
-- 전문 용어 해석이 부정확할 수 있음
-- 업계 문맥 이해가 부족할 수 있음
-- 내부 규정·절차·문서 형식을 반영하지 못할 수 있음
-- 답변은 그럴듯하지만 실무 정확도가 부족할 수 있음
-
-**도메인 특화의 효과**
-
-- 전문 용어 이해 향상
-- 문맥 정확도 향상
-- 실무형 답변 강화
-- 업무 자동화 적합성 향상
-
-### 도메인 특화의 대표 방법
-
-| 방법 | 설명 | 특징 |
-|------|------|------|
-| **프롬프트 특화** | 역할·답변 형식·금지 규칙·용어집을 프롬프트에 반영 | 가장 빠르고 비용이 적음 |
-| **RAG** | 관련 문서를 검색한 뒤 그 내용을 근거로 답변 | 최신 정보 반영이 쉬움, 모델 재학습 불필요 |
-| **파인튜닝** | 특정 데이터로 모델을 추가 학습 | 응답 스타일 통일, 고정 양식 출력에 강함 |
-
-> **도메인 특화는 목표, RAG·파인튜닝은 그 목표를 달성하는 수단입니다.**
-
-**실무 권장 순서**: 프롬프트 설계 → RAG 구축 → 필요한 부분만 파인튜닝 추가
-
-### 도메인별 설계 포인트
-
-| 도메인 | 핵심 | 주요 고려사항 |
-|--------|------|--------------|
-| <i class="fa-solid fa-hospital"></i> 의료 | 정확성·근거·책임 경계 | RAG 중심, 진료 가이드라인·약물 정보 연동, "전문의 확인 필요" 안전장치 |
-| <i class="fa-solid fa-scale-balanced"></i>️ 법률 | 조문·판례·최신 개정 여부 | 법령·계약서 템플릿 연동, 조항 근거 제시, 최신 개정 반영 |
-| <i class="fa-solid fa-industry"></i> 제조 | 설비·공정·품질·유지보수 | 설비 매뉴얼·SOP·점검 이력 활용, 문서+구조화 데이터 연계 |
-| <i class="fa-solid fa-coins"></i> 금융 | 규제·컴플라이언스·설명 책임 | 상품 설명서·약관 연동, 금지 표현 통제(예: 수익 보장) |
-| <i class="fa-solid fa-book-open"></i> 교육 | 학습 수준별 설명·개인화 | 교안·문제은행 연동, 난이도별 설명, 첨삭 피드백 |
-
-### 도메인 특화 LLM 구축 체크리스트
-
-**1. 목표 정의**
-- 어떤 도메인인가 / 어떤 업무를 자동화할 것인가
-- 누가 사용할 것인가 / 성공 기준은 무엇인가
-
-**2. 데이터 준비** — 매뉴얼, FAQ, 정책 문서, 보고서, 상담 로그, 용어집
-- 중복 제거 / 오래된 문서 제거 / 민감 정보 마스킹 / 메타데이터 저장
-
-**3. 데이터 구조화** — 파싱 → 섹션 분리 → 청킹 → 메타데이터 부여
-
-**4. RAG 구축** — 임베딩 생성 → 벡터 DB 저장 → 유사 문서 검색 → LLM 프롬프트 삽입
-
-**5. 프롬프트 설계** — 역할 정의, 답변 범위, 금지 규칙, 출력 형식 통일
-
-**6. 평가 체계** — 정확성·관련성·완전성·출처 일치성·응답 시간 (측정 가능해야 운영 가능)
-
-**7. 안전장치** — 금칙어 필터, 민감 정보 마스킹, 권한 없는 문서 차단, 위험 응답 제한
-
-**8. 운영 및 지속 개선** — 질문/응답 로그 저장 → 실패 케이스 분석 → 문서 업데이트 반영
-
-### 아키텍처 흐름
-
-```
-사용자 질문 → 권한 확인 → 관련 문서 검색 → 검색 결과 재정렬
-→ 프롬프트 조립 → LLM 응답 생성 → 출력 정책·안전장치 적용
-→ 로그 저장 및 품질 개선
-```
-
-> **핵심**: LLM 단독이 아니라 검색·정책·운영 체계를 함께 붙인 **시스템**입니다.
-
-### 배포 환경 비교 (AWS vs On-prem)
-
-| 항목 | AWS형 | On-prem형 |
-|------|-------|-----------|
-| 문서 저장 | S3 | NAS / 파일 서버 |
-| 벡터 DB | OpenSearch / Aurora pgvector | Qdrant / Milvus / pgvector |
-| LLM 서빙 | Bedrock / 외부 API | vLLM / Ollama |
-| 모니터링 | CloudWatch / X-Ray | Prometheus + Grafana + ELK |
-| 장점 | 빠른 구축, 높은 확장성 | 민감정보 통제, 보안 정책 적합 |
-| 주의 | 비용 관리, 데이터 반출 정책 | GPU 서버 운영 부담 |
-
-**실무 추천**: 빠른 PoC → AWS / 민감정보 중심 → On-prem / 기업 환경 → 하이브리드
-
----
-
-## 도메인 지원
-
-| 도메인 | 값 | 시스템 프롬프트 특징 |
-|--------|-----|-------------------|
-| 의학 | `medical` | 근거 기반 답변, 전문의 상담 권고 안전장치 |
-| 고교 영어 | `english` | 학습 친화적 설명, 예문 제공, 한/영 혼용 지원 |
-| 금융·투자 | `finance` | 재무제표·밸류에이션·거시경제·기술적분석·자산배분 문서 기반, 투자 책임 안내 안전장치 |
-| 일반 | `general` | 범용 RAG 답변 |
-
----
-
-## 샘플 데이터
-
-`data/samples/` 폴더에 도메인별 샘플 문서가 포함되어 있습니다:
-
-| 파일 | 도메인 | 내용 |
-|------|--------|------|
-| `medical_hypertension.txt` | 의학 | 고혈압 진료 가이드라인 |
-| `medical_diabetes.txt` | 의학 | 당뇨병 진단 및 관리 |
-| `english_grammar.txt` | 고교 영어 | 핵심 문법 (시제, 관계대명사, 가정법) |
-| `english_reading_writing.txt` | 고교 영어 | 독해·작문·어휘 전략 |
-| `finance_accounting_tax_basics.txt` | 금융·투자 | 개인·법인·세무·회계 기초 상식 |
-| `finance_economic_indicators.txt` | 금융·투자 | 경제지표 분석 (물가, 유가 등) |
-| `finance_macro_analysis_practice.txt` | 금융·투자 | 거시경제 상황 분석 실습 |
-| `finance_industry_analysis.txt` | 금융·투자 | 산업 분석 (Porter's 5 Forces, SWOT, PEST) |
-| `finance_industry_analysis_practice.txt` | 금융·투자 | 산업 분석 실습 (KPI, Peer Comparison) |
-| `finance_financial_statements_1.txt` | 금융·투자 | 재무제표 분석 I (손익계산서 & 대차대조표) |
-| `finance_financial_statements_2.txt` | 금융·투자 | 재무제표 분석 II (현금흐름표 & 기업가치) |
-| `finance_valuation_multiples.txt` | 금융·투자 | 상대가치 평가 (PER, PBR 등 밸류에이션 멀티플) |
-| `finance_technical_analysis_1.txt` | 금융·투자 | 기술적 분석 I (추세 & 지표) |
-| `finance_technical_analysis_2.txt` | 금융·투자 | 기술적 분석 II (패턴 & 엘리어트 파동) |
-| `finance_stock_dividend_basics.txt` | 금융·투자 | 주식·배당·금융상품 기초 상식 |
-| `finance_financial_products_classification.txt` | 금융·투자 | 금융상품의 구분 (자본시장법 기준) |
-| `finance_etf_deep_dive.txt` | 금융·투자 | ETF 심화 (일반펀드 vs ETF 비교) |
-| `finance_portfolio_theory.txt` | 금융·투자 | 포트폴리오 이론 및 성과 분석 |
-| `finance_asset_allocation.txt` | 금융·투자 | 자산배분 모델 |
-| `finance_foreign_investor_flows.txt` | 금융·투자 | 외국인 매수·매도 및 자본 국적 확인 방법 |
-| `finance_glossary.txt` | 금융·투자 | 투자분석 핵심 용어집 |
-
----
+- “ETF의 총보수, 스프레드, 추적오차는 각각 왜 확인해야 하나요?”
+- “변동성과 MDD의 차이, 그리고 샤프 비율을 함께 보는 이유를 설명해 주세요.”
+- “평균-분산 최적화와 블랙-리터만 모델의 입력값과 한계를 비교해 주세요.”
+- “리밸런싱 규칙을 정할 때 비중 기준과 시간 기준의 장단점은 무엇인가요?”
 
 ## 프로젝트 구조
 
-```
+```text
 .
-├── streamlit_app.py              # Streamlit 데모 UI
 ├── app/
-│   ├── api/routes/
-│   │   ├── chat.py               # /chat, /chat/orchestrate 엔드포인트
-│   │   ├── ingest.py
-│   │   └── health.py
-│   ├── core/                     # 설정(config), 데이터베이스(database)
-│   ├── models/                   # SQLAlchemy 모델
-│   ├── schemas/
-│   │   └── chat.py               # ChatRequest/Response + OrchestrateRequest/Response
-│   ├── services/
-│   │   ├── orchestrator.py       # <i class="fa-solid fa-star"></i> 메인 오케스트레이터 (Tool Calling 루프)
-│   │   ├── tool_registry.py      # <i class="fa-solid fa-star"></i> 도구 스키마 정의
-│   │   ├── tool_executor.py      # <i class="fa-solid fa-star"></i> 도구 실행기
-│   │   ├── rag_service.py        # 고정 파이프라인 RAG
-│   │   ├── llm_service.py        # LLM 호출 (generate_answer + call_with_tools)
-│   │   ├── hybrid_search.py      # 하이브리드 검색 (Qdrant + PostgreSQL)
-│   │   ├── context_router.py     # 컨텍스트 라우터
-│   │   ├── session_memory.py     # 단기 기억
-│   │   ├── long_term_memory_service.py  # 장기 기억 (pgvector)
-│   │   ├── embedder.py
-│   │   ├── vector_store.py
-│   │   ├── chunker.py
-│   │   └── file_parser.py
-│   ├── utils/
+│   ├── api/routes/        # chat, ingest, health API
+│   ├── core/              # 환경 설정 및 DB 연결
+│   ├── models/            # 채팅 로그·문서 청크·장기 기억 모델
+│   ├── services/          # RAG, 검색, 임베딩, 오케스트레이터
 │   └── main.py
 ├── data/
-│   ├── samples/
-│   └── uploads/
-├── .github/workflows/            # CI/CD (GitHub Actions)
-├── Dockerfile
+│   ├── samples/           # 금융상품·자산배분 샘플 문서
+│   └── uploads/           # 업로드 파일 저장 경로
+├── frontend/              # 기본 정적 프론트엔드
+├── streamlit_app.py       # 데모 UI
 ├── docker-compose.yml
-├── requirements.txt
-└── .env
+├── Dockerfile
+├── init.sql               # pgvector 확장 초기화
+└── requirements.txt
 ```
-
----
-
-## CI/CD (GitHub Actions)
-
-### CI 파이프라인 (`.github/workflows/ci.yml`)
-
-`main` / `develop` 브랜치 push 및 PR 시 자동 실행:
-
-1. Python 3.11 환경 설정
-2. 의존성 설치
-3. flake8 린트 검사
-4. pytest 단위 테스트 실행
-
-### CD 파이프라인 (`.github/workflows/cd.yml`)
-
-`main` 브랜치 push 또는 버전 태그(`v*.*.*`) 시 자동 실행:
-
-1. AWS ECR 로그인
-2. Docker 이미지 빌드 및 ECR 푸시
-3. ECS 태스크 정의 업데이트
-4. ECS 서비스 배포 (롤링 업데이트)
-
-#### 필요한 GitHub Secrets / Variables
-
-| 이름 | 종류 | 설명 |
-|------|------|------|
-| `AWS_ACCESS_KEY_ID` | Secret | AWS IAM 액세스 키 |
-| `AWS_SECRET_ACCESS_KEY` | Secret | AWS IAM 시크릿 키 |
-| `AWS_REGION` | Variable | AWS 리전 (기본값: `ap-northeast-2`) |
-| `ECR_REPOSITORY` | Variable | ECR 리포지토리 이름 |
-| `ECS_CLUSTER` | Variable | ECS 클러스터 이름 |
-| `ECS_SERVICE` | Variable | ECS 서비스 이름 |
-| `CONTAINER_NAME` | Variable | 컨테이너 이름 |
-
----
 
 ## 기술 스택
 
-| 구성 요소 | 기술 |
-|-----------|------|
-| API 서버 | FastAPI + Uvicorn |
-| 데모 UI | Streamlit |
-| 벡터 DB | Qdrant |
-| 관계형 DB | PostgreSQL 16 + pgvector |
-| 캐시 | Redis 7 |
-| 임베딩 | sentence-transformers (all-MiniLM-L6-v2) |
-| PDF 파싱 | pypdf |
-| LLM 연동 | httpx + OpenAI 호환 API (vLLM 등) |
-| 컨테이너화 | Docker + Docker Compose |
-| CI/CD | GitHub Actions + AWS ECR + ECS |
+FastAPI · Streamlit · Qdrant · PostgreSQL/pgvector · Redis · sentence-transformers · OpenAI 호환 LLM API · Docker Compose
 
----
+## 유의사항
 
-## 확장 포인트
-
-### 품질 · 기능 개선 (우선순위 높음)
-
-- <i class="fa-solid fa-repeat"></i> Reranker 모델 추가 (BGE-reranker 등) — 검색 결과 재정렬
-- <i class="fa-solid fa-puzzle-piece"></i> 토큰 기반 정교한 청킹 — 현재 문자 수 기준 → 토큰 수 기준으로 전환
-- <i class="fa-solid fa-tag"></i>️ 문서 메타데이터 저장 — 버전·작성자·업로드일 추적
-- <i class="fa-solid fa-magnifying-glass"></i> 권한 기반 검색 필터 — 사용자 역할별 접근 가능 문서 제한
-- <i class="fa-solid fa-screwdriver-wrench"></i> 오케스트레이터 도구 추가 — 웹 검색, 계산기, 외부 API 등
-- <i class="fa-solid fa-shuffle"></i> 병렬 도구 호출 (Parallel Tool Calling) 지원
-
-### 운영 · 보안 강화
-
-- <i class="fa-solid fa-lock"></i> JWT 인증 및 권한 기반 문서 접근 제어
-- <i class="fa-solid fa-chart-line"></i> Prometheus + Grafana 모니터링 연동
-- <i class="fa-solid fa-water"></i> SSE(Server-Sent Events) 기반 스트리밍 답변
-- <i class="fa-solid fa-boxes-stacked"></i>️ 문서 버전 관리 및 삭제 API
-- <i class="fa-solid fa-clipboard-list"></i> 평가셋 기반 품질 점검 — 정확성·관련성·완전성 지표 자동 측정
-- <i class="fa-solid fa-lock"></i> 금칙어 필터 및 출력 안전장치 강화
-
-### 한 줄 로드맵
-
-> **문서 중심 RAG MVP를 먼저 구축하고, 운영 로그를 기반으로 권한·품질·UI·재정렬·파인튜닝을 점진 확장한다.**
+- 응답 품질은 등록 문서의 최신성·정확성·메타데이터에 직접 좌우됩니다. 상품설명서, 운용보고서, 자산배분 정책 등은 최신 버전으로 관리하세요.
+- 이 애플리케이션은 실시간 시세·공시·세법·규제 변경을 자동으로 조회하지 않습니다. 최신 정보가 필요한 판단은 원문과 공식 공시를 별도로 확인해야 합니다.
+- 특정 투자자에게 적합한 상품이나 비중을 자동으로 산정·보증하지 않습니다. 투자 목적, 기간, 위험 감수 수준, 유동성 필요를 바탕으로 별도의 검토가 필요합니다.

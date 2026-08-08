@@ -1,12 +1,12 @@
 services:
   postgres:
     image: pgvector/pgvector:pg16
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-ragdb}
       POSTGRES_USER: ${POSTGRES_USER:-raguser}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ragpass}
-    ports:
-      - "15433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/01-enable-pgvector.sql:ro
@@ -19,8 +19,6 @@ services:
 
   redis:
     image: redis:7-alpine
-    ports:
-      - "6380:6379"
     volumes:
       - redis_data:/data
     healthcheck:
@@ -32,9 +30,6 @@ services:
 
   qdrant:
     image: qdrant/qdrant:v1.15.1
-    ports:
-      - "6335:6333"
-      - "6336:6334"
     volumes:
       - qdrant_data:/qdrant/storage
     healthcheck:
@@ -46,8 +41,6 @@ services:
 
   api:
     build: .
-    ports:
-      - "8190:8000"
     env_file:
       - .env
     environment:
@@ -59,11 +52,7 @@ services:
       QDRANT_PORT: 6333
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    volumes:
-      - ./app:/app/app
-      - ./frontend:/app/frontend
-      - ./data:/app/data
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     depends_on:
       postgres:
         condition: service_healthy
@@ -76,26 +65,26 @@ services:
       interval: 10s
       timeout: 5s
       retries: 6
-      start_period: 20s
+      start_period: 30s
     restart: unless-stopped
 
-  streamlit:
-    build: .
+  caddy:
+    image: caddy:2.8-alpine
     ports:
-      - "8290:8501"
-    env_file:
-      - .env
-    environment:
-      API_BASE_URL: http://api:8000
+      - "80:80"
+      - "443:443"
     volumes:
-      - ./streamlit_app.py:/app/streamlit_app.py:ro
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
     depends_on:
       api:
         condition: service_healthy
-    command: streamlit run /app/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
     restart: unless-stopped
 
 volumes:
   postgres_data:
   redis_data:
   qdrant_data:
+  caddy_data:
+  caddy_config:

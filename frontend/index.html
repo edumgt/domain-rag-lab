@@ -74,8 +74,14 @@
 
     <main class="chat-area">
       <header class="chat-header">
-        <div class="domain-badge" id="domainBadge"><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분 학습 모드</div>
+        <div class="brand-nav" aria-label="학습 서비스 메뉴">
+          <button class="brand-nav-btn active" data-view="home"><i class="fa-solid fa-house"></i> 홈</button>
+          <button class="brand-nav-btn" data-view="learn"><i class="fa-solid fa-book-open"></i> 학습</button>
+          <button class="brand-nav-btn" data-view="quiz"><i class="fa-solid fa-circle-question"></i> 퀴즈</button>
+          <button class="brand-nav-btn" data-view="simulation"><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</button>
+        </div>
         <div class="header-actions">
+          <div class="domain-badge" id="domainBadge"><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분 학습 모드</div>
           <button class="btn-ghost" id="clearChatBtn" title="대화 초기화">
             <i class="fa-solid fa-trash-can"></i> 초기화
           </button>

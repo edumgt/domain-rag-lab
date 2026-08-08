@@ -1,3 +1,4 @@
+import time
 import uuid
 
 from qdrant_client import QdrantClient
@@ -18,7 +19,21 @@ class VectorStore:
         self._ensure_collection()
 
     def _ensure_collection(self):
-        collections = [c.name for c in self.client.get_collections().collections]
+        # Compose에서 Qdrant 컨테이너가 막 기동된 직후에도 API가 안정적으로
+        # 시작하도록 준비 완료까지 잠시 재시도한다.
+        last_error = None
+        for _ in range(15):
+            try:
+                collections = [c.name for c in self.client.get_collections().collections]
+                break
+            except Exception as error:
+                last_error = error
+                time.sleep(2)
+        else:
+            raise RuntimeError(
+                f"Qdrant 연결에 실패했습니다 ({settings.qdrant_host}:{settings.qdrant_port})."
+            ) from last_error
+
         if self.collection_name not in collections:
             self.client.create_collection(
                 collection_name=self.collection_name,

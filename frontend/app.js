@@ -8,7 +8,48 @@
     loading: false,
     chatHistory: [],
     activeTopic: 'products',
+    activeView: 'home',
+    quizIndex: 0,
+    quizAnswers: [],
   };
+
+  const QUIZ_QUESTIONS = [
+    {
+      category: '금융상품',
+      question: 'ETF를 일반펀드와 비교할 때, 장중 실시간으로 거래되는 특성과 가장 직접적으로 연결되는 항목은 무엇인가요?',
+      choices: ['기준가가 하루 한 번만 산정된다', '호가 스프레드와 거래 유동성을 확인한다', '만기까지 중도 환매가 불가능하다', '예금자보호 한도가 적용된다'],
+      answer: 1,
+      explanation: 'ETF는 거래소에서 실시간으로 매매되므로 거래대금, 호가 스프레드, 괴리율을 함께 점검해야 합니다.',
+    },
+    {
+      category: '성과·위험',
+      question: '최대낙폭(MDD)이 특히 잘 보여 주는 정보는 무엇인가요?',
+      choices: ['특정 기간의 최고점 대비 가장 큰 하락 폭', '매년 평균 수익률', '무위험수익률 대비 초과수익', '자산 간 상관관계'],
+      answer: 0,
+      explanation: 'MDD는 고점에서 저점까지의 가장 큰 하락 폭으로, 투자자가 견뎌야 할 손실 구간을 파악하는 데 쓰입니다.',
+    },
+    {
+      category: '자산배분',
+      question: 'Risk Parity 접근의 핵심 목표로 가장 알맞은 것은 무엇인가요?',
+      choices: ['모든 자산에 동일한 금액을 투자한다', '기대수익률이 가장 큰 자산만 편입한다', '각 자산의 위험기여도를 균형 있게 조정한다', '매월 가장 많이 오른 자산으로 교체한다'],
+      answer: 2,
+      explanation: 'Risk Parity는 자본 비중이 아니라 포트폴리오 위험에 각 자산이 기여하는 정도를 균형 있게 보는 방식입니다.',
+    },
+    {
+      category: '포트폴리오 이론',
+      question: '분산투자 효과를 설명할 때 자산 간 상관관계가 중요한 이유는 무엇인가요?',
+      choices: ['상관관계가 낮으면 함께 움직일 가능성이 낮아 전체 변동성을 낮출 수 있다', '상관관계는 수익률 계산에만 쓰이고 위험과는 무관하다', '상관관계가 높을수록 항상 분산 효과가 커진다', '상관관계는 채권에만 적용된다'],
+      answer: 0,
+      explanation: '같은 방향으로 덜 움직이는 자산을 결합하면 개별 자산의 변동성이 포트폴리오에서 일부 상쇄될 수 있습니다.',
+    },
+    {
+      category: '자산배분',
+      question: '블랙-리터만 모델은 평균-분산 최적화의 어떤 문제를 완화하는 데 유용한가요?',
+      choices: ['입력값 변화에 따라 최적 비중이 과도하게 흔들리는 문제', 'ETF의 거래소 상장 문제', '채권의 이자 지급 문제', '현금의 유동성 문제'],
+      answer: 0,
+      explanation: '시장 균형수익률과 투자자의 전망을 결합해 기대수익률 추정의 불안정성을 낮추려는 접근입니다.',
+    },
+  ];
 
   const TOPIC_META = {
     products: {
@@ -156,6 +197,8 @@
   const $simPromptBtn = document.getElementById('simPromptBtn');
   const $simAllocation = document.getElementById('simAllocation');
   const $simNarrative = document.getElementById('simNarrative');
+  const $chatInputArea = document.querySelector('.chat-input-area');
+  const $viewButtons = Array.from(document.querySelectorAll('.brand-nav-btn'));
 
   document.querySelectorAll('.sim-preset').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -172,8 +215,13 @@
       $topicButtons.forEach(item => item.classList.remove('active'));
       btn.classList.add('active');
       state.activeTopic = btn.dataset.topic;
+      if (state.activeView !== 'learn') setView('learn');
       updateTopicUI();
     });
+  });
+
+  $viewButtons.forEach(btn => {
+    btn.addEventListener('click', () => setView(btn.dataset.view));
   });
 
   $questionInput.addEventListener('keydown', (e) => {
@@ -225,6 +273,7 @@
   });
 
   $simPromptBtn.addEventListener('click', () => {
+    setView('learn');
     $questionInput.value = buildSimulationPrompt();
     resizeInput();
     $questionInput.focus();
@@ -234,7 +283,97 @@
     const meta = TOPIC_META[state.activeTopic];
     $domainBadge.innerHTML = `<i class="fa-solid ${meta.icon}"></i> ${meta.label} 학습 모드`;
     $currentTrackLabel.textContent = meta.label;
-    if (!state.chatHistory.length) showWelcome();
+    if (!state.chatHistory.length && state.activeView === 'learn') showWelcome();
+  }
+
+  function setView(view) {
+    state.activeView = view;
+    $viewButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
+    $chatInputArea.classList.toggle('hidden', view !== 'learn');
+    $clearChatBtn.classList.toggle('hidden', view !== 'learn');
+
+    if (view === 'home') renderHome();
+    if (view === 'learn') showWelcome();
+    if (view === 'quiz') renderQuiz();
+    if (view === 'simulation') renderSimulationGuide();
+  }
+
+  function renderHome() {
+    const modules = [
+      ['금융상품 이해', '주식·ETF·채권·파생상품의 구조, 비용, 위험을 비교합니다.', 'fa-layer-group'],
+      ['포트폴리오 이론', '분산투자와 상관관계, 변동성·MDD·샤프 비율을 해석합니다.', 'fa-chart-column'],
+      ['자산배분 실습', '평균분산·블랙-리터만·Risk Parity를 같은 포트폴리오에 적용합니다.', 'fa-sliders'],
+    ].map(([title, copy, icon]) => `
+      <button class="home-module" data-go="learn">
+        <i class="fa-solid ${icon}"></i><strong>${title}</strong><span>${copy}</span><em>학습 시작 <i class="fa-solid fa-arrow-right"></i></em>
+      </button>`).join('');
+
+    $messages.innerHTML = `
+      <article class="content-page home-page">
+        <div class="content-kicker">FINANCE LEARNING LAB · RAG 기반 학습</div>
+        <h1>금융상품을 이해하고,<br><mark>나만의 자산배분 원칙</mark>을 설계합니다.</h1>
+        <p class="content-lead">교재형 콘텐츠, 개념 퀴즈, 학습용 포트폴리오 시뮬레이션과 근거 문서 기반 RAG를 한 흐름으로 제공합니다.</p>
+        <div class="home-actions">
+          <button class="content-cta" data-go="learn"><i class="fa-solid fa-book-open"></i> 학습 트랙 둘러보기</button>
+          <button class="content-secondary" data-go="quiz"><i class="fa-solid fa-circle-question"></i> 5문제 퀴즈 풀기</button>
+        </div>
+        <section class="home-stats">
+          <div><strong>3</strong><span>학습 방식<br>콘텐츠 · 퀴즈 · 실습</span></div>
+          <div><strong>5</strong><span>핵심 지표<br>CAGR · 변동성 · MDD 등</span></div>
+          <div><strong>3</strong><span>배분 모델<br>MVO · BL · RP</span></div>
+        </section>
+        <section class="content-section"><div class="section-heading"><span>01</span><h2>학습 로드맵</h2></div><div class="home-module-grid">${modules}</div></section>
+        <section class="markdown-card">
+          <p class="markdown-label">LEARNING NOTE</p>
+          <h2>좋은 포트폴리오는 ‘정답’보다<br>위험을 감당할 수 있는 구조에 가깝습니다.</h2>
+          <blockquote>수익률만으로 상품을 비교하지 말고 비용, 유동성, 상관관계와 최대낙폭을 함께 검토하세요.</blockquote>
+          <div class="markdown-columns"><div><h3>상품을 볼 때</h3><ul><li>무엇에 투자하는가</li><li>총비용과 거래비용은 얼마인가</li><li>유동성·추적오차·신용위험은 어떤가</li></ul></div><div><h3>배분을 볼 때</h3><ul><li>투자기간과 손실 허용 범위는 어떤가</li><li>자산 간 상관관계가 낮은가</li><li>리밸런싱 규칙이 있는가</li></ul></div></div>
+        </section>
+        <p class="content-disclaimer">학습용 서비스이며 특정 투자상품의 매수·매도를 권유하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
+      </article>`;
+    bindViewLinks();
+  }
+
+  function renderQuiz() {
+    const question = QUIZ_QUESTIONS[state.quizIndex];
+    const complete = state.quizIndex >= QUIZ_QUESTIONS.length;
+    if (complete) {
+      const score = state.quizAnswers.filter((answer, i) => answer === QUIZ_QUESTIONS[i].answer).length;
+      const saved = JSON.parse(localStorage.getItem('finance-rag-quiz-results') || '[]');
+      if (!state.quizAnswers.saved) {
+        saved.unshift({ score, total: QUIZ_QUESTIONS.length, completedAt: new Date().toISOString() });
+        localStorage.setItem('finance-rag-quiz-results', JSON.stringify(saved.slice(0, 10)));
+        state.quizAnswers.saved = true;
+      }
+      $messages.innerHTML = `<article class="content-page quiz-page quiz-result"><div class="content-kicker">QUIZ RESULT</div><div class="result-ring"><strong>${score}</strong><span>/ ${QUIZ_QUESTIONS.length}</span></div><h1>${score >= 4 ? '훌륭합니다. 핵심 개념을 잘 이해하고 있어요.' : '풀이를 바탕으로 핵심 개념을 다시 연결해 보세요.'}</h1><p class="content-lead">정답과 해설을 복습한 뒤 시뮬레이션에서 자산 비중을 바꿔 보세요.</p><div class="quiz-review">${QUIZ_QUESTIONS.map((item, i) => `<div class="review-row ${state.quizAnswers[i] === item.answer ? 'correct' : 'incorrect'}"><span>${i + 1}</span><div><strong>${state.quizAnswers[i] === item.answer ? '정답' : '복습 필요'} · ${item.category}</strong><p>${item.explanation}</p></div></div>`).join('')}</div><div class="home-actions"><button class="content-cta" data-reset-quiz><i class="fa-solid fa-rotate-right"></i> 다시 풀기</button><button class="content-secondary" data-go="simulation">시뮬레이션으로 이동</button></div></article>`;
+      $messages.querySelector('[data-reset-quiz]').addEventListener('click', () => { state.quizIndex = 0; state.quizAnswers = []; renderQuiz(); });
+      bindViewLinks();
+      return;
+    }
+    $messages.innerHTML = `<article class="content-page quiz-page"><div class="quiz-topline"><span class="content-kicker">${question.category.toUpperCase()} QUIZ</span><span>${state.quizIndex + 1} / ${QUIZ_QUESTIONS.length}</span></div><div class="quiz-progress"><i style="width:${((state.quizIndex + 1) / QUIZ_QUESTIONS.length) * 100}%"></i></div><h1>${question.question}</h1><p class="content-lead">가장 적절한 답을 하나 선택하세요.</p><div class="quiz-choices">${question.choices.map((choice, index) => `<button class="quiz-choice" data-answer="${index}"><span>${String.fromCharCode(65 + index)}</span>${choice}</button>`).join('')}</div><div id="quizFeedback"></div></article>`;
+    $messages.querySelectorAll('[data-answer]').forEach(button => button.addEventListener('click', () => answerQuiz(Number(button.dataset.answer))));
+  }
+
+  function answerQuiz(answer) {
+    const question = QUIZ_QUESTIONS[state.quizIndex];
+    const correct = answer === question.answer;
+    state.quizAnswers[state.quizIndex] = answer;
+    $messages.querySelectorAll('.quiz-choice').forEach(button => {
+      const value = Number(button.dataset.answer);
+      button.disabled = true;
+      if (value === question.answer) button.classList.add('correct');
+      if (value === answer && !correct) button.classList.add('incorrect');
+    });
+    document.getElementById('quizFeedback').innerHTML = `<div class="quiz-feedback ${correct ? 'correct' : 'incorrect'}"><strong>${correct ? '정답입니다.' : '다시 확인해 보세요.'}</strong><p>${question.explanation}</p><button class="content-cta" id="nextQuizBtn">${state.quizIndex + 1 === QUIZ_QUESTIONS.length ? '결과 보기' : '다음 문제'} <i class="fa-solid fa-arrow-right"></i></button></div>`;
+    document.getElementById('nextQuizBtn').addEventListener('click', () => { state.quizIndex += 1; renderQuiz(); });
+  }
+
+  function renderSimulationGuide() {
+    $messages.innerHTML = `<article class="content-page simulation-page"><div class="content-kicker">ALLOCATION SIMULATOR</div><h1>비중을 바꾸며 위험과<br><mark>수익의 균형</mark>을 살펴보세요.</h1><p class="content-lead">오른쪽 시뮬레이터에서 주식/ETF·채권·대체/현금 비중과 헤지 강도를 조정하면 학습용 가정에 따른 기대수익률, 변동성, 샤프 비율, 스트레스 손실을 확인할 수 있습니다.</p><div class="simulation-steps"><div><span>01</span><h3>모델 선택</h3><p>평균분산, 블랙-리터만, Risk Parity의 관점을 선택합니다.</p></div><div><span>02</span><h3>비중 조정</h3><p>투자 성향 프리셋을 출발점으로 자산 비중과 헤지 강도를 수정합니다.</p></div><div><span>03</span><h3>RAG로 해석</h3><p>‘이 설정으로 RAG 질문 만들기’로 결과와 리스크를 문서 근거로 검토합니다.</p></div></div><section class="markdown-card warning-card"><h2><i class="fa-solid fa-circle-info"></i> 시뮬레이션 가정</h2><p>표시 수치는 교육을 위한 단순화된 가정과 상관관계 행렬을 사용한 예시이며, 실시간 가격·세금·수수료·상품별 제약을 반영하지 않습니다.</p></section></article>`;
+  }
+
+  function bindViewLinks() {
+    $messages.querySelectorAll('[data-go]').forEach(button => button.addEventListener('click', () => setView(button.dataset.go)));
   }
 
   function showWelcome() {
@@ -620,5 +759,6 @@
 
   updateTopicUI();
   updateSimulation();
+  setView('home');
   $topKLabel.textContent = state.topK;
 })();

@@ -1,60 +1,18 @@
-name: CD — Build & Deploy to AWS ECS
+name: CD — Deploy to EC2
 
 on:
   push:
-    branches: ["main"]
-    tags: ["v*.*.*"]
+    branches: [main]
+  workflow_dispatch:
 
-env:
-  # These values can be overridden by setting GitHub Variables in your repository
-  # Settings → Secrets and variables → Actions → Variables
-  AWS_REGION: ${{ vars.AWS_REGION || 'ap-northeast-2' }}
-  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY || 'domain-rag-api' }}
-  ECS_CLUSTER: ${{ vars.ECS_CLUSTER || 'domain-rag-cluster' }}
-  ECS_SERVICE: ${{ vars.ECS_SERVICE || 'domain-rag-service' }}
-  CONTAINER_NAME: ${{ vars.CONTAINER_NAME || 'domain-rag-api' }}
+concurrency:
+  group: domain-rag-production
+  cancel-in-progress: false
 
 jobs:
-  build-and-push:
-    name: Build Docker Image & Push to ECR
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
-    outputs:
-      image: ${{ steps.build-image.outputs.image }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Build, tag, and push Docker image to ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-
   deploy:
-    name: Deploy to Amazon ECS
+    name: Sync and deploy production stack
     runs-on: ubuntu-latest
-    needs: build-and-push
     permissions:
       contents: read
 
@@ -62,32 +20,42 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Download current ECS task definition
+      - name: Configure SSH key
+        env:
+          EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}
         run: |
-          aws ecs describe-task-definition \
-            --task-definition ${{ env.ECS_SERVICE }} \
-            --query taskDefinition \
-            > task-definition.json
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$EC2_SSH_PRIVATE_KEY" > ~/.ssh/domain-rag-deploy.pem
+          chmod 600 ~/.ssh/domain-rag-deploy.pem
+          ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
 
-      - name: Update ECS task definition with new image
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: task-definition.json
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ needs.build-and-push.outputs.image }}
+      - name: Synchronize application files
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_APP_DIR: ${{ secrets.EC2_APP_DIR }}
+        run: |
+          rsync -az --delete \
+            --exclude '.env' \
+            --exclude '.git' \
+            --exclude '.claude' \
+            --exclude '__pycache__' \
+            --exclude '*.pyc' \
+            --exclude '*.pem' \
+            -e 'ssh -i ~/.ssh/domain-rag-deploy.pem' \
+            ./ "$EC2_USER@$EC2_HOST:$EC2_APP_DIR/"
 
-      - name: Deploy updated task definition to ECS
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true
+      - name: Build and restart services
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_APP_DIR: ${{ secrets.EC2_APP_DIR }}
+        run: |
+          ssh -i ~/.ssh/domain-rag-deploy.pem "$EC2_USER@$EC2_HOST" <<EOF
+          set -euo pipefail
+          cd "$EC2_APP_DIR"
+          sudo docker compose -f docker-compose.prod.yml up --build -d
+          sudo docker compose -f docker-compose.prod.yml ps
+          curl --fail --retry 12 --retry-delay 5 http://localhost/health
+          EOF
