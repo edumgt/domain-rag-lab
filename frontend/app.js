@@ -168,6 +168,39 @@
     },
   ];
 
+  const GLOSSARY = [
+    { terms: ['분산투자'], korean: '분산투자', hanja: '分散投資', abbr: '—', english: 'Diversification', summary: '서로 다른 자산에 나누어 투자해 한 곳의 손실이 전체에 미치는 영향을 줄이려는 방법입니다.', detail: '종목 수를 많이 늘리는 것만으로 충분하지는 않습니다. 산업·국가·자산 종류가 서로 비슷하면 함께 움직일 수 있으므로, 자산 간 움직임도 함께 살펴야 합니다.' },
+    { terms: ['상관관계'], korean: '상관관계', hanja: '相關關係', abbr: 'ρ (rho)', english: 'Correlation', summary: '두 자산이 같은 방향으로 움직이는 정도를 나타내는 수치입니다.', detail: '1에 가까우면 함께 움직이는 경향이 크고, -1에 가까우면 반대 방향으로 움직이는 경향이 있습니다. 낮은 상관관계는 분산투자 효과를 기대하게 하지만, 미래에도 항상 같지는 않습니다.' },
+    { terms: ['변동성'], korean: '변동성', hanja: '變動性', abbr: 'σ (sigma)', english: 'Volatility', summary: '가격이나 수익률이 평균 주변에서 얼마나 크게 오르내렸는지 보여 주는 지표입니다.', detail: '변동성이 크면 단기간의 오르내림 폭도 클 수 있습니다. 변동성이 낮다고 손실 가능성이 없는 것은 아니며, 투자 기간과 감당 가능한 손실을 함께 고려해야 합니다.' },
+    { terms: ['최대낙폭', 'MDD'], korean: '최대낙폭', hanja: '最大落幅', abbr: 'MDD', english: 'Maximum Drawdown', summary: '특정 기간의 최고점에서 가장 크게 하락한 폭입니다.', detail: '예를 들어 100에서 70까지 내려갔다면 최대낙폭은 -30%입니다. 평균 수익률만으로 보이지 않는 실제 손실 구간을 보여 주므로, 투자자가 버틸 수 있는 위험을 판단할 때 유용합니다.' },
+    { terms: ['샤프 비율', '샤프비율'], korean: '샤프 비율', hanja: '危險調整收益率', abbr: 'SR', english: 'Sharpe Ratio', summary: '감수한 변동성 대비 초과수익을 비교하는 위험조정 성과 지표입니다.', detail: '일반적으로 값이 높을수록 같은 변동성에서 더 나은 성과로 해석할 수 있습니다. 다만 과거 자료와 계산 기간에 따라 달라지며, 손실의 모양이나 미래 성과를 모두 설명하지는 못합니다.' },
+    { terms: ['자산배분'], korean: '자산배분', hanja: '資産配分', abbr: 'AA', english: 'Asset Allocation', summary: '주식·채권·현금성 자산 등에 얼마씩 나눌지 정하는 과정입니다.', detail: '목표, 투자 기간, 손실 허용 범위에 따라 비중이 달라집니다. 특정 자산의 미래를 맞히기보다 전체 위험을 관리하는 관점에서 사용합니다.' },
+    { terms: ['리밸런싱'], korean: '리밸런싱', hanja: '資産再配分', abbr: 'RB', english: 'Rebalancing', summary: '변한 자산 비중을 처음 정한 목표 비중에 맞추어 조정하는 일입니다.', detail: '많이 오른 자산의 비중이 커지면 포트폴리오 위험도 달라질 수 있습니다. 일정 주기 또는 허용 범위를 정해 점검하되 거래비용과 세금도 고려해야 합니다.' },
+    { terms: ['수익률'], korean: '수익률', hanja: '收益率', abbr: 'R', english: 'Rate of Return', summary: '투자한 금액 대비 얼마가 늘거나 줄었는지를 비율로 나타낸 값입니다.', detail: '높은 과거 수익률이 미래 수익을 보장하지는 않습니다. 수익률은 변동성, 최대낙폭, 비용과 함께 해석하는 것이 좋습니다.' },
+    { terms: ['위험'], korean: '위험', hanja: '危險', abbr: 'Risk', english: 'Investment Risk', summary: '예상과 다른 결과가 나와 손실을 볼 수 있는 가능성과 그 크기입니다.', detail: '투자에서 위험은 단순히 나쁜 일이 아니라 결과가 흔들릴 수 있다는 뜻입니다. 가격 변동, 신용, 유동성 등 여러 종류의 위험을 나누어 살펴야 합니다.' },
+    { terms: ['유동성'], korean: '유동성', hanja: '流動性', abbr: '—', english: 'Liquidity', summary: '필요한 때 큰 가격 손해 없이 현금으로 바꾸기 쉬운 정도입니다.', detail: '거래량이 적거나 매수·매도 호가 차이가 큰 상품은 원하는 가격에 거래하기 어려울 수 있습니다. 가까운 시일에 쓸 돈일수록 유동성이 중요합니다.' },
+    { terms: ['포트폴리오'], korean: '포트폴리오', hanja: '資産構成', abbr: 'PF', english: 'Portfolio', summary: '한 사람이 보유한 여러 투자자산의 전체 구성입니다.', detail: '한 종목의 성과보다 자산 전체가 어떻게 함께 움직이는지가 중요합니다. 목표와 위험 허용 범위에 맞춰 주식·채권·현금성 자산 등을 조합합니다.' },
+    { terms: ['채권'], korean: '채권', hanja: '債券', abbr: 'Bond', english: 'Bond', summary: '정부나 기업에 돈을 빌려주고 이자와 원금을 받기로 한 증서입니다.', detail: '금리 변화, 발행자의 상환 능력, 만기에 따라 가격과 위험이 달라집니다. 중간에 팔면 손익이 생길 수 있으므로 원금이 항상 보장되는 것은 아닙니다.' },
+    { terms: ['금리'], korean: '금리', hanja: '金利', abbr: 'IR', english: 'Interest Rate', summary: '돈을 빌리거나 맡길 때 붙는 이자의 비율입니다.', detail: '시장금리가 오르면 기존 채권의 가격은 내려갈 수 있고, 반대로 금리가 내려가면 기존 채권 가격이 오를 수 있습니다. 다만 만기와 신용위험에 따라 영향은 다릅니다.' },
+    { terms: ['듀레이션'], korean: '듀레이션', hanja: '—', abbr: 'Dur.', english: 'Duration', summary: '채권 가격이 금리 변화에 얼마나 민감한지 가늠하는 지표입니다.', detail: '일반적으로 듀레이션이 길수록 금리 변화에 따른 가격 움직임이 커지는 경향이 있습니다. 실제 가격 변화는 금리 수준과 채권의 구조에도 영향을 받습니다.' },
+    { terms: ['신용위험'], korean: '신용위험', hanja: '信用危險', abbr: 'CR', english: 'Credit Risk', summary: '돈을 빌린 주체가 이자나 원금을 약속대로 갚지 못할 위험입니다.', detail: '국채와 회사채, 기업별 채권은 상환 능력에 차이가 있을 수 있습니다. 높은 이자는 더 큰 신용위험에 대한 보상일 수 있으므로 발행자와 신용등급을 확인해야 합니다.' },
+    { terms: ['파생상품'], korean: '파생상품', hanja: '派生商品', abbr: '—', english: 'Derivatives', summary: '주가·금리·환율 등 기초자산의 가격에서 가치가 파생되는 계약입니다.', detail: '선물과 옵션 등이 대표적입니다. 가격 위험을 줄이는 헤지에 쓸 수 있지만 구조가 복잡하고 손실이 커질 수 있어 계약 조건과 최대 손실을 먼저 이해해야 합니다.' },
+    { terms: ['헤지'], korean: '헤지', hanja: '危險回避', abbr: 'Hedge', english: 'Hedging', summary: '예상하지 못한 가격 변동으로 생길 손실을 줄이려는 위험관리 방법입니다.', detail: '보험료를 내고 위험을 줄이는 것처럼, 헤지는 수익 가능성 일부를 포기하는 대가로 손실을 완화할 수 있습니다. 완전한 손실 방지를 뜻하지는 않습니다.' },
+    { terms: ['평균분산'], korean: '평균분산', hanja: '平均分散', abbr: 'MVO', english: 'Mean-Variance Optimization', summary: '기대수익률과 변동성을 함께 고려해 자산 비중을 찾는 자산배분 방법입니다.', detail: '입력한 기대수익률과 상관관계가 조금만 달라져도 결과 비중이 크게 바뀔 수 있습니다. 따라서 하나의 정답으로 보기보다 가정을 점검하는 도구로 활용합니다.' },
+    { terms: ['블랙-리터만', '블랙 리터만'], korean: '블랙-리터만 모형', hanja: '—', abbr: 'BL', english: 'Black-Litterman Model', summary: '시장 균형수익률과 투자자의 전망을 결합해 자산배분 입력값을 만드는 모형입니다.', detail: '평균분산 최적화에서 기대수익률 추정에 지나치게 민감한 문제를 완화하려는 목적이 있습니다. 전망의 신뢰도를 어떻게 설정하는지가 결과에 영향을 줍니다.' },
+    { terms: ['Risk Parity', '리스크 패리티'], korean: '리스크 패리티', hanja: '危險均衡', abbr: 'RP', english: 'Risk Parity', summary: '투입 금액보다 각 자산이 전체 위험에 기여하는 정도를 균형 있게 보려는 자산배분 방식입니다.', detail: '변동성이 큰 자산은 같은 금액을 담아도 위험 기여도가 커질 수 있습니다. 레버리지와 금리 환경 등 실제 운용 조건에 따라 결과가 달라질 수 있습니다.' },
+    { terms: ['ETF'], korean: '상장지수펀드', hanja: '上場指數펀드', abbr: 'ETF', english: 'Exchange-Traded Fund', summary: '여러 자산을 담은 펀드를 거래소에서 주식처럼 사고팔 수 있게 만든 상품입니다.', detail: '무엇을 추종하는지, 총보수, 거래량, 호가 차이, 시장가격과 순자산가치의 차이(괴리율)를 함께 확인해야 합니다.' },
+    { terms: ['주식'], korean: '주식', hanja: '株式', abbr: 'Stock', english: 'Stock / Equity', summary: '기업의 지분 일부를 나타내는 증서로, 보유자는 기업 성과에 따른 가격 변동과 배당에 참여할 수 있습니다.', detail: '기업이 잘될 가능성뿐 아니라 산업 변화, 경쟁, 가격 수준에 따라 손실도 생길 수 있습니다. 한 기업에 집중하면 개별 기업 위험이 커집니다.' },
+    { terms: ['펀드'], korean: '투자신탁', hanja: '投資信託', abbr: 'Fund', english: 'Investment Fund', summary: '여러 투자자의 돈을 모아 정한 운용 전략에 따라 자산에 투자하는 상품입니다.', detail: '운용 방식, 비용, 환매 시점, 편입 자산이 상품마다 다릅니다. 과거 수익률만 보지 말고 설명서와 위험등급도 확인해야 합니다.' },
+    { terms: ['괴리율'], korean: '괴리율', hanja: '乖離率', abbr: 'Premium / Discount', english: 'Premium/Discount to NAV', summary: 'ETF의 시장 거래가격과 순자산가치(NAV)가 얼마나 차이 나는지 보여 주는 비율입니다.', detail: '괴리율이 크면 실제 담긴 자산 가치와 다른 가격에 사고팔 수 있습니다. 거래량과 호가 차이도 함께 확인하는 것이 좋습니다.' },
+    { terms: ['추적오차'], korean: '추적오차', hanja: '追跡誤差', abbr: 'TE', english: 'Tracking Error', summary: 'ETF나 인덱스 펀드의 수익률이 목표 지수의 수익률과 얼마나 다르게 움직였는지 나타냅니다.', detail: '보수, 거래비용, 편입 방식, 현금 보유 등으로 차이가 생길 수 있습니다. 작다고 항상 좋은 것은 아니며 상품의 목표와 비교해야 합니다.' },
+    { terms: ['배당'], korean: '배당', hanja: '配當', abbr: 'Div.', english: 'Dividend', summary: '기업이 이익 일부를 주주에게 나누어 주는 금액입니다.', detail: '배당 지급 여부와 규모는 기업이 결정하며 보장되지 않습니다. 배당만 보지 말고 기업의 이익, 재무상태, 배당정책을 함께 살펴야 합니다.' },
+    { terms: ['기대수익률'], korean: '기대수익률', hanja: '期待收益率', abbr: 'E[R]', english: 'Expected Return', summary: '앞으로 기대하는 평균적인 수익 수준을 가정한 값입니다.', detail: '미래를 확정하는 숫자가 아니라 분석을 위한 가정입니다. 자산배분 모형은 기대수익률 가정에 민감할 수 있으므로 여러 시나리오를 비교하는 것이 좋습니다.' },
+    { terms: ['CAGR'], korean: '연평균성장률', hanja: '年平均成長率', abbr: 'CAGR', english: 'Compound Annual Growth Rate', summary: '여러 해 동안의 누적 성과를 매년 같은 비율로 성장한 것처럼 환산한 수익률입니다.', detail: '중간의 큰 하락과 회복 과정은 가려질 수 있습니다. 따라서 CAGR은 변동성, 최대낙폭과 함께 보는 것이 좋습니다.' },
+    { terms: ['옵션'], korean: '선택권', hanja: '選擇權', abbr: 'Option', english: 'Option', summary: '정해진 조건으로 자산을 사고팔 수 있는 권리를 거래하는 파생상품입니다.', detail: '매수자와 매도자의 손익 구조가 다르고, 만기와 행사가격에 따라 가치가 변합니다. 복잡한 구조와 손실 가능성을 충분히 이해해야 합니다.' },
+    { terms: ['선물'], korean: '선물', hanja: '先物', abbr: 'Futures', english: 'Futures Contract', summary: '미래의 특정 시점에 정한 가격으로 자산을 사고팔기로 하는 계약입니다.', detail: '가격 변동 위험을 관리하는 데 쓸 수 있지만 증거금과 일일 정산 때문에 손익이 빠르게 변할 수 있습니다.' },
+  ];
+
   const MODEL_META = {
     mean_variance: {
       label: '평균분산',
@@ -244,6 +277,11 @@
   const $openLeftPanel = document.getElementById('openLeftPanel');
   const $openRightPanel = document.getElementById('openRightPanel');
   const $closeLeftPanel = document.getElementById('closeLeftPanel');
+  const $glossaryModal = document.getElementById('glossaryModal');
+  const $glossaryTitle = document.getElementById('glossaryTitle');
+  const $glossaryNames = document.getElementById('glossaryNames');
+  const $glossarySummary = document.getElementById('glossarySummary');
+  const $glossaryDetail = document.getElementById('glossaryDetail');
 
   document.querySelectorAll('.sim-preset').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -267,8 +305,16 @@
   $openRightPanel.addEventListener('click', () => togglePanel('right'));
   $closeLeftPanel.addEventListener('click', () => setPanel('left', false));
   $offcanvasBackdrop.addEventListener('click', () => closePanels());
+  $messages.addEventListener('click', event => {
+    const term = event.target.closest('[data-glossary-term]');
+    if (term) openGlossary(Number(term.dataset.glossaryTerm));
+  });
+  $glossaryModal.addEventListener('click', event => {
+    if (event.target.closest('[data-glossary-close]')) closeGlossary();
+  });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closePanels();
+    if (event.key === 'Escape') closeGlossary();
   });
 
   $questionInput.addEventListener('keydown', (e) => {
@@ -361,6 +407,77 @@
     $openLeftPanel.setAttribute('aria-expanded', 'false');
     $openRightPanel.setAttribute('aria-expanded', 'false');
   }
+
+  function annotateGlossary(node) {
+    const root = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
+    if (!root || root.closest?.('.glossary-term, .glossary-modal')) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(textNode) {
+        const parent = textNode.parentElement;
+        if (!textNode.nodeValue.trim() || parent?.closest('.glossary-term, .glossary-modal, button, textarea, script, style')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(textNode => {
+      const matches = [];
+      GLOSSARY.forEach((entry, index) => entry.terms.forEach(term => matches.push({ term, index })));
+      matches.sort((a, b) => b.term.length - a.term.length);
+      const pattern = new RegExp(matches.map(item => escapeRegex(item.term)).join('|'), 'g');
+      if (!pattern.test(textNode.nodeValue)) return;
+      pattern.lastIndex = 0;
+      const fragment = document.createDocumentFragment();
+      let cursor = 0;
+      textNode.nodeValue.replace(pattern, (match, offset) => {
+        fragment.append(document.createTextNode(textNode.nodeValue.slice(cursor, offset)));
+        const item = matches.find(candidate => candidate.term === match);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'glossary-term';
+        button.dataset.glossaryTerm = String(item.index);
+        button.textContent = match;
+        button.setAttribute('aria-label', `${match} 용어 설명 보기`);
+        fragment.append(button);
+        cursor = offset + match.length;
+        return match;
+      });
+      fragment.append(document.createTextNode(textNode.nodeValue.slice(cursor)));
+      textNode.replaceWith(fragment);
+    });
+  }
+
+  function openGlossary(index) {
+    const entry = GLOSSARY[index];
+    if (!entry) return;
+    $glossaryTitle.textContent = entry.korean;
+    $glossaryNames.innerHTML = `
+      <span><b>한자</b>${escHtml(entry.hanja)}</span>
+      <span><b>약자</b>${escHtml(entry.abbr)}</span>
+      <span><b>영문</b>${escHtml(entry.english)}</span>`;
+    $glossarySummary.textContent = entry.summary;
+    $glossaryDetail.textContent = entry.detail;
+    $glossaryModal.classList.add('open');
+    $glossaryModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    $glossaryModal.querySelector('.glossary-close').focus();
+  }
+
+  function closeGlossary() {
+    $glossaryModal.classList.remove('open');
+    $glossaryModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  function escapeRegex(value) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  new MutationObserver(records => {
+    records.forEach(record => record.addedNodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) annotateGlossary(node);
+    }));
+  }).observe($messages, { childList: true, subtree: true });
 
   function renderHome() {
     const modules = [
@@ -462,6 +579,7 @@
         <div class="content-kicker">5-DAY FINANCE THEORY</div>
         <h1>하루 하나씩 읽는<br><mark>금융상품·자산배분 이론</mark></h1>
         <p class="content-lead">각 일차 메뉴는 독립적으로 읽을 수 있습니다. 개념을 먼저 읽고, 궁금한 점은 RAG 학습으로 이어서 질문해 보세요.</p>
+        <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄이 있는 경제 용어를 누르면 한자·영문·약자와 쉬운 설명을 볼 수 있습니다.</p>
         <section class="theory-overview">
           <div><strong>5일</strong><span>짧고 분명한 이론 학습</span></div>
           <div><strong>고등학생 수준</strong><span>어려운 용어는 쉬운 말로 풉니다</span></div>
@@ -504,6 +622,7 @@
           <h1>${escHtml(lesson.title)}</h1>
           <p>${escHtml(lesson.subtitle)}</p>
         </div>
+        <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄 용어를 누르면 상세 용어 설명이 열립니다.</p>
         <div class="theory-progress" aria-label="5일 학습 중 ${lesson.day}일차">${THEORY_DAYS.map(item => `<i class="${item.day <= lesson.day ? 'done' : ''}"></i>`).join('')}</div>
         <section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section>
         <div class="theory-lesson-list">${lessonBlocks}</div>

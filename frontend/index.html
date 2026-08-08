@@ -211,6 +211,19 @@
     </aside>
   </div>
 
+  <div class="glossary-modal" id="glossaryModal" role="dialog" aria-modal="true" aria-labelledby="glossaryTitle" aria-hidden="true">
+    <div class="glossary-modal-backdrop" data-glossary-close></div>
+    <section class="glossary-dialog">
+      <button class="glossary-close" type="button" data-glossary-close aria-label="용어 설명 닫기"><i class="fa-solid fa-xmark"></i></button>
+      <p class="glossary-label">금융 용어 사전</p>
+      <h2 id="glossaryTitle"></h2>
+      <div class="glossary-names" id="glossaryNames"></div>
+      <p class="glossary-summary" id="glossarySummary"></p>
+      <div class="glossary-detail" id="glossaryDetail"></div>
+      <p class="glossary-note">학습용 설명입니다. 실제 투자 판단에는 상품설명서와 공시 자료를 함께 확인하세요.</p>
+    </section>
+  </div>
+
   <script src="/static/app.js"></script>
 </body>
 </html>
