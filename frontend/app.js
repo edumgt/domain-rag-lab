@@ -676,7 +676,8 @@
         <div><h2>${escHtml(heading)}</h2>${paragraphs.map(text => `<p>${escHtml(text)}</p>`).join('')}</div>
       </section>
     `).join('');
-    const magazine = lesson.day === 2 ? renderKoreaMarketMagazine() : '';
+    const magazine = renderDailyMarketMagazine(lesson.day);
+    const koreaEquityExtra = lesson.day === 2 ? renderKoreaMarketMagazine() : '';
     const dayVisual = renderDayInfographic(lesson.day);
     const previous = lesson.day > 1 ? lesson.day - 1 : null;
     const next = lesson.day < THEORY_DAYS.length ? lesson.day + 1 : null;
@@ -694,6 +695,7 @@
         <section class="lesson-dashboard" aria-label="오늘의 학습 대시보드"><div><span>READ</span><strong>${lesson.lessons.length}</strong><small>개념 카드</small></div><div><span>KEYWORDS</span><strong>${lesson.keywords.length}</strong><small>핵심 용어</small></div><div><span>CHECK</span><strong><i class="fa-solid fa-pen"></i></strong><small>마무리 질문</small></div></section>
         ${dayVisual}
         ${magazine}
+        ${koreaEquityExtra}
         <div class="theory-lesson-list">${lessonBlocks}</div>
         <section class="theory-check"><i class="fa-solid fa-pen-to-square"></i><div><strong>오늘의 확인</strong><p>${escHtml(lesson.check)}</p></div></section>
         <section class="theory-keywords"><strong>핵심 단어</strong><div>${lesson.keywords.map(word => `<span>${escHtml(word)}</span>`).join('')}</div></section>
@@ -722,6 +724,106 @@
       5: `<section class="day-infographic allocation-map"><div class="info-heading"><span>PORTFOLIO BLUEPRINT</span><h2>자산배분은 종목 맞히기보다 역할 나누기</h2></div><div class="allocation-pyramid"><article><b>성장</b><span>국내·해외 주식 ETF</span></article><article><b>완충</b><span>국채 · 우량채 · 채권 ETF</span></article><article><b>유동성</b><span>현금성 자산 · 단기 목적자금</span></article></div><div class="rebalancing-line"><span>목표 비중 설정</span><i></i><span>정기 점검</span><i></i><span>기준 벗어나면 조정</span></div></section>`,
     };
     return visuals[day] || '';
+  }
+
+  function renderDailyMarketMagazine(day) {
+    const editions = {
+      1: {
+        eyebrow: 'DAY 01 · MONEY & MARKET FIELD GUIDE',
+        title: '내 돈은 어느 문을 통해<br><em>시장으로 들어갈까?</em>',
+        deck: '투자의 첫 장면은 종목 화면이 아니라 계좌·상품·거래소의 역할을 이해하는 일입니다. 은행, 증권사, 자산운용사, 한국거래소가 맡은 일을 실제 이름과 함께 읽어 봅니다.',
+        pulse: [['은행', 42], ['증권사', 76], ['운용사', 65], ['거래소', 88]],
+        storyTitle: '앱 하나에서 모두 보이지만, 역할은 서로 다릅니다.',
+        story: '삼성증권·미래에셋증권·NH투자증권·KB증권·키움증권 등은 투자자의 주문을 받아 시장에 연결하는 증권사입니다. KODEX·TIGER·RISE·ACE 같은 ETF 브랜드는 각각 삼성자산운용·미래에셋자산운용·KB자산운용·한국투자신탁운용이 상품을 설계하고 운용합니다.',
+        note: '처음 계좌를 만들 때는 이벤트보다 내가 쓰려는 기능을 먼저 체크하세요. 국내·해외 주식, ETF, 채권, ISA·연금, 파생상품 지원 여부와 거래·환전·이체 비용이 서로 다를 수 있습니다.',
+        files: [
+          ['삼성전자', '반도체·스마트폰·가전', '주식은 회사의 사업 결과와 기대가 가격에 반영됩니다. 삼성전자는 메모리, 파운드리, 모바일, 가전처럼 여러 사업이 있어 “반도체만”으로 읽기 어렵습니다.', '사업보고서 → 부문별 매출·이익 / IR → 다음 분기 수요 가정'],
+          ['KB금융', '은행·증권·보험·운용', '금융지주는 예금만 받는 은행이 아닙니다. 대출, 카드, 증권, 보험, 자산운용 수익이 합쳐져 금리·경기·신용위험에 복합적으로 반응합니다.', '대손비용 · CET1 · 배당·자사주 정책'],
+          ['KODEX 200', 'KOSPI 200 ETF 사례', '한 종목을 고르는 대신 KOSPI 200 구성 종목을 한 바구니로 보유하는 방식입니다. 분산되지만 대형 반도체·금융주의 영향은 여전히 큽니다.', '기초지수 · 총보수 · NAV · 호가 스프레드'],
+          ['국고채 ETF', '금리와 만기의 상품', '정부에 돈을 빌려주는 국채에 투자하는 ETF도 가격이 움직입니다. 특히 만기가 길수록 금리 변화에 민감해질 수 있습니다.', '듀레이션 · 만기 · 금리 민감도'],
+        ],
+        matrix: [['은행 상품', '원금·만기·중도해지', '예금·적금'], ['증권사 계좌', '시장·수수료·주문 방식', '주식·ETF·채권'], ['운용사 상품', '기초자산·보수·운용규칙', 'ETF·공모펀드'], ['거래소 시장', '거래시간·유동성·공시', 'KRX 상장상품']],
+        checklist: ['상품 이름 대신 기초자산을 한 문장으로 쓰기', '운용사와 주문을 받는 증권사를 구분하기', '“언제 써야 하는 돈인가”를 상품보다 먼저 정하기'],
+      },
+      2: {
+        eyebrow: 'DAY 02 · KOREAN EQUITY READING ROOM',
+        title: '뜨는 테마보다 먼저,<br><em>돈 버는 구조를 읽기</em>',
+        deck: 'AI 반도체, 자동차, 조선·방산, 플랫폼, 바이오, 금융, 배터리는 모두 다른 언어로 움직입니다. 대표 기업을 통해 매출을 바꾸는 변수와 확인해야 할 숫자를 연결합니다.',
+        pulse: [['AI 메모리', 92], ['자동차', 67], ['조선·방산', 79], ['금융', 58]],
+        storyTitle: '같은 “성장”이라도 실적을 만드는 엔진은 다릅니다.',
+        story: '삼성전자와 SK하이닉스는 AI 서버 투자와 고대역폭메모리(HBM) 수요를 함께 보지만, 제품 구성과 사업 포트폴리오가 다릅니다. 현대차는 판매량·인센티브·환율을, HD현대중공업은 수주가 매출로 전환되는 시점과 원가를, NAVER는 광고·커머스·AI 수익화를 따로 읽어야 합니다.',
+        note: '기업 이름을 테마로만 묶지 마세요. 실적 발표 자료에서 “가격·물량·원가·환율·금리·규제” 중 무엇이 다음 분기의 숫자를 바꿀지 표시하면 뉴스가 훨씬 선명해집니다.',
+        files: [
+          ['삼성전자', 'HBM·메모리·파운드리', '2026년 HBM4 양산 출하 및 HBM4E 샘플 관련 발표은 AI 인프라가 국내 반도체 공급망의 핵심 관찰 주제임을 보여 줍니다. 기술 발표와 실적 실현은 구분해서 봐야 합니다.', '메모리 가격 · 고객 인증 · 수율 · CAPEX'],
+          ['SK하이닉스', 'D램·낸드·HBM', '메모리 비중이 높은 기업은 서버 수요와 제품 믹스, 공급 제약, 가격 사이클에 민감합니다. 경쟁력은 판매량만 아니라 고부가 제품 전환 속도에도 달려 있습니다.', 'HBM 비중 · ASP · 재고 · 고객 다변화'],
+          ['현대차', '완성차·하이브리드·EV', '차량 한 대의 판매가 전부가 아닙니다. 지역별 믹스, 인센티브, 환율, 재고, 하이브리드와 전기차의 제품 구성까지 함께 봐야 영업이익의 방향을 읽을 수 있습니다.', '판매대수 · 인센티브 · 환율 · 가동률'],
+          ['셀트리온', '바이오시밀러·직접판매', '바이오 기업은 허가, 출시, 경쟁약 가격, 유통망, 원가가 한꺼번에 작용합니다. 제품 개발 뉴스는 출발점이고 실제 처방과 판매가 이어지는지 확인해야 합니다.', '허가·출시 · 점유율 · 약가 · 재고'],
+        ],
+        matrix: [['KOSPI 200 ETF', '한국 대형주 바구니', '삼성·미래·KB·한투 등 운용사 상품 비교'], ['반도체 ETF', '메모리·장비·소부장 노출', '상위 편입종목 겹침 확인'], ['고배당 ETF', '배당·주주환원 기업 중심', '배당률 외 지속 가능성 확인'], ['밸류업 ETF', '기업가치 제고 지수 활용', '지수 규칙·편입 변경 확인']],
+        checklist: ['회사 매출을 만드는 제품을 한 줄로 정리하기', '호재 기사와 실적 반영 시점을 분리하기', 'ETF 상위 10개 편입 종목을 직접 확인하기'],
+      },
+      3: {
+        eyebrow: 'DAY 03 · RATES, BONDS & HEDGING DESK',
+        title: '금리 한 번의 변화가<br><em>채권과 기업을 잇는 방식</em>',
+        deck: '기준금리는 예금·대출만의 숫자가 아닙니다. 채권 가격, 금융주 이익, 원화 가치, 성장주 할인율까지 연결됩니다. 선물·옵션은 이 연결을 거래하는 도구지만 위험도 함께 커집니다.',
+        pulse: [['기준금리', 68], ['국채', 84], ['환율', 73], ['파생상품', 91]],
+        storyTitle: '채권은 “안전”이라는 단어 하나로 설명되지 않습니다.',
+        story: '국채는 발행 주체의 신용위험이 상대적으로 낮은 편이지만, 시장금리가 오르면 기존 채권 가격은 내려갈 수 있습니다. 회사채에는 발행 기업의 신용위험이 추가됩니다. 같은 채권 ETF라도 만기와 듀레이션이 다르면 금리 움직임에 대한 반응도 달라집니다.',
+        note: 'KOSPI 200 선물·옵션, 국채선물, 미국달러선물처럼 거래소에 상장된 파생상품은 헤지와 가격발견에 쓰입니다. 그러나 증거금과 레버리지 때문에 원금보다 큰 손실이 날 수 있어, 교육·모의거래·적격투자자 절차를 거쳐도 작은 규모로 구조를 익히는 것이 먼저입니다.',
+        files: [
+          ['한국은행', '기준금리와 통화정책', '기준금리는 시장의 모든 금리를 그대로 결정하지는 않지만, 예금·대출·채권 수익률과 환율 기대를 읽는 중요한 출발점입니다. 발표문에서 성장·물가·금융안정 판단을 함께 읽습니다.', '기준금리 · 물가 전망 · 성장 전망'],
+          ['국고채 3년·10년', '만기가 다른 정부채', '3년물과 10년물은 같은 국채라도 금리 변화에 대한 민감도가 다릅니다. 장기채는 일반적으로 가격 변동이 더 클 수 있어 “채권=현금”으로 보기는 어렵습니다.', '만기 · 듀레이션 · 수익률 곡선'],
+          ['은행·금융지주', '금리와 신용의 교차점', 'KB금융·신한지주·하나금융지주·우리금융지주는 예대금리차뿐 아니라 대손비용, 자본비율, 비은행 이익을 함께 봐야 합니다. 금리가 움직인다고 이익이 한 방향으로만 변하지 않습니다.', 'NIM · 대손충당금 · CET1 · 배당'],
+          ['KOSPI 200 옵션', '권리와 의무의 비대칭', '옵션 매수는 지불한 프리미엄이 최대 손실이지만, 옵션 매도는 큰 손실 가능성을 가질 수 있습니다. 상품 이름보다 포지션의 최대 손실과 증거금 구조를 먼저 계산해야 합니다.', '만기 · 행사가 · 증거금 · 강제청산'],
+        ],
+        matrix: [['단기채 ETF', '짧은 만기·낮은 금리 민감도', '대기자금과 동일하지 않음'], ['장기국채 ETF', '긴 만기·큰 금리 민감도', '금리 하락·상승 모두 점검'], ['달러 ETF·선물', '환율 노출', '환헤지 여부 확인'], ['지수 선물·옵션', '레버리지·만기', '적격투자자·증거금 확인']],
+        checklist: ['채권 ETF의 평균 만기와 듀레이션 확인하기', '금리 기사에서 기준금리와 시장금리를 구분하기', '파생 주문 전 최대손실·유지증거금부터 적기'],
+      },
+      4: {
+        eyebrow: 'DAY 04 · RISK, DRAWDOWN & DIVERSIFICATION',
+        title: '좋은 종목을 많이 사도<br><em>위험은 겹칠 수 있습니다</em>',
+        deck: '포트폴리오 위험은 종목 개수만으로 줄지 않습니다. 한국 대형주, 반도체 ETF, AI 테마 ETF가 같은 방향으로 움직일 때 생기는 겹침과 최대낙폭을 시각적으로 읽어 봅니다.',
+        pulse: [['집중위험', 88], ['상관관계', 74], ['변동성', 66], ['유동성', 52]],
+        storyTitle: '분산은 이름이 아니라 ‘다르게 움직일 가능성’입니다.',
+        story: '삼성전자 직접 보유와 KOSPI 200 ETF, 반도체 ETF를 동시에 담으면 상품은 세 개지만 반도체 노출은 생각보다 클 수 있습니다. 반대로 주식·채권·현금성 자산은 완벽한 안전판은 아니어도 손실 시점과 변동성이 달라 포트폴리오의 흔들림을 완화할 여지를 줍니다.',
+        note: '수익률은 결과를, 변동성은 흔들림을, 최대낙폭(MDD)은 가장 힘들었던 구간을 보여 줍니다. 세 지표가 모두 필요합니다. 특히 “좋은 해의 수익률”보다 감당하기 어려운 하락폭을 먼저 가정해야 장기 계획이 흔들리지 않습니다.',
+        files: [
+          ['삼성전자 + 반도체 ETF', '직접 보유와 ETF 중복', 'ETF는 분산 도구지만 상위 편입 종목이 직접 보유 종목과 겹치면 집중위험이 커질 수 있습니다. 보유 수량이 아니라 포트폴리오 내 실질 비중을 합산해 봅니다.', '상위 10종목 · 업종 비중 · 중복 노출'],
+          ['LG에너지솔루션 + 2차전지 ETF', '테마 집중의 사례', '전기차 수요, 메탈 가격, 고객 주문, 가동률은 관련 기업들이 함께 받는 변수입니다. 여러 종목을 담아도 같은 테마 충격에서 자유롭지 않을 수 있습니다.', '고객사 · 원재료 · 가동률 · CAPEX'],
+          ['HD현대중공업 + 방산 ETF', '수주 산업의 공통 변수', '조선·방산은 수주 뉴스가 강한 관심을 받지만, 납기와 원가, 수출 승인, 환율이 성과를 가릅니다. 계약 규모와 단기 이익을 같은 뜻으로 해석하지 않습니다.', '수주잔고 · 납기 · 원가 · 승인'],
+          ['KOSPI 200 + 미국지수 ETF', '국가 분산의 출발점', '국가를 나누면 기업·통화·산업 구성의 차이를 얻을 수 있지만, 글로벌 위험회피 국면에서는 함께 하락할 수 있습니다. 환율 효과도 수익률에 들어옵니다.', '상관관계 · 환율 · 산업 구성'],
+        ],
+        matrix: [['수익률', '얼마나 늘었나', '기간과 기준점 통일'], ['변동성', '얼마나 흔들렸나', '연환산·표본기간 확인'], ['MDD', '고점 대비 얼마나 빠졌나', '회복에 걸린 시간 확인'], ['샤프비율', '위험 대비 성과', '무위험수익률 가정 확인']],
+        checklist: ['ETF와 직접 보유 종목의 중복 비중 합산하기', '가장 큰 하락을 견딜 수 있는지 금액으로 써 보기', '테마가 아니라 수요·원가·환율의 공통 변수를 찾기'],
+      },
+      5: {
+        eyebrow: 'DAY 05 · PORTFOLIO EDITORIAL',
+        title: '종목을 고른 뒤가 아니라,<br><em>목표부터 포트폴리오로</em>',
+        deck: '자산배분은 시장을 예측하는 게임보다 목표·기간·손실 허용범위를 역할별로 나누는 과정에 가깝습니다. 국내 대표 ETF와 기업 사례를 “성장·완충·유동성”의 언어로 다시 배치합니다.',
+        pulse: [['성장자산', 78], ['채권완충', 56], ['현금유동성', 43], ['리밸런싱', 86]],
+        storyTitle: '매거진 속 종목도 포트폴리오 안에서는 ‘역할’로 바뀝니다.',
+        story: '삼성전자나 현대차 같은 개별 주식은 기업 특유의 성장과 위험을 갖습니다. KOSPI 200 ETF는 한국 대형주 시장 노출을, 국고채 ETF는 금리 위험을, 현금성 자산은 가까운 지출에 대응할 여지를 제공합니다. 무엇이 더 좋다는 답보다 서로 다른 역할을 이해하는 것이 우선입니다.',
+        note: '평균분산, 블랙-리터만, Risk Parity는 모두 정답 기계가 아니라 비중을 생각하는 서로 다른 렌즈입니다. 이 앱의 시뮬레이션 값은 학습용 가정치이며 실제 거래비용·세금·개인별 계좌 조건을 반영하지 않습니다.',
+        files: [
+          ['KOSPI 200 ETF', '한국 주식 성장 바구니', 'KODEX·TIGER·RISE·ACE 등 다양한 운용사의 지수 ETF가 있습니다. 이름이 비슷해도 보수, 규모, 유동성, 분배 방식, 지수 방법론은 확인해야 합니다.', '기초지수 · 보수 · 거래량 · 괴리율'],
+          ['국고채 ETF', '완충 역할의 채권 노출', '채권 ETF는 주식과 다른 역할을 기대할 수 있지만 금리 변화에 따른 가격 변동이 있습니다. 목표 기간에 맞춰 단기·중기·장기 만기를 구분합니다.', '듀레이션 · 신용등급 · 만기'],
+          ['삼성전자·현대차·KB금융', '개별 기업 위성 포지션', '지수 ETF를 중심으로 두고 개별 기업은 사업을 이해한 범위에서 작은 비중으로 두는 접근도 생각해 볼 수 있습니다. 이는 예시일 뿐 정답 비중은 아닙니다.', '기업위험 · 지수 중복 · 비중 상한'],
+          ['달러·금·리츠 ETF', '분산 후보 자산', '환율, 실질금리, 부동산 경기 등 다른 변수를 갖는 상품은 분산 후보가 될 수 있습니다. 그러나 각각 비용·변동성·세금·기초자산의 위험이 존재합니다.', '환노출 · 임대수익 · 원자재 변동'],
+        ],
+        matrix: [['성장', '주식·주식 ETF', '장기 목표 자금'], ['완충', '국채·우량채 ETF', '변동성 조절'], ['유동성', '예금·MMF 등', '가까운 지출·비상금'], ['위성', '개별주·테마 ETF', '이해한 범위의 제한된 비중']],
+        checklist: ['목적자금과 투자자금을 분리하기', '목표 비중·점검일·조정 기준을 미리 적기', '시뮬레이션 후 실제 비용·세금·계좌 조건을 별도로 확인하기'],
+      },
+    };
+    const edition = editions[day];
+    if (!edition) return '';
+    return `<section class="daily-market-magazine" aria-label="${edition.eyebrow}">
+      <header class="daily-magazine-hero"><div><span>${edition.eyebrow}</span><h2>${edition.title}</h2><p>${edition.deck}</p></div><div class="daily-pulse"><span>MARKET LENS</span>${edition.pulse.map(([label, value]) => `<div><b>${label}</b><i><em style="height:${value}%"></em></i><small>${value}</small></div>`).join('')}<p>막대 수치는 수익률이 아닌<br>학습용 관찰 우선순위입니다.</p></div></header>
+      <div class="daily-magazine-story"><article><span>WHY IT MATTERS</span><h3>${edition.storyTitle}</h3><p>${edition.story}</p></article><aside><i class="fa-solid fa-magnifying-glass-chart"></i><b>읽는 순서</b><ol><li>사업과 상품의 구조</li><li>다음 분기 핵심 변수</li><li>가장 나쁜 경우의 위험</li></ol><p>${edition.note}</p></aside></div>
+      <section class="market-file-grid">${edition.files.map(([name, category, body, check], index) => `<article class="market-file"><span>FILE ${String(index + 1).padStart(2, '0')}</span><h3>${name}</h3><b>${category}</b><p>${body}</p><div><i class="fa-solid fa-eye"></i><small>${check}</small></div></article>`).join('')}</section>
+      <section class="market-comparison"><div><span>COMPARE BEFORE YOU BUY</span><h3>이름이 비슷해도, 확인할 항목은 다릅니다.</h3></div><div class="comparison-table">${edition.matrix.map(([name, meaning, check]) => `<p><b>${name}</b><span>${meaning}</span><em>${check}</em></p>`).join('')}</div></section>
+      <footer class="daily-checklist"><div><span>READER'S CHECKLIST</span><strong>오늘의 읽기 과제</strong></div><ol>${edition.checklist.map(item => `<li>${item}</li>`).join('')}</ol></footer>
+      <p class="market-source-note"><i class="fa-solid fa-circle-info"></i> 실제 기업·상품명은 학습 사례입니다. 한국거래소 KIND 공시, 운용사 상품설명서, 회사 IR·사업보고서와 한국은행 자료를 원문으로 확인하세요. 특정 상품의 매수·매도 추천이 아닙니다.</p>
+    </section>`;
   }
 
   function renderKoreaMarketMagazine() {
