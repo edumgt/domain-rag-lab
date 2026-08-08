@@ -266,6 +266,254 @@
     ],
   };
 
+  // 5일 × 40개: 시장 구분과 산업별로 읽는 국내 상장사 학습 아틀라스
+  // 실시간 가격·투자의견이 아닌 사업 구조와 공시 확인 포인트를 위한 학습 데이터입니다.
+  const COMPANY_ATLAS = Object.fromEntries(Object.entries({
+    1: `KOSPI|삼성전자|반도체
+KOSPI|SK하이닉스|반도체
+KOSPI|LG전자|전자·가전
+KOSPI|삼성SDI|배터리
+KOSPI|LG에너지솔루션|배터리
+KOSPI|현대차|자동차
+KOSPI|기아|자동차
+KOSPI|HD현대|산업재
+KOSPI|현대모비스|자동차부품
+KOSPI|POSCO홀딩스|소재
+KOSPI|LG화학|소재
+KOSPI|롯데케미칼|소재
+KOSPI|한화솔루션|에너지·소재
+KOSPI|두산에너빌리티|전력·원전
+KOSPI|삼성바이오로직스|바이오
+KOSPI|셀트리온|바이오
+KOSPI|KB금융|금융
+KOSPI|신한지주|금융
+KOSPI|하나금융지주|금융
+KOSPI|우리금융지주|금융
+KOSDAQ|알테오젠|바이오
+KOSDAQ|HLB|바이오
+KOSDAQ|에코프로비엠|배터리소재
+KOSDAQ|에코프로|배터리소재
+KOSDAQ|리가켐바이오|바이오
+KOSDAQ|펩트론|바이오
+KOSDAQ|삼천당제약|바이오
+KOSDAQ|휴젤|미용·바이오
+KOSDAQ|클래시스|미용의료기기
+KOSDAQ|파마리서치|미용·바이오
+KOSDAQ|JYP Ent.|엔터테인먼트
+KOSDAQ|에스엠|엔터테인먼트
+KOSDAQ|스튜디오드래곤|콘텐츠
+KOSDAQ|카카오게임즈|게임
+KOSDAQ|펄어비스|게임
+KOSDAQ|SOOP|플랫폼
+KOSDAQ|더존비즈온|소프트웨어
+KOSDAQ|코난테크놀로지|AI소프트웨어
+KOSDAQ|루닛|의료AI
+KOSDAQ|레인보우로보틱스|로봇`,
+    2: `KOSPI|삼성전기|전자부품
+KOSPI|LG이노텍|전자부품
+KOSPI|한미반도체|반도체장비
+KOSPI|두산|산업재
+KOSPI|한화에어로스페이스|방산
+KOSPI|현대로템|방산·철도
+KOSPI|LIG넥스원|방산
+KOSPI|한국항공우주|방산·항공
+KOSPI|삼성중공업|조선
+KOSPI|한화오션|조선
+KOSPI|HD한국조선해양|조선
+KOSPI|HD현대미포|조선
+KOSPI|LS ELECTRIC|전력기기
+KOSPI|효성중공업|전력기기
+KOSPI|HD현대일렉트릭|전력기기
+KOSPI|대한전선|전력기기
+KOSPI|일진전기|전력기기
+KOSPI|OCI홀딩스|태양광·소재
+KOSPI|고려아연|비철금속
+KOSPI|풍산|방산·소재
+KOSDAQ|원익IPS|반도체장비
+KOSDAQ|주성엔지니어링|반도체장비
+KOSDAQ|동진쎄미켐|반도체소재
+KOSDAQ|솔브레인|반도체소재
+KOSDAQ|하나머티리얼즈|반도체소재
+KOSDAQ|ISC|반도체부품
+KOSDAQ|HPSP|반도체장비
+KOSDAQ|티씨케이|반도체소재
+KOSDAQ|피에스케이홀딩스|반도체장비
+KOSDAQ|SFA반도체|반도체후공정
+KOSDAQ|서울반도체|LED·부품
+KOSDAQ|덕산네오룩스|디스플레이소재
+KOSDAQ|리노공업|반도체부품
+KOSDAQ|이오테크닉스|반도체장비
+KOSDAQ|인텍플러스|검사장비
+KOSDAQ|테크윙|반도체장비
+KOSDAQ|유진테크|반도체장비
+KOSDAQ|대주전자재료|전자소재
+KOSDAQ|천보|배터리소재
+KOSDAQ|원텍|미용의료기기`,
+    3: `KOSPI|SK이노베이션|에너지
+KOSPI|S-Oil|에너지
+KOSPI|GS|지주·에너지
+KOSPI|SK|지주
+KOSPI|CJ|지주·소비
+KOSPI|KT|통신
+KOSPI|LG유플러스|통신
+KOSPI|NAVER|플랫폼
+KOSPI|카카오|플랫폼
+KOSPI|넷마블|게임
+KOSPI|엔씨소프트|게임
+KOSPI|크래프톤|게임
+KOSPI|F&F|소비재
+KOSPI|아모레퍼시픽|화장품
+KOSPI|LG생활건강|화장품
+KOSPI|신세계|유통
+KOSPI|이마트|유통
+KOSPI|호텔신라|면세·여행
+KOSPI|오리온|식품
+KOSPI|농심|식품
+KOSDAQ|실리콘투|화장품유통
+KOSDAQ|브이티|화장품·소재
+KOSDAQ|코스메카코리아|화장품ODM
+KOSDAQ|클리오|화장품
+KOSDAQ|메디톡스|바이오
+KOSDAQ|바이오니아|바이오
+KOSDAQ|씨젠|진단
+KOSDAQ|오상헬스케어|진단
+KOSDAQ|지아이이노베이션|바이오
+KOSDAQ|에이비엘바이오|바이오
+KOSDAQ|보로노이|바이오
+KOSDAQ|앱클론|바이오
+KOSDAQ|오스코텍|바이오
+KOSDAQ|큐로셀|바이오
+KOSDAQ|차바이오텍|바이오
+KOSDAQ|동국제약|제약
+KOSDAQ|메디포스트|바이오
+KOSDAQ|제넥신|바이오
+KOSDAQ|유바이오로직스|백신
+KOSDAQ|에스티팜|바이오CDMO`,
+    4: `KOSPI|삼성물산|건설·지주
+KOSPI|현대건설|건설
+KOSPI|DL이앤씨|건설
+KOSPI|GS건설|건설
+KOSPI|대우건설|건설
+KOSPI|한전기술|원전
+KOSPI|한국전력|유틸리티
+KOSPI|KT&G|소비재
+KOSPI|SK텔레콤|통신
+KOSPI|삼성화재|보험
+KOSPI|삼성생명|보험
+KOSPI|현대해상|보험
+KOSPI|DB손해보험|보험
+KOSPI|미래에셋증권|증권
+KOSPI|한국금융지주|증권·금융
+KOSPI|키움증권|증권
+KOSPI|삼성증권|증권
+KOSPI|NH투자증권|증권
+KOSPI|메리츠금융지주|금융
+KOSPI|한화생명|보험
+KOSDAQ|성일하이텍|배터리재활용
+KOSDAQ|코윈테크|자동화장비
+KOSDAQ|윤성에프앤씨|배터리장비
+KOSDAQ|에코앤드림|배터리소재
+KOSDAQ|나노신소재|전자소재
+KOSDAQ|엠플러스|배터리장비
+KOSDAQ|원준|배터리장비
+KOSDAQ|대보마그네틱|배터리장비
+KOSDAQ|상아프론테크|소재
+KOSDAQ|하나기술|배터리장비
+KOSDAQ|에코프로에이치엔|환경
+KOSDAQ|민테크|배터리진단
+KOSDAQ|서진시스템|전자부품
+KOSDAQ|비츠로셀|전지
+KOSDAQ|피엔티|배터리장비
+KOSDAQ|엔켐|전해액
+KOSDAQ|이녹스첨단소재|디스플레이소재
+KOSDAQ|제룡전기|전력기기
+KOSDAQ|LS머트리얼즈|전력·부품
+KOSDAQ|알멕|자동차부품`,
+    5: `KOSPI|롯데쇼핑|유통
+KOSPI|현대백화점|유통
+KOSPI|BGF리테일|편의점
+KOSPI|GS리테일|편의점
+KOSPI|대한항공|항공
+KOSPI|아시아나항공|항공
+KOSPI|HMM|해운
+KOSPI|팬오션|해운
+KOSPI|동원산업|식품·해운
+KOSPI|하이트진로|식품
+KOSPI|대상|식품
+KOSPI|삼양식품|식품
+KOSPI|롯데웰푸드|식품
+KOSPI|빙그레|식품
+KOSPI|한국콜마|화장품ODM
+KOSPI|코웨이|렌탈
+KOSPI|효성티앤씨|소재
+KOSPI|한섬|의류
+KOSPI|영원무역|의류
+KOSPI|한세실업|의류
+KOSDAQ|CJ ENM|콘텐츠
+KOSDAQ|파크시스템스|정밀장비
+KOSDAQ|고영|검사장비
+KOSDAQ|로보티즈|로봇
+KOSDAQ|뉴로메카|로봇
+KOSDAQ|로보스타|로봇
+KOSDAQ|유진로봇|로봇
+KOSDAQ|에스피지|로봇부품
+KOSDAQ|티로보틱스|로봇
+KOSDAQ|알에스오토메이션|자동화
+KOSDAQ|휴림로봇|로봇
+KOSDAQ|제이엘케이|의료AI
+KOSDAQ|뷰노|의료AI
+KOSDAQ|딥노이드|의료AI
+KOSDAQ|마크로젠|유전체
+KOSDAQ|디어유|플랫폼
+KOSDAQ|위메이드|게임
+KOSDAQ|컴투스|게임
+KOSDAQ|넥슨게임즈|게임
+KOSDAQ|웹젠|게임`,
+  }).map(([day, rows]) => [day, rows.trim().split('\n').map(row => row.split('|'))]));
+
+  const ATLAS_PROFILES = {
+    '반도체': ['메모리·시스템 반도체와 전방 IT 수요가 연결되는 산업입니다.', 'AI 서버·제품 믹스·가격 사이클', '수요 둔화·재고·대규모 설비투자'],
+    '반도체장비': ['고객사의 미세공정·설비투자에 공급하는 장비 산업입니다.', '수주·고객 인증·가동률', 'CAPEX 지연·고객 집중'],
+    '반도체소재': ['공정에 쓰이는 소재의 품질·납품 승인이 중요한 산업입니다.', '고객사 인증·수율·판가', '공정 전환·단가 압력'],
+    '반도체부품': ['정밀 부품과 테스트 솔루션의 성능이 경쟁력입니다.', '테스트 물량·고객 다변화', '수요 사이클·기술 교체'],
+    '반도체후공정': ['패키징·테스트 단계의 생산성과 고객 주문이 핵심입니다.', '가동률·패키지 단가·수율', '고객 집중·단가 하락'],
+    '전자·가전': ['제품 판매와 프리미엄 믹스, 부품 조달이 함께 작용합니다.', '판매량·ASP·원가', '소비 둔화·환율'],
+    '전자부품': ['스마트폰·전장·IT 기기의 부품 공급망에 속합니다.', '고객 신제품·가동률·판가', '고객 집중·재고 조정'],
+    '배터리': ['전기차와 ESS 수요, 고객 주문, 공장 가동률이 연결됩니다.', '수주·가동률·원재료 가격', '수요 변동·CAPEX 부담'],
+    '배터리소재': ['양극재·전해질 등 소재의 판가와 메탈 가격이 변수입니다.', '출하량·메탈 가격·고객사', '판가 하락·재고 평가'],
+    '배터리장비': ['배터리 생산라인 투자에 장비를 공급합니다.', '수주잔고·인도·고객 CAPEX', '투자 지연·매출 인식 변동'],
+    '자동차': ['판매량·차종 믹스·환율·인센티브가 실적을 만듭니다.', '지역별 판매·인센티브·환율', '수요 둔화·가격 경쟁'],
+    '자동차부품': ['완성차 생산계획과 전동화 부품 전환이 중요합니다.', '완성차 물량·전장 비중', '고객 집중·원가 전가'],
+    '산업재': ['경기·설비투자·자회사 가치가 함께 반영되는 산업군입니다.', '수주·CAPEX·자회사 실적', '경기 민감도·부채'],
+    '전력·원전': ['전력망 투자·정책·장기 프로젝트의 영향을 받습니다.', '수주·정책·납기', '프로젝트 지연·원가'],
+    '전력기기': ['송배전망과 데이터센터 전력 수요가 관찰 대상입니다.', '수주잔고·납기·마진', '원자재 가격·수주 공백'],
+    '방산': ['수출 계약과 납기, 원가, 정부 예산이 연결됩니다.', '수주잔고·수출 승인·납기', '계약 지연·원가 상승'],
+    '방산·항공': ['국방 수요와 항공기 개발·정비 사업이 결합됩니다.', '수주·개발 일정·수출', '승인 지연·개발비'],
+    '방산·철도': ['방산 수출과 철도 프로젝트가 장기 수주를 만듭니다.', '수주·인도·원가', '납기·정책 변화'],
+    '조선': ['선가와 수주잔고가 긴 시간차를 두고 매출로 전환됩니다.', '수주잔고·선가·후판가격', '공정 지연·원가'],
+    '바이오': ['허가·임상·출시·판매망의 순서가 중요한 산업입니다.', '임상·허가·매출화', '임상 실패·경쟁약'],
+    '바이오CDMO': ['고객사의 의약품 생산을 맡아 설비와 수주가 연결됩니다.', '수주·가동률·품질 승인', '고객 집중·CAPEX'],
+    '진단': ['검사 수요와 제품 믹스, 해외 유통망을 봅니다.', '검사량·판가·수출', '수요 정상화·가격 경쟁'],
+    '미용·바이오': ['미용 제품의 국가별 판매·유통망·제품 수명주기가 중요합니다.', '수출·유통망·신제품', '규제·경쟁 심화'],
+    '미용의료기기': ['장비 판매 뒤 소모품·서비스 매출의 구조를 봅니다.', '해외 인허가·소모품 비중', '규제·경쟁 제품'],
+    '의료AI': ['의료기관 도입과 인허가 뒤 실제 매출 전환이 핵심입니다.', '인허가·도입 병원·매출화', '도입 지연·규제'],
+    '플랫폼': ['광고·커머스·콘텐츠·AI 서비스의 수익화를 구분해 봅니다.', '이용자·광고·수익화', '경쟁·비용 증가'],
+    '소프트웨어': ['구독형 매출과 고객 유지율이 기업가치를 좌우합니다.', 'ARR·고객 유지·수익성', 'IT 지출 둔화·경쟁'],
+    'AI소프트웨어': ['AI 기술의 실제 도입 계약과 반복 매출을 확인합니다.', '수주·레퍼런스·매출화', '기대 선반영·경쟁'],
+    '게임': ['신작 흥행·라이브서비스·해외 매출이 실적을 움직입니다.', '신작 일정·결제액·해외매출', '흥행 변동·마케팅비'],
+    '엔터테인먼트': ['아티스트 활동과 음원·공연·MD 매출을 함께 봅니다.', '앨범·공연·해외 확장', '아티스트 의존·비용'],
+    '콘텐츠': ['제작 편수와 판권·광고·플랫폼 판매의 조합입니다.', '편성·판권·제작비', '흥행 불확실성·비용'],
+    '로봇': ['자동화 수요와 실제 납품·서비스 매출 전환이 중요합니다.', '수주·고객 도입·가동률', '투자 지연·수익성'],
+    '금융': ['금리·신용·자본여력·주주환원이 함께 작용합니다.', 'NIM·대손·CET1', '경기 둔화·신용비용'],
+    '증권': ['거래대금·IB·자산관리·운용손익을 구분해 봅니다.', '거래대금·IB·WM', '시장 변동·운용손실'],
+    '보험': ['보험손익·투자손익·지급여력의 균형을 봅니다.', '손해율·CSM·지급여력', '금리·손해율 변동'],
+    '에너지': ['정제마진·유가·화학 스프레드와 설비투자가 변수입니다.', '유가·정제마진·가동률', '유가 급변·수요 둔화'],
+    '소재': ['원재료 가격과 제품 스프레드·수요 산업을 함께 봅니다.', '판가·원재료·가동률', '가격 하락·경기 둔화'],
+    '유통': ['기존점 성장·온라인 경쟁·재고 회전이 관찰 대상입니다.', '기존점·객단가·재고', '소비 둔화·경쟁'],
+    '식품': ['가격 인상·원재료·해외 판매·브랜드력이 조합됩니다.', '판매량·원가·수출', '원가 상승·소비 둔화'],
+    '기본': ['사업보고서의 제품·서비스 구성부터 확인해야 합니다.', '매출 구성·수익성·현금흐름', '산업 변화·재무 부담'],
+  };
+
   const $messages = document.getElementById('messages');
   const $questionInput = document.getElementById('questionInput');
   const $sendBtn = document.getElementById('sendBtn');
@@ -678,6 +926,7 @@
     `).join('');
     const magazine = renderDailyMarketMagazine(lesson.day);
     const koreaEquityExtra = lesson.day === 2 ? renderKoreaMarketMagazine() : '';
+    const companyAtlas = renderCompanyAtlas(lesson.day);
     const dayVisual = renderDayInfographic(lesson.day);
     $messages.innerHTML = `
       <article class="content-page theory-page theory-detail-page theory-day-${lesson.day}">
@@ -694,6 +943,7 @@
         ${dayVisual}
         ${magazine}
         ${koreaEquityExtra}
+        ${companyAtlas}
         <div class="theory-lesson-list">${lessonBlocks}</div>
         <section class="theory-check"><i class="fa-solid fa-pen-to-square"></i><div><strong>오늘의 확인</strong><p>${escHtml(lesson.check)}</p></div></section>
         <section class="theory-keywords"><strong>핵심 단어</strong><div>${lesson.keywords.map(word => `<span>${escHtml(word)}</span>`).join('')}</div></section>
@@ -705,6 +955,7 @@
       </article>`;
     bindViewLinks();
     bindTheoryLinks();
+    bindAtlasFilters();
     $messages.querySelector('[data-theory-rag]')?.addEventListener('click', () => {
       setView('learn');
       $questionInput.value = lesson.ragPrompt;
@@ -822,6 +1073,31 @@
       <footer class="daily-checklist"><div><span>READER'S CHECKLIST</span><strong>오늘의 읽기 과제</strong></div><ol>${edition.checklist.map(item => `<li>${item}</li>`).join('')}</ol></footer>
       <p class="market-source-note"><i class="fa-solid fa-circle-info"></i> 실제 기업·상품명은 학습 사례입니다. 한국거래소 KIND 공시, 운용사 상품설명서, 회사 IR·사업보고서와 한국은행 자료를 원문으로 확인하세요. 특정 상품의 매수·매도 추천이 아닙니다.</p>
     </section>`;
+  }
+
+  function renderCompanyAtlas(day) {
+    const companies = COMPANY_ATLAS[day] || [];
+    const counts = companies.reduce((acc, [market]) => ({ ...acc, [market]: (acc[market] || 0) + 1 }), {});
+    return `<section class="company-atlas" aria-label="${day}일차 국내 상장사 40개 아틀라스">
+      <header class="atlas-header"><div><span>200 COMPANY ATLAS · DAY ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를<br>사업과 변수로 읽기</h2><p>시장 구분은 KRX 상장시장 기준 학습 표기입니다. 아래 카드는 실시간 시세가 아닌 사업 구조, 공시에서 확인할 변수와 위험을 빠르게 연결하기 위한 리딩 노트입니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>DAY<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
+      <div class="atlas-toolbar"><div class="atlas-count"><span><b>${companies.length}</b> COMPANIES</span><i></i><span>KOSPI <b>${counts.KOSPI || 0}</b></span><i></i><span>KOSDAQ <b>${counts.KOSDAQ || 0}</b></span></div><div class="atlas-filters" role="group" aria-label="시장별 기업 필터"><button class="active" data-atlas-filter="all">전체 ${companies.length}</button><button data-atlas-filter="KOSPI">KOSPI ${counts.KOSPI || 0}</button><button data-atlas-filter="KOSDAQ">KOSDAQ ${counts.KOSDAQ || 0}</button></div></div>
+      <div class="atlas-arrow-line"><span>시장</span><i></i><span>산업</span><i></i><span>핵심 변수</span><i></i><span>위험</span></div>
+      <div class="atlas-grid">${companies.map(([market, name, sector], index) => {
+        const [summary, watch, risk] = ATLAS_PROFILES[sector] || ATLAS_PROFILES.기본;
+        return `<article class="atlas-card" data-atlas-market="${market}"><div class="atlas-card-top"><span>${market}</span><b>${String(index + 1).padStart(2, '0')}</b></div><h3>${name}</h3><p class="atlas-sector">${sector}</p><p class="atlas-summary">${name}은(는) ${summary}</p><div class="atlas-watch"><i class="fa-solid fa-eye"></i><span><b>관찰</b>${watch}</span></div><div class="atlas-risk"><i class="fa-solid fa-triangle-exclamation"></i><span><b>위험</b>${risk}</span></div></article>`;
+      }).join('')}</div>
+      <footer class="atlas-footer"><div><i class="fa-solid fa-file-lines"></i><strong>공시 읽기 원칙</strong><span>사업보고서 → 분기보고서·잠정실적 → 주요사항보고서 순으로 원문을 확인하세요.</span></div><div><i class="fa-solid fa-chart-column"></i><strong>숫자 읽기 원칙</strong><span>매출만 보지 말고 수익성, 현금흐름, 부채·자본, 고객·산업 집중도를 함께 점검하세요.</span></div></footer>
+    </section>`;
+  }
+
+  function bindAtlasFilters() {
+    const buttons = $messages.querySelectorAll('[data-atlas-filter]');
+    const cards = $messages.querySelectorAll('[data-atlas-market]');
+    buttons.forEach(button => button.addEventListener('click', () => {
+      const filter = button.dataset.atlasFilter;
+      buttons.forEach(item => item.classList.toggle('active', item === button));
+      cards.forEach(card => { card.hidden = filter !== 'all' && card.dataset.atlasMarket !== filter; });
+    }));
   }
 
   function renderKoreaMarketMagazine() {
