@@ -9,50 +9,10 @@
     chatHistory: [],
     activeView: 'home',
     activeTheoryDay: 1,
-    quizIndex: 0,
-    quizAnswers: [],
     activeScenario: 'equity',
     savedSimulation: null,
     currentSimulation: null,
   };
-
-  const QUIZ_QUESTIONS = [
-    {
-      category: '금융상품',
-      question: 'ETF를 일반펀드와 비교할 때, 장중 실시간으로 거래되는 특성과 가장 직접적으로 연결되는 항목은 무엇인가요?',
-      choices: ['기준가가 하루 한 번만 산정된다', '호가 스프레드와 거래 유동성을 확인한다', '만기까지 중도 환매가 불가능하다', '예금자보호 한도가 적용된다'],
-      answer: 1,
-      explanation: 'ETF는 거래소에서 실시간으로 매매되므로 거래대금, 호가 스프레드, 괴리율을 함께 점검해야 합니다.',
-    },
-    {
-      category: '성과·위험',
-      question: '최대낙폭(MDD)이 특히 잘 보여 주는 정보는 무엇인가요?',
-      choices: ['특정 기간의 최고점 대비 가장 큰 하락 폭', '매년 평균 수익률', '무위험수익률 대비 초과수익', '자산 간 상관관계'],
-      answer: 0,
-      explanation: 'MDD는 고점에서 저점까지의 가장 큰 하락 폭으로, 투자자가 견뎌야 할 손실 구간을 파악하는 데 쓰입니다.',
-    },
-    {
-      category: '자산배분',
-      question: 'Risk Parity 접근의 핵심 목표로 가장 알맞은 것은 무엇인가요?',
-      choices: ['모든 자산에 동일한 금액을 투자한다', '기대수익률이 가장 큰 자산만 편입한다', '각 자산의 위험기여도를 균형 있게 조정한다', '매월 가장 많이 오른 자산으로 교체한다'],
-      answer: 2,
-      explanation: 'Risk Parity는 자본 비중이 아니라 포트폴리오 위험에 각 자산이 기여하는 정도를 균형 있게 보는 방식입니다.',
-    },
-    {
-      category: '포트폴리오 이론',
-      question: '분산투자 효과를 설명할 때 자산 간 상관관계가 중요한 이유는 무엇인가요?',
-      choices: ['상관관계가 낮으면 함께 움직일 가능성이 낮아 전체 변동성을 낮출 수 있다', '상관관계는 수익률 계산에만 쓰이고 위험과는 무관하다', '상관관계가 높을수록 항상 분산 효과가 커진다', '상관관계는 채권에만 적용된다'],
-      answer: 0,
-      explanation: '같은 방향으로 덜 움직이는 자산을 결합하면 개별 자산의 변동성이 포트폴리오에서 일부 상쇄될 수 있습니다.',
-    },
-    {
-      category: '자산배분',
-      question: '블랙-리터만 모델은 평균-분산 최적화의 어떤 문제를 완화하는 데 유용한가요?',
-      choices: ['입력값 변화에 따라 최적 비중이 과도하게 흔들리는 문제', 'ETF의 거래소 상장 문제', '채권의 이자 지급 문제', '현금의 유동성 문제'],
-      answer: 0,
-      explanation: '시장 균형수익률과 투자자의 전망을 결합해 기대수익률 추정의 불안정성을 낮추려는 접근입니다.',
-    },
-  ];
 
   const PRODUCT_EXPLAINERS = [
     {
@@ -163,6 +123,12 @@
         ['채권은 돈을 빌려준 약속장', ['채권을 산다는 것은 정부나 기업에 돈을 빌려주고 정해진 이자와 만기 원금을 받기로 하는 것입니다.', '국채는 정부가 발행하고, 회사채는 기업이 발행합니다. 발행자가 약속한 돈을 갚지 못할 가능성은 신용위험이라고 합니다.', '만기가 길수록 금리 변화에 가격이 더 민감해지는 경향이 있습니다. 이를 설명할 때 듀레이션이라는 지표를 사용합니다.']],
         ['금리가 오르면 채권 가격은 왜 내려갈까요?', ['새로 나온 채권의 이자가 더 높아지면, 기존의 낮은 이자를 주는 채권은 같은 가격으로는 매력이 줄어듭니다. 그래서 기존 채권 가격이 조정될 수 있습니다.', '반대로 금리가 내려가면 기존에 높은 이자를 약속한 채권의 매력이 커져 가격이 오를 수 있습니다.', '채권도 중간에 팔면 손익이 생길 수 있으므로 “항상 안전하다”고 단정할 수는 없습니다.']],
         ['한국 금리·채권시장 사례', ['한국은행 기준금리는 2026년 7월 16일 기준 연 2.75%입니다. 기준금리 변화는 예·적금 금리, 대출금리, 국고채 수익률과 채권 ETF 가격에 영향을 줄 수 있지만, 각각이 같은 폭·같은 시점에 움직이지는 않습니다.', '개인 투자자가 한국 채권시장을 접하는 방법에는 국채·회사채 직접 매매, 개인투자용 국채 청약, 채권형 펀드·ETF 등이 있습니다. 국채는 정부가 발행하고, 회사채는 삼성전자·현대자동차 같은 기업을 포함한 다양한 기업이 발행할 수 있습니다. 발행 주체가 다르면 신용위험과 수익률도 달라집니다.', '금리 방향을 맞히려 하기보다 만기와 듀레이션을 먼저 확인하세요. 특히 장기 국채·장기채 ETF는 금리 변화에 가격이 더 민감할 수 있고, “국채”라는 이름만으로 중도 매매 가격 위험이 사라지는 것은 아닙니다.']],
+        ['“파생”은 무슨 뜻일까요?', ['파생(派生)은 “어떤 것에서 갈라져 나와 생긴다”는 뜻입니다. 파생상품(derivatives)은 주식·주가지수·금리·환율·원자재처럼 기초가 되는 자산의 가격이나 조건에서 가치가 따라 나오는 금융 계약입니다.', '예를 들어 KOSPI 200 선물은 KOSPI 200 지수 자체가 아니라 그 지수의 미래 가격 변동을 대상으로 만든 계약입니다. 이처럼 기초자산의 가격 변동에서 별도 계약의 가치가 정해지기 때문에 “파생”상품이라고 부릅니다.', '영어 derivative는 미적분에서 도함수라는 뜻으로도 쓰이지만, 금융에서는 기초자산에서 가치가 파생되는 계약을 뜻합니다.']],
+        ['배추 판매로 보는 선물 계약', ['배추 농부가 가을에 배추 1,000포기를 수확해 팔 예정인데, 가을 가격이 포기당 1,000원이 될지 6,000원이 될지 알 수 없다고 해 보세요. 농부와 김치공장이 지금 “가을에 포기당 3,000원으로 1,000포기를 사고팔자”고 약속할 수 있습니다.', '여기서 실제 배추는 기초자산이고, 미래에 정한 가격으로 사고팔겠다는 약속은 배추 가격에서 파생된 계약입니다. 농부는 가격 폭락 위험을 줄이고, 김치공장은 가격 급등 위험을 줄일 수 있습니다.', '가을 시장가격이 1,000원이면 농부에게, 6,000원이면 김치공장에게 이 약속이 유리합니다. 따라서 파생상품은 위험을 줄이는 데 쓸 수 있지만, 가격이 한쪽으로 크게 움직이면 상대방의 손실도 커질 수 있습니다.']],
+        ['선물은 미래 거래를 미리 정하는 약속', ['선물은 미래의 특정 날짜에 어떤 물건이나 자산을 미리 정한 가격으로 사고팔기로 하는 계약입니다. 이름에 “선(先)”이 들어가는 이유는 미래의 거래 조건을 지금 먼저 정하기 때문입니다.', '배추 사례에서 “가을에 배추 1,000포기를 포기당 3,000원에 사고팔자”는 약속이 바로 선물과 같은 원리입니다. 실제 시장가격이 나중에 달라져도, 계약한 두 사람은 약속한 가격을 기준으로 거래하거나 차이를 정산합니다.', '선물은 농부와 김치공장처럼 가격 변동 위험을 줄이려는 헤지에 활용할 수 있습니다. 다만 가격 방향을 예상하고 거래하면 손실이 빠르게 커질 수 있으므로, 거래 단위·만기·증거금과 최악의 손실을 먼저 확인해야 합니다.']],
+        ['옵션은 미래 거래를 선택할 수 있는 권리', ['옵션은 미래의 특정 날짜까지 미리 정한 가격으로 사고팔 수 있는 권리입니다. 선물은 보통 약속한 거래를 이행해야 하지만, 옵션을 산 사람은 시장 상황이 불리하면 그 권리를 쓰지 않을 수 있다는 점이 다릅니다.', '김치공장이 가을 배추 가격이 오를까 걱정돼 농부에게 “가을에 포기당 3,000원에 살 수 있는 권리”를 사는 상황을 생각해 보세요. 가을 가격이 6,000원이면 그 권리를 써서 3,000원에 살 수 있고, 1,000원이라면 시장에서 사면 되므로 권리를 쓰지 않을 수 있습니다.', '이 권리를 사기 위해 처음 내는 돈을 프리미엄이라고 합니다. 옵션 매수자는 보통 낸 프리미엄만큼으로 손실이 제한되지만, 권리를 팔아준 옵션 매도자는 시장가격이 크게 움직일 때 큰 손실을 볼 수 있습니다.']],
+        ['옵션 만기일이 주가에 영향을 줄 수 있는 이유', ['옵션 만기일에는 계약이 끝나므로, 옵션을 가진 사람과 옵션을 팔아준 금융기관이 포지션을 정리하거나 위험을 줄이기 위한 헤지를 조정합니다. 이 과정에서 주식이나 선물의 매수·매도 주문이 늘어나면 주가나 지수에 단기 영향을 줄 수 있습니다.', '예를 들어 증권사가 콜옵션을 팔았다면 주가 상승 위험을 줄이기 위해 관련 주식이나 선물을 사둘 수 있습니다. 만기가 가까워지면 옵션 가치와 필요한 헤지 규모가 빠르게 바뀌어, 사고파는 주문도 늘어날 수 있습니다.', '특히 행사가격 근처에서는 주가가 그 가격 주변에 머무르거나 급히 움직이는 듯 보이기도 하는데, 이를 핀닝(고정) 효과라고 합니다. 다만 옵션 만기만으로 주가 방향을 판단할 수는 없으며, 거래량·시장 규모·뉴스·다른 투자자의 수급도 함께 봐야 합니다.']],
+        ['헤지는 큰 손실을 줄이는 안전장치', ['헤지(hedge)는 예상과 다르게 가격이 움직여 생길 손실을 줄이기 위한 위험관리 방법입니다. 이익을 크게 내기보다, 불확실한 가격 변동이 내 자금에 미치는 영향을 줄이는 데 목적이 있습니다.', '예를 들어 배추 농부가 가을 배추값 하락이 걱정되어 미리 일정 가격에 팔기로 선물계약을 맺는다면 이것이 헤지입니다. 시장가격이 떨어져도 약속한 가격을 기준으로 거래할 수 있어 수입 감소 위험을 줄일 수 있습니다.', '헤지는 보험과 비슷하게 손실을 완화하는 대신 대가가 있을 수 있습니다. 배추값이 크게 올라도 농부는 시장가격보다 낮은 약속 가격에 팔 수 있으므로, 큰 손실을 피하는 대신 큰 이익의 일부를 포기할 수 있습니다.']],
         ['파생상품은 보험처럼도 쓰입니다', ['선물·옵션 같은 파생상품은 주가, 금리, 환율 등의 움직임을 바탕으로 한 계약입니다. 국내에서는 KOSPI 200 선물·옵션, 해외에서는 나스닥 100 지수·원유·금 등을 기초자산으로 한 선물이 예시입니다.', '가격 하락이 걱정될 때 손실을 일부 줄이는 헤지에 활용할 수 있지만, 구조가 복잡하고 손실이 빠르게 커질 수도 있습니다.', '학습 단계에서는 “어떤 위험을 줄이려는 계약인지, 최대 손실은 얼마인지”를 먼저 묻는 습관이 중요합니다.']],
         ['KRX에서 실제로 거래되는 파생상품', ['한국거래소(KRX)에는 KOSPI 200·미니 KOSPI 200·KOSDAQ 150 선물과 옵션, 미국달러선물, 3년·10년 국채선물, 금선물 등이 있습니다. KOSPI 200 선물은 지수의 현물을 주고받는 대신 만기에 현금으로 결제하는 구조입니다.', 'KOSPI 200 선물의 거래승수는 25만 원이고, 미니 KOSPI 200 선물은 이를 5만 원으로 낮춘 상품입니다. “미니”라는 이름은 1계약의 금액이 더 작다는 뜻일 뿐, 레버리지와 증거금 위험이 없다는 뜻은 아닙니다.', 'KRX는 ETF 자체를 기초자산으로 하는 ETF선물도 운영합니다. 상품 목록과 거래시간·결제월·증거금은 바뀔 수 있으므로, 실제 주문 전에는 KRX 상품명세와 이용 증권사의 주문 화면을 함께 확인하세요.']],
         ['주식 앱으로도 거래할 수 있나요?', ['많은 증권사 MTS·HTS는 한 앱 안에서 주식과 선물·옵션 메뉴를 함께 제공합니다. 하지만 주식 계좌만으로 바로 거래하는 것은 아닙니다. 일반 위탁계좌와 별도로 파생상품 거래가 가능한 계좌를 열고 거래 권한을 받아야 합니다.', '국내에서는 KOSPI 200·KOSDAQ 150 지수 선물·옵션, 통화·금속 선물 등을 볼 수 있습니다. 해외에서는 나스닥 100 지수, 원유, 금 등 다양한 선물이 있지만, 증권사에 따라 별도 해외선물 앱·계좌·메뉴가 필요할 수 있습니다.', '앱에 “선물/옵션” 메뉴가 보여도 거래가 허용됐다는 뜻은 아닙니다. 계좌 개설, 투자자 정보, 교육·모의거래, 예탁금, 거래 가능 단계가 모두 완료됐는지 차례로 확인해야 합니다.']],
@@ -247,6 +213,25 @@
     { terms: ['CAGR'], korean: '연평균성장률', hanja: '年平均成長率', abbr: 'CAGR', english: 'Compound Annual Growth Rate', summary: '여러 해 동안의 누적 성과를 매년 같은 비율로 성장한 것처럼 환산한 수익률입니다.', detail: '중간의 큰 하락과 회복 과정은 가려질 수 있습니다. 따라서 CAGR은 변동성, 최대낙폭과 함께 보는 것이 좋습니다.' },
     { terms: ['옵션'], korean: '선택권', hanja: '選擇權', abbr: 'Option', english: 'Option', summary: '정해진 조건으로 자산을 사고팔 수 있는 권리를 거래하는 파생상품입니다.', detail: '매수자와 매도자의 손익 구조가 다르고, 만기와 행사가격에 따라 가치가 변합니다. 복잡한 구조와 손실 가능성을 충분히 이해해야 합니다.' },
     { terms: ['선물'], korean: '선물', hanja: '先物', abbr: 'Futures', english: 'Futures Contract', summary: '미래의 특정 시점에 정한 가격으로 자산을 사고팔기로 하는 계약입니다.', detail: '가격 변동 위험을 관리하는 데 쓸 수 있지만 증거금과 일일 정산 때문에 손익이 빠르게 변할 수 있습니다.' },
+    { terms: ['ETN'], korean: '상장지수증권', hanja: '上場指數證券', abbr: 'ETN', english: 'Exchange-Traded Note', summary: '증권사가 특정 지수의 수익률을 따르도록 만든, 거래소에서 사고파는 증권입니다.', detail: 'ETF처럼 보이지만 펀드가 아니라 증권사의 약속에 기반합니다. 따라서 지수 움직임뿐 아니라 발행 증권사가 약속을 지킬 수 있는지도 살펴야 합니다.' },
+    { terms: ['리츠'], korean: '부동산투자회사', hanja: '不動産投資會社', abbr: 'REITs', english: 'Real Estate Investment Trusts', summary: '여러 사람이 돈을 모아 건물·물류센터 같은 부동산에 투자하고 임대수익 등을 나누는 상품입니다.', detail: '직접 건물을 사지 않아도 부동산 투자에 참여하는 방식입니다. 임대료, 공실, 빚의 규모와 금리 변화가 수익에 영향을 줍니다.' },
+    { terms: ['기준가격', '기준가'], korean: '기준가격', hanja: '基準價格', abbr: 'NAV', english: 'Net Asset Value', summary: '펀드가 가진 자산의 가치를 계산해 정한 1좌당 가격입니다.', detail: '일반 펀드는 보통 이 가격을 기준으로 가입하거나 환매합니다. 거래소에서 실시간으로 사고파는 ETF의 시장가격과는 다를 수 있습니다.' },
+    { terms: ['NAV', '순자산가치'], korean: '순자산가치', hanja: '純資産價値', abbr: 'NAV', english: 'Net Asset Value', summary: '펀드가 보유한 자산에서 빚을 뺀 실제 가치입니다.', detail: 'ETF 1주에 담긴 자산의 값이라고 생각할 수 있습니다. 시장에서 거래되는 ETF 가격이 NAV와 다르면 괴리율이 생깁니다.' },
+    { terms: ['환매'], korean: '환매', hanja: '還買', abbr: '—', english: 'Redemption', summary: '펀드에 넣은 돈을 되돌려 받기 위해 보유분을 팔아 현금화하는 일입니다.', detail: '주식처럼 즉시 팔리는 방식이 아니라 정해진 기준가격과 처리 시간이 적용될 수 있습니다. 상품에 따라 수수료나 환매 제한도 확인해야 합니다.' },
+    { terms: ['증거금'], korean: '증거금', hanja: '證據金', abbr: 'Margin', english: 'Margin', summary: '선물·옵션 거래를 시작할 때 계약 이행을 보장하려고 맡기는 돈입니다.', detail: '계약 금액 전부가 아니라 일부만 내므로 적은 돈으로 큰 계약을 움직일 수 있습니다. 그만큼 가격이 조금만 움직여도 손익이 크게 달라질 수 있습니다.' },
+    { terms: ['유지증거금'], korean: '유지증거금', hanja: '維持證據金', abbr: 'Maintenance Margin', english: 'Maintenance Margin', summary: '선물·옵션 포지션을 계속 보유하려면 계좌에 유지해야 하는 최소 금액입니다.', detail: '손실 때문에 이 금액 아래로 내려가면 추가 돈을 넣으라는 요구를 받을 수 있습니다. 제때 채우지 못하면 포지션이 정리될 수 있습니다.' },
+    { terms: ['레버리지'], korean: '레버리지', hanja: '槓桿', abbr: '—', english: 'Leverage', summary: '적은 돈으로 더 큰 금액의 자산이나 계약을 움직이는 구조입니다.', detail: '지렛대처럼 수익을 키울 수도 있지만 손실도 같은 방식으로 커집니다. 투자금보다 큰 손실이 날 수 있는지 먼저 확인해야 합니다.' },
+    { terms: ['강제청산', '반대매매'], korean: '강제청산', hanja: '強制淸算', abbr: '—', english: 'Forced Liquidation', summary: '증거금이 부족할 때 증권사가 포지션을 강제로 정리하는 일입니다.', detail: '추가 증거금을 정해진 기한 안에 넣지 못하면 발생할 수 있습니다. 원하지 않는 시점과 가격에 거래가 끝나 손실이 확정될 수 있습니다.' },
+    { terms: ['롤오버'], korean: '롤오버', hanja: '—', abbr: '—', english: 'Rollover', summary: '만기가 가까운 선물·옵션 계약을 정리하고 다음 만기의 계약으로 옮기는 일입니다.', detail: '계약을 계속 보유하고 싶은 경우에 사용합니다. 다음 만기 가격 차이와 거래비용이 생길 수 있으므로 단순히 “연장”이라고만 보기는 어렵습니다.' },
+    { terms: ['기초자산'], korean: '기초자산', hanja: '基礎資産', abbr: 'Underlying', english: 'Underlying Asset', summary: '파생상품의 가격과 손익을 결정하는 기준이 되는 주식·지수·금리·원자재 같은 대상입니다.', detail: '선물과 옵션은 기초자산 자체가 아니라, 그 가격 변화에 연결된 계약입니다. 무엇이 기초자산인지 알아야 계약의 위험도 이해할 수 있습니다.' },
+    { terms: ['기초지수'], korean: '기초지수', hanja: '基礎指數', abbr: 'Benchmark', english: 'Underlying Index', summary: 'ETF나 ETN이 따라가도록 만든 기준 지수입니다.', detail: '상품 이름이 비슷해도 어떤 종목을 어떤 비중으로 담는지에 따라 기초지수가 다를 수 있습니다. 설명서에서 추종 대상과 지수 규칙을 확인하세요.' },
+    { terms: ['거래승수'], korean: '거래승수', hanja: '去來乘數', abbr: 'Multiplier', english: 'Contract Multiplier', summary: '선물 1계약이 실제로 얼마의 금액을 뜻하는지 계산할 때 곱하는 숫자입니다.', detail: '지수에 거래승수를 곱하면 한 계약의 규모를 가늠할 수 있습니다. 승수가 클수록 같은 지수 변동에도 손익 금액이 커집니다.' },
+    { terms: ['공실률'], korean: '공실률', hanja: '空室率', abbr: 'Vacancy Rate', english: 'Vacancy Rate', summary: '임대할 수 있는 공간 가운데 비어 있는 공간의 비율입니다.', detail: '공실률이 높으면 임대료 수입이 줄어 리츠나 부동산 소유자의 수익에 부담이 될 수 있습니다.' },
+    { terms: ['차입금'], korean: '차입금', hanja: '借入金', abbr: 'Debt', english: 'Borrowings', summary: '기업이나 리츠가 은행·채권시장 등에서 빌린 돈입니다.', detail: '빚을 이용하면 투자 규모를 키울 수 있지만 이자와 상환 부담이 생깁니다. 금리가 오르거나 수입이 줄면 부담이 더 커질 수 있습니다.' },
+    { terms: ['총보수'], korean: '총보수', hanja: '總報酬', abbr: 'TER', english: 'Total Expense Ratio', summary: '펀드·ETF를 운용하는 데 드는 연간 비용의 비율입니다.', detail: '보수는 보통 펀드 자산에서 조금씩 빠져나가므로 따로 청구서를 받지 않아도 수익률에 영향을 줍니다. 비슷한 상품끼리는 보수를 비교해 보세요.' },
+    { terms: ['호가 스프레드', '호가 차이'], korean: '호가 스프레드', hanja: '呼價差', abbr: 'Spread', english: 'Bid-Ask Spread', summary: '살 수 있는 가장 싼 가격과 팔 수 있는 가장 비싼 가격의 차이입니다.', detail: '차이가 크면 사자마자 손해를 보고 시작하는 것처럼 느껴질 수 있습니다. 거래량이 적은 상품일수록 스프레드가 넓어질 수 있습니다.' },
+    { terms: ['연환산'], korean: '연환산', hanja: '年換算', abbr: 'Annualized', english: 'Annualized', summary: '한 달·몇 년 등 서로 다른 기간의 성과를 1년 기준으로 바꾸어 비교하는 방법입니다.', detail: '기간이 짧을수록 연환산 수치는 실제보다 크게 보일 수 있습니다. 원래 기간과 함께 해석해야 합니다.' },
+    { terms: ['무위험수익률'], korean: '무위험수익률', hanja: '無危險收益率', abbr: 'Rf', english: 'Risk-Free Rate', summary: '위험이 거의 없다고 가정한 투자에서 기대하는 기준 수익률입니다.', detail: '실제로 위험이 완전히 없는 투자는 드물지만, 성과를 비교할 때 기준점으로 사용합니다. 보통 단기 국채 수익률 등을 참고합니다.' },
   ];
 
   const MODEL_META = {
@@ -761,7 +746,6 @@ KOSDAQ|웹젠|게임`,
     if (view === 'home') renderHome();
     if (view === 'learn') showWelcome();
     if (view === 'theory') renderTheoryIndex();
-    if (view === 'quiz') renderQuiz();
     if (view === 'simulation') {
       renderSimulationGuide();
       closePanels();
@@ -867,7 +851,6 @@ KOSDAQ|웹젠|게임`,
   function renderHome() {
     const modules = [
       ['5일 이론 학습', '금융상품부터 자산배분·리밸런싱까지 하루 한 주제씩 읽습니다.', 'fa-calendar-days', 'theory'],
-      ['개념 퀴즈', 'ETF, 채권, 분산투자와 위험 지표의 핵심을 확인합니다.', 'fa-circle-question', 'quiz'],
       ['자산배분 실습', '평균분산·블랙-리터만·Risk Parity를 같은 포트폴리오에 적용합니다.', 'fa-sliders', 'simulation'],
     ].map(([title, copy, icon, target]) => `
       <button class="home-module" data-go="${target}">
@@ -900,14 +883,13 @@ KOSDAQ|웹젠|게임`,
         <div class="home-actions">
           <button class="content-cta" data-go="theory"><i class="fa-solid fa-calendar-days"></i> 5일 이론 학습 시작</button>
           <button class="content-cta" data-go="learn"><i class="fa-solid fa-comments"></i> RAG에게 질문하기</button>
-          <button class="content-secondary" data-go="quiz"><i class="fa-solid fa-circle-question"></i> 5문제 퀴즈 풀기</button>
         </div>
         <section class="home-stats">
-          <div><strong>3</strong><span>학습 방식<br>콘텐츠 · 퀴즈 · 실습</span></div>
+          <div><strong>2</strong><span>학습 방식<br>콘텐츠 · 실습</span></div>
           <div><strong>5</strong><span>핵심 지표<br>CAGR · 변동성 · MDD 등</span></div>
           <div><strong>3</strong><span>배분 모델<br>MVO · BL · RP</span></div>
         </section>
-        <section class="learning-map" aria-label="학습 흐름 인포그래픽"><div class="map-heading"><span>LEARNING FLOW</span><strong>읽고 → 확인하고 → 직접 비교합니다</strong></div><div class="map-steps"><div><i class="fa-solid fa-book-open"></i><b>이론</b><small>상품과 시장 구조</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-circle-question"></i><b>퀴즈</b><small>핵심 개념 점검</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-chart-pie"></i><b>실습</b><small>비중과 위험 비교</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-comments"></i><b>RAG</b><small>문서 근거로 확장</small></div></div></section>
+        <section class="learning-map" aria-label="학습 흐름 인포그래픽"><div class="map-heading"><span>LEARNING FLOW</span><strong>읽고 → 직접 비교하고 → 질문합니다</strong></div><div class="map-steps"><div><i class="fa-solid fa-book-open"></i><b>이론</b><small>상품과 시장 구조</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-chart-pie"></i><b>실습</b><small>비중과 위험 비교</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-comments"></i><b>RAG</b><small>문서 근거로 확장</small></div></div></section>
         <section class="content-section"><div class="section-heading"><span>01</span><h2>학습 메뉴</h2></div><div class="home-module-grid">${modules}</div></section>
         <section class="content-section"><div class="section-heading"><span>02</span><h2>금융상품과 실물자산, 쉽게 시작하기</h2></div><p class="section-intro">투자와 거래는 ‘얼마나 많이 버는가’보다 <strong>무엇을 받고, 어떤 조건에서 가치가 줄어들 수 있는가</strong>를 이해하는 일에서 시작합니다.</p><div class="product-explainer-grid">${explainers}</div></section>
         <section class="life-trade-guide"><div><span>EVERYDAY EXCHANGE GUIDE</span><h2>사회생활에서 만나는 모든 거래를<br>같은 질문으로 점검합니다.</h2><p>금융상품뿐 아니라 실물자산, 수집품, 중고 물건, 서비스와 디지털 권리도 거래 전 확인 기준이 필요합니다.</p></div><div class="life-trade-grid">${lifeTrades}</div><footer><b>공통 점검 순서</b><span>① 거래 대상과 권리 확인</span><i></i><span>② 상태·진위·가격 비교</span><i></i><span>③ 비용·보관·인도 조건</span><i></i><span>④ 기록·안전결제·분쟁 대비</span></footer></section>
@@ -920,40 +902,6 @@ KOSDAQ|웹젠|게임`,
         <p class="content-disclaimer">학습용 서비스이며 특정 투자상품의 매수·매도를 권유하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
       </article>`;
     bindViewLinks();
-  }
-
-  function renderQuiz() {
-    const question = QUIZ_QUESTIONS[state.quizIndex];
-    const complete = state.quizIndex >= QUIZ_QUESTIONS.length;
-    if (complete) {
-      const score = state.quizAnswers.filter((answer, i) => answer === QUIZ_QUESTIONS[i].answer).length;
-      const saved = JSON.parse(localStorage.getItem('finance-rag-quiz-results') || '[]');
-      if (!state.quizAnswers.saved) {
-        saved.unshift({ score, total: QUIZ_QUESTIONS.length, completedAt: new Date().toISOString() });
-        localStorage.setItem('finance-rag-quiz-results', JSON.stringify(saved.slice(0, 10)));
-        state.quizAnswers.saved = true;
-      }
-      $messages.innerHTML = `<article class="content-page quiz-page quiz-result"><div class="content-kicker">QUIZ RESULT</div><div class="result-ring"><strong>${score}</strong><span>/ ${QUIZ_QUESTIONS.length}</span></div><h1>${score >= 4 ? '훌륭합니다. 핵심 개념을 잘 이해하고 있어요.' : '풀이를 바탕으로 핵심 개념을 다시 연결해 보세요.'}</h1><p class="content-lead">정답과 해설을 복습한 뒤 시뮬레이션에서 자산 비중을 바꿔 보세요.</p><section class="quiz-skill-map" aria-label="영역별 퀴즈 결과">${QUIZ_QUESTIONS.map((item, i) => `<div class="${state.quizAnswers[i] === item.answer ? 'good' : 'needs'}"><span>${item.category}</span><i style="width:${state.quizAnswers[i] === item.answer ? 100 : 38}%"></i><b>${state.quizAnswers[i] === item.answer ? '이해 완료' : '복습 추천'}</b></div>`).join('')}</section><div class="quiz-review">${QUIZ_QUESTIONS.map((item, i) => `<div class="review-row ${state.quizAnswers[i] === item.answer ? 'correct' : 'incorrect'}"><span>${i + 1}</span><div><strong>${state.quizAnswers[i] === item.answer ? '정답' : '복습 필요'} · ${item.category}</strong><p>${item.explanation}</p></div></div>`).join('')}</div><div class="home-actions"><button class="content-cta" data-reset-quiz><i class="fa-solid fa-rotate-right"></i> 다시 풀기</button><button class="content-secondary" data-go="simulation">시뮬레이션으로 이동</button></div></article>`;
-      $messages.querySelector('[data-reset-quiz]').addEventListener('click', () => { state.quizIndex = 0; state.quizAnswers = []; renderQuiz(); });
-      bindViewLinks();
-      return;
-    }
-    $messages.innerHTML = `<article class="content-page quiz-page"><div class="quiz-topline"><span class="content-kicker">${question.category.toUpperCase()} QUIZ</span><span>${state.quizIndex + 1} / ${QUIZ_QUESTIONS.length}</span></div><div class="quiz-progress"><i style="width:${((state.quizIndex + 1) / QUIZ_QUESTIONS.length) * 100}%"></i></div><div class="quiz-dot-map" aria-label="퀴즈 진행도">${QUIZ_QUESTIONS.map((_, index) => `<i class="${index < state.quizIndex ? 'done' : index === state.quizIndex ? 'current' : ''}"></i>`).join('')}</div><h1>${question.question}</h1><p class="content-lead">가장 적절한 답을 하나 선택하세요.</p><div class="quiz-choices">${question.choices.map((choice, index) => `<button class="quiz-choice" data-answer="${index}"><span>${String.fromCharCode(65 + index)}</span>${choice}</button>`).join('')}</div><div id="quizFeedback"></div></article>`;
-    $messages.querySelectorAll('[data-answer]').forEach(button => button.addEventListener('click', () => answerQuiz(Number(button.dataset.answer))));
-  }
-
-  function answerQuiz(answer) {
-    const question = QUIZ_QUESTIONS[state.quizIndex];
-    const correct = answer === question.answer;
-    state.quizAnswers[state.quizIndex] = answer;
-    $messages.querySelectorAll('.quiz-choice').forEach(button => {
-      const value = Number(button.dataset.answer);
-      button.disabled = true;
-      if (value === question.answer) button.classList.add('correct');
-      if (value === answer && !correct) button.classList.add('incorrect');
-    });
-    document.getElementById('quizFeedback').innerHTML = `<div class="quiz-feedback ${correct ? 'correct' : 'incorrect'}"><strong>${correct ? '정답입니다.' : '다시 확인해 보세요.'}</strong><p>${question.explanation}</p><button class="content-cta" id="nextQuizBtn">${state.quizIndex + 1 === QUIZ_QUESTIONS.length ? '결과 보기' : '다음 문제'} <i class="fa-solid fa-arrow-right"></i></button></div>`;
-    document.getElementById('nextQuizBtn').addEventListener('click', () => { state.quizIndex += 1; renderQuiz(); });
   }
 
   function renderSimulationGuide() {
@@ -1061,7 +1009,6 @@ KOSDAQ|웹젠|게임`,
         <div class="theory-actions">
           <button class="content-cta" data-theory-rag="${escHtml(lesson.ragPrompt)}"><i class="fa-solid fa-comments"></i> 이 내용 RAG에게 질문하기</button>
           <button class="content-secondary" data-go="simulation"><i class="fa-solid fa-chart-pie"></i> 자산배분 실습으로</button>
-          <button class="content-secondary" data-go="quiz">핵심 퀴즈 풀기 <i class="fa-solid fa-arrow-right"></i></button>
         </div>
       </article>`;
     bindViewLinks();
