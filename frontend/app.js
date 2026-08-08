@@ -276,6 +276,7 @@
   const $offcanvasBackdrop = document.getElementById('offcanvasBackdrop');
   const $openLeftPanel = document.getElementById('openLeftPanel');
   const $openRightPanel = document.getElementById('openRightPanel');
+  const $referencePanel = document.getElementById('referencePanel');
   const $closeLeftPanel = document.getElementById('closeLeftPanel');
   const $learningPanel = document.getElementById('learningPanel');
   const $ragPanel = document.getElementById('ragPanel');
