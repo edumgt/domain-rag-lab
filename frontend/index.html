@@ -10,10 +10,14 @@
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
+  <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
   <div class="app-layout">
-    <aside class="sidebar">
+    <aside class="sidebar" id="learningPanel" aria-label="학습과 문서 등록">
       <div class="sidebar-header">
-        <h1 class="logo"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h1>
+        <div class="panel-title-row">
+          <h1 class="logo"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h1>
+          <button class="panel-close" id="closeLeftPanel" aria-label="학습 패널 닫기"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         <p class="logo-sub">금융상품 이해 · 자산배분 방법론 · 실습 시뮬레이션</p>
       </div>
 
@@ -74,6 +78,9 @@
 
     <main class="chat-area">
       <header class="chat-header">
+        <button class="panel-toggle" id="openLeftPanel" aria-controls="learningPanel" aria-label="학습 패널 열기">
+          <i class="fa-solid fa-bars"></i><span>학습</span>
+        </button>
         <div class="brand-nav" aria-label="학습 서비스 메뉴">
           <button class="brand-nav-btn active" data-view="home"><i class="fa-solid fa-house"></i> 홈</button>
           <button class="brand-nav-btn" data-view="learn"><i class="fa-solid fa-book-open"></i> 학습</button>
@@ -84,6 +91,9 @@
           <div class="domain-badge" id="domainBadge"><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분 학습 모드</div>
           <button class="btn-ghost" id="clearChatBtn" title="대화 초기화">
             <i class="fa-solid fa-trash-can"></i> 초기화
+          </button>
+          <button class="panel-toggle panel-toggle-right" id="openRightPanel" aria-controls="referencePanel" aria-label="도구 패널 열기">
+            <i class="fa-solid fa-sliders"></i><span>도구</span>
           </button>
         </div>
       </header>
@@ -114,7 +124,7 @@
       </div>
     </main>
 
-    <aside class="ref-panel" id="refPanel">
+    <aside class="ref-panel" id="referencePanel" aria-label="참고 문서와 자산배분 시뮬레이션">
       <div class="ref-header">
         <h3><i class="fa-solid fa-paperclip"></i> 참고 문서</h3>
         <button class="btn-ghost" id="closeRefBtn"><i class="fa-solid fa-xmark"></i></button>

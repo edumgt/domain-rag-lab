@@ -199,6 +199,10 @@
   const $simNarrative = document.getElementById('simNarrative');
   const $chatInputArea = document.querySelector('.chat-input-area');
   const $viewButtons = Array.from(document.querySelectorAll('.brand-nav-btn'));
+  const $offcanvasBackdrop = document.getElementById('offcanvasBackdrop');
+  const $openLeftPanel = document.getElementById('openLeftPanel');
+  const $openRightPanel = document.getElementById('openRightPanel');
+  const $closeLeftPanel = document.getElementById('closeLeftPanel');
 
   document.querySelectorAll('.sim-preset').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -224,6 +228,14 @@
     btn.addEventListener('click', () => setView(btn.dataset.view));
   });
 
+  $openLeftPanel.addEventListener('click', () => togglePanel('left'));
+  $openRightPanel.addEventListener('click', () => togglePanel('right'));
+  $closeLeftPanel.addEventListener('click', () => setPanel('left', false));
+  $offcanvasBackdrop.addEventListener('click', () => closePanels());
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closePanels();
+  });
+
   $questionInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -242,7 +254,7 @@
     showWelcome();
   });
 
-  $closeRefBtn.addEventListener('click', () => updateRefPanel([]));
+  $closeRefBtn.addEventListener('click', () => setPanel('right', false));
 
   $uploadTrigger.addEventListener('click', () => $fileInput.click());
   $uploadArea.addEventListener('click', (e) => {
@@ -296,6 +308,29 @@
     if (view === 'learn') showWelcome();
     if (view === 'quiz') renderQuiz();
     if (view === 'simulation') renderSimulationGuide();
+  }
+
+  function togglePanel(panel) {
+    const isOpen = document.body.classList.contains(`${panel}-panel-open`);
+    setPanel(panel, !isOpen);
+  }
+
+  function setPanel(panel, isOpen) {
+    const otherPanel = panel === 'left' ? 'right' : 'left';
+    document.body.classList.toggle(`${panel}-panel-open`, isOpen);
+    if (isOpen) document.body.classList.remove(`${otherPanel}-panel-open`);
+    $offcanvasBackdrop.classList.toggle('visible', isOpen);
+    $offcanvasBackdrop.setAttribute('aria-hidden', String(!isOpen));
+    $openLeftPanel.setAttribute('aria-expanded', String(panel === 'left' && isOpen));
+    $openRightPanel.setAttribute('aria-expanded', String(panel === 'right' && isOpen));
+  }
+
+  function closePanels() {
+    document.body.classList.remove('left-panel-open', 'right-panel-open');
+    $offcanvasBackdrop.classList.remove('visible');
+    $offcanvasBackdrop.setAttribute('aria-hidden', 'true');
+    $openLeftPanel.setAttribute('aria-expanded', 'false');
+    $openRightPanel.setAttribute('aria-expanded', 'false');
   }
 
   function renderHome() {
@@ -535,6 +570,7 @@
   function updateRefPanel(chunks) {
     if (!chunks.length) {
       $refList.innerHTML = '<p class="ref-empty">질문 후 참고 문서가 여기에 표시됩니다.</p>';
+      setPanel('right', false);
       return;
     }
 
@@ -545,6 +581,7 @@
         <div class="ref-card-content">${escHtml(chunk.content || '')}</div>
       </div>
     `).join('');
+    setPanel('right', true);
   }
 
   async function handleFileUpload(file) {
