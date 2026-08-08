@@ -152,6 +152,8 @@ done
 | `finance_asset_allocation.txt` | 평균-분산, 블랙-리터만, Risk Parity, 자산배분 사례 |
 | `finance_stock_dividend_basics.txt` | 주식·배당 및 금융상품 기초 |
 | `finance_valuation_multiples.txt` | PER·PBR 등 상대가치 평가 |
+| `finance_lending_sectors_guide.txt` | 제1·2금융권, 등록 대부업·사적 대출의 등록·규율·보호 범위 학습 |
+| `finance_aihub_rag_case.txt` | AI Hub 금융·법률 데이터를 정제·청킹·메타데이터화하여 RAG에 등록하는 사례 |
 
 ## 사용 예시
 

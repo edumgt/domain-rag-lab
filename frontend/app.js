@@ -91,53 +91,73 @@
       analogy: '비가 올 때를 대비해 우산을 미리 준비하는 ‘보험’처럼 위험을 줄이는 데 쓸 수 있어요.',
       check: '손실이 빠르게 커질 수 있어 구조와 최대 손실을 충분히 이해하기 전에는 접근하지 마세요.',
     },
+    {
+      icon: 'fa-coins', title: '금·귀금속',
+      oneLine: '실물의 희소성과 국제 가격, 환율에 영향을 받는 대표적 실물자산입니다.',
+      analogy: '같은 금이라도 순도와 무게, 매입·매도 가격 차이, 보관 방법에 따라 실제 거래 결과가 달라집니다.',
+      check: '순도·중량·시세 기준·매매 스프레드·보관·진위 확인을 함께 살피세요.',
+    },
+    {
+      icon: 'fa-house', title: '부동산',
+      oneLine: '주거·임대·사업 공간을 거래하거나 이용할 권리와 관련된 실물자산입니다.',
+      analogy: '가격만이 아니라 위치, 권리관계, 관리비, 공실 가능성, 계약 기간을 함께 읽어야 하는 거래예요.',
+      check: '등기·권리관계·계약 조건·유지비·세금·유동성을 전문가와 함께 확인하세요.',
+    },
+    {
+      icon: 'fa-stamp', title: '우표·수석 등 수집품',
+      oneLine: '희소성·상태·진위·출처가 가치에 큰 영향을 주는 취미·수집 거래 대상입니다.',
+      analogy: '같은 종류여도 보존 상태와 감정서, 거래 이력이 다르면 전혀 다른 물건이 될 수 있습니다.',
+      check: '진품 여부·상태 등급·출처·감정 비용·보관·재판매 수요를 확인하세요.',
+    },
+    {
+      icon: 'fa-recycle', title: '중고거래',
+      oneLine: '사용하던 물건의 상태와 거래 조건을 확인해 가치를 교환하는 생활 거래입니다.',
+      analogy: '새 제품 가격이 기준점일 뿐, 실제 가격은 사용감·구성품·수리 이력·인도 방식에서 정해집니다.',
+      check: '실물 상태·작동 여부·시리얼·안전결제·직거래 장소·환불 조건을 기록하세요.',
+    },
   ];
 
   const THEORY_DAYS = [
     {
       day: 1,
       icon: 'fa-compass',
-      title: '금융상품과 투자 기초',
-      subtitle: '돈을 쓰는 목적과 위험의 크기를 먼저 정하면 상품 선택이 쉬워집니다.',
-      goal: '저축과 투자의 차이, 수익률·위험·유동성의 의미를 설명할 수 있어요.',
-      keywords: ['원금', '수익률', '위험', '유동성', '분산투자', '증권사'],
+      title: '금융상품과 생활 거래 기초',
+      subtitle: '돈을 쓰는 목적, 거래 대상의 상태와 위험을 먼저 정하면 선택이 쉬워집니다.',
+      goal: '저축·투자·생활 거래의 차이와 수익률·위험·유동성·거래 조건을 설명할 수 있어요.',
+      keywords: ['원금', '수익률', '위험', '유동성', '권리', '거래기록'],
       lessons: [
         ['저축과 투자는 무엇이 다른가요?', ['저축은 가까운 미래에 쓸 돈을 비교적 안전하게 보관하는 데 알맞습니다. 예금·적금이 대표적입니다.', '투자는 시간이 지나며 자산을 키우기 위해 가격 변동을 감수하는 선택입니다. 주식, 채권, 펀드, ETF 등이 여기에 해당합니다.', '둘 중 하나만 고르는 문제가 아닙니다. 생활비와 비상금은 먼저 확보하고, 남는 돈의 기간과 목표에 맞춰 투자 여부를 판단합니다.']],
         ['상품을 고를 때 보는 세 가지', ['수익률은 돈이 얼마나 늘어날 가능성이 있는지, 위험은 예상과 다르게 줄어들 수 있는 정도를 뜻합니다.', '유동성은 필요할 때 현금으로 바꾸기 쉬운 정도입니다. 수익률이 높아 보여도 급하게 돈이 필요할 때 팔기 어렵다면 내 상황에는 맞지 않을 수 있습니다.', '“높은 수익률, 낮은 위험, 높은 유동성”을 동시에 모두 얻기는 어렵다는 점을 기억하세요.']],
         ['기본 금융상품 지도', ['예금·적금은 안정성과 목적자금 관리에, 주식은 기업 성장에 참여하는 데 쓰입니다.', '채권은 정부나 기업에 돈을 빌려주고 이자와 원금을 받는 구조입니다. ETF·펀드는 여러 자산을 한 상품에 담아 분산투자를 쉽게 합니다.', '상품 이름보다 “무엇에 투자하는지, 비용은 얼마인지, 어떤 위험이 있는지”를 먼저 확인하세요.']],
         ['한국 투자자가 만나는 기관들', ['한국의 개인 투자자는 은행의 예·적금과 채권 상품, 증권사의 주식·ETF·채권·파생상품 계좌, 자산운용사의 펀드·ETF를 주로 이용합니다. 삼성증권·미래에셋증권·NH투자증권·KB증권·키움증권 등은 거래 서비스를 제공하는 증권사 예시이며, 실제 지원 계좌·수수료·상품은 회사와 계좌 유형별로 다릅니다.', '자산운용사는 투자 상품을 설계·운용하고, 증권사는 그 상품의 매매를 중개하는 역할이 기본입니다. 같은 ETF라도 운용사는 상품설명서와 운용을 맡고, 앱에서 주문을 받는 곳은 증권사라는 점을 구분해 보세요.', '처음 계좌를 고를 때는 “어느 앱이 유명한가?”보다 내가 필요한 시장(국내주식·해외주식·채권·연금·파생상품)을 지원하는지, 비용표와 위험고지를 읽기 쉬운지부터 확인하는 편이 좋습니다.']],
+        ['모든 거래에 공통인 확인 순서', ['금·부동산·우표·수석·중고 물건·서비스는 가격을 보기 전에 “내가 실제로 무엇을 받는가”부터 확인해야 합니다. 소유권·이용권·인도 조건처럼 거래 대상의 권리와 범위를 한 문장으로 정리해 보세요.', '다음으로 상태·진위·출처·수리 이력·계약 조건을 확인합니다. 부동산은 등기와 계약서, 금은 순도와 중량, 수집품은 감정과 보존 상태, 중고 물건은 작동 여부와 구성품이 대표적입니다.', '마지막으로 가격 비교, 수수료·배송·보관비, 안전결제·인도 기록, 환불·분쟁 기준을 남깁니다. 이 순서는 투자 판단이 아니라 안전한 생활 거래를 위한 기본 점검입니다.']],
       ],
-      check: '내가 1년 안에 꼭 써야 하는 돈과 5년 이상 기다릴 수 있는 돈을 나누어 적어 보세요.',
-      ragPrompt: '한국 투자자가 은행·증권사·자산운용사를 통해 만나는 금융상품을 예로 들어, 저축과 투자 및 수익률·위험·유동성의 관계를 설명해줘.',
+      check: '최근 사고팔았거나 계약했던 물건·서비스 하나를 골라 대상, 상태, 비용, 인도·분쟁 조건을 네 줄로 적어 보세요.',
+      ragPrompt: '예금·펀드·금·부동산·수집품·중고거래를 예로 들어, 생활 거래에서 가격 외에 확인할 권리·상태·비용·유동성·사기 위험을 설명해줘.',
     },
     {
       day: 2,
       icon: 'fa-chart-line',
-      title: '주식 · ETF · 펀드',
-      subtitle: '기업 한 곳에 투자할지, 여러 자산을 묶은 바구니를 고를지 이해합니다.',
-      goal: '주식, ETF, 펀드의 구조와 확인할 비용·유동성 항목을 구분할 수 있어요.',
-      keywords: ['주주', '배당', 'ETF', '총보수', '괴리율', 'KOSPI 200'],
+      title: '펀드 · ETF · 리츠 · ETN',
+      subtitle: '여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다.',
+      goal: '펀드, ETF, 리츠, ETN의 구조와 비용·유동성·발행자 위험을 구분할 수 있어요.',
+      keywords: ['펀드', 'ETF', '리츠', 'ETN', '총보수', '괴리율'],
       lessons: [
-        ['주식은 기업의 작은 주인이 되는 증서', ['주식을 사면 그 기업의 지분 일부를 갖게 됩니다. 기업의 성과와 기대에 따라 가격이 오르내리고, 일부 기업은 이익을 배당으로 나눕니다.', '좋은 회사라고 해서 언제나 좋은 투자 결과를 주는 것은 아닙니다. 이미 비싼 가격에 거래되고 있거나 산업 환경이 바뀔 수 있기 때문입니다.', '한 기업에만 돈이 몰리면 그 기업의 문제에 크게 흔들릴 수 있습니다.']],
-        ['ETF와 펀드는 왜 바구니라고 부르나요?', ['ETF와 펀드는 여러 주식·채권 등을 한데 묶어 투자할 수 있게 합니다. 하나의 상품만 사도 여러 자산에 나누어 투자하는 효과를 기대할 수 있습니다.', 'ETF는 거래소에서 주식처럼 장중에 사고팔 수 있고, 펀드는 보통 하루 한 번 기준가격으로 가입·환매가 처리됩니다.', '바구니라고 해서 위험이 사라지는 것은 아닙니다. 특정 국가·산업에만 담긴 ETF는 여전히 크게 움직일 수 있습니다.']],
-        ['구매 전 확인표', ['ETF는 무엇을 추종하는지, 총보수, 거래량, 호가 차이(스프레드), 시장가격과 순자산가치의 차이(괴리율)를 봅니다.', '펀드는 운용 전략, 보수, 환매에 걸리는 시간, 편입 자산을 살핍니다.', '과거 수익률은 참고 자료일 뿐 미래 성과를 보장하지 않습니다.']],
-        ['한국 주식·ETF로 보는 실제 사례', ['한국 대표 지수인 KOSPI 200은 시장대표성·업종대표성·유동성을 고려해 고른 200개 종목으로 구성됩니다. 삼성전자, SK하이닉스, 현대차, KB금융, NAVER처럼 대형주가 지수에 큰 영향을 줄 수 있으므로, 지수 ETF를 사도 특정 기업·산업에 대한 노출이 완전히 사라지는 것은 아닙니다.', '국내에서는 KODEX(삼성자산운용), TIGER(미래에셋자산운용), RISE(KB자산운용), ACE(한국투자신탁운용), PLUS(한화자산운용), SOL(신한자산운용), KOSEF(키움투자자산운용) 등 여러 ETF 브랜드를 만날 수 있습니다. 같은 “200 ETF”라도 추적 지수, 총보수, 규모, 거래량, 분배 방식이 다를 수 있습니다.', '예를 들어 KODEX 200·TIGER 200·RISE 200·ACE 200처럼 KOSPI 200을 추종하는 상품을 비교할 때는 이름만 보지 말고 종목코드, 기초지수, 운용사, 총보수, 순자산가치(NAV), 호가 스프레드와 괴리율을 함께 확인하세요. ETF와 ETN은 법적 구조도 다르므로 ETN은 발행 증권사의 신용위험도 추가로 살펴야 합니다.']],
-        ['MARKET FILE 01 · AI 반도체: 삼성전자와 SK하이닉스', ['삼성전자는 메모리 반도체·파운드리·스마트폰·가전 등 사업 포트폴리오가 넓은 기업입니다. SK하이닉스는 D램·낸드 등 메모리 사업의 비중이 큰 편입니다. 두 기업 모두 AI 데이터센터에서 쓰이는 고대역폭메모리(HBM), 서버 D램, 기업용 SSD 수요가 중요한 관찰 대상입니다.', '2026년에는 삼성전자가 HBM4 양산 출하를 발표했고, SK하이닉스는 차세대 HBM4E 샘플을 주요 고객에게 공급했다고 알렸습니다. 이것은 기술·제품 개발의 사례이지, 미래 실적이 확정됐다는 뜻은 아닙니다.', '읽을 때는 ① AI 서버 투자와 메모리 가격 사이클 ② 고객 인증과 제품 믹스 ③ 수율·설비투자 ④ 파운드리 경쟁 ⑤ 환율을 함께 보세요. 반도체 ETF를 선택할 때도 두 기업의 편입 비중이 얼마나 되는지 꼭 확인해야 합니다.']],
-        ['MARKET FILE 02 · 자동차·조선·방산: 수주와 인도 사이', ['현대차는 내연기관·하이브리드·전기차를 함께 판매하는 완성차 기업입니다. 차종 판매 구성, 미국·유럽 등 지역별 판매, 환율, 재고와 인센티브, 전동화 투자 속도가 실적을 읽는 핵심입니다. 현대차는 2026년에도 하이브리드·전기차 라인업 확대와 관련한 자료를 공개하고 있습니다.', 'HD현대중공업은 상선·특수선·엔진·해양 분야를, 한화에어로스페이스는 항공엔진·방산·우주 관련 사업을 주요 축으로 봅니다. 이 업종은 계약 뉴스만으로 판단하기보다 수주 잔고가 실제 매출과 이익으로 전환되는 시점, 원가, 납기, 환율을 함께 봐야 합니다.', '산업 전망을 볼 때는 “수주가 늘었다”와 “올해 이익이 바로 늘어난다”를 구분하세요. 조선·방산은 계약 기간이 길고, 국가별 승인·예산·조달 일정의 영향을 받기 때문에 공시의 계약 조건과 회사 IR 자료를 함께 읽는 습관이 필요합니다.']],
-        ['MARKET FILE 03 · 플랫폼·바이오: 숫자 외에 봐야 할 것', ['NAVER는 검색·광고·커머스·콘텐츠·클라우드와 AI 서비스를 연결하는 플랫폼 기업입니다. 이용자 수나 화제성만 보기보다 광고 매출, 커머스 거래액, 콘텐츠 비용, AI 서비스의 수익화, 해외 사업의 성과를 분리해서 읽는 편이 좋습니다. 카카오도 광고·커머스·콘텐츠·모빌리티 등 여러 사업이 연결돼 있어 사업부별 지표를 나눠 볼 필요가 있습니다.', '셀트리온은 바이오시밀러의 개발·생산·판매가 핵심인 기업입니다. 2026년에는 해외 규제 변화와 피하주사(SC) 제형 개발, 제품 포트폴리오 확대가 회사가 제시한 주요 이슈입니다. 바이오 기업은 허가·임상·출시 시점과 경쟁약 가격을 함께 확인해야 합니다.', '플랫폼과 바이오는 “성장 산업”이라는 한 단어로 묶기 어렵습니다. 플랫폼은 경쟁과 수익화, 바이오는 규제·임상·특허·판매망이 핵심이므로, 매출 성장률 하나보다 사업별 비용과 실행 일정을 함께 읽어야 합니다.']],
-        ['MARKET FILE 04 · 금융·소재: 금리와 자본의 언어', ['KB금융·신한지주·하나금융지주·우리금융지주 같은 금융지주는 은행뿐 아니라 증권·보험·카드·자산운용 계열사의 성과를 함께 봅니다. 기준금리와 예대금리차, 대손비용, 부동산·기업대출 건전성, 비이자 수수료, 보통주자본비율(CET1), 배당·자사주 정책이 주요 지표입니다.', 'KB금융은 2026년 상반기 실적 발표에서 은행·비은행 포트폴리오와 주주환원 계획을 함께 제시했습니다. 금융주는 배당만 보지 말고, 배당을 계속할 수 있는 자본 여력과 경기 악화 때 대손충당금이 어떻게 변하는지도 확인해야 합니다.', 'LG에너지솔루션은 전기차·에너지저장장치용 배터리, POSCO홀딩스는 철강과 이차전지 소재 관련 사업을 함께 살펴볼 수 있는 사례입니다. 이들 기업은 전기차 수요·원재료 가격·고객사 주문·공장 가동률·투자 규모가 복합적으로 작용하므로, “친환경 테마”라는 말만으로 같은 위험이라고 보기는 어렵습니다.']],
-        ['MARKET FILE 05 · 투자자처럼 읽는 기업 노트', ['기업 하나를 고를 때는 먼저 “무엇을 팔아 돈을 버는가?”를 한 문장으로 써 보세요. 다음으로 매출을 움직이는 가격·물량·환율·금리·원재료·규제 중 세 가지를 골라 분기 실적 발표 때마다 확인합니다.', '회사 홈페이지의 IR 자료, 사업보고서, 한국거래소 KIND 공시에서는 실적자료·주요 계약·유상증자·자사주·배당 관련 정보를 확인할 수 있습니다. 뉴스 제목은 출발점일 뿐이며, 숫자와 가정은 원문 공시로 되돌아가 확인해야 합니다.', '아래 기업들은 모두 학습 사례일 뿐 추천 목록이 아닙니다. 삼성전자, SK하이닉스, 현대차, HD현대중공업, 한화에어로스페이스, NAVER, 카카오, 셀트리온, KB금융, 신한지주, LG에너지솔루션, POSCO홀딩스 중 하나를 골라 “사업·성장 동력·위험·확인할 공시” 네 칸으로 정리해 보세요.']],
+        ['펀드와 ETF는 어떻게 다른가요?', ['펀드와 ETF는 주식·채권·원자재·부동산 관련 자산 등을 한 상품에 담을 수 있는 그릇입니다. 상품 이름보다 어떤 자산과 전략을 담는지 먼저 확인하세요.', 'ETF는 거래소에서 장중에 사고팔고, 일반 펀드는 보통 하루 한 번 산정하는 기준가격으로 가입·환매됩니다. 거래 방식이 다르므로 필요한 현금 시점과 거래비용도 달라질 수 있습니다.', '여러 자산을 담았다고 위험이 사라지지는 않습니다. 특정 국가·자산군·테마에 집중된 상품은 여전히 크게 움직일 수 있습니다.']],
+        ['리츠와 ETN의 구조', ['리츠는 오피스·물류센터·리테일 등 부동산 또는 부동산 관련 자산에서 나오는 임대수익과 가치 변동에 참여하는 상품입니다. 공실률, 임대료, 금리, 부동산 경기와 차입 구조를 함께 봅니다.', 'ETN은 증권사가 특정 지수의 수익률을 따르도록 만든 증권입니다. ETF처럼 거래되더라도 펀드가 아니라 발행 증권사의 신용위험이 추가된다는 점이 다릅니다.', '원자재·변동성·레버리지처럼 복잡한 지수를 따르는 ETN은 만기, 지수 산식, 롤오버 비용과 조기청산 조건을 특히 꼼꼼히 읽어야 합니다.']],
+        ['상품 설명서에서 비교할 항목', ['펀드·ETF는 기초자산, 운용 전략, 총보수, 환매 또는 매매 방식, 거래량과 괴리율을 확인합니다.', '리츠는 자산 구성, 임대차 현황, 차입금, 배당가능이익과 금리 민감도를, ETN은 발행사, 만기, 기초지수, 신용위험을 확인합니다.', '과거 수익률은 비교의 한 자료일 뿐입니다. 내가 언제 쓸 돈인지와 손실이 났을 때 감당 가능한 범위를 먼저 정한 뒤 상품설명서와 투자설명서를 읽으세요.']],
+        ['목적에 따라 상품을 나누어 보기', ['단기 목적자금에는 예금·적금·MMF처럼 유동성과 손실 가능성을 먼저 보는 상품이, 장기 목표에는 채권형 펀드·ETF, 주식형 펀드·ETF, 리츠처럼 다른 위험과 수익 원천을 가진 상품이 검토 대상이 될 수 있습니다.', '같은 ETF라도 국내외 주식, 국채·회사채, 금·원자재, 리츠 등 기초자산이 다릅니다. “ETF를 샀다”가 아니라 “무슨 위험을 보유했는가”로 이해하는 습관이 중요합니다.', '보험과 연금은 보장·노후소득이라는 목적을 함께 가진 금융상품입니다. 투자형 상품과 비교할 때는 기대수익률만이 아니라 보장 내용, 해지 비용, 수수료와 유동성을 나누어 살펴보세요.']],
       ],
-      check: '관심 있는 ETF 하나를 골라 “무엇을 담는지”와 “연간 총보수”를 찾아 보세요.',
-      ragPrompt: 'KOSPI 200과 국내 ETF 브랜드·상품을 예로 들어 주식, ETF, 펀드의 차이와 ETF 확인 항목을 설명해줘. 특정 상품 매수 추천은 하지 마.',
+      check: '펀드·ETF·리츠·ETN 중 두 상품을 골라 기초자산, 비용, 유동성, 발행자 위험을 비교해 보세요.',
+      ragPrompt: '펀드, ETF, 리츠, ETN의 구조와 기초자산·비용·유동성·발행자 위험을 비교해 설명해줘. 특정 상품 매수 추천은 하지 마.',
     },
     {
       day: 3,
       icon: 'fa-landmark',
-      title: '채권 · 금리 · 파생상품',
-      subtitle: '빌려준 돈의 약속과 가격 변동, 그리고 위험을 줄이기 위한 도구를 살펴봅니다.',
-      goal: '채권 가격과 금리의 관계, 파생상품의 헤지 목적과 위험을 설명할 수 있어요.',
-      keywords: ['만기', '이자', '금리', '신용위험', '헤지', '증거금'],
+      title: '채권 · 외환 · 원자재 · 파생상품',
+      subtitle: '금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다.',
+      goal: '채권 가격과 금리, 외환·원자재의 가격 변수, 파생상품의 헤지 목적과 위험을 설명할 수 있어요.',
+      keywords: ['만기', '이자', '금리', '환율', '원자재', '헤지'],
       lessons: [
         ['채권은 돈을 빌려준 약속장', ['채권을 산다는 것은 정부나 기업에 돈을 빌려주고 정해진 이자와 만기 원금을 받기로 하는 것입니다.', '국채는 정부가 발행하고, 회사채는 기업이 발행합니다. 발행자가 약속한 돈을 갚지 못할 가능성은 신용위험이라고 합니다.', '만기가 길수록 금리 변화에 가격이 더 민감해지는 경향이 있습니다. 이를 설명할 때 듀레이션이라는 지표를 사용합니다.']],
         ['금리가 오르면 채권 가격은 왜 내려갈까요?', ['새로 나온 채권의 이자가 더 높아지면, 기존의 낮은 이자를 주는 채권은 같은 가격으로는 매력이 줄어듭니다. 그래서 기존 채권 가격이 조정될 수 있습니다.', '반대로 금리가 내려가면 기존에 높은 이자를 약속한 채권의 매력이 커져 가격이 오를 수 있습니다.', '채권도 중간에 팔면 손익이 생길 수 있으므로 “항상 안전하다”고 단정할 수는 없습니다.']],
@@ -858,12 +878,22 @@ KOSDAQ|웹젠|게임`,
         <div><strong>쉽게 말하면</strong><span>${item.analogy}</span></div>
         <div><strong>확인할 점</strong><span>${item.check}</span></div>
       </article>`).join('');
+    const lifeTrades = [
+      ['금·귀금속', '순도 · 중량 · 매매 차이 · 보관', 'fa-coins'],
+      ['부동산', '권리관계 · 계약 · 유지비 · 유동성', 'fa-house'],
+      ['자동차·가전', '상태 · 수리이력 · 보증 · 이전', 'fa-car-side'],
+      ['우표·수석·예술품', '진위 · 보존상태 · 출처 · 감정', 'fa-gem'],
+      ['중고 전자기기', '작동 · 계정 해제 · 구성품 · 안전결제', 'fa-mobile-screen-button'],
+      ['티켓·예약권', '양도 가능 여부 · 유효기간 · 사기 위험', 'fa-ticket'],
+      ['서비스 거래', '작업 범위 · 견적 · 결과물 · 분쟁 기준', 'fa-handshake'],
+      ['디지털 자산·콘텐츠', '이용권한 · 약관 · 복제·양도 제한', 'fa-file-code'],
+    ].map(([name, check, icon]) => `<article><i class="fa-solid ${icon}"></i><h3>${name}</h3><p>${check}</p></article>`).join('');
 
     $messages.innerHTML = `
       <article class="content-page home-page">
-        <div class="content-kicker">FINANCE LEARNING LAB · RAG 기반 학습</div>
-        <h1>금융상품을 이해하고,<br><mark>나만의 자산배분 원칙</mark>을 설계합니다.</h1>
-        <p class="content-lead">교재형 콘텐츠, 개념 퀴즈, 학습용 포트폴리오 시뮬레이션과 근거 문서 기반 RAG를 한 흐름으로 제공합니다.</p>
+        <div class="content-kicker">MONEY & EVERYDAY EXCHANGE · RAG 기반 학습</div>
+        <h1>금융상품부터 생활 거래까지,<br><mark>가치와 위험을 읽는 원칙</mark>을 익힙니다.</h1>
+        <p class="content-lead">금·부동산·수집품·중고거래를 포함해, 가격뿐 아니라 상태·권리·비용·사기 위험을 함께 확인하는 학습 흐름을 제공합니다.</p>
         <div class="home-actions">
           <button class="content-cta" data-go="theory"><i class="fa-solid fa-calendar-days"></i> 5일 이론 학습 시작</button>
           <button class="content-cta" data-go="learn"><i class="fa-solid fa-comments"></i> RAG에게 질문하기</button>
@@ -876,7 +906,8 @@ KOSDAQ|웹젠|게임`,
         </section>
         <section class="learning-map" aria-label="학습 흐름 인포그래픽"><div class="map-heading"><span>LEARNING FLOW</span><strong>읽고 → 확인하고 → 직접 비교합니다</strong></div><div class="map-steps"><div><i class="fa-solid fa-book-open"></i><b>이론</b><small>상품과 시장 구조</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-circle-question"></i><b>퀴즈</b><small>핵심 개념 점검</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-chart-pie"></i><b>실습</b><small>비중과 위험 비교</small></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-comments"></i><b>RAG</b><small>문서 근거로 확장</small></div></div></section>
         <section class="content-section"><div class="section-heading"><span>01</span><h2>학습 메뉴</h2></div><div class="home-module-grid">${modules}</div></section>
-        <section class="content-section"><div class="section-heading"><span>02</span><h2>금융상품, 쉽게 시작하기</h2></div><p class="section-intro">투자는 ‘얼마나 많이 버는가’보다 <strong>내 돈이 어디에 쓰이고 어떤 상황에서 줄어들 수 있는가</strong>를 이해하는 일에서 시작합니다.</p><div class="product-explainer-grid">${explainers}</div></section>
+        <section class="content-section"><div class="section-heading"><span>02</span><h2>금융상품과 실물자산, 쉽게 시작하기</h2></div><p class="section-intro">투자와 거래는 ‘얼마나 많이 버는가’보다 <strong>무엇을 받고, 어떤 조건에서 가치가 줄어들 수 있는가</strong>를 이해하는 일에서 시작합니다.</p><div class="product-explainer-grid">${explainers}</div></section>
+        <section class="life-trade-guide"><div><span>EVERYDAY EXCHANGE GUIDE</span><h2>사회생활에서 만나는 모든 거래를<br>같은 질문으로 점검합니다.</h2><p>금융상품뿐 아니라 실물자산, 수집품, 중고 물건, 서비스와 디지털 권리도 거래 전 확인 기준이 필요합니다.</p></div><div class="life-trade-grid">${lifeTrades}</div><footer><b>공통 점검 순서</b><span>① 거래 대상과 권리 확인</span><i></i><span>② 상태·진위·가격 비교</span><i></i><span>③ 비용·보관·인도 조건</span><i></i><span>④ 기록·안전결제·분쟁 대비</span></footer></section>
         <section class="markdown-card">
           <p class="markdown-label">LEARNING NOTE</p>
           <h2>좋은 포트폴리오는 ‘정답’보다<br>위험을 감당할 수 있는 구조에 가깝습니다.</h2>
@@ -977,8 +1008,7 @@ KOSDAQ|웹젠|게임`,
         <div><h2>${escHtml(heading)}</h2>${paragraphs.map(text => `<p>${escHtml(text)}</p>`).join('')}</div>
       </section>
     `).join('');
-    const magazine = renderDailyMarketMagazine(lesson.day);
-    const koreaEquityExtra = lesson.day === 2 ? renderKoreaMarketMagazine() : '';
+    const productJourney = renderProductJourney(lesson.day);
     const companyAtlas = renderCompanyAtlas(lesson.day);
     const dayVisual = renderDayInfographic(lesson.day);
     $messages.innerHTML = `
@@ -994,8 +1024,9 @@ KOSDAQ|웹젠|게임`,
         <section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section>
         <section class="lesson-dashboard" aria-label="오늘의 학습 대시보드"><div><span>READ</span><strong>${lesson.lessons.length}</strong><small>개념 카드</small></div><div><span>KEYWORDS</span><strong>${lesson.keywords.length}</strong><small>핵심 용어</small></div><div><span>CHECK</span><strong><i class="fa-solid fa-pen"></i></strong><small>마무리 질문</small></div></section>
         ${dayVisual}
-        ${magazine}
-        ${koreaEquityExtra}
+        ${lesson.day === 1 ? renderLendingFunnel() : ''}
+        ${lesson.day === 4 ? renderAiHubRagCase() : ''}
+        ${productJourney}
         ${companyAtlas}
         <div class="theory-lesson-list">${lessonBlocks}</div>
         <section class="theory-check"><i class="fa-solid fa-pen-to-square"></i><div><strong>오늘의 확인</strong><p>${escHtml(lesson.check)}</p></div></section>
@@ -1009,6 +1040,7 @@ KOSDAQ|웹젠|게임`,
     bindViewLinks();
     bindTheoryLinks();
     bindAtlasFilters();
+    bindAtlasDetails();
     addTickerLabels();
     $messages.querySelector('[data-theory-rag]')?.addEventListener('click', () => {
       setView('learn');
@@ -1018,13 +1050,70 @@ KOSDAQ|웹젠|게임`,
     });
   }
 
+  function renderProductJourney(day) {
+    const journeys = {
+      1: {
+        title: '목적부터 고르는 돈과 생활 거래 지도',
+        lead: '금융상품·실물자산·중고 물건 모두 쓸 시점, 손실 가능성, 현금화와 거래 조건을 먼저 연결합니다.',
+        cards: [['예금·적금', '단기 목적자금과 약정 이자', '만기 · 중도해지 이율 · 예금자보호'], ['금·귀금속', '순도·중량으로 거래하는 실물자산', '시세 기준 · 매매 차이 · 보관'], ['부동산', '권리와 이용 가치를 함께 보는 자산', '등기 · 계약 · 유지비 · 유동성'], ['중고거래', '상태와 인도 조건이 핵심인 생활 거래', '작동 · 구성품 · 안전결제 · 기록']],
+      },
+      2: {
+        title: '거래 대상의 구조와 상태 읽기',
+        lead: '펀드·ETF·리츠·ETN과 수집품·중고 물건은 구조, 진위와 상태를 각각 확인해야 합니다.',
+        cards: [['공모펀드·ETF', '운용 전략에 따라 여러 자산에 투자', '편입자산 · 보수 · 환매·거래 방식'], ['리츠·ETN', '부동산·지수와 연결된 증권', '차입 · 발행사 신용 · 만기'], ['우표·수석·예술품', '희소성과 취향으로 거래되는 수집품', '진위 · 상태 등급 · 출처 · 감정'], ['중고 전자기기', '사용 이력에 따라 가치가 달라지는 물건', '작동 · 수리 · 계정 해제 · 구성품']],
+      },
+      3: {
+        title: '금리·환율·원자재까지 넓혀 보는 시장',
+        lead: '채권, 외화, 금·원자재와 파생상품은 서로 다른 위험 원천을 가집니다.',
+        cards: [['국채·회사채', '이자와 원금 상환 약속', '만기 · 듀레이션 · 신용등급'], ['외화·외화예금', '환율 변동에 노출되는 자산', '환율 · 환전비용 · 유동성'], ['금·원자재', '실물가격과 선물곡선의 영향', '순도·보관 또는 롤오버·거래 비용'], ['부동산·토지', '입지와 권리에서 가치가 나오는 실물자산', '등기 · 임대차 · 유지비 · 환금성']],
+      },
+      4: {
+        title: '상품별 위험을 한 기준으로 비교하기',
+        lead: '가격 변동만이 아니라 신용, 유동성, 금리, 환율, 구조 위험을 함께 점검합니다.',
+        cards: [['예금·보험', '원금·보장 조건을 확인', '보호 한도 · 보장 제외 · 해지 조건'], ['채권·채권형 상품', '금리와 신용위험을 확인', '듀레이션 · 신용등급 · 중도매매 가격'], ['수집품·중고 물건', '진위와 상태, 재판매 위험을 확인', '감정 · 하자 · 시세 비교 · 보관'], ['개인 간 거래', '사기와 분쟁 가능성을 먼저 관리', '신원 · 안전결제 · 인도 기록 · 환불 조건']],
+      },
+      5: {
+        title: '서로 다른 역할로 포트폴리오 구성하기',
+        lead: '상품의 수가 아니라 목적과 위험 원천이 다른지로 자산배분을 설계합니다.',
+        cards: [['유동성 버킷', '가까운 지출과 비상 상황 대응', '예금 · MMF · 만기 관리'], ['안정 버킷', '금리·신용위험을 제한한 완충', '국채 · 우량채 · 듀레이션'], ['실물·취미 버킷', '사용·보관·취향을 전제로 한 보유', '금 · 부동산 · 수집품 · 유지비'], ['거래 원칙 버킷', '사고팔 때 손실과 분쟁을 줄이는 규칙', '가격 비교 · 기록 · 안전결제 · 계약']],
+      },
+    };
+    const journey = journeys[day];
+    return `<section class="product-journey" aria-label="${journey.title}"><div class="product-journey-heading"><span>PRODUCT LENS · DAY ${String(day).padStart(2, '0')}</span><h2>${journey.title}</h2><p>${journey.lead}</p></div><div class="product-journey-grid">${journey.cards.map(([name, role, check]) => `<article><h3>${name}</h3><p>${role}</p><small><i class="fa-solid fa-check"></i> ${check}</small></article>`).join('')}</div><p class="product-journey-note"><i class="fa-solid fa-circle-info"></i> 상품별 설명서·약관·공시에서 실제 조건과 비용을 확인하세요. 이 내용은 교육용이며 매수·매도 권유가 아닙니다.</p></section>`;
+  }
+
+  function renderLendingFunnel() {
+    const levels = [
+      ['제1금융권', '은행 중심', '기관 체계 규모 · 넓음', '은행법 등 업권별 법령과 금융소비자보호 규율', '예금자보호는 보호 대상·한도 내에서만 적용'],
+      ['제2금융권', '저축은행 · 보험 · 증권 · 카드 · 캐피탈 등', '기관 유형 · 다양', '업권별 법령과 금융소비자보호 규율', '상품별 위험·보호 범위가 서로 다름'],
+      ['등록 대부업', '등록 여부를 확인할 수 있는 대부업자', '시장 접근 · 제한적', '대부업법 및 최고금리 등 관련 규율', '등록 확인·계약서·총비용을 반드시 점검'],
+      ['미등록·불법 사금융', '등록 확인 불가 또는 위법한 영업·추심', '제도권 검증 · 없음', '위법 행위는 제재·피해구제 대상', '거래 중단 후 1332·1397 등 공식 도움 창구 확인'],
+    ];
+    return `<section class="lending-funnel" aria-label="금융권과 사금융 구분 인포그래픽"><header><span>FINANCING & SAFETY LENS</span><h2>제1·2금융권과 사적 대출,<br>이름보다 <em>등록·규율·보호 범위</em>를 확인하세요.</h2><p>‘제1·2금융권’은 이해를 돕는 통상적 표현이며, 실제 적용 법령과 보호 제도는 회사·상품·계약에 따라 달라집니다.</p></header><div class="lending-funnel-chart">${levels.map(([name, examples, scale, law, safety], index) => `<article class="funnel-level level-${index + 1}"><div><b>${name}</b><span>${examples}</span></div><p><strong>규모·접근성</strong>${scale}</p><p><strong>법 적용</strong>${law}</p><p><strong>안전성·보호</strong>${safety}</p></article>`).join('')}</div><footer><i class="fa-solid fa-triangle-exclamation"></i><span>사인 간 금전거래라도 이자율 제한 등 법이 적용될 수 있습니다. 등록 여부, 실제 연이율, 수수료, 계약서와 추심 방식이 의심되면 돈을 보내기 전에 공식 기관에 확인하세요.</span></footer></section>`;
+  }
+
+  function renderAiHubRagCase() {
+    const steps = [
+      ['01', '찾고 검토하기', 'AI 데이터찾기의 금융·법률 분야에서 데이터셋 설명, 제공 형식, 버전, 이용 조건과 출처 표기 요구를 확인합니다.'],
+      ['02', '정제·메타데이터화', '허용된 파일을 UTF-8 텍스트로 정리하고 source, dataset, version, license, topic, effective_date를 남깁니다.'],
+      ['03', '문서 단위로 청킹', '금융 FAQ는 질문·답변 단위로, 법률은 조문·항·호와 시행일이 끊기지 않게 나눕니다. 표·각주·개정 이력은 보존합니다.'],
+      ['04', '등록·검색·검증', '정제본을 RAG에 등록하고 데이터셋·문서·조문·기준일을 답변에 표시합니다. 최신 법령·공시는 공식 원문으로 재확인합니다.'],
+    ];
+    return `<section class="aihub-rag-case" aria-label="AI Hub 금융 법률 데이터 RAG 활용 사례"><header><span>RAG IMPLEMENTATION CASE</span><h2>AI Hub 금융·법률 데이터를<br><em>근거 중심 RAG</em>로 연결하는 방법</h2><p>데이터셋별 이용정책·라이선스·구성·개인정보 여부를 확인한 뒤, 허용된 범위에서 내려받은 원문만 등록합니다.</p></header><div class="aihub-flow">${steps.map(([number, title, body]) => `<article><b>${number}</b><h3>${title}</h3><p>${body}</p></article>`).join('')}</div><section class="aihub-example"><div><span>LEARNING EXAMPLE</span><h3>“등록 대부업과 미등록 불법사금융을 구분할 때 무엇을 확인해야 하나요?”</h3><p>금융 데이터의 등록·계약·수수료 안내와 법률 데이터의 적용 조문을 함께 검색한 뒤, 등록 확인 방법·실제 연이율·계약서·신고 창구를 근거 문서와 기준일로 답합니다.</p></div><pre><code>source: AI Hub
+dataset: [실제 데이터셋명]
+topic: 대부업·금융소비자보호
+effective_date: [기준일]
+본문: 질문·답변 또는 조문 단위 원문
+주의: 최신성 확인 필요 · 법률 자문 아님</code></pre></section><footer><i class="fa-solid fa-shield-halved"></i><span>로그인 우회·자동 수집·재배포를 전제로 하지 않습니다. AI Hub 데이터셋 페이지의 이용정책과 개별 라이선스를 우선하고, 개인정보·민감정보는 조건과 내부 정책에 따라 최소화·비식별화합니다.</span><a href="https://aihub.or.kr/" target="_blank" rel="noopener noreferrer">AI Hub 데이터 찾기 <i class="fa-solid fa-arrow-up-right-from-square"></i></a></footer></section>`;
+  }
+
   function renderDayInfographic(day) {
     const visuals = {
-      1: `<section class="day-infographic market-map-card"><div class="info-heading"><span>KOREA MARKET MAP</span><h2>누가 상품을 만들고, 누가 거래를 돕나요?</h2></div><div class="institution-grid"><article><i class="fa-solid fa-building-columns"></i><b>은행</b><span>예·적금 · 대출 · 일부 채권</span><small>국민·신한·하나·우리 등</small></article><article><i class="fa-solid fa-mobile-screen-button"></i><b>증권사</b><span>주식 · ETF · 채권 · 계좌</span><small>삼성·미래·NH·KB·키움 등</small></article><article><i class="fa-solid fa-layer-group"></i><b>자산운용사</b><span>ETF · 펀드의 설계와 운용</span><small>KODEX·TIGER·RISE·ACE 등</small></article></div><div class="money-flow"><span>투자자</span><i class="fa-solid fa-arrow-right"></i><span>증권사 앱</span><i class="fa-solid fa-arrow-right"></i><span>KRX 시장·펀드</span><i class="fa-solid fa-arrow-right"></i><span>주식·채권·ETF</span></div></section>`,
-      2: `<section class="day-infographic company-strip"><div class="info-heading"><span>STOCKS AT A GLANCE</span><h2>한국 대표 기업을 산업별로 읽기</h2></div><div><article><b>반도체</b><span>삼성전자 · SK하이닉스</span><i style="width:88%"></i></article><article><b>자동차·산업재</b><span>현대차 · HD현대중공업 · 한화에어로스페이스</span><i style="width:72%"></i></article><article><b>플랫폼·바이오</b><span>NAVER · 카카오 · 셀트리온</span><i style="width:61%"></i></article><article><b>금융·소재</b><span>KB금융 · LG에너지솔루션 · POSCO홀딩스</span><i style="width:67%"></i></article></div></section>`,
+      1: `<section class="day-infographic market-map-card"><div class="info-heading"><span>FINANCIAL PRODUCT MAP</span><h2>누가 상품을 만들고, 누가 거래를 돕나요?</h2></div><div class="institution-grid"><article><i class="fa-solid fa-building-columns"></i><b>은행</b><span>예·적금 · 외화 · 신탁</span><small>만기·금리·보호 조건 확인</small></article><article><i class="fa-solid fa-shield-heart"></i><b>보험·연금사</b><span>보장 · 연금 · 장기 저축</span><small>보장·해지·수수료 확인</small></article><article><i class="fa-solid fa-layer-group"></i><b>증권·운용사</b><span>펀드 · ETF · 채권 · 리츠</span><small>기초자산·비용·위험 확인</small></article></div><div class="money-flow"><span>목적자금</span><i class="fa-solid fa-arrow-right"></i><span>상품 구조</span><i class="fa-solid fa-arrow-right"></i><span>비용·위험</span><i class="fa-solid fa-arrow-right"></i><span>계좌·거래 방식</span></div></section>`,
+      2: `<section class="day-infographic company-strip"><div class="info-heading"><span>WRAPPER PRODUCTS AT A GLANCE</span><h2>같은 바구니라도 구조와 위험은 다릅니다</h2></div><div><article><b>공모펀드</b><span>운용전략 · 기준가격 · 환매</span><i style="width:76%"></i></article><article><b>ETF</b><span>기초지수 · 거래량 · 괴리율</span><i style="width:86%"></i></article><article><b>리츠</b><span>부동산 · 임대수익 · 차입</span><i style="width:64%"></i></article><article><b>ETN</b><span>발행사 신용 · 만기 · 지수</span><i style="width:72%"></i></article></div></section>`,
       3: `<section class="day-infographic derivative-map"><div class="info-heading"><span>KRX PRODUCT MAP</span><h2>금리·채권·파생상품을 한 장으로</h2></div><div class="derivative-grid"><article><i class="fa-solid fa-landmark"></i><b>채권</b><span>국채 · 회사채 · 채권 ETF</span><small>금리와 만기가 핵심</small></article><article><i class="fa-solid fa-chart-line"></i><b>지수 선물·옵션</b><span>KOSPI 200 · KOSDAQ 150</span><small>증거금 · 만기 확인</small></article><article><i class="fa-solid fa-dollar-sign"></i><b>FICC</b><span>달러 · 3년·10년 국채 · 금</span><small>환율·금리·원자재 변수</small></article></div><div class="rate-meter"><span>한국은행 기준금리<br><b>2.75%</b><small>2026.07.16 기준</small></span><i><b style="width:55%"></b></i><em>금리 변화 → 채권 가격·대출·예금·환율에 영향</em></div></section>`,
-      4: `<section class="day-infographic risk-radar"><div class="info-heading"><span>RISK LENS</span><h2>수익률 하나만 보지 않는 4가지 지표</h2></div><div class="risk-four"><article><i class="fa-solid fa-chart-line"></i><b>수익률</b><span>얼마나 늘었나</span></article><article><i class="fa-solid fa-wave-square"></i><b>변동성</b><span>얼마나 흔들렸나</span></article><article><i class="fa-solid fa-arrow-trend-down"></i><b>MDD</b><span>얼마나 크게 빠졌나</span></article><article><i class="fa-solid fa-scale-balanced"></i><b>샤프 비율</b><span>위험 대비 성과는?</span></article></div><div class="concentration-meter"><span>예시: 반도체 ETF + 삼성전자 직접 보유</span><i><b style="width:82%"></b></i><strong>겹치는 노출을 확인하세요</strong></div></section>`,
-      5: `<section class="day-infographic allocation-map"><div class="info-heading"><span>PORTFOLIO BLUEPRINT</span><h2>자산배분은 종목 맞히기보다 역할 나누기</h2></div><div class="allocation-pyramid"><article><b>성장</b><span>국내·해외 주식 ETF</span></article><article><b>완충</b><span>국채 · 우량채 · 채권 ETF</span></article><article><b>유동성</b><span>현금성 자산 · 단기 목적자금</span></article></div><div class="rebalancing-line"><span>목표 비중 설정</span><i></i><span>정기 점검</span><i></i><span>기준 벗어나면 조정</span></div></section>`,
+      4: `<section class="day-infographic risk-radar"><div class="info-heading"><span>RISK LENS</span><h2>수익률 하나만 보지 않는 4가지 지표</h2></div><div class="risk-four"><article><i class="fa-solid fa-chart-line"></i><b>수익률</b><span>얼마나 늘었나</span></article><article><i class="fa-solid fa-wave-square"></i><b>변동성</b><span>얼마나 흔들렸나</span></article><article><i class="fa-solid fa-arrow-trend-down"></i><b>MDD</b><span>얼마나 크게 빠졌나</span></article><article><i class="fa-solid fa-scale-balanced"></i><b>샤프 비율</b><span>위험 대비 성과는?</span></article></div><div class="concentration-meter"><span>예시: 장기채 ETF + 채권형 펀드 + 금리 ETN</span><i><b style="width:72%"></b></i><strong>같은 금리 위험이 겹치는지 확인하세요</strong></div></section>`,
+      5: `<section class="day-infographic allocation-map"><div class="info-heading"><span>PORTFOLIO BLUEPRINT</span><h2>자산배분은 상품 이름보다 역할 나누기</h2></div><div class="allocation-pyramid"><article><b>성장</b><span>주식형 펀드 · ETF · 리츠</span></article><article><b>완충</b><span>국채 · 우량채 · 채권형 상품</span></article><article><b>유동성</b><span>예금 · MMF · 단기 목적자금</span></article></div><div class="rebalancing-line"><span>목표 비중 설정</span><i></i><span>정기 점검</span><i></i><span>기준 벗어나면 조정</span></div></section>`,
     };
     return visuals[day] || '';
   }
@@ -1133,13 +1222,13 @@ KOSDAQ|웹젠|게임`,
     const companies = COMPANY_ATLAS[day] || [];
     const counts = companies.reduce((acc, [market]) => ({ ...acc, [market]: (acc[market] || 0) + 1 }), {});
     return `<section class="company-atlas" aria-label="${day}일차 국내 상장사 40개 아틀라스">
-      <header class="atlas-header"><div><span>200 COMPANY ATLAS · DAY ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를<br>사업과 변수로 읽기</h2><p>시장 구분은 KRX 상장시장 기준 학습 표기입니다. 아래 카드는 실시간 시세가 아닌 사업 구조, 공시에서 확인할 변수와 위험을 빠르게 연결하기 위한 리딩 노트입니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>DAY<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
+      <header class="atlas-header"><div><span>200 COMPANY ATLAS · DAY ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를<br>사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>DAY<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
       <div class="atlas-toolbar"><div class="atlas-count"><span><b>${companies.length}</b> COMPANIES</span><i></i><span>KOSPI <b>${counts.KOSPI || 0}</b></span><i></i><span>KOSDAQ <b>${counts.KOSDAQ || 0}</b></span></div><div class="atlas-filters" role="group" aria-label="시장별 기업 필터"><button class="active" data-atlas-filter="all">전체 ${companies.length}</button><button data-atlas-filter="KOSPI">KOSPI ${counts.KOSPI || 0}</button><button data-atlas-filter="KOSDAQ">KOSDAQ ${counts.KOSDAQ || 0}</button></div></div>
       <div class="atlas-arrow-line"><span>시장</span><i></i><span>산업</span><i></i><span>핵심 변수</span><i></i><span>위험</span></div>
       <div class="atlas-grid">${companies.map(([market, name, sector], index) => {
         const [summary, watch, risk] = ATLAS_PROFILES[sector] || ATLAS_PROFILES.기본;
         const ticker = COMPANY_TICKERS[day]?.[index] || '—';
-        return `<article class="atlas-card" data-atlas-market="${market}"><div class="atlas-card-top"><span>${market}</span><b>${String(index + 1).padStart(2, '0')}</b></div><h3>${name} <small class="atlas-ticker">${ticker}</small></h3><p class="atlas-sector">${sector}</p><p class="atlas-summary">${name}은(는) ${summary}</p><div class="atlas-watch"><i class="fa-solid fa-eye"></i><span><b>관찰</b>${watch}</span></div><div class="atlas-risk"><i class="fa-solid fa-triangle-exclamation"></i><span><b>위험</b>${risk}</span></div></article>`;
+        return `<article class="atlas-card" data-atlas-market="${market}"><div class="atlas-card-top"><span>${market}</span><b>${String(index + 1).padStart(2, '0')}</b></div><h3>${name} <small class="atlas-ticker">${ticker}</small></h3><p class="atlas-sector">${sector}</p><p class="atlas-summary">${name}은(는) ${summary}</p><div class="atlas-watch"><i class="fa-solid fa-eye"></i><span><b>관찰</b>${watch}</span></div><div class="atlas-risk"><i class="fa-solid fa-triangle-exclamation"></i><span><b>위험</b>${risk}</span></div><button class="atlas-detail-btn" data-atlas-detail data-name="${name}" data-ticker="${ticker}" data-market="${market}" data-sector="${sector}" data-summary="${summary}" data-watch="${watch}" data-risk="${risk}">매거진 보기 <i class="fa-solid fa-arrow-up-right-from-square"></i></button></article>`;
       }).join('')}</div>
       <footer class="atlas-footer"><div><i class="fa-solid fa-file-lines"></i><strong>공시 읽기 원칙</strong><span>사업보고서 → 분기보고서·잠정실적 → 주요사항보고서 순으로 원문을 확인하세요.</span></div><div><i class="fa-solid fa-chart-column"></i><strong>숫자 읽기 원칙</strong><span>매출만 보지 말고 수익성, 현금흐름, 부채·자본, 고객·산업 집중도를 함께 점검하세요.</span></div></footer>
     </section>`;
@@ -1153,6 +1242,57 @@ KOSDAQ|웹젠|게임`,
       buttons.forEach(item => item.classList.toggle('active', item === button));
       cards.forEach(card => { card.hidden = filter !== 'all' && card.dataset.atlasMarket !== filter; });
     }));
+  }
+
+  function bindAtlasDetails() {
+    $messages.querySelectorAll('[data-atlas-detail]').forEach(button => button.addEventListener('click', () => {
+      openAtlasMagazine(button.dataset);
+    }));
+  }
+
+  async function openAtlasMagazine(company) {
+    document.getElementById('atlasMagazineModal')?.remove();
+    const searchQuery = encodeURIComponent(`${company.name} 공식 홈페이지`);
+    const kindUrl = `https://kind.krx.co.kr/common/companysummary.do?method=searchCompanySummary&likeSearchCode=${encodeURIComponent(company.ticker)}`;
+    const naverFinanceUrl = `https://finance.naver.com/item/main.naver?code=${encodeURIComponent(company.ticker)}`;
+    const modal = document.createElement('div');
+    modal.className = 'atlas-magazine-modal';
+    modal.id = 'atlasMagazineModal';
+    modal.innerHTML = `<div class="atlas-magazine-backdrop" data-atlas-close></div><article class="atlas-magazine-sheet" role="dialog" aria-modal="true" aria-label="${escHtml(company.name)} 기업 매거진"><button class="atlas-magazine-close" data-atlas-close aria-label="닫기"><i class="fa-solid fa-xmark"></i></button><header><span>COMPANY MAGAZINE · ${escHtml(company.market)}</span><h2>${escHtml(company.name)} <small>${escHtml(company.ticker)}</small></h2><p>${escHtml(company.sector)} · 사업 구조와 시장 정보를 한 화면에서 읽는 학습 노트</p></header><section class="atlas-magazine-lead"><div><span>BUSINESS SNAPSHOT</span><h3>${escHtml(company.summary)}</h3><p><b>관찰 변수</b>${escHtml(company.watch)}</p><p><b>핵심 위험</b>${escHtml(company.risk)}</p></div><div class="atlas-price-panel" id="atlasPricePanel"><span>MARKET SNAPSHOT</span><strong><i class="fa-solid fa-spinner fa-spin"></i> 시세 불러오는 중</strong><small>지연 시세 · 교육용 참고</small></div></section><section class="atlas-magazine-links"><a href="https://search.naver.com/search.naver?where=nexearch&query=${searchQuery}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-house"></i> 공식 홈페이지 찾기</a><a href="${kindUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-lines"></i> KIND 공시·기업정보</a><a href="${naverFinanceUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-chart-line"></i> 시세 상세</a></section><section class="atlas-news"><div><span>RECENT NEWS</span><h3>최근 뉴스</h3></div><div id="atlasNewsList"><p><i class="fa-solid fa-spinner fa-spin"></i> 최신 뉴스를 불러오는 중입니다.</p></div></section><footer>시세와 뉴스는 외부 공개 데이터에서 조회한 참고 정보이며, 지연·누락될 수 있습니다. 투자 권유가 아닙니다.</footer></article>`;
+    document.body.appendChild(modal);
+    document.body.classList.add('modal-open');
+    modal.querySelectorAll('[data-atlas-close]').forEach(item => item.addEventListener('click', () => { modal.remove(); document.body.classList.remove('modal-open'); }));
+    try {
+      const response = await fetch(`/market/company?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}&name=${encodeURIComponent(company.name)}`);
+      if (!response.ok) throw new Error('market snapshot unavailable');
+      const snapshot = await response.json();
+      if (!document.body.contains(modal)) return;
+      renderAtlasSnapshot(modal, snapshot);
+    } catch (_) {
+      if (!document.body.contains(modal)) return;
+      modal.querySelector('#atlasPricePanel').innerHTML = '<span>MARKET SNAPSHOT</span><strong>시세를 불러오지 못했습니다</strong><small>아래 시세 상세 링크에서 확인하세요.</small>';
+      modal.querySelector('#atlasNewsList').innerHTML = '<p>최근 뉴스를 불러오지 못했습니다. 공식 공시와 뉴스 검색을 함께 확인하세요.</p>';
+    }
+  }
+
+  function renderAtlasSnapshot(modal, snapshot) {
+    const panel = modal.querySelector('#atlasPricePanel');
+    const quote = snapshot.quote;
+    if (quote?.price != null) {
+      const change = quote.change == null ? '' : `${quote.change >= 0 ? '+' : ''}${Number(quote.change).toLocaleString('ko-KR')}`;
+      panel.innerHTML = `<span>MARKET SNAPSHOT</span><strong>${Number(quote.price).toLocaleString('ko-KR')} <small>${escHtml(quote.currency || 'KRW')}</small></strong><em class="${quote.change >= 0 ? 'up' : 'down'}">${change}</em><small>외부 공개 데이터 기준 지연 시세</small>`;
+    } else {
+      panel.innerHTML = '<span>MARKET SNAPSHOT</span><strong>시세 제공 없음</strong><small>아래 시세 상세 링크에서 확인하세요.</small>';
+    }
+    const list = modal.querySelector('#atlasNewsList');
+    if (snapshot.news?.length) {
+      list.innerHTML = snapshot.news.map(item => {
+        const url = typeof item.url === 'string' && item.url.startsWith('https://') ? item.url : '#';
+        return `<a href="${escHtml(url)}" target="_blank" rel="noopener noreferrer"><span>${escHtml(item.title)}</span><small>${escHtml(item.published_at || '뉴스 원문 보기')}</small><i class="fa-solid fa-arrow-up-right-from-square"></i></a>`;
+      }).join('');
+    } else {
+      list.innerHTML = '<p>표시할 최근 뉴스가 없습니다. 공시와 뉴스 검색을 함께 확인하세요.</p>';
+    }
   }
 
   function addTickerLabels() {
