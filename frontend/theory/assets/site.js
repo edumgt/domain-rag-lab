@@ -17,7 +17,16 @@
     if (!lesson) { renderIndex(); return; }
     const next = lessons.find((item) => item.day === lesson.day + 1);
     const previous = lessons.find((item) => item.day === lesson.day - 1);
-    $app.innerHTML = `${nav(lesson.day)}<article><header class="lesson-head"><p class="eyebrow">DAY ${String(lesson.day).padStart(2, '0')} / 05</p><h1>${escapeHtml(lesson.title)}</h1><p>${escapeHtml(lesson.subtitle)}</p><div class="progress" aria-label="${lesson.day}일차 진행"><i style="width:${lesson.day * 20}%"></i></div></header><section class="goal"><p>오늘의 학습 목표</p><strong>${escapeHtml(lesson.goal)}</strong></section><section class="keywords"><p>핵심 단어</p><div>${lesson.keywords.map((word) => `<span>${escapeHtml(word)}</span>`).join('')}</div></section><section class="lesson-list">${lesson.lessons.map(([heading, paragraphs], index) => `<section class="lesson"><span>${String(index + 1).padStart(2, '0')}</span><div><h2>${escapeHtml(heading)}</h2>${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div></section>`).join('')}</section><aside class="check"><p>오늘의 확인</p><strong>${escapeHtml(lesson.check)}</strong></aside><div class="pager">${previous ? `<a href="${fileFor(previous.day)}">← DAY ${String(previous.day).padStart(2, '0')}</a>` : '<span></span>'}${next ? `<a href="${fileFor(next.day)}">DAY ${String(next.day).padStart(2, '0')} →</a>` : '<a href="index.html">목차로 돌아가기 →</a>'}</div></article>${footer}`;
+    $app.innerHTML = `${nav(lesson.day)}<article><header class="lesson-head"><p class="eyebrow">DAY ${String(lesson.day).padStart(2, '0')} / 05</p><h1>${escapeHtml(lesson.title)}</h1><p>${escapeHtml(lesson.subtitle)}</p></header><section class="goal"><p>오늘의 학습 목표</p><strong>${escapeHtml(lesson.goal)}</strong></section><section class="keywords"><p>핵심 단어</p><div>${lesson.keywords.map((word) => `<span>${escapeHtml(word)}</span>`).join('')}</div></section><section class="lesson-list">${lesson.lessons.map(([heading, paragraphs], index) => `<section class="lesson"><span>${String(index + 1).padStart(2, '0')}</span><div class="lesson-content"><h2>${escapeHtml(heading)}</h2><div class="lesson-body">${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="${escapeHtml(heading)} 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`).join('')}</section><aside class="check"><p>오늘의 확인</p><strong>${escapeHtml(lesson.check)}</strong></aside><div class="pager">${previous ? `<a href="${fileFor(previous.day)}">← DAY ${String(previous.day).padStart(2, '0')}</a>` : '<span></span>'}${next ? `<a href="${fileFor(next.day)}">DAY ${String(next.day).padStart(2, '0')} →</a>` : '<a href="index.html">목차로 돌아가기 →</a>'}</div></article>${footer}`;
+    $app.querySelectorAll('[data-lesson-toggle]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const section = button.closest('.lesson');
+        const collapsed = section.classList.toggle('is-collapsed');
+        button.setAttribute('aria-expanded', String(!collapsed));
+        button.setAttribute('aria-label', collapsed ? '내용 펼치기' : '내용 접기');
+        button.title = collapsed ? '내용 펼치기' : '내용 접기';
+      });
+    });
   }
 
   day ? renderDay(lessons.find((item) => item.day === day)) : renderIndex();

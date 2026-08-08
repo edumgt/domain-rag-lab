@@ -44,7 +44,7 @@ services:
   api:
     build: .
     env_file:
-      - .env
+      - ${APP_ENV_FILE:-.env.prod}
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432

@@ -1154,26 +1154,34 @@ body.right-panel-open .ref-panel { transform: translateX(0); }
 .theory-back:hover { color: var(--accent); }
 .theory-detail-heading { padding: 8px 0 10px; }
 .theory-detail-heading > .fa-solid { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; margin: 9px 0 2px; border-radius: 50%; background: var(--accent-dim); color: var(--accent); font-size: 18px; }
-.theory-detail-heading h1 { margin: 7px 0 6px; }
+.theory-detail-heading h1 { margin: 7px 0 6px; font-size: clamp(30px, 2.7vw, 42px); line-height: 1.18; }
 .theory-detail-heading p { max-width: 760px; color: var(--text-2); font-size: 16px; line-height: 1.58; }
 
 /* 2일차 한국시장 매거진 섹션 */
 .theory-day-2 .theory-lesson:nth-child(n+4) { position: relative; overflow: hidden; border-color: #bfdbfe; background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%); }
-.theory-day-2 .theory-lesson:nth-child(n+4)::after { content: 'KOREA MARKET MAGAZINE'; position: absolute; top: 16px; right: 18px; color: rgba(37, 99, 235, .16); font-size: 10px; font-weight: 900; letter-spacing: .09em; }
+.theory-day-2 .theory-lesson:nth-child(n+4)::after { content: 'KOREA MARKET MAGAZINE'; position: absolute; top: 16px; right: 56px; color: rgba(37, 99, 235, .16); font-size: 10px; font-weight: 900; letter-spacing: .09em; }
 .theory-day-2 .theory-lesson:nth-child(n+4) h2 { padding-right: 146px; }
-.theory-progress { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; margin: 10px 0 24px; }
-.theory-progress i { height: 7px; border-radius: 99px; background: var(--border); }
-.theory-progress i.done { background: var(--accent); }
 .theory-goal, .theory-check, .theory-keywords { border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); }
 .theory-goal { padding: 20px 22px; border-left: 4px solid var(--accent); }
 .theory-goal strong, .theory-check strong, .theory-keywords > strong { color: var(--accent); font-size: 14px; }
 .theory-goal p { margin: 8px 0 0; color: var(--text-2); line-height: 1.7; }
 .theory-lesson-list { margin: 18px 0; display: flex; flex-direction: column; gap: 14px; }
-.theory-lesson { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 24px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.theory-lesson { position: relative; display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 24px 58px 24px 24px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
 .theory-lesson > span { color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .08em; }
 .theory-lesson h2 { margin: 0 0 12px; font-size: 21px; }
 .theory-lesson p { margin: 0 0 10px; color: var(--text-2); line-height: 1.8; }
 .theory-lesson p:last-child { margin-bottom: 0; }
+.lesson-accordion-toggle { position: absolute; z-index: 1; top: 16px; right: 16px; display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 1px solid #bfdbfe; border-radius: 999px; background: #eff6ff; color: var(--accent); font: 800 18px/1 var(--font); cursor: pointer; transition: transform .16s ease, background .16s ease; }
+.lesson-accordion-toggle:hover { background: var(--accent-dim); }
+.theory-lesson.is-collapsed .theory-lesson-body { display: none; }
+.theory-lesson.is-collapsed h2 { margin-bottom: 0; }
+.theory-lesson.is-collapsed .lesson-accordion-toggle { transform: rotate(180deg); }
+.accordion-summary { position: relative; }
+.section-accordion-toggle { position: absolute; z-index: 3; top: 18px; right: 18px; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 1px solid rgba(186, 230, 253, .65); border-radius: 999px; background: rgba(15, 23, 42, .34); color: #e0f2fe; cursor: pointer; transition: background .16s ease, transform .16s ease; }
+.section-accordion-toggle:hover { background: rgba(30, 64, 175, .75); }
+.section-accordion-toggle i { font-size: 13px; }
+.accordion-section.is-collapsed > :not(.accordion-summary) { display: none; }
+.accordion-section.is-collapsed .section-accordion-toggle { transform: rotate(180deg); }
 .theory-check { display: flex; gap: 14px; padding: 20px 22px; background: #f8fbff; }
 .theory-check > i { color: var(--accent); padding-top: 2px; }
 .theory-check p { margin: 7px 0 0; color: var(--text-2); line-height: 1.7; }
@@ -1356,9 +1364,9 @@ body.modal-open { overflow: hidden; }
 .option-chain-explainer b { color: var(--text); }
 .option-chain-disclaimer { margin: 10px 0 0; color: var(--text-muted); font-size: 11px; line-height: 1.55; }
 .sim-footer { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 18px 26px; background: var(--surface2); }
-.sim-footer p { color: var(--text-muted); font-size: 12px; line-height: 1.55; }
+.sim-footer p { flex: 1 1 0; min-width: 0; margin: 0; color: var(--text-muted); font-size: 12px; line-height: 1.55; }
 .sim-footer p i { color: var(--accent); margin-right: 4px; }
-.sim-footer .sim-ask-btn { flex: 0 0 auto; margin: 0; }
+.sim-footer .sim-ask-btn { width: auto; flex: 0 0 auto; margin: 0; white-space: nowrap; }
 
 /* ===== Learning infographics ===== */
 .learning-map { margin: -24px 0 46px; padding: 20px 22px; border: 1px solid #bfdbfe; border-radius: 14px; background: linear-gradient(110deg, #eff6ff, #fff); }
@@ -1558,8 +1566,17 @@ body.modal-open { overflow: hidden; }
 .sector-lens-grid b { color: #1d4ed8; }.sector-lens-grid span { color: var(--text-muted); text-align: right; }
 
 /* ===== Expanded allocation dashboard ===== */
-.simulation-page { max-width: 1440px; }
-.simulation-workbench { margin-top: 34px; }
+.simulation-page { max-width: none; }
+.simulation-guide-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; }
+.simulation-guide-head .content-kicker { margin: 0 0 7px; font-size: 11px; }
+.simulation-guide-head h1 { margin: 0; font-size: clamp(30px, 3vw, 43px); line-height: 1.1; }
+.simulation-guide-head .content-lead { max-width: 620px; margin: 0 0 3px; font-size: 15px; line-height: 1.6; text-align: right; }
+.simulation-steps { display: flex; align-items: center; gap: 12px; margin: 18px 0 20px; padding: 11px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface2); }
+.simulation-steps div { display: flex; align-items: center; gap: 7px; min-width: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.simulation-steps span { font-size: 11px; }
+.simulation-steps h3 { margin: 0; font-size: 13px; }
+.simulation-steps > i { color: #93c5fd; font-size: 11px; }
+.simulation-workbench { margin-top: 0; }
 .simulation-workbench .simulation-panel { border-radius: 22px; }
 .simulation-workbench .sim-body { grid-template-columns: minmax(330px, .72fr) minmax(540px, 1.28fr); gap: 30px; padding: 32px; }
 .simulation-workbench .sim-settings { padding: 24px; }
@@ -1574,6 +1591,8 @@ body.modal-open { overflow: hidden; }
 .risk-bar-chart span { color: var(--text-2); font-size: 12px; font-weight: 750; }.risk-bar-chart i { height: 13px; overflow: hidden; border-radius: 999px; background: #dbeafe; }.risk-bar-chart b { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #2563eb, #38bdf8); }.risk-bar-chart strong { color: #1d4ed8; font-size: 13px; text-align: right; }.risk-bar-chart .loss b { background: linear-gradient(90deg, #f59e0b, #ef4444); }.risk-bar-chart .loss strong { color: #dc2626; }
 
 @media (max-width: 900px) {
+  .simulation-guide-head { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .simulation-guide-head .content-lead { max-width: none; text-align: left; }
   .simulation-workbench .sim-body { grid-template-columns: 1fr; }
   .simulation-workbench .sim-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .magazine-hero, .magazine-lead-grid, .sector-lens, .daily-magazine-hero, .daily-magazine-story, .market-comparison, .daily-checklist { grid-template-columns: 1fr; }
@@ -1584,6 +1603,8 @@ body.modal-open { overflow: hidden; }
   .rate-meter em, .concentration-meter strong { text-align: left; }
 }
 @media (max-width: 620px) {
+  .simulation-steps { gap: 8px; padding: 10px; }
+  .simulation-steps > i { display: none; }
   .simulation-header, .simulation-workbench .sim-body { padding: 18px; }
   .simulation-header { align-items: flex-start; }
   .simulation-live { display: none; }

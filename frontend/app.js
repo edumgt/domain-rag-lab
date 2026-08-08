@@ -924,7 +924,7 @@ KOSDAQ|웹젠|게임`,
   }
 
   function renderSimulationGuide() {
-    $messages.innerHTML = `<article class="content-page simulation-page"><div class="content-kicker">ALLOCATION WORKBENCH</div><h1>직접 설계하고 비교하는<br><mark>자산배분 실습</mark></h1><p class="content-lead">한 화면에서 자산 비중과 헤지를 조절하고, 모델별 결과·시장 충격·저장한 설정을 비교해 보세요.</p><div class="simulation-steps"><div><span>01</span><h3>설계</h3><p>프리셋을 출발점으로 자산 비중과 헤지 강도를 조절합니다.</p></div><div><span>02</span><h3>검증</h3><p>성과 지표와 세 가지 스트레스 시나리오를 함께 읽습니다.</p></div><div><span>03</span><h3>비교</h3><p>현재 설정을 저장하고 이전 설정과 차이를 확인합니다.</p></div></div><div class="simulation-workbench" id="simulationMount"></div></article>`;
+    $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">ALLOCATION WORKBENCH</div><h1>자산배분 <mark>실습</mark></h1></div><p class="content-lead">비중·헤지를 조절하고 성과, 시장 충격, 저장한 설정을 비교합니다.</p></header><div class="simulation-steps" aria-label="실습 순서"><div><span>01</span><h3>설계</h3></div><i class="fa-solid fa-arrow-right"></i><div><span>02</span><h3>검증</h3></div><i class="fa-solid fa-arrow-right"></i><div><span>03</span><h3>비교</h3></div></div><div class="simulation-workbench" id="simulationMount"></div></article>`;
     document.getElementById('simulationMount').appendChild($simulationPanel);
     updateSimulation();
   }
@@ -999,7 +999,8 @@ KOSDAQ|웹젠|게임`,
     const lessonBlocks = lesson.lessons.map(([heading, paragraphs], index) => `
       <section class="theory-lesson">
         <span>${String(index + 1).padStart(2, '0')}</span>
-        <div><h2>${escHtml(heading)}</h2>${paragraphs.map(text => `<p>${escHtml(text)}</p>`).join('')}</div>
+        <div class="theory-lesson-content"><h2>${escHtml(heading)}</h2><div class="theory-lesson-body">${paragraphs.map(text => `<p>${escHtml(text)}</p>`).join('')}</div></div>
+        <button class="lesson-accordion-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="${escHtml(heading)} 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
       </section>
     `).join('');
     const productJourney = renderProductJourney(lesson.day);
@@ -1014,7 +1015,6 @@ KOSDAQ|웹젠|게임`,
           <p>${escHtml(lesson.subtitle)}</p>
         </div>
         <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄 용어를 누르면 상세 용어 설명이 열립니다.</p>
-        <div class="theory-progress" aria-label="5일 학습 중 ${lesson.day}일차">${THEORY_DAYS.map(item => `<i class="${item.day <= lesson.day ? 'done' : ''}"></i>`).join('')}</div>
         <section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section>
         <section class="lesson-dashboard" aria-label="오늘의 학습 대시보드"><div><span>READ</span><strong>${lesson.lessons.length}</strong><small>개념 카드</small></div><div><span>KEYWORDS</span><strong>${lesson.keywords.length}</strong><small>핵심 용어</small></div><div><span>CHECK</span><strong><i class="fa-solid fa-pen"></i></strong><small>마무리 질문</small></div></section>
         ${dayVisual}
@@ -1034,12 +1034,63 @@ KOSDAQ|웹젠|게임`,
     bindTheoryLinks();
     bindAtlasFilters();
     bindAtlasDetails();
+    bindTheoryLessonAccordions($messages);
+    bindTheorySectionAccordions($messages);
     addTickerLabels();
     $messages.querySelector('[data-theory-rag]')?.addEventListener('click', () => {
       setView('learn');
       $questionInput.value = lesson.ragPrompt;
       resizeInput();
       $questionInput.focus();
+    });
+  }
+
+  function bindTheoryLessonAccordions(root) {
+    root.querySelectorAll('[data-lesson-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        const section = button.closest('.theory-lesson');
+        const collapsed = section.classList.toggle('is-collapsed');
+        button.setAttribute('aria-expanded', String(!collapsed));
+        button.setAttribute('aria-label', collapsed ? '내용 펼치기' : '내용 접기');
+        button.title = collapsed ? '내용 펼치기' : '내용 접기';
+      });
+    });
+  }
+
+  function bindTheorySectionAccordions(root) {
+    const accordionSections = [
+      ['.day-infographic', '.info-heading'],
+      ['.product-journey', '.product-journey-heading'],
+      ['.lending-funnel', ':scope > header'],
+      ['.aihub-rag-case', ':scope > header'],
+      ['.daily-market-magazine', ':scope > .daily-magazine-hero'],
+      ['.company-atlas', ':scope > .atlas-header'],
+      ['.market-magazine', ':scope > .magazine-hero'],
+    ];
+
+    accordionSections.forEach(([sectionSelector, summarySelector]) => {
+      root.querySelectorAll(sectionSelector).forEach(section => {
+        const summary = section.querySelector(summarySelector);
+        if (!summary || section.querySelector('[data-section-toggle]')) return;
+        const heading = summary.querySelector('h2, h3')?.textContent.trim() || section.getAttribute('aria-label') || '섹션';
+        section.classList.add('accordion-section');
+        summary.classList.add('accordion-summary');
+        const button = document.createElement('button');
+        button.className = 'section-accordion-toggle';
+        button.type = 'button';
+        button.dataset.sectionToggle = '';
+        button.setAttribute('aria-expanded', 'true');
+        button.setAttribute('aria-label', `${heading} 내용 접기`);
+        button.title = '내용 접기';
+        button.innerHTML = '<i class="fa-solid fa-chevron-up" aria-hidden="true"></i>';
+        button.addEventListener('click', () => {
+          const collapsed = section.classList.toggle('is-collapsed');
+          button.setAttribute('aria-expanded', String(!collapsed));
+          button.setAttribute('aria-label', `${heading} 내용 ${collapsed ? '펼치기' : '접기'}`);
+          button.title = collapsed ? '내용 펼치기' : '내용 접기';
+        });
+        summary.appendChild(button);
+      });
     });
   }
 
