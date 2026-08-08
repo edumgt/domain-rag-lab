@@ -405,7 +405,8 @@
   }
 
   async function handleFileUpload(file) {
-    const allowed = file.name.toLowerCase().endsWith('.txt') || file.name.toLowerCase().endsWith('.pdf');
+    const lowerName = file.name.toLowerCase();
+    const allowed = lowerName.endsWith('.txt') || lowerName.endsWith('.pdf');
     if (!allowed) {
       showUploadStatus('error', 'TXT 또는 PDF 파일만 지원합니다.');
       return;
@@ -514,7 +515,7 @@
       Math.sqrt(variance) * model.volMultiplier * (1 - hedgeRatio * SIMULATION_ASSUMPTIONS.hedgeVolatilityReduction),
     );
     const sharpe = (expectedReturn - SIMULATION_ASSUMPTIONS.riskFreeRate) / volatility;
-    const drawdown = Math.min(0, -(
+    const drawdown = -Math.max(0, (
       volatility * SIMULATION_ASSUMPTIONS.stressVolatilityMultiplier
       + Math.max(0, weights.stock - 0.5) * SIMULATION_ASSUMPTIONS.equityStressPenalty
       - hedgeRatio * SIMULATION_ASSUMPTIONS.hedgeStressOffset
@@ -530,6 +531,7 @@
       `헤지 강도 · ${Math.round(hedgeRatio * 100)}%`,
     ].map(line => `<span>${line}</span>`).join('');
 
+    // 정규화 비중 기준의 학습용 분류: 대략적인 성향 비교를 위한 규칙입니다.
     const tilt = weights.stock >= 0.55 ? '공격형' : weights.bond >= 0.4 ? '방어형' : '균형형';
     $simNarrative.innerHTML = `
       <strong>${model.label}</strong> 기준 ${tilt} 포트폴리오입니다.<br>
