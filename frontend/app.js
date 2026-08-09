@@ -1235,6 +1235,7 @@ KOSDAQ|웹젠|게임`,
     const productJourney = renderProductJourney(lesson.day);
     const companyAtlas = renderCompanyAtlas(lesson.day);
     const dayVisual = renderDayInfographic(lesson.day);
+    const learningVisual = renderLearningVisual(lesson.day);
     $messages.innerHTML = `
       <article class="content-page theory-page theory-detail-page theory-day-${lesson.day}">
         <div class="theory-detail-heading">
@@ -1247,6 +1248,7 @@ KOSDAQ|웹젠|게임`,
         <section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section>
         <section class="lesson-dashboard" aria-label="오늘의 학습 대시보드"><div><span>READ</span><strong>${lesson.lessons.length}</strong><small>개념 카드</small></div><div><span>KEYWORDS</span><strong>${lesson.keywords.length}</strong><small>핵심 용어</small></div><div><span>CHECK</span><strong><i class="fa-solid fa-pen"></i></strong><small>마무리 질문</small></div></section>
         ${dayVisual}
+        ${learningVisual}
         ${lesson.day === 1 ? renderLendingFunnel() : ''}
         ${lesson.day === 1 ? renderAiHubRagCase() : ''}
         ${productJourney}
@@ -1389,6 +1391,17 @@ effective_date: [기준일]
       5: `<section class="day-infographic allocation-map"><div class="info-heading"><span>PORTFOLIO BLUEPRINT</span><h2>자산배분은 상품 이름보다 역할 나누기</h2></div><div class="allocation-pyramid"><article><b>성장</b><span>주식형 펀드 · ETF · 리츠</span></article><article><b>완충</b><span>국채 · 우량채 · 채권형 상품</span></article><article><b>유동성</b><span>예금 · MMF · 단기 목적자금</span></article></div><div class="rebalancing-line"><span>목표 비중 설정</span><i></i><span>정기 점검</span><i></i><span>기준 벗어나면 조정</span></div></section>`,
     };
     return visuals[day] || '';
+  }
+
+  function renderLearningVisual(day) {
+    const visual = {
+      1: { title: '선택 기준을 한눈에', note: '수익률·위험·유동성은 함께 최대로 만들기 어렵습니다. 목적과 사용 시점을 먼저 정하세요.', body: `<div class="visual-triad"><article class="accent"><i class="fa-solid fa-arrow-trend-up"></i><b>수익률</b><span>얼마나 늘어날 가능성이 있나</span></article><article><i class="fa-solid fa-triangle-exclamation"></i><b>위험</b><span>예상과 다르게 줄어들 수 있나</span></article><article><i class="fa-solid fa-money-bill-transfer"></i><b>유동성</b><span>필요할 때 현금화할 수 있나</span></article></div>` },
+      2: { title: 'ETF 가격의 두 층', note: '편입 자산의 가치(NAV)와 거래소에서 형성되는 시장가격은 다를 수 있습니다.', body: `<div class="visual-flow"><article>편입 자산 가치<small>주식·채권 등의 실제 값</small></article><i class="fa-solid fa-arrow-right"></i><article class="accent">NAV<small>순자산가치</small></article><i class="fa-solid fa-arrow-right-left"></i><article>시장가격<small>호가와 수요로 장중 변동</small></article></div>` },
+      3: { title: '금리와 채권의 기본 관계', note: '다른 조건이 같다면 시장금리 상승은 기존 채권 가격 하락 압력으로 이어질 수 있습니다.', body: `<div class="visual-triad"><article class="accent"><i class="fa-solid fa-percent"></i><b>시장금리 ↑</b><span>새로 발행되는 채권 이자가 높아짐</span></article><article><i class="fa-solid fa-arrow-trend-down"></i><b>기존 채권 가격 ↓</b><span>낮은 쿠폰의 매력을 조정</span></article><article><i class="fa-solid fa-ruler-horizontal"></i><b>듀레이션</b><span>만기가 길수록 민감도가 커질 수 있음</span></article></div>` },
+      4: { title: '그래프로 읽는 위험', note: '수익률이 같아도 하락 폭과 흔들림은 다를 수 있습니다.', body: `<div class="visual-risk-chart"><svg viewBox="0 0 580 170" role="img" aria-label="수익률과 최대낙폭을 보여주는 예시 그래프"><path d="M15 135 H565 M15 92 H565 M15 49 H565" stroke="#dbe5f5" stroke-dasharray="5 6"/><polyline points="15,130 82,103 140,117 214,44 285,66 350,142 417,107 493,29 565,59" fill="none" stroke="#2563eb" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><line x1="214" y1="44" x2="350" y2="142" stroke="#f97316" stroke-width="3" stroke-dasharray="8 6"/><text x="265" y="102" fill="#c2410c" font-size="15" font-weight="700">MDD</text></svg><div><span><i class="blue"></i>수익률 경로</span><span><i class="orange"></i>고점 대비 최대 하락</span><span><i class="green"></i>변동성은 전체 흔들림</span></div></div>` },
+      5: { title: '목표 비중은 사전 약속', note: '색깔과 비중은 예시이며, 실제 비중은 목표·기간·손실 허용 범위에 따라 달라집니다.', body: `<div class="visual-allocation"><div class="allocation-ring"><b>목표<br>비중</b></div><div><span><i></i>성장 자산 · 장기 목표</span><span><i></i>완충 자산 · 변동성 조절</span><span><i></i>대체 자산 · 다른 위험 요인</span><span><i></i>유동성 · 가까운 지출</span></div></div>` },
+    }[day];
+    return visual ? `<section class="learning-visual" aria-label="${visual.title} 인포그래픽"><header><span>VISUAL SUMMARY</span><h2>${visual.title}</h2></header>${visual.body}<p>${visual.note}</p></section>` : '';
   }
 
   function renderDailyMarketMagazine(day) {
