@@ -1228,7 +1228,7 @@ KOSDAQ|웹젠|게임`,
     const lessonBlocks = lesson.lessons.map(([heading, paragraphs], index) => `
       <section class="theory-lesson">
         <span>${String(index + 1).padStart(2, '0')}</span>
-        <div class="theory-lesson-content"><h2>${escHtml(heading)}</h2><div class="theory-lesson-body">${paragraphs.map(text => `<p>${escHtml(text)}</p>`).join('')}</div></div>
+        <div class="theory-lesson-content"><h2>${escHtml(heading)}</h2><div class="theory-lesson-body">${paragraphs.map(text => `<p>${escHtml(text)}</p>`).join('')}${renderLessonVisual(lesson.day, heading)}</div></div>
         <button class="lesson-accordion-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="${escHtml(heading)} 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
       </section>
     `).join('');
@@ -1398,6 +1398,20 @@ effective_date: [기준일]
       5: { title: '목표 비중은 사전 약속', note: '색깔과 비중은 예시이며, 실제 비중은 목표·기간·손실 허용 범위에 따라 달라집니다.', body: `<div class="visual-allocation"><div class="allocation-ring"><b>목표<br>비중</b></div><div><span><i></i>성장 자산 · 장기 목표</span><span><i></i>완충 자산 · 변동성 조절</span><span><i></i>대체 자산 · 다른 위험 요인</span><span><i></i>유동성 · 가까운 지출</span></div></div>` },
     }[day];
     return visual ? `<section class="learning-visual" aria-label="${visual.title} 인포그래픽"><header><span>VISUAL SUMMARY</span><h2>${visual.title}</h2></header>${visual.body}<p>${visual.note}</p></section>` : '';
+  }
+
+  function renderLessonVisual(day, heading) {
+    const figure = (label, body, caption) => `<figure class="lesson-inline-visual"><span>${label}</span>${body}<figcaption>${caption}</figcaption></figure>`;
+    if (heading.includes('포지션과 포트폴리오')) return figure('POSITION VS PORTFOLIO', `<div class="position-portfolio-visual"><article><i class="fa-solid fa-chart-line"></i><b>포지션</b><small>한 상품의 현재 거래 상태</small><em>주식 10주 · 선물 매도 · 풋 매수</em></article><i class="fa-solid fa-arrow-right"></i><article class="portfolio-basket"><i class="fa-solid fa-briefcase"></i><b>포트폴리오</b><small>여러 자산·포지션의 전체 바구니</small><em>주식 · 채권 · 현금 · 헤지</em></article></div>`, '포지션은 한 칸의 거래 상태, 포트폴리오는 그 칸들을 합친 전체 구성입니다.');
+    if (heading.includes('위험을 읽는 네 가지 숫자')) return figure('RISK METRICS', `<div class="metric-card-visual"><article><i class="fa-solid fa-wave-square"></i><b>변동성</b><small>평소 흔들림의 크기</small></article><article><i class="fa-solid fa-arrow-trend-down"></i><b>MDD</b><small>고점 대비 최대 하락</small></article><article><i class="fa-solid fa-scale-balanced"></i><b>샤프 비율</b><small>위험 대비 성과</small></article></div>`, '한 숫자만으로 결론내리지 말고, 기간과 기준점을 맞춰 함께 비교합니다.');
+    if (heading.includes('저축과 투자는')) return figure('SAVING & INVESTING', `<div class="balance-visual"><article><i class="fa-solid fa-piggy-bank"></i><b>저축</b><small>가까운 목적 · 안정성</small></article><i class="fa-solid fa-arrow-right-arrow-left"></i><article><i class="fa-solid fa-seedling"></i><b>투자</b><small>긴 기간 · 가격 변동 감수</small></article></div>`, '둘 중 하나만 고르는 것이 아니라, 쓸 시점에 따라 역할을 나누는 것이 출발점입니다.');
+    if (heading.includes('선물은 미래 거래')) return figure('FUTURES TIMELINE', `<div class="timeline-visual"><b>오늘<small>가격·수량·만기 약속</small></b><i></i><b>보유 기간<small>증거금·일일 정산</small></b><i></i><b>만기·청산<small>반대거래·결제</small></b></div>`, '선물은 자산 자체가 아니라 미래 거래 조건을 표준화한 계약입니다.');
+    if (heading.includes('펀드와 ETF는')) return figure('FUND VS ETF', `<div class="balance-visual"><article><i class="fa-solid fa-box"></i><b>펀드</b><small>기준가로 가입·환매</small></article><i class="fa-solid fa-arrow-right-arrow-left"></i><article><i class="fa-solid fa-building-columns"></i><b>ETF</b><small>거래소에서 장중 매매</small></article></div>`, '같은 바구니형 상품이어도 거래 방식과 확인할 비용·유동성이 다릅니다.');
+    if (heading.includes('NAV·iNAV')) return figure('ETF PRICE PATH', `<div class="timeline-visual"><b>편입 자산<small>보유 주식·채권 가치</small></b><i></i><b>NAV<small>순자산가치</small></b><i></i><b>시장가격<small>호가·수요로 변동</small></b></div>`, 'NAV와 시장가격의 차이가 괴리율이며, 거래량과 호가 차이도 함께 봅니다.');
+    if (heading.includes('금리가 오르면 채권 가격')) return figure('RATE & BOND', `<div class="timeline-visual rate-path"><b>시장금리 ↑<small>새 채권 이자 상승</small></b><i></i><b>기존 채권 가격 ↓<small>상대 매력 조정</small></b><i></i><b>듀레이션<small>긴 만기일수록 민감</small></b></div>`, '기본 방향을 설명한 도식이며, 신용위험·만기·유동성도 실제 가격에 영향을 줍니다.');
+    if (heading.includes('자산배분은 비중')) return figure('ALLOCATION ROLES', `<div class="allocation-inline"><i></i><span>성장<br><small>주식형</small></span><span>완충<br><small>채권형</small></span><span>유동성<br><small>현금성</small></span></div>`, '자산배분은 상품 이름보다 각 자산이 포트폴리오에서 맡는 역할을 나누는 일입니다.');
+    if (heading.includes('리밸런싱은 원래')) return figure('REBALANCING LOOP', `<div class="timeline-visual"><b>목표 비중<small>미리 기록</small></b><i></i><b>정기 점검<small>주기·허용 범위</small></b><i></i><b>규칙대로 조정<small>비용·세금 확인</small></b></div>`, '가격 예측보다 사전에 정한 기준으로 점검하고 조정하는 과정이 핵심입니다.');
+    return '';
   }
 
   function renderDailyMarketMagazine(day) {
