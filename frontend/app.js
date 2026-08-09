@@ -12,6 +12,7 @@
     activeScenario: 'equity',
     savedSimulation: null,
     currentSimulation: null,
+    calendarCursor: null,
   };
 
   const PRODUCT_EXPLAINERS = [
@@ -252,6 +253,25 @@
     { terms: ['호가 스프레드', '호가 차이'], korean: '호가 스프레드', hanja: '呼價差', abbr: 'Spread', english: 'Bid-Ask Spread', summary: '살 수 있는 가장 싼 가격과 팔 수 있는 가장 비싼 가격의 차이입니다.', detail: '차이가 크면 사자마자 손해를 보고 시작하는 것처럼 느껴질 수 있습니다. 거래량이 적은 상품일수록 스프레드가 넓어질 수 있습니다.' },
     { terms: ['연환산'], korean: '연환산', hanja: '年換算', abbr: 'Annualized', english: 'Annualized', summary: '한 달·몇 년 등 서로 다른 기간의 성과를 1년 기준으로 바꾸어 비교하는 방법입니다.', detail: '기간이 짧을수록 연환산 수치는 실제보다 크게 보일 수 있습니다. 원래 기간과 함께 해석해야 합니다.' },
     { terms: ['무위험수익률'], korean: '무위험수익률', hanja: '無危險收益率', abbr: 'Rf', english: 'Risk-Free Rate', summary: '위험이 거의 없다고 가정한 투자에서 기대하는 기준 수익률입니다.', detail: '실제로 위험이 완전히 없는 투자는 드물지만, 성과를 비교할 때 기준점으로 사용합니다. 보통 단기 국채 수익률 등을 참고합니다.' },
+  ];
+
+  const CALENDAR_EVENTS = [
+    { id: 'evt-us-nfp-aug', date: '2026-08-07', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'high', title: '미국 7월 고용보고서(비농업 고용지수) 발표', summary: '미국 노동부가 7월 비농업 고용자 수, 실업률, 시간당 임금을 발표합니다.', detail: '고용지표는 미국 연준의 금리 결정에 큰 영향을 주는 자료 중 하나입니다. 고용이 예상보다 강하면 금리 인하 기대가 줄고, 예상보다 약하면 금리 인하 기대가 커지는 경향이 있어 국채금리·환율·주가지수 선물이 발표 직후 크게 움직일 수 있습니다. 숫자 하나만으로 방향을 단정하기보다 임금 상승률, 실업률 추세와 함께 확인하는 것이 좋습니다.' },
+    { id: 'evt-kr-kakao-q2', date: '2026-08-07', time: '오전 이사회 · 오후 컨퍼런스콜(예정)', category: 'earnings', market: '한국', importance: 'medium', title: '카카오 2026년 2분기 실적 발표(잠정)', summary: '카카오가 2분기 매출·영업이익 잠정 실적과 사업부문별 성과를 공개합니다.', detail: '플랫폼 기업의 실적 발표에서는 광고·커머스·콘텐츠 등 사업부문별 매출 구성과 수익성 추세를 함께 확인하는 것이 좋습니다. 잠정실적은 이후 사업보고서·분기보고서로 확정되므로, 공식 공시(전자공시시스템)에서 원문을 다시 확인하는 습관이 중요합니다.' },
+    { id: 'evt-us-cpi-aug', date: '2026-08-13', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'high', title: '미국 7월 소비자물가지수(CPI) 발표', summary: '미국 노동통계국이 7월 CPI와 근원 CPI(식료품·에너지 제외) 상승률을 발표합니다.', detail: 'CPI는 인플레이션 흐름을 보여 주는 대표 지표로, 시장이 예상한 수치와 실제 발표치의 차이(서프라이즈)가 클수록 금리·환율·주가 변동성이 커질 수 있습니다. 전월 대비(MoM)와 전년 대비(YoY) 상승률을 함께 보고, 근원 CPI가 둔화 또는 재가속되는 추세인지 확인하세요.' },
+    { id: 'evt-kr-kospi-opt-aug', date: '2026-08-13', time: '장중 · 최종거래일', category: 'expiry', market: '한국', importance: 'medium', title: '코스피200 옵션 만기일(매월 둘째 목요일)', summary: '코스피200 옵션의 최종거래일로, 미결제약정 정리와 관련 헤지 주문이 늘어날 수 있습니다.', detail: '옵션 만기일에는 옵션 매도자였던 기관·금융기관이 델타 헤지 물량을 정리하면서 장 막판 수급이 평소보다 출렁일 수 있습니다. “만기일이라 무조건 오르내린다”고 단정하기보다, 미결제약정과 프로그램 매매 동향을 함께 참고 자료로만 확인하는 것이 좋습니다.' },
+    { id: 'evt-us-ppi-aug', date: '2026-08-14', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'medium', title: '미국 7월 생산자물가지수(PPI) 발표', summary: '기업 간 거래 단계의 물가 변화를 보여 주는 PPI가 발표됩니다.', detail: 'PPI는 소비자물가(CPI)보다 한발 앞서 기업의 원가 압력을 보여 줄 수 있어 향후 CPI 흐름을 가늠하는 보조 지표로 활용됩니다. 에너지·식품처럼 변동성이 큰 항목을 제외한 근원 PPI를 함께 보면 추세를 판단하는 데 도움이 됩니다.' },
+    { id: 'evt-fomc-minutes-aug', date: '2026-08-19', time: '한국시간 새벽(서머타임 기준)', category: 'macro', market: '미국', importance: 'medium', title: 'FOMC 7월 정례회의 의사록 공개', summary: '지난 7월 연방공개시장위원회(FOMC) 회의의 세부 논의 내용이 공개됩니다.', detail: '의사록에는 위원들이 금리 결정 당시 어떤 위험 요인과 데이터를 근거로 판단했는지가 담겨 있어, 다음 회의의 방향을 가늠하는 참고 자료로 쓰입니다. 성명서만으로 알기 어려운 위원 간 견해 차이를 확인할 수 있지만, 이미 지난 회의의 기록이라는 점도 함께 감안해야 합니다.' },
+    { id: 'evt-jackson-hole', date: '2026-08-21', time: '현지시간 기준 3일간', category: 'macro', market: '미국', importance: 'high', title: '잭슨홀 경제정책 심포지엄 개막', summary: '미국 캔자스시티 연은이 주최하는 연례 경제정책 심포지엄으로, 연준 의장의 연설이 주목받습니다.', detail: '잭슨홀 심포지엄에서 연준 의장의 연설은 향후 통화정책 방향에 대한 힌트로 해석되는 경우가 많아 채권·주식·환율 시장이 민감하게 반응할 수 있습니다. 연설 하나로 다음 회의 결과가 확정되는 것은 아니므로, 이후 발표되는 경제지표와 함께 판단해야 합니다.' },
+    { id: 'evt-nvidia-q2', date: '2026-08-26', time: '한국시간 오전(장 마감 후 발표, 서머타임 기준)', category: 'earnings', market: '미국', importance: 'high', title: '엔비디아(NVIDIA) 2026 회계연도 2분기 실적 발표', summary: 'AI 반도체 수요와 데이터센터 매출 전망을 가늠할 수 있는 엔비디아의 분기 실적이 발표됩니다.', detail: '데이터센터 부문 매출 성장률, 차세대 GPU 공급 상황, 다음 분기 매출 가이던스가 특히 주목받습니다. 엔비디아 실적은 국내 반도체·서버 공급망 관련 기업들의 투자심리에도 영향을 줄 수 있어 국내 투자자도 참고하는 경우가 많습니다.' },
+    { id: 'evt-bok-rate-aug', date: '2026-08-28', time: '오전 9시 결정, 오전 통화정책방향 발표', category: 'macro', market: '한국', importance: 'high', title: '한국은행 금융통화위원회 기준금리 결정', summary: '한국은행 금통위가 기준금리 인상·인하·동결 여부를 결정하고 통화정책방향을 발표합니다.', detail: '기준금리는 예·적금 금리, 대출금리, 국고채 수익률과 채권형 상품 가격에 영향을 줄 수 있습니다. 결정 결과뿐 아니라 총재 기자간담회에서 나오는 향후 정책 방향에 대한 발언도 함께 확인하는 것이 좋습니다.' },
+    { id: 'evt-us-nfp-sep', date: '2026-09-04', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'high', title: '미국 8월 고용보고서 발표', summary: '8월 비농업 고용자 수와 실업률이 발표됩니다.', detail: '9월 FOMC 회의를 앞두고 발표되는 고용지표라 시장의 금리 전망에 미치는 영향이 특히 클 수 있습니다. 전월 수치의 수정(리비전) 여부도 함께 확인하면 고용 흐름을 더 정확히 읽을 수 있습니다.' },
+    { id: 'evt-kospi-quad-sep', date: '2026-09-10', time: '장중 · 최종거래일', category: 'expiry', market: '한국', importance: 'high', title: '코스피200 선물·옵션 동시만기일(9월물, 분기 만기)', summary: '3·6·9·12월물 코스피200 선물이 옵션과 함께 만기를 맞는 분기 동시만기일입니다.', detail: '분기 동시만기일에는 선물·옵션 미결제약정 정리 물량이 한꺼번에 몰려 월간 만기보다 변동성이 커질 수 있습니다. 특히 장 마감 동시호가 구간에서 프로그램 매매(차익·비차익) 주문이 늘어나는 경향이 있어 참고 지표로만 활용하고 과도한 의미 부여는 주의해야 합니다.' },
+    { id: 'evt-us-cpi-sep', date: '2026-09-11', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'high', title: '미국 8월 CPI 발표', summary: '9월 FOMC 직전 발표되는 마지막 주요 CPI 지표입니다.', detail: '이 지표는 FOMC의 금리 결정 직전에 나오는 만큼 시장의 민감도가 특히 높습니다. 헤드라인 CPI와 근원 CPI의 방향이 엇갈릴 경우 해석에 더 주의가 필요합니다.' },
+    { id: 'evt-fomc-sep', date: '2026-09-17', time: '한국시간 새벽(서머타임 기준)', category: 'macro', market: '미국', importance: 'high', title: 'FOMC 9월 정례회의 금리 결정 발표', summary: '연방공개시장위원회가 이틀간의 회의를 마치고 기준금리 결정과 경제전망(점도표)을 공개합니다.', detail: '금리 결정 자체뿐 아니라 위원들의 향후 금리 전망을 보여 주는 점도표(dot plot), 의장의 기자회견 발언이 시장에 큰 영향을 줄 수 있습니다. 결정 결과가 예상과 같아도 향후 전망 문구가 달라지면 시장이 반응할 수 있다는 점을 기억하세요.' },
+    { id: 'evt-triple-witching-sep', date: '2026-09-18', time: '현지시간 장 마감 동시호가', category: 'expiry', market: '미국', importance: 'high', title: "미국 증시 '네 마녀의 날'(주가지수 선물·옵션, 개별주식 선물·옵션 동시만기)", summary: '3·6·9·12월 셋째 금요일, 네 가지 파생상품 계약이 한꺼번에 만기를 맞아 거래량이 크게 늘어날 수 있습니다.', detail: '동시만기일에는 지수를 추종하는 기관의 리밸런싱 주문과 만기 청산 물량이 겹치면서 장 마감 무렵 변동성이 커지는 경향이 있습니다. 국내 코스피200 동시만기일과 마찬가지로, 특정 방향을 예단하기보다 거래량·변동성이 커질 수 있는 날로 이해하는 것이 좋습니다.' },
+    { id: 'evt-us-pce-sep', date: '2026-09-25', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'medium', title: '미국 8월 근원 PCE 물가지수 발표', summary: '연준이 가장 중요하게 참고하는 물가지표인 근원 개인소비지출(PCE) 상승률이 발표됩니다.', detail: 'PCE는 CPI와 산출 방식이 달라 두 지표의 방향이 항상 일치하지는 않습니다. 연준이 정책 판단에서 PCE를 핵심 지표로 삼는다고 여러 차례 밝힌 만큼, CPI 발표 이후에도 PCE 결과를 다시 확인하는 습관이 필요합니다.' },
+    { id: 'evt-kr-samsung-q3-preview', date: '2026-10-08', time: '오전(예정)', category: 'earnings', market: '한국', importance: 'medium', title: '삼성전자 2026년 3분기 잠정실적 발표', summary: '삼성전자가 3분기 매출·영업이익 잠정치를 공개합니다.', detail: '잠정실적은 사업부문별 세부 수치 없이 매출·영업이익 총액만 먼저 공개되는 경우가 많습니다. 반도체(메모리·파운드리)와 디바이스 부문의 세부 실적은 이후 확정 실적 발표와 사업보고서에서 확인할 수 있습니다.' },
   ];
 
   const MODEL_META = {
@@ -652,6 +672,12 @@ KOSDAQ|웹젠|게임`,
   const $glossaryNames = document.getElementById('glossaryNames');
   const $glossarySummary = document.getElementById('glossarySummary');
   const $glossaryDetail = document.getElementById('glossaryDetail');
+  const $calendarModal = document.getElementById('calendarModal');
+  const $calendarModalCategory = document.getElementById('calendarModalCategory');
+  const $calendarModalTitle = document.getElementById('calendarModalTitle');
+  const $calendarModalMeta = document.getElementById('calendarModalMeta');
+  const $calendarModalSummary = document.getElementById('calendarModalSummary');
+  const $calendarModalDetail = document.getElementById('calendarModalDetail');
 
   // 좌측은 학습 메뉴, 우측은 RAG 자료와 참고 문서에만 집중합니다.
   $referencePanel.insertBefore($ragPanel, $refList);
@@ -687,9 +713,13 @@ KOSDAQ|웹젠|게임`,
   $glossaryModal.addEventListener('click', event => {
     if (event.target.closest('[data-glossary-close]')) closeGlossary();
   });
+  $calendarModal.addEventListener('click', event => {
+    if (event.target.closest('[data-calendar-close]')) closeCalendarEvent();
+  });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closePanels();
     if (event.key === 'Escape') closeGlossary();
+    if (event.key === 'Escape') closeCalendarEvent();
   });
 
   $questionInput.addEventListener('keydown', (e) => {
@@ -776,6 +806,7 @@ KOSDAQ|웹젠|게임`,
       requestAnimationFrame(() => $simulationPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }));
     }
     if (view === 'backtest') renderBacktestWorkflow();
+    if (view === 'calendar') renderCalendar();
   }
 
   function togglePanel(panel) {
@@ -859,6 +890,29 @@ KOSDAQ|웹젠|게임`,
   function closeGlossary() {
     $glossaryModal.classList.remove('open');
     $glossaryModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  function openCalendarEvent(id) {
+    const entry = CALENDAR_EVENTS.find(item => item.id === id);
+    if (!entry) return;
+    $calendarModalCategory.textContent = `${calendarCategoryLabel(entry.category)} · ${entry.market}`;
+    $calendarModalTitle.textContent = entry.title;
+    $calendarModalMeta.innerHTML = `
+      <span><b>날짜</b>${escHtml(formatCalendarDate(entry.date))}</span>
+      <span><b>시간</b>${escHtml(entry.time)}</span>
+      <span><b>중요도</b>${calendarImportanceLabel(entry.importance)}</span>`;
+    $calendarModalSummary.textContent = entry.summary;
+    $calendarModalDetail.textContent = entry.detail;
+    $calendarModal.classList.add('open');
+    $calendarModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    $calendarModal.querySelector('.glossary-close').focus();
+  }
+
+  function closeCalendarEvent() {
+    $calendarModal.classList.remove('open');
+    $calendarModal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
   }
 
@@ -968,6 +1022,122 @@ KOSDAQ|웹젠|게임`,
   }
 
   function drawBacktestChart(points) { const canvas = document.getElementById('backtestChart'); if (!canvas || !points?.length) return; const ctx = canvas.getContext('2d'); const values = points.map(p => p.value), min = Math.min(...values), max = Math.max(...values), pad = 24, w = canvas.width - pad * 2, h = canvas.height - pad * 2; ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.strokeStyle = '#dbeafe'; ctx.beginPath(); ctx.moveTo(pad, canvas.height - pad); ctx.lineTo(canvas.width - pad, canvas.height - pad); ctx.stroke(); ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 3; ctx.beginPath(); points.forEach((p, i) => { const x = pad + w * i / Math.max(1, points.length - 1), y = pad + (max - p.value) / Math.max(1, max - min) * h; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); }
+
+  function calendarCategoryLabel(category) {
+    return { macro: '경제지표', earnings: '실적발표', expiry: '선물·옵션 만기' }[category] || category;
+  }
+
+  function calendarImportanceLabel(level) {
+    return { high: '높음', medium: '보통', low: '낮음' }[level] || level;
+  }
+
+  function calendarWeekdayKo(dateStr) {
+    return `${['일', '월', '화', '수', '목', '금', '토'][new Date(`${dateStr}T00:00:00`).getDay()]}요일`;
+  }
+
+  function formatCalendarDate(dateStr) {
+    const [year, month, day] = dateStr.split('-');
+    return `${year}년 ${Number(month)}월 ${Number(day)}일 (${calendarWeekdayKo(dateStr)})`;
+  }
+
+  function toDateKey(date) {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  }
+
+  function buildCalendarCells(year, month) {
+    const startWeekday = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const cells = new Array(startWeekday).fill(null);
+    for (let day = 1; day <= daysInMonth; day += 1) cells.push(day);
+    while (cells.length % 7 !== 0) cells.push(null);
+    return cells;
+  }
+
+  function groupCalendarEvents() {
+    const map = {};
+    CALENDAR_EVENTS.forEach(event => {
+      if (!map[event.date]) map[event.date] = [];
+      map[event.date].push(event);
+    });
+    return map;
+  }
+
+  function renderCalendar() {
+    const now = new Date();
+    if (!state.calendarCursor) state.calendarCursor = { year: now.getFullYear(), month: now.getMonth() };
+    const { year, month } = state.calendarCursor;
+    const todayKey = toDateKey(now);
+    const eventsByDate = groupCalendarEvents();
+    const cellsHtml = buildCalendarCells(year, month).map(day => {
+      if (!day) return '<div class="calendar-cell is-empty"></div>';
+      const key = toDateKey(new Date(year, month, day));
+      const dayEvents = eventsByDate[key] || [];
+      const chips = dayEvents.slice(0, 3).map(event => `<button type="button" class="calendar-chip cal-cat-${event.category}" data-calendar-event="${event.id}">${escHtml(event.title)}</button>`).join('');
+      const more = dayEvents.length > 3 ? `<span class="calendar-more">+${dayEvents.length - 3}건 더보기</span>` : '';
+      return `<div class="calendar-cell${key === todayKey ? ' is-today' : ''}${dayEvents.length ? ' has-event' : ''}"><span class="calendar-daynum">${day}</span><div class="calendar-chips">${chips}${more}</div></div>`;
+    }).join('');
+
+    const upcomingHtml = CALENDAR_EVENTS
+      .filter(event => event.date >= todayKey)
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .slice(0, 8)
+      .map(event => `
+        <li class="calendar-agenda-item">
+          <div class="calendar-agenda-date"><b>${event.date.slice(5).replace('-', '.')}</b><span>${calendarWeekdayKo(event.date)}</span></div>
+          <div class="calendar-agenda-body">
+            <span class="calendar-tag cal-cat-${event.category}">${calendarCategoryLabel(event.category)} · ${event.market}</span>
+            <button type="button" class="calendar-agenda-title" data-calendar-event="${event.id}">${escHtml(event.title)}</button>
+            <p>${escHtml(event.summary)}</p>
+          </div>
+        </li>`).join('');
+
+    $messages.innerHTML = `
+      <article class="content-page calendar-page">
+        <div class="content-kicker">MARKET CALENDAR · 학습용 샘플</div>
+        <h1>증시 일정 <mark>캘린더</mark></h1>
+        <p class="content-lead">주요 경제지표 발표, 기업 실적 발표, 선물·옵션 만기일을 한눈에 확인하세요. 일정 이름을 누르면 상세 설명이 열립니다.</p>
+        <section class="calendar-board" aria-label="월간 증시 일정 캘린더">
+          <div class="calendar-toolbar">
+            <div class="calendar-toolbar-nav">
+              <button type="button" class="calendar-nav-btn" data-calendar-nav="-1" aria-label="이전 달"><i class="fa-solid fa-chevron-left"></i></button>
+              <strong>${year}년 ${month + 1}월</strong>
+              <button type="button" class="calendar-nav-btn" data-calendar-nav="1" aria-label="다음 달"><i class="fa-solid fa-chevron-right"></i></button>
+              <button type="button" class="calendar-today-btn" data-calendar-today>오늘</button>
+            </div>
+            <div class="calendar-legend"><span class="cal-cat-macro">경제지표</span><span class="cal-cat-earnings">실적발표</span><span class="cal-cat-expiry">선물·옵션 만기</span></div>
+          </div>
+          <div class="calendar-weekdays"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+          <div class="calendar-grid">${cellsHtml}</div>
+        </section>
+        <section class="content-section calendar-agenda-section">
+          <div class="section-heading"><span>UPCOMING</span><h2>다가오는 일정</h2></div>
+          <ul class="calendar-agenda-list">${upcomingHtml || '<li class="calendar-agenda-empty">이번 달 이후 표시할 예정 일정이 없습니다.</li>'}</ul>
+        </section>
+        <p class="content-disclaimer">학습용 예시 일정입니다. 실제 발표 일정·시간은 변경될 수 있으니 거래소·기관의 공식 캘린더에서 다시 확인하세요. 특정 상품의 매수·매도를 권유하지 않습니다.</p>
+      </article>`;
+    bindCalendarInteractions();
+  }
+
+  function bindCalendarInteractions() {
+    $messages.querySelectorAll('[data-calendar-nav]').forEach(button => {
+      button.addEventListener('click', () => {
+        let { year, month } = state.calendarCursor;
+        month += Number(button.dataset.calendarNav);
+        if (month < 0) { month = 11; year -= 1; }
+        if (month > 11) { month = 0; year += 1; }
+        state.calendarCursor = { year, month };
+        renderCalendar();
+      });
+    });
+    $messages.querySelector('[data-calendar-today]')?.addEventListener('click', () => {
+      const now = new Date();
+      state.calendarCursor = { year: now.getFullYear(), month: now.getMonth() };
+      renderCalendar();
+    });
+    $messages.querySelectorAll('[data-calendar-event]').forEach(button => {
+      button.addEventListener('click', () => openCalendarEvent(button.dataset.calendarEvent));
+    });
+  }
 
   function renderTheoryIndex() {
     const dayCards = THEORY_DAYS.map(item => `

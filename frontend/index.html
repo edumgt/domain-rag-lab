@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/static/style.css?v=20260808-19" />
+  <link rel="stylesheet" href="/static/style.css?v=20260808-20" />
 </head>
 <body>
   <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
@@ -86,6 +86,7 @@
           <button class="brand-nav-btn" data-view="learn"><i class="fa-solid fa-comments"></i> RAG 질문</button>
           <button class="brand-nav-btn" data-view="simulation"><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</button>
           <button class="brand-nav-btn" data-view="backtest"><i class="fa-solid fa-flask"></i> LEAN 백테스트</button>
+          <button class="brand-nav-btn" data-view="calendar"><i class="fa-solid fa-calendar-days"></i> 캘린더</button>
         </div>
         <div class="header-actions">
           <div class="domain-badge"><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분</div>
@@ -310,6 +311,19 @@
     </section>
   </div>
 
-  <script src="/static/app.js?v=20260808-21"></script>
+  <div class="glossary-modal calendar-modal" id="calendarModal" role="dialog" aria-modal="true" aria-labelledby="calendarModalTitle" aria-hidden="true">
+    <div class="glossary-modal-backdrop" data-calendar-close></div>
+    <section class="glossary-dialog calendar-dialog">
+      <button class="glossary-close" type="button" data-calendar-close aria-label="일정 상세 닫기"><i class="fa-solid fa-xmark"></i></button>
+      <p class="glossary-label" id="calendarModalCategory">증시 일정</p>
+      <h2 id="calendarModalTitle"></h2>
+      <div class="glossary-names calendar-modal-meta" id="calendarModalMeta"></div>
+      <p class="glossary-summary" id="calendarModalSummary"></p>
+      <div class="glossary-detail" id="calendarModalDetail"></div>
+      <p class="glossary-note">학습용 예시 일정입니다. 실제 발표 일정·시간은 변경될 수 있으니 거래소·기관의 공식 캘린더에서 다시 확인하세요.</p>
+    </section>
+  </div>
+
+  <script src="/static/app.js?v=20260808-22"></script>
 </body>
 </html>
