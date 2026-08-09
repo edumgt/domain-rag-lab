@@ -10,7 +10,7 @@
   const footer = '<footer>금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.</footer>';
 
   function renderIndex() {
-    $app.innerHTML = `${nav(0)}<section class="hero"><p class="eyebrow">5-DAY FINANCE THEORY</p><h1>상품 이해에서<br><em>자산배분 설계</em>까지</h1><p>하루 한 주제씩, 금융상품의 구조와 위험을 읽고 내 기준으로 비교하는 5일 학습입니다.</p></section><section class="curriculum">${lessons.map((item) => `<a class="day-card" href="${fileFor(item.day)}"><p>DAY ${String(item.day).padStart(2, '0')}</p><h2>${escapeHtml(item.title)}</h2><span>${escapeHtml(item.subtitle)}</span><strong>학습 시작 →</strong></a>`).join('')}</section>${footer}`;
+    $app.innerHTML = `${nav(0)}<section class="hero"><p class="eyebrow">5-DAY FINANCE THEORY</p><h1>상품 이해·<em>자산배분 설계</em></h1><p>하루 한 주제씩, 금융상품의 구조와 위험을 읽고 내 기준으로 비교하는 5일 학습입니다.</p></section><section class="curriculum">${lessons.map((item) => `<a class="day-card" href="${fileFor(item.day)}"><p>DAY ${String(item.day).padStart(2, '0')}</p><h2>${escapeHtml(item.title)}</h2><span>${escapeHtml(item.subtitle)}</span><strong>학습 시작 →</strong></a>`).join('')}</section>${footer}`;
   }
 
   function renderDay(lesson) {

@@ -956,7 +956,7 @@ KOSDAQ|웹젠|게임`,
     $messages.innerHTML = `
       <article class="content-page home-page">
         <div class="content-kicker">MONEY & EVERYDAY EXCHANGE · RAG 기반 학습</div>
-        <h1>금융상품부터 생활 거래까지,<br><mark>가치와 위험을 읽는 원칙</mark>을 익힙니다.</h1>
+        <h1><mark>금융·생활 거래</mark> 학습</h1>
         <p class="content-lead">금·부동산·수집품·중고거래를 포함해, 가격뿐 아니라 상태·권리·비용·사기 위험을 함께 확인하는 학습 흐름을 제공합니다.</p>
         <div class="home-actions">
           <button class="content-cta" data-go="theory"><i class="fa-solid fa-calendar-days"></i> 5일 이론 학습 시작</button>
@@ -990,7 +990,7 @@ KOSDAQ|웹젠|게임`,
 
   function renderBacktestWorkflow() {
     const today = new Date().toISOString().slice(0, 10);
-    $messages.innerHTML = `<article class="content-page backtest-page"><header class="backtest-page-head"><div class="content-kicker">QUANTCONNECT LEAN · YFINANCE WORKFLOW</div><h1>입력 · 데이터 · LEAN <mark>수익률 비교</mark></h1><p class="content-lead">yfinance 일봉과 QuantConnect LEAN으로 교육용 매수·보유 결과를 비교합니다.</p></header><section class="backtest-canvas" aria-label="백테스트 워크플로우"><div class="workflow-node input"><span>01 · 국내 종목</span><input id="btTicker" value="005930.KS" maxlength="12" aria-label="종목 티커" /><small>예: 삼성전자 005930.KS · SK하이닉스 000660.KS</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>02 · 백테스트 기간</span><div><input id="btStart" type="date" value="2023-01-01" /><input id="btEnd" type="date" value="${today}" /></div><small>전략 성과를 계산할 기간</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>03 · 비교 기간</span><div><input id="btCompareStart" type="date" value="2022-01-01" /><input id="btCompareEnd" type="date" value="2022-12-31" /></div><small>이전 기간과 수익률 비교</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node engine"><span>04 · 실행 엔진</span><strong><i class="fa-brands fa-docker"></i> LEAN</strong><small>yfinance → 원격 Docker</small></div></section><div class="backtest-actions"><button class="content-cta" id="runBacktest"><i class="fa-solid fa-play"></i> 백테스트 실행</button><span>교육용 매수·보유 예시이며 투자 권유가 아닙니다.</span></div><section class="backtest-result" id="backtestResult"><div class="backtest-empty"><i class="fa-solid fa-diagram-project"></i><p>워크플로우의 입력값을 설정한 뒤 실행하세요.</p></div></section></article>`;
+    $messages.innerHTML = `<article class="content-page backtest-page"><header class="backtest-page-head"><div class="content-kicker">QUANTCONNECT LEAN · YFINANCE WORKFLOW</div><h1>LEAN <mark>수익률 비교</mark></h1><p class="content-lead">yfinance 일봉과 QuantConnect LEAN으로 교육용 매수·보유 결과를 비교합니다.</p></header><section class="backtest-canvas" aria-label="백테스트 워크플로우"><div class="workflow-node input"><span>01 · 국내 종목</span><input id="btTicker" value="005930.KS" maxlength="12" aria-label="종목 티커" /><small>예: 삼성전자 005930.KS · SK하이닉스 000660.KS</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>02 · 백테스트 기간</span><div><input id="btStart" type="date" value="2023-01-01" /><input id="btEnd" type="date" value="${today}" /></div><small>전략 성과를 계산할 기간</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>03 · 비교 기간</span><div><input id="btCompareStart" type="date" value="2022-01-01" /><input id="btCompareEnd" type="date" value="${today}" /></div><small>이전 기간과 수익률 비교</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node engine"><span>04 · 실행 엔진</span><strong><i class="fa-brands fa-docker"></i> LEAN</strong><small>yfinance → 원격 Docker</small></div></section><div class="backtest-actions"><button class="content-cta" id="runBacktest"><i class="fa-solid fa-play"></i> 백테스트 실행</button><span>교육용 매수·보유 예시이며 투자 권유가 아닙니다.</span></div><section class="backtest-result" id="backtestResult"><div class="backtest-empty"><i class="fa-solid fa-diagram-project"></i><p>워크플로우의 입력값을 설정한 뒤 실행하세요.</p></div></section></article>`;
     document.getElementById('runBacktest').addEventListener('click', runBacktest);
   }
 
@@ -1153,7 +1153,7 @@ KOSDAQ|웹젠|게임`,
     $messages.innerHTML = `
       <article class="content-page theory-page">
         <div class="content-kicker">5-DAY FINANCE THEORY</div>
-        <h1>하루 하나씩 읽는<br><mark>금융상품·자산배분 이론</mark></h1>
+        <h1><mark>금융상품·자산배분</mark> 이론</h1>
         <p class="content-lead">각 일차 메뉴는 독립적으로 읽을 수 있습니다. 개념을 먼저 읽고, 궁금한 점은 RAG 학습으로 이어서 질문해 보세요.</p>
         <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄이 있는 경제 용어를 누르면 한자·영문·약자와 쉬운 설명을 볼 수 있습니다.</p>
         <section class="theory-overview">
@@ -1550,7 +1550,7 @@ effective_date: [기준일]
       ['LG에너지솔루션', '배터리 · ESS', '전기차·ESS 수요, 고객 주문, 가동률과 투자 규모가 중요'],
     ];
     return `<section class="market-magazine" aria-label="한국 주식 시장 매거진">
-      <header class="magazine-hero"><div><span>KOREA EQUITY ATLAS · 2026</span><h2>산업의 흐름으로<br><em>기업을 읽는 법</em></h2><p>종목 이름을 외우기보다, 어떤 사업이 어떤 변수로 움직이는지부터 살펴보는 한국시장 리딩 가이드입니다.</p></div><div class="market-pulse"><span>SECTOR PULSE</span><div><b>AI 반도체</b><i style="height:82%"></i></div><div><b>자동차</b><i style="height:63%"></i></div><div><b>조선·방산</b><i style="height:72%"></i></div><div><b>금융</b><i style="height:55%"></i></div><small>막대 높이는 수익률이 아닌<br>학습용 산업 관찰 강도입니다.</small></div></header>
+      <header class="magazine-hero"><div><span>KOREA EQUITY ATLAS · 2026</span><h2>산업 흐름으로 <em>기업 읽기</em></h2><p>종목 이름을 외우기보다, 어떤 사업이 어떤 변수로 움직이는지부터 살펴보는 한국시장 리딩 가이드입니다.</p></div><div class="market-pulse"><span>SECTOR PULSE</span><div><b>AI 반도체</b><i style="height:82%"></i></div><div><b>자동차</b><i style="height:63%"></i></div><div><b>조선·방산</b><i style="height:72%"></i></div><div><b>금융</b><i style="height:55%"></i></div><small>막대 높이는 수익률이 아닌<br>학습용 산업 관찰 강도입니다.</small></div></header>
       <div class="magazine-lead-grid"><article class="lead-story"><span>LEAD STORY</span><h3>AI는 반도체 한 종목의 이야기가 아닙니다.</h3><p>메모리, 파운드리, 서버, 전력·냉각, 데이터센터 투자까지 연결된 공급망을 함께 봐야 합니다. 삼성전자와 SK하이닉스는 HBM·서버 메모리라는 공통 변수를 공유하지만 사업 구조와 제품 포트폴리오는 다릅니다.</p><div class="mini-compare"><span>수요</span><i></i><span>제품 믹스</span><i></i><span>가격</span><i></i><span>설비</span></div></article><article class="market-check"><span>INVESTOR CHECK</span><strong>3가지 질문</strong><ol><li>회사는 무엇을 팔아 매출을 만드나?</li><li>다음 분기 숫자를 바꿀 변수는 무엇인가?</li><li>가장 나쁜 경우의 위험은 무엇인가?</li></ol></article></div>
       <div class="company-card-grid">${companies.map(([name, sector, note], index) => `<article class="company-feature"><span>0${index + 1}</span><h3>${name}</h3><b>${sector}</b><p>${note}</p><i class="fa-solid ${['fa-microchip','fa-memory','fa-car-side','fa-ship','fa-network-wired','fa-flask','fa-building-columns','fa-battery-three-quarters'][index]}"></i></article>`).join('')}</div>
       <section class="sector-lens"><div><span>HOW TO READ</span><h3>업종별로 다른 ‘전망’의 뜻</h3></div><div class="sector-lens-grid"><p><b>반도체</b><span>가격·재고·고객 인증</span></p><p><b>자동차</b><span>판매·인센티브·환율</span></p><p><b>조선·방산</b><span>수주·납기·원가</span></p><p><b>플랫폼·바이오</b><span>수익화·허가·경쟁</span></p><p><b>금융·배터리</b><span>자본·대손·가동률</span></p></div></section>
