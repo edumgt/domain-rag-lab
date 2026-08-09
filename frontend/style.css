@@ -448,7 +448,15 @@ html, body {
 .content-disclaimer { margin-top: 28px; color: var(--text-muted); font-size: 12px; }
 
 /* ===== Market calendar ===== */
-.calendar-page { max-width: 960px; }
+.calendar-page { max-width: none; }
+.calendar-page-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+.calendar-page-head .content-kicker { margin: 0 0 6px; font-size: 11px; }
+.calendar-page-head h1 { margin: 0; font-size: clamp(28px, 3.2vw, 42px); line-height: 1.1; }
+.calendar-page-head .content-lead { max-width: 460px; margin: 0 0 2px; font-size: 14px; line-height: 1.6; text-align: right; }
+@media (max-width: 860px) {
+  .calendar-page-head { align-items: flex-start; flex-direction: column; gap: 7px; }
+  .calendar-page-head .content-lead { max-width: none; text-align: left; }
+}
 .calendar-board { margin: 28px 0 40px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
 .calendar-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--border); background: var(--surface2); }
 .calendar-toolbar-nav { display: flex; align-items: center; gap: 10px; }

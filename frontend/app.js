@@ -1093,9 +1093,13 @@ KOSDAQ|웹젠|게임`,
 
     $messages.innerHTML = `
       <article class="content-page calendar-page">
-        <div class="content-kicker">MARKET CALENDAR · 학습용 샘플</div>
-        <h1>증시 일정 <mark>캘린더</mark></h1>
-        <p class="content-lead">주요 경제지표 발표, 기업 실적 발표, 선물·옵션 만기일을 한눈에 확인하세요. 일정 이름을 누르면 상세 설명이 열립니다.</p>
+        <header class="calendar-page-head">
+          <div>
+            <div class="content-kicker">MARKET CALENDAR · 학습용 샘플</div>
+            <h1>증시 일정 <mark>캘린더</mark></h1>
+          </div>
+          <p class="content-lead">주요 경제지표 발표, 기업 실적 발표, 선물·옵션 만기일을 한눈에 확인하세요. 일정 이름을 누르면 상세 설명이 열립니다.</p>
+        </header>
         <section class="calendar-board" aria-label="월간 증시 일정 캘린더">
           <div class="calendar-toolbar">
             <div class="calendar-toolbar-nav">
