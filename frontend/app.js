@@ -1236,13 +1236,12 @@ KOSDAQ|웹젠|게임`,
     const companyAtlas = renderCompanyAtlas(lesson.day);
     const dayVisual = renderDayInfographic(lesson.day);
     const learningVisual = renderLearningVisual(lesson.day);
+    const titleVisual = renderTitleVisual(lesson.day);
     $messages.innerHTML = `
       <article class="content-page theory-page theory-detail-page theory-day-${lesson.day}">
         <div class="theory-detail-heading">
-          <span class="theory-day-number">DAY ${lesson.day} / ${THEORY_DAYS.length}</span>
-          <i class="fa-solid ${lesson.icon}"></i>
-          <h1>${escHtml(lesson.title)}</h1>
-          <p>${escHtml(lesson.subtitle)}</p>
+          <div class="theory-title-copy"><span class="theory-day-number">DAY ${lesson.day} / ${THEORY_DAYS.length}</span><i class="fa-solid ${lesson.icon}"></i><h1>${escHtml(lesson.title)}</h1><p>${escHtml(lesson.subtitle)}</p></div>
+          ${titleVisual}
         </div>
         <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄 용어를 누르면 상세 용어 설명이 열립니다.</p>
         <section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section>
@@ -1402,6 +1401,17 @@ effective_date: [기준일]
       5: { title: '목표 비중은 사전 약속', note: '색깔과 비중은 예시이며, 실제 비중은 목표·기간·손실 허용 범위에 따라 달라집니다.', body: `<div class="visual-allocation"><div class="allocation-ring"><b>목표<br>비중</b></div><div><span><i></i>성장 자산 · 장기 목표</span><span><i></i>완충 자산 · 변동성 조절</span><span><i></i>대체 자산 · 다른 위험 요인</span><span><i></i>유동성 · 가까운 지출</span></div></div>` },
     }[day];
     return visual ? `<section class="learning-visual" aria-label="${visual.title} 인포그래픽"><header><span>VISUAL SUMMARY</span><h2>${visual.title}</h2></header>${visual.body}<p>${visual.note}</p></section>` : '';
+  }
+
+  function renderTitleVisual(day) {
+    const visuals = {
+      1: `<div class="title-orbit"><i class="fa-solid fa-piggy-bank"></i><b>목적</b><span>→ 상품 → 위험</span></div>`,
+      2: `<div class="title-bars"><span style="height:42%">FUND</span><span style="height:78%">ETF</span><span style="height:55%">REIT</span><span style="height:66%">ETN</span></div>`,
+      3: `<div class="title-rate"><i class="fa-solid fa-percent"></i><b>RATE</b><span>채권 · 환율 · 선물</span></div>`,
+      4: `<div class="title-line"><svg viewBox="0 0 300 120" role="img" aria-label="변동성과 최대낙폭을 나타낸 선 그래프"><polyline points="4,88 47,72 84,84 125,24 162,48 204,103 244,62 296,34" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><line x1="125" y1="24" x2="204" y2="103" stroke="#fbbf24" stroke-width="3" stroke-dasharray="6 5"/></svg><span>RISK · MDD · SHARPE</span></div>`,
+      5: `<div class="title-allocation"><i></i><b>성장</b><b>완충</b><b>유동성</b></div>`,
+    };
+    return `<aside class="theory-title-visual" aria-label="${day}일차 핵심 시각 요약"><span>DAY ${String(day).padStart(2, '0')} · VISUAL MAP</span>${visuals[day] || ''}</aside>`;
   }
 
   function renderDailyMarketMagazine(day) {
