@@ -1217,15 +1217,15 @@ body.right-panel-open .ref-panel { transform: translateX(0); }
 .theory-day-card small { display: block; color: var(--text-muted); line-height: 1.55; }
 .theory-day-card em { display: block; margin-top: 18px; color: var(--accent); font-style: normal; font-weight: 750; font-size: 14px; }
 .theory-day-number { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
-.glossary-hint { margin: 18px 0; color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+.glossary-hint { margin: 8px 0 16px; color: var(--text-muted); font-size: 14px; line-height: 1.6; }
 .glossary-hint i { color: var(--accent); margin-right: 4px; }
 
 .theory-back { padding: 0; border: 0; background: none; color: var(--text-muted); font: 700 14px var(--font); cursor: pointer; }
 .theory-back:hover { color: var(--accent); }
-.theory-detail-heading { padding: 8px 0 10px; }
-.theory-detail-heading > .fa-solid { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; margin: 9px 0 2px; border-radius: 50%; background: var(--accent-dim); color: var(--accent); font-size: 18px; }
-.theory-detail-heading h1 { margin: 7px 0 6px; font-size: clamp(30px, 2.7vw, 42px); line-height: 1.18; }
-.theory-detail-heading p { max-width: 760px; color: var(--text-2); font-size: 16px; line-height: 1.58; }
+.theory-detail-heading { padding: 4px 0 6px; }
+.theory-detail-heading > .fa-solid { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; margin: 6px 0 2px; border-radius: 50%; background: var(--accent-dim); color: var(--accent); font-size: 13px; }
+.theory-detail-heading h1 { margin: 4px 0 4px; font-size: clamp(20px, 1.6vw, 26px); line-height: 1.25; letter-spacing: -.03em; }
+.theory-detail-heading p { max-width: 760px; color: var(--text-2); font-size: 14px; line-height: 1.5; }
 
 /* 2일차 한국시장 매거진 섹션 */
 .theory-day-2 .theory-lesson:nth-child(n+4) { position: relative; overflow: hidden; border-color: #bfdbfe; background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%); }
@@ -1505,7 +1505,7 @@ body.modal-open { overflow: hidden; }
 
 .lending-funnel { margin: 30px 0; padding: 34px; color: #ecfeff; background: #071a36; border-radius: 18px; overflow: hidden; }
 .lending-funnel header { max-width: 760px; }.lending-funnel header > span { color: #67e8f9; font-size: 11px; font-weight: 850; letter-spacing: .12em; }.lending-funnel h2 { margin: 9px 0; color: #fff; font-size: clamp(25px, 3.2vw, 36px); line-height: 1.2; }.lending-funnel h2 em { color: #67e8f9; font-style: normal; }.lending-funnel header p { color: #cbd5e1; line-height: 1.65; }
-.lending-funnel-chart { display: grid; gap: 8px; margin-top: 28px; }.funnel-level { display: grid; grid-template-columns: 1.15fr .75fr 1.35fr 1.35fr; gap: 16px; align-items: center; min-height: 92px; margin: 0 auto; padding: 16px 22px; clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%); }.funnel-level.level-1 { width: 100%; background: linear-gradient(90deg, #075985, #0e7490); }.funnel-level.level-2 { width: 88%; background: linear-gradient(90deg, #155e75, #0f766e); }.funnel-level.level-3 { width: 76%; background: linear-gradient(90deg, #92400e, #b45309); }.funnel-level.level-4 { width: 64%; background: linear-gradient(90deg, #991b1b, #b91c1c); }.funnel-level b { display: block; color: #fff; font-size: 17px; }.funnel-level div > span { display: block; margin-top: 5px; color: #e0f2fe; font-size: 12px; line-height: 1.4; }.funnel-level p { margin: 0; color: #f1f5f9; font-size: 12px; line-height: 1.45; }.funnel-level p strong { display: block; margin-bottom: 4px; color: #a5f3fc; font-size: 10px; letter-spacing: .06em; }.funnel-level.level-3 p strong { color: #fef3c7; }.funnel-level.level-4 p strong { color: #fee2e2; }
+.lending-funnel-chart { display: grid; gap: 8px; margin-top: 28px; }.funnel-level { display: grid; grid-template-columns: 1.15fr .75fr 1.35fr 1.35fr; gap: 16px; align-items: center; min-height: 92px; margin: 0 auto; padding: 16px 22px 16px 30px; clip-path: polygon(0 0, 96% 0, 100% 100%, 0 100%); }.funnel-level.level-1 { width: 100%; background: linear-gradient(90deg, #075985, #0e7490); }.funnel-level.level-2 { width: 88%; background: linear-gradient(90deg, #155e75, #0f766e); }.funnel-level.level-3 { width: 76%; background: linear-gradient(90deg, #92400e, #b45309); }.funnel-level.level-4 { width: 64%; background: linear-gradient(90deg, #991b1b, #b91c1c); }.funnel-level b { display: block; color: #fff; font-size: 17px; }.funnel-level div > span { display: block; margin-top: 5px; color: #e0f2fe; font-size: 12px; line-height: 1.4; }.funnel-level p { margin: 0; color: #f1f5f9; font-size: 12px; line-height: 1.45; }.funnel-level p strong { display: block; margin-bottom: 4px; color: #a5f3fc; font-size: 10px; letter-spacing: .06em; }.funnel-level.level-3 p strong { color: #fef3c7; }.funnel-level.level-4 p strong { color: #fee2e2; }
 .lending-funnel footer { display: flex; gap: 10px; align-items: flex-start; margin-top: 22px; padding: 15px; color: #cbd5e1; background: rgba(255,255,255,.07); border: 1px solid rgba(125,211,252,.18); border-radius: 10px; font-size: 13px; line-height: 1.65; }.lending-funnel footer i { margin-top: 3px; color: #fbbf24; }
 
 .aihub-rag-case { margin: 30px 0; padding: 34px; color: #e2e8f0; background: linear-gradient(135deg, #1e1b4b, #312e81); border-radius: 18px; }.aihub-rag-case header > span { color: #c4b5fd; font-size: 11px; font-weight: 850; letter-spacing: .12em; }.aihub-rag-case h2 { margin: 9px 0; color: #fff; font-size: clamp(25px, 3.2vw, 36px); line-height: 1.2; }.aihub-rag-case h2 em { color: #a5f3fc; font-style: normal; }.aihub-rag-case header p { max-width: 760px; margin: 0; color: #ddd6fe; line-height: 1.65; }
