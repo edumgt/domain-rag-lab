@@ -117,7 +117,7 @@ class LeanBacktestService:
             "outperformance_pct": round(strategy_return - comparison_return, 2),
             "max_drawdown_pct": round(float(drawdown), 2),
             "points": points,
-            "lean_log": lean_log[-3000:],
+            "lean_log": lean_log[-6000:],
             "disclaimer": "yfinance 일봉 기반 교육용 예시입니다. 배당·세금·수수료·슬리피지·데이터 품질과 실제 체결은 반영하지 않으며 투자 권유가 아닙니다.",
         }
 
