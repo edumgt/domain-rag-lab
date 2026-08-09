@@ -955,9 +955,13 @@ KOSDAQ|웹젠|게임`,
 
     $messages.innerHTML = `
       <article class="content-page home-page">
-        <div class="content-kicker">MONEY & EVERYDAY EXCHANGE · RAG 기반 학습</div>
-        <h1><mark>금융·생활 거래</mark> 학습</h1>
-        <p class="content-lead">금·부동산·수집품·중고거래를 포함해, 가격뿐 아니라 상태·권리·비용·사기 위험을 함께 확인하는 학습 흐름을 제공합니다.</p>
+        <header class="home-page-head">
+          <div>
+            <div class="content-kicker">MONEY & EVERYDAY EXCHANGE · RAG 기반 학습</div>
+            <h1><mark>금융·생활 거래</mark> 학습</h1>
+          </div>
+          <p class="content-lead">금·부동산·수집품·중고거래를 포함해, 가격뿐 아니라 상태·권리·비용·사기 위험을 함께 확인하는 학습 흐름을 제공합니다.</p>
+        </header>
         <div class="home-actions">
           <button class="content-cta" data-go="theory"><i class="fa-solid fa-calendar-days"></i> 5일 이론 학습 시작</button>
           <button class="content-cta" data-go="learn"><i class="fa-solid fa-comments"></i> RAG에게 질문하기</button>
@@ -1156,9 +1160,13 @@ KOSDAQ|웹젠|게임`,
     `).join('');
     $messages.innerHTML = `
       <article class="content-page theory-page">
-        <div class="content-kicker">5-DAY FINANCE THEORY</div>
-        <h1><mark>금융상품·자산배분</mark> 이론</h1>
-        <p class="content-lead">각 일차 메뉴는 독립적으로 읽을 수 있습니다. 개념을 먼저 읽고, 궁금한 점은 RAG 학습으로 이어서 질문해 보세요.</p>
+        <header class="theory-index-head">
+          <div>
+            <div class="content-kicker">5-DAY FINANCE THEORY</div>
+            <h1><mark>금융상품·자산배분</mark> 이론</h1>
+          </div>
+          <p class="content-lead">각 일차 메뉴는 독립적으로 읽을 수 있습니다. 개념을 먼저 읽고, 궁금한 점은 RAG 학습으로 이어서 질문해 보세요.</p>
+        </header>
         <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄이 있는 경제 용어를 누르면 한자·영문·약자와 쉬운 설명을 볼 수 있습니다.</p>
         <section class="theory-overview">
           <div><strong>5일</strong><span>짧고 분명한 이론 학습</span></div>
