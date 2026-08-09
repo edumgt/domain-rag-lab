@@ -1250,7 +1250,6 @@ KOSDAQ|웹젠|게임`,
         ${lesson.day === 1 ? renderLendingFunnel() : ''}
         ${lesson.day === 1 ? renderAiHubRagCase() : ''}
         ${productJourney}
-        ${companyAtlas}
         <div class="theory-lesson-list">${lessonBlocks}</div>
         <section class="theory-check"><i class="fa-solid fa-pen-to-square"></i><div><strong>오늘의 확인</strong><p>${escHtml(lesson.check)}</p></div></section>
         <section class="theory-keywords"><strong>핵심 단어</strong><div>${lesson.keywords.map(word => `<span>${escHtml(word)}</span>`).join('')}</div></section>
@@ -1258,6 +1257,7 @@ KOSDAQ|웹젠|게임`,
           <button class="content-cta" data-theory-rag="${escHtml(lesson.ragPrompt)}"><i class="fa-solid fa-comments"></i> 이 내용 RAG에게 질문하기</button>
           <button class="content-secondary" data-go="simulation"><i class="fa-solid fa-chart-pie"></i> 자산배분 실습으로</button>
         </div>
+        ${companyAtlas}
       </article>`;
     bindViewLinks();
     bindTheoryLinks();
