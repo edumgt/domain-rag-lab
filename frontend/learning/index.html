@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Finance RAG Lab 전체 학습 자료">
+    <title>전체 학습 자료 | Finance RAG Lab</title>
+    <link rel="stylesheet" href="learning.css">
+    <script defer src="learning.js"></script>
+  </head>
+  <body>
+    <div class="library-shell">
+      <aside class="library-sidebar" aria-label="학습 문서 목록">
+        <a class="brand" href="/">Finance RAG Lab</a>
+        <p class="eyebrow">LEARNING LIBRARY</p>
+        <h1>전체 학습 자료</h1>
+        <p class="intro">원본 TXT 학습 자료를 빠짐없이 HTML 학습 화면에서 읽습니다.</p>
+        <label class="search-label" for="documentSearch">문서 찾기</label>
+        <input id="documentSearch" type="search" placeholder="제목 또는 파일명 검색">
+        <p id="documentCount" class="document-count" aria-live="polite">문서 목록을 불러오는 중입니다.</p>
+        <nav id="documentList" class="document-list" aria-label="전체 학습 문서"></nav>
+      </aside>
+      <main class="library-main">
+        <header class="library-header">
+          <p class="eyebrow">SOURCE-ALIGNED LEARNING</p>
+          <h2 id="documentTitle">학습 자료를 선택하세요</h2>
+          <p id="documentMeta">왼쪽 목록의 자료를 선택하면 원본 TXT 전체가 표시됩니다.</p>
+        </header>
+        <section class="source-notice">
+          <strong>원본 동기화 방식</strong>
+          <span>이 화면은 <code>data/samples/*.txt</code>를 서버에서 직접 읽습니다. 새 TXT를 추가하거나 수정한 뒤 페이지를 새로고침하면 목록과 본문에 반영됩니다.</span>
+        </section>
+        <article id="documentContent" class="document-content" aria-live="polite">
+          <p class="empty-state">학습 문서를 불러오는 중입니다.</p>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>

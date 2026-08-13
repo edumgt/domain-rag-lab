@@ -160,6 +160,10 @@ API_BASE_URL=http://localhost:8190 streamlit run streamlit_app.py
 
 1일차는 “선물 1계약의 매도 주문과 1계약의 매수 주문이 체결되면 계약이 생긴다”는 수준부터 설명합니다. 현물 주식처럼 기업 지분을 사는 것이 아니라, 기준 대상의 가격 변화에 따른 손익을 정산하는 표준 계약이라는 점을 다룹니다. 이후 2일차에서 거래소·청산기관과 익명의 반대편 거래자 구조, 헤지·투기·차익거래의 차이를 확장합니다.
 
+### 전체 TXT 학습 자료 HTML 라이브러리
+
+기존 5일 이론 화면은 그대로 유지합니다. `data/samples/finance_*.txt`의 전체 원문은 별도 학습 화면인 `http://localhost:8190/static/learning/index.html`에서 확인합니다. 이 화면은 서버에서 TXT 목록과 원문을 직접 읽으므로, 새 TXT 파일을 추가하거나 기존 파일을 수정한 뒤 새로고침하면 별도의 HTML 복사 작업 없이 학습 화면에 반영됩니다.
+
 ### 선물·옵션 교육용 시뮬레이터
 
 메인 프런트엔드의 **자산배분 실습**에는 교육용 선물·풋옵션 헤지 모듈이 포함되어 있습니다.
@@ -221,6 +225,7 @@ done
 | `finance_asset_allocation.txt` | 평균-분산, 블랙-리터만, Risk Parity, 자산배분 사례 |
 | `finance_stock_dividend_basics.txt` | 주식·배당 및 금융상품 기초 |
 | `finance_valuation_multiples.txt` | PER·PBR 등 상대가치 평가 |
+| `finance_quantopian_intro.txt` | 퀀토피안의 역사적 역할, Zipline 등 오픈소스 도구, LEAN과의 차이와 백테스트 유의사항 |
 | `finance_lending_sectors_guide.txt` | 제1·2금융권, 등록 대부업·사적 대출의 등록·규율·보호 범위 학습 |
 | `finance_aihub_rag_case.txt` | AI Hub 금융·법률 데이터를 정제·청킹·메타데이터화하여 RAG에 등록하는 사례 |
 

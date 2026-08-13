@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
@@ -41,6 +41,58 @@ app.include_router(chat_router)
 
 # Serve frontend static files
 _frontend_dir = os.path.join(os.path.dirname(__file__), "..", "frontend")
+_sample_documents_dir = os.path.join(os.path.dirname(__file__), "..", "data", "samples")
+
+
+def _sample_document_title(path: str) -> str:
+    """Return the first Markdown H1, falling back to the file stem."""
+    try:
+        with open(path, "r", encoding="utf-8") as source:
+            for line in source:
+                if line.startswith("# "):
+                    return line[2:].strip()
+    except OSError:
+        pass
+    return os.path.splitext(os.path.basename(path))[0]
+
+
+@app.get("/learning/documents")
+def list_learning_documents():
+    """Expose every bundled TXT learning document to the HTML learning library."""
+    if not os.path.isdir(_sample_documents_dir):
+        return []
+
+    documents = []
+    for filename in sorted(os.listdir(_sample_documents_dir)):
+        if not filename.endswith(".txt"):
+            continue
+        path = os.path.join(_sample_documents_dir, filename)
+        if os.path.isfile(path):
+            documents.append({"filename": filename, "title": _sample_document_title(path)})
+    return documents
+
+
+@app.get("/learning/documents/{filename}")
+def read_learning_document(filename: str):
+    """Return one bundled TXT document without allowing path traversal."""
+    if os.path.basename(filename) != filename or not filename.endswith(".txt"):
+        raise HTTPException(status_code=404, detail="학습 문서를 찾을 수 없습니다.")
+
+    path = os.path.join(_sample_documents_dir, filename)
+    if not os.path.isfile(path):
+        raise HTTPException(status_code=404, detail="학습 문서를 찾을 수 없습니다.")
+
+    try:
+        with open(path, "r", encoding="utf-8") as source:
+            return {
+                "filename": filename,
+                "title": _sample_document_title(path),
+                "content": source.read(),
+            }
+    except OSError as error:
+        raise HTTPException(status_code=500, detail="학습 문서를 읽을 수 없습니다.") from error
+
+
 if os.path.isdir(_frontend_dir):
     app.mount("/static", StaticFiles(directory=_frontend_dir), name="static")
 
