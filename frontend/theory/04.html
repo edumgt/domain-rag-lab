@@ -78,5 +78,22 @@
     button.title = collapsed ? '내용 펼치기' : '내용 접기';
   });
 </script>
+<script>
+  (() => {
+    const goal = document.querySelector('.goal strong');
+    if (goal) goal.textContent = '퀀트 투자의 기본 관점과 블랙 스완을 고려한 위험관리, 알파·베타의 구분, 분산투자, 상관관계, 변동성, MDD, 샤프 비율을 설명할 수 있어요.';
+    const keywords = document.querySelector('.keywords div');
+    if (keywords && !keywords.textContent.includes('알파')) keywords.insertAdjacentHTML('beforeend', '<span>알파</span><span>베타</span><span>벤치마크</span>');
+    const riskLesson = [...document.querySelectorAll('.lesson')].find((lesson) => lesson.querySelector('h2')?.textContent.includes('위험을 읽는 네 가지 숫자'));
+    if (riskLesson && !document.querySelector('[data-alpha-beta-lesson]')) {
+      riskLesson.insertAdjacentHTML('afterend', `<section class="lesson" data-alpha-beta-lesson><span></span><div class="lesson-content"><h2>알파와 베타: 초과성과와 시장 노출을 구분하기</h2><div class="lesson-body"><p>베타(beta)는 시장이 움직일 때 전략·종목이 평균적으로 얼마나 민감하게 움직였는지를 나타내는 시장 노출도입니다. KOSPI 200을 벤치마크로 했을 때 베타가 1이면 시장과 비슷한 폭, 1보다 크면 더 큰 폭으로, 음수면 반대 방향으로 움직이는 경향을 뜻합니다. 과거 자료에서 추정한 값이므로 미래에도 유지된다는 보장은 없습니다.</p><p>알파(alpha)는 같은 베타와 위험을 감수했을 때 벤치마크 또는 CAPM이 설명하는 수준을 넘어선 수익입니다. 실제 수익률에서 무위험수익률과 베타를 반영한 기대수익률을 뺀 값으로 생각할 수 있습니다. 양(+)의 알파는 같은 기간·비용·벤치마크 기준에서 초과성과가 있었다는 뜻일 뿐, 미래 수익 보장이나 운용자의 실력 증명은 아닙니다.</p><p>따라서 “알파 팩터는 새로운 알고리즘, 베타 팩터는 이미 알려진 알고리즘”이라는 구분은 표준 금융 용어가 아닙니다. 알파 신호는 알려진 공통 팩터를 통제한 뒤에도 초과수익을 기대하게 하는 예측 신호를, 베타 팩터는 시장·가치·규모·모멘텀처럼 널리 알려진 공통 수익 원천에 대한 노출을 뜻합니다. 다만 알파처럼 보이던 규칙이 공개·복제로 널리 알려지고 저비용으로 구현되면 팩터 베타 또는 대체 베타로 재분류될 수 있습니다.</p><p>알파·베타는 변동성·MDD·샤프 비율과 함께 읽어야 합니다. 특히 벤치마크, 측정 기간, 수수료·세금·거래비용이 다르면 수치를 직접 비교할 수 없습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="알파와 베타 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`);
+      document.querySelectorAll('.lesson-list > .lesson').forEach((lesson, index) => { lesson.querySelector(':scope > span').textContent = String(index + 1).padStart(2, '0'); });
+      const toggle = document.querySelector('[data-alpha-beta-lesson] [data-lesson-toggle]');
+      toggle.addEventListener('click', () => { const section = toggle.closest('.lesson'); const collapsed = section.classList.toggle('is-collapsed'); toggle.setAttribute('aria-expanded', String(!collapsed)); toggle.setAttribute('aria-label', collapsed ? '내용 펼치기' : '내용 접기'); toggle.title = collapsed ? '내용 펼치기' : '내용 접기'; });
+    }
+    const glossary = document.querySelector('.glossary-grid');
+    if (glossary && !document.querySelector('[data-alpha-beta-glossary]')) glossary.insertAdjacentHTML('beforeend', '<div class="glossary-item" data-alpha-beta-glossary><dt>알파 <small>Alpha · 超過收益 · α</small></dt><dd>정한 벤치마크와 시장 노출(베타)으로 설명하고도 남는 초과성과 또는 이를 기대하게 하는 신호입니다. “새 알고리즘”의 동의어는 아니며, 널리 공개되어 복제 가능한 신호는 팩터 베타로 재분류될 수도 있습니다.</dd></div><div class="glossary-item"><dt>베타 <small>Beta · 市場敏感度 · β</small></dt><dd>벤치마크 시장 또는 널리 알려진 공통 팩터의 움직임에 대한 수익률의 민감도입니다. “이미 알려진 알고리즘”의 동의어가 아니며, 추정 기간과 모형에 따라 값이 달라집니다.</dd></div>');
+  })();
+</script>
   </body>
 </html>
