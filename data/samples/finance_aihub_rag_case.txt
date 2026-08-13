@@ -6,7 +6,30 @@ AI Hub의 금융 및 법률 분야 데이터셋을 활용해 금융상품, 대�
 
 AI Hub는 데이터 찾기에서 금융과 법률 분야를 제공하므로, 목적에 맞는 데이터셋을 찾는 출발점으로 사용할 수 있습니다.
 
-## 1. 데이터셋 선정표
+## 1. AI Hub 가입과 데이터셋 다운로드 신청
+
+AI Hub 데이터는 로그인과 다운로드 신청 절차를 거쳐야 받을 수 있습니다. 아래 순서는 일반적인 흐름이며, 데이터셋마다 심사 여부·소요 시간이 다를 수 있습니다.
+
+1. **회원가입**: [AI Hub](https://aihub.or.kr/) 우측 상단 로그인 → 회원가입에서 개인/기관 구분을 선택하고 이메일 인증 또는 본인인증(휴대폰·아이핀 등)을 완료합니다. 기관 계정은 소속 확인 절차가 추가될 수 있습니다.
+2. **데이터셋 검색**: 로그인 후 상단 메뉴 "데이터"(또는 "데이터 찾기")에서 통합검색에 "금융", "법률", "금융소비자", "대부업" 등 키워드를 입력하거나, 왼쪽 분야 필터에서 "금융", "법률/공공행정" 카테고리를 선택합니다.
+3. **상세 페이지 확인**: 목록에서 목적에 맞는 데이터셋을 클릭하면 상세 페이지에서 구축목적, 구축량, 데이터 형태(텍스트/이미지 등), 저작권 및 이용정책, 다운로드 파일 구성(Training/Validation, 라벨링데이터/원천데이터)을 확인할 수 있습니다. 이 단계에서 반드시 **이용정책과 출처 표기 의무**를 읽고 기록해 둡니다.
+4. **다운로드 신청**: 상세 페이지의 "다운로드" 버튼을 누르면 활용 목적을 입력하는 신청서 작성 화면이 뜹니다. 목적(예: "RAG 학습 실습용")을 간단히 적고 이용약관에 동의한 뒤 신청합니다. 데이터셋에 따라 즉시 승인되거나, 관리자 심사 후 승인 이메일이 오는 경우가 있습니다.
+5. **다운로드 실행**: 승인 후 상세 페이지에서 파일을 직접 내려받거나, 대용량 데이터셋은 AI Hub가 제공하는 다운로드 도구(전용 실행 파일 또는 셸 스크립트)를 사용하도록 안내되는 경우가 있습니다. 안내된 방법을 그대로 따릅니다.
+6. **압축 해제 및 구조 확인**: 내려받은 파일은 보통 아래와 같은 폴더 구조를 갖습니다(데이터셋마다 이름은 다를 수 있음).
+
+   ```text
+   01.데이터/
+   ├── 1.Training/
+   │   ├── 원천데이터/         # 원문 텍스트, PDF 등
+   │   └── 라벨링데이터/       # 구조화된 JSON
+   └── 2.Validation/
+       ├── 원천데이터/
+       └── 라벨링데이터/
+   ```
+
+7. **버전·다운로드 일자 기록**: 다운로드 직후 데이터셋명, 버전, 다운로드 일자, 파일 목록을 별도 메모(예: `download_log.md`)에 남깁니다. 나중에 메타데이터(`dataset`, `version`, `verified_at`)를 채울 때 이 기록을 사용합니다.
+
+## 2. 데이터셋 선정표
 
 | 확인 항목 | 금융 데이터 예 | 금융법률 데이터 예 |
 |---|---|---|
@@ -15,7 +38,7 @@ AI Hub는 데이터 찾기에서 금융과 법률 분야를 제공하므로, 목
 | 필수 메타데이터 | 데이터셋명, 버전, 출처, 작성·기준일 | 법령명, 조문번호, 시행일, 개정일, 출처 |
 | 검토할 위험 | 오래된 상품 조건, 광고성 문장, 개인정보 | 시행일 경과, 조문 누락, 법률자문 오인 |
 
-## 2. 등록 전 정제 절차
+## 3. 등록 전 정제 절차
 
 1. AI Hub 데이터셋 상세 페이지에서 이용 조건과 출처 표기 요구를 기록합니다.
 2. 내려받은 파일에서 허용된 텍스트만 추출합니다. 원본 파일명·데이터셋명·버전·다운로드 일자를 별도 보관합니다.
@@ -24,9 +47,90 @@ AI Hub는 데이터 찾기에서 금융과 법률 분야를 제공하므로, 목
 5. 개인정보 또는 민감정보가 포함됐는지 확인하고, 이용 조건과 내부 정책에 따라 제거·비식별화합니다.
 6. 텍스트마다 `source`, `dataset`, `version`, `license`, `topic`, `effective_date`, `verified_at` 메타데이터를 넣습니다.
 
-## 3. 이 프로젝트에 등록하는 예시
+## 4. JSON 예제 구조 이해하고 변환하기
 
-이 프로젝트는 TXT/PDF 등록을 지원합니다. 데이터셋에서 허용된 내용만 UTF-8 TXT 또는 PDF로 정리한 뒤 등록합니다.
+AI Hub의 금융·법률 텍스트 데이터셋은 대부분 "라벨링데이터" 폴더에 JSON 파일로 들어 있습니다. 필드명은 데이터셋마다 다르므로, 실제로는 내려받은 JSON 파일을 열어 구조를 먼저 확인해야 합니다. 아래는 금융 FAQ·법률 조문형 데이터셋에서 흔히 보이는 구조를 정리한 **예시**입니다(특정 데이터셋의 실제 필드를 그대로 옮긴 것이 아닙니다).
+
+```json
+{
+  "info": {
+    "dataset_name": "[실제 데이터셋명]",
+    "version": "1.0",
+    "category": "금융",
+    "license": "AI Hub 이용정책에 따름"
+  },
+  "data": [
+    {
+      "doc_id": "FIN-000123",
+      "title": "등록 대부업 확인 안내",
+      "topic": "대부업·금융소비자보호",
+      "effective_date": "2024-01-01",
+      "qas": [
+        {
+          "question": "등록 대부업과 미등록 영업을 구분할 때 무엇을 확인해야 하나요?",
+          "answer": "등록 정보, 계약서의 실제 연이율과 수수료, 상호·연락처 일치 여부, 공식 신고·상담 창구를 확인합니다."
+        }
+      ]
+    }
+  ]
+}
+```
+
+법률 조문형 데이터셋은 보통 `law_name`(법령명), `article_no`(조문번호), `clause`(항), `item`(호), `enforcement_date`(시행일) 같은 필드로 계층을 표현합니다. 어떤 구조든 다음 순서로 접근하면 됩니다.
+
+1. `python -c "import json; d=json.load(open('파일.json', encoding='utf-8')); print(list(d.keys()))"` 등으로 최상위 키를 먼저 확인합니다.
+2. QA 배열, 조문 배열처럼 실제 텍스트가 들어 있는 위치를 찾습니다.
+3. 정제 절차(3장)에서 정한 단위(질문→답변, 법령명→조문→항→호)에 맞춰 매핑할 필드를 정합니다.
+4. 아래처럼 변환 스크립트를 작성해 이 프로젝트가 받는 TXT 형식으로 바꿉니다.
+
+```python
+# scripts/json_to_txt.py
+import json
+from pathlib import Path
+
+SRC_DIR = Path("./raw/aihub_finance_json")   # 다운로드한 라벨링데이터 폴더
+OUT_FILE = Path("./prepared/aihub_finance_law_chunks.txt")
+
+def render_chunk(info: dict, item: dict, qa: dict) -> str:
+    return (
+        f"제목: {item['title']}\n"
+        f"source: AI Hub\n"
+        f"dataset: {info['dataset_name']}\n"
+        f"version: {info['version']}\n"
+        f"topic: {item.get('topic', '')}\n"
+        f"effective_date: {item.get('effective_date', '')}\n\n"
+        f"질문: {qa['question']}\n"
+        f"답변: {qa['answer']}\n"
+    )
+
+def main():
+    chunks = []
+    for json_path in sorted(SRC_DIR.glob("*.json")):
+        payload = json.loads(json_path.read_text(encoding="utf-8"))
+        info = payload["info"]
+        for item in payload["data"]:
+            for qa in item["qas"]:
+                chunks.append(render_chunk(info, item, qa))
+
+    OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    OUT_FILE.write_text("\n---\n".join(chunks), encoding="utf-8")
+    print(f"{len(chunks)}개 청크를 {OUT_FILE}에 저장했습니다.")
+
+if __name__ == "__main__":
+    main()
+```
+
+실행 전 `SRC_DIR`, `render_chunk`의 필드명을 실제로 다운로드한 JSON 구조에 맞춰 고쳐야 합니다. 스크립트를 실행하면 5장에서 등록할 `aihub_finance_law_chunks.txt`가 만들어집니다.
+
+```bash
+python scripts/json_to_txt.py
+```
+
+## 5. 이 프로젝트에 등록하는 예시
+
+이 프로젝트는 TXT/PDF 등록을 지원합니다(JSON 직접 업로드는 지원하지 않으므로, 반드시 4장의 변환 과정을 거칩니다). 데이터셋에서 허용된 내용만 UTF-8 TXT 또는 PDF로 정리한 뒤 등록합니다.
+
+파일 전체를 한 번에 등록하려면 `/ingest/file`을 사용합니다.
 
 ```bash
 curl -X POST http://localhost:8190/ingest/file \
@@ -34,7 +138,35 @@ curl -X POST http://localhost:8190/ingest/file \
   -F "domain=finance"
 ```
 
-예시 정제 문서:
+문서 단위로 메타데이터(제목·document_id)를 직접 지정하며 등록하려면 `/ingest/text`를 사용합니다. 아래는 4장에서 만든 청크 파일을 읽어 문서 단위(`---` 구분)로 반복 등록하는 예시입니다.
+
+```python
+# scripts/upload_chunks.py
+import requests
+from pathlib import Path
+
+API_URL = "http://localhost:8190/ingest/text"
+chunks = Path("./prepared/aihub_finance_law_chunks.txt").read_text(encoding="utf-8").split("\n---\n")
+
+for i, chunk in enumerate(chunks):
+    title_line = next((line for line in chunk.splitlines() if line.startswith("제목:")), f"청크 {i}")
+    resp = requests.post(API_URL, json={
+        "document_id": f"aihub-finance-{i:04d}",
+        "title": title_line.replace("제목:", "").strip(),
+        "content": chunk.strip(),
+        "domain": "finance",
+    })
+    resp.raise_for_status()
+    print(i, resp.json())
+```
+
+```bash
+python scripts/upload_chunks.py
+```
+
+등록 후에는 이 프로젝트의 채팅 화면 또는 `/chat` API로 7장의 품질 점검 질문을 직접 물어보고, 응답에 출처·기준일이 포함되는지 확인합니다.
+
+예시 정제 문서(4장 변환 스크립트의 출력 결과와 동일한 형식):
 
 ```text
 제목: 등록 대부업 확인 안내
@@ -48,7 +180,7 @@ effective_date: [기준일]
 공식 신고·상담 창구를 확인합니다. 최신 법령과 기관 안내는 별도 원문으로 재확인합니다.
 ```
 
-## 4. 검색과 답변 정책
+## 6. 검색과 답변 정책
 
 - 금융 질문은 상품 설명·수수료·위험 정보를 우선 검색합니다.
 - 금융법률 질문은 법령명·조문번호·시행일이 들어 있는 청크를 우선 검색합니다.
@@ -56,7 +188,7 @@ effective_date: [기준일]
 - 근거가 부족하면 추정하지 않고 등록된 문서에서 확인되지 않는다고 답합니다.
 - 대출·투자·법률 분쟁에 대한 개인별 결론은 제공하지 않고, 공식 상담·전문가 확인을 안내합니다.
 
-## 5. 품질 점검 질문
+## 7. 품질 점검 질문
 
 1. 등록 대부업의 계약서에서 확인할 항목을 출처와 기준일을 포함해 설명해줘.
 2. 법정 최고금리 관련 설명의 근거 조문과 시행일은 무엇이야?
