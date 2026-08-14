@@ -19,5 +19,19 @@
     button.title = collapsed ? '내용 펼치기' : '내용 접기';
   });
 });</script>
+<script>
+  document.querySelector('.keywords div').insertAdjacentHTML('beforeend', '<span>레버리지 ETF</span><span>일일 목표수익률</span><span>일일 리밸런싱</span>');
+  document.querySelector('.lesson-list > .lesson:nth-child(5)').insertAdjacentHTML('afterend', `<section class="lesson"><span>06</span><div class="lesson-content"><h2>레버리지 ETF는 왜 선물·스왑을 쓰나요?</h2><div class="lesson-body"><p>레버리지 ETF는 기초지수의 장기 누적수익률이 아니라, 보통 하루 수익률의 일정 배수(예: +2배·+3배)를 목표로 합니다. 운용사는 ETF 순자산보다 큰 지수 노출을 만들기 위해 선물·스왑 등 파생상품과 현금성 자산을 조합합니다. 예를 들어 순자산이 100억 원인 2배 상품은 하루 시작 시점에 기초지수 약 200억 원에 해당하는 경제적 노출을 목표로 설계할 수 있습니다. 실제 편입 수단과 비중은 상품의 투자설명서에 따라 다릅니다.</p><p>목표 배수는 하루가 끝날 때 다시 맞춥니다. 지수가 올라 ETF 순자산이 커지면 같은 2배 노출을 유지하기 위해 파생상품 노출을 늘리고, 지수가 내려 순자산이 줄면 노출을 줄이는 식입니다. 이를 일일 리밸런싱 또는 일일 재설정이라고 합니다. 따라서 투자자가 선물계약을 직접 주문하지 않아도, ETF 내부에서는 운용사가 목표 노출을 관리합니다.</p><p>이 목표는 하루 단위입니다. 가령 지수가 첫날 +10%, 다음 날 약 -9.09% 움직이면 지수는 처음 수준으로 돌아오지만, 매일 3배를 목표로 한 상품은 수수료·세금 등을 빼기 전에도 <code>100 × 1.30 × (1 − 0.2727) ≈ 94.55</code>가 됩니다. 매일의 수익률에 곱해지는 구조이므로 변동성이 크고 오르내림이 반복될수록 여러 날의 성과는 단순한 2배·3배와 크게 달라질 수 있습니다. 이것은 일일 목표를 달성하지 못한 오류가 아니라 목표기간이 서로 다르기 때문에 생기는 효과입니다.</p><p>일반 ETF와 비교할 때는 추종배수뿐 아니라 ‘목표기간이 일간인지’, 파생상품·롤오버·스왑 상대방 위험, 총보수와 거래비용, 기초지수의 변동성을 함께 확인하세요. 보유 기간을 정하는 단일 규칙이나 손실 한도는 모든 사람에게 같지 않으므로, 상품설명서와 자신의 투자 목적·손실 감당 범위를 기준으로 판단해야 합니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="레버리지 ETF는 왜 선물·스왑을 쓰나요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`);
+  document.querySelector('.glossary-grid').insertAdjacentHTML('beforeend', '<div class="glossary-item"><dt>일일 재설정 <small>Daily Reset · Daily Rebalancing</small></dt><dd>레버리지·인버스 ETF가 하루의 목표 배수를 유지하도록 파생상품 노출을 다시 조정하는 과정입니다. 목표는 보통 하루 수익률에 한정되므로, 여러 날의 수익률은 기초지수 누적수익률의 단순 배수와 달라질 수 있습니다.</dd></div>');
+  document.querySelectorAll('.lesson-list > .lesson').forEach((lesson, index) => { lesson.querySelector(':scope > span').textContent = String(index + 1).padStart(2, '0'); });
+  document.querySelector('.lesson-list > .lesson:nth-child(6) [data-lesson-toggle]').addEventListener('click', () => {
+    const button = document.querySelector('.lesson-list > .lesson:nth-child(6) [data-lesson-toggle]');
+    const section = button.closest('.lesson');
+    const collapsed = section.classList.toggle('is-collapsed');
+    button.setAttribute('aria-expanded', String(!collapsed));
+    button.setAttribute('aria-label', collapsed ? '내용 펼치기' : '내용 접기');
+    button.title = collapsed ? '내용 펼치기' : '내용 접기';
+  });
+</script>
   </body>
 </html>

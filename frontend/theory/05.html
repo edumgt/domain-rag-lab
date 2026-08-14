@@ -20,12 +20,22 @@
   });
 });</script>
 <script>
-  document.querySelector('.keywords div').insertAdjacentHTML('beforeend', '<span>올웨더 포트폴리오</span><span>All Weather</span>');
+  document.querySelector('.keywords div').insertAdjacentHTML('beforeend', '<span>올웨더 포트폴리오</span><span>All Weather</span><span>이머징마켓</span>');
   document.querySelector('.lesson-list > .lesson:nth-child(5)').insertAdjacentHTML('afterend', `<section class="lesson"><span>06</span><div class="lesson-content"><h2>올웨더 포트폴리오: 여러 경제 날씨에 대비하는 자산배분</h2><div class="lesson-body"><p>올웨더 포트폴리오(All Weather Portfolio)는 레이 달리오와 브리지워터의 리스크 패리티 사고방식에서 널리 알려진 자산배분 접근입니다. 다음 시장을 맞히기보다 성장률·물가가 오르거나 내리는 여러 경제 환경에서도 한 자산의 충격이 전체를 좌우하지 않게 설계하자는 생각입니다.</p><p>주식, 경기 둔화 때 방어 역할을 기대하는 명목채권, 물가 상승에 대비하는 물가연동채·원자재·금처럼 서로 다른 위험 요인을 가진 자산을 함께 검토합니다. 다른 자산이 항상 반대로 움직인다고 보장할 수는 없지만, 한쪽에만 몰아두는 위험을 줄이려는 것입니다.</p><p>인터넷의 개인용 올웨더 비중은 하나의 예시일 뿐 실제 브리지워터 운용과 같지 않습니다. 투자 기간, 현금 필요 시점, 세금·거래비용, 환율 위험, 상품의 만기 구조에 따라 적합한 비중은 달라집니다.</p><p>올웨더도 손실을 없애 주지 않습니다. 주식·채권이 함께 하락할 수 있고 장기채는 금리 상승에 민감합니다. 목표 비중과 점검 주기를 정한 뒤 정기 또는 허용 범위 이탈 시에만 리밸런싱하는 교육용 틀로 이해하세요.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="올웨더 포트폴리오 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`);
   document.querySelector('.glossary-grid').insertAdjacentHTML('beforeend', '<div class="glossary-item"><dt>올웨더 포트폴리오 <small>All Weather Portfolio · AWP</small></dt><dd>성장·물가의 여러 경제 환경에 대비해 자산별 위험을 나누어 보려는 자산배분 접근입니다. 정형 비중은 예시일 뿐이며, 금리·환율·비용·투자기간에 따라 손실과 결과가 달라집니다.</dd></div>');
+  document.querySelector('.lesson-list > .lesson:nth-child(6)').insertAdjacentHTML('afterend', `<section class="lesson"><span>07</span><div class="lesson-content"><h2>이머징마켓: 성장 가능성과 함께 보는 시장</h2><div class="lesson-body"><p>이머징마켓(emerging market, 신흥시장)은 경제 규모와 자본시장이 성장하는 과정에 있는 국가·지역의 주식·채권 시장을 가리키는 말입니다. 선진시장과의 경계가 하나의 공식 기준으로 고정되어 있는 것은 아니며, 지수 제공기관마다 시장 접근성·거래 결제·외국인 투자 제도·유동성 등을 기준으로 분류가 달라질 수 있습니다.</p><p>이머징마켓은 장기 성장, 인구·소비 확대, 산업화 같은 기회를 반영할 수 있지만 더 높은 기대수익을 뜻하지는 않습니다. 현지 주가 변동에 더해 환율, 정치·규제 변화, 거래 유동성, 특정 국가·산업 집중, 시장 접근 제한이 수익률과 손실 폭에 함께 영향을 줄 수 있습니다.</p><p>자산배분에서는 개별 국가를 맞히는 선택이라기보다 국내·선진국 주식과 구분되는 하나의 위험 요인으로 살펴볼 수 있습니다. 광범위한 이머징마켓 ETF나 펀드를 비교할 때는 편입 국가와 상위 종목, 국가·산업 집중도, 기준 통화와 환노출, 총보수, 추적 방식, 거래량을 먼저 확인하세요. 여러 국가를 담아도 세계 경기 침체나 달러 강세처럼 함께 영향을 받는 위험은 남습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="이머징마켓: 성장 가능성과 함께 보는 시장 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`);
+  document.querySelector('.glossary-grid').insertAdjacentHTML('beforeend', '<div class="glossary-item"><dt>이머징마켓 <small>Emerging Market · 新興市場 · EM</small></dt><dd>경제와 자본시장이 성장하는 과정에 있는 국가·지역의 시장을 묶어 부르는 말입니다. 분류 기준은 지수 제공기관마다 다를 수 있습니다. 주가뿐 아니라 환율·유동성·정책·국가 및 산업 집중 위험을 함께 점검해야 합니다.</dd></div>');
   document.querySelectorAll('.lesson-list > .lesson').forEach((lesson, index) => { lesson.querySelector(':scope > span').textContent = String(index + 1).padStart(2, '0'); });
   document.querySelector('.lesson-list > .lesson:nth-child(6) [data-lesson-toggle]').addEventListener('click', () => {
     const button = document.querySelector('.lesson-list > .lesson:nth-child(6) [data-lesson-toggle]');
+    const section = button.closest('.lesson');
+    const collapsed = section.classList.toggle('is-collapsed');
+    button.setAttribute('aria-expanded', String(!collapsed));
+    button.setAttribute('aria-label', collapsed ? '내용 펼치기' : '내용 접기');
+    button.title = collapsed ? '내용 펼치기' : '내용 접기';
+  });
+  document.querySelector('.lesson-list > .lesson:nth-child(7) [data-lesson-toggle]').addEventListener('click', () => {
+    const button = document.querySelector('.lesson-list > .lesson:nth-child(7) [data-lesson-toggle]');
     const section = button.closest('.lesson');
     const collapsed = section.classList.toggle('is-collapsed');
     button.setAttribute('aria-expanded', String(!collapsed));
