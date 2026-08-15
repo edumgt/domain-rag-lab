@@ -23,21 +23,21 @@
 
       <nav class="topic-nav">
         <p class="nav-label">5일 이론 학습</p>
-        <a class="topic-btn theory-menu-btn" href="/static/theory/01.html">
+        <button class="topic-btn theory-menu-btn" data-theory-day="1">
           <span class="day-menu-number">1일차</span> 금융상품과 생활 거래 기초
-        </a>
-        <a class="topic-btn theory-menu-btn" href="/static/theory/02.html">
+        </button>
+        <button class="topic-btn theory-menu-btn" data-theory-day="2">
           <span class="day-menu-number">2일차</span> 펀드 · ETF · 리츠 · ETN
-        </a>
-        <a class="topic-btn theory-menu-btn" href="/static/theory/03.html">
+        </button>
+        <button class="topic-btn theory-menu-btn" data-theory-day="3">
           <span class="day-menu-number">3일차</span> 채권 · 외환 · 원자재 · 파생상품
-        </a>
-        <a class="topic-btn theory-menu-btn" href="/static/theory/04.html">
+        </button>
+        <button class="topic-btn theory-menu-btn" data-theory-day="4">
           <span class="day-menu-number">4일차</span> 포트폴리오와 위험 지표
-        </a>
-        <a class="topic-btn theory-menu-btn" href="/static/theory/05.html">
+        </button>
+        <button class="topic-btn theory-menu-btn" data-theory-day="5">
           <span class="day-menu-number">5일차</span> 자산배분과 리밸런싱
-        </a>
+        </button>
 
         <p class="nav-label">실습 도구</p>
         <button class="topic-btn theory-menu-btn" id="openSimulationPanel">
@@ -90,6 +90,7 @@
         </div>
         <div class="header-actions">
           <div class="domain-badge"><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분</div>
+          <button class="btn-ghost" id="authButton"><i class="fa-solid fa-user"></i> 로그인</button>
           <button class="btn-ghost" id="clearChatBtn" title="대화 초기화">
             <i class="fa-solid fa-trash-can"></i> 초기화
           </button>
@@ -324,6 +325,27 @@
     </section>
   </div>
 
+  <template id="day1ButlerContent">
+    <section class="butler-intro" aria-labelledby="butlerIntroTitle">
+      <div class="butler-intro-head"><span>COMPANY ANALYSIS TOOL</span><a href="https://www.butler.works/ko/home" target="_blank" rel="noopener noreferrer">버틀러 방문 <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+      <h2 id="butlerIntroTitle">버틀러로 기업의 펀더멘털을 읽어 보세요</h2>
+      <p>버틀러는 기업의 재무제표·실적·공시를 보기 쉽게 정리해, 개인 투자자가 기업 분석과 포트폴리오 점검에 활용할 수 있도록 돕는 플랫폼입니다.</p>
+      <div class="butler-feature-grid"><article><i class="fa-solid fa-chart-column"></i><b>기업 데이터 시각화</b><span>매출·영업이익·수주잔고·지역별 실적 등을 그래프로 확인합니다.</span></article><article><i class="fa-solid fa-file-lines"></i><b>기업공시 분석</b><span>많은 공시 가운데 중요한 정보를 빠르게 찾아볼 수 있습니다.</span></article><article><i class="fa-solid fa-briefcase"></i><b>포트폴리오·관심기업</b><span>여러 계좌의 종목과 관심 기업을 한눈에 관리합니다.</span></article><article><i class="fa-solid fa-filter"></i><b>기업 스크리너</b><span>다양한 조건을 조합해 투자 기준에 맞는 기업 후보를 살펴봅니다.</span></article></div>
+      <small><i class="fa-solid fa-circle-info"></i> 데이터와 시각화는 투자 판단을 돕는 정보입니다. 매매 추천이나 수익 보장을 뜻하지 않으며, 투자 결정 전 공시 원문과 최신 정보를 직접 확인하세요.</small>
+    </section>
+  </template>
+
+  <div class="auth-modal" id="authModal" hidden>
+    <div class="auth-modal-backdrop" data-auth-close></div>
+    <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="glossary-close" type="button" data-auth-close aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <p class="glossary-label">MY ACCOUNT</p><h2 id="authTitle">로그인</h2>
+      <form id="authForm"><label id="authNameField" hidden>이름<input id="authName" maxlength="80"></label><label>이메일<input id="authEmail" type="email" required></label><label>비밀번호<input id="authPassword" type="password" minlength="8" required></label><button class="btn-primary" type="submit">로그인</button></form>
+      <button class="auth-switch" id="authSwitch" type="button">회원가입</button><p id="authStatus" class="auth-status"></p>
+    </section>
+  </div>
+
   <script src="/static/app.js?v=20260809-27"></script>
+  <script src="/static/auth.js"></script>
 </body>
 </html>

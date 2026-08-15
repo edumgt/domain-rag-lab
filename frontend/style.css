@@ -1355,6 +1355,13 @@ body.modal-open { overflow: hidden; }
   .app-footer { align-items: flex-start; flex-direction: column; gap: 2px; padding: 7px 16px; }
 }
 
+.auth-modal { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; padding: 20px; }
+.auth-modal[hidden] { display: none; }
+.auth-modal-backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, .62); backdrop-filter: blur(3px); }
+.auth-dialog { position: relative; z-index: 1; width: min(420px, 100%); padding: 30px; border: 1px solid #bfdbfe; border-radius: 16px; background: #fff; box-shadow: 0 20px 60px rgba(15, 23, 42, .3); }
+.auth-dialog h2 { margin: 4px 0 20px; color: #172554; }.auth-dialog form { display: grid; gap: 14px; }.auth-dialog label { display: grid; gap: 6px; color: #334155; font-size: 13px; font-weight: 700; }.auth-dialog input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font: inherit; }.auth-switch { margin-top: 16px; padding: 0; border: 0; color: #2563eb; background: transparent; font: 700 13px var(--font); cursor: pointer; }.auth-status { min-height: 18px; margin: 9px 0 0; color: #dc2626; font-size: 12px; }
+.personal-schedule { margin: 18px 0; padding: 18px; border: 1px solid #bfdbfe; border-radius: 12px; background: #f8fbff; }.personal-schedule h2 { margin: 0 0 12px; color: #172554; font-size: 18px; }.personal-schedule form { display: flex; gap: 8px; }.personal-schedule input { padding: 9px; border: 1px solid #cbd5e1; border-radius: 7px; font: inherit; }.personal-events { display: grid; gap: 7px; margin-top: 12px; }.personal-events span { display: flex; justify-content: space-between; gap: 10px; padding: 8px 10px; border-radius: 7px; background: #fff; color: #334155; font-size: 13px; }.personal-events button { border: 0; color: #dc2626; background: transparent; cursor: pointer; }
+
 /* ===== Allocation workbench ===== */
 .simulation-page { max-width: 1240px; }
 .simulation-workbench { margin-top: 28px; }

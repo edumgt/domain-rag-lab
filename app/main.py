@@ -10,6 +10,7 @@ from app.api.routes.health import router as health_router
 from app.api.routes.ingest import router as ingest_router
 from app.api.routes.market import router as market_router
 from app.api.routes.backtest import router as backtest_router
+from app.api.routes.auth import router as auth_router
 from app.core.config import settings
 from app.core.database import Base, engine
 
@@ -17,6 +18,7 @@ from app.core.database import Base, engine
 import app.models.chat_log          # noqa: F401
 import app.models.document_chunk    # noqa: F401
 import app.models.long_term_memory  # noqa: F401
+import app.models.user              # noqa: F401
 
 Base.metadata.create_all(bind=engine)
 
@@ -37,6 +39,7 @@ app.include_router(health_router)
 app.include_router(ingest_router)
 app.include_router(market_router)
 app.include_router(backtest_router)
+app.include_router(auth_router)
 app.include_router(chat_router)
 
 # Serve frontend static files
