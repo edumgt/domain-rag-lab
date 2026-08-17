@@ -78,7 +78,7 @@
     },
   ];
 
-  const THEORY_DAYS = [
+  const FALLBACK_THEORY_DAYS = [
     {
       day: 1,
       icon: 'fa-compass',
@@ -110,10 +110,11 @@
       icon: 'fa-chart-line',
       title: '펀드 · ETF · 리츠 · ETN',
       subtitle: '여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다.',
-      goal: '펀드, ETF, 리츠, ETN의 구조와 비용·유동성·발행자 위험을 비교하고, ETF의 기초자산·파생상품 활용·NAV 괴리율을 구분할 수 있어요.',
-      keywords: ['펀드', 'ETF', '파생상품 ETF', '기초자산', 'NAV', '괴리율'],
+      goal: '펀드, ETF, 리츠, ETN의 구조와 비용·유동성·발행자 위험을 비교하고, ETF 브랜드·운용사, 기초자산·파생상품 활용·NAV 괴리율을 구분할 수 있어요.',
+      keywords: ['펀드', 'ETF', 'ETF 브랜드', '자산운용사', '파생상품 ETF', '기초자산', 'NAV', '괴리율'],
       lessons: [
         ['펀드와 ETF는 어떻게 다른가요?', ['펀드와 ETF는 주식·채권·원자재·부동산 관련 자산 등을 한 상품에 담을 수 있는 그릇입니다. 상품 이름보다 어떤 자산과 전략을 담는지 먼저 확인하세요.', 'ETF는 거래소에서 장중에 사고팔고, 일반 펀드는 보통 하루 한 번 산정하는 기준가격으로 가입·환매됩니다. 거래 방식이 다르므로 필요한 현금 시점과 거래비용도 달라질 수 있습니다.', '여러 자산을 담았다고 위험이 사라지지는 않습니다. 특정 국가·자산군·테마에 집중된 상품은 여전히 크게 움직일 수 있습니다.']],
+        ['국내 ETF 브랜드와 운용사: 주문 증권사와 구분하기', ['KODEX, TIGER, RISE, ACE, SOL처럼 ETF 이름 앞에 붙는 말은 보통 상품을 설계·운용하는 자산운용사의 브랜드입니다. ETF를 주문받아 거래소에 연결하는 증권사와는 역할이 다릅니다.', '대표적으로 KODEX는 삼성자산운용, TIGER는 미래에셋자산운용, RISE는 KB자산운용, ACE는 한국투자신탁운용, SOL은 신한자산운용의 ETF 브랜드입니다. 따라서 어느 증권사 앱을 쓰는지와 어느 운용사의 ETF인지를 별도로 확인해야 합니다.', '브랜드는 상품을 고르는 추천 신호가 아닙니다. 같은 기초지수를 추종하는 ETF라도 총보수, 순자산 규모, 거래량, 분배 방식, 환헤지 여부와 지수 방법론이 다를 수 있으므로 상품설명서와 KRX ETF/ETN 정보를 비교하세요.']],
         ['ETF·선물·옵션은 무엇을 거래하나요?', ['ETF는 주식·채권 같은 여러 자산을 담은 상품 자체를 사고파는 방식입니다. 예를 들어 KOSPI 200 ETF를 사면 KOSPI 200 구성종목을 담은 바구니에 투자하는 것입니다.', '선물은 그 자산의 미래 가격을 약속하는 계약이고, 옵션은 미래에 사고팔 수 있는 권리입니다. 같은 지수나 주식을 기준으로 삼아도 거래하는 대상과 위험은 서로 다릅니다.', 'ETF를 보유한 뒤 파생상품을 쓰는 경우에는 전체 포트폴리오의 위험을 줄이려는 헤지인지, 가격 방향을 예상한 거래인지 먼저 구분해 보세요.']],
         ['ETF의 기초자산과 추종 대상, 구분하기', ['ETF의 기초자산은 ETF 가치의 바탕이 되는 주식·채권·원자재·리츠·지수 등입니다. 다만 투자설명서에는 실제로 보유하는 자산과 목표로 삼는 기초지수가 함께 나올 수 있으므로 둘을 구분해 읽어야 합니다.', '예를 들어 주식형 ETF는 지수 구성 주식을 직접 담아 지수를 따라갈 수 있습니다. 반면 해외지수·원자재 ETF는 현지 주식, 예탁증서, 선물계약 등을 활용할 수 있습니다. “S&P 500”, “금”, “원유”라는 이름만으로 어떤 자산을 실제 보유하는지 단정할 수는 없습니다.', '상품설명서에서 기초지수 또는 기초자산, 운용 방법, 상위 편입종목·계약, 환헤지 여부를 차례로 확인하면 내가 어떤 가격 변동과 위험을 갖게 되는지 더 분명해집니다.']],
         ['파생상품 ETF는 무엇이 다른가요?', ['파생상품 ETF는 선물·스왑 등 파생상품을 활용해 특정 지수나 자산의 가격 변화를 추종하는 ETF입니다. 원유처럼 보관이 어렵거나 해외 시장에 직접 접근하기 어려운 자산, 레버리지·인버스처럼 목표 수익률을 설계한 상품에서 이런 방식이 쓰일 수 있습니다.', '이 ETF를 매수하는 투자자가 선물계약을 직접 주문하는 것은 아닙니다. 투자자는 ETF 주식을 거래하고, ETF 내부에서 운용사가 선물·스왑과 현금성 자산 등을 조합해 목표 지수의 움직임을 따라가려 합니다. 따라서 ETF 자체의 거래 방식은 주식과 비슷하지만, 성과와 위험은 내부 파생상품 구조의 영향을 받습니다.', '특히 선물형 ETF는 만기가 가까운 계약을 다음 만기 계약으로 바꾸는 롤오버 비용 또는 수익, 레버리지·인버스 ETF는 일간 수익률을 기준으로 재설정되는 복리 효과를 확인해야 합니다. 파생상품을 쓴다는 사실만으로 위험이 같아지는 것도, 현물보다 항상 더 위험해지는 것도 아니므로 추종배수·목표기간·편입 계약과 설명서를 함께 보세요.']],
@@ -819,6 +820,7 @@ KOSDAQ|웹젠|게임`,
     $clearChatBtn.classList.toggle('hidden', view !== 'learn');
 
     if (view === 'home') renderHome();
+    if (view === 'stocks') renderStocksView();
     if (view === 'learn') showWelcome();
     if (view === 'theory') renderTheoryIndex();
     if (view === 'simulation') {
@@ -946,6 +948,12 @@ KOSDAQ|웹젠|게임`,
       if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) annotateGlossary(node);
     }));
   }).observe($messages, { childList: true, subtree: true });
+
+  // The standalone theory pages and the in-app learning view share this source.
+  // Keep the embedded data only as an offline fallback for direct static previews.
+  const THEORY_DAYS = Array.isArray(window.THEORY_DAYS) && window.THEORY_DAYS.length
+    ? window.THEORY_DAYS
+    : FALLBACK_THEORY_DAYS;
 
   function renderHome() {
     const modules = [
@@ -1216,16 +1224,16 @@ KOSDAQ|웹젠|게임`,
 
   function renderTheoryDay(lesson) {
     const lessonBlocks = lesson.lessons.map(([heading, paragraphs], index) => `
-      <section class="theory-lesson">
+      <section class="theory-lesson" id="day-${lesson.day}-lesson-${index + 1}">
         <span>${String(index + 1).padStart(2, '0')}</span>
         <div class="theory-lesson-content"><h2>${escHtml(heading)}</h2><div class="theory-lesson-body">${paragraphs.map(text => `<p>${escHtml(text)}</p>`).join('')}${renderLessonVisual(lesson.day, heading)}</div></div>
         <button class="lesson-accordion-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="${escHtml(heading)} 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
       </section>
     `).join('');
     const productJourney = renderProductJourney(lesson.day);
-    const companyAtlas = renderCompanyAtlas(lesson.day);
     const dayVisual = renderDayInfographic(lesson.day);
     const learningVisual = renderLearningVisual(lesson.day);
+    const dayRoadmap = renderDayRoadmap(lesson);
     $messages.innerHTML = `
       <article class="content-page theory-page theory-detail-page theory-day-${lesson.day}">
         <div class="theory-detail-heading">
@@ -1233,6 +1241,7 @@ KOSDAQ|웹젠|게임`,
           <div class="theory-title-side"><section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section><section class="lesson-dashboard" aria-label="오늘의 학습 대시보드"><div><span>READ</span><strong>${lesson.lessons.length}</strong><small>개념 카드</small></div><div><span>KEYWORDS</span><strong>${lesson.keywords.length}</strong><small>핵심 용어</small></div><div><span>CHECK</span><strong><i class="fa-solid fa-pen"></i></strong><small>마무리 질문</small></div></section></div>
         </div>
         <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄 용어를 누르면 상세 용어 설명이 열립니다.</p>
+        ${dayRoadmap}
         ${renderDay1ButlerContent(lesson.day)}
         ${dayVisual}
         ${learningVisual}
@@ -1247,12 +1256,9 @@ KOSDAQ|웹젠|게임`,
           <button class="content-cta" data-theory-rag="${escHtml(lesson.ragPrompt)}"><i class="fa-solid fa-comments"></i> 이 내용 RAG에게 질문하기</button>
           <button class="content-secondary" data-go="simulation"><i class="fa-solid fa-chart-pie"></i> 자산배분 실습으로</button>
         </div>
-        ${companyAtlas}
       </article>`;
     bindViewLinks();
     bindTheoryLinks();
-    bindAtlasFilters();
-    bindAtlasDetails();
     bindTheoryLessonAccordions($messages);
     bindTheorySectionAccordions($messages);
     addTickerLabels();
@@ -1262,6 +1268,30 @@ KOSDAQ|웹젠|게임`,
       resizeInput();
       $questionInput.focus();
     });
+  }
+
+  function renderStocksView(day = 1) {
+    const selectedDay = Number(day);
+    $messages.innerHTML = `<article class="content-page stocks-page">
+      <header class="stocks-page-head">
+        <div><span>LISTED COMPANY ATLAS</span><h1>사업과 변수로 읽는<br><mark>국내 상장사</mark></h1></div>
+        <p>5일 학습에서 다룬 국내 상장사 200개를 일차별 40개씩 살펴봅니다. 종목명보다 사업 구조, 다음 실적을 바꾸는 변수와 핵심 위험을 함께 확인하세요.</p>
+      </header>
+      <nav class="atlas-day-tabs" aria-label="일차별 종목 아틀라스">${THEORY_DAYS.map(item => `<button class="${item.day === selectedDay ? 'active' : ''}" data-atlas-day="${item.day}" aria-label="${item.day}일차 종목 보기">${item.day}</button>`).join('')}</nav>
+      <p class="stocks-page-note"><i class="fa-solid fa-circle-info"></i> 종목 카드를 누르면 사업·관찰 변수·위험, 지연 시세와 관련 링크를 볼 수 있습니다.</p>
+      ${renderCompanyAtlas(selectedDay)}
+    </article>`;
+    bindViewLinks();
+    bindAtlasFilters();
+    bindAtlasDetails();
+    $messages.querySelectorAll('[data-atlas-day]').forEach(button => button.addEventListener('click', () => renderStocksView(button.dataset.atlasDay)));
+  }
+
+  function renderDayRoadmap(lesson) {
+    return `<section class="day-roadmap" aria-label="${escHtml(lesson.title)} 전체 학습 목차">
+      <header><span>DAY ${String(lesson.day).padStart(2, '0')} · LEARNING MAP</span><h2>이 일차에서 확인할 모든 내용</h2><p>아래 항목은 이 페이지의 개념 카드로 바로 이동합니다. 핵심 개념, 국내 사례, 위험 점검을 한 일차 안에서 이어서 확인하세요.</p></header>
+      <ol>${lesson.lessons.map(([heading], index) => `<li><a href="#day-${lesson.day}-lesson-${index + 1}"><b>${String(index + 1).padStart(2, '0')}</b><span>${escHtml(heading)}</span><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a></li>`).join('')}</ol>
+    </section>`;
   }
 
   function bindTheoryLessonAccordions(root) {
@@ -1321,9 +1351,9 @@ KOSDAQ|웹젠|게임`,
         cards: [['예금·적금', '단기 목적자금과 약정 이자', '만기 · 중도해지 이율 · 예금자보호'], ['금·귀금속', '순도·중량으로 거래하는 실물자산', '시세 기준 · 매매 차이 · 보관'], ['부동산', '권리와 이용 가치를 함께 보는 자산', '등기 · 계약 · 유지비 · 유동성'], ['중고거래', '상태와 인도 조건이 핵심인 생활 거래', '작동 · 구성품 · 안전결제 · 기록']],
       },
       2: {
-        title: '거래 대상의 구조와 상태 읽기',
-        lead: '펀드·ETF·리츠·ETN과 수집품·중고 물건은 구조, 진위와 상태를 각각 확인해야 합니다.',
-        cards: [['공모펀드·ETF', '운용 전략에 따라 여러 자산에 투자', '편입자산 · 보수 · 환매·거래 방식'], ['리츠·ETN', '부동산·지수와 연결된 증권', '차입 · 발행사 신용 · 만기'], ['우표·수석·예술품', '희소성과 취향으로 거래되는 수집품', '진위 · 상태 등급 · 출처 · 감정'], ['중고 전자기기', '사용 이력에 따라 가치가 달라지는 물건', '작동 · 수리 · 계정 해제 · 구성품']],
+        title: 'ETF·펀드·리츠·ETN을 같은 기준으로 비교하기',
+        lead: '상품 이름이 아니라 누가 운용하는지, 무엇을 담는지, 어떻게 거래되는지와 어떤 위험을 갖는지 순서대로 확인합니다.',
+        cards: [['공모펀드', '운용 전략에 따라 여러 자산에 투자', '편입자산 · 보수 · 기준가 · 환매'], ['ETF', '운용사가 설계한 상장 펀드를 장중 매매', '운용사 · 기초지수 · NAV · 거래량'], ['리츠', '부동산 임대수익과 가치 변동에 참여', '공실 · 차입 · 금리 · 배당가능이익'], ['ETN', '증권사가 발행한 지수 연계 증권', '발행사 신용 · 만기 · 지수 산식']],
       },
       3: {
         title: '금리·환율·원자재까지 넓혀 보는 시장',
@@ -1487,21 +1517,21 @@ effective_date: [기준일]
         checklist: ['상품 이름 대신 기초자산을 한 문장으로 쓰기', '운용사와 주문을 받는 증권사를 구분하기', '“언제 써야 하는 돈인가”를 상품보다 먼저 정하기'],
       },
       2: {
-        eyebrow: 'DAY 02 · KOREAN EQUITY READING ROOM',
-        title: '뜨는 테마보다 먼저,<br><em>돈 버는 구조를 읽기</em>',
-        deck: 'AI 반도체, 자동차, 조선·방산, 플랫폼, 바이오, 금융, 배터리는 모두 다른 언어로 움직입니다. 대표 기업을 통해 매출을 바꾸는 변수와 확인해야 할 숫자를 연결합니다.',
-        pulse: [['AI 메모리', 92], ['자동차', 67], ['조선·방산', 79], ['금융', 58]],
-        storyTitle: '같은 “성장”이라도 실적을 만드는 엔진은 다릅니다.',
-        story: '삼성전자와 SK하이닉스는 AI 서버 투자와 고대역폭메모리(HBM) 수요를 함께 보지만, 제품 구성과 사업 포트폴리오가 다릅니다. 현대차는 판매량·인센티브·환율을, HD현대중공업은 수주가 매출로 전환되는 시점과 원가를, NAVER는 광고·커머스·AI 수익화를 따로 읽어야 합니다.',
-        note: '기업 이름을 테마로만 묶지 마세요. 실적 발표 자료에서 “가격·물량·원가·환율·금리·규제” 중 무엇이 다음 분기의 숫자를 바꿀지 표시하면 뉴스가 훨씬 선명해집니다.',
+        eyebrow: 'DAY 02 · ETF & FUND READING ROOM',
+        title: '유명한 이름보다 먼저,<br><em>상품의 구조를 읽기</em>',
+        deck: 'ETF·펀드·리츠·ETN은 모두 여러 자산 또는 지수와 연결되지만, 운용 주체, 거래 방식, 비용과 위험은 다릅니다. 상품명에서 확인 항목까지 한 흐름으로 살펴봅니다.',
+        pulse: [['기초지수', 92], ['총보수', 67], ['유동성', 79], ['구조 위험', 58]],
+        storyTitle: 'ETF 브랜드와 주문을 받는 증권사는 서로 다릅니다.',
+        story: 'KODEX·TIGER·RISE·ACE·SOL은 자산운용사가 설계·운용하는 ETF 브랜드입니다. 투자자는 삼성증권·미래에셋증권·NH투자증권·KB증권·키움증권 등 자신의 증권사 계좌에서 이 ETF들을 주문할 수 있습니다. 따라서 “어느 앱에서 사는가”와 “어느 운용사의 어떤 상품인가”를 구분해야 합니다.',
+        note: '브랜드의 친숙함만으로 상품을 고르지 마세요. 같은 지수형 ETF라도 기초지수, 총보수, 순자산 규모, 거래량, 호가 차이, 환헤지 여부와 분배 방식을 확인해야 합니다.',
         files: [
-          ['삼성전자', 'HBM·메모리·파운드리', '2026년 HBM4 양산 출하 및 HBM4E 샘플 관련 발표은 AI 인프라가 국내 반도체 공급망의 핵심 관찰 주제임을 보여 줍니다. 기술 발표와 실적 실현은 구분해서 봐야 합니다.', '메모리 가격 · 고객 인증 · 수율 · CAPEX'],
-          ['SK하이닉스', 'D램·낸드·HBM', '메모리 비중이 높은 기업은 서버 수요와 제품 믹스, 공급 제약, 가격 사이클에 민감합니다. 경쟁력은 판매량만 아니라 고부가 제품 전환 속도에도 달려 있습니다.', 'HBM 비중 · ASP · 재고 · 고객 다변화'],
-          ['현대차', '완성차·하이브리드·EV', '차량 한 대의 판매가 전부가 아닙니다. 지역별 믹스, 인센티브, 환율, 재고, 하이브리드와 전기차의 제품 구성까지 함께 봐야 영업이익의 방향을 읽을 수 있습니다.', '판매대수 · 인센티브 · 환율 · 가동률'],
-          ['셀트리온', '바이오시밀러·직접판매', '바이오 기업은 허가, 출시, 경쟁약 가격, 유통망, 원가가 한꺼번에 작용합니다. 제품 개발 뉴스는 출발점이고 실제 처방과 판매가 이어지는지 확인해야 합니다.', '허가·출시 · 점유율 · 약가 · 재고'],
+          ['KODEX · TIGER', '국내 대표 ETF 브랜드', '브랜드는 운용 주체를 알려 주는 단서일 뿐입니다. 같은 시장을 추종하는 상품이라도 지수 규칙과 비용이 같은지 개별 상품설명서에서 확인해야 합니다.', '운용사 · 기초지수 · 총보수 · 상장일'],
+          ['RISE · ACE · SOL', '운용사별 ETF 브랜드', '서로 다른 운용사의 상품을 한 증권사 앱에서 주문할 수 있습니다. 브랜드보다 상품의 실제 편입 자산과 거래 여건을 비교합니다.', '기초자산 · 순자산 · 거래량 · 호가 차이'],
+          ['국고채 ETF', '금리와 만기의 상품', '채권 ETF는 예금이 아니며 금리 변화에 따라 가격이 달라질 수 있습니다. 단기·중기·장기 만기와 듀레이션을 구분해 봅니다.', '만기 · 듀레이션 · 신용위험 · 괴리율'],
+          ['리츠 · ETN', '구조가 다른 상장 상품', '리츠는 부동산 임대수익·차입·금리에, ETN은 발행사의 신용·만기·지수 산식에 추가로 영향을 받습니다.', '공실 · 차입 · 발행사 · 만기'],
         ],
-        matrix: [['KOSPI 200 ETF', '한국 대형주 바구니', '삼성·미래·KB·한투 등 운용사 상품 비교'], ['반도체 ETF', '메모리·장비·소부장 노출', '상위 편입종목 겹침 확인'], ['고배당 ETF', '배당·주주환원 기업 중심', '배당률 외 지속 가능성 확인'], ['밸류업 ETF', '기업가치 제고 지수 활용', '지수 규칙·편입 변경 확인']],
-        checklist: ['회사 매출을 만드는 제품을 한 줄로 정리하기', '호재 기사와 실적 반영 시점을 분리하기', 'ETF 상위 10개 편입 종목을 직접 확인하기'],
+        matrix: [['시장대표 ETF', '국내외 주식시장 바구니', '운용사 · 지수 방법론 · 총보수 비교'], ['섹터 ETF', '반도체·금융·방산 등 집중 노출', '상위 편입종목 겹침 확인'], ['채권 ETF', '금리·만기 위험에 노출', '듀레이션 · 신용등급 · 괴리율 확인'], ['ETN', '증권사 신용을 포함한 지수 연계 증권', '발행사 · 만기 · 조기청산 조건 확인']],
+        checklist: ['ETF 브랜드와 운용사를 한 쌍으로 적기', '주문 증권사와 상품 운용사를 구분하기', 'ETF 두 개의 기초지수·비용·거래량을 비교하기'],
       },
       3: {
         eyebrow: 'DAY 03 · RATES, BONDS & HEDGING DESK',
@@ -1571,7 +1601,7 @@ effective_date: [기준일]
     const companies = COMPANY_ATLAS[day] || [];
     const counts = companies.reduce((acc, [market]) => ({ ...acc, [market]: (acc[market] || 0) + 1 }), {});
     return `<section class="company-atlas" aria-label="${day}일차 국내 상장사 40개 아틀라스">
-      <header class="atlas-header"><div><span>200 COMPANY ATLAS · DAY ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를<br>사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>DAY<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
+      <header class="atlas-header"><div><span>KOREAN LISTED COMPANY ATLAS · DAY ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를<br>사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>DAY<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
       <div class="atlas-toolbar"><div class="atlas-count"><span><b>${companies.length}</b> COMPANIES</span><i></i><span>KOSPI <b>${counts.KOSPI || 0}</b></span><i></i><span>KOSDAQ <b>${counts.KOSDAQ || 0}</b></span></div><div class="atlas-filters" role="group" aria-label="시장별 기업 필터"><button class="active" data-atlas-filter="all">전체 ${companies.length}</button><button data-atlas-filter="KOSPI">KOSPI ${counts.KOSPI || 0}</button><button data-atlas-filter="KOSDAQ">KOSDAQ ${counts.KOSDAQ || 0}</button></div></div>
       <div class="atlas-arrow-line"><span>시장</span><i></i><span>산업</span><i></i><span>핵심 변수</span><i></i><span>위험</span></div>
       <div class="atlas-grid">${companies.map(([market, name, sector], index) => {
