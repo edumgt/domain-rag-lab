@@ -7,7 +7,7 @@
     topK: 4,
     loading: false,
     chatHistory: [],
-    activeView: 'home',
+    activeView: 'stocks',
     activeTheoryDay: 1,
     activeScenario: 'equity',
     savedSimulation: null,
@@ -719,7 +719,7 @@ KOSDAQ|웹젠|게임`,
   });
 
   $viewButtons.forEach(btn => {
-    btn.addEventListener('click', () => setView(btn.dataset.view));
+    btn.addEventListener('click', () => setView(btn.dataset.view === 'home' ? 'stocks' : btn.dataset.view));
   });
 
   $openLeftPanel.addEventListener('click', () => togglePanel('left'));
@@ -2211,6 +2211,10 @@ effective_date: [기준일]
   }
 
   updateSimulation();
-  setView('home');
+  const requestedView = new URLSearchParams(window.location.search).get('view');
+  const initialView = ['stocks', 'learn', 'simulation', 'backtest', 'calendar'].includes(requestedView)
+    ? requestedView
+    : 'stocks';
+  setView(initialView);
   $topKLabel.textContent = state.topK;
 })();

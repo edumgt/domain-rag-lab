@@ -10,13 +10,60 @@
     <title>03일차 | 5일 금융 이론 — 채권 · 외환 · 원자재 · 파생상품</title>
     <link rel="stylesheet" href="assets/site.css" />
     <link rel="stylesheet" href="assets/app-shell.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
     <script defer src="assets/visuals.js"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js"></script>
   </head>
   <body data-day="3">
-    <header class="day-appbar"><button type="button" id="dayMenuButton" aria-controls="dayOffcanvas" aria-expanded="false">☰ 학습</button><a class="home-link" href="/">⌂ 홈</a><a href="/">▣ 종목보기</a><a href="/">☁ RAG 질문</a><a href="/">◔ 시뮬레이션</a></header>
-    <div class="day-backdrop" id="dayBackdrop"></div><aside class="day-offcanvas" id="dayOffcanvas" aria-label="5일 학습 목차"><h2>5일 이론 학습</h2><p>일차를 선택해 정적 학습 페이지로 이동합니다.</p><a href="01.html">DAY 01 · 금융상품 기초</a><a href="02.html">DAY 02 · 펀드 · ETF</a><a class="active" href="03.html">DAY 03 · 채권 · 외환 · 파생상품</a><a href="04.html">DAY 04 · 포트폴리오와 위험</a><a href="05.html">DAY 05 · 자산배분</a></aside>
+    <header class="day-appbar">
+      <button
+        class="day-panel-toggle"
+        type="button"
+        id="dayMenuButton"
+        aria-controls="dayOffcanvas"
+        aria-expanded="false"
+      >
+        <i class="fa-solid fa-bars"></i><span>학습</span>
+      </button>
+      <div
+        class="day-brand-nav"
+        role="navigation"
+        aria-label="학습 서비스 메뉴"
+      >
+        <a href="/?view=stocks"><i class="fa-solid fa-house"></i> 홈</a
+        ><a href="/?view=stocks"
+          ><i class="fa-solid fa-building-columns"></i> 종목보기</a
+        ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
+        ><a href="/?view=simulation"
+          ><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</a
+        ><a href="/?view=backtest"
+          ><i class="fa-solid fa-flask"></i> LEAN 백테스트</a
+        ><a href="/?view=calendar"
+          ><i class="fa-solid fa-calendar-days"></i> 캘린더</a
+        >
+      </div>
+      <div class="day-header-actions">
+        <span class="day-domain-badge"
+          ><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분</span
+        ><a class="day-login" href="/?view=stocks"
+          ><i class="fa-solid fa-user"></i> 로그인</a
+        ><span class="day-rag"><i class="fa-solid fa-database"></i> RAG</span>
+      </div>
+    </header>
+    <div class="day-backdrop" id="dayBackdrop"></div>
+    <aside class="day-offcanvas" id="dayOffcanvas" aria-label="5일 학습 목차">
+      <h2>5일 이론 학습</h2>
+      <p>일차를 선택해 정적 학습 페이지로 이동합니다.</p>
+      <a href="01.html">DAY 01 · 금융상품 기초</a
+      ><a href="02.html">DAY 02 · 펀드 · ETF</a
+      ><a class="active" href="03.html">DAY 03 · 채권 · 외환 · 파생상품</a
+      ><a href="04.html">DAY 04 · 포트폴리오와 위험</a
+      ><a href="05.html">DAY 05 · 자산배분</a>
+    </aside>
     <nav aria-label="5일 학습 목차">
       <a class="brand" href="index.html">5일 금융 이론</a>
       <div class="day-nav">
@@ -638,7 +685,36 @@
                   있지만, 가격이 한쪽으로 크게 움직이면 상대방의 손실도 커질 수
                   있습니다.
                 </p>
-                <figure class="concept-visual trade-futures"><p class="visual-kicker">TRADE VS FUTURES</p><div class="visual-row"><div class="visual-card"><strong>무역</strong><span>실물 재화·서비스를 계약하고 인도·통관·물류 또는 서비스 제공으로 이행합니다.</span></div><div class="visual-card blue"><strong>선물거래</strong><span>미래 가격을 정한 표준 금융계약으로, 대개 반대매매로 차액을 정산합니다.</span></div><div class="visual-card"><strong>원유 수입 헤지</strong><span>원유 수입회사는 원유선물 매수로 유가 상승 부담을 완화할 수 있습니다.</span></div></div><figcaption><b>무역은 실물을 확보하고, 선물은 가격 위험을 관리합니다</b> · 헤지는 위험을 줄이는 방법입니다.</figcaption></figure>
+                <figure class="concept-visual trade-futures">
+                  <p class="visual-kicker">TRADE VS FUTURES</p>
+                  <div class="visual-row">
+                    <div class="visual-card">
+                      <strong>무역</strong
+                      ><span
+                        >실물 재화·서비스를 계약하고 인도·통관·물류 또는 서비스
+                        제공으로 이행합니다.</span
+                      >
+                    </div>
+                    <div class="visual-card blue">
+                      <strong>선물거래</strong
+                      ><span
+                        >미래 가격을 정한 표준 금융계약으로, 대개 반대매매로
+                        차액을 정산합니다.</span
+                      >
+                    </div>
+                    <div class="visual-card">
+                      <strong>원유 수입 헤지</strong
+                      ><span
+                        >원유 수입회사는 원유선물 매수로 유가 상승 부담을 완화할
+                        수 있습니다.</span
+                      >
+                    </div>
+                  </div>
+                  <figcaption>
+                    <b>무역은 실물을 확보하고, 선물은 가격 위험을 관리합니다</b>
+                    · 헤지는 위험을 줄이는 방법입니다.
+                  </figcaption>
+                </figure>
               </div>
             </div>
             <button
@@ -659,10 +735,11 @@
               <div class="lesson-body">
                 <p>
                   한국거래소(KRX)의 주식선물은 모든 상장주식에 자동으로 붙는
-                  상품이 아닙니다. 선물의 기준이 되는 주식을 <b>기초주권</b>이라고
-                  하며, 거래소가 정한 대상만 주식선물로 거래할 수 있습니다.
-                  계약 단위와 만기가 표준화된 장내상품이므로, 투자자가 임의의
-                  종목·만기·행사가를 만들어 주문하는 방식과는 다릅니다.
+                  상품이 아닙니다. 선물의 기준이 되는 주식을
+                  <b>기초주권</b>이라고 하며, 거래소가 정한 대상만 주식선물로
+                  거래할 수 있습니다. 계약 단위와 만기가 표준화된
+                  장내상품이므로, 투자자가 임의의 종목·만기·행사가를 만들어
+                  주문하는 방식과는 다릅니다.
                 </p>
                 <p>
                   현행 KRX 시행세칙은 기초주권을 코스피200 구성종목,
@@ -676,18 +753,18 @@
                   거래소가 대상을 관리할 때는 시장 대표성뿐 아니라 충분한
                   거래수요와 유동성이 중요합니다. 거래가 지나치게 적으면 호가가
                   벌어지고 원하는 가격에 청산하기 어려우며, 가격 왜곡 위험도
-                  커질 수 있기 때문입니다. 시가총액·유통주식수·거래대금과
-                  기업의 상장 유지 상태는 이런 시장성과 안정성을 점검하는 데
-                  활용되는 요소이지만, 학습자는 이를 모든 종목에 똑같이 적용되는
-                  공개된 단일 숫자 기준으로 이해해서는 안 됩니다.
+                  커질 수 있기 때문입니다. 시가총액·유통주식수·거래대금과 기업의
+                  상장 유지 상태는 이런 시장성과 안정성을 점검하는 데 활용되는
+                  요소이지만, 학습자는 이를 모든 종목에 똑같이 적용되는 공개된
+                  단일 숫자 기준으로 이해해서는 안 됩니다.
                 </p>
                 <p>
                   정기 선정은 코스피200선물의 6월물 또는 12월물 최종결제일을
                   기준으로 이뤄질 수 있습니다. 또 상장폐지 사유, 합병·분할·감자,
-                  주식교환·이전 등 기초주권에 중대한 변동이 생기면 거래소는
-                  별도 조치를 하고 해당 주식선물의 최종거래일을 변경할 수
-                  있습니다. 이미 보유한 계약의 처리 방식은 공지와 증권사의
-                  안내를 반드시 확인하세요.
+                  주식교환·이전 등 기초주권에 중대한 변동이 생기면 거래소는 별도
+                  조치를 하고 해당 주식선물의 최종거래일을 변경할 수 있습니다.
+                  이미 보유한 계약의 처리 방식은 공지와 증권사의 안내를 반드시
+                  확인하세요.
                 </p>
               </div>
             </div>
@@ -697,6 +774,68 @@
               data-lesson-toggle
               aria-expanded="true"
               aria-label="주식선물의 대상 종목은 어떻게 정할까요? 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section>
+          <section class="lesson">
+            <span>13B</span>
+            <div class="lesson-content">
+              <h2>거래소가 보증하는 것은 계약 이행입니다</h2>
+              <div class="lesson-body">
+                <p>
+                  거래소 파생상품은 매수자와 매도자가 서로의 신용을 직접 확인해
+                  계약을 끝까지 이행해야 하는 구조가 아닙니다. 체결 뒤 KRX의
+                  청산 기능은 <b>중앙청산상대방(CCP)</b>으로서 청산회원 사이에
+                  들어가, 모든 매도자에게는 매수자 역할을 하고 모든 매수자에게는
+                  매도자 역할을 합니다. 이를 통해 원래 두 당사자 사이의 계약은
+                  청산기관과 각 당사자 사이의 결제 의무로 바뀝니다.
+                </p>
+                <p>
+                  이행 안정성은 증거금, 매일의 손익정산, 미결제약정 위험에 맞춘
+                  추가 증거금, 강제청산, 공동기금 등으로 관리합니다. 어느
+                  청산회원이 결제 의무를 제때 이행하기 어려운 상황이 생겨도,
+                  청산기관은 정해진 절차에 따라 결제를 완료하도록 조치합니다.
+                  개인 투자자는 보통 증권사를 통해 거래하므로, 실제 증거금
+                  납부·추가 납부 요구·강제청산 안내는 증권사 계좌에서 받습니다.
+                </p>
+                <p>
+                  다만 “거래소가 보증한다”는 말은
+                  <b>계약의 결제 이행과 상대방 결제불이행 위험을 관리한다</b>는
+                  뜻입니다. 내가 선물 가격을 잘못 예상해 발생한 평가손실, 추가
+                  증거금, 강제청산 손실을 거래소가 대신 보상하거나 수익을
+                  보장한다는 뜻은 아닙니다.
+                </p>
+                <figure class="concept-visual trade-futures">
+                  <p class="visual-kicker">CENTRAL CLEARING</p>
+                  <div class="visual-row">
+                    <div class="visual-card">
+                      <strong>매수·매도 주문</strong
+                      ><span>증권사를 통해 익명으로 체결됩니다.</span>
+                    </div>
+                    <div class="visual-card blue">
+                      <strong>KRX 청산기관 (CCP)</strong
+                      ><span>증거금·일일정산·결제이행을 관리합니다.</span>
+                    </div>
+                    <div class="visual-card">
+                      <strong>결제 안정성</strong
+                      ><span>상대방 결제불이행 위험을 줄이는 구조입니다.</span>
+                    </div>
+                  </div>
+                  <figcaption>
+                    <b>계약 이행 보증 ≠ 투자 손실 보전</b> · 가격 변동으로 인한
+                    손익은 투자자에게 귀속됩니다.
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="거래소가 보증하는 것은 계약 이행입니다 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -1069,6 +1208,15 @@
                 금리가 오르면 할인율도 함께 오르는 경향이 있어, 같은 미래
                 이익이라도 오늘 가치로는 더 작게 계산됩니다. 먼 미래의 이익
                 비중이 큰 성장주일수록 할인율 변화에 가격이 더 민감합니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>중앙청산상대방 <small>Central Counterparty · CCP</small></dt>
+              <dd>
+                거래소에서 체결된 거래의 당사자 사이에 들어가 결제 의무를
+                인수하고, 증거금·손익정산·결제불이행 절차를 통해 결제 이행을
+                관리하는 청산기관입니다. 가격 변동으로 생긴 투자 손실을
+                보상하거나 수익을 보장하는 기관은 아닙니다.
               </dd>
             </div>
             <div class="glossary-item">
