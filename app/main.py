@@ -29,7 +29,7 @@ app = FastAPI(title=settings.app_name)
 async def prevent_frontend_cache(request: Request, call_next):
     """Always refresh the client shell and its mutable local assets."""
     response = await call_next(request)
-    if request.url.path in {"/", "/static/app.js", "/static/style.css"}:
+    if request.url.path == "/" or request.url.path.startswith("/static/"):
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
