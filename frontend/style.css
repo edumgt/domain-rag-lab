@@ -444,6 +444,16 @@ html, body {
 .tick-dashboard { margin-bottom: 46px; }
 .tick-card { padding: 22px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
 .tick-card-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px 20px; margin-bottom: 16px; }
+.tick-search { position: relative; max-width: 320px; margin-bottom: 12px; }
+.tick-search-input { box-sizing: border-box; width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface2); color: var(--text); font: inherit; font-size: 13px; }
+.tick-search-input:focus { outline: 0; border-color: var(--accent); }
+.tick-search-results { position: absolute; z-index: 4; top: calc(100% + 6px); left: 0; right: 0; max-height: 260px; overflow-y: auto; margin: 0; padding: 6px; list-style: none; border: 1px solid var(--border-hi); border-radius: var(--radius-sm); background: var(--surface); box-shadow: 0 10px 24px rgba(0,0,0,.14); }
+.tick-search-results li { list-style: none; }
+.tick-search-results button { display: block; width: 100%; padding: 8px 10px; border: 0; border-radius: 6px; background: transparent; text-align: left; cursor: pointer; }
+.tick-search-results button:hover { background: var(--surface2); }
+.tick-search-results button b { display: block; font-size: 13px; color: var(--text); }
+.tick-search-results button span { display: block; margin-top: 2px; font-size: 11px; color: var(--text-muted); }
+.tick-search-empty { padding: 10px; color: var(--text-muted); font-size: 12px; }
 .tick-symbol { display: block; color: var(--text-muted); font-size: 13px; font-weight: 700; }
 .tick-symbol small { margin-left: 6px; color: var(--text-muted); font-weight: 500; }
 .tick-price { display: block; margin-top: 6px; font-size: 30px; font-weight: 800; color: var(--text); line-height: 1.2; }
@@ -457,6 +467,9 @@ html, body {
 .tick-chart-stage { position: relative; padding: 10px 0 4px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .tick-chart-wrap { width: 100%; }
 .tick-chart-wrap svg { display: block; }
+.tick-chart-empty { display: grid; place-items: center; gap: 8px; height: 260px; color: var(--text-muted); font-size: 13px; text-align: center; }
+.tick-chart-empty i { font-size: 22px; color: var(--accent); }
+.tick-updated { color: var(--text-muted); font-size: 11px; }
 .tick-chart-tooltip { position: absolute; z-index: 3; display: grid; gap: 3px; min-width: 168px; padding: 9px 11px; border: 1px solid var(--border-hi); border-radius: 8px; background: var(--surface); box-shadow: 0 8px 20px rgba(0,0,0,.12); font-size: 11px; line-height: 1.5; color: var(--text-2); pointer-events: none; opacity: 0; transform: translateY(4px); transition: opacity .1s, transform .1s; }
 .tick-chart-tooltip.is-visible { opacity: 1; transform: translateY(0); }
 .tick-chart-tooltip b { display: block; color: var(--text); font-size: 11px; }

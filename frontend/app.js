@@ -16,14 +16,16 @@
   };
 
   const tickState = {
-    symbol: '삼성전자',
+    name: '삼성전자',
     ticker: '005930',
-    market: 'KOSPI · 교육용 시뮬레이션',
-    price: 71500,
-    history: [],
+    market: 'KOSPI',
+    bars: [],
+    meta: {},
     bucket: 5,
     timer: null,
-    seq: 0,
+    loading: false,
+    error: null,
+    lastFetchedAt: null,
   };
 
   const PRODUCT_EXPLAINERS = [
@@ -968,116 +970,73 @@ KOSDAQ|웹젠|게임`,
     ? window.THEORY_DAYS
     : FALLBACK_THEORY_DAYS;
 
-  // ===== 홈 대시보드: 틱 차트 시뮬레이션 =====
-  // 실시간 시세가 아니라 KRX 호가 단위 규칙을 따르는 교육용 가상 체결 데이터입니다.
-  function tickSizeFor(price) {
-    if (price < 2000) return 1;
-    if (price < 5000) return 5;
-    if (price < 20000) return 10;
-    if (price < 50000) return 50;
-    if (price < 200000) return 100;
-    if (price < 500000) return 500;
-    return 1000;
+  // ===== 홈 대시보드: 실시간 분봉 차트 =====
+  // KRX 개별 체결(틱) 데이터는 유료 시세이거나 증권사 Open API(계좌 인증 필요)로만 얻을 수 있습니다.
+  // 여기서는 공개 API로 얻을 수 있는 가장 촘촘한 단위인 Yahoo Finance 1분봉을 주기적으로 갱신합니다.
+  const ATLAS_COMPANY_LIST = Object.entries(COMPANY_ATLAS).flatMap(([day, companies]) =>
+    companies.map(([market, name, sector], index) => ({ market, name, sector, ticker: COMPANY_TICKERS[day]?.[index] || '' }))
+  ).filter(c => c.ticker);
+
+  function fmtTime(iso) {
+    return new Date(iso).toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit' });
+  }
+  function fmtWon(n) {
+    return Number(n).toLocaleString('ko-KR', { maximumFractionDigits: 0 });
   }
 
-  function nextTickPrice(price) {
-    const tick = tickSizeFor(price);
-    if (Math.random() < 0.32) return price; // 직전과 같은 가격에 체결되는 경우
-    const up = Math.random() < 0.5;
-    return Math.max(tick, up ? price + tick : price - tick);
-  }
-
-  function seedTickHistory() {
-    const count = 60;
-    let price = tickState.price;
-    const prices = [price];
-    for (let i = 1; i < count; i++) {
-      price = nextTickPrice(price);
-      prices.push(price);
-    }
-    const now = Date.now();
-    tickState.history = prices.map((p, i) => ({
-      seq: i + 1,
-      price: p,
-      time: new Date(now - (count - i) * 900),
-      volume: 1 + Math.floor(Math.random() * 40),
-    }));
-    tickState.seq = count;
-    tickState.price = prices[prices.length - 1];
-  }
-
-  function pushTick() {
-    tickState.price = nextTickPrice(tickState.price);
-    tickState.seq += 1;
-    tickState.history.push({
-      seq: tickState.seq,
-      price: tickState.price,
-      time: new Date(),
-      volume: 1 + Math.floor(Math.random() * 40),
-    });
-    if (tickState.history.length > 400) tickState.history.shift();
-  }
-
-  function bucketizeTicks(history, n) {
-    const bars = [];
-    for (let i = 0; i < history.length; i += n) {
-      const chunk = history.slice(i, i + n);
-      const prices = chunk.map(t => t.price);
-      bars.push({
-        open: prices[0],
-        high: Math.max(...prices),
-        low: Math.min(...prices),
-        close: prices[prices.length - 1],
+  function bucketizeBars(bars, n) {
+    const out = [];
+    for (let i = 0; i < bars.length; i += n) {
+      const chunk = bars.slice(i, i + n);
+      out.push({
+        open: chunk[0].open,
+        high: Math.max(...chunk.map(b => b.high)),
+        low: Math.min(...chunk.map(b => b.low)),
+        close: chunk[chunk.length - 1].close,
         count: chunk.length,
         forming: chunk.length < n,
         startTime: chunk[0].time,
         endTime: chunk[chunk.length - 1].time,
       });
     }
-    return bars;
+    return out;
   }
 
-  function fmtTime(date) {
-    return date.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  }
-  function fmtWon(n) {
-    return Number(n).toLocaleString('ko-KR');
-  }
-
-  let tickChartGeom = null; // 마지막으로 그린 차트의 좌표 정보(툴팁 계산용)
+  let tickChartGeom = null;
+  let tickOutsideClickBound = false;
 
   function renderTickChartSVG(bars) {
     const width = 720, height = 260;
     const padL = 8, padR = 56, padT = 14, padB = 22;
-    const maxBars = 28;
+    const maxBars = 30;
     const visible = bars.slice(-maxBars);
+    if (!visible.length) {
+      tickChartGeom = null;
+      return `<div class="tick-chart-empty"><i class="fa-solid fa-chart-simple"></i><p>표시할 분봉 데이터가 없습니다.</p></div>`;
+    }
     const plotW = width - padL - padR;
     const plotH = height - padT - padB;
-    const slot = plotW / Math.max(visible.length, 1);
+    const slot = plotW / visible.length;
     const barW = Math.max(3, Math.min(16, slot * 0.6));
 
-    const highs = visible.map(b => b.high);
-    const lows = visible.map(b => b.low);
-    let maxP = Math.max(...highs), minP = Math.min(...lows);
-    if (maxP === minP) { maxP += tickSizeFor(maxP) * 4; minP -= tickSizeFor(minP) * 4; }
+    let maxP = Math.max(...visible.map(b => b.high));
+    let minP = Math.min(...visible.map(b => b.low));
+    if (maxP === minP) { maxP += 1; minP -= 1; }
     const pad = (maxP - minP) * 0.08;
     maxP += pad; minP -= pad;
     const y = (p) => padT + (1 - (p - minP) / (maxP - minP)) * plotH;
 
     const upColor = '#dc2626', downColor = '#2563eb', flatColor = '#94a3b8';
-    const geomBars = [];
     let candleSvg = '';
     visible.forEach((b, i) => {
       const cx = padL + slot * i + slot / 2;
-      const rising = b.close > b.open;
-      const falling = b.close < b.open;
+      const rising = b.close > b.open, falling = b.close < b.open;
       const color = rising ? upColor : falling ? downColor : flatColor;
       const yOpen = y(b.open), yClose = y(b.close), yHigh = y(b.high), yLow = y(b.low);
       const bodyTop = Math.min(yOpen, yClose);
       const bodyH = Math.max(2, Math.abs(yClose - yOpen));
       candleSvg += `<line x1="${cx}" y1="${yHigh}" x2="${cx}" y2="${yLow}" stroke="${color}" stroke-width="1.5" opacity="${b.forming ? 0.55 : 1}"/>`;
       candleSvg += `<rect x="${(cx - barW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${barW.toFixed(1)}" height="${bodyH.toFixed(1)}" rx="1.5" fill="${color}" opacity="${b.forming ? 0.55 : 1}"/>`;
-      geomBars.push({ cx, slotX0: padL + slot * i, slotX1: padL + slot * (i + 1), bar: b });
     });
 
     const gridCount = 4;
@@ -1090,51 +1049,116 @@ KOSDAQ|웹젠|게임`,
     }
 
     tickChartGeom = { padL, plotW, slot, visible, width, height };
-
-    return `<svg id="tickChartSvg" viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none" role="img" aria-label="틱 차트">${gridSvg}${candleSvg}</svg>`;
+    return `<svg id="tickChartSvg" viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none" role="img" aria-label="분봉 차트">${gridSvg}${candleSvg}</svg>`;
   }
 
-  function renderTickTape(history) {
-    const recent = history.slice(-9).reverse();
-    return recent.map(t => {
-      const idx = history.indexOf(t);
-      const prev = idx > 0 ? history[idx - 1].price : t.price;
-      const rising = t.price > prev, falling = t.price < prev;
+  function renderTickTape(bars) {
+    const recent = bars.slice(-9).reverse();
+    return recent.map((b, i) => {
+      const prev = recent[i + 1];
+      const rising = prev ? b.close > prev.close : b.close > b.open;
+      const falling = prev ? b.close < prev.close : b.close < b.open;
       const cls = rising ? 'up' : falling ? 'down' : 'flat';
       const arrow = rising ? '▲' : falling ? '▼' : '·';
-      return `<li class="${cls}"><span class="tick-tape-time">${fmtTime(t.time)}</span><span class="tick-tape-price">${fmtWon(t.price)}</span><em>${arrow}</em><span class="tick-tape-vol">${t.volume}주</span></li>`;
+      return `<li class="${cls}"><span class="tick-tape-time">${fmtTime(b.time)}</span><span class="tick-tape-price">${fmtWon(b.close)}</span><em>${arrow}</em><span class="tick-tape-vol">${Number(b.volume).toLocaleString('ko-KR')}주</span></li>`;
     }).join('');
   }
 
   function renderTickDashboardFrame() {
     const wrap = document.getElementById('tickChartWrap');
     if (!wrap) { stopTickDashboard(); return; }
-    const bars = bucketizeTicks(tickState.history, tickState.bucket);
-    wrap.innerHTML = renderTickChartSVG(bars);
 
-    const base = tickState.history[0].price;
-    const cur = tickState.price;
-    const diff = cur - base;
-    const pct = base ? (diff / base) * 100 : 0;
-    const rising = diff > 0, falling = diff < 0;
+    const symbolEl = document.getElementById('tickSymbolLabel');
+    if (symbolEl) symbolEl.innerHTML = `${escHtml(tickState.name)} <small>${escHtml(tickState.ticker)} · ${escHtml(tickState.market)}</small>`;
+
+    if (tickState.loading && !tickState.bars.length) {
+      wrap.innerHTML = `<div class="tick-chart-empty"><i class="fa-solid fa-spinner fa-spin"></i><p>실시간 분봉을 불러오는 중입니다.</p></div>`;
+    } else if (tickState.error && !tickState.bars.length) {
+      wrap.innerHTML = `<div class="tick-chart-empty"><i class="fa-solid fa-triangle-exclamation"></i><p>${escHtml(tickState.error)}</p></div>`;
+    } else {
+      const bars = bucketizeBars(tickState.bars, tickState.bucket);
+      wrap.innerHTML = renderTickChartSVG(bars);
+      const countEl = document.getElementById('tickPrintCount');
+      if (countEl) countEl.textContent = `1분봉 ${tickState.bars.length}개 수신 · 현재 ${tickState.bucket}분봉 ${bars.length}개`;
+    }
+
+    const lastClose = tickState.bars.length ? tickState.bars[tickState.bars.length - 1].close : null;
+    const cur = tickState.meta.price != null ? tickState.meta.price : lastClose;
+    const base = tickState.meta.previous_close != null ? tickState.meta.previous_close : (tickState.bars[0]?.open ?? cur);
     const priceEl = document.getElementById('tickCurrentPrice');
     const changeEl = document.getElementById('tickCurrentChange');
-    if (priceEl) priceEl.textContent = `${fmtWon(cur)}원`;
-    if (changeEl) {
-      changeEl.className = `tick-change ${rising ? 'up' : falling ? 'down' : 'flat'}`;
-      changeEl.textContent = `${rising ? '▲' : falling ? '▼' : '-'} ${fmtWon(Math.abs(diff))}원 (${diff >= 0 ? '+' : ''}${pct.toFixed(2)}%)`;
+    if (cur != null) {
+      const diff = base != null ? cur - base : 0;
+      const pct = base ? (diff / base) * 100 : 0;
+      const rising = diff > 0, falling = diff < 0;
+      if (priceEl) priceEl.textContent = `${fmtWon(cur)}원`;
+      if (changeEl) {
+        changeEl.className = `tick-change ${rising ? 'up' : falling ? 'down' : 'flat'}`;
+        changeEl.textContent = `${rising ? '▲' : falling ? '▼' : '-'} ${fmtWon(Math.abs(diff))}원 (${diff >= 0 ? '+' : ''}${pct.toFixed(2)}%) · 전일종가 대비`;
+      }
+    } else if (priceEl) {
+      priceEl.textContent = '-';
+      if (changeEl) { changeEl.className = 'tick-change flat'; changeEl.textContent = tickState.error ? '데이터 없음' : '불러오는 중…'; }
     }
+
     const tapeEl = document.getElementById('tickTape');
-    if (tapeEl) tapeEl.innerHTML = renderTickTape(tickState.history);
-    const countEl = document.getElementById('tickPrintCount');
-    if (countEl) countEl.textContent = `누적 체결 ${tickState.history.length}틱 · 현재 ${tickState.bucket}틱 봉 ${bars.length}개`;
+    if (tapeEl) tapeEl.innerHTML = tickState.bars.length ? renderTickTape(tickState.bars) : '';
+
+    const updatedEl = document.getElementById('tickUpdatedAt');
+    if (updatedEl) updatedEl.textContent = tickState.lastFetchedAt ? `마지막 갱신 ${fmtTime(tickState.lastFetchedAt)}` : '';
+  }
+
+  async function fetchIntraday() {
+    const requestedTicker = tickState.ticker;
+    tickState.loading = true;
+    if (!tickState.bars.length) renderTickDashboardFrame();
+    try {
+      const response = await fetch(`/market/intraday?ticker=${encodeURIComponent(tickState.ticker)}&market=${encodeURIComponent(tickState.market)}`);
+      const payload = await response.json();
+      if (requestedTicker !== tickState.ticker) return; // 응답이 오는 사이 다른 종목으로 전환된 경우 무시
+      tickState.bars = payload.bars || [];
+      tickState.meta = payload.meta || {};
+      tickState.error = payload.error || null;
+      tickState.lastFetchedAt = new Date().toISOString();
+    } catch (_) {
+      if (requestedTicker !== tickState.ticker) return;
+      tickState.error = '분봉 데이터를 불러오지 못했습니다. 네트워크를 확인해 주세요.';
+    } finally {
+      if (requestedTicker === tickState.ticker) {
+        tickState.loading = false;
+        renderTickDashboardFrame();
+      }
+    }
   }
 
   function stopTickDashboard() {
-    if (tickState.timer) {
-      clearInterval(tickState.timer);
-      tickState.timer = null;
+    if (tickState.timer) { clearInterval(tickState.timer); tickState.timer = null; }
+  }
+
+  function switchTickSymbol(company) {
+    tickState.ticker = company.ticker;
+    tickState.market = company.market;
+    tickState.name = company.name;
+    tickState.bars = [];
+    tickState.meta = {};
+    tickState.error = null;
+    renderTickDashboardFrame();
+    fetchIntraday();
+  }
+
+  function renderTickSearchResults(query) {
+    const list = document.getElementById('tickSearchResults');
+    if (!list) return;
+    const q = query.trim().toLowerCase();
+    if (!q) { list.innerHTML = ''; list.hidden = true; return; }
+    const matches = ATLAS_COMPANY_LIST.filter(c => c.name.toLowerCase().includes(q) || c.ticker.includes(q)).slice(0, 8);
+    if (!matches.length) {
+      list.innerHTML = '<li class="tick-search-empty">일치하는 종목이 없습니다 (종목보기 200개 중 검색)</li>';
+      list.hidden = false;
+      return;
     }
+    list.innerHTML = matches.map(c => `<li><button type="button" data-search-pick="${escHtml(c.ticker)}" data-search-market="${escHtml(c.market)}" data-search-name="${escHtml(c.name)}"><b>${escHtml(c.name)}</b><span>${escHtml(c.ticker)} · ${escHtml(c.market)} · ${escHtml(c.sector)}</span></button></li>`).join('');
+    list.hidden = false;
   }
 
   function bindTickDashboardEvents() {
@@ -1152,7 +1176,7 @@ KOSDAQ|웹젠|게임`,
         const item = tickChartGeom.visible[idx];
         if (!item) { tooltip.classList.remove('is-visible'); return; }
         const rising = item.close > item.open, falling = item.close < item.open;
-        tooltip.innerHTML = `<b>${fmtTime(item.startTime)} ~ ${fmtTime(item.endTime)}</b><span class="${rising ? 'up' : falling ? 'down' : 'flat'}">종가 ${fmtWon(item.close)}원</span><small>시 ${fmtWon(item.open)} · 고 ${fmtWon(item.high)} · 저 ${fmtWon(item.low)} · 체결 ${item.count}틱${item.forming ? ' (형성 중)' : ''}</small>`;
+        tooltip.innerHTML = `<b>${fmtTime(item.startTime)} ~ ${fmtTime(item.endTime)}</b><span class="${rising ? 'up' : falling ? 'down' : 'flat'}">종가 ${fmtWon(item.close)}원</span><small>시 ${fmtWon(item.open)} · 고 ${fmtWon(item.high)} · 저 ${fmtWon(item.low)} · 1분봉 ${item.count}개${item.forming ? ' (형성 중)' : ''}</small>`;
         tooltip.classList.add('is-visible');
         tooltip.style.left = `${event.clientX - rect.left + 12}px`;
         tooltip.style.top = `${event.clientY - rect.top - 8}px`;
@@ -1166,22 +1190,41 @@ KOSDAQ|웹젠|게임`,
         renderTickDashboardFrame();
       });
     });
+    const searchInput = document.getElementById('tickSearchInput');
+    const searchResults = document.getElementById('tickSearchResults');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => renderTickSearchResults(searchInput.value));
+      searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) renderTickSearchResults(searchInput.value); });
+      if (!tickOutsideClickBound) {
+        tickOutsideClickBound = true;
+        document.addEventListener('click', (event) => {
+          const results = document.getElementById('tickSearchResults');
+          if (results && !event.target.closest('.tick-search')) results.hidden = true;
+        });
+      }
+    }
+    if (searchResults && searchInput) {
+      searchResults.addEventListener('click', (event) => {
+        const btn = event.target.closest('[data-search-pick]');
+        if (!btn) return;
+        switchTickSymbol({ ticker: btn.dataset.searchPick, market: btn.dataset.searchMarket, name: btn.dataset.searchName });
+        searchInput.value = '';
+        searchResults.hidden = true;
+      });
+    }
   }
 
   function initTickDashboard() {
-    if (!tickState.history.length) seedTickHistory();
     renderTickDashboardFrame();
     bindTickDashboardEvents();
     stopTickDashboard();
-    tickState.timer = setInterval(() => {
-      pushTick();
-      renderTickDashboardFrame();
-    }, 900);
+    fetchIntraday();
+    tickState.timer = setInterval(fetchIntraday, 20000);
   }
 
   function renderTickDashboardSection() {
     const buckets = [1, 5, 10, 20];
-    const bucketButtons = buckets.map(n => `<button type="button" class="tick-bucket-btn ${n === tickState.bucket ? 'active' : ''}" data-tick-bucket="${n}">${n}틱</button>`).join('');
+    const bucketButtons = buckets.map(n => `<button type="button" class="tick-bucket-btn ${n === tickState.bucket ? 'active' : ''}" data-tick-bucket="${n}">${n}분봉</button>`).join('');
     const tickTable = [
       ['2,000원 미만', '1원'], ['2,000원 ~ 5,000원 미만', '5원'], ['5,000원 ~ 20,000원 미만', '10원'],
       ['20,000원 ~ 50,000원 미만', '50원'], ['50,000원 ~ 200,000원 미만', '100원'],
@@ -1189,16 +1232,21 @@ KOSDAQ|웹젠|게임`,
     ].map(([range, tick]) => `<tr><td>${range}</td><td><b>${tick}</b></td></tr>`).join('');
 
     return `
-      <section class="content-section tick-dashboard" aria-label="틱 차트 대시보드">
-        <div class="section-heading"><span>LIVE</span><h2>오늘의 틱 차트</h2></div>
+      <section class="content-section tick-dashboard" aria-label="실시간 분봉 차트">
+        <div class="section-heading"><span>LIVE</span><h2>실시간 분봉 차트</h2></div>
+        <p class="section-intro">개별 체결(틱) 데이터는 KRX 유료 시세 또는 증권사 Open API(계좌 인증 필요)로만 받을 수 있어, 공개 API로 얻을 수 있는 가장 촘촘한 단위인 <strong>1분봉</strong>을 20초마다 갱신해 보여줍니다.</p>
         <article class="tick-card">
           <header class="tick-card-head">
             <div>
-              <span class="tick-symbol">${tickState.symbol} <small>${tickState.ticker} · ${tickState.market}</small></span>
-              <strong id="tickCurrentPrice" class="tick-price">${fmtWon(tickState.price)}원</strong>
-              <em id="tickCurrentChange" class="tick-change flat">-</em>
+              <div class="tick-search">
+                <input type="text" id="tickSearchInput" class="tick-search-input" placeholder="종목명 또는 코드 검색 (예: 삼성전자, 005930)" autocomplete="off" aria-label="종목 검색" />
+                <ul id="tickSearchResults" class="tick-search-results" hidden></ul>
+              </div>
+              <span id="tickSymbolLabel" class="tick-symbol">${escHtml(tickState.name)} <small>${escHtml(tickState.ticker)} · ${escHtml(tickState.market)}</small></span>
+              <strong id="tickCurrentPrice" class="tick-price">-</strong>
+              <em id="tickCurrentChange" class="tick-change flat">불러오는 중…</em>
             </div>
-            <div class="tick-bucket-group" role="group" aria-label="틱 봉 단위 선택">${bucketButtons}</div>
+            <div class="tick-bucket-group" role="group" aria-label="분봉 집계 단위 선택">${bucketButtons}</div>
           </header>
           <div class="tick-chart-stage">
             <div id="tickChartWrap" class="tick-chart-wrap"></div>
@@ -1207,10 +1255,11 @@ KOSDAQ|웹젠|게임`,
           <div class="tick-legend">
             <span class="up"><i></i>상승 마감</span>
             <span class="down"><i></i>하락 마감</span>
-            <span id="tickPrintCount" class="tick-count">누적 체결 0틱</span>
+            <span id="tickPrintCount" class="tick-count">-</span>
+            <span id="tickUpdatedAt" class="tick-updated"></span>
           </div>
-          <ul id="tickTape" class="tick-tape" aria-label="최근 체결 내역"></ul>
-          <p class="tick-disclaimer"><i class="fa-solid fa-circle-info"></i> 실시간 시세가 아니라 KRX 호가 단위 규칙을 따르는 가상 체결을 초 단위로 생성한 교육용 시뮬레이션입니다. 실제 매매 판단에 사용하지 마세요.</p>
+          <ul id="tickTape" class="tick-tape" aria-label="최근 1분봉 내역"></ul>
+          <p class="tick-disclaimer"><i class="fa-solid fa-circle-info"></i> Yahoo Finance 공개 API 기준 1분봉 데이터이며 실제 체결과 몇 분 차이가 있을 수 있습니다. 개별 체결(틱) 단위 실시간 데이터가 아니며, 실제 매매 판단에 사용하지 마세요.</p>
         </article>
 
         <div class="tick-concept-grid">
@@ -1220,7 +1269,7 @@ KOSDAQ|웹젠|게임`,
           </article>
           <article class="tick-concept-card">
             <h3>틱 차트 (Tick Chart)</h3>
-            <p>시간(1분, 5분 등) 대신 <b>거래가 발생한 횟수(틱)</b>를 기준으로 봉을 그리는 차트입니다. '10틱 차트'는 거래가 10번 성사될 때마다 봉 하나가 새로 생깁니다. 위 차트의 봉 단위 버튼으로 직접 비교해 보세요.</p>
+            <p>시간 대신 <b>거래가 발생한 횟수(틱)</b>를 기준으로 봉을 그리는 차트입니다. '10틱 차트'는 거래가 10번 성사될 때마다 봉 하나가 새로 생깁니다. 위 차트는 공개 데이터의 한계로 분봉을 같은 방식으로 묶어 보여줍니다.</p>
           </article>
           <article class="tick-concept-card">
             <h3>틱 떼기 (Tick Scalping)</h3>
