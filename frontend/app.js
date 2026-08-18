@@ -7,12 +7,23 @@
     topK: 4,
     loading: false,
     chatHistory: [],
-    activeView: 'stocks',
+    activeView: 'home',
     activeTheoryDay: 1,
     activeScenario: 'equity',
     savedSimulation: null,
     currentSimulation: null,
     calendarCursor: null,
+  };
+
+  const tickState = {
+    symbol: '삼성전자',
+    ticker: '005930',
+    market: 'KOSPI · 교육용 시뮬레이션',
+    price: 71500,
+    history: [],
+    bucket: 5,
+    timer: null,
+    seq: 0,
   };
 
   const PRODUCT_EXPLAINERS = [
@@ -719,7 +730,7 @@ KOSDAQ|웹젠|게임`,
   });
 
   $viewButtons.forEach(btn => {
-    btn.addEventListener('click', () => setView(btn.dataset.view === 'home' ? 'stocks' : btn.dataset.view));
+    btn.addEventListener('click', () => setView(btn.dataset.view));
   });
 
   $openLeftPanel.addEventListener('click', () => togglePanel('left'));
@@ -815,6 +826,7 @@ KOSDAQ|웹젠|게임`,
   });
 
   function setView(view) {
+    stopTickDashboard();
     state.activeView = view;
     $viewButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
     $chatInputArea.classList.toggle('hidden', view !== 'learn');
@@ -956,6 +968,276 @@ KOSDAQ|웹젠|게임`,
     ? window.THEORY_DAYS
     : FALLBACK_THEORY_DAYS;
 
+  // ===== 홈 대시보드: 틱 차트 시뮬레이션 =====
+  // 실시간 시세가 아니라 KRX 호가 단위 규칙을 따르는 교육용 가상 체결 데이터입니다.
+  function tickSizeFor(price) {
+    if (price < 2000) return 1;
+    if (price < 5000) return 5;
+    if (price < 20000) return 10;
+    if (price < 50000) return 50;
+    if (price < 200000) return 100;
+    if (price < 500000) return 500;
+    return 1000;
+  }
+
+  function nextTickPrice(price) {
+    const tick = tickSizeFor(price);
+    if (Math.random() < 0.32) return price; // 직전과 같은 가격에 체결되는 경우
+    const up = Math.random() < 0.5;
+    return Math.max(tick, up ? price + tick : price - tick);
+  }
+
+  function seedTickHistory() {
+    const count = 60;
+    let price = tickState.price;
+    const prices = [price];
+    for (let i = 1; i < count; i++) {
+      price = nextTickPrice(price);
+      prices.push(price);
+    }
+    const now = Date.now();
+    tickState.history = prices.map((p, i) => ({
+      seq: i + 1,
+      price: p,
+      time: new Date(now - (count - i) * 900),
+      volume: 1 + Math.floor(Math.random() * 40),
+    }));
+    tickState.seq = count;
+    tickState.price = prices[prices.length - 1];
+  }
+
+  function pushTick() {
+    tickState.price = nextTickPrice(tickState.price);
+    tickState.seq += 1;
+    tickState.history.push({
+      seq: tickState.seq,
+      price: tickState.price,
+      time: new Date(),
+      volume: 1 + Math.floor(Math.random() * 40),
+    });
+    if (tickState.history.length > 400) tickState.history.shift();
+  }
+
+  function bucketizeTicks(history, n) {
+    const bars = [];
+    for (let i = 0; i < history.length; i += n) {
+      const chunk = history.slice(i, i + n);
+      const prices = chunk.map(t => t.price);
+      bars.push({
+        open: prices[0],
+        high: Math.max(...prices),
+        low: Math.min(...prices),
+        close: prices[prices.length - 1],
+        count: chunk.length,
+        forming: chunk.length < n,
+        startTime: chunk[0].time,
+        endTime: chunk[chunk.length - 1].time,
+      });
+    }
+    return bars;
+  }
+
+  function fmtTime(date) {
+    return date.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+  function fmtWon(n) {
+    return Number(n).toLocaleString('ko-KR');
+  }
+
+  let tickChartGeom = null; // 마지막으로 그린 차트의 좌표 정보(툴팁 계산용)
+
+  function renderTickChartSVG(bars) {
+    const width = 720, height = 260;
+    const padL = 8, padR = 56, padT = 14, padB = 22;
+    const maxBars = 28;
+    const visible = bars.slice(-maxBars);
+    const plotW = width - padL - padR;
+    const plotH = height - padT - padB;
+    const slot = plotW / Math.max(visible.length, 1);
+    const barW = Math.max(3, Math.min(16, slot * 0.6));
+
+    const highs = visible.map(b => b.high);
+    const lows = visible.map(b => b.low);
+    let maxP = Math.max(...highs), minP = Math.min(...lows);
+    if (maxP === minP) { maxP += tickSizeFor(maxP) * 4; minP -= tickSizeFor(minP) * 4; }
+    const pad = (maxP - minP) * 0.08;
+    maxP += pad; minP -= pad;
+    const y = (p) => padT + (1 - (p - minP) / (maxP - minP)) * plotH;
+
+    const upColor = '#dc2626', downColor = '#2563eb', flatColor = '#94a3b8';
+    const geomBars = [];
+    let candleSvg = '';
+    visible.forEach((b, i) => {
+      const cx = padL + slot * i + slot / 2;
+      const rising = b.close > b.open;
+      const falling = b.close < b.open;
+      const color = rising ? upColor : falling ? downColor : flatColor;
+      const yOpen = y(b.open), yClose = y(b.close), yHigh = y(b.high), yLow = y(b.low);
+      const bodyTop = Math.min(yOpen, yClose);
+      const bodyH = Math.max(2, Math.abs(yClose - yOpen));
+      candleSvg += `<line x1="${cx}" y1="${yHigh}" x2="${cx}" y2="${yLow}" stroke="${color}" stroke-width="1.5" opacity="${b.forming ? 0.55 : 1}"/>`;
+      candleSvg += `<rect x="${(cx - barW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${barW.toFixed(1)}" height="${bodyH.toFixed(1)}" rx="1.5" fill="${color}" opacity="${b.forming ? 0.55 : 1}"/>`;
+      geomBars.push({ cx, slotX0: padL + slot * i, slotX1: padL + slot * (i + 1), bar: b });
+    });
+
+    const gridCount = 4;
+    let gridSvg = '';
+    for (let g = 0; g <= gridCount; g++) {
+      const price = minP + ((maxP - minP) * g) / gridCount;
+      const gy = y(price);
+      gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR + 6}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/>`;
+      gridSvg += `<text x="${width - padR + 10}" y="${(gy + 3).toFixed(1)}" font-size="10" fill="var(--text-muted)">${fmtWon(Math.round(price))}</text>`;
+    }
+
+    tickChartGeom = { padL, plotW, slot, visible, width, height };
+
+    return `<svg id="tickChartSvg" viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none" role="img" aria-label="틱 차트">${gridSvg}${candleSvg}</svg>`;
+  }
+
+  function renderTickTape(history) {
+    const recent = history.slice(-9).reverse();
+    return recent.map(t => {
+      const idx = history.indexOf(t);
+      const prev = idx > 0 ? history[idx - 1].price : t.price;
+      const rising = t.price > prev, falling = t.price < prev;
+      const cls = rising ? 'up' : falling ? 'down' : 'flat';
+      const arrow = rising ? '▲' : falling ? '▼' : '·';
+      return `<li class="${cls}"><span class="tick-tape-time">${fmtTime(t.time)}</span><span class="tick-tape-price">${fmtWon(t.price)}</span><em>${arrow}</em><span class="tick-tape-vol">${t.volume}주</span></li>`;
+    }).join('');
+  }
+
+  function renderTickDashboardFrame() {
+    const wrap = document.getElementById('tickChartWrap');
+    if (!wrap) { stopTickDashboard(); return; }
+    const bars = bucketizeTicks(tickState.history, tickState.bucket);
+    wrap.innerHTML = renderTickChartSVG(bars);
+
+    const base = tickState.history[0].price;
+    const cur = tickState.price;
+    const diff = cur - base;
+    const pct = base ? (diff / base) * 100 : 0;
+    const rising = diff > 0, falling = diff < 0;
+    const priceEl = document.getElementById('tickCurrentPrice');
+    const changeEl = document.getElementById('tickCurrentChange');
+    if (priceEl) priceEl.textContent = `${fmtWon(cur)}원`;
+    if (changeEl) {
+      changeEl.className = `tick-change ${rising ? 'up' : falling ? 'down' : 'flat'}`;
+      changeEl.textContent = `${rising ? '▲' : falling ? '▼' : '-'} ${fmtWon(Math.abs(diff))}원 (${diff >= 0 ? '+' : ''}${pct.toFixed(2)}%)`;
+    }
+    const tapeEl = document.getElementById('tickTape');
+    if (tapeEl) tapeEl.innerHTML = renderTickTape(tickState.history);
+    const countEl = document.getElementById('tickPrintCount');
+    if (countEl) countEl.textContent = `누적 체결 ${tickState.history.length}틱 · 현재 ${tickState.bucket}틱 봉 ${bars.length}개`;
+  }
+
+  function stopTickDashboard() {
+    if (tickState.timer) {
+      clearInterval(tickState.timer);
+      tickState.timer = null;
+    }
+  }
+
+  function bindTickDashboardEvents() {
+    const wrap = document.getElementById('tickChartWrap');
+    const tooltip = document.getElementById('tickChartTooltip');
+    if (wrap && tooltip) {
+      wrap.addEventListener('mousemove', (event) => {
+        if (!tickChartGeom) return;
+        const svg = wrap.querySelector('svg');
+        if (!svg) return;
+        const rect = svg.getBoundingClientRect();
+        const xRatio = (event.clientX - rect.left) / rect.width;
+        const xSvg = xRatio * tickChartGeom.width;
+        const idx = Math.floor((xSvg - tickChartGeom.padL) / tickChartGeom.slot);
+        const item = tickChartGeom.visible[idx];
+        if (!item) { tooltip.classList.remove('is-visible'); return; }
+        const rising = item.close > item.open, falling = item.close < item.open;
+        tooltip.innerHTML = `<b>${fmtTime(item.startTime)} ~ ${fmtTime(item.endTime)}</b><span class="${rising ? 'up' : falling ? 'down' : 'flat'}">종가 ${fmtWon(item.close)}원</span><small>시 ${fmtWon(item.open)} · 고 ${fmtWon(item.high)} · 저 ${fmtWon(item.low)} · 체결 ${item.count}틱${item.forming ? ' (형성 중)' : ''}</small>`;
+        tooltip.classList.add('is-visible');
+        tooltip.style.left = `${event.clientX - rect.left + 12}px`;
+        tooltip.style.top = `${event.clientY - rect.top - 8}px`;
+      });
+      wrap.addEventListener('mouseleave', () => tooltip.classList.remove('is-visible'));
+    }
+    document.querySelectorAll('[data-tick-bucket]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        tickState.bucket = Number(btn.dataset.tickBucket);
+        document.querySelectorAll('[data-tick-bucket]').forEach(b => b.classList.toggle('active', b === btn));
+        renderTickDashboardFrame();
+      });
+    });
+  }
+
+  function initTickDashboard() {
+    if (!tickState.history.length) seedTickHistory();
+    renderTickDashboardFrame();
+    bindTickDashboardEvents();
+    stopTickDashboard();
+    tickState.timer = setInterval(() => {
+      pushTick();
+      renderTickDashboardFrame();
+    }, 900);
+  }
+
+  function renderTickDashboardSection() {
+    const buckets = [1, 5, 10, 20];
+    const bucketButtons = buckets.map(n => `<button type="button" class="tick-bucket-btn ${n === tickState.bucket ? 'active' : ''}" data-tick-bucket="${n}">${n}틱</button>`).join('');
+    const tickTable = [
+      ['2,000원 미만', '1원'], ['2,000원 ~ 5,000원 미만', '5원'], ['5,000원 ~ 20,000원 미만', '10원'],
+      ['20,000원 ~ 50,000원 미만', '50원'], ['50,000원 ~ 200,000원 미만', '100원'],
+      ['200,000원 ~ 500,000원 미만', '500원'], ['500,000원 이상', '1,000원'],
+    ].map(([range, tick]) => `<tr><td>${range}</td><td><b>${tick}</b></td></tr>`).join('');
+
+    return `
+      <section class="content-section tick-dashboard" aria-label="틱 차트 대시보드">
+        <div class="section-heading"><span>LIVE</span><h2>오늘의 틱 차트</h2></div>
+        <article class="tick-card">
+          <header class="tick-card-head">
+            <div>
+              <span class="tick-symbol">${tickState.symbol} <small>${tickState.ticker} · ${tickState.market}</small></span>
+              <strong id="tickCurrentPrice" class="tick-price">${fmtWon(tickState.price)}원</strong>
+              <em id="tickCurrentChange" class="tick-change flat">-</em>
+            </div>
+            <div class="tick-bucket-group" role="group" aria-label="틱 봉 단위 선택">${bucketButtons}</div>
+          </header>
+          <div class="tick-chart-stage">
+            <div id="tickChartWrap" class="tick-chart-wrap"></div>
+            <div id="tickChartTooltip" class="tick-chart-tooltip" role="status"></div>
+          </div>
+          <div class="tick-legend">
+            <span class="up"><i></i>상승 마감</span>
+            <span class="down"><i></i>하락 마감</span>
+            <span id="tickPrintCount" class="tick-count">누적 체결 0틱</span>
+          </div>
+          <ul id="tickTape" class="tick-tape" aria-label="최근 체결 내역"></ul>
+          <p class="tick-disclaimer"><i class="fa-solid fa-circle-info"></i> 실시간 시세가 아니라 KRX 호가 단위 규칙을 따르는 가상 체결을 초 단위로 생성한 교육용 시뮬레이션입니다. 실제 매매 판단에 사용하지 마세요.</p>
+        </article>
+
+        <div class="tick-concept-grid">
+          <article class="tick-concept-card">
+            <h3>틱(Tick)이란?</h3>
+            <p>틱은 <b>주가가 움직이는 최소 가격 변동 단위</b>입니다. 주가는 1원씩 연속으로 바뀌는 것이 아니라, 가격대별로 정해진 단위(1틱)로만 오르내립니다. 예를 들어 주가가 70,000원이면 70,100원, 70,200원처럼 100원 단위로 움직입니다.</p>
+          </article>
+          <article class="tick-concept-card">
+            <h3>틱 차트 (Tick Chart)</h3>
+            <p>시간(1분, 5분 등) 대신 <b>거래가 발생한 횟수(틱)</b>를 기준으로 봉을 그리는 차트입니다. '10틱 차트'는 거래가 10번 성사될 때마다 봉 하나가 새로 생깁니다. 위 차트의 봉 단위 버튼으로 직접 비교해 보세요.</p>
+          </article>
+          <article class="tick-concept-card">
+            <h3>틱 떼기 (Tick Scalping)</h3>
+            <p>1~2틱 정도의 아주 미세한 가격 변동만 노리고 빠르게 매수·매도해 단기 차익을 노리는 초단타 매매 기법입니다. 체결 속도와 거래비용이 수익을 크게 좌우합니다.</p>
+          </article>
+        </div>
+
+        <div class="option-chain-scroll tick-size-table">
+          <table class="option-chain-table">
+            <caption>KRX 주식 호가 단위(틱당 가격) 예시 · 상품·시장에 따라 달라질 수 있습니다</caption>
+            <thead><tr><th>주가 범위</th><th>1틱(호가 단위) 금액</th></tr></thead>
+            <tbody>${tickTable}</tbody>
+          </table>
+        </div>
+      </section>`;
+  }
+
   function renderHome() {
     const modules = [
       ['5일 이론 학습', '금융상품부터 자산배분·리밸런싱까지 하루 한 주제씩 읽습니다.', 'fa-calendar-days', 'theory'],
@@ -995,7 +1277,9 @@ KOSDAQ|웹젠|게임`,
         <div class="home-actions">
           <button class="content-cta" data-go="theory"><i class="fa-solid fa-calendar-days"></i> 5일 이론 학습 시작</button>
           <button class="content-cta" data-go="learn"><i class="fa-solid fa-comments"></i> RAG에게 질문하기</button>
+          <button class="content-secondary" data-go="stocks"><i class="fa-solid fa-building-columns"></i> 종목보기로 이동</button>
         </div>
+        ${renderTickDashboardSection()}
         <section class="content-section"><div class="section-heading"><span>01</span><h2>학습 메뉴</h2></div><div class="home-module-grid">${modules}</div></section>
         <section class="content-section"><div class="section-heading"><span>02</span><h2>금융상품과 실물자산, 쉽게 시작하기</h2></div><p class="section-intro">투자와 거래는 ‘얼마나 많이 버는가’보다 <strong>무엇을 받고, 어떤 조건에서 가치가 줄어들 수 있는가</strong>를 이해하는 일에서 시작합니다.</p><div class="product-explainer-grid">${explainers}</div></section>
         <section class="life-trade-guide"><div><span>EVERYDAY EXCHANGE GUIDE</span><h2>사회생활에서 만나는 모든 거래를<br>같은 질문으로 점검합니다.</h2><p>금융상품뿐 아니라 실물자산, 수집품, 중고 물건, 서비스와 디지털 권리도 거래 전 확인 기준이 필요합니다.</p></div><div class="life-trade-grid">${lifeTrades}</div><footer><b>공통 점검 순서</b><span>① 거래 대상과 권리 확인</span><i></i><span>② 상태·진위·가격 비교</span><i></i><span>③ 비용·보관·인도 조건</span><i></i><span>④ 기록·안전결제·분쟁 대비</span></footer></section>
@@ -1008,6 +1292,7 @@ KOSDAQ|웹젠|게임`,
         <p class="content-disclaimer">학습용 서비스이며 특정 투자상품의 매수·매도를 권유하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
       </article>`;
     bindViewLinks();
+    initTickDashboard();
   }
 
   function renderSimulationGuide() {
@@ -2212,9 +2497,9 @@ effective_date: [기준일]
 
   updateSimulation();
   const requestedView = new URLSearchParams(window.location.search).get('view');
-  const initialView = ['stocks', 'learn', 'simulation', 'backtest', 'calendar'].includes(requestedView)
+  const initialView = ['home', 'stocks', 'learn', 'simulation', 'backtest', 'calendar'].includes(requestedView)
     ? requestedView
-    : 'stocks';
+    : 'home';
   setView(initialView);
   $topKLabel.textContent = state.topK;
 })();
