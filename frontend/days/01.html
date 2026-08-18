@@ -889,101 +889,13 @@
         .querySelector(".keywords div")
         .insertAdjacentHTML(
           "beforeend",
-          "<span>옵션 프리미엄</span><span>시간가치</span><span>내재가치</span>",
-        );
-      document
-        .querySelector(".lesson-list > .lesson:nth-child(10)")
-        .insertAdjacentHTML(
-          "afterend",
-          `<section class="lesson"><span>11</span><div class="lesson-content"><h2>콜옵션을 사려면 왜 프리미엄을 낼까요?</h2><div class="lesson-body"><p>콜옵션을 매수하면 만기 전 또는 만기에 정해진 가격으로 살 수 있는 ‘권리’를 얻습니다. 권리를 산 사람은 불리하면 행사하지 않을 수 있지만, 그 권리를 팔아준 사람은 조건이 충족되면 계약을 이행해야 합니다. 그래서 옵션 매수자는 계약이 체결될 때 옵션 가격인 프리미엄을 내고, 옵션 매도자는 그 프리미엄을 받습니다. 보험 가입자가 보험료를 내고 보험회사가 사고 위험을 부담하는 모습과 비슷하지만, 옵션 가격은 시장에서 계속 변한다는 차이가 있습니다.</p><p>프리미엄은 크게 두 부분으로 생각할 수 있습니다. 내재가치는 지금 바로 권리를 썼을 때 얻을 수 있는 가치이고, 시간가치는 만기 전까지 가격이 유리하게 움직일 가능성에 붙는 가치입니다. 예를 들어 현재 주가가 행사가격보다 낮은 콜옵션은 지금 행사해도 이익이 없어서 내재가치는 0일 수 있습니다. 그래도 만기까지 시간이 남아 있고 주가가 오를 가능성이 있다면 시간가치가 있어 프리미엄을 내고 거래될 수 있습니다.</p><p>만기가 가까워질수록 시간가치는 보통 줄어듭니다. 만기에 콜옵션이 외가격(기초자산 가격이 행사가격보다 낮은 상태)으로 끝나면 내재가치와 시간가치가 모두 0이어서 권리는 가치 없이 소멸합니다. 이때 매수자가 이미 낸 프리미엄은 돌려받지 못합니다. 반대로 만기에 내가격이면 시간가치는 사라지고 남은 내재가치를 기준으로 결제·행사 여부가 정해집니다.</p><p>따라서 ‘ATM이나 OTM 옵션은 0원으로 살 수 없다’고 단정하기보다, 만기 전에는 시간가치 때문에 가격이 붙을 수 있고 만기에는 조건에 따라 가치가 0이 될 수 있다고 이해하는 편이 정확합니다. 거래소의 최소호가와 실제 매수·매도 주문은 상품마다 다르며, 가치가 거의 없는 계약은 반대 주문이 없어 거래 자체가 성립하지 않을 수도 있습니다. 옵션 매수의 최대 손실은 보통 낸 프리미엄과 거래비용이지만, 옵션 매도는 손실 구조가 다르므로 별도로 이해해야 합니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="콜옵션을 사려면 왜 프리미엄을 낼까요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`,
-        );
-      document
-        .querySelector(".glossary-grid")
-        .insertAdjacentHTML(
-          "beforeend",
-          '<div class="glossary-item"><dt>시간가치 <small>Time Value · Extrinsic Value</small></dt><dd>옵션 프리미엄 중 내재가치를 넘는 부분입니다. 만기 전 가격이 유리하게 움직일 가능성을 반영하며, 다른 조건이 같다면 만기가 가까워질수록 줄어드는 경향이 있습니다. 만기에는 시간가치가 0이 됩니다.</dd></div>',
-        );
-      document
-        .querySelectorAll(".lesson-list > .lesson")
-        .forEach((lesson, index) => {
-          lesson.querySelector(":scope > span").textContent = String(
-            index + 1,
-          ).padStart(2, "0");
-        });
-      document
-        .querySelector(
-          ".lesson-list > .lesson:nth-child(11) [data-lesson-toggle]",
-        )
-        .addEventListener("click", () => {
-          const button = document.querySelector(
-            ".lesson-list > .lesson:nth-child(11) [data-lesson-toggle]",
-          );
-          const section = button.closest(".lesson");
-          const collapsed = section.classList.toggle("is-collapsed");
-          button.setAttribute("aria-expanded", String(!collapsed));
-          button.setAttribute(
-            "aria-label",
-            collapsed ? "내용 펼치기" : "내용 접기",
-          );
-          button.title = collapsed ? "내용 펼치기" : "내용 접기";
-        });
-    </script>
-    <script>
-      document
-        .querySelector(".keywords div")
-        .insertAdjacentHTML(
-          "beforeend",
-          "<span>매수호가</span><span>매도호가</span><span>호가 스프레드</span>",
-        );
-      document
-        .querySelector(".lesson-list > .lesson:nth-child(11)")
-        .insertAdjacentHTML(
-          "afterend",
-          `<section class="lesson"><span>12</span><div class="lesson-content"><h2>옵션 프리미엄은 호가가 만날 때 정해집니다</h2><div class="lesson-body"><p>옵션 프리미엄도 거래소에서 매수 주문과 매도 주문이 만나면서 정해집니다. 매수호가는 ‘이 가격 이하라면 사겠다’, 매도호가는 ‘이 가격 이상이라야 팔겠다’는 뜻입니다. 가장 높은 매수호가와 가장 낮은 매도호가의 차이를 호가 스프레드라고 합니다.</p><p>중요한 점은 스프레드의 가운데 가격이 자동 체결가격은 아니라는 것입니다. 예를 들어 매수호가가 500원, 매도호가가 520원이라면 두 가격은 아직 만나지 않았으므로 일반적인 장중 주문장에서는 510원에 자동으로 체결되지 않고 각각 대기합니다. 화면에서 510원은 두 호가의 중간값으로 참고할 수 있지만, 실제 거래가가 아닙니다.</p><p>누군가 520원에 사겠다는 주문을 내거나, 500원에 팔겠다는 주문을 내면 가격 조건이 맞아 체결될 수 있습니다. 연속매매에서는 보통 먼저 주문장에 있던 반대 주문의 가격으로 체결됩니다. 그래서 520원 매도 주문이 먼저 있었다가 나중에 520원 매수 주문이 들어오면 520원에서 체결되는 식입니다. 장 시작·마감처럼 여러 주문을 모아 한 가격으로 정하는 단일가매매는 별도 방식입니다.</p><p>유동성이 높아 매수·매도 호가 차이가 좁으면 원하는 가격 근처에서 거래될 가능성이 커집니다. 반대로 거래가 뜸하면 스프레드가 넓어져 매수 직후나 매도 직후 불리한 가격 차이가 생길 수 있습니다. 옵션을 볼 때는 마지막 체결가만 보지 말고 현재 매수·매도호가, 스프레드, 거래량과 미결제약정을 함께 확인하세요.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="옵션 프리미엄은 호가가 만날 때 정해집니다 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`,
-        );
-      document
-        .querySelector(".glossary-grid")
-        .insertAdjacentHTML(
-          "beforeend",
-          '<div class="glossary-item"><dt>호가 스프레드 <small>Bid-Ask Spread</small></dt><dd>현재 가장 높은 매수호가와 가장 낮은 매도호가의 차이입니다. 가운데 값은 참고용 중간값일 뿐 자동 체결가격은 아닙니다. 스프레드가 넓으면 실제 매매 비용과 가격 불확실성이 커질 수 있습니다.</dd></div>',
-        );
-      document
-        .querySelectorAll(".lesson-list > .lesson")
-        .forEach((lesson, index) => {
-          lesson.querySelector(":scope > span").textContent = String(
-            index + 1,
-          ).padStart(2, "0");
-        });
-      document
-        .querySelector(
-          ".lesson-list > .lesson:nth-child(12) [data-lesson-toggle]",
-        )
-        .addEventListener("click", () => {
-          const button = document.querySelector(
-            ".lesson-list > .lesson:nth-child(12) [data-lesson-toggle]",
-          );
-          const section = button.closest(".lesson");
-          const collapsed = section.classList.toggle("is-collapsed");
-          button.setAttribute("aria-expanded", String(!collapsed));
-          button.setAttribute(
-            "aria-label",
-            collapsed ? "내용 펼치기" : "내용 접기",
-          );
-          button.title = collapsed ? "내용 펼치기" : "내용 접기";
-        });
-    </script>
-    <script>
-      document
-        .querySelector(".keywords div")
-        .insertAdjacentHTML(
-          "beforeend",
           "<span>버틀러</span><span>기업 분석</span><span>기업공시</span><span>포트폴리오</span><span>스크리너</span>",
         );
       document
-        .querySelector(".lesson-list")
+        .querySelector(".lesson-list > .lesson:nth-child(14)")
         .insertAdjacentHTML(
-          "afterbegin",
-          `<section class="lesson"><span>01</span><div class="lesson-content"><h2>버틀러로 기업 분석을 시작해 볼까요?</h2><div class="lesson-body"><p><a href="https://www.butler.works/ko/home" target="_blank" rel="noopener noreferrer">버틀러</a>는 투자자가 기업의 재무제표·실적·공시를 이해하기 쉽게 살펴볼 수 있도록 돕는 기업 분석 플랫폼입니다. 여러 증권 계좌와 관심 기업의 정보를 모아, 개인 투자자가 기업의 펀더멘털과 자신의 포트폴리오를 점검하는 ‘투자 비서’처럼 활용할 수 있습니다.</p><p>복잡한 숫자는 매출, 영업이익, 수주잔고, 지역별 실적 등의 그래프로 확인할 수 있습니다. 기업공시에서는 많은 공시 가운데 투자 판단에 중요한 내용을 빠르게 찾도록 돕고, 관심기업은 그룹별로 묶어 꾸준히 추적할 수 있습니다.</p><p>포트폴리오 관리 기능으로 여러 증권 계좌에 흩어진 종목을 한 화면에서 살펴볼 수 있으며, 기업 스크리너에서는 다양한 조건을 조합해 자신의 기준에 맞는 기업 후보를 찾을 수 있습니다. 초보자는 성장 추세를 읽는 데, 중·장기 투자자는 공시와 펀더멘털을 비교하는 데 활용할 수 있습니다.</p><p>다만 플랫폼이 제공하는 데이터와 시각화는 투자 판단을 돕는 정보입니다. 매매를 대신 결정하거나 수익을 보장하지 않으므로, 최신 공시 원문·재무제표·상품 이용 조건을 다시 확인하고 자신의 투자 목적과 위험 감수 수준에 맞춰 판단하세요. 일부 기능은 유료 구독으로 제공될 수 있으며, 지원 시장과 기능은 서비스 정책에 따라 달라질 수 있습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="버틀러로 기업 분석을 시작해 볼까요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`,
+          "afterend",
+          `<section class="lesson"><span>15</span><div class="lesson-content"><h2>버틀러로 기업 분석을 시작해 볼까요?</h2><div class="lesson-body"><p><a href="https://www.butler.works/ko/home" target="_blank" rel="noopener noreferrer">버틀러</a>는 투자자가 기업의 재무제표·실적·공시를 이해하기 쉽게 살펴볼 수 있도록 돕는 기업 분석 플랫폼입니다. 여러 증권 계좌와 관심 기업의 정보를 모아, 개인 투자자가 기업의 펀더멘털과 자신의 포트폴리오를 점검하는 ‘투자 비서’처럼 활용할 수 있습니다.</p><p>복잡한 숫자는 매출, 영업이익, 수주잔고, 지역별 실적 등의 그래프로 확인할 수 있습니다. 기업공시에서는 많은 공시 가운데 투자 판단에 중요한 내용을 빠르게 찾도록 돕고, 관심기업은 그룹별로 묶어 꾸준히 추적할 수 있습니다.</p><p>포트폴리오 관리 기능으로 여러 증권 계좌에 흩어진 종목을 한 화면에서 살펴볼 수 있으며, 기업 스크리너에서는 다양한 조건을 조합해 자신의 기준에 맞는 기업 후보를 찾을 수 있습니다. 초보자는 성장 추세를 읽는 데, 중·장기 투자자는 공시와 펀더멘털을 비교하는 데 활용할 수 있습니다.</p><p>다만 플랫폼이 제공하는 데이터와 시각화는 투자 판단을 돕는 정보입니다. 매매를 대신 결정하거나 수익을 보장하지 않으므로, 최신 공시 원문·재무제표·상품 이용 조건을 다시 확인하고 자신의 투자 목적과 위험 감수 수준에 맞춰 판단하세요. 일부 기능은 유료 구독으로 제공될 수 있으며, 지원 시장과 기능은 서비스 정책에 따라 달라질 수 있습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="버틀러로 기업 분석을 시작해 볼까요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`,
         );
       document
         .querySelectorAll(".lesson-list > .lesson")
@@ -994,11 +906,11 @@
         });
       document
         .querySelector(
-          ".lesson-list > .lesson:first-child [data-lesson-toggle]",
+          ".lesson-list > .lesson:nth-child(15) [data-lesson-toggle]",
         )
         .addEventListener("click", () => {
           const button = document.querySelector(
-            ".lesson-list > .lesson:first-child [data-lesson-toggle]",
+            ".lesson-list > .lesson:nth-child(15) [data-lesson-toggle]",
           );
           const section = button.closest(".lesson");
           const collapsed = section.classList.toggle("is-collapsed");
