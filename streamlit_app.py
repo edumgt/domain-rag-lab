@@ -12,7 +12,7 @@ import uuid
 import requests
 import streamlit as st
 
-API_BASE = os.getenv("API_BASE_URL", "http://localhost:8190")
+API_BASE = os.getenv("API_BASE_URL", "http://localhost:8300")
 
 # ── 페이지 설정 ────────────────────────────────────────────────────
 st.set_page_config(

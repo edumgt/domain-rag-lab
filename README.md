@@ -125,9 +125,9 @@ docker compose --env-file .env.local -f docker-compose.yml up --build -d
 | 서비스 | 주소 |
 |---|---|
 | Streamlit UI | http://localhost:8290 |
-| FastAPI | http://localhost:8190 |
-| API 문서 | http://localhost:8190/docs |
-| 상태 확인 | http://localhost:8190/health |
+| FastAPI | http://localhost:8300 |
+| API 문서 | http://localhost:8300/docs |
+| 상태 확인 | http://localhost:8300/health |
 | Qdrant 대시보드 | http://localhost:6335/dashboard |
 | PostgreSQL (호스트 접속) | `localhost:15433` |
 | Redis (호스트 접속) | `localhost:6380` |
@@ -136,14 +136,14 @@ docker compose --env-file .env.local -f docker-compose.yml up --build -d
 
 ```bash
 docker compose --env-file .env.local -f docker-compose.yml ps
-curl http://localhost:8190/health
+curl http://localhost:8300/health
 ```
 
 로컬에서 UI만 실행할 때는 API 주소를 지정할 수 있습니다.
 
 ```bash
 pip install -r requirements.txt
-API_BASE_URL=http://localhost:8190 streamlit run streamlit_app.py
+API_BASE_URL=http://localhost:8300 streamlit run streamlit_app.py
 ```
 
 ### 5일 이론 페이지
@@ -200,7 +200,7 @@ docker compose --env-file .env.prod -f docker-compose.prod.yml ps
 
 ```bash
 for f in ./data/samples/finance_*.txt; do
-  curl -X POST http://localhost:8190/ingest/file \
+  curl -X POST http://localhost:8300/ingest/file \
     -F "file=@${f}" \
     -F "domain=finance"
 done
@@ -234,7 +234,7 @@ done
 ### 금융상품 비교
 
 ```bash
-curl -X POST http://localhost:8190/chat \
+curl -X POST http://localhost:8300/chat \
   -H "Content-Type: application/json" \
   -d '{
     "question": "일반펀드와 ETF를 비교할 때 비용과 유동성 측면에서 확인할 항목을 정리해 주세요.",
@@ -247,7 +247,7 @@ curl -X POST http://localhost:8190/chat \
 ### 자산배분 질의
 
 ```bash
-curl -X POST http://localhost:8190/chat/orchestrate \
+curl -X POST http://localhost:8300/chat/orchestrate \
   -H "Content-Type: application/json" \
   -d '{
     "question": "60/40 포트폴리오와 Risk Parity의 차이를 위험 기여도 관점에서 설명해 주세요.",
@@ -259,7 +259,7 @@ curl -X POST http://localhost:8190/chat/orchestrate \
 ### 직접 문서 등록
 
 ```bash
-curl -X POST http://localhost:8190/ingest/text \
+curl -X POST http://localhost:8300/ingest/text \
   -H "Content-Type: application/json" \
   -d '{
     "document_id": "allocation-policy-v1",
@@ -318,9 +318,20 @@ UI에서 도메인을 `금융·투자`로 선택한 뒤 다음 기능을 사용�
 └── requirements.txt
 ```
 
-## 기술 스택
+## 기술 스택 및 오픈소스 구성요소
 
-FastAPI · Streamlit · Qdrant · PostgreSQL/pgvector · Redis · sentence-transformers · OpenAI 호환 LLM API · Docker Compose
+구현 코드, `requirements.txt`, Docker Compose 설정을 기준으로 정리한 목록입니다. 각 이름은 해당 프로젝트의 GitHub 저장소로 연결됩니다. 임베딩은 외부 `sentence-transformers` 모델이 아니라 이 저장소의 경량 해시 임베딩 구현을 사용합니다.
+
+| 구분 | 사용 기술·솔루션 | 용도 |
+|---|---|---|
+| 언어·컨테이너 | [Python](https://github.com/python/cpython) 3.11 · [Docker](https://github.com/docker/docker-ce) · [Docker Compose](https://github.com/docker/compose) | API/UI 실행 이미지와 로컬·운영 환경 구성 |
+| API·UI | [FastAPI](https://github.com/fastapi/fastapi) · [Uvicorn](https://github.com/encode/uvicorn) · [Streamlit](https://github.com/streamlit/streamlit) | REST API, ASGI 서버, 데모 UI |
+| 데이터 저장소 | [PostgreSQL](https://github.com/postgres/postgres) · [pgvector](https://github.com/pgvector/pgvector) · [Redis](https://github.com/redis/redis) · [Qdrant](https://github.com/qdrant/qdrant) | 문서·대화 데이터, 장기 기억 벡터, 캐시, 문서 유사도 검색 |
+| 데이터 접근 라이브러리 | [SQLAlchemy](https://github.com/sqlalchemy/sqlalchemy) · [psycopg2](https://github.com/psycopg/psycopg2) · [pgvector-python](https://github.com/pgvector/pgvector-python) · [redis-py](https://github.com/redis/redis-py) · [qdrant-client](https://github.com/qdrant/qdrant-client) | PostgreSQL/pgvector, Redis, Qdrant 연동 |
+| API·입력 처리 라이브러리 | [Pydantic](https://github.com/pydantic/pydantic) · [pydantic-settings](https://github.com/pydantic/pydantic-settings) · [HTTPX](https://github.com/encode/httpx) · [Requests](https://github.com/psf/requests) · [python-multipart](https://github.com/Kludex/python-multipart) · [pypdf](https://github.com/py-pdf/pypdf) | 환경·요청 검증, LLM/외부 API 호출, 파일 업로드 및 PDF 파싱 |
+| LLM 연동 | [vLLM](https://github.com/vllm-project/vllm) 또는 [Ollama](https://github.com/ollama/ollama) 등 OpenAI 호환 Chat Completions 서버 | RAG 답변과 도구 호출을 위한 외부 LLM 서버. 이 저장소는 서버 주소를 환경변수로 받아 연동합니다. |
+| 금융 백테스트·데이터 | [QuantConnect LEAN](https://github.com/QuantConnect/Lean) · [yfinance](https://github.com/ranaroussi/yfinance) | 원격 Docker 기반 백테스트 실행 및 일봉 데이터 조회 |
+| 운영 프록시 | [Caddy](https://github.com/caddyserver/caddy) | 운영 환경의 TLS 및 FastAPI 리버스 프록시 |
 
 ## 유의사항
 
