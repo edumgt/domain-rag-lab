@@ -17,7 +17,6 @@
     <script defer src="assets/visuals.js"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js"></script>
-    <script defer src="assets/data-library-reader.js"></script>
   </head>
   <body data-day="5">
     <header class="day-appbar">
@@ -41,8 +40,6 @@
         ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
         ><a href="/?view=simulation"
           ><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</a
-        ><a href="/?view=backtest"
-          ><i class="fa-solid fa-flask"></i> LEAN 백테스트</a
         ><a href="/?view=calendar"
           ><i class="fa-solid fa-calendar-days"></i> 캘린더</a
         >
@@ -59,11 +56,11 @@
     <aside class="day-offcanvas" id="dayOffcanvas" aria-label="5일 학습 목차">
       <h2>5일 이론 학습</h2>
       <p>일차를 선택해 정적 학습 페이지로 이동합니다.</p>
-      <a href="01.html">DAY 01 · 금융상품 기초</a
-      ><a href="02.html">DAY 02 · 펀드 · ETF</a
-      ><a href="03.html">DAY 03 · 채권 · 외환 · 파생상품</a
-      ><a href="04.html">DAY 04 · 포트폴리오와 위험</a
-      ><a class="active" href="05.html">DAY 05 · 자산배분</a>
+      <a href="01.html">01 · 금융상품 기초</a
+      ><a href="02.html">02 · 펀드 · ETF</a
+      ><a href="03.html">03 · 채권 · 외환 · 파생상품</a
+      ><a href="04.html">04 · 포트폴리오와 위험</a
+      ><a class="active" href="05.html">05 · 자산배분</a>
     </aside>
     <nav aria-label="5일 학습 목차">
       <a class="brand" href="index.html">5일 금융 이론</a>
@@ -84,7 +81,7 @@
     <main id="app">
       <article>
         <header class="lesson-head">
-          <p class="eyebrow">DAY 05 / 05</p>
+          <p class="eyebrow">05 / 05</p>
           <h1>자산배분과 리밸런싱</h1>
           <p>
             목표와 위험 수준에 맞게 비중을 정하고, 흔들리지 않도록 규칙을
@@ -95,8 +92,7 @@
           <p>오늘의 학습 목표</p>
           <strong
             >자산배분 원칙을 적용하고, 파생상품이 포트폴리오와 현물시장에
-            연결되는 방식 및 LEAN 백테스트 결과를 자신의 리밸런싱 점검에 연결할
-            수 있어요.</strong
+            연결되는 방식과 리밸런싱 규칙을 설명할 수 있어요.</strong
           >
         </section>
         <section class="keywords">
@@ -106,7 +102,7 @@
             ><span>Risk Parity</span><span>리밸런싱</span><span>마켓타이밍</span
             ><span>헤지</span><span>현물시장</span><span>선물</span
             ><span>옵션</span><span>목표수익률</span><span>위험허용도</span
-            ><span>투자기간</span><span>LEAN</span>
+            ><span>투자기간</span>
           </div>
         </section>
         <section class="lesson-list">
@@ -671,46 +667,11 @@
               <span aria-hidden="true">⌃</span>
             </button>
           </section>
-          <section class="lesson">
-            <span>16</span>
-            <div class="lesson-content">
-              <h2>통합 실습: LEAN 백테스트로 리밸런싱 점검하기</h2>
-              <div class="lesson-body">
-                <p>
-                  LEAN 백테스트 워크플로우에서 종목, 백테스트 기간, 비교 기간을
-                  입력하면 yfinance 가격을 준비하고 LEAN을 실행해 전략 결과와
-                  비교 기간의 성과를 나란히 확인합니다. 수익률은 결론이 아니라
-                  가정의 결과입니다.
-                </p>
-                <p>
-                  수익률·비교 기간·최대낙폭을 목표 비중과 비교해 보세요. 한
-                  자산의 과거 성과가 좋았더라도 위험 허용도와 투자 기간에 맞지
-                  않으면 비중을 늘릴 근거가 되지 않습니다.
-                </p>
-                <p>
-                  1일차에 등록한 RAG 근거 문서의 상품 조건·법률 기준일과
-                  백테스트의 비용 가정을 함께 확인합니다. 실제 주문 전에는 최신
-                  공시와 약관을 다시 확인합니다.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="통합 실습: LEAN 백테스트로 리밸런싱 점검하기 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
         </section>
         <aside class="check">
           <p>오늘의 확인</p>
           <strong
-            >목표 비중·점검 주기와 LEAN 백테스트의 수익률·MDD를 함께 적고, 다음
-            점검일을 정해 보세요.</strong
+            >목표 비중과 점검 주기를 적고, 다음 점검일을 정해 보세요.</strong
           >
         </aside>
         <section class="glossary">
@@ -778,7 +739,7 @@
           </dl>
         </section>
         <div class="pager">
-          <a href="04.html">← DAY 04</a
+          <a href="04.html">← 04</a
           ><a href="index.html">목차로 돌아가기 →</a>
         </div>
       </article>

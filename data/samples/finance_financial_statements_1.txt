@@ -1,7 +1,6 @@
 # 재무제표 분석 I (손익계산서 & 대차대조표)
 
 
-> 📺 **YouTube 강의**: [🎬 재무제표 분석 손익계산서 대차대조표](https://www.youtube.com/results?search_query=재무제표+손익계산서+대차대조표+분석+한국어)
 >
 > 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
 
@@ -14,37 +13,6 @@
 - 대차대조표(Balance Sheet) 구조 이해
 - 자산·부채·자본 분석
 - 실습: DART 공시 재무제표 데이터 수집 및 분석
-
----
-
-## 🗓 세부 일정 (1일 8시간)
-
-
-> **강의 5시간** (5개 단락 × 50분 + 도입·마무리 50분) + **실습 3시간** = 총 8시간
-
-| 시간 | 구분 | 내용 | 형태 |
-|------|------|------|------|
-| 09:00 – 09:10 | 도입 | 오늘 학습 목표 확인 | 강의 |
-| 09:10 – 09:30 | **1단락** 설명 20분 | 손익계산서(Income Statement) 구조 이해 | 강의 |
-| 09:30 – 10:00 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:00 – 10:20 | **2단락** 설명 20분 | 매출액, 영업이익, 순이익 분석 | 강의 |
-| 10:20 – 10:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:50 – 11:00 | ☕ 휴식 | — | — |
-| 11:00 – 11:20 | **3단락** 설명 20분 | 대차대조표(Balance Sheet) 구조 이해 | 강의 |
-| 11:20 – 11:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 11:50 – 12:10 | **4단락** 설명 20분 | 자산·부채·자본 분석 | 강의 |
-| 12:10 – 12:40 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 12:40 – 13:00 | **5단락** 설명 20분 | DART 공시 재무제표 데이터 수집 방법 개요 | 강의 |
-| 13:00 – 13:30 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 13:30 – 14:00 | 강의 마무리 | Q&A · 핵심 복습 | 강의 |
-| 14:00 – 15:00 | 💻 **실습 1부** 60분 | DART API 수집 코드 작성 (기업 코드 캐시·재무제표 동적 수집) | 실습 |
-| 15:00 – 15:10 | ☕ 휴식 | — | — |
-| 15:10 – 16:00 | 💻 **실습 2부** 50분 | 재무비율 계산 · 웹 대시보드 · 문서 출력 구현 | 실습 |
-| 16:00 – 16:10 | ☕ 휴식 | — | — |
-| 16:10 – 17:00 | 💻 **실습 발표 & 리뷰** 50분 | 코드 리뷰 · 발표 · 피드백 | 실습 |
-
-> 강의 5시간: 도입 10분 + 단락 5개×50분 + 마무리 30분 = **300분**  
-> 실습 3시간: 1부 60분 + 휴식 10분 + 2부 50분 + 휴식 10분 + 발표·리뷰 50분 = **180분**
 
 ---
 
@@ -92,7 +60,6 @@
 
 손익계산서는 회사가 **일정 기간 동안** 얼마나 벌고, 얼마나 쓰고, 마지막에 얼마나 남겼는지를 보여주는 성적표입니다.
 
-> 📺 [🎬 손익계산서 구조 읽는 법](https://www.youtube.com/results?search_query=손익계산서+구조+읽는법+재무제표+한국어)
 
 ```mermaid
 flowchart TD
@@ -119,7 +86,6 @@ flowchart TD
 
 > 📖 **Wikipedia**: [영업이익](https://ko.wikipedia.org/wiki/영업이익) · [당기순이익](https://ko.wikipedia.org/wiki/당기순이익) · [매출총이익](https://ko.wikipedia.org/wiki/매출총이익)
 
-> 📺 [🎬 매출액 영업이익 순이익 차이](https://www.youtube.com/results?search_query=매출액+영업이익+순이익+차이+분석+한국어)
 
 | 지표 | 공식 | 의미 |
 |------|------|------|
@@ -505,7 +471,6 @@ graph LR
 
 > 📖 **Wikipedia**: [대차대조표](https://ko.wikipedia.org/wiki/대차대조표)
 
-> 📺 [🎬 대차대조표 재무상태표 읽는 법](https://www.youtube.com/results?search_query=대차대조표+재무상태표+읽는법+한국어)
 
 손익계산서가 **기간의 흐름**이라면, 대차대조표는 **특정 시점의 스냅샷**입니다.
 
@@ -577,7 +542,6 @@ block-beta
 
 > 📖 **Wikipedia**: [자기자본이익률](https://ko.wikipedia.org/wiki/자기자본이익률) · [부채비율](https://ko.wikipedia.org/wiki/부채비율) · [유동비율](https://ko.wikipedia.org/wiki/유동비율)
 
-> 📺 [🎬 자산 부채 자본 재무건전성 분석](https://www.youtube.com/results?search_query=자산+부채+자본+재무건전성+부채비율+한국어)
 
 **주요 안전성 지표**
 
@@ -657,7 +621,6 @@ block-beta
 
 > 📖 **Wikipedia**: [자기자본이익률(ROE)](https://ko.wikipedia.org/wiki/자기자본이익률) · [투자수익률(ROI)](https://ko.wikipedia.org/wiki/투자수익률)
 
-> 📺 [🎬 ROE ROI ROA 차이 쉽게 설명](https://www.youtube.com/results?search_query=ROE+ROI+ROA+차이+쉬운+설명+한국어)
 
 이 세 지표는 모두 **"투입 대비 얼마나 벌었나?"** 를 측정합니다. 무엇을 기준으로 계산하느냐가 다를 뿐입니다.
 
@@ -727,7 +690,6 @@ ROE = ROA × (총자산 / 자기자본)
 
 > 📖 **Wikipedia**: [유동비율](https://ko.wikipedia.org/wiki/유동비율) · [당좌비율](https://ko.wikipedia.org/wiki/당좌비율)
 
-> 📺 [🎬 유동성 지표 유동비율 당좌비율 쉽게](https://www.youtube.com/results?search_query=유동성지표+유동비율+당좌비율+쉬운설명+한국어)
 
 **"흑자인데 부도?" — 유동성이 없으면 이익도 소용없습니다.**
 
@@ -775,112 +737,14 @@ CCC = 재고보유기간 + 매출채권회수기간 − 매입채무지급기간
 
 ### 5. 실습: DART 공시 재무제표 데이터 수집 및 분석
 
-> 📺 [🎬 DART 공시 재무제표 파이썬 수집](https://www.youtube.com/results?search_query=DART+공시+재무제표+파이썬+수집+한국어)
 
 DART(전자공시시스템)는 한국 상장기업의 공식 재무 데이터를 얻을 수 있는 가장 신뢰할 수 있는 원천입니다.
 
 **yfinance로 손익계산서 분석 (글로벌 상장 주식)**
 
-```python
-import yfinance as yf
-import pandas as pd
-
-def income_statement_summary(ticker: str, name: str = ""):
-    t = yf.Ticker(ticker)
-    fs = t.financials  # 연간 손익계산서 (단위: 달러/원)
-    if fs is None or fs.empty:
-        print(f"{name or ticker}: 데이터 없음")
-        return
-
-    rows = ["Total Revenue", "Gross Profit", "Operating Income", "Net Income"]
-    labels = {"Total Revenue": "매출액", "Gross Profit": "매출총이익",
-              "Operating Income": "영업이익", "Net Income": "당기순이익"}
-
-    subset = fs.loc[[r for r in rows if r in fs.index]]
-    subset.index = [labels.get(i, i) for i in subset.index]
-    subset.columns = [str(c.year) + "Y" for c in subset.columns]
-
-    print(f"\n=== {name or ticker} 손익계산서 (단위: 억) ===")
-    print((subset / 1e8).round(0).to_string())
-
-    # 영업이익률 계산
-    if "매출액" in subset.index and "영업이익" in subset.index:
-        margin = subset.loc["영업이익"] / subset.loc["매출액"] * 100
-        margin.index = [str(c.year) + "Y" for c in fs.columns]
-        print("\n영업이익률(%):", margin.round(1).to_string())
-
-income_statement_summary("005930.KS", "삼성전자")
-```
 
 **DART OpenAPI로 한국 상장기업 재무 데이터 수집**
 
-```python
-import requests
-import pandas as pd
-import os
-
-DART_API_KEY = os.environ["DART_API_KEY"]  # .env 또는 환경변수에서 로드
-
-def dart_company_search(query: str) -> list[dict]:
-    """
-    앱의 /api/dart/company-search 엔드포인트와 동일한 로직.
-    corp_name, stock_code, corp_code, market 반환.
-    """
-    url = "https://opendart.fss.or.kr/api/company.json"
-    params = {"crtfc_key": DART_API_KEY, "corp_name": query}
-    resp = requests.get(url, params=params, timeout=10)
-    data = resp.json()
-    if data.get("status") != "000":
-        return []
-    return [
-        {
-            "corp_name":  c["corp_name"],
-            "stock_code": c.get("stock_code", ""),
-            "corp_code":  c["corp_code"],
-            "market":     c.get("corp_cls", ""),
-        }
-        for c in data.get("results", [])
-        if c.get("stock_code")  # 상장사만 필터
-    ]
-
-def dart_financial_statement(corp_code: str, year: str = "2023",
-                              reprt_code: str = "11011") -> pd.DataFrame:
-    """
-    DART 단일회사 주요계정 조회 (reprt_code: 11011=사업보고서).
-    손익계산서(IS), 재무상태표(BS) 주요 항목 반환.
-    """
-    url = "https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json"
-    params = {
-        "crtfc_key": DART_API_KEY,
-        "corp_code":  corp_code,
-        "bsns_year":  year,
-        "reprt_code": reprt_code,
-        "fs_div":     "CFS",  # 연결재무제표
-    }
-    resp = requests.get(url, params=params, timeout=10)
-    data = resp.json()
-    if data.get("status") != "000":
-        return pd.DataFrame()
-    df = pd.DataFrame(data["list"])
-    df["thstrm_amount"] = pd.to_numeric(
-        df["thstrm_amount"].str.replace(",", ""), errors="coerce"
-    )
-    return df[["sj_nm", "account_nm", "thstrm_amount"]].rename(columns={
-        "sj_nm":          "재무제표",
-        "account_nm":     "계정명",
-        "thstrm_amount":  "당기금액(원)",
-    })
-
-# --- 사용 예시 ---
-companies = dart_company_search("삼성전자")
-if companies:
-    corp = companies[0]
-    print(f"검색 결과: {corp['corp_name']} ({corp['stock_code']})")
-    fs_df = dart_financial_statement(corp["corp_code"], year="2023")
-    # 손익계산서만 필터
-    is_df = fs_df[fs_df["재무제표"] == "손익계산서"]
-    print(is_df.head(10).to_string(index=False))
-```
 
 - 실습에서는 숫자를 단순히 가져오는 데서 끝나지 않고, **최근 3~5년 변화 방향**을 읽는 것이 중요합니다.
 - **연결 기준인지 별도 기준인지**, **연간인지 분기인지** 구분해야 숫자를 잘못 해석하지 않습니다.
@@ -945,42 +809,6 @@ OpenDART는 공시 원문과 주요 재무 계정, 대량 재무정보를 API �
 
 기업 검색을 매번 API로 처리하면 느립니다. 먼저 DART 고유번호 파일을 내려받아 캐시합니다.
 
-```python
-import os
-import io
-import zipfile
-import requests
-import pandas as pd
-import xml.etree.ElementTree as ET
-
-DART_API_KEY = os.getenv("DART_API_KEY")
-
-def fetch_corp_codes():
-    url = "https://opendart.fss.or.kr/api/corpCode.xml"
-    res = requests.get(url, params={"crtfc_key": DART_API_KEY}, timeout=30)
-    res.raise_for_status()
-
-    with zipfile.ZipFile(io.BytesIO(res.content)) as zf:
-        xml_name = zf.namelist()[0]
-        xml_bytes = zf.read(xml_name)
-
-    root = ET.fromstring(xml_bytes)
-    rows = []
-    for item in root.findall("list"):
-        rows.append({
-            "corp_code": item.findtext("corp_code"),
-            "corp_name": item.findtext("corp_name"),
-            "stock_code": item.findtext("stock_code"),
-            "modify_date": item.findtext("modify_date"),
-        })
-    df = pd.DataFrame(rows)
-    df = df[df["stock_code"].fillna("").str.len() == 6]
-    df.to_csv("dart_companies.csv", index=False, encoding="utf-8-sig")
-    return df
-
-companies = fetch_corp_codes()
-print(companies.head())
-```
 
 ---
 
@@ -988,44 +816,6 @@ print(companies.head())
 
 기존 실습은 한 회사의 한 연도만 조회합니다. 웹앱에서는 사용자가 기간과 보고서 종류를 선택할 수 있어야 합니다.
 
-```python
-def fetch_financial_statement(corp_code, year, reprt_code="11011", fs_div="CFS"):
-    url = "https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json"
-    params = {
-        "crtfc_key": DART_API_KEY,
-        "corp_code": corp_code,
-        "bsns_year": str(year),
-        "reprt_code": reprt_code,
-        "fs_div": fs_div,
-    }
-    data = requests.get(url, params=params, timeout=20).json()
-    rows = data.get("list", [])
-    if not rows:
-        return pd.DataFrame()
-
-    df = pd.DataFrame(rows)
-    amount_cols = ["thstrm_amount", "frmtrm_amount", "bfefrmtrm_amount"]
-    for col in amount_cols:
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col].astype(str).str.replace(",", ""), errors="coerce")
-    df["year"] = year
-    df["reprt_code"] = reprt_code
-    df["fs_div"] = fs_div
-    return df
-
-def fetch_multi_year_financials(corp_code, years, reprt_code="11011"):
-    frames = []
-    for year in years:
-        df = fetch_financial_statement(corp_code, year, reprt_code=reprt_code, fs_div="CFS")
-        if df.empty:
-            df = fetch_financial_statement(corp_code, year, reprt_code=reprt_code, fs_div="OFS")
-        if not df.empty:
-            frames.append(df)
-    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
-
-fs_raw = fetch_multi_year_financials("00126380", years=[2021, 2022, 2023, 2024])
-fs_raw.to_csv("dart_financial_raw.csv", index=False, encoding="utf-8-sig")
-```
 
 ---
 
@@ -1033,34 +823,6 @@ fs_raw.to_csv("dart_financial_raw.csv", index=False, encoding="utf-8-sig")
 
 DART 재무제표는 회사와 업종에 따라 계정명이 다르게 나올 수 있습니다. 예를 들어 매출은 `매출액`, `수익(매출액)`, `영업수익` 등으로 표시될 수 있습니다. 웹앱은 표준 계정 매핑을 제공하고, 사용자가 직접 매핑을 수정할 수 있어야 합니다.
 
-```python
-ACCOUNT_ALIASES = {
-    "revenue": ["매출액", "수익(매출액)", "영업수익", "매출", "Ⅰ.매출액", "I. 매출액"],
-    "gross_profit": ["매출총이익", "매출총손익"],
-    "operating_income": ["영업이익", "영업이익(손실)", "영업손익"],
-    "net_income": ["당기순이익", "당기순이익(손실)", "분기순이익", "반기순이익"],
-    "assets": ["자산총계", "자산 총계"],
-    "liabilities": ["부채총계", "부채 총계"],
-    "equity": ["자본총계", "자본 총계"],
-    "current_assets": ["유동자산"],
-    "current_liabilities": ["유동부채"],
-    "cash": ["현금및현금성자산", "현금및현금성자산및단기금융상품"],
-    "inventory": ["재고자산"],
-    "receivables": ["매출채권", "매출채권 및 기타채권"],
-}
-
-def map_standard_account(account_name):
-    clean = str(account_name).replace(" ", "")
-    for standard, aliases in ACCOUNT_ALIASES.items():
-        for alias in aliases:
-            if clean == alias.replace(" ", ""):
-                return standard
-    return None
-
-fs_raw["standard_account"] = fs_raw["account_nm"].apply(map_standard_account)
-standard_fs = fs_raw[fs_raw["standard_account"].notna()].copy()
-standard_fs.to_csv("financial_statement_standard.csv", index=False, encoding="utf-8-sig")
-```
 
 **웹앱 고도화 포인트**
 
@@ -1075,31 +837,6 @@ standard_fs.to_csv("financial_statement_standard.csv", index=False, encoding="ut
 
 #### 5-6. 재무비율 자동 계산
 
-```python
-def pivot_standard_fs(df):
-    pivot = df.pivot_table(
-        index="year",
-        columns="standard_account",
-        values="thstrm_amount",
-        aggfunc="first",
-    ).sort_index()
-    return pivot
-
-wide = pivot_standard_fs(standard_fs)
-
-ratios = pd.DataFrame(index=wide.index)
-ratios["revenue_growth"] = wide.get("revenue").pct_change()
-ratios["operating_margin"] = wide.get("operating_income") / wide.get("revenue")
-ratios["net_margin"] = wide.get("net_income") / wide.get("revenue")
-ratios["debt_ratio"] = wide.get("liabilities") / wide.get("equity")
-ratios["current_ratio"] = wide.get("current_assets") / wide.get("current_liabilities")
-ratios["asset_turnover"] = wide.get("revenue") / wide.get("assets")
-ratios["roe"] = wide.get("net_income") / wide.get("equity")
-ratios["roa"] = wide.get("net_income") / wide.get("assets")
-
-ratios.to_csv("financial_ratios.csv", encoding="utf-8-sig")
-print((ratios * 100).round(1))
-```
 
 **분석 축**
 
@@ -1218,92 +955,6 @@ print((ratios * 100).round(1))
 | 신용평가 요약 | 신용분석가 | 현금흐름, 차입 부담, 재무 커버리지 |
 | IR 원페이지 | 주주/투자자 | 핵심 KPI, 성장 스토리, 리스크 |
 
-```python
-DOCUMENT_TEMPLATES = {
-    "investment_memo": """
-# 투자검토 메모: {corp_name}
-
-## 핵심 요약
-
-> 📺 [🎬 핵심 요약](https://www.youtube.com/results?search_query=핵심+요약+한국어)
-
-- 최근 매출 성장률:
-- 영업이익률:
-- ROE:
-- 부채비율:
-
-## 긍정 요인
-
-> 📺 [🎬 긍정 요인](https://www.youtube.com/results?search_query=긍정+요인+한국어)
-
--
-
-## 위험 요인
-
-> 📺 [🎬 위험 요인](https://www.youtube.com/results?search_query=위험+요인+한국어)
-
--
-
-## 투자 판단
-
-> 📺 [🎬 투자 판단](https://www.youtube.com/results?search_query=투자+판단+한국어)
-
--
-""",
-    "bank_credit_summary": """
-# 여신심사 재무요약: {corp_name}
-
-## 상환능력
-
-> 📺 [🎬 상환능력](https://www.youtube.com/results?search_query=상환능력+한국어)
-
-- 영업이익:
-- 이자보상배율:
-
-## 재무안정성
-
-> 📺 [🎬 재무안정성](https://www.youtube.com/results?search_query=재무안정성+한국어)
-
-- 부채비율:
-- 유동비율:
-
-## 심사 의견
-
-> 📺 [🎬 심사 의견](https://www.youtube.com/results?search_query=심사+의견+한국어)
-
--
-""",
-    "board_report": """
-# 이사회 재무보고: {corp_name}
-
-## 실적 요약
-
-> 📺 [🎬 실적 요약](https://www.youtube.com/results?search_query=실적+요약+한국어)
-
-- 매출:
-- 영업이익:
-- 순이익:
-
-## 재무상태
-
-> 📺 [🎬 재무상태](https://www.youtube.com/results?search_query=재무상태+한국어)
-
-- 자산:
-- 부채:
-- 자본:
-
-## 경영진 확인 사항
-
-> 📺 [🎬 경영진 확인 사항](https://www.youtube.com/results?search_query=경영진+확인+사항+한국어)
-
--
-""",
-}
-
-def render_financial_document(template_key, corp_name, ratios):
-    template = DOCUMENT_TEMPLATES[template_key]
-    return template.format(corp_name=corp_name)
-```
 
 ---
 
@@ -1311,29 +962,6 @@ def render_financial_document(template_key, corp_name, ratios):
 
 먼저 Markdown 문서로 생성하고, 이후 PDF로 변환합니다.
 
-```python
-from matplotlib.backends.backend_pdf import PdfPages
-import matplotlib.pyplot as plt
-
-def build_financial_pdf(corp_name, wide, ratios, output_path="financial_report.pdf"):
-    with PdfPages(output_path) as pdf:
-        fig = plt.figure(figsize=(11, 8))
-        plt.axis("off")
-        plt.text(0.05, 0.9, f"Financial Statement Report: {corp_name}", fontsize=20, weight="bold")
-        plt.text(0.05, 0.84, "Source: OpenDART", fontsize=11)
-        plt.text(0.05, 0.78, "Statements: Income Statement, Balance Sheet, Ratio Analysis", fontsize=11)
-        pdf.savefig(fig, bbox_inches="tight")
-        plt.close(fig)
-
-        fig, ax = plt.subplots(figsize=(11, 6))
-        if "revenue" in wide.columns:
-            wide["revenue"].plot(kind="bar", ax=ax, color="steelblue")
-        ax.set_title("Revenue Trend")
-        ax.grid(True, axis="y", alpha=0.3)
-        pdf.savefig(fig, bbox_inches="tight")
-        plt.close(fig)
-    return output_path
-```
 
 ---
 
@@ -1375,74 +1003,8 @@ app
 
 ---
 
-## 🔗 Python 소스 연계
-
-> 📺 [🎬 Python 소스 연계](https://www.youtube.com/results?search_query=Python+소스+연계+한국어)
-
-이 문서에서 설명하는 개념들이 앱 코드의 어느 부분과 연결되는지 확인하세요.
-
-### DART 기업 검색 — `/api/dart/company-search`
-
-```mermaid
-sequenceDiagram
-    participant U as 사용자 (브라우저)
-    participant F as dartCompanySearch.js
-    participant B as FastAPI 백엔드
-    participant D as DART OpenAPI
-
-    U->>F: 기업명 입력 후 검색 클릭
-    F->>B: POST /api/dart/company-search<br/>{"query": "삼성전자"}
-    B->>D: GET /api/company.json<br/>crtfc_key=DART_API_KEY
-    D-->>B: corp_name, stock_code,<br/>corp_code, market 목록
-    B-->>F: JSON 배열 반환
-    F-->>U: 검색 결과 테이블 렌더링
-```
-
-- **환경변수**: `DART_API_KEY` 필수 (`.env` 또는 시스템 환경변수)
-- **요청 스키마**: `DartCompanySearchRequest(query: str)`
-- **반환 필드**: `corp_name`, `stock_code`, `corp_code`, `market`
-- **프론트엔드 파일**: `dartCompanySearch.js`
-
-### 재무제표 카드 뷰 — `financialStatement.js`
-
-```mermaid
-flowchart LR
-    JS["financialStatement.js\n기업 펀더멘탈 분석"]
-    JS --> C1["📄 손익계산서\nimages/income-statement.png"]
-    JS --> C2["🏦 재무상태표\nimages/balance-sheet*.png (4장)"]
-    JS --> C3["💵 현금흐름표\nimages/cash-flow*.png (4장)"]
-    JS --> C4["📊 밸류에이션 멀티플\nimages/multiples.png"]
-    JS --> C5["💧 유동성 지표\nimages/liquidity.png"]
-    JS --> C6["🏛 기준금리\nimages/base-rate.png"]
-    JS --> C7["📈 시장금리\nimages/market-rate.png"]
-    JS --> C8["😱 투자자 심리\nimages/sentiment.png"]
-
-    style JS fill:#FF9800,color:#fff
-    style C1 fill:#E3F2FD
-    style C2 fill:#F3E8FF
-    style C3 fill:#E8F5E9
-    style C4 fill:#E3F2FD
-    style C5 fill:#E8F5E9
-    style C6 fill:#F3E8FF
-    style C7 fill:#FFF3E0
-    style C8 fill:#FFE4E6
-```
-
-- **구현 방식**: 프론트엔드에서 로컬 이미지를 카드+갤러리 형태로 표시 (API 호출 없음)
-
-- **이미지 경로**: `images/` 폴더의 한글 장표 이미지 14장
-
-### 위의 이미지가 학습 내용에 맞지 않는 이미지의 경우 개인별로 이미지를 구글링 검색해서 보완한다
-
-
-
-- **학습 연결**: 이 문서(07.md)의 1~4-3절 개념이 손익계산서·재무상태표·현금흐름표·유동성 카드와 대응됩니다.
-
----
-
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 1. DART 고유번호 파일을 내려받아 `dart_companies.csv`를 만들고, 관심 기업 3개를 검색할 수 있는 구조를 설계하세요.
 2. 관심 기업 1개를 정해 최근 3~5개년 사업보고서 재무제표를 연결 기준으로 수집하고, 없으면 별도 기준으로 fallback하는 로직을 작성하세요.

@@ -1,10 +1,8 @@
-# Day 056 — 자산배분 모델
+# 자산배분 모델
 
-> **모듈 8: 퀀트를 위한 금융 필수 지식** | 5/5일차 | 🏦 | 학습시간: 8시간
 
 ---
 
-> 📺 **YouTube 강의**: [🎬 자산배분 모델 포트폴리오 전략](https://www.youtube.com/results?search_query=자산배분+모델+포트폴리오+전략+한국어+강의)
 >
 > 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
 
@@ -61,38 +59,6 @@
 
 ---
 
-## 🗓 세부 일정 (1일 8시간)
-
-
-
-> **강의 5시간** (5개 단락 × 50분 + 도입·마무리 50분) + **실습 3시간** = 총 8시간
-
-| 시간 | 구분 | 내용 | 형태 |
-|------|------|------|------|
-| 09:00 – 09:10 | 도입 | 오늘 학습 목표 확인 | 강의 |
-| 09:10 – 09:30 | **1단락** 설명 20분 | 평균분산 최적화 | 강의 |
-| 09:30 – 10:00 | 각자 정리 & 유튜브 30분 | 마코위츠 최적화 영상 검색 | 자율 |
-| 10:00 – 10:20 | **2단락** 설명 20분 | 블랙-리터만 모델 | 강의 |
-| 10:20 – 10:50 | 각자 정리 & 유튜브 30분 | 시장균형수익률·투자자 전망 정리 | 자율 |
-| 10:50 – 11:00 | ☕ 휴식 | — | — |
-| 11:00 – 11:20 | **3단락** 설명 20분 | Risk-Parity 모델 | 강의 |
-| 11:20 – 11:50 | 각자 정리 & 유튜브 30분 | 위험기여도 개념 복습 | 자율 |
-| 11:50 – 12:10 | **4단락** 설명 20분 | 60/40, All Weather 사례 | 강의 |
-| 12:10 – 12:40 | 각자 정리 & 유튜브 30분 | 대표 자산배분 전략 비교 | 자율 |
-| 12:40 – 13:00 | **5단락** 설명 20분 | 평균분산 구현 절차 | 강의 |
-| 13:00 – 13:30 | 각자 정리 & 유튜브 30분 | 제약조건과 리밸런싱 기준 정리 | 자율 |
-| 13:30 – 14:00 | 강의 마무리 | Q&A · 핵심 복습 | 강의 |
-| 14:00 – 15:00 | 💻 **실습 1부** 60분 | 기대수익률·공분산 행렬 계산 | 실습 |
-| 15:00 – 15:10 | ☕ 휴식 | — | — |
-| 15:10 – 16:00 | 💻 **실습 2부** 50분 | 최적 비중 계산 및 백테스트 | 실습 |
-| 16:00 – 16:10 | ☕ 휴식 | — | — |
-| 16:10 – 17:00 | 💻 **실습 발표 & 리뷰** 50분 | 전략별 장단점 발표 | 실습 |
-
-> 강의 5시간: 도입 10분 + 단락 5개×50분 + 마무리 30분 = **300분**  
-> 실습 3시간: 1부 60분 + 휴식 10분 + 2부 50분 + 휴식 10분 + 발표·리뷰 50분 = **180분**
-
----
-
 ## 🔗 참고 사이트 & 데이터 원천
 
 
@@ -133,17 +99,7 @@
 최적 비중 산출 및 백테스트
 ```
 
-> 📺 [🎬 평균분산 최적화 포트폴리오](https://www.youtube.com/results?search_query=평균분산+최적화+포트폴리오+한국어)
 
-```python
-import numpy as np
-
-expected_returns = np.array([0.10, 0.04, 0.07])
-weights = np.array([0.5, 0.3, 0.2])
-
-portfolio_return = weights @ expected_returns
-print(f"기대수익률: {portfolio_return:.2%}")
-```
 
 ---
 
@@ -160,18 +116,7 @@ print(f"기대수익률: {portfolio_return:.2%}")
 | 투자자 전망(View) | 특정 자산 또는 상대성과에 대한 판단 |
 | 전망 신뢰도 | 투자자 의견을 얼마나 강하게 반영할지 |
 
-> 📺 [🎬 블랙 리터만 모델 설명](https://www.youtube.com/results?search_query=블랙+리터만+모델+포트폴리오+한국어)
 
-```python
-import pandas as pd
-
-market_implied = pd.Series({"SPY": 0.07, "TLT": 0.03, "GLD": 0.04})
-views = pd.Series({"SPY": 0.01, "TLT": -0.005, "GLD": 0.005})
-confidence = 0.5
-
-adjusted_returns = market_implied + confidence * views
-print(adjusted_returns)
-```
 
 ---
 
@@ -183,15 +128,6 @@ Risk-Parity는 자본 비중이 아니라 위험 기여도를 비슷하게 맞�
 
 **단순 역변동성 비중 예시**
 
-```python
-import pandas as pd
-
-volatility = pd.Series({"SPY": 0.18, "TLT": 0.12, "GLD": 0.15, "DBC": 0.22})
-inverse_vol = 1 / volatility
-weights = inverse_vol / inverse_vol.sum()
-
-print(weights.round(3))
-```
 
 | 방식 | 기준 | 특징 |
 |------|------|------|
@@ -212,81 +148,12 @@ print(weights.round(3))
 | Permanent Portfolio | 주식, 장기채, 현금, 금 각 25% | 단순한 장기 분산 |
 | 글로벌 멀티에셋 | 국가·자산군 분산 | 특정 국가 리스크 완화 |
 
-> 📺 [🎬 6040 포트폴리오 올웨더 자산배분](https://www.youtube.com/results?search_query=60+40+포트폴리오+올웨더+자산배분+한국어)
 
-```python
-portfolios = {
-    "60/40": {"SPY": 0.60, "TLT": 0.40},
-    "All Weather Simple": {"SPY": 0.30, "TLT": 0.40, "IEF": 0.15, "GLD": 0.075, "DBC": 0.075},
-    "Permanent": {"SPY": 0.25, "TLT": 0.25, "BIL": 0.25, "GLD": 0.25},
-}
-
-for name, weights in portfolios.items():
-    print(name, sum(weights.values()))
-```
-
----
-
-### 5. 실습: Python으로 평균분산 자산배분 구현
-
-이번 실습의 목표는 ETF 데이터를 수집하고, 무작위 포트폴리오를 생성해 샤프 비율이 높은 비중을 찾는 것입니다.
-
-```python
-import numpy as np
-import pandas as pd
-import yfinance as yf
-
-tickers = ["SPY", "TLT", "GLD", "DBC"]
-prices = yf.download(tickers, start="2018-01-01", auto_adjust=True)["Close"]
-returns = prices.pct_change().dropna()
-
-mu = returns.mean() * 252
-cov = returns.cov() * 252
-risk_free = 0.03
-
-records = []
-for _ in range(5000):
-    w = np.random.random(len(tickers))
-    w = w / w.sum()
-    port_return = w @ mu
-    port_vol = (w.T @ cov @ w) ** 0.5
-    sharpe = (port_return - risk_free) / port_vol
-    records.append([*w, port_return, port_vol, sharpe])
-
-cols = [f"w_{t}" for t in tickers] + ["return", "volatility", "sharpe"]
-result = pd.DataFrame(records, columns=cols)
-best = result.sort_values("sharpe", ascending=False).iloc[0]
-
-print(best.round(4))
-```
-
-#### 🔗 Python 소스 연계
-
-```mermaid
-sequenceDiagram
-    participant F as Frontend<br/>(allocationOptimizer.js)
-    participant A as /api/portfolio/optimize
-    participant P as Python<br/>optimizer
-
-    F->>A: POST {tickers: ["SPY","TLT","GLD"], objective: "max_sharpe"}
-    A->>P: 기대수익률·공분산·제약조건 전달
-    P-->>A: 최적 비중·성과지표·효율적 투자선
-    A-->>F: 최적화 결과 JSON
-```
-
-| API 파라미터 | 예시 | 설명 |
-|---|---|---|
-| `tickers` | `["SPY", "TLT", "GLD"]` | 최적화 대상 |
-| `objective` | `"min_vol"`, `"max_sharpe"` | 최적화 목표 |
-| `risk_free` | `0.03` | 샤프 비율 계산용 무위험수익률 |
-| `max_weight` | `0.6` | 단일 자산 최대 비중 |
-| `rebalance` | `"M"`, `"Q"` | 리밸런싱 주기 |
 
 ---
 
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 1. `SPY`, `TLT`, `GLD`, `DBC`로 최대 샤프 포트폴리오를 만들고 60/40 전략과 비교해보세요.
 2. 무위험수익률을 0%, 3%, 5%로 바꾸면 최적 비중이 어떻게 달라지는지 확인해보세요.
@@ -294,35 +161,16 @@ sequenceDiagram
 4. 역변동성 포트폴리오와 평균분산 최적화 포트폴리오의 장단점을 표로 정리해보세요.
 5. 최적화 결과가 과거 데이터에 지나치게 맞춰질 수 있는 이유를 설명해보세요.
 
-## 모듈 8 마무리
-
-> 📺 [🎬 모듈 8 마무리](https://www.youtube.com/results?search_query=모듈+8+마무리+한국어)
-
-모듈 8(퀀트를 위한 금융 필수 지식) 전 5일차를 완료했습니다.
-
-| 학습 주제 | 핵심 도구 | 참고 파일 |
-|-----------|-----------|-----------|
-| 주식·ETF | EPS, 배당, ETF 성과 비교 | Day 052 |
-| 채권 | 금리, 듀레이션, 수익률 곡선 | Day 053 |
-| 파생상품 | 선물, 옵션, 스왑 | Day 054 |
-| 포트폴리오 분석 | CAGR, MDD, 샤프 비율 | Day 055 |
-| 자산배분 | 평균분산, 블랙-리터만, Risk-Parity | Day 056 |
-
----
-
 # 금융 규제·산업 구조 기초 — 한국 금융회사 분류와 자본시장법
 
-> **모듈 8 보충: 퀀트를 위한 금융 필수 지식** | 🏦 | 학습시간: 4시간
 
 ---
 
-> 📺 **YouTube 강의**: [🎬 한국 금융회사 종류 자본시장법](https://www.youtube.com/results?search_query=한국+금융회사+종류+자본시장법+금융투자업+설명+강의)
 >
 > 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
 
 ## 이 문서에서 다루는 것
 
-> 📺 [🎬 이 문서에서 다루는 것](https://www.youtube.com/results?search_query=이+문서에서+다루는+것+한국어)
 
 - **금융상품의 개론** — 개념·기능·3대 분류 체계
 - **예금 및 신탁상품** — 수신상품의 종류와 특징
@@ -340,7 +188,6 @@ sequenceDiagram
 
 ## 🔗 참고 법령 & 공식 사이트
 
-> 📺 [🎬 참고 법령 공식 사이트](https://www.youtube.com/results?search_query=참고+법령+공식+사이트+한국어)
 
 | 법령/기관 | URL | 내용 |
 |-----------|-----|------|
@@ -354,7 +201,6 @@ sequenceDiagram
 
 ## 1. 금융회사의 종류
 
-> 📺 [🎬 금융회사의 종류](https://www.youtube.com/results?search_query=금융회사의+종류+한국어)
 
 > 📖 **Wikipedia**: [금융회사](https://ko.wikipedia.org/wiki/금융회사) · [은행](https://ko.wikipedia.org/wiki/은행) · [보험회사](https://ko.wikipedia.org/wiki/보험회사)
 
@@ -369,7 +215,6 @@ sequenceDiagram
 | 여신전문금융회사 | 여신전문금융업법 | 신용카드, 할부금융, 리스 | 삼성카드, 현대캐피탈 |
 | 금융지주회사 | 금융지주회사법 | 자회사(은행·증권·보험 등) 지배·관리 | KB금융지주, 신한금융지주 |
 
-> 📺 [🎬 은행 증권 보험 여신전문 금융회사 차이](https://www.youtube.com/results?search_query=은행+증권사+보험회사+저축은행+차이+한국어)
 
 ### 은행의 세부 분류
 
@@ -541,75 +386,7 @@ sequenceDiagram
         └── 정책금융기관
 ```
 
-```python
-# 비은행금융회사 전체 분류 요약
-non_bank_financial = {
-    "비은행예금취급기관": {
-        "예시": ["저축은행", "신협", "새마을금고", "농협단위조합", "우체국"],
-        "예금수취": True,
-        "예금자보호": "O (자체기금 또는 정부보장)",
-    },
-    "금융투자업자": {
-        "예시": ["증권사", "자산운용사", "투자자문사", "선물회사"],
-        "예금수취": False,
-        "주요규제": "자본시장법",
-    },
-    "보험회사": {
-        "예시": ["생명보험사", "손해보험사", "재보험사"],
-        "예금수취": False,
-        "주요규제": "보험업법",
-    },
-    "여신전문금융회사": {
-        "예시": ["신용카드사", "할부금융사", "리스사"],
-        "예금수취": False,
-        "주요규제": "여신전문금융업법",
-    },
-    "기타": {
-        "예시": ["대부업자", "P2P(온투업)", "전자금융업자", "벤처캐피탈", "정책금융기관"],
-        "예금수취": False,
-        "주요규제": "각 개별법",
-    },
-}
 
-for group, info in non_bank_financial.items():
-    print(f"\n[{group}]")
-    print(f"  예시: {', '.join(info['예시'][:3])} ...")
-    print(f"  예금수취 가능: {info['예금수취']}")
-```
-
-```python
-financial_companies = {
-    "은행": {
-        "근거법": "은행법",
-        "핵심업무": ["수신(예금)", "여신(대출)", "내외국환"],
-        "주요기관": ["KB국민은행", "신한은행", "카카오뱅크"],
-    },
-    "금융투자업자": {
-        "근거법": "자본시장법",
-        "핵심업무": ["투자매매", "투자중개", "집합투자", "자문·일임", "신탁"],
-        "주요기관": ["미래에셋증권", "삼성자산운용", "키움증권"],
-    },
-    "보험회사": {
-        "근거법": "보험업법",
-        "핵심업무": ["생명보험", "손해보험", "자산운용"],
-        "주요기관": ["삼성생명", "DB손해보험"],
-    },
-    "저축은행": {
-        "근거법": "상호저축은행법",
-        "핵심업무": ["서민 수신·여신"],
-        "주요기관": ["SBI저축은행", "OK저축은행"],
-    },
-    "여신전문금융회사": {
-        "근거법": "여신전문금융업법",
-        "핵심업무": ["신용카드", "할부금융", "시설대여(리스)"],
-        "주요기관": ["삼성카드", "현대캐피탈"],
-    },
-}
-
-for company_type, info in financial_companies.items():
-    print(f"[{company_type}] 근거법: {info['근거법']}")
-    print(f"  핵심업무: {', '.join(info['핵심업무'])}")
-```
 
 ---
 
@@ -848,42 +625,6 @@ HTS/MTS에서는 증권사마다 명칭과 화면 구성이 다르지만 보통 
 
 > ⚠️ **주의**: 고객예탁금이 늘었다고 반드시 주가가 오르지는 않습니다. 투자자들이 관망하며 현금을 쌓아 두는 경우에도 예탁금은 증가합니다. 다른 수급 지표(외국인·기관 순매수 등)와 함께 종합 해석해야 합니다.
 
-```python
-# 증권회사 업무별 수익 구조 요약 (Python 데이터 구조)
-brokerage_business = {
-    "브로커리지 (위탁매매)": {
-        "설명": "고객 주문을 거래소에 대신 체결",
-        "수익": "거래 수수료 (주식 0.01~0.5%)",
-        "퀀트_연관": "체결 데이터, 호가 분석, 최선집행 알고리즘",
-    },
-    "딜링 (자기매매)": {
-        "설명": "자기 계좌로 직접 트레이딩",
-        "수익": "매매 차익, 스프레드",
-        "퀀트_연관": "프랍 트레이딩, 시장조성(MM), 차익거래",
-    },
-    "IB (기업금융)": {
-        "설명": "IPO·유상증자·M&A 자문 및 인수",
-        "수익": "인수 수수료 (발행액의 1~5%)",
-        "퀀트_연관": "기업가치평가(DCF, 비교기업), IPO 공모가 산정",
-    },
-    "자산관리 (WM)": {
-        "설명": "고객 자산 맞춤 운용",
-        "수익": "일임·자문 보수 (연 0.5~1.5%)",
-        "퀀트_연관": "포트폴리오 최적화, 리스크 관리, 로보어드바이저",
-    },
-    "리서치": {
-        "설명": "기업·산업 분석 보고서",
-        "수익": "간접 수익 (고객 유치·유지)",
-        "퀀트_연관": "팩터 분석, 어닝 서프라이즈 예측, 텍스트 마이닝",
-    },
-}
-
-for biz, info in brokerage_business.items():
-    print(f"\n[{biz}]")
-    print(f"  설명: {info['설명']}")
-    print(f"  수익: {info['수익']}")
-    print(f"  퀀트 연관: {info['퀀트_연관']}")
-```
 
 ---
 
@@ -1154,111 +895,8 @@ PG사 → 쇼핑몰 정산 (보통 T+2~7일)
 
 ---
 
-#### ⑨ Python: 핀테크 업종 분류 구조
-
-```python
-from dataclasses import dataclass, field
-from typing import List
-
-@dataclass
-class FintechCompany:
-    name: str
-    category: str
-    legal_basis: str       # 근거 법령
-    regulator: str         # 감독 기관
-    core_service: str
-    deposit_taking: bool   # 수신 가능 여부
-    investor_protection: str
-    examples: List[str] = field(default_factory=list)
-
-FINTECHS = [
-    FintechCompany(
-        name="전자자금이체업자",
-        category="전자금융업",
-        legal_basis="전자금융거래법",
-        regulator="금융위원회",
-        core_service="계좌 간 자금 이체",
-        deposit_taking=False,
-        investor_protection="없음",
-        examples=["토스(비바리퍼블리카)"],
-    ),
-    FintechCompany(
-        name="선불전자지급수단 발행·관리업",
-        category="전자금융업",
-        legal_basis="전자금융거래법",
-        regulator="금융위원회",
-        core_service="충전금·포인트 발행",
-        deposit_taking=False,
-        investor_protection="없음 (충전금 별도 예치 의무)",
-        examples=["카카오페이 충전금", "네이버페이 포인트"],
-    ),
-    FintechCompany(
-        name="전자지급결제대행업 (PG)",
-        category="전자금융업",
-        legal_basis="전자금융거래법",
-        regulator="금융위원회",
-        core_service="온라인 결제 중개·정산",
-        deposit_taking=False,
-        investor_protection="없음",
-        examples=["KG이니시스", "나이스페이먼츠", "토스페이먼츠"],
-    ),
-    FintechCompany(
-        name="인터넷전문은행",
-        category="은행",
-        legal_basis="은행법 + 인터넷전문은행법",
-        regulator="금융위원회·금융감독원",
-        core_service="비대면 예금·대출·이체",
-        deposit_taking=True,
-        investor_protection="예금자보호법 (5천만원)",
-        examples=["카카오뱅크", "케이뱅크", "토스뱅크"],
-    ),
-    FintechCompany(
-        name="마이데이터 사업자",
-        category="데이터업",
-        legal_basis="신용정보법",
-        regulator="금융위원회",
-        core_service="본인 금융데이터 통합 조회·분석",
-        deposit_taking=False,
-        investor_protection="없음",
-        examples=["뱅크샐러드", "토스", "네이버페이"],
-    ),
-    FintechCompany(
-        name="가상자산사업자 (VASP)",
-        category="가상자산",
-        legal_basis="특정금융정보법",
-        regulator="금융정보분석원(FIU)",
-        core_service="암호화폐 거래·보관·중개",
-        deposit_taking=False,
-        investor_protection="없음 (자본시장법 적용 외)",
-        examples=["업비트", "빗썸", "코인원"],
-    ),
-]
-
-print(f"{'회사 유형':24} | {'수신':4} | {'투자자보호':20} | 예시")
-print("-" * 80)
-for f in FINTECHS:
-    ex = f.examples[0] if f.examples else "-"
-    deposit = "O" if f.deposit_taking else "X"
-    print(f"{f.name:24} | {deposit:4} | {f.investor_protection:20} | {ex}")
-```
-
-**실행 결과:**
-```
-회사 유형                | 수신 | 투자자보호             | 예시
---------------------------------------------------------------------------------
-전자자금이체업자         | X    | 없음                 | 토스(비바리퍼블리카)
-선불전자지급수단 발행·관리업 | X | 없음 (충전금 별도 예치 의무) | 카카오페이 충전금
-전자지급결제대행업 (PG)  | X    | 없음                 | KG이니시스
-인터넷전문은행           | O    | 예금자보호법 (5천만원) | 카카오뱅크
-마이데이터 사업자        | X    | 없음                 | 뱅크샐러드
-가상자산사업자 (VASP)    | X    | 없음 (자본시장법 적용 외) | 업비트
-```
-
----
-
 ## 1-VC. 벤처캐피탈(VC)과 사모펀드(PEF) — 스타트업·비상장 투자 생태계
 
-> 📺 [🎬 1-VC 벤처캐피탈과 사모펀드 스타트업·비상장](https://www.youtube.com/results?search_query=1-VC+벤처캐피탈과+사모펀드+스타트업·비상장+투자+생태계+한국어)
 
 > 📖 **Wikipedia**: [벤처캐피탈](https://ko.wikipedia.org/wiki/벤처캐피탈) · [사모펀드](https://ko.wikipedia.org/wiki/사모펀드) · [엔젤투자](https://ko.wikipedia.org/wiki/엔젤투자자)
 
@@ -1348,32 +986,6 @@ VC 운용사(GP)는 두 가지 방식으로 수익을 얻습니다.
 | **운용 보수** | Management Fee | 약 **2% / 연** | 약정 총액 기준 매년 수취 |
 | **성과 보수** | Carried Interest | 약 **20%** | Hurdle Rate(최저 수익률) 초과분의 20% |
 
-```python
-def vc_economics(fund_size_bn: float, hurdle_rate: float, actual_return: float) -> dict:
-    """
-    fund_size_bn: 펀드 규모 (억 원)
-    hurdle_rate: 최저 수익률 (예: 0.08 = 8%)
-    actual_return: 실제 수익 배수 (예: 2.5 = 2.5배)
-    """
-    management_fee_annual = fund_size_bn * 0.02           # 연간 운용 보수
-    total_return = fund_size_bn * actual_return            # 총 회수금
-    hurdle_profit = fund_size_bn * (1 + hurdle_rate)       # 허들 기준 최소 회수
-    carry_base = total_return - hurdle_profit               # 성과 보수 기준 초과분
-    carried_interest = carry_base * 0.20 if carry_base > 0 else 0
-    lp_profit = total_return - fund_size_bn - carried_interest
-
-    return {
-        "펀드 규모 (억)":   fund_size_bn,
-        "총 회수금 (억)":   total_return,
-        "연간 운용 보수":   f"{management_fee_annual:.1f}억",
-        "성과 보수 (Carry)": f"{carried_interest:.1f}억",
-        "LP 순수익 (억)":   f"{lp_profit:.1f}억",
-    }
-
-result = vc_economics(fund_size_bn=1000, hurdle_rate=0.08, actual_return=2.5)
-for k, v in result.items():
-    print(f"  {k}: {v}")
-```
 
 ```
   펀드 규모 (억): 1000
@@ -1459,7 +1071,6 @@ VC가 투자 회수하는 방법은 크게 4가지입니다.
 
 ## 2. 금융투자회사(금융투자업자)의 설명
 
-> 📺 [🎬 금융투자회사의 설명](https://www.youtube.com/results?search_query=금융투자회사의+설명+한국어)
 
 > 📖 **Wikipedia**: [금융투자업](https://ko.wikipedia.org/wiki/금융투자업) · [증권회사](https://ko.wikipedia.org/wiki/증권회사) · [자산운용사](https://ko.wikipedia.org/wiki/자산운용사)
 
@@ -1685,124 +1296,8 @@ graph LR
 
 ---
 
-### 2.7 Python: 금융투자업 6가지 구조 정리
-
-```python
-from dataclasses import dataclass, field
-from typing import List
-
-@dataclass
-class FinancialInvestmentBusiness:
-    name: str
-    law_ref: str          # 자본시장법 조문
-    entry_type: str       # 인가 or 등록
-    min_capital: str      # 최저 자기자본
-    description: str
-    key_duty: str         # 핵심 의무
-    examples: List[str] = field(default_factory=list)
-
-BUSINESSES = [
-    FinancialInvestmentBusiness(
-        name="투자매매업",
-        law_ref="제6조 제1항",
-        entry_type="금융위 인가",
-        min_capital="50억~500억 원",
-        description="금융투자상품을 자기 계산으로 매도·매수",
-        key_duty="자기 포지션 리스크 관리",
-        examples=["미래에셋증권(자기매매)", "한국투자증권(인수)"],
-    ),
-    FinancialInvestmentBusiness(
-        name="투자중개업",
-        law_ref="제6조 제2항",
-        entry_type="금융위 인가",
-        min_capital="30억~100억 원",
-        description="투자자 주문을 받아 위탁 매매 중개",
-        key_duty="최선 집행 의무(Best Execution)",
-        examples=["키움증권", "NH투자증권"],
-    ),
-    FinancialInvestmentBusiness(
-        name="집합투자업",
-        law_ref="제6조 제3항",
-        entry_type="금융위 인가",
-        min_capital="80억 원",
-        description="2인 이상 투자자 자금을 모아 펀드로 운용",
-        key_duty="선관주의 의무 + 운용 결과 보고",
-        examples=["삼성자산운용", "미래에셋자산운용"],
-    ),
-    FinancialInvestmentBusiness(
-        name="투자자문업",
-        law_ref="제6조 제4항",
-        entry_type="금융위 등록",
-        min_capital="5억 원",
-        description="금융투자상품 투자에 관한 자문 제공",
-        key_duty="이해충돌 방지, 정보 제공 정확성",
-        examples=["쿼터백(로보어드바이저)", "에셋플러스 자문부문"],
-    ),
-    FinancialInvestmentBusiness(
-        name="투자일임업",
-        law_ref="제6조 제5항",
-        entry_type="금융위 등록",
-        min_capital="15억 원",
-        description="투자 판단을 위임 받아 일임 운용",
-        key_duty="선관주의 의무 + 손실보전 금지",
-        examples=["삼성증권 Wrap", "로보어드바이저 일임 서비스"],
-    ),
-    FinancialInvestmentBusiness(
-        name="신탁업",
-        law_ref="제6조 제6항",
-        entry_type="금융위 인가",
-        min_capital="100억 원",
-        description="재산을 신탁 받아 관리·운용·처분",
-        key_duty="신탁 재산 분리·충실 의무",
-        examples=["한국투자신탁운용", "우리은행 신탁부"],
-    ),
-]
-
-print(f"{'업무':12} | {'진입':10} | {'최저자본':12} | {'주요 예시'}")
-print("-" * 70)
-for b in BUSINESSES:
-    ex = ", ".join(b.examples[:1])
-    print(f"{b.name:12} | {b.entry_type:10} | {b.min_capital:12} | {ex}")
-
-# 인가 vs 등록 구분
-print("\n[인가 필요 업무]")
-for b in BUSINESSES:
-    if "인가" in b.entry_type:
-        print(f"  - {b.name} ({b.law_ref})")
-
-print("\n[등록으로 가능한 업무]")
-for b in BUSINESSES:
-    if "등록" in b.entry_type:
-        print(f"  - {b.name} ({b.law_ref}) → 비교적 낮은 진입장벽")
-```
-
-**실행 결과 예시:**
-```
-업무           | 진입       | 최저자본      | 주요 예시
-----------------------------------------------------------------------
-투자매매업     | 금융위 인가 | 50억~500억 원 | 미래에셋증권(자기매매)
-투자중개업     | 금융위 인가 | 30억~100억 원 | 키움증권
-집합투자업     | 금융위 인가 | 80억 원       | 삼성자산운용
-투자자문업     | 금융위 등록 | 5억 원        | 쿼터백(로보어드바이저)
-투자일임업     | 금융위 등록 | 15억 원       | 삼성증권 Wrap
-신탁업         | 금융위 인가 | 100억 원      | 한국투자신탁운용
-
-[인가 필요 업무]
-  - 투자매매업 (제6조 제1항)
-  - 투자중개업 (제6조 제2항)
-  - 집합투자업 (제6조 제3항)
-  - 신탁업 (제6조 제6항)
-
-[등록으로 가능한 업무]
-  - 투자자문업 (제6조 제4항) → 비교적 낮은 진입장벽
-  - 투자일임업 (제6조 제5항) → 비교적 낮은 진입장벽
-```
-
----
-
 ## 2-A. 자산운용회사(집합투자업자) 상세
 
-> 📺 [🎬 2-A 자산운용회사 상세](https://www.youtube.com/results?search_query=2-A+자산운용회사+상세+한국어)
 
 > 📖 **Wikipedia**: [자산운용사](https://ko.wikipedia.org/wiki/자산운용사) · [집합투자기구](https://ko.wikipedia.org/wiki/집합투자기구) · [ETF](https://ko.wikipedia.org/wiki/상장지수펀드)
 
@@ -2108,112 +1603,6 @@ ETF 홈페이지에서 확인해야 할 주요 항목입니다.
 
 ---
 
-### 2-A.5 Python: ETF 구성 종목 조회 (yfinance + KRX 활용)
-
-```python
-import yfinance as yf
-import pandas as pd
-
-# ─── 방법 1: yfinance로 해외 ETF 구성 종목 조회 ───
-# 국내 ETF는 yfinance 지원이 제한적 → 해외 ETF 예시
-
-def get_etf_info(ticker: str) -> None:
-    """해외 ETF 기본 정보 조회 (yfinance)"""
-    etf = yf.Ticker(ticker)
-    info = etf.info
-
-    print(f"\n{'='*50}")
-    print(f"ETF: {ticker} — {info.get('longName', 'N/A')}")
-    print(f"{'='*50}")
-    print(f"  기초지수     : {info.get('category', 'N/A')}")
-    print(f"  총자산(AUM)  : ${info.get('totalAssets', 0)/1e9:.2f}B")
-    print(f"  총보수(TER)  : {info.get('annualReportExpenseRatio', 'N/A')}")
-    print(f"  52주 최고    : {info.get('fiftyTwoWeekHigh', 'N/A')}")
-    print(f"  52주 최저    : {info.get('fiftyTwoWeekLow', 'N/A')}")
-    print(f"  배당수익률   : {info.get('yield', 'N/A')}")
-
-# 대표 해외 ETF 조회
-for ticker in ['SPY', 'QQQ', 'GLD', 'TLT']:
-    get_etf_info(ticker)
-```
-
-```python
-# ─── 방법 2: KRX 데이터포털 CSV 활용 ───
-# KRX data.krx.co.kr에서 다운로드한 ETF 전종목 CSV 분석 예시
-
-import pandas as pd
-import io, requests
-
-def load_krx_etf_list() -> pd.DataFrame:
-    """
-    KRX ETF 전종목 데이터 로드
-    실제 사용 시: data.krx.co.kr → 기본통계 → ETF → ETF 전종목시세 → CSV 다운로드
-    여기서는 구조 예시 DataFrame을 반환
-    """
-    sample_data = """종목코드,종목명,기초지수명,운용사,순자산(억),총보수(%),상장주식수(천좌)
-069500,KODEX 200,코스피200,삼성자산운용,45000,0.15,180000
-360750,TIGER 미국S&P500,S&P500,미래에셋자산운용,32000,0.07,95000
-148020,KBSTAR 200,코스피200,KB자산운용,8500,0.017,35000
-278540,KODEX 200선물인버스2X,코스피200선물,삼성자산운용,12000,0.64,60000
-411060,ACE 미국나스닥100,나스닥100,한국투자신탁운용,18000,0.07,70000
-305720,KODEX 2차전지산업,2차전지 테마,삼성자산운용,22000,0.45,80000"""
-
-    df = pd.read_csv(io.StringIO(sample_data))
-    return df
-
-df = load_krx_etf_list()
-print("=== KRX ETF 전종목 (샘플) ===")
-print(df.to_string(index=False))
-
-# 운용사별 ETF 수 및 순자산 집계
-print("\n=== 운용사별 집계 ===")
-summary = df.groupby('운용사').agg(
-    ETF수=('종목코드', 'count'),
-    총순자산=('순자산(억)', 'sum')
-).sort_values('총순자산', ascending=False)
-print(summary)
-
-# 총보수 기준 필터링 (0.1% 이하 저비용 ETF)
-low_cost = df[df['총보수(%)'] <= 0.10]
-print(f"\n=== 총보수 0.10% 이하 ETF ===")
-print(low_cost[['종목명', '운용사', '총보수(%)']].to_string(index=False))
-```
-
-```python
-# ─── 방법 3: 개별 ETF 구성 종목 분석 ───
-# 운용사 홈페이지에서 다운로드한 구성종목 CSV 분석 예시
-
-portfolio_data = """종목명,종목코드,비중(%),평가금액(억)
-삼성전자,005930,27.5,12375
-SK하이닉스,000660,8.2,3690
-LG에너지솔루션,373220,5.1,2295
-삼성바이오로직스,207940,3.8,1710
-현대차,005380,3.5,1575
-NAVER,035420,2.9,1305
-카카오,035720,2.1,945
-셀트리온,068270,1.9,855
-KB금융,105560,1.8,810
-신한지주,055550,1.7,765"""
-
-import pandas as pd, io
-df_port = pd.read_csv(io.StringIO(portfolio_data))
-
-print("=== KODEX 200 구성종목 상위 10 (예시) ===")
-print(df_port.to_string(index=False))
-
-# 상위 5종목 집중도
-top5_weight = df_port.head(5)['비중(%)'].sum()
-print(f"\n상위 5종목 비중 합계: {top5_weight:.1f}%")
-print(f"나머지 종목 비중: {100 - top5_weight:.1f}%")
-
-# 간단한 포트폴리오 분산도 — 허핀달 지수(HHI)
-weights = df_port['비중(%)'] / 100
-hhi = (weights ** 2).sum()
-print(f"허핀달 집중도 지수(HHI): {hhi:.4f}  (0=완전분산, 1=단일종목)")
-```
-
----
-
 ### 2-A.6 ETF 브랜드별 주요 상품 비교
 
 국내 운용사별 대표 ETF를 자산군으로 비교합니다.
@@ -2428,7 +1817,6 @@ quadrantChart
 
 ## 3. 자본시장법
 
-> 📺 [🎬 자본시장법](https://www.youtube.com/results?search_query=자본시장법+한국어)
 
 > 📖 **Wikipedia**: [자본시장과 금융투자업에 관한 법률](https://ko.wikipedia.org/wiki/자본시장과_금융투자업에_관한_법률)
 
@@ -2456,7 +1844,6 @@ quadrantChart
 | **투자자 보호** | 적합성·적정성 원칙, 설명의무, 이해충돌 방지 |
 | **공시 강화** | 내부자거래 규제, 불공정거래 행위 금지 |
 
-> 📺 [🎬 자본시장법 핵심 내용 설명](https://www.youtube.com/results?search_query=자본시장법+핵심+내용+설명+한국어)
 
 ### 3.3 자본시장법상 금융투자상품 정의
 
@@ -2470,31 +1857,11 @@ quadrantChart
 
 즉 **원본 손실 가능성**이 금융투자상품의 핵심 기준입니다. 예금·보험은 원본이 보장되므로 금융투자상품에 해당하지 않습니다.
 
-```python
-def is_financial_investment_product(principal_loss_possible: bool) -> str:
-    """자본시장법상 금융투자상품 해당 여부 판단 (단순화)"""
-    if principal_loss_possible:
-        return "금융투자상품 해당 → 자본시장법 적용"
-    else:
-        return "비금융투자상품 → 은행법·보험업법 등 적용"
-
-examples = [
-    ("주식", True),
-    ("회사채", True),
-    ("선물계약", True),
-    ("콜옵션", True),
-    ("은행 정기예금", False),
-    ("생명보험", False),
-]
-for name, loss_possible in examples:
-    print(f"{name}: {is_financial_investment_product(loss_possible)}")
-```
 
 ---
 
 ## 4. 위탁과 수탁
 
-> 📺 [🎬 위탁과 수탁](https://www.youtube.com/results?search_query=위탁과+수탁+한국어)
 
 > 📖 **Wikipedia**: [위탁매매](https://ko.wikipedia.org/wiki/위탁매매)
 
@@ -2518,25 +1885,12 @@ for name, loss_possible in examples:
 | 수탁 한도 | 일부 상품(수익증권 등)은 판매 회사별 수탁 한도 존재 |
 | 수탁 거부 | 증권사는 미성년자 계좌 개설, 불법 자금 의심 시 수탁 거부 가능 |
 
-```python
-# 위탁매매 수수료 계산 예시
-def calc_commission(trade_amount: float, commission_rate: float = 0.00015) -> float:
-    """위탁매매 수수료 계산 (기본 0.015%)"""
-    return trade_amount * commission_rate
 
-trade = 10_000_000  # 1,000만원 거래
-commission = calc_commission(trade)
-print(f"거래금액: {trade:,}원")
-print(f"위탁수수료 (0.015%): {commission:,.0f}원")
-```
-
-> 📺 [🎬 주식 위탁매매 수수료 설명](https://www.youtube.com/results?search_query=주식+위탁매매+수수료+증권사+한국어)
 
 ---
 
 ## 5. 신탁 (信託, Trust)
 
-> 📺 [🎬 신탁](https://www.youtube.com/results?search_query=신탁+한국어)
 
 > 📖 **Wikipedia**: [신탁](https://ko.wikipedia.org/wiki/신탁)
 
@@ -2563,7 +1917,6 @@ print(f"위탁수수료 (0.015%): {commission:,.0f}원")
 | 목적 | 유언대용신탁 | 사망 시 재산 배분 계획 |
 | 목적 | 퇴직연금신탁 | 퇴직급여 적립·운용 |
 
-> 📺 [🎬 신탁 종류 특정금전신탁 설명](https://www.youtube.com/results?search_query=신탁+종류+특정금전신탁+불특정금전신탁+한국어)
 
 ### 위탁·수탁·신탁 비교
 
@@ -2578,7 +1931,6 @@ print(f"위탁수수료 (0.015%): {commission:,.0f}원")
 
 ## 6. 수신과 여신
 
-> 📺 [🎬 수신과 여신](https://www.youtube.com/results?search_query=수신과+여신+한국어)
 
 > 📖 **Wikipedia**: [예금](https://ko.wikipedia.org/wiki/예금) · [대출](https://ko.wikipedia.org/wiki/대출)
 
@@ -2611,33 +1963,12 @@ print(f"위탁수수료 (0.015%): {commission:,.0f}원")
 
 은행은 수신금리(예금에 지급하는 이자)보다 여신금리(대출로 받는 이자)를 높게 유지해 **예대마진(NIM: Net Interest Margin)**을 수익으로 취합니다.
 
-```python
-# 예대마진 계산 예시
-def calc_nim(loan_rate: float, deposit_rate: float, loan_amount: float) -> dict:
-    """예대마진(NIM) 계산"""
-    interest_income = loan_amount * loan_rate        # 이자수익 (여신)
-    interest_expense = loan_amount * deposit_rate    # 이자비용 (수신)
-    nim = loan_rate - deposit_rate
-    net_income = interest_income - interest_expense
-    return {
-        "여신금리": f"{loan_rate:.2%}",
-        "수신금리": f"{deposit_rate:.2%}",
-        "NIM": f"{nim:.2%}",
-        "연간 순이자이익": f"{net_income:,.0f}원",
-    }
 
-result = calc_nim(loan_rate=0.05, deposit_rate=0.03, loan_amount=1_000_000_000)
-for k, v in result.items():
-    print(f"{k}: {v}")
-```
-
-> 📺 [🎬 은행 수신 여신 예대마진 설명](https://www.youtube.com/results?search_query=은행+수신+여신+예대마진+NIM+한국어)
 
 ---
 
 ## 7. 금융상품의 구분
 
-> 📺 [🎬 금융상품의 구분](https://www.youtube.com/results?search_query=금융상품의+구분+한국어)
 
 > 📖 **Wikipedia**: [금융상품](https://ko.wikipedia.org/wiki/금융상품) · [파생상품](https://ko.wikipedia.org/wiki/파생상품)
 
@@ -2685,43 +2016,7 @@ for k, v in result.items():
 | 선도 (Forward) | 비표준화, 당사자 간 맞춤 계약 | 장외 (OTC) |
 | 스왑 (Swap) | 미래 현금흐름을 교환 | 장외 (OTC) |
 
-```python
-financial_products = {
-    "금융투자상품": {
-        "증권": {
-            "채무증권": ["국채", "지방채", "회사채", "CD"],
-            "지분증권": ["보통주", "우선주", "출자지분"],
-            "수익증권": ["공모펀드", "ETF", "REITs"],
-            "파생결합증권": ["ELS", "DLS", "ELB", "ETN"],
-        },
-        "파생상품": {
-            "거래소거래": ["코스피200선물", "코스피200옵션", "달러선물"],
-            "장외거래(OTC)": ["금리스왑", "통화선도", "CDS"],
-        },
-    },
-    "비금융투자상품": {
-        "예금": ["보통예금", "정기예금", "정기적금"],
-        "보험": ["생명보험", "손해보험"],
-    },
-}
 
-def classify_product(name: str, is_investment: bool, product_type: str) -> None:
-    category = "금융투자상품" if is_investment else "비금융투자상품"
-    print(f"{name}: {category} ({product_type})")
-
-examples = [
-    ("삼성전자 주식", True, "지분증권"),
-    ("국고채 3년", True, "채무증권"),
-    ("코스피200 선물", True, "파생상품"),
-    ("KODEX200 ETF", True, "수익증권"),
-    ("KB국민은행 정기예금", False, "예금"),
-    ("삼성생명 종신보험", False, "보험"),
-]
-for args in examples:
-    classify_product(*args)
-```
-
-> 📺 [🎬 금융상품 구분 증권 파생상품 예금 차이](https://www.youtube.com/results?search_query=금융상품+구분+증권+파생상품+예금+자본시장법+한국어)
 
 ---
 
@@ -2788,37 +2083,6 @@ for args in examples:
 | **비상장 사모 상품** | 제한된 채널 | 49인 이하 소수 투자자 | 헤지펀드, 사모펀드(PEF) |
 | **장외(OTC) 상품** | 기관 간 협의 | 맞춤형, 유동성 낮음 | 선도(Forward), 스왑 |
 
-```python
-# 금융상품 속성 분류 시스템
-from dataclasses import dataclass
-from typing import Literal
-
-@dataclass
-class FinancialProductProfile:
-    name: str
-    principal_protection: Literal["보장", "부분보장", "비보장"]
-    return_type: Literal["확정", "변동"]
-    risk_grade: int          # 1(최고위험) ~ 6(최저위험)
-    listing: Literal["상장", "비상장공모", "비상장사모", "장외"]
-    investment_purpose: str  # 안전/소득/성장/헤지
-
-products = [
-    FinancialProductProfile("국채 3년",         "보장",    "확정", 5, "상장",    "소득"),
-    FinancialProductProfile("삼성전자 주식",     "비보장",  "변동", 2, "상장",    "성장"),
-    FinancialProductProfile("KODEX 200 ETF",     "비보장",  "변동", 2, "상장",    "성장"),
-    FinancialProductProfile("코스피200 콜옵션",  "비보장",  "변동", 1, "상장",    "헤지"),
-    FinancialProductProfile("정기예금",          "보장",    "확정", 6, "비상장공모","안전"),
-    FinancialProductProfile("ELS (원금비보장)",  "비보장",  "변동", 2, "비상장공모","소득"),
-    FinancialProductProfile("금리스왑(IRS)",     "비보장",  "변동", 1, "장외",    "헤지"),
-    FinancialProductProfile("MMF",              "비보장",  "변동", 6, "비상장공모","안전"),
-]
-
-print(f"{'상품명':20} | {'원금':6} | {'수익':4} | {'위험':4} | {'상장':8} | {'목적'}")
-print("-" * 72)
-for p in products:
-    print(f"{p.name:20} | {p.principal_protection:6} | {p.return_type:4} | "
-          f"{p.risk_grade}등급 | {p.listing:8} | {p.investment_purpose}")
-```
 
 **실행 결과:**
 ```
@@ -2902,7 +2166,6 @@ MMF                  | 비보장 | 변동 | 6등급 | 비상장공모 | 안전
 
 ## 8. 금융 규제 체계 요약
 
-> 📺 [🎬 금융 규제 체계 요약](https://www.youtube.com/results?search_query=금융+규제+체계+요약+한국어)
 
 | 규제 체계 | 정책 기관 | 감독 기관 | 자율규제 |
 |-----------|-----------|-----------|----------|
@@ -2928,7 +2191,6 @@ graph TD
 
 ## 9. 금융상품의 개론
 
-> 📺 [🎬 금융상품의 개론](https://www.youtube.com/results?search_query=금융상품의+개론+한국어)
 
 > 📖 **Wikipedia**: [금융상품](https://ko.wikipedia.org/wiki/금융상품)
 
@@ -2970,7 +2232,6 @@ graph TD
 
 ## 10. 예금 및 신탁상품
 
-> 📺 [🎬 예금 및 신탁상품](https://www.youtube.com/results?search_query=예금+및+신탁상품+한국어)
 
 > 📖 **Wikipedia**: [예금](https://ko.wikipedia.org/wiki/예금) · [신탁](https://ko.wikipedia.org/wiki/신탁)
 
@@ -2995,25 +2256,6 @@ graph TD
 | 보호 O | 은행·저축은행·증권사·보험사(예금성) 예금 | 1인당 **5,000만원** (원리금 합산) |
 | 보호 X | 실적배당형 상품(펀드, ETF), 외화예금 일부, 법인예금 일부 | 한도 없음(보호 안 됨) |
 
-```python
-# 예금자보호 계산 예시
-PROTECTION_LIMIT = 50_000_000  # 5,000만원
-
-deposits = {
-    "KB국민은행 정기예금": 30_000_000,
-    "KB국민은행 적금":     15_000_000,
-    "KB국민은행 보통예금":  8_000_000,
-}
-
-total = sum(deposits.values())
-protected = min(total, PROTECTION_LIMIT)
-unprotected = max(0, total - PROTECTION_LIMIT)
-
-print(f"총 예금: {total:,}원")
-print(f"보호금액: {protected:,}원")
-print(f"비보호금액: {unprotected:,}원")
-# → 총 53,000,000원 중 50,000,000원 보호, 3,000,000원 미보호
-```
 
 ### 10.2 신탁 상품의 종류
 
@@ -3032,7 +2274,6 @@ print(f"비보호금액: {unprotected:,}원")
 
 ## 11. 보장성 금융상품 (보험)
 
-> 📺 [🎬 보장성 금융상품](https://www.youtube.com/results?search_query=보장성+금융상품+한국어)
 
 > 📖 **Wikipedia**: [보험](https://ko.wikipedia.org/wiki/보험) · [생명보험](https://ko.wikipedia.org/wiki/생명보험) · [손해보험](https://ko.wikipedia.org/wiki/손해보험) · [실손의료보험](https://ko.wikipedia.org/wiki/실손의료보험)
 
@@ -3161,29 +2402,6 @@ print(f"비보호금액: {unprotected:,}원")
 | **실손** | 각 보험사가 비례 배분 (합산 지급액 ≤ 실제 손해액) |
 | **정액** | 각 보험사가 **독립적으로 각자 지급** (중복 수령 가능) |
 
-```python
-# 이득금지 원칙 적용 예시
-
-actual_loss = 1_000_000  # 실제 손해 100만원
-
-# 실손보험 2개 가입 (각각 한도 100만원)
-policy_A_limit = 1_000_000
-policy_B_limit = 1_000_000
-
-# 합산 지급액 = min(실제손해, 각 보험 한도 합산 비례)
-# 비례배분: A가 50%, B가 50%
-indemnity_A = actual_loss * (policy_A_limit / (policy_A_limit + policy_B_limit))
-indemnity_B = actual_loss * (policy_B_limit / (policy_A_limit + policy_B_limit))
-print(f"실손 합산: A={indemnity_A:,.0f}원, B={indemnity_B:,.0f}원, 합계={indemnity_A+indemnity_B:,.0f}원")
-# → 실손 합산: A=500,000원, B=500,000원, 합계=1,000,000원
-
-# 정액보험 2개 가입 (각 3,000만원 암 진단비)
-fixed_A = 30_000_000
-fixed_B = 30_000_000
-total_fixed = fixed_A + fixed_B
-print(f"정액 합산: A={fixed_A:,}원 + B={fixed_B:,}원 = {total_fixed:,}원 (이득금지 원칙 미적용)")
-# → 정액 합산: 60,000,000원 (실제 치료비와 무관)
-```
 
 ---
 
@@ -3275,59 +2493,6 @@ print(f"정액 합산: A={fixed_A:,}원 + B={fixed_B:,}원 = {total_fixed:,}원 
 | 비보호 항목 | 은행 발행채권, 양도성예금증서(CD) | 보증보험, 재보험 |
 
 ---
-
-### 11.9 Python: 보험 보상 방식 시뮬레이션
-
-```python
-from dataclasses import dataclass
-from typing import Literal
-
-@dataclass
-class InsuranceClaim:
-    name: str
-    benefit_type: Literal["정액", "실손", "혼합"]
-    actual_loss: int       # 실제 발생 손해 (원)
-    fixed_amount: int      # 정액 약정금 (정액 시)
-    deductible_rate: float # 자기부담률 (실손 시, 0~1)
-
-    def calculate_payout(self) -> dict:
-        if self.benefit_type == "정액":
-            payout = self.fixed_amount
-            note = "실제 손해와 무관하게 약정금 지급"
-        elif self.benefit_type == "실손":
-            payout = int(self.actual_loss * (1 - self.deductible_rate))
-            note = f"실제 손해의 {(1-self.deductible_rate)*100:.0f}% 보상"
-        else:  # 혼합
-            fixed_part = self.fixed_amount
-            indemnity_part = int(self.actual_loss * (1 - self.deductible_rate))
-            payout = fixed_part + indemnity_part
-            note = "정액(진단비) + 실손(치료비) 합산"
-        return {"지급액": payout, "비고": note}
-
-cases = [
-    InsuranceClaim("암 진단비 (정액)",    "정액", 5_000_000,  30_000_000, 0.0),
-    InsuranceClaim("실손의료보험 (실손)", "실손", 1_000_000,           0, 0.2),
-    InsuranceClaim("자동차 자기차량 (실손)","실손",3_000_000,          0, 0.2),
-    InsuranceClaim("종합 암보험 (혼합)",  "혼합", 5_000_000,  20_000_000, 0.3),
-]
-
-print(f"{'상품':25} | {'방식':4} | {'실손해':>10} | {'지급액':>12} | 비고")
-print("-" * 85)
-for c in cases:
-    result = c.calculate_payout()
-    print(f"{c.name:25} | {c.benefit_type:4} | {c.actual_loss:>10,} | "
-          f"{result['지급액']:>12,} | {result['비고']}")
-```
-
-**실행 결과:**
-```
-상품                      | 방식 |     실손해 |       지급액 | 비고
--------------------------------------------------------------------------------------
-암 진단비 (정액)          | 정액 |  5,000,000 |   30,000,000 | 실제 손해와 무관하게 약정금 지급
-실손의료보험 (실손)       | 실손 |  1,000,000 |      800,000 | 실제 손해의 80% 보상
-자동차 자기차량 (실손)    | 실손 |  3,000,000 |    2,400,000 | 실제 손해의 80% 보상
-종합 암보험 (혼합)        | 혼합 |  5,000,000 |   23,500,000 | 정액(진단비) + 실손(치료비) 합산
-```
 
 ### 11.10 사회보험 · 국영보험 · 4대보험
 
@@ -3469,34 +2634,6 @@ n   = 가입 기간 (개월 수)
 
 #### ⑦ 4대 보험료 납부 구조 요약
 
-```python
-# 4대 사회보험 보험료 계산 (2024년 기준 예시)
-
-monthly_salary = 3_000_000  # 월급 300만원
-
-rates = {
-    "국민건강보험": {"total": 0.0709, "worker": 0.5, "employer": 0.5},
-    "장기요양보험": {"total": 0.0709 * 0.1295, "worker": 0.5, "employer": 0.5},  # 건강보험료의 12.95%
-    "국민연금":     {"total": 0.09,   "worker": 0.5, "employer": 0.5},
-    "고용보험":     {"total": 0.018,  "worker": 0.9/1.8, "employer": 0.9/1.8},
-    # 산재보험: 사업주 전액 (업종별 상이, 여기서는 제외)
-}
-
-print(f"월급 {monthly_salary:,}원 기준 4대보험 보험료")
-print(f"{'항목':16} | {'전체 보험료':>12} | {'근로자 부담':>12} | {'사용자 부담':>12}")
-print("-" * 62)
-
-total_worker = 0
-for name, r in rates.items():
-    total_fee = int(monthly_salary * r["total"])
-    worker = int(total_fee * r["worker"])
-    employer = total_fee - worker
-    total_worker += worker
-    print(f"{name:16} | {total_fee:>12,} | {worker:>12,} | {employer:>12,}")
-
-print(f"\n근로자 월 실수령 감소액: {total_worker:,}원")
-print(f"(세전 {monthly_salary:,}원 - 보험료 {total_worker:,}원 - 소득세·지방세 별도)")
-```
 
 **실행 결과 예시 (월급 300만원):**
 ```
@@ -3552,7 +2689,6 @@ print(f"(세전 {monthly_salary:,}원 - 보험료 {total_worker:,}원 - 소득�
 
 ## 12. 투자성 금융상품
 
-> 📺 [🎬 투자성 금융상품](https://www.youtube.com/results?search_query=투자성+금융상품+한국어)
 
 > 📖 **Wikipedia**: [금융투자상품](https://ko.wikipedia.org/wiki/금융투자상품)
 
@@ -3582,7 +2718,6 @@ print(f"(세전 {monthly_salary:,}원 - 보험료 {total_worker:,}원 - 소득�
 
 ## 13. 정보 비대칭성·역선택·도덕적 해이
 
-> 📺 [🎬 정보 비대칭성·역선택·도덕적 해이](https://www.youtube.com/results?search_query=정보+비대칭성·역선택·도덕적+해이+한국어)
 
 > 📖 **Wikipedia**: [정보 비대칭](https://ko.wikipedia.org/wiki/정보의_비대칭) · [역선택](https://ko.wikipedia.org/wiki/역선택) · [도덕적 해이](https://ko.wikipedia.org/wiki/도덕적_해이)
 
@@ -3622,27 +2757,6 @@ print(f"(세전 {monthly_salary:,}원 - 보험료 {total_worker:,}원 - 소득�
 | 은행 대출 | 부실 기업이 높은 금리도 감수하고 대출 신청 → 역으로 위험한 차입자만 남음 | 신용평가, 담보·보증 요구 |
 | 증권 발행 | 나쁜 기업이 좋은 기업인 척 주식 발행 | 공시 의무화, 감사인 제도 |
 
-```python
-# 역선택 예시: 보험 시장 레몬 모델 (단순화)
-import numpy as np
-
-np.random.seed(0)
-n = 1000
-# 실제 건강 점수 (높을수록 건강)
-health = np.random.normal(70, 15, n)
-
-# 건강한 사람은 가입 안 함, 아픈 사람이 더 많이 가입
-# 가입 확률 = 건강 점수에 반비례
-enrollment_prob = 1 / (1 + np.exp((health - 70) / 10))
-enrolled = np.random.binomial(1, enrollment_prob)
-
-avg_health_enrolled = health[enrolled == 1].mean()
-avg_health_all      = health.mean()
-
-print(f"전체 평균 건강 점수: {avg_health_all:.1f}")
-print(f"보험 가입자 평균 건강 점수: {avg_health_enrolled:.1f}")
-# → 가입자의 건강 점수가 낮다 = 역선택 발생
-```
 
 ### 13.3 도덕적 해이 (Moral Hazard)
 
@@ -3681,322 +2795,11 @@ print(f"보험 가입자 평균 건강 점수: {avg_health_enrolled:.1f}")
 
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 1. 본인이 주로 사용하는 금융회사(증권사, 은행 등)가 어떤 근거 법률 아래에서 어떤 금융투자 업무를 인가받았는지 금융감독원 금융회사 공시시스템에서 확인해보세요.
 2. 자신이 보유한 금융상품(예금, 주식, 펀드, ETF, 보험 등)을 수신성·보장성·투자성 기준으로 나누고, 예금자보호 여부를 함께 정리해보세요.
 3. 은행의 최근 NIM(순이자마진) 데이터를 금융감독원 DART 공시에서 찾아 예대마진 변화가 주가에 어떤 영향을 주었는지 분석해보세요.
 4. 역선택과 도덕적 해이가 실제로 발생한 금융 사례(2008년 서브프라임 위기, 2011년 저축은행 사태 등)를 조사하고, 어떤 규제가 도입되었는지 설명해보세요.
-
----
-
-# 모듈 8 재정리 — 퀀트를 위한 금융 필수 지식 5일 커리큘럼
-
-> 대상 파일: `37.md` ~ `40.md`  
-> 범위: 금융상품 이해 + 자산배분방법론  
-> 목적: 기존 문서에 핵심 주제가 골고루 들어 있는지 점검하고, 5일짜리 커리큘럼으로 다시 정리
-
----
-
-## 1. 기존 문서 구성 진단
-
-> 📺 [🎬 기존 문서 구성 진단](https://www.youtube.com/results?search_query=기존+문서+구성+진단+한국어)
-
-
-| 파일 | 포함된 Day | 주제 | 진단 |
-|------|------------|------|------|
-| `37.md` | Day 052 | 주식 및 ETF 상품 이해 | 주식·ETF 개요, 기본 지표, ETF 유형, ETF 운용 전략, 성과 비교 실습 포함 |
-| `37.md` | Day 053 | 채권 상품 이해 | 채권 개요, 금리와 가격, 듀레이션, 채권 종류, 수익률 곡선 실습 포함 |
-| `38.md` | Day 054 | 파생상품 이해 | 선물, 옵션, 스왑, 옵션 손익 구조, 옵션 시뮬레이션 포함 |
-| `39.md` | Day 055 | 포트폴리오 이론 및 성과 분석 | MPT, 효율적 투자선, CAGR, 변동성, MDD, 샤프·소르티노 포함 |
-| `40.md` | Day 056 | 자산배분 모델 | 평균분산, 블랙-리터만, Risk-Parity, 60/40·All Weather 사례 포함 |
-
-**종합 판단**
-
-- 요청한 핵심 내용은 전반적으로 **골고루 포함**되어 있습니다.
-- 금융상품 이해는 `주식/ETF → 채권 → 파생상품` 순서로 자연스럽게 구성되어 있습니다.
-- 자산배분방법론은 `포트폴리오 이론/성과분석 → 자산배분 모델/사례분석`으로 이어져 학습 흐름이 좋습니다.
-- 다만 `37.md`에 Day 052와 Day 053이 함께 들어 있어, 파일 단위 관리보다는 **일차 단위 커리큘럼 표**가 별도로 필요합니다.
-
----
-
-## 2. 요청 범위별 포함 여부 분석
-
-> 📺 [🎬 요청 범위별 포함 여부](https://www.youtube.com/results?search_query=요청+범위별+포함+여부+분석+한국어)
-
-| 요청 범위 | 포함 위치 | 포함 수준 | 보완 의견 |
-|-----------|-----------|-----------|-----------|
-| 주식/ETF 개요 | `37.md` Day 052 | 충분 | 주식시장 구조, EPS, 배당, ETF 종류가 포함됨 |
-| 주식/ETF 운용 전략 | `37.md` Day 052 | 충분 | 패시브, 액티브, 팩터, 레버리지/인버스 ETF 포함 |
-| 채권 개요 | `37.md` Day 053 | 충분 | 발행자, 만기, 쿠폰, 액면가, 신용등급 포함 |
-| 채권 운용 전략 | `37.md` Day 053 | 보통 | 듀레이션과 수익률 곡선은 포함됨. 운용 전략 관점은 바벨·불릿·래더 전략을 추가하면 더 좋음 |
-| 파생상품 개요 | `38.md` Day 054 | 충분 | 선물, 옵션, 스왑 기본 구조 포함 |
-| 파생상품 운용 전략 | `38.md` Day 054 | 보통 | 헤징, 옵션 전략은 포함됨. 스프레드·보호적 풋·커버드콜을 더 강조하면 좋음 |
-| 포트폴리오 이론 개요 | `39.md` Day 055 | 충분 | MPT와 효율적 투자선 포함 |
-| 성과분석 | `39.md` Day 055 | 충분 | CAGR, 변동성, MDD 포함 |
-| 리스크 지표 | `39.md` Day 055 | 충분 | 샤프, 소르티노, 칼마 비율 포함 |
-| 평균분산 모델 | `40.md` Day 056 | 충분 | 기대수익률, 공분산, 최대 샤프 실습 포함 |
-| 블랙-리터만 모델 | `40.md` Day 056 | 보통 | 개요와 입력값은 포함됨. 실제 수식보다 직관 중심 |
-| Risk-Parity 모델 | `40.md` Day 056 | 충분 | 위험기여도와 역변동성 예시 포함 |
-| 사례 분석 | `40.md` Day 056 | 충분 | 60/40, All Weather, Permanent Portfolio 포함 |
-
----
-
-## 3. 5일짜리 커리큘럼 재정리
-
-> 📺 [🎬 5일짜리 커리큘럼 재정리](https://www.youtube.com/results?search_query=5일짜리+커리큘럼+재정리+한국어)
-
-### Day 052 — 주식 및 ETF 상품 이해
-
-**학습 목표**
-
-- 주식과 ETF의 구조를 이해한다.
-- 개별 주식과 ETF를 퀀트 분석 대상으로 다룰 때 필요한 기본 지표를 익힌다.
-- ETF 운용 전략별 차이를 비교한다.
-
-**핵심 내용**
-
-| 구분 | 내용 |
-|------|------|
-| 주식시장 구조 | 코스피, 코스닥, 나스닥의 차이 |
-| 주식 기본 지표 | EPS, PER, 배당수익률, 시가총액 |
-| ETF 개요 | 지수 추종, 거래소 상장, 분산투자 효과 |
-| ETF 종류 | 시장대표, 섹터, 채권, 원자재, 팩터 ETF |
-| 운용 전략 | 패시브, 액티브, 팩터, 레버리지/인버스 |
-
-**실습**
-
-- `SPY`, `QQQ`, `TLT`, `GLD` 가격 데이터 수집
-- 누적수익률, 변동성, MDD 비교
-- ETF별 투자 성격 요약표 작성
-
-**산출물**
-
-- ETF 성과 비교표
-- ETF 누적수익률 차트
-- ETF별 운용 전략 요약
-
----
-
-### Day 053 — 채권 상품 이해
-
-**학습 목표**
-
-- 채권의 발행 구조와 가격 결정 원리를 이해한다.
-- 금리 변화가 채권 가격에 미치는 영향을 계산한다.
-- 채권 운용에서 듀레이션과 수익률 곡선의 의미를 해석한다.
-
-**핵심 내용**
-
-| 구분 | 내용 |
-|------|------|
-| 채권 개요 | 발행자, 만기, 쿠폰, 액면가, 신용등급 |
-| 금리와 가격 | 시장금리 상승 시 채권가격 하락 |
-| 리스크 지표 | 듀레이션, 볼록성, 신용스프레드 |
-| 채권 종류 | 국채, 공사채, 투자등급 회사채, 하이일드채 |
-| 운용 전략 | 래더, 바벨, 불릿, 듀레이션 조절 |
-
-**실습**
-
-- 만기별 국채금리 데이터 수집
-- 2년·10년 금리 스프레드 계산
-- 채권 가격과 시장금리 변화 시뮬레이션
-
-**산출물**
-
-- 수익률 곡선 차트
-- 장단기금리차 분석표
-- 금리 변화별 채권 가격 민감도 표
-
----
-
-### Day 054 — 파생상품 이해
-
-**학습 목표**
-
-- 선물, 옵션, 스왑의 기본 구조를 이해한다.
-- 파생상품이 투기뿐 아니라 헤징과 위험관리에도 쓰인다는 점을 이해한다.
-- 옵션 손익 구조를 직접 계산하고 시각화한다.
-
-**핵심 내용**
-
-| 구분 | 내용 |
-|------|------|
-| 선물 | 표준화 계약, 롱/숏 포지션, 헤징 |
-| 옵션 | 콜옵션, 풋옵션, 행사가격, 프리미엄 |
-| 옵션 전략 | 콜 매수, 풋 매수, 보호적 풋, 커버드콜, 스트래들 |
-| 스왑 | 금리스왑, 통화스왑, 총수익스왑 |
-| 운용 전략 | 방향성 거래, 변동성 거래, 포트폴리오 헤지 |
-
-**실습**
-
-- 콜옵션·풋옵션 만기 손익 계산
-- 스트래들 전략 손익곡선 작성
-- 선물 롱·숏 포지션 손익 비교
-
-**산출물**
-
-- 옵션 손익표
-- 옵션 손익곡선
-- 헤징 전략별 장단점 정리
-
----
-
-### Day 055 — 포트폴리오 이론 및 성과 분석
-
-**학습 목표**
-
-- 포트폴리오를 단일 자산이 아니라 자산 조합으로 분석한다.
-- 수익률과 위험을 함께 평가하는 성과분석 체계를 익힌다.
-- 리스크 지표를 통해 전략의 품질을 비교한다.
-
-**핵심 내용**
-
-| 구분 | 내용 |
-|------|------|
-| 포트폴리오 이론 | 현대 포트폴리오 이론, 분산투자 |
-| 효율적 투자선 | 같은 위험에서 높은 수익, 같은 수익에서 낮은 위험 |
-| 성과 지표 | 누적수익률, CAGR, 변동성, MDD |
-| 리스크 지표 | 샤프 비율, 소르티노 비율, 칼마 비율 |
-| 대시보드 설계 | KPI, 누적성과, 드로다운, 월별 수익률 |
-
-**실습**
-
-- `SPY`, `TLT`, `GLD`, `DBC` 포트폴리오 구성
-- CAGR, 변동성, MDD, 샤프 비율 계산
-- 벤치마크 대비 성과 비교
-
-**산출물**
-
-- 포트폴리오 성과 요약표
-- 누적수익률 차트
-- 드로다운 차트
-
----
-
-### Day 056 — 자산배분 모델 및 사례 분석
-
-**학습 목표**
-
-- 대표적인 자산배분 모델의 목적과 차이를 이해한다.
-- 평균분산, 블랙-리터만, Risk-Parity 모델의 입력값과 결과를 비교한다.
-- 실제 자산배분 사례를 분석하고 퀀트 전략으로 확장한다.
-
-**핵심 내용**
-
-| 구분 | 내용 |
-|------|------|
-| 평균분산 최적화 | 기대수익률, 공분산, 최소분산, 최대샤프 |
-| 블랙-리터만 | 시장균형수익률, 투자자 전망, 신뢰도 |
-| Risk-Parity | 자본 비중이 아닌 위험기여도 균등화 |
-| 사례 분석 | 60/40, All Weather, Permanent Portfolio |
-| 실전 이슈 | 추정오차, 과최적화, 리밸런싱, 거래비용 |
-
-**실습**
-
-- 무작위 포트폴리오 생성
-- 최대 샤프 포트폴리오 탐색
-- 60/40, 역변동성, 평균분산 최적화 결과 비교
-
-**산출물**
-
-- 최적 비중표
-- 효율적 투자선 산점도
-- 자산배분 전략 비교 리포트
-
----
-
-## 4. 최종 5일 운영안
-
-> 📺 [🎬 최종 5일 운영안](https://www.youtube.com/results?search_query=최종+5일+운영안+한국어)
-
-| 일차 | 주제 | 이론 비중 | 실습 비중 | 핵심 산출물 |
-|------|------|-----------|-----------|-------------|
-| Day 052 | 주식/ETF 상품 이해 | 60% | 40% | ETF 성과 비교표 |
-| Day 053 | 채권 상품 이해 | 60% | 40% | 수익률 곡선 분석 |
-| Day 054 | 파생상품 이해 | 55% | 45% | 옵션 손익 시뮬레이션 |
-| Day 055 | 포트폴리오 이론 및 성과 분석 | 50% | 50% | 포트폴리오 성과 대시보드 |
-| Day 056 | 자산배분 모델 및 사례 분석 | 50% | 50% | 자산배분 최적화 리포트 |
-
----
-
-## 5. 보완 권장 사항
-
-> 📺 [🎬 보완 권장 사항](https://www.youtube.com/results?search_query=보완+권장+사항+한국어)
-
-기존 `37.md` ~ `40.md`의 내용은 전체적으로 충분하지만, 아래 항목을 추가하면 요청 범위와 더 정확히 맞아집니다.
-
-| 보완 위치 | 추가하면 좋은 내용 | 이유 |
-|-----------|-------------------|------|
-| Day 053 채권 | 래더, 바벨, 불릿 전략 | 채권 “운용 전략” 표현을 더 명확히 보강 |
-| Day 054 파생상품 | 보호적 풋, 커버드콜, 스프레드 전략 | 파생상품 “운용 전략”의 실전성을 강화 |
-| Day 055 포트폴리오 | 벤치마크 대비 초과수익, 추적오차 | 성과분석을 운용 평가 관점으로 확장 |
-| Day 056 자산배분 | 추정오차, 과최적화, 리밸런싱 비용 | 모델을 실전 포트폴리오에 적용할 때의 한계 보완 |
-
----
-
-## 6. 결론
-
-> 📺 [🎬 결론](https://www.youtube.com/results?search_query=결론+한국어)
-
-`37.md` ~ `40.md`는 요청한 **퀀트를 위한 금융 필수 지식**의 핵심 범위를 대부분 포함하고 있습니다. 가장 큰 특징은 `37.md`가 두 개의 수업(Day 052, Day 053)을 함께 담고 있다는 점입니다.
-
-따라서 학습 운영은 파일 번호가 아니라 아래 5일 구조로 관리하는 것이 가장 자연스럽습니다.
-
-```text
-Day 052: 주식/ETF 상품 이해
-Day 053: 채권 상품 이해
-Day 054: 파생상품 이해
-Day 055: 포트폴리오 이론 및 성과 분석
-Day 056: 자산배분 모델 및 사례 분석
-```
-
-이 5일 과정을 마치면 수강자는 금융상품의 구조를 이해하고, 각 상품을 포트폴리오에 편입해 성과와 리스크를 분석한 뒤, 자산배분 모델로 최적 비중을 설계하는 흐름까지 학습하게 됩니다.
-
----
-
-## 7. 웹앱 반영 현황 점검
-
-> 📺 [🎬 웹앱 반영 현황 점검](https://www.youtube.com/results?search_query=웹앱+반영+현황+점검+한국어)
-
-문서 커리큘럼을 웹앱 기능과 대조하면, 기존 웹앱은 **포트폴리오 최적화**와 **리스크 분석**은 잘 갖추고 있었지만, 주식/ETF·채권·파생상품을 모듈 8 흐름으로 묶어 보여주는 전용 화면은 부족했습니다.
-
-| 커리큘럼 축 | 기존 웹앱 반영 | 보완 후 반영 |
-|-------------|----------------|--------------|
-| 주식/ETF 상품 이해 | 일부 반영: 매크로/산업 화면의 ETF 데이터 활용 | `금융상품·자산배분` 화면에서 누적 성과와 ETF 성격을 통합 표시 |
-| 채권 상품 이해 | 일부 반영: 금리·수익률 곡선 개념이 매크로 화면에 분산 | 채권 수익률 곡선과 금리 민감도 관점을 전용 화면에 포함 |
-| 파생상품 이해 | 거의 미반영 | 옵션 손익 구조(콜, 풋, 스트래들)를 전용 화면에 포함 |
-| 포트폴리오 이론 | 반영: `포트폴리오 최적화` 메뉴 존재 | 5일 커리큘럼 점검 화면과 기존 최적화 화면을 연결 |
-| 리스크 지표 | 반영: `리스크 분석 (VaR)` 메뉴 존재 | CAGR, 변동성, MDD, Sharpe, Sortino 비교를 통합 화면에 추가 |
-| 자산배분 모델 | 부분 반영: 평균분산, Risk-Parity 중심 | 평균분산, 블랙-리터만, Risk-Parity, 60/40 사례를 함께 비교 |
-
----
-
-
-## 9. 웹앱 실행 및 확인
-
-FastAPI 서버 실행:
-
-```bash
-python3 -m uvicorn app.backend.main:app --host 0.0.0.0 --port 8000
-```
-
-확인 URL:
-
-```text
-http://127.0.0.1:8000/
-```
-
-확인한 API:
-
-```text
-GET  /api/health
-POST /api/quant/financial-knowledge
-POST /api/quant/portfolio
-```
-
-현재 웹앱 메뉴에서 `금융 필수 지식 → 금융상품·자산배분`을 선택하면, 이 5일 커리큘럼의 문서 반영 상태와 웹앱 실습 기능을 함께 확인할 수 있습니다.
-
 
 ---
 
@@ -4012,13 +2815,12 @@ POST /api/quant/portfolio
 
 ---
 
-# 투자분석 핵심 용어집 — Python Quant Lab
+# 투자분석 핵심 용어집
 
 이 문서는 **Python Quant Lab**의 4대 분석 축(매크로·산업적·기본적·기술적)과 통합 리포트, 퀀트 전략, ML/DL 금융 예측, 웹앱 개발에서 반복 등장하는 핵심 용어를
 초급자도 이해할 수 있는 수준의 쉬운 뜻 + 실전 예시로 정리한 사전입니다.
 
 > 📖 관련 문서:
-> - [docs/27.md](27.md) ~ [docs/36.md](36.md) — 모듈 7 전체 강의자료
 > - [readme.md](../readme.md) — 전체 커리큘럼 및 API 구성
 > - 📝 **한자 병기 및 어원 사전** (한자·어원·일제강점기 유래): [한자 병기 및 어원 사전](#-한자-병기-및-어원-사전--금융투자회계-용어)
 
@@ -4026,7 +2828,6 @@ POST /api/quant/portfolio
 
 ## 목차
 
-> 📺 [🎬 목차](https://www.youtube.com/results?search_query=목차+한국어)
 
 1. [매크로 분석 용어](#1-매크로-분석-macro-analysis-용어)
 2. [산업적 분석 용어](#2-산업적-분석-industry-analysis-용어)
@@ -4045,7 +2846,6 @@ POST /api/quant/portfolio
 
 ## 1. 매크로 분석 (Macro Analysis) 용어
 
-> 📺 [🎬 매크로 분석 용어](https://www.youtube.com/results?search_query=매크로+분석+용어+한국어)
 
 > 금리, 물가, 환율, 유가 같은 경제 전체의 큰 흐름을 읽는 데 필요한 용어
 
@@ -4071,7 +2871,6 @@ POST /api/quant/portfolio
 
 ## 2. 산업적 분석 (Industry Analysis) 용어
 
-> 📺 [🎬 산업적 분석 용어](https://www.youtube.com/results?search_query=산업적+분석+용어+한국어)
 
 > 특정 산업의 경쟁력과 매력도를 평가하는 데 필요한 용어
 
@@ -4095,7 +2894,6 @@ POST /api/quant/portfolio
 
 ## 3. 기본적 분석 (Fundamental Analysis) 용어
 
-> 📺 [🎬 기본적 분석 용어](https://www.youtube.com/results?search_query=기본적+분석+용어+한국어)
 
 ### 3-1. 재무제표 (Financial Statements)
 
@@ -4149,7 +2947,6 @@ POST /api/quant/portfolio
 
 ## 4. 기술적 분석 (Technical Analysis) 용어
 
-> 📺 [🎬 기술적 분석 용어](https://www.youtube.com/results?search_query=기술적+분석+용어+한국어)
 
 ### 4-1. 추세·이동평균
 
@@ -4208,7 +3005,6 @@ POST /api/quant/portfolio
 
 ## 5. 통합 리포트 & 투자의견 용어
 
-> 📺 [🎬 통합 리포트 투자의견 용어](https://www.youtube.com/results?search_query=통합+리포트+투자의견+용어+한국어)
 
 > 기본적 분석 + 기술적 분석을 합친 통합 리포트에서 사용하는 용어
 
@@ -4234,7 +3030,6 @@ POST /api/quant/portfolio
 
 ## 6. 퀀트 전략 & 포트폴리오 용어
 
-> 📺 [🎬 퀀트 전략 포트폴리오 용어](https://www.youtube.com/results?search_query=퀀트+전략+포트폴리오+용어+한국어)
 
 > 퀀트 전략 수립, 포트폴리오 최적화, 리스크 관리에서 자주 쓰이는 용어
 
@@ -4278,7 +3073,6 @@ POST /api/quant/portfolio
 
 ## 7. ML/DL 금융 예측 용어
 
-> 📺 [🎬 ML DL 금융 예측](https://www.youtube.com/results?search_query=ML+DL+금융+예측+용어+한국어)
 
 > 머신러닝·딥러닝을 금융 시계열 예측에 적용할 때 필요한 용어
 
@@ -4305,7 +3099,6 @@ POST /api/quant/portfolio
 
 ## 8. 웹앱 & API 개발 용어
 
-> 📺 [🎬 웹앱 API 개발 용어](https://www.youtube.com/results?search_query=웹앱+API+개발+용어+한국어)
 
 > FastAPI 백엔드와 Vanilla JS 프론트엔드로 구성된 웹앱 개발에서 쓰이는 용어
 
@@ -4331,7 +3124,6 @@ POST /api/quant/portfolio
 
 ## 9. 통계·수학 기초 (Statistics & Math Basics)
 
-> 📺 [🎬 통계·수학 기초](https://www.youtube.com/results?search_query=통계·수학+기초+한국어)
 
 > 퀀트 분석에서 자주 쓰이는 통계 개념
 
@@ -4350,53 +3142,8 @@ POST /api/quant/portfolio
 
 ---
 
-## 10. 파이썬 실습 — 기초 통계 + 금융 데이터 확인
-
-> 📺 [🎬 파이썬 실습 기초 통계](https://www.youtube.com/results?search_query=파이썬+실습+기초+통계+금융+데이터+확인+한국어)
-
-```python
-import numpy as np
-import pandas as pd
-from scipy import stats
-
-# 수익률 시뮬레이션 (GBM 기반)
-rng = np.random.default_rng(42)
-returns = rng.normal(0.0004, 0.012, 252)  # 일간 수익률 1년치
-
-# 기초 통계량
-print("평균(연환산):", np.mean(returns) * 252)
-print("변동성(연환산):", np.std(returns, ddof=1) * np.sqrt(252))
-
-# VaR / CVaR (95%)
-var_95 = np.percentile(returns, 5)
-cvar_95 = returns[returns <= var_95].mean()
-print(f"VaR 95%: {var_95*100:.2f}%")
-print(f"CVaR 95%: {cvar_95*100:.2f}%")
-
-# Sharpe Ratio (무위험 수익률 연 3% 가정)
-rf_daily = 0.03 / 252
-excess = returns - rf_daily
-sharpe = np.mean(excess) / np.std(excess, ddof=1) * np.sqrt(252)
-print(f"Sharpe Ratio: {sharpe:.2f}")
-
-# MDD 계산
-cum = np.cumprod(1 + returns)
-peak = np.maximum.accumulate(cum)
-mdd = np.min((cum - peak) / peak)
-print(f"MDD: {mdd*100:.2f}%")
-
-# 두 자산 상관관계
-asset_a = rng.normal(0.0003, 0.010, 252)
-asset_b = 0.6 * asset_a + 0.4 * rng.normal(0, 0.010, 252)
-corr, p_val = stats.pearsonr(asset_a, asset_b)
-print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
-```
-
----
-
 ## 11. 자주 혼동하는 용어 비교
 
-> 📺 [🎬 자주 혼동하는 용어 비교](https://www.youtube.com/results?search_query=자주+혼동하는+용어+비교+한국어)
 
 | 비교 쌍 | A | B | 핵심 차이 |
 |---|---|---|---|
@@ -4423,7 +3170,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 12. 금융 규제·산업 구조 용어 (자본시장법 기준)
 
-> 📺 [🎬 금융 규제·산업 구조 용어](https://www.youtube.com/results?search_query=금융+규제·산업+구조+용어+한국어)
 
 > 한국 금융 산업의 법적 구조와 자본시장법에 등장하는 핵심 개념
 > 자세한 내용은 [docs/42.md](42.md) 참조
@@ -4617,7 +3363,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 13. 벤처캐피탈·사모펀드·신탁·절세 용어
 
-> 📺 [🎬 벤처캐피탈·사모펀드·신탁·절세 용어](https://www.youtube.com/results?search_query=벤처캐피탈·사모펀드·신탁·절세+용어+한국어)
 
 | 용어 | 한자 | 영문 | 정의 | 예시 |
 |------|------|------|------|------|
@@ -4659,7 +3404,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 📌 읽는 법 — 표기 구분
 
-> 📺 [🎬 읽는 법 표기 구분](https://www.youtube.com/results?search_query=읽는+법+표기+구분+한국어)
 
 | 기호 | 의미 |
 |------|------|
@@ -4678,7 +3422,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 목차
 
-> 📺 [🎬 목차](https://www.youtube.com/results?search_query=목차+한국어)
 
 1. [경제·거시 용어](#1-경제거시-용어)
 2. [기업·법인 용어](#2-기업법인-용어)
@@ -4693,7 +3436,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 1. 경제·거시 용어
 
-> 📺 [🎬 경제·거시 용어](https://www.youtube.com/results?search_query=경제·거시+용어+한국어)
 
 ### 경제 (經濟)
 | 항목 | 내용 |
@@ -4801,7 +3543,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 2. 기업·법인 용어
 
-> 📺 [🎬 기업·법인 용어](https://www.youtube.com/results?search_query=기업·법인+용어+한국어)
 
 ### 법인 (法人)
 | 항목 | 내용 |
@@ -4899,7 +3640,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 3. 회계·재무 용어
 
-> 📺 [🎬 회계·재무 용어](https://www.youtube.com/results?search_query=회계·재무+용어+한국어)
 
 ### 재무 (財務)
 | 항목 | 내용 |
@@ -5081,7 +3821,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 4. 세무·조세 용어
 
-> 📺 [🎬 세무·조세 용어](https://www.youtube.com/results?search_query=세무·조세+용어+한국어)
 
 ### 조세 (租稅)
 | 항목 | 내용 |
@@ -5204,7 +3943,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 5. 금융·은행 용어
 
-> 📺 [🎬 금융·은행 용어](https://www.youtube.com/results?search_query=금융·은행+용어+한국어)
 
 ### 금융 (金融)
 | 항목 | 내용 |
@@ -5310,7 +4048,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 6. 증권·투자 용어
 
-> 📺 [🎬 증권·투자 용어](https://www.youtube.com/results?search_query=증권·투자+용어+한국어)
 
 ### 증권 (證券)
 | 항목 | 내용 |
@@ -5432,7 +4169,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 7. 부동산·등기 용어
 
-> 📺 [🎬 부동산·등기 용어](https://www.youtube.com/results?search_query=부동산·등기+용어+한국어)
 
 ### 부동산 (不動産)
 | 항목 | 내용 |
@@ -5491,7 +4227,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 8. 분석·리스크 용어
 
-> 📺 [🎬 분석·리스크 용어](https://www.youtube.com/results?search_query=분석·리스크+용어+한국어)
 
 ### 분석 (分析)
 | 항목 | 내용 |
@@ -5594,7 +4329,6 @@ print(f"두 자산 상관계수: {corr:.3f}  (p={p_val:.4f})")
 
 ## 📚 참고: 일제강점기 주요 유입 한자어 요약
 
-> 📺 [🎬 참고 일제강점기 주요 유입](https://www.youtube.com/results?search_query=참고+일제강점기+주요+유입+한자어+요약+한국어)
 
 일제강점기 동안 일본의 근대 법률·회계·금융 체계가 조선에 이식되면서, 아래 용어들이 이 시기 공식 용어로 자리잡았습니다. 이 중 상당수는 현재도 한국 법령·재무·세무 용어로 사용 중입니다.
 

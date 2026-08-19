@@ -1,10 +1,8 @@
 # 기술적 분석 II (패턴 & 엘리어트 파동)
 
-> **모듈 7: 투자분석 기초 방법론** | 10/10일차 | 💹 | 학습시간: 8시간
 
 ---
 
-> 📺 **YouTube 강의**: [🎬 기술적 분석 패턴 엘리어트 파동](https://www.youtube.com/results?search_query=기술적분석+패턴+엘리어트파동+한국어+강의)
 >
 > 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
 
@@ -16,38 +14,6 @@
 - 차트 패턴 분석 (헤드앤숄더, 이중천장 등)
 - 엘리어트 파동 이론 개요
 - 실습: 종목 선정 후 기본적·기술적 분석 통합 리포트
-
----
-
-## 🗓 세부 일정 (1일 8시간)
-
-
-
-> **강의 5시간** (5개 단락 × 50분 + 도입·마무리 50분) + **실습 3시간** = 총 8시간
-
-| 시간 | 구분 | 내용 | 형태 |
-|------|------|------|------|
-| 09:00 – 09:10 | 도입 | 오늘 학습 목표 확인 | 강의 |
-| 09:10 – 09:30 | **1단락** 설명 20분 | 캔들 패턴 분석 (도지·망치·장악형 등) | 강의 |
-| 09:30 – 10:00 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:00 – 10:20 | **2단락** 설명 20분 | 차트 패턴 분석 (헤드앤숄더·이중천장 등) | 강의 |
-| 10:20 – 10:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:50 – 11:00 | ☕ 휴식 | — | — |
-| 11:00 – 11:20 | **3단락** 설명 20분 | 엘리어트 파동 이론 개요 | 강의 |
-| 11:20 – 11:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 11:50 – 12:10 | **4단락** 설명 20분 | 엘리어트 파동 실전 매매 전략 | 강의 |
-| 12:10 – 12:40 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 12:40 – 13:00 | **5단락** 설명 20분 | 종목 선정 후 통합 리포트 구성 방법 | 강의 |
-| 13:00 – 13:30 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 13:30 – 14:00 | 강의 마무리 | Q&A · 핵심 복습 | 강의 |
-| 14:00 – 15:00 | 💻 **실습 1부** 60분 | 캔들·차트·엘리어트 파동 패턴 인식 코드 작성 | 실습 |
-| 15:00 – 15:10 | ☕ 휴식 | — | — |
-| 15:10 – 16:00 | 💻 **실습 2부** 50분 | 통합 리포트(기본적+기술적 분석) 생성 코드 작성 | 실습 |
-| 16:00 – 16:10 | ☕ 휴식 | — | — |
-| 16:10 – 17:00 | 💻 **실습 발표 & 리뷰** 50분 | 코드 리뷰 · 발표 · 피드백 | 실습 |
-
-> 강의 5시간: 도입 10분 + 단락 5개×50분 + 마무리 30분 = **300분**  
-> 실습 3시간: 1부 60분 + 휴식 10분 + 2부 50분 + 휴식 10분 + 발표·리뷰 50분 = **180분**
 
 ---
 
@@ -119,7 +85,6 @@ block-beta
   C --> L
 ```
 
-> 📺 [🎬 캔들 차트 기초 봉차트 설명](https://www.youtube.com/results?search_query=캔들차트+기초+봉차트+한국어+설명)
 
 **OHLC 관계도**
 
@@ -152,7 +117,6 @@ flowchart TD
 | **베어리쉬 엔걸핑(Bearish Engulfing)** | 큰 음봉이 앞날 양봉 전체를 덮음 | 강한 매도 전환 신호 |
 | **샛별(Morning Star)** | 음봉 → 도지 → 양봉 3캔들 조합 | 바닥 반전 강한 신호 |
 
-> 📺 [🎬 망치봉 도지봉 장악형 캔들 패턴](https://www.youtube.com/results?search_query=망치봉+도지봉+엔걸핑+캔들패턴+한국어)
 
 **캔들 패턴 실전 활용 — 패턴만으로 매매하면 안 되는 이유**
 
@@ -187,95 +151,6 @@ flowchart TD
 
 **캔들 패턴 Python 시각화**
 
-```python
-import yfinance as yf
-import mplfinance as mpf
-
-# 삼성전자 최근 3개월 캔들 차트
-df = yf.download("005930.KS", period="3mo", interval="1d", auto_adjust=True)
-df = df[["Open", "High", "Low", "Close", "Volume"]]
-df.columns = ["Open", "High", "Low", "Close", "Volume"]
-
-mpf.plot(
-    df,
-    type="candle",
-    style="charles",
-    title="삼성전자 캔들 차트 (최근 3개월)",
-    ylabel="주가 (원)",
-    volume=True,
-    mav=(5, 20),
-    savefig="candle_chart.png"
-)
-```
-
----
-
-### 🔗 Python 소스 연계 — 캔들 패턴 (Section 1)
-
-웹앱의 **Tab 4 (캔들패턴)**은 `technicalChart.js`의 `CandleChart` 클래스를 기반으로 6가지 패턴을 캔버스에 직접 그립니다.
-
-**`technicalChart.js` Tab 4 구현 구조**
-
-```mermaid
-flowchart LR
-    subgraph Tab4["Tab 4: 캔들패턴"]
-        direction TB
-        P1["Hammer\n(망치봉)"]
-        P2["Bearish Engulfing\n(베어리쉬 엔걸핑)"]
-        P3["Doji\n(도지)"]
-        P4["Morning Star\n(샛별)"]
-        P5["Evening Star\n(저녁별)"]
-        P6["Bullish Engulfing\n(불리쉬 엔걸핑)"]
-    end
-
-    G["genPrices(n, start, seed, scenario)"] -->|"시나리오별 가격 시뮬레이션"| Tab4
-    Tab4 -->|"drawCandles()"| C["CandleChart\n캔버스 렌더링"]
-    C -->|"drawArrow(x, y, dir, color)"| A["패턴 발생 위치\n화살표 표시"]
-    C -->|"drawWaveLabel(x, y, label)"| L["패턴명 라벨\n표시"]
-
-    style Tab4 fill:#2c3e50,color:#fff
-    style C fill:#2980b9,color:#fff
-    style G fill:#27ae60,color:#fff
-```
-
-**패턴 감지 핵심 로직 (JavaScript 의사코드)**
-
-```javascript
-// CandleChart 클래스 — 주요 메서드 시그니처
-class CandleChart {
-    drawCandles()              // OHLC 배열 → 캔버스에 캔들 렌더링
-    drawLine(prices, color)    // 이동평균선 등 꺾은선 그리기
-    drawBand(upper, lower)     // 볼린저밴드 음영 영역
-    drawTrendline(p1, p2)      // 추세선 (두 점 연결)
-    drawHLine(price)           // 수평 지지·저항선
-    drawArrow(x, y, dir, color)   // 패턴 위치 화살표 (dir: "up"/"down")
-    drawWaveLabel(x, y, label)    // 파동/패턴 라벨 텍스트
-}
-
-// genPrices — 시나리오별 가격 생성
-// scenario: "trend_up" | "trend_down" | "sideways" | "wave"
-const prices = genPrices(n=60, start=50000, seed=42, scenario="trend_down");
-
-// 망치봉(Hammer) 감지 조건 (Python과 동일 로직)
-// 아래 꼬리 길이 > 몸통의 2배 AND 위 꼬리 없음 AND 하락 추세 후
-function isHammer(open, high, low, close) {
-    const body = Math.abs(close - open);
-    const lowerWick = Math.min(open, close) - low;
-    const upperWick = high - Math.max(open, close);
-    return lowerWick > body * 2 && upperWick < body * 0.5;
-}
-```
-
-**Python ↔ JavaScript 패턴 감지 대응표**
-
-| 캔들 패턴 | Python (mplfinance) | JavaScript (technicalChart.js) |
-|-----------|--------------------|---------------------------------|
-| 망치봉 | `talib.CDLHAMMER()` | `isHammer(o,h,l,c)` 수식 직접 구현 |
-| 도지 | `talib.CDLDOJI()` | `Math.abs(close-open) < range*0.05` |
-| 엔걸핑 | `talib.CDLENGULFING()` | 전봉 몸통 포함 여부 비교 |
-| 샛별 | `talib.CDLMORNINGSTAR()` | 3캔들 조합 순서 검사 |
-| 시각화 | `mpf.plot(type="candle")` | `CandleChart.drawCandles()` |
-| 패턴 표시 | `addplot` 화살표 | `drawArrow(x, y, "up", "#00f")` |
 
 ---
 
@@ -285,7 +160,6 @@ function isHammer(open, high, low, close) {
 
 차트 패턴은 여러 캔들에 걸쳐 형성되는 **가격 흐름의 모양**으로, 추세 전환이나 지속을 예측하는 데 활용합니다.
 
-> 📺 [🎬 차트 패턴 헤드앤숄더 이중천장 설명](https://www.youtube.com/results?search_query=차트패턴+헤드앤숄더+이중천장+한국어+주식)
 
 **반전 패턴 (Reversal Patterns)**
 
@@ -328,7 +202,6 @@ flowchart LR
     style TP fill:#8e44ad,color:#fff
 ```
 
-> 📺 [🎬 이중천장 이중바닥 매매 전략](https://www.youtube.com/results?search_query=이중천장+이중바닥+더블탑+매매전략+한국어)
 
 **지속 패턴 (Continuation Patterns)**
 
@@ -373,68 +246,12 @@ flowchart TD
 
 ---
 
-### 🔗 Python 소스 연계 — 차트 패턴 (Section 2)
-
-**목표가 수식의 JavaScript 구현 대응**
-
-웹앱에서는 차트 패턴의 목표가 공식을 `technicalChart.js`의 드로잉 메서드로 시각화합니다.
-
-```mermaid
-flowchart LR
-    subgraph Python["Python (백테스트/분석)"]
-        P1["pandas 고점·저점 탐지\ndf.loc[argrelextrema(...)]"]
-        P2["목표가 공식 계산\ntarget = neckline - (head - neckline)"]
-        P3["matplotlib 시각화\nax.axhline(target, color='red')"]
-    end
-
-    subgraph JS["JavaScript (웹앱 technicalChart.js)"]
-        J1["genPrices() 또는 실제 데이터 로드"]
-        J2["고점·저점 인덱스 탐지\n(슬라이딩 윈도우)"]
-        J3["drawHLine(price)\n목표가·넥라인 수평선"]
-        J4["drawTrendline(p1, p2)\n패턴 경계선 그리기"]
-    end
-
-    Python -->|"동일 공식"| JS
-    P1 --> J2
-    P2 --> J3
-    P3 --> J4
-
-    style Python fill:#2c3e50,color:#fff
-    style JS fill:#2980b9,color:#fff
-```
-
-**목표가 계산 공식 JavaScript 구현 예시**
-
-```javascript
-// technicalChart.js — 패턴 목표가 계산 및 표시
-function calcTargetHnS(headPrice, necklinePrice) {
-    // 헤드앤숄더: 목표가 = 넥라인 - (헤드 - 넥라인)
-    const amplitude = headPrice - necklinePrice;
-    return necklinePrice - amplitude;
-}
-
-function calcTargetDoubleBottom(necklinePrice, bottomPrice) {
-    // 이중바닥: 목표가 = 넥라인 + (넥라인 - 바닥)
-    const amplitude = necklinePrice - bottomPrice;
-    return necklinePrice + amplitude;
-}
-
-// CandleChart 인스턴스에 결과 표시
-const chart = new CandleChart(canvas);
-chart.drawHLine(necklinePrice);               // 넥라인
-chart.drawHLine(targetPrice);                 // 목표가
-chart.drawTrendline(shoulder1, shoulder2);    // 패턴 경계선
-```
-
----
-
 ### 3. 엘리어트 파동 이론 (Elliott Wave Theory)
 
 > 📖 **Wikipedia**: [엘리엇 파동 이론](https://ko.wikipedia.org/wiki/엘리엇_파동_이론) · [피보나치 수열](https://ko.wikipedia.org/wiki/피보나치_수열)
 
 랄프 넬슨 엘리어트(Ralph Nelson Elliott)가 1930년대에 제안한 이론으로, 주가가 **군중 심리의 반복 패턴**에 따라 파동 형태로 움직인다고 봅니다.
 
-> 📺 [🎬 엘리어트 파동이론 기초 설명](https://www.youtube.com/results?search_query=엘리어트파동이론+기초+주식+한국어+설명)
 
 ---
 
@@ -712,76 +529,6 @@ flowchart TD
 | **시간대 선택** | 분봉·일봉·주봉 시간대에 따라 카운팅 결과가 달라짐 |
 | **실패 확률** | 5파 이후 반드시 조정이 오지만 시점 예측은 불확실 |
 
-> 📺 [🎬 엘리어트 파동 실전 매매 적용법](https://www.youtube.com/results?search_query=엘리어트파동+실전매매+적용법+한국주식+강의)
-
----
-
-### 🔗 Python 소스 연계 — 엘리어트 파동 (Section 3)
-
-웹앱의 **Tab 6 (엘리어트파동)**은 `technicalChart.js`가 파동 레이블과 피보나치 수평선을 자동으로 그립니다.
-
-**Tab 6 구현 아키텍처**
-
-```mermaid
-flowchart TD
-    subgraph Tab6["Tab 6: 엘리어트파동 (technicalChart.js)"]
-        direction TB
-        GP["genPrices(n=120, start=50000,\nseed=7, scenario='wave')"]
-        CC["CandleChart 인스턴스 생성"]
-        DC["drawCandles() — 캔들 렌더링"]
-        WL["drawWaveLabel(x, y, label)\n파동 번호 자동 표시\n(1, 2, 3, 4, 5, a, b, c)"]
-        FH["drawHLine(price)\n피보나치 수평선 표시\n38.2% / 61.8%"]
-        TL["drawTrendline(p1, p2)\n파동 경계·추세선"]
-    end
-
-    GP --> CC --> DC
-    DC --> WL
-    DC --> FH
-    DC --> TL
-
-    style Tab6 fill:#1a252f,color:#fff
-    style GP fill:#27ae60,color:#fff
-    style WL fill:#e74c3c,color:#fff
-    style FH fill:#f39c12,color:#fff
-```
-
-**피보나치 수평선 계산 (JavaScript)**
-
-```javascript
-// technicalChart.js — Tab 6 피보나치 수평선 자동 계산
-// genPrices(n, start, seed, scenario)로 생성된 prices 배열 사용
-
-const high = Math.max(...prices);   // 5파 고점
-const low  = Math.min(...prices);   // 2파 또는 4파 저점
-const range = high - low;
-
-// 피보나치 되돌림 레벨 계산
-const fib382 = high - range * 0.382;   // 38.2% 되돌림
-const fib618 = high - range * 0.618;   // 61.8% 되돌림
-
-// CandleChart에 수평선 표시
-chart.drawHLine(fib382);   // drawHLine(price) — 38.2% 선
-chart.drawHLine(fib618);   // drawHLine(price) — 61.8% 선
-
-// 파동 레이블 자동 표시
-// drawWaveLabel(x, y, label)
-const wavePoints = detectWavePoints(prices);  // swing high/low 감지
-wavePoints.forEach((pt, i) => {
-    const labels = ["1", "2", "3", "4", "5", "a", "b", "c"];
-    chart.drawWaveLabel(pt.x, pt.y, labels[i]);
-});
-```
-
-**Python ↔ JavaScript 파동 분석 기능 대응표**
-
-| 기능 | Python (분석 스크립트) | JavaScript (technicalChart.js) |
-|------|----------------------|--------------------------------|
-| 가격 데이터 | `yfinance.download()` | `genPrices(n, start, seed, scenario)` |
-| 고점·저점 탐지 | `scipy.signal.argrelextrema()` | 슬라이딩 윈도우 비교 |
-| 피보나치 계산 | `(high - low) * 0.618` | `range * 0.618` (동일) |
-| 수평선 표시 | `ax.axhline(fib618)` | `chart.drawHLine(fib618)` |
-| 파동 레이블 | `ax.annotate("3", xy=(...))` | `chart.drawWaveLabel(x, y, "3")` |
-| 추세선 | `ax.plot([x1,x2],[y1,y2])` | `chart.drawTrendline(p1, p2)` |
 
 ---
 
@@ -852,47 +599,7 @@ flowchart TD
     style FINAL fill:#e74c3c,color:#fff
 ```
 
-**스크리닝 Python 코드**
 
-```python
-import yfinance as yf
-import pandas as pd
-
-def screen_stocks(tickers: list[str]) -> pd.DataFrame:
-    """
-    종목 스크리닝 — 정량 필터 자동 적용
-    반환: 기본 지표 데이터프레임
-    """
-    results = []
-    for t in tickers:
-        try:
-            info = yf.Ticker(t).info
-            results.append({
-                "ticker":       t,
-                "name":         info.get("longName", t),
-                "market_cap":   info.get("marketCap", 0) / 1e12,     # 조 원
-                "per":          info.get("trailingPE", None),
-                "pbr":          info.get("priceToBook", None),
-                "roe":          info.get("returnOnEquity", 0) * 100,  # %
-                "debt_ratio":   info.get("debtToEquity", None),
-                "revenue_growth": info.get("revenueGrowth", 0) * 100,
-                "op_margin":    info.get("operatingMargins", 0) * 100,
-            })
-        except Exception:
-            continue
-
-    df = pd.DataFrame(results)
-    # 1차 필터
-    df = df[(df["market_cap"] >= 1) & (df["per"].between(0, 50))]
-    # 2차 필터
-    df = df[(df["roe"] >= 10) & (df["revenue_growth"] >= 5)]
-    return df.sort_values("roe", ascending=False)
-
-# 실행 예시 (코스피 대형주 일부)
-candidates = ["005930.KS", "000660.KS", "035420.KS", "051910.KS", "006400.KS"]
-screened = screen_stocks(candidates)
-print(screened.to_string(index=False))
-```
 
 ---
 
@@ -943,87 +650,7 @@ flowchart TD
     style Block5 fill:#f39c12,color:#fff
 ```
 
-**주요 재무 지표 자동 계산 Python 코드**
 
-```python
-import yfinance as yf
-import pandas as pd
-
-def fundamental_analysis(ticker: str) -> dict:
-    """기본적 분석 — 주요 지표 자동 추출"""
-    stk  = yf.Ticker(ticker)
-    info = stk.info
-
-    # 밸류에이션 지표
-    valuation = {
-        "PER":        info.get("trailingPE"),
-        "선행PER":    info.get("forwardPE"),
-        "PBR":        info.get("priceToBook"),
-        "PSR":        info.get("priceToSalesTrailing12Months"),
-        "EV/EBITDA":  info.get("enterpriseToEbitda"),
-    }
-
-    # 수익성 지표
-    profitability = {
-        "ROE (%)":          round((info.get("returnOnEquity") or 0) * 100, 1),
-        "ROA (%)":          round((info.get("returnOnAssets") or 0) * 100, 1),
-        "영업이익률 (%)":    round((info.get("operatingMargins") or 0) * 100, 1),
-        "순이익률 (%)":      round((info.get("profitMargins") or 0) * 100, 1),
-        "EBITDA 마진 (%)":   round((info.get("ebitdaMargins") or 0) * 100, 1),
-    }
-
-    # 성장성 지표
-    growth = {
-        "매출 성장률 (%)":     round((info.get("revenueGrowth") or 0) * 100, 1),
-        "영업이익 성장률 (%)": round((info.get("earningsGrowth") or 0) * 100, 1),
-    }
-
-    # 재무 안정성
-    stability = {
-        "부채비율 (%)":  round(info.get("debtToEquity") or 0, 1),
-        "유동비율 (%)":  round((info.get("currentRatio") or 0) * 100, 1),
-        "이자보상배율":  round(info.get("ebitda", 0) /
-                               max(info.get("totalDebt", 1) * 0.05, 1), 1),
-    }
-
-    # DCF 간이 계산 (Simplified DCF)
-    fcf         = info.get("freeCashflow", 0)
-    shares      = info.get("sharesOutstanding", 1)
-    wacc        = 0.09          # 가중평균자본비용 9% (가정)
-    g_rate      = 0.04          # 영구 성장률 4% (가정)
-    fcf_per_sh  = fcf / shares  # 주당 FCF
-    dcf_value   = fcf_per_sh / (wacc - g_rate)  # Gordon Growth Model 근사
-
-    current_price = info.get("currentPrice", info.get("regularMarketPrice", 0))
-    upside = (dcf_value - current_price) / current_price * 100 if current_price else 0
-
-    valuation_summary = {
-        "현재가":       current_price,
-        "DCF 내재가치": round(dcf_value, 0),
-        "업사이드 (%)": round(upside, 1),
-        "투자의견":     "매수" if upside > 20 else "중립" if upside > -10 else "매도",
-    }
-
-    return {
-        "기업명":        info.get("longName", ticker),
-        "밸류에이션":    valuation,
-        "수익성":        profitability,
-        "성장성":        growth,
-        "재무안정성":    stability,
-        "DCF 요약":      valuation_summary,
-    }
-
-# 실행 예시
-result = fundamental_analysis("005930.KS")   # 삼성전자
-for section, data in result.items():
-    print(f"\n{'='*30}")
-    print(f"[ {section} ]")
-    if isinstance(data, dict):
-        for k, v in data.items():
-            print(f"  {k:20s}: {v}")
-    else:
-        print(f"  {data}")
-```
 
 ---
 
@@ -1043,76 +670,7 @@ for section, data in result.items():
 | ⑥ | **캔들 패턴** | 망치봉·불리쉬 엔걸핑·샛별 | 교수형·베어리쉬 엔걸핑·저녁별 |
 | ⑦ | **차트 패턴** | 이중바닥·역H&S 돌파 | 이중천장·H&S 넥라인 이탈 |
 
-**기술적 분석 통합 Python 코드**
 
-```python
-import yfinance as yf
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-
-def technical_analysis(ticker: str, period: str = "6mo") -> dict:
-    """기술적 분석 — 7항목 체크리스트 자동 평가"""
-    df = yf.download(ticker, period=period, auto_adjust=True, progress=False)
-    df = df[["Open", "High", "Low", "Close", "Volume"]]
-    close  = df["Close"]
-    volume = df["Volume"]
-
-    # 이동평균선
-    df["MA20"] = close.rolling(20).mean()
-    df["MA60"] = close.rolling(60).mean()
-
-    # RSI (14일)
-    delta = close.diff()
-    gain  = delta.clip(lower=0).rolling(14).mean()
-    loss  = (-delta.clip(upper=0)).rolling(14).mean()
-    df["RSI"] = 100 - (100 / (1 + gain / loss))
-
-    # MACD
-    ema12 = close.ewm(span=12, adjust=False).mean()
-    ema26 = close.ewm(span=26, adjust=False).mean()
-    df["MACD"]   = ema12 - ema26
-    df["Signal"] = df["MACD"].ewm(span=9, adjust=False).mean()
-    df["Hist"]   = df["MACD"] - df["Signal"]
-
-    # 볼린저밴드
-    df["BB_mid"]   = close.rolling(20).mean()
-    df["BB_upper"] = df["BB_mid"] + 2 * close.rolling(20).std()
-    df["BB_lower"] = df["BB_mid"] - 2 * close.rolling(20).std()
-
-    # 거래량 이동평균
-    df["VOL_MA20"] = volume.rolling(20).mean()
-
-    latest = df.iloc[-1]
-    prev   = df.iloc[-2]
-
-    # 7항목 신호 평가
-    signals = {
-        "추세 (MA 정배열)":   "🟢 강세" if latest["MA20"] > latest["MA60"] else "🔴 약세",
-        "RSI":                "🟢 과매도 회복" if 30 < latest["RSI"] < 55 else
-                              "🔴 과매수" if latest["RSI"] > 70 else "⚪ 중립",
-        "MACD":               "🟢 골든크로스" if latest["MACD"] > latest["Signal"] and
-                                                  prev["MACD"] <= prev["Signal"] else
-                              "🟢 강세" if latest["MACD"] > latest["Signal"] else "🔴 약세",
-        "볼린저밴드":          "🟢 하단 반등" if latest["Close"] <= latest["BB_lower"] * 1.02 else
-                              "🔴 상단 저항" if latest["Close"] >= latest["BB_upper"] * 0.98 else "⚪ 중립",
-        "거래량":             "🟢 평균 초과" if latest["Volume"] > latest["VOL_MA20"] else "🔴 평균 이하",
-    }
-
-    # 기술적 점수 집계
-    bullish_count = sum(1 for s in signals.values() if "🟢" in s)
-    bearish_count = sum(1 for s in signals.values() if "🔴" in s)
-    ta_verdict    = "강세" if bullish_count >= 4 else "약세" if bearish_count >= 4 else "중립"
-
-    return {
-        "ticker":     ticker,
-        "signals":    signals,
-        "bullish":    bullish_count,
-        "bearish":    bearish_count,
-        "ta_verdict": ta_verdict,
-        "df":         df,
-    }
-```
 
 ---
 
@@ -1166,296 +724,6 @@ flowchart TD
     style HOLD fill:#7f8c8d,color:#fff
     style REDUCE fill:#f39c12,color:#fff
     style SELL fill:#922b21,color:#fff
-```
-
----
-
-#### 4-6. Step 5 — 통합 리포트 Python 생성 코드
-
-기본적 분석과 기술적 분석을 통합해 **단일 리포트 이미지**를 자동 생성하는 코드입니다.
-
-```python
-import yfinance as yf
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-import matplotlib.patches as mpatches
-from matplotlib.patches import FancyBboxPatch
-import numpy as np
-
-def integrated_report(ticker: str, period: str = "1y"):
-    """
-    기본적·기술적 통합 분석 리포트 자동 생성
-    실제 증권사 리포트에 준하는 레이아웃
-    """
-    # ── 데이터 수집 ──────────────────────────────────
-    stk  = yf.Ticker(ticker)
-    info = stk.info
-    df   = yf.download(ticker, period=period, auto_adjust=True, progress=False)
-    df   = df[["Open", "High", "Low", "Close", "Volume"]]
-    close  = df["Close"]
-    volume = df["Volume"]
-
-    # ── 기술적 지표 계산 ──────────────────────────────
-    df["MA20"]     = close.rolling(20).mean()
-    df["MA60"]     = close.rolling(60).mean()
-    df["MA120"]    = close.rolling(120).mean()
-    df["BB_mid"]   = close.rolling(20).mean()
-    df["BB_upper"] = df["BB_mid"] + 2 * close.rolling(20).std()
-    df["BB_lower"] = df["BB_mid"] - 2 * close.rolling(20).std()
-
-    delta = close.diff()
-    gain  = delta.clip(lower=0).rolling(14).mean()
-    loss  = (-delta.clip(upper=0)).rolling(14).mean()
-    df["RSI"] = 100 - (100 / (1 + gain / loss))
-
-    ema12 = close.ewm(span=12, adjust=False).mean()
-    ema26 = close.ewm(span=26, adjust=False).mean()
-    df["MACD"]   = ema12 - ema26
-    df["Signal"] = df["MACD"].ewm(span=9, adjust=False).mean()
-    df["Hist"]   = df["MACD"] - df["Signal"]
-    df["VOL_MA"] = volume.rolling(20).mean()
-
-    latest = df.iloc[-1]
-
-    # ── 기본적 분석 지표 ──────────────────────────────
-    name     = info.get("longName", ticker)
-    sector   = info.get("sector", "N/A")
-    industry = info.get("industry", "N/A")
-    per      = info.get("trailingPE")
-    pbr      = info.get("priceToBook")
-    roe      = round((info.get("returnOnEquity") or 0) * 100, 1)
-    op_margin = round((info.get("operatingMargins") or 0) * 100, 1)
-    rev_growth = round((info.get("revenueGrowth") or 0) * 100, 1)
-    debt_eq  = round(info.get("debtToEquity") or 0, 1)
-
-    # DCF 간이 목표주가
-    fcf      = info.get("freeCashflow", 0)
-    shares   = info.get("sharesOutstanding", 1)
-    dcf_val  = (fcf / shares) / (0.09 - 0.04) if shares else 0
-    cur_price = info.get("currentPrice", info.get("regularMarketPrice", 0))
-    upside   = (dcf_val - cur_price) / cur_price * 100 if cur_price and dcf_val else 0
-
-    # 기술적 신호 점수
-    ta_score = 0
-    if latest["MA20"] > latest["MA60"]:            ta_score += 2
-    if latest["RSI"] < 55 and latest["RSI"] > 30:  ta_score += 2
-    if latest["MACD"] > latest["Signal"]:          ta_score += 2
-    if latest["Close"] < latest["BB_upper"] * 0.99: ta_score += 1
-    if latest["Volume"] > latest["VOL_MA"]:        ta_score += 1
-    ta_verdict = "강세" if ta_score >= 6 else "중립" if ta_score >= 4 else "약세"
-
-    # 투자의견
-    fa_score = 0
-    if per and per < 20:           fa_score += 2
-    if pbr and pbr < 2:            fa_score += 2
-    if roe > 15:                   fa_score += 2
-    if op_margin > 10:             fa_score += 1
-    if rev_growth > 10:            fa_score += 1
-    if upside > 20:                fa_score += 2
-    total_score = ta_score * 5 + fa_score * 5  # 0~100 환산
-    if total_score >= 70:   verdict, color = "강력 매수", "#1e8449"
-    elif total_score >= 55: verdict, color = "매수",     "#27ae60"
-    elif total_score >= 40: verdict, color = "중립",     "#7f8c8d"
-    elif total_score >= 25: verdict, color = "비중 축소","#f39c12"
-    else:                   verdict, color = "매도",     "#922b21"
-
-    # ── 레이아웃 구성 ──────────────────────────────────
-    fig = plt.figure(figsize=(18, 22), facecolor="#f8f9fa")
-    fig.suptitle(
-        f"{name} ({ticker})  ·  종합 투자 분석 리포트",
-        fontsize=16, fontweight="bold", y=0.98, color="#1a252f"
-    )
-
-    gs = gridspec.GridSpec(
-        5, 3,
-        figure=fig,
-        height_ratios=[0.8, 3, 1.2, 1.2, 1.2],
-        hspace=0.45, wspace=0.35,
-        top=0.95, bottom=0.04, left=0.06, right=0.97
-    )
-
-    # ── Row 0: 헤더 요약 박스 ──────────────────────────
-    ax_header = fig.add_subplot(gs[0, :])
-    ax_header.axis("off")
-    summary_text = (
-        f"섹터: {sector}  |  업종: {industry}  |  "
-        f"현재가: {cur_price:,.0f}원  |  "
-        f"DCF 목표가: {dcf_val:,.0f}원  |  "
-        f"업사이드: {upside:+.1f}%  |  "
-        f"투자의견:  {verdict}  |  "
-        f"종합점수: {total_score}점"
-    )
-    ax_header.text(0.5, 0.5, summary_text, ha="center", va="center",
-                   fontsize=10.5, color="white",
-                   bbox=dict(boxstyle="round,pad=0.5", facecolor=color, alpha=0.92),
-                   transform=ax_header.transAxes)
-
-    # ── Row 1: 메인 주가 차트 (Col 0~1) ──────────────────
-    ax_main = fig.add_subplot(gs[1, :2])
-    ax_main.plot(close.index, close,        label="종가",  color="#2c3e50",  lw=1.5)
-    ax_main.plot(df.index, df["MA20"],      label="MA20",  color="#3498db",  lw=1.0, ls="--")
-    ax_main.plot(df.index, df["MA60"],      label="MA60",  color="#e74c3c",  lw=1.0, ls="--")
-    ax_main.plot(df.index, df["MA120"],     label="MA120", color="#f39c12",  lw=1.0, ls=":")
-    ax_main.fill_between(df.index, df["BB_upper"], df["BB_lower"],
-                         alpha=0.08, color="#8e44ad", label="볼린저밴드")
-    if dcf_val > 0:
-        ax_main.axhline(dcf_val,   color="#1e8449", ls="-.",  lw=1.2, label=f"DCF 목표가 {dcf_val:,.0f}")
-    ax_main.set_title("주가 차트 + 이동평균 + 볼린저밴드", fontsize=11, pad=8)
-    ax_main.legend(fontsize=8, loc="upper left", ncol=3)
-    ax_main.grid(True, alpha=0.2)
-    ax_main.set_facecolor("#fdfefe")
-
-    # ── Row 1: 기본 지표 요약 테이블 (Col 2) ──────────────
-    ax_tbl = fig.add_subplot(gs[1, 2])
-    ax_tbl.axis("off")
-    fa_rows = [
-        ["지표", "값", "평가"],
-        ["PER",  f"{per:.1f}x" if per else "N/A",       "✅" if per and per < 20 else "⚠️"],
-        ["PBR",  f"{pbr:.2f}x" if pbr else "N/A",       "✅" if pbr and pbr < 2  else "⚠️"],
-        ["ROE",  f"{roe:.1f}%",                          "✅" if roe > 15 else "⚠️"],
-        ["영업이익률", f"{op_margin:.1f}%",               "✅" if op_margin > 10 else "⚠️"],
-        ["매출 성장", f"{rev_growth:+.1f}%",              "✅" if rev_growth > 10 else "⚠️"],
-        ["부채비율",  f"{debt_eq:.0f}%",                  "✅" if debt_eq < 100 else "⚠️"],
-        ["DCF 업사이드", f"{upside:+.1f}%",               "✅" if upside > 20 else "⚠️"],
-    ]
-    tbl = ax_tbl.table(
-        cellText=fa_rows[1:],
-        colLabels=fa_rows[0],
-        cellLoc="center", loc="center",
-        bbox=[0, 0, 1, 1]
-    )
-    tbl.auto_set_font_size(False)
-    tbl.set_fontsize(9)
-    for (r, c), cell in tbl.get_celld().items():
-        if r == 0:
-            cell.set_facecolor("#2c3e50")
-            cell.set_text_props(color="white", fontweight="bold")
-        elif r % 2 == 0:
-            cell.set_facecolor("#eaf0fb")
-    ax_tbl.set_title("기본적 분석 지표", fontsize=11, pad=8)
-
-    # ── Row 2: RSI (Col 0~1) ──────────────────────────────
-    ax_rsi = fig.add_subplot(gs[2, :2])
-    ax_rsi.plot(df.index, df["RSI"], color="#8e44ad", lw=1.2)
-    ax_rsi.axhline(70, color="#e74c3c", ls="--", alpha=0.6, label="과매수(70)")
-    ax_rsi.axhline(30, color="#27ae60", ls="--", alpha=0.6, label="과매도(30)")
-    ax_rsi.fill_between(df.index, df["RSI"], 30, where=(df["RSI"] < 30),
-                        color="#27ae60", alpha=0.2)
-    ax_rsi.fill_between(df.index, df["RSI"], 70, where=(df["RSI"] > 70),
-                        color="#e74c3c", alpha=0.2)
-    ax_rsi.set_ylim(0, 100)
-    ax_rsi.set_ylabel("RSI")
-    ax_rsi.legend(fontsize=8, loc="upper right")
-    ax_rsi.grid(True, alpha=0.2)
-    ax_rsi.set_title("RSI (14)", fontsize=10, pad=6)
-    ax_rsi.set_facecolor("#fdfefe")
-
-    # ── Row 2: 기술적 신호 레이더 (Col 2) ─────────────────
-    ax_radar = fig.add_subplot(gs[2, 2], polar=True)
-    categories = ["추세", "RSI", "MACD", "BB", "거래량"]
-    n_cats  = len(categories)
-    scores  = [
-        (2 if latest["MA20"] > latest["MA60"] else 0),
-        (2 if 30 < latest["RSI"] < 55 else 0),
-        (2 if latest["MACD"] > latest["Signal"] else 0),
-        (1 if latest["Close"] < latest["BB_upper"] * 0.99 else 0),
-        (1 if latest["Volume"] > latest["VOL_MA"] else 0),
-    ]
-    max_scores = [2, 2, 2, 1, 1]
-    norm_scores = [s / m for s, m in zip(scores, max_scores)]
-    angles  = [n / float(n_cats) * 2 * np.pi for n in range(n_cats)]
-    norm_scores += norm_scores[:1]
-    angles  += angles[:1]
-    ax_radar.plot(angles, norm_scores, "o-", color="#2980b9", lw=2)
-    ax_radar.fill(angles, norm_scores, alpha=0.25, color="#2980b9")
-    ax_radar.set_xticks(angles[:-1])
-    ax_radar.set_xticklabels(categories, fontsize=9)
-    ax_radar.set_yticks([0.5, 1.0])
-    ax_radar.set_yticklabels(["50%", "100%"], fontsize=7)
-    ax_radar.set_title(f"기술적 신호\n({ta_verdict})", fontsize=10, pad=12)
-
-    # ── Row 3: MACD (Col 0~1) ─────────────────────────────
-    ax_macd = fig.add_subplot(gs[3, :2])
-    ax_macd.plot(df.index, df["MACD"],   color="#3498db", lw=1.2, label="MACD")
-    ax_macd.plot(df.index, df["Signal"], color="#e74c3c", lw=1.2, label="Signal")
-    colors_hist = ["#27ae60" if v >= 0 else "#e74c3c" for v in df["Hist"]]
-    ax_macd.bar(df.index, df["Hist"], color=colors_hist, alpha=0.4, label="Hist")
-    ax_macd.axhline(0, color="black", lw=0.5)
-    ax_macd.set_ylabel("MACD")
-    ax_macd.legend(fontsize=8, loc="upper left")
-    ax_macd.grid(True, alpha=0.2)
-    ax_macd.set_title("MACD (12/26/9)", fontsize=10, pad=6)
-    ax_macd.set_facecolor("#fdfefe")
-
-    # ── Row 3: 투자의견 요약 박스 (Col 2) ─────────────────
-    ax_verdict = fig.add_subplot(gs[3, 2])
-    ax_verdict.axis("off")
-    verdict_lines = [
-        f"투자의견:  {verdict}",
-        f"종합점수:  {total_score} / 100",
-        f"기본적 점수: {fa_score * 5} / 50",
-        f"기술적 점수: {ta_score * 5} / 50",
-        "",
-        f"현재가:    {cur_price:>10,.0f} 원",
-        f"DCF 목표가: {dcf_val:>10,.0f} 원",
-        f"업사이드:   {upside:>+10.1f} %",
-        "",
-        f"기술적 신호: {ta_verdict}",
-        f"RSI:        {latest['RSI']:.1f}",
-        f"MACD:       {'골든크로스 ✅' if latest['MACD'] > latest['Signal'] else '데드크로스 ❌'}",
-    ]
-    ax_verdict.text(0.05, 0.95, "\n".join(verdict_lines),
-                    ha="left", va="top", fontsize=9.5, family="monospace",
-                    transform=ax_verdict.transAxes,
-                    bbox=dict(boxstyle="round,pad=0.6", facecolor=color, alpha=0.15,
-                              edgecolor=color, lw=2))
-    ax_verdict.set_title("통합 투자의견", fontsize=11, pad=8)
-
-    # ── Row 4: 거래량 (Col 0~1) ──────────────────────────
-    ax_vol = fig.add_subplot(gs[4, :2])
-    vol_colors = ["#3498db" if c >= o else "#e74c3c"
-                  for c, o in zip(df["Close"], df["Open"])]
-    ax_vol.bar(df.index, df["Volume"], color=vol_colors, alpha=0.7, label="거래량")
-    ax_vol.plot(df.index, df["VOL_MA"], color="#f39c12", lw=1.5, label="거래량 MA20")
-    ax_vol.set_ylabel("거래량")
-    ax_vol.legend(fontsize=8, loc="upper right")
-    ax_vol.grid(True, alpha=0.2)
-    ax_vol.set_title("거래량", fontsize=10, pad=6)
-    ax_vol.set_facecolor("#fdfefe")
-
-    # ── Row 4: 리스크 요인 요약 (Col 2) ──────────────────
-    ax_risk = fig.add_subplot(gs[4, 2])
-    ax_risk.axis("off")
-    risk_text = (
-        "⚠️  주요 리스크 요인\n"
-        "─────────────────────\n"
-        f"• 고PER 밸류에이션 부담: {'있음' if per and per > 25 else '낮음'}\n"
-        f"• 고부채 재무 리스크:   {'있음' if debt_eq > 150 else '낮음'}\n"
-        f"• RSI 과매수:           {'있음' if latest['RSI'] > 70 else '없음'}\n"
-        f"• 역배열 추세:          {'있음' if latest['MA20'] < latest['MA60'] else '없음'}\n"
-        "─────────────────────\n"
-        "※ 본 리포트는 학습용이며\n"
-        "   실제 투자 조언이 아닙니다."
-    )
-    ax_risk.text(0.05, 0.95, risk_text,
-                 ha="left", va="top", fontsize=9, family="monospace",
-                 transform=ax_risk.transAxes,
-                 bbox=dict(boxstyle="round,pad=0.5", facecolor="#fef9e7",
-                           edgecolor="#f39c12", lw=1.5))
-    ax_risk.set_title("리스크 요인", fontsize=11, pad=8)
-
-    plt.savefig(f"{ticker}_integrated_report.png", dpi=150, bbox_inches="tight",
-                facecolor=fig.get_facecolor())
-    plt.show()
-    print(f"\n리포트 저장 완료: {ticker}_integrated_report.png")
-    print(f"투자의견: {verdict}  |  총점: {total_score}/100  |  업사이드: {upside:+.1f}%")
-
-# ── 실행 예시 ──────────────────────────────────────────
-integrated_report("005930.KS")   # 삼성전자
-# integrated_report("000660.KS") # SK하이닉스
-# integrated_report("NVDA")      # 엔비디아
-# integrated_report("AAPL")      # 애플
 ```
 
 ---
@@ -1720,35 +988,6 @@ flowchart LR
 
 **통합 스코어링 API 엔드포인트**
 
-```python
-# backend/routers/analysis.py
-from fastapi import APIRouter
-from pydantic import BaseModel
-
-router = APIRouter(prefix="/api")
-
-class IntegratedScore(BaseModel):
-    ticker:       str
-    company_name: str
-    current_price: float
-    dcf_target:   float
-    upside_pct:   float
-    fa_score:     int        # 기본적 분석 점수 (0~50)
-    ta_score:     int        # 기술적 분석 점수 (0~50)
-    macro_score:  int        # 거시·산업 점수 (0~20)
-    total_score:  int        # 합산 (0~120 → 0~100 환산)
-    verdict:      str        # "강력매수" | "매수" | "중립" | "비중축소" | "매도"
-    signals:      dict       # 개별 기술적 신호 딕셔너리
-    risks:        list[str]  # 리스크 요인 목록
-
-@router.get("/score/{ticker}", response_model=IntegratedScore)
-async def get_integrated_score(ticker: str):
-    """
-    종목 통합 스코어링 API
-    기본적 분석 + 기술적 분석 + 거시환경 점수 합산
-    """
-    ...
-```
 
 **프론트엔드 스코어 렌더링 (JavaScript)**
 
@@ -1838,7 +1077,6 @@ flowchart TD
 
 ## 웹앱 실습 연계
 
-> 📺 [🎬 웹앱 실습 연계](https://www.youtube.com/results?search_query=웹앱+실습+연계+한국어)
 
 ### Tab 5 (보조지표) — 볼린저밴드 + RSI + MACD 통합 뷰
 
@@ -2047,107 +1285,19 @@ flowchart LR
     style EP fill:#e74c3c,color:#fff
 ```
 
-**백테스트 Python 코드 (FastAPI 라우터 구조)**
 
-```python
-# backend/routers/quant.py — 백테스트 엔드포인트
-from fastapi import APIRouter
-from pydantic import BaseModel
-
-router = APIRouter(prefix="/api/quant")
-
-class BacktestRequest(BaseModel):
-    fast_ma: int = 20    # 단기 이동평균 기간
-    slow_ma: int = 60    # 장기 이동평균 기간
-    n_days:  int = 1260  # 백테스트 기간 (거래일 기준, 1260일 ≈ 5년)
-
-@router.post("/backtest")
-async def run_backtest(req: BacktestRequest):
-    """
-    이동평균 골든크로스/데드크로스 전략 백테스트
-    Returns:
-        chart: PNG 이미지 (base64)
-        metrics: {
-            total_return: float,    # 총 수익률 (%)
-            sharpe: float,          # 샤프 비율
-            max_drawdown: float,    # 최대 낙폭 (%)
-            win_rate: float,        # 승률 (%)
-            n_trades: int           # 총 거래 횟수
-        }
-    """
-    # fast_ma < slow_ma 조건 검사
-    # 가격 데이터 생성 또는 로드 (n_days 기간)
-    # MA 크로스오버 신호 계산
-    # 수익률·샤프·MDD·승률 계산
-    # matplotlib 차트 PNG 생성 → base64 인코딩
-    ...
-```
 
 **백테스트 전략 핵심 로직 (Python)**
 
-```python
-import pandas as pd
-import numpy as np
-
-def ma_crossover_backtest(prices: pd.Series, fast: int, slow: int):
-    """이동평균 크로스오버 백테스트"""
-    ma_fast = prices.rolling(fast).mean()
-    ma_slow = prices.rolling(slow).mean()
-
-    # 포지션: 1(매수) / 0(현금)
-    signal = (ma_fast > ma_slow).astype(int)
-    signal = signal.shift(1)  # 당일 신호는 다음날 실행 (리얼리즘)
-
-    daily_return = prices.pct_change()
-    strategy_return = daily_return * signal
-
-    # 성과 지표
-    total_return  = (1 + strategy_return).prod() - 1
-    sharpe        = strategy_return.mean() / strategy_return.std() * np.sqrt(252)
-    cumulative    = (1 + strategy_return).cumprod()
-    max_drawdown  = ((cumulative - cumulative.cummax()) / cumulative.cummax()).min()
-
-    # 거래 횟수 및 승률
-    trades    = signal.diff().abs()
-    n_trades  = int(trades.sum() / 2)   # 매수+매도 쌍을 1거래로 카운트
-    win_rate  = (strategy_return[strategy_return != 0] > 0).mean()
-
-    return {
-        "total_return": round(total_return * 100, 2),
-        "sharpe":        round(sharpe, 2),
-        "max_drawdown":  round(max_drawdown * 100, 2),
-        "win_rate":      round(win_rate * 100, 1),
-        "n_trades":      n_trades,
-    }
-```
 
 ---
 
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 1. 관심 종목의 최근 차트를 보고 이중천장·이중바닥·헤드앤숄더 중 가장 가까운 패턴이 있는지 표시해보세요.
-2. 위 Python 리포트를 실행해서 RSI·MACD·볼린저밴드 신호가 모두 같은 방향을 가리키는지 확인해보세요. 신호가 엇갈린다면 왜 그런지 생각해보세요.
 3. 엘리어트 파동 관점에서 최근 주가 흐름이 어느 파동 위치에 있을 것 같은지 추정해보고, 그 근거를 두 가지 이상 써보세요.
-4. 웹앱의 Tab 7 (종합리포트)를 열고 스코어링 결과가 BUY/HOLD/SELL 중 어느 판정이 나오는지 확인하세요. 각 신호별 점수를 계산해 Python 코드의 결과와 비교해보세요.
 5. `/api/quant/backtest` API를 호출할 때 `fast_ma=5, slow_ma=20`과 `fast_ma=20, slow_ma=60`의 샤프 비율과 최대 낙폭을 비교해보세요.
-
-## 모듈 7 마무리
-
-> 📺 [🎬 모듈 7 마무리](https://www.youtube.com/results?search_query=모듈+7+마무리+한국어)
-
-모듈 7(투자분석 기초 방법론) 전 10일차를 완료했습니다.
-
-| 분석 방법 | 핵심 도구 | 참고 파일 |
-|-----------|-----------|-----------|
-| 매크로 분석 | 금리·물가·유가·환율 | Day 042~044 |
-| 산업 분석 | Porter's 5 Forces, SWOT | Day 045~046 |
-| 기본적 분석 | 재무제표, PER/PBR, DCF | Day 047~049 |
-| 기술적 분석 | MA·RSI·MACD·패턴·파동 | Day 050~051 |
-
-
----
 
 # [주식 상식] 주식 종목 이름 뒤에 붙는 '우'의 의미와 차이점
 

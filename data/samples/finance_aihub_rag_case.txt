@@ -97,42 +97,6 @@ AI Hub의 금융·법률 텍스트 데이터셋은 대부분 "라벨링데이터
 3. 정제 절차(3장)에서 정한 단위(질문→답변, 법령명→조문→항→호)에 맞춰 매핑할 필드를 정합니다.
 4. 아래처럼 변환 스크립트를 작성해 이 프로젝트가 받는 TXT 형식으로 바꿉니다.
 
-```python
-# scripts/json_to_txt.py
-import json
-from pathlib import Path
-
-SRC_DIR = Path("./raw/aihub_finance_json")   # 다운로드한 라벨링데이터 폴더
-OUT_FILE = Path("./prepared/aihub_finance_law_chunks.txt")
-
-def render_chunk(info: dict, item: dict, qa: dict) -> str:
-    return (
-        f"제목: {item['title']}\n"
-        f"source: AI Hub\n"
-        f"dataset: {info['dataset_name']}\n"
-        f"version: {info['version']}\n"
-        f"topic: {item.get('topic', '')}\n"
-        f"effective_date: {item.get('effective_date', '')}\n\n"
-        f"질문: {qa['question']}\n"
-        f"답변: {qa['answer']}\n"
-    )
-
-def main():
-    chunks = []
-    for json_path in sorted(SRC_DIR.glob("*.json")):
-        payload = json.loads(json_path.read_text(encoding="utf-8"))
-        info = payload["info"]
-        for item in payload["data"]:
-            for qa in item["qas"]:
-                chunks.append(render_chunk(info, item, qa))
-
-    OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    OUT_FILE.write_text("\n---\n".join(chunks), encoding="utf-8")
-    print(f"{len(chunks)}개 청크를 {OUT_FILE}에 저장했습니다.")
-
-if __name__ == "__main__":
-    main()
-```
 
 실행 전 `SRC_DIR`, `render_chunk`의 필드명을 실제로 다운로드한 JSON 구조에 맞춰 고쳐야 합니다. 스크립트를 실행하면 5장에서 등록할 `aihub_finance_law_chunks.txt`가 만들어집니다.
 
@@ -154,25 +118,6 @@ curl -X POST http://localhost:8190/ingest/file \
 
 문서 단위로 메타데이터(제목·document_id)를 직접 지정하며 등록하려면 `/ingest/text`를 사용합니다. 아래는 4장에서 만든 청크 파일을 읽어 문서 단위(`---` 구분)로 반복 등록하는 예시입니다.
 
-```python
-# scripts/upload_chunks.py
-import requests
-from pathlib import Path
-
-API_URL = "http://localhost:8190/ingest/text"
-chunks = Path("./prepared/aihub_finance_law_chunks.txt").read_text(encoding="utf-8").split("\n---\n")
-
-for i, chunk in enumerate(chunks):
-    title_line = next((line for line in chunk.splitlines() if line.startswith("제목:")), f"청크 {i}")
-    resp = requests.post(API_URL, json={
-        "document_id": f"aihub-finance-{i:04d}",
-        "title": title_line.replace("제목:", "").strip(),
-        "content": chunk.strip(),
-        "domain": "finance",
-    })
-    resp.raise_for_status()
-    print(i, resp.json())
-```
 
 ```bash
 python scripts/upload_chunks.py

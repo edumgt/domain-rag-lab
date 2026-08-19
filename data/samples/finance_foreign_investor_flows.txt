@@ -476,53 +476,6 @@
 
 > 아래 Python 스크립트를 **인터넷이 연결된 로컬 환경**에서 실행하면 당일 기준 거래량 상위 200 종목과 종가를 정확히 조회할 수 있습니다.
 
-```python
-# 설치: pip install pykrx pandas
-from pykrx import stock
-import pandas as pd
-from datetime import datetime
-
-today = datetime.today().strftime('%Y%m%d')  # 예: '20260527'
-
-# ── KOSPI 거래량 상위 200 ──
-kospi_vol = stock.get_market_trading_volume_by_ticker(today, market="KOSPI")
-kospi_top200 = (
-    kospi_vol.sort_values("거래량", ascending=False)
-    .head(200)
-    .reset_index()
-    .rename(columns={"티커": "종목코드"})
-)
-kospi_top200["회사명"] = kospi_top200["종목코드"].apply(stock.get_market_ticker_name)
-ohlcv_kospi = stock.get_market_ohlcv_by_ticker(today, market="KOSPI")
-kospi_top200 = kospi_top200.merge(
-    ohlcv_kospi[["종가"]].rename_axis("종목코드").reset_index(),
-    on="종목코드", how="left"
-)
-print("=== KOSPI 거래량 상위 200 ===")
-print(kospi_top200[["순위", "회사명", "종목코드", "종가", "거래량"]].to_string())
-
-# ── KOSDAQ 거래량 상위 200 ──
-kosdaq_vol = stock.get_market_trading_volume_by_ticker(today, market="KOSDAQ")
-kosdaq_top200 = (
-    kosdaq_vol.sort_values("거래량", ascending=False)
-    .head(200)
-    .reset_index()
-    .rename(columns={"티커": "종목코드"})
-)
-kosdaq_top200["회사명"] = kosdaq_top200["종목코드"].apply(stock.get_market_ticker_name)
-ohlcv_kosdaq = stock.get_market_ohlcv_by_ticker(today, market="KOSDAQ")
-kosdaq_top200 = kosdaq_top200.merge(
-    ohlcv_kosdaq[["종가"]].rename_axis("종목코드").reset_index(),
-    on="종목코드", how="left"
-)
-print("\n=== KOSDAQ 거래량 상위 200 ===")
-print(kosdaq_top200[["순위", "회사명", "종목코드", "종가", "거래량"]].to_string())
-
-# CSV 저장
-kospi_top200.to_csv("kospi_volume_top200.csv", index=False, encoding="utf-8-sig")
-kosdaq_top200.to_csv("kosdaq_volume_top200.csv", index=False, encoding="utf-8-sig")
-print("\n✅ 저장 완료: kospi_volume_top200.csv / kosdaq_volume_top200.csv")
-```
 
 > **데이터 출처**: [KRX 정보데이터시스템](https://data.krx.co.kr) · [네이버 증권 거래량 순위](https://finance.naver.com/sise/sise_quant.naver?sosok=0)
 
@@ -573,4 +526,3 @@ print("\n✅ 저장 완료: kospi_volume_top200.csv / kosdaq_volume_top200.csv")
 - 패키징 기술: TSV 적층 구조 발열 관리 → 냉각 기술 발전 필수
 - 저전력 메모리: 모바일·엣지 AI 확산으로 MRAM, ReRAM 등 차세대 메모리 중요
 - 스토리지-메모리 융합: CXL 기반 메모리 풀링, 공유 아키텍처 도입 전망
-

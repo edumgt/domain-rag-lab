@@ -10,7 +10,6 @@
 
 ## A. 주식거래 기초 상식
 
-> 📺 [🎬 주식거래 기초 상식](https://www.youtube.com/results?search_query=주식거래+기초+상식+한국어)
 
 ### A.1 주식이란 무엇인가
 
@@ -234,7 +233,6 @@
 
 > 📖 **Wikipedia**: [기업공개(IPO)](https://ko.wikipedia.org/wiki/기업공개) · [상장](https://ko.wikipedia.org/wiki/상장_(금융))
 
-> 📺 [🎬 IPO 기업공개 상장절차 쉬운 설명](https://www.youtube.com/results?search_query=IPO+기업공개+상장절차+쉬운+설명+한국어)
 
 #### IPO란 무엇인가?
 
@@ -438,27 +436,6 @@
 | **수수료** | 증권사 | 0.0~0.5% (회사별 상이) | 매수·매도 각각 부과 |
 | **농어촌특별세** | 국가 | 0.15% (코스피) | 증권거래세에 포함 |
 
-```python
-def trading_cost(price: float, quantity: int, is_sell: bool = True) -> dict:
-    """주식 거래 비용 계산 (코스피 기준)"""
-    amount = price * quantity
-    commission = amount * 0.00015  # 수수료 0.015% (키움증권 기준 예시)
-    transaction_tax = amount * 0.0018 if is_sell else 0  # 거래세 0.18% (매도만)
-    total_cost = commission + transaction_tax
-
-    return {
-        "거래 금액": f"{amount:,.0f}원",
-        "수수료": f"{commission:,.0f}원",
-        "증권거래세": f"{transaction_tax:,.0f}원",
-        "총 비용": f"{total_cost:,.0f}원",
-        "비용 비율": f"{total_cost/amount*100:.4f}%",
-    }
-
-# 삼성전자 100주, 주가 80,000원에 매도 시
-result = trading_cost(price=80_000, quantity=100, is_sell=True)
-for k, v in result.items():
-    print(f"  {k}: {v}")
-```
 
 ### A.6 고객예탁금 (Customer Deposit)
 
@@ -489,16 +466,6 @@ for k, v in result.items():
 
 고객예탁금은 **주식 시장에 투입될 준비가 된 자금**입니다. 전체 고객예탁금 규모를 모니터링하면 시장 심리와 수급 동향을 파악하는 데 도움이 됩니다.
 
-```python
-# 고객예탁금 변화에 따른 시장 해석 예시
-deposit_trend = {
-    "급증": "투자자 관심 ↑, 대기 매수 자금 증가 → 단기 매수 압력 가능",
-    "감소": "투자자 자금 이탈, 주식 매도 후 출금 → 관망 심리 강화",
-    "급감": "공포 심리로 자금 대규모 이탈 → 추가 하락 위험 신호",
-}
-for trend, meaning in deposit_trend.items():
-    print(f"[{trend}] {meaning}")
-```
 
 > ⚠️ **주의**: 고객예탁금 증가가 반드시 주가 상승을 의미하지는 않습니다. 시장 참가자들이 관망할 때도 예탁금은 늘어날 수 있습니다. 다른 지표(외국인 수급, 기관 순매수 등)와 함께 종합 판단해야 합니다.
 
@@ -506,7 +473,6 @@ for trend, meaning in deposit_trend.items():
 
 ## B. 배당 상식
 
-> 📺 [🎬 배당 상식](https://www.youtube.com/results?search_query=배당+상식+한국어)
 
 ### B.1 배당이란?
 
@@ -591,29 +557,6 @@ for trend, meaning in deposit_trend.items():
 | **배당성향** | 배당총액 ÷ 당기순이익 × 100 | 이익 중 배당 비중 |
 | **배당성장률** | 전년 DPS 대비 증가율 | 배당 증가 추세 |
 
-```python
-def dividend_analysis(stock_price: float, dps: float, net_income: int, shares: int) -> dict:
-    dividend_yield = dps / stock_price * 100
-    total_dividend = dps * shares
-    payout_ratio = total_dividend / net_income * 100
-
-    return {
-        "주당배당금 (DPS)": f"{dps:,}원",
-        "배당수익률": f"{dividend_yield:.2f}%",
-        "배당성향": f"{payout_ratio:.1f}%",
-        "총 배당금": f"{total_dividend:,}원",
-    }
-
-# 예시: 현재 주가 50,000원, DPS 2,000원, 순이익 5조, 발행주식 1억주
-result = dividend_analysis(
-    stock_price=50_000,
-    dps=2_000,
-    net_income=5_000_000_000_000,
-    shares=100_000_000
-)
-for k, v in result.items():
-    print(f"  {k}: {v}")
-```
 
 ### B.4 배당 세금
 
@@ -629,7 +572,6 @@ for k, v in result.items():
 
 > 📖 **Wikipedia**: [주주환원](https://ko.wikipedia.org/wiki/주주환원) · [자사주매입](https://ko.wikipedia.org/wiki/자사주_매입)
 
-> 📺 [🎬 주주환원 배당 자사주 소각 쉬운 설명](https://www.youtube.com/results?search_query=주주환원+배당+자사주+소각+쉬운+설명+한국어)
 
 **주주환원(株主還元, Shareholder Return)**이란 회사가 벌어들인 이익을 주주에게 돌려주는 모든 행위입니다.
 
@@ -682,7 +624,6 @@ for k, v in result.items():
 
 ## C. 원금손실 가능성 — 초급자도 이해하는 쉬운 설명
 
-> 📺 [🎬 원금손실 가능성 초급자도 이해하는](https://www.youtube.com/results?search_query=원금손실+가능성+초급자도+이해하는+쉬운+설명+한국어)
 
 ### C.1 은행 예금 vs 투자의 차이
 
@@ -732,7 +673,6 @@ for k, v in result.items():
 
 ## E. 금융상품 구분 — 한눈에 보기
 
-> 📺 [🎬 금융상품 구분 한눈에 보기](https://www.youtube.com/results?search_query=금융상품+구분+한눈에+보기+한국어)
 
 ### E.1 수신성·보장성·투자성 구분
 
@@ -832,28 +772,11 @@ for k, v in result.items():
 | **RP(환매조건부채권)** | 일정 기간 후 재매입 약정된 단기 채권거래 | 단기 유동성 운용 | 만기/금리조건 확인 필요 |
 | **MMF** | 초단기 우량채 중심 단기 금융펀드 | 현금성 운용, 변동성 낮음 | 원금 비보장, 시장 급변 영향 |
 
-```python
-# 금융상품 위험·수익 프로파일 비교
-products = {
-    "정기예금":       {"위험등급": 6, "원금보장": True,  "연기대수익": "2~4%",   "손실한도": "없음"},
-    "혼합형 펀드":    {"위험등급": 3, "원금보장": False, "연기대수익": "4~8%",   "손실한도": "원금 일부"},
-    "코스피200 ETF": {"위험등급": 2, "원금보장": False, "연기대수익": "5~15%",  "손실한도": "원금 전부"},
-    "개별 주식":      {"위험등급": 2, "원금보장": False, "연기대수익": "무제한", "손실한도": "원금 전부"},
-    "레버리지 ETF":   {"위험등급": 1, "원금보장": False, "연기대수익": "무제한", "손실한도": "원금 전부+"},
-}
-
-print(f"{'상품':16} | {'위험':4} | {'원금':4} | {'기대수익':10} | 손실 한도")
-print("-" * 70)
-for name, p in products.items():
-    보장 = "✅" if p["원금보장"] else "❌"
-    print(f"{name:16} | {p['위험등급']}등급 | {보장}  | {p['연기대수익']:10} | {p['손실한도']}")
-```
 
 ---
 
 ## F. 투자 전 꼭 알아야 할 원칙
 
-> 📺 [🎬 투자 전 꼭 알아야](https://www.youtube.com/results?search_query=투자+전+꼭+알아야+할+원칙+한국어)
 
 ### F.1 분산투자 (Don't Put All Eggs in One Basket)
 
@@ -891,7 +814,6 @@ for name, p in products.items():
 
 ## G. 해외 투자 보완 — 이론·시장·전략
 
-> 📺 [🎬 해외 투자 기초](https://www.youtube.com/results?search_query=해외+투자+기초+국제+증권시장+한국어)
 
 ### G.1 해외 투자에 대한 이론적 접근
 
@@ -1237,36 +1159,6 @@ flowchart LR
 | **경기 선행지수** | 경기선행지수가 꺾이면 방어 섹터로 전환 | 통계청 경기동행·선행지수 |
 | **52주 신고가 업종** | 새 고가를 경신하는 업종에 자금 유입 중 | 한국거래소(KRX) 데이터 |
 
-```python
-# 섹터별 상대강도 비교 예시 (yfinance 활용)
-import yfinance as yf
-import pandas as pd
-
-# 국내 섹터 ETF 티커 (예시)
-sector_etfs = {
-    "IT (반도체)":    "TIGER반도체.KS",   # 예시 (실제 티커 확인 필요)
-    "금융":           "KODEX은행.KS",
-    "헬스케어":       "KODEX헬스케어.KS",
-    "에너지·화학":   "TIGER200에너지화학.KS",
-}
-
-# 최근 3개월 수익률 비교
-end   = pd.Timestamp.today()
-start = end - pd.DateOffset(months=3)
-
-performance = {}
-for name, ticker in sector_etfs.items():
-    try:
-        data = yf.download(ticker, start=start, end=end, auto_adjust=True)["Close"]
-        ret  = (data.iloc[-1] / data.iloc[0] - 1) * 100
-        performance[name] = f"{ret:.2f}%"
-    except Exception:
-        performance[name] = "데이터 없음"
-
-print("=== 최근 3개월 섹터별 수익률 ===")
-for sector, ret in sorted(performance.items(), key=lambda x: x[1], reverse=True):
-    print(f"  {sector:20}: {ret}")
-```
 
 > 💡 **투자자 포인트**: 순환매는 단기 트레이딩에서 활용되지만, 경기 사이클이 예측보다 길게 또는 짧게 진행될 수 있어 과도한 섹터 교체는 거래비용과 실기 위험을 높입니다. 장기 투자자는 핵심 포트폴리오를 유지하면서 일부만 전술적으로 섹터 비중을 조정하는 것이 일반적입니다.
 
@@ -1326,25 +1218,6 @@ flowchart TD
     style F fill:#2ecc71,color:#fff
 ```
 
-```python
-# 외국인 순매수 모니터링 개념 코드 (KRX 데이터 활용)
-import pandas as pd
-
-# KRX 투자자별 매매동향 데이터 (data.krx.co.kr 다운로드 기준)
-# 실제로는 KRX API 또는 CSV를 활용
-sample_data = {
-    "날짜": ["2024-01-02","2024-01-03","2024-01-04","2024-01-05","2024-01-08"],
-    "외국인_순매수(억원)": [1200, 850, 1500, -300, 2100],
-    "코스피_등락": [0.8, 0.3, 1.2, -0.5, 1.8],
-}
-df = pd.DataFrame(sample_data)
-
-# 5일 연속 순매수 여부 확인
-df["연속순매수"] = df["외국인_순매수(억원)"] > 0
-streak = df["연속순매수"].rolling(5).sum()
-print("5일 연속 순매수 구간:")
-print(df[streak == 5][["날짜", "외국인_순매수(억원)", "코스피_등락"]])
-```
 
 | 외국인 동향 | 주가 해석 | 투자 대응 |
 |------------|---------|---------|
@@ -1477,38 +1350,6 @@ print(df[streak == 5][["날짜", "외국인_순매수(억원)", "코스피_등�
 | **월간 운용보고서** | 시장 코멘트, 포지션 변화, 성과분해 |
 | **분기 리뷰** | 전략 유효성, 리밸런싱 근거, 리스크 점검 |
 | **대시보드(웹)** | 실시간 수익률·낙폭·팩터 노출 시각화 |
-
-### L.7 PDF 레포팅 예시 (Python)
-
-```python
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-
-def make_performance_pdf(path="performance_report.pdf"):
-    c = canvas.Canvas(path, pagesize=A4)
-    w, h = A4
-    y = h - 60
-
-    c.setFont("Helvetica-Bold", 14)
-    c.drawString(50, y, "투자운용 성과보고서 (예시)")
-    y -= 30
-
-    c.setFont("Helvetica", 11)
-    rows = [
-        "기간: 2026-01-01 ~ 2026-12-31",
-        "포트폴리오 수익률: 12.4%",
-        "벤치마크 수익률: 9.1%",
-        "초과수익률(Alpha): +3.3%p",
-        "변동성: 14.8%, MDD: -8.6%",
-        "Sharpe: 0.78, Information Ratio: 0.42",
-    ]
-    for row in rows:
-        c.drawString(50, y, f"- {row}")
-        y -= 20
-
-    c.drawString(50, y - 10, "요약: 위험 대비 성과는 양호하나 변동성 관리 추가 필요.")
-    c.save()
-```
 
 ### L.8 웹 화면 예시 (HTML + JS)
 
@@ -1807,7 +1648,6 @@ def make_performance_pdf(path="performance_report.pdf"):
 
 > 📖 **Wikipedia**: [유상증자](https://ko.wikipedia.org/wiki/유상증자)
 
-> 📺 [🎬 유상증자 쉬운 설명 주가 영향](https://www.youtube.com/results?search_query=유상증자+쉬운+설명+주가영향+한국어)
 
 #### 유상증자란?
 
@@ -1907,29 +1747,6 @@ def make_performance_pdf(path="performance_report.pdf"):
 
 > 💡 **투자자 포인트**: 액면분할 발표 자체가 주가 상승 신호로 해석되기도 합니다. 고가주가 분할에 나선다는 것은 기업이 주가 수준에 자신감이 있다는 신호로 받아들여지기 때문입니다.
 
-```python
-def stock_split_simulation(price: float, shares: int, ratio: int) -> dict:
-    """액면분할 시뮬레이션"""
-    market_cap_before = price * shares
-    new_price  = price  / ratio
-    new_shares = shares * ratio
-    market_cap_after = new_price * new_shares
-
-    return {
-        "분할 전 주가": f"{price:,.0f}원",
-        "분할 전 주식수": f"{shares:,}주",
-        "분할 전 시가총액": f"{market_cap_before/1e8:,.0f}억원",
-        "─────": "─────────────────",
-        "분할 비율": f"{ratio}:1",
-        "분할 후 주가": f"{new_price:,.0f}원",
-        "분할 후 주식수": f"{new_shares:,}주",
-        "분할 후 시가총액": f"{market_cap_after/1e8:,.0f}억원 (동일)",
-    }
-
-result = stock_split_simulation(price=500_000, shares=10_000_000, ratio=5)
-for k, v in result.items():
-    print(f"  {k}: {v}")
-```
 
 | 단계 | 핵심 내용 | 체크 포인트 |
 |------|---------|-----------|
@@ -2017,7 +1834,6 @@ for k, v in result.items():
 
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 1. 본인이 가입한 금융상품(예금·펀드·보험·주식 등)을 위 분류표에서 찾아 위험 등급과 원금보장 여부를 확인해보세요.
 2. 본인이 보유한 주식(또는 ETF)의 최근 1년 배당수익률과 배당성향을 증권사 HTS에서 확인해보세요.
@@ -2045,7 +1861,6 @@ for k, v in result.items():
 
 ---
 
-> 📺 **YouTube 강의**: [🎬 주식 손절 익절 홀드 추세추종 투자전략](https://www.youtube.com/results?search_query=주식+손절+익절+홀드+추세추종+투자전략+설명)
 >
 > 📝 **관련 문서**: [11.md](11.md) — 기술적 분석 II | [12.md](12.md) — 기술적 분석 I
 
@@ -2059,7 +1874,6 @@ for k, v in result.items():
 
 ## 1. 핵심 개념 한눈에 보기
 
-> 📺 [🎬 주식 투자 4가지 행동 핵심 개념](https://www.youtube.com/results?search_query=주식+투자+홀드+손절+익절+추세추종+개념+한국어)
 
 주식을 보유한 투자자는 매 순간 **두 가지 질문**에 답해야 합니다.
 
@@ -2072,7 +1886,6 @@ for k, v in result.items():
 
 ## 2. 사방(四方) 4분면 표 — 투자자 행동 매트릭스
 
-> 📺 [🎬 투자 4분면 매트릭스](https://www.youtube.com/results?search_query=투자+4분면+매트릭스+손절+익절+홀드)
 
 ```
                     ┌─────────────────────────────────────────────────┐
@@ -2104,13 +1917,11 @@ for k, v in result.items():
 
 ## 3. 4가지 행동 상세 설명
 
-> 📺 [🎬 주식 투자 행동 상세 설명](https://www.youtube.com/results?search_query=주식+투자+행동+홀드+익절+손절+추세추종+상세+한국어)
 
 ---
 
 ### ① 추세추종 (Trend Following) — 손실 중 + 상승 전망
 
-> 📺 [🎬 추세추종 전략](https://www.youtube.com/results?search_query=추세추종+전략+주식+한국어)
 
 > 📖 **Wikipedia**: [추세추종](https://ko.wikipedia.org/wiki/추세_추종)
 
@@ -2138,7 +1949,6 @@ for k, v in result.items():
 
 ### ② 홀드 (Hold) — 이익 중 + 상승 전망
 
-> 📺 [🎬 주식 홀드 전략](https://www.youtube.com/results?search_query=주식+홀드+보유+전략+한국어)
 
 **상황**: 수익이 나고 있고, 앞으로도 계속 오를 것으로 전망될 때
 
@@ -2163,7 +1973,6 @@ for k, v in result.items():
 
 ### ③ 익절 (Take Profit) — 이익 중 + 하락 전망
 
-> 📺 [🎬 주식 익절 전략](https://www.youtube.com/results?search_query=주식+익절+수익실현+전략+한국어)
 
 **상황**: 수익이 나고 있으나, 앞으로 하락할 것으로 전망될 때
 
@@ -2189,7 +1998,6 @@ for k, v in result.items():
 
 ### ④ 손절 (Stop-Loss) — 손실 중 + 하락 전망
 
-> 📺 [🎬 주식 손절 전략](https://www.youtube.com/results?search_query=주식+손절+스톱로스+전략+한국어)
 
 > 📖 **Wikipedia**: [손절매](https://ko.wikipedia.org/wiki/손절매)
 
@@ -2219,7 +2027,6 @@ for k, v in result.items():
 
 ## 4. 손실·수익률 회복 비대칭성
 
-> 📺 [🎬 주식 손실 회복 비대칭성](https://www.youtube.com/results?search_query=주식+손실+회복+비대칭성+복리+한국어)
 
 손절이 중요한 이유를 수치로 이해합니다.
 
@@ -2240,7 +2047,6 @@ for k, v in result.items():
 
 ## 5. 실전 의사결정 흐름도
 
-> 📺 [🎬 주식 투자 의사결정 흐름도](https://www.youtube.com/results?search_query=주식+투자+의사결정+프로세스+한국어)
 
 ```mermaid
 flowchart TD
@@ -2265,7 +2071,6 @@ flowchart TD
 
 ## 6. 추세 전망 판단 기준
 
-> 📺 [🎬 주식 추세 판단 기준](https://www.youtube.com/results?search_query=주식+추세+판단+이동평균+RSI+MACD+한국어)
 
 "향후 추세가 상승인지 하락인지"를 판단하는 기술적 기준입니다.
 
@@ -2282,7 +2087,6 @@ flowchart TD
 
 ## 7. 투자자가 빠지기 쉬운 심리적 함정
 
-> 📺 [🎬 투자 심리 함정](https://www.youtube.com/results?search_query=투자+심리+함정+손실+회피+편향+한국어)
 
 > 📖 **Wikipedia**: [행동경제학](https://ko.wikipedia.org/wiki/행동경제학) · [손실 회피](https://ko.wikipedia.org/wiki/손실_회피)
 
@@ -2327,7 +2131,6 @@ flowchart TD
 
 ## 8. 투자자 행동 체크리스트
 
-> 📺 [🎬 투자 체크리스트](https://www.youtube.com/results?search_query=주식+투자+체크리스트+매수+매도+한국어)
 
 주식을 매수하기 전 미리 아래 항목을 결정합니다.
 
@@ -2348,7 +2151,6 @@ flowchart TD
 
 ## 9. 요약 정리
 
-> 📺 [🎬 투자 전략 요약 정리](https://www.youtube.com/results?search_query=주식+투자+전략+요약+정리+한국어)
 
 | 행동 | 현재 상태 | 전망 | 핵심 한마디 |
 |------|:---------:|:----:|-------------|
@@ -2365,7 +2167,6 @@ flowchart TD
 
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 1. 관심 종목 하나를 골라 현재 매수가 대비 손익 상태와 이동평균선 방향을 확인한 후, 위 4분면 표 중 어디에 해당하는지 분류해보세요.
 2. 가상으로 1,000만 원을 특정 종목에 투자한다고 가정하고, 목표주가(익절가)와 손절선을 미리 설정해보세요.

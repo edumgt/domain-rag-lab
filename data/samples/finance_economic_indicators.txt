@@ -93,7 +93,6 @@
 
 ---
 
-> 📺 **YouTube 강의**: [🎬 경제지표 분석 물가 유가 환율](https://www.youtube.com/results?search_query=경제지표+분석+물가+유가+환율+한국어+투자)
 >
 > 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
 
@@ -106,37 +105,6 @@
 - 환율과 주가의 관계
 - 실업률, GDP 성장률 지표 해석
 - 실습: 주요 경제지표 데이터 수집 및 상관관계 분석
-
----
-
-## 🗓 세부 일정 (1일 8시간)
-
-
-> **강의 5시간** (5개 단락 × 50분 + 도입·마무리 50분) + **실습 3시간** = 총 8시간
-
-| 시간 | 구분 | 내용 | 형태 |
-|------|------|------|------|
-| 09:00 – 09:10 | 도입 | 오늘 학습 목표 확인 | 강의 |
-| 09:10 – 09:30 | **1단락** 설명 20분 | 소비자물가지수(CPI)와 생산자물가지수(PPI) | 강의 |
-| 09:30 – 10:00 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:00 – 10:20 | **2단락** 설명 20분 | 유가(WTI, 브렌트유) 분석 | 강의 |
-| 10:20 – 10:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:50 – 11:00 | ☕ 휴식 | — | — |
-| 11:00 – 11:20 | **3단락** 설명 20분 | 환율과 주가의 관계 | 강의 |
-| 11:20 – 11:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 11:50 – 12:10 | **4단락** 설명 20분 | 실업률, GDP 성장률 지표 해석 | 강의 |
-| 12:10 – 12:40 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 12:40 – 13:00 | **5단락** 설명 20분 | 경제지표 상관관계 분석 방법론 개요 | 강의 |
-| 13:00 – 13:30 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 13:30 – 14:00 | 강의 마무리 | Q&A · 핵심 복습 | 강의 |
-| 14:00 – 15:00 | 💻 **실습 1부** 60분 | FRED·yfinance로 CPI·PPI·WTI·환율·실업률 데이터 수집 | 실습 |
-| 15:00 – 15:10 | ☕ 휴식 | — | — |
-| 15:10 – 16:00 | 💻 **실습 2부** 50분 | 상관관계 히트맵 · 롤링 상관관계 시각화 구현 | 실습 |
-| 16:00 – 16:10 | ☕ 휴식 | — | — |
-| 16:10 – 17:00 | 💻 **실습 발표 & 리뷰** 50분 | 코드 리뷰 · 발표 · 피드백 | 실습 |
-
-> 강의 5시간: 도입 10분 + 단락 5개×50분 + 마무리 30분 = **300분**  
-> 실습 3시간: 1부 60분 + 휴식 10분 + 2부 50분 + 휴식 10분 + 발표·리뷰 50분 = **180분**
 
 ---
 
@@ -209,7 +177,6 @@ flowchart LR
     style F fill:#2980b9,color:#fff
 ```
 
-> 📺 [🎬 소비자물가지수 CPI 뜻 설명](https://www.youtube.com/results?search_query=소비자물가지수+CPI+인플레이션+한국어+설명)
 
 **PPI (Producer Price Index, 생산자물가지수)**
 
@@ -231,45 +198,7 @@ flowchart LR
     style F fill:#922b21,color:#fff
 ```
 
-> 📺 [🎬 PPI 생산자물가지수 CPI 차이](https://www.youtube.com/results?search_query=PPI+생산자물가지수+CPI+차이+한국어)
 
-```python
-# CPI 변화율(인플레이션율) 계산 예시
-cpi_monthly = [104.5, 105.2, 104.8, 106.3, 107.1, 108.0]
-
-# 전월 대비 변화율 (MoM)
-mom = [(cpi_monthly[i] - cpi_monthly[i-1]) / cpi_monthly[i-1] * 100
-       for i in range(1, len(cpi_monthly))]
-
-# 연율 환산 (MoM * 12)
-annualized = [m * 12 for m in mom]
-
-for i, (m, a) in enumerate(zip(mom, annualized)):
-    print(f"{i+2}월: MoM {m:.2f}%  |  연율환산 {a:.1f}%")
-```
-
-#### 🔗 Python 소스 연계
-
-이 섹션의 물가지표(CPI)는 웹앱의 **거시경제현황 1 (실시간)** 탭에서 직접 확인할 수 있습니다.
-
-```mermaid
-sequenceDiagram
-    participant F as Frontend<br/>(macroRealtime.js)
-    participant A as /api/macro/realtime
-    participant Y as yfinance
-
-    F->>A: POST {tickers: ["^TNX", "GC=F"], period: "1y"}
-    A->>Y: yf.download(tickers, period="1y")
-    Y-->>A: OHLCV 시계열 데이터
-    A-->>F: {image: base64_png, summary: {ticker: {current, return_pct, annual_vol_pct}}}
-```
-
-| API 파라미터 | 값 예시 | 설명 |
-|---|---|---|
-| `tickers` | `["^TNX"]` | 미국 10년물 국채금리 (금리 인상/인하 신호) |
-| `period` | `"1y"`, `"6mo"`, `"3mo"` | 조회 기간 |
-
----
 
 ### 2. 유가(WTI, 브렌트유) 분석
 
@@ -284,7 +213,6 @@ sequenceDiagram
 | 특징 | 미국 기준 원유, 경질유 | 글로벌 기준 원유 (세계 원유 70%+ 기준) |
 | 가격 차이 | 보통 WTI가 $1~3 저렴 | — |
 
-> 📺 [🎬 WTI 브렌트유 차이 원유 투자](https://www.youtube.com/results?search_query=WTI+브렌트유+차이+원유가격+한국어)
 
 **유가 상승 시 경제 파급 경로**
 
@@ -340,23 +268,7 @@ flowchart LR
     style DOWN fill:#eaf2ff
 ```
 
-> 📺 [🎬 유가 상승 하락 주식시장 영향](https://www.youtube.com/results?search_query=유가+주식+영향+에너지+섹터+한국어)
 
-```python
-import yfinance as yf
-import pandas as pd
-
-# WTI 원유 선물 가격 (CL=F) 수집
-oil = yf.download("CL=F", start="2022-01-01", end="2024-12-31", auto_adjust=True)["Close"]
-
-# 20일 이동평균 추가
-oil_ma20 = oil.rolling(20).mean()
-
-print(f"최근 종가: ${oil.iloc[-1]:.2f}/배럴")
-print(f"20일 이동평균: ${oil_ma20.iloc[-1]:.2f}/배럴")
-print(f"52주 최고: ${oil[-252:].max():.2f}")
-print(f"52주 최저: ${oil[-252:].min():.2f}")
-```
 #### 위의 예시 실행 시
 ```
 (.venv) root@DESKTOP-CLQV18N:/home/ubuntu/investment-analysis/test# python3 0201.py
@@ -369,33 +281,6 @@ TypeError: unsupported format string passed to Series.__format__
 ```
 #### 오류 해결 하세요.
 
-
-#### 🔗 Python 소스 연계
-
-웹앱 **거시경제현황 1 (실시간)** 에서 WTI 유가를 실시간으로 조회합니다.
-
-```mermaid
-sequenceDiagram
-    participant F as Frontend<br/>(macroRealtime.js)
-    participant A as /api/macro/realtime
-    participant Y as yfinance
-
-    F->>A: POST {tickers: ["CL=F"], period: "6mo"}
-    A->>Y: yf.download("CL=F", period="6mo")
-    alt Yahoo Finance 정상
-        Y-->>A: 실제 WTI 시계열
-        A-->>F: {is_simulated: false, summary: {CL=F: {current: 78.5, return_pct: -3.2}}}
-    else Yahoo Finance 제한
-        A-->>F: {is_simulated: true, warning: "GBM 시뮬레이션 사용 중"}
-    end
-```
-
-| API 파라미터 | 유가 조회용 값 |
-|---|---|
-| `tickers` | `["CL=F"]` (WTI 선물) |
-| `period` | `"1y"` (연간 추세 파악 권장) |
-
----
 
 ### 3. 환율과 주가의 관계
 
@@ -452,45 +337,8 @@ flowchart TD
     style E fill:#27ae60,color:#fff
 ```
 
-> 📺 [🎬 원달러 환율 주식 관계](https://www.youtube.com/results?search_query=원달러+환율+주식시장+관계+한국어)
 
-> 📺 [🎬 외국인 투자자 환율 코스피 영향](https://www.youtube.com/results?search_query=외국인+투자자+코스피+환율+한국어)
 
-```python
-import yfinance as yf
-import pandas as pd
-import numpy as np
-
-# 원달러 환율 (KRW=X) 및 코스피 ETF (EWY)
-usdkrw = yf.download("KRW=X", start="2022-01-01", end="2025-12-31", auto_adjust=True)["Close"]
-kospi  = yf.download("EWY",   start="2022-01-01", end="2025-12-31", auto_adjust=True)["Close"]
-
-df = pd.DataFrame({"환율": usdkrw, "코스피ETF": kospi}).dropna()
-
-correlation = df["환율"].corr(df["코스피ETF"])
-print(f"원달러 환율 vs 코스피ETF 상관계수: {correlation:.3f}")
-print("(음수: 환율 상승 시 코스피 하락 경향)")
-```
-
-#### 🔗 Python 소스 연계
-
-환율(USD/KRW)과 코스피를 동시에 조회해 상관관계를 웹앱에서 시각화합니다.
-
-```mermaid
-sequenceDiagram
-    participant F as Frontend<br/>(macroRealtime.js)
-    participant A as /api/macro/realtime
-
-    F->>A: POST {tickers: ["KRW=X", "^KS11"], period: "1y"}
-    A-->>F: {summary: {<br/>  "KRW=X": {current: 1352.4, return_pct: 2.1},<br/>  "^KS11": {current: 2680.0, return_pct: -1.8}<br/>}}
-    Note over F: 상관계수 계산 후 차트 렌더링
-```
-
-| 환율·주가 동시 조회 파라미터 | 설명 |
-|---|---|
-| `"KRW=X"` | 달러/원 환율 |
-| `"^KS11"` | KOSPI 지수 |
-| `"EWY"` | iShares MSCI Korea ETF (대안) |
 
 ### 3-1. 외국인의 주가상승 신호
 
@@ -532,32 +380,6 @@ flowchart TD
 | **대규모 순매도** | 원화 약세 (환율 ↑) | 코스피 하락 압력 | 리스크 점검·손절 기준 확인 |
 | **연속 순매도** | 원화 약세 심화 | 추가 이탈 악순환 가능 | 방어 포지션 검토 |
 
-```python
-import yfinance as yf
-import pandas as pd
-
-# 외국인 순매수 모멘텀과 코스피 관계 (개념 예시)
-# 실제 외국인 매매동향은 KRX data.krx.co.kr에서 다운로드
-
-# 코스피 ETF (EWY)와 원달러 환율 동반 조회
-data = yf.download(["EWY", "KRW=X"], start="2023-01-01", end="2024-12-31",
-                   auto_adjust=True)["Close"]
-data.columns = ["코스피ETF", "환율"]
-
-# 코스피 ETF 수익률과 환율 변화 계산
-data["코스피수익"] = data["코스피ETF"].pct_change() * 100
-data["환율변화"]   = data["환율"].pct_change() * 100
-
-# 외국인 순매수 가정: 환율이 내려가는 날 → 달러→원화 전환 압력 (순매수 추정)
-data["외국인매수추정"] = data["환율변화"] < 0  # 단순 추정
-
-# 외국인 추정 매수일의 코스피 평균 수익률
-buy_days  = data[data["외국인매수추정"]]["코스피수익"].mean()
-sell_days = data[~data["외국인매수추정"]]["코스피수익"].mean()
-
-print(f"외국인 추정 순매수일 평균 코스피 수익률: {buy_days:.3f}%")
-print(f"외국인 추정 순매도일 평균 코스피 수익률: {sell_days:.3f}%")
-```
 
 > ⚠️ **주의사항**: 외국인 순매수가 항상 주가 상승으로 이어지지는 않습니다. 파생상품 헤지, 인덱스 리밸런싱, 배당 차익거래 목적의 매수는 주가 상승 신호로 보기 어렵습니다. **순매수의 지속성, 대상 종목, 환율 동향, 거래대금**을 종합해 판단해야 합니다.
 
@@ -589,7 +411,6 @@ flowchart LR
     style F fill:#922b21,color:#fff
 ```
 
-> 📺 [🎬 GDP 성장률 경기침체 투자](https://www.youtube.com/results?search_query=GDP+성장률+경기침체+주식투자+한국어)
 
 **실업률 (Unemployment Rate)**
 
@@ -607,7 +428,6 @@ flowchart LR
     end
 ```
 
-> 📺 [🎬 미국 실업률 비농업고용지수 주식](https://www.youtube.com/results?search_query=미국+실업률+비농업고용+주식시장+한국어)
 
 **미국 고용지표 발표 순서**
 
@@ -626,22 +446,6 @@ flowchart LR
 | 비농업 고용(NFP) | 매월 첫째 금요일 | 전월 대비 증감 인원 |
 | 실업률 | NFP 동시 발표 | % |
 | ADP 민간 고용 | NFP 발표 2일 전 수요일 | 선행 지표 |
-
-#### 🔗 Python 소스 연계
-
-GDP·실업률은 yfinance로 직접 수집되지 않지만, 금리(채권 수익률)를 프록시 지표로 활용해 웹앱에서 조회할 수 있습니다.
-
-```mermaid
-sequenceDiagram
-    participant F as Frontend<br/>(macroRealtime.js)
-    participant A as /api/macro/realtime
-
-    F->>A: POST {tickers: ["^TNX", "^FVX"], period: "2y"}
-    Note over A: 미국 10년채(^TNX), 5년채(^FVX)<br/>장단기 금리차 = 경기침체 선행 신호
-    A-->>F: {summary: {<br/>  "^TNX": {current: 4.35, annual_vol_pct: 18.2},<br/>  "^FVX": {current: 4.12, annual_vol_pct: 21.0}<br/>}}
-```
-
----
 
 ### 5. 실습: 주요 경제지표 데이터 수집 및 상관관계 분석
 
@@ -727,40 +531,6 @@ pip install requests seaborn plotly statsmodels openpyxl
 
 먼저 일별 금융시장 데이터를 수집합니다. 이 단계는 API Key가 없어도 실행할 수 있어 실습 진입점으로 좋습니다.
 
-```python
-import yfinance as yf
-import pandas as pd
-
-MARKET_TICKERS = {
-    "WTI": "CL=F",
-    "Gold": "GC=F",
-    "DollarIndex": "DX-Y.NYB",
-    "US10Y": "^TNX",
-    "SP500": "^GSPC",
-    "KOSPI": "^KS11",
-    "USDKRW": "KRW=X",
-}
-
-def fetch_yfinance_close(tickers, start="2022-01-01", end="2025-12-31"):
-    frames = {}
-    for name, ticker in tickers.items():
-        data = yf.download(
-            ticker,
-            start=start,
-            end=end,
-            auto_adjust=True,
-            progress=False,
-        )
-        if data.empty:
-            print(f"skip: {name} ({ticker})")
-            continue
-        frames[name] = data["Close"]
-    return pd.DataFrame(frames).sort_index()
-
-daily_prices = fetch_yfinance_close(MARKET_TICKERS)
-daily_prices.to_csv("macro_market_daily.csv", encoding="utf-8-sig")
-print(daily_prices.tail())
-```
 
 **주의할 점**
 
@@ -784,48 +554,6 @@ FRED는 CPI, PPI, GDP, 실업률, 금리, 스프레드를 한 번에 가져오�
 | 미국 10년물 국채 | `DGS10` | 일별 | 월말 또는 월평균 |
 | 장단기 스프레드 | `T10Y2Y` | 일별 | 월평균 |
 
-```python
-import os
-import requests
-import pandas as pd
-
-FRED_API_KEY = os.getenv("FRED_API_KEY")
-
-FRED_SERIES = {
-    "US_CPI": "CPIAUCSL",
-    "US_PPI": "PPIACO",
-    "US_UNRATE": "UNRATE",
-    "US_REAL_GDP": "GDPC1",
-    "FEDFUNDS": "FEDFUNDS",
-    "US10Y_FRED": "DGS10",
-    "US10Y2Y_SPREAD": "T10Y2Y",
-}
-
-def fetch_fred_series(series_id, start="2022-01-01", end="2025-12-31"):
-    url = "https://api.stlouisfed.org/fred/series/observations"
-    params = {
-        "series_id": series_id,
-        "api_key": FRED_API_KEY,
-        "file_type": "json",
-        "observation_start": start,
-        "observation_end": end,
-    }
-    data = requests.get(url, params=params, timeout=20).json()
-    rows = data.get("observations", [])
-    df = pd.DataFrame(rows)
-    if df.empty:
-        return pd.Series(dtype="float64", name=series_id)
-    values = pd.to_numeric(df["value"].replace(".", pd.NA), errors="coerce")
-    return pd.Series(values.values, index=pd.to_datetime(df["date"]), name=series_id).dropna()
-
-fred_df = pd.DataFrame({
-    name: fetch_fred_series(series_id)
-    for name, series_id in FRED_SERIES.items()
-})
-
-fred_df.to_csv("macro_fred_raw.csv", encoding="utf-8-sig")
-print(fred_df.tail())
-```
 
 ---
 
@@ -835,91 +563,14 @@ FRED만으로도 실습은 가능하지만, “공식 원천에서 직접 수집
 
 **BLS: CPI·실업률 직접 조회**
 
-```python
-import os
-import requests
-import pandas as pd
-
-BLS_API_KEY = os.getenv("BLS_API_KEY")
-
-BLS_SERIES = {
-    "BLS_CPI_ALL": "CUSR0000SA0",
-    "BLS_UNRATE": "LNS14000000",
-}
-
-def fetch_bls(series_ids, start_year=2020, end_year=2024):
-    url = "https://api.bls.gov/publicAPI/v2/timeseries/data/"
-    payload = {
-        "seriesid": list(series_ids.values()),
-        "startyear": str(start_year),
-        "endyear": str(end_year),
-    }
-    if BLS_API_KEY:
-        payload["registrationkey"] = BLS_API_KEY
-
-    data = requests.post(url, json=payload, timeout=20).json()
-    frames = {}
-    reverse = {v: k for k, v in series_ids.items()}
-    for item in data.get("Results", {}).get("series", []):
-        name = reverse.get(item["seriesID"], item["seriesID"])
-        rows = []
-        for obs in item["data"]:
-            if obs["period"].startswith("M"):
-                rows.append({
-                    "date": pd.to_datetime(f"{obs['year']}-{obs['period'][1:]}-01"),
-                    "value": float(obs["value"]),
-                })
-        frames[name] = pd.DataFrame(rows).set_index("date")["value"].sort_index()
-    return pd.DataFrame(frames)
-
-bls_df = fetch_bls(BLS_SERIES)
-print(bls_df.tail())
-```
 
 **BEA: 분기 GDP 조회**
 
-```python
-import os
-import requests
-import pandas as pd
-
-BEA_API_KEY = os.getenv("BEA_API_KEY")
-
-def fetch_bea_real_gdp(year="X"):
-    url = "https://apps.bea.gov/api/data/"
-    params = {
-        "UserID": BEA_API_KEY,
-        "method": "GetData",
-        "datasetname": "NIPA",
-        "TableName": "T10106",
-        "LineNumber": "1",
-        "Frequency": "Q",
-        "Year": year,
-        "ResultFormat": "JSON",
-    }
-    data = requests.get(url, params=params, timeout=20).json()
-    rows = data.get("BEAAPI", {}).get("Results", {}).get("Data", [])
-    df = pd.DataFrame(rows)
-    if df.empty:
-        return pd.Series(dtype="float64", name="BEA_REAL_GDP_GROWTH")
-    return pd.Series(
-        pd.to_numeric(df["DataValue"].str.replace(",", ""), errors="coerce").values,
-        index=pd.PeriodIndex(df["TimePeriod"], freq="Q").to_timestamp("Q"),
-        name="BEA_REAL_GDP_GROWTH",
-    ).sort_index()
-
-bea_gdp = fetch_bea_real_gdp()
-print(bea_gdp.tail())
-```
 
 **EIA: WTI 현물 가격 조회**
 
 EIA API v2는 데이터셋별 라우트와 파라미터가 다를 수 있으므로, 먼저 문서의 API Browser에서 WTI 시리즈 라우트를 확인합니다. 빠른 실습에서는 FRED의 `DCOILWTICO` 또는 yfinance `CL=F`를 쓰고, 보고서에는 원천 차이를 적습니다.
 
-```python
-# 대체 실습: FRED에서 WTI 현물 가격 조회
-wti_spot = fetch_fred_series("DCOILWTICO", start="2022-01-01", end="2025-12-31")
-```
 
 ---
 
@@ -927,37 +578,6 @@ wti_spot = fetch_fred_series("DCOILWTICO", start="2022-01-01", end="2025-12-31")
 
 상관관계 분석에서 가장 흔한 실수는 일별 금융시장 데이터와 월별/분기별 경제지표를 그대로 붙이는 것입니다. 아래처럼 월말 또는 월평균 기준으로 맞춥니다.
 
-```python
-def to_monthly_market(df):
-    # 가격성 지표는 월말값을 사용한 뒤 월간 수익률을 계산합니다.
-    monthly_level = df.resample("M").last()
-    monthly_return = monthly_level.pct_change()
-    return monthly_level, monthly_return
-
-def to_monthly_macro(df):
-    # 월별/분기별 거시지표는 월말 인덱스로 정렬하고 필요 시 forward fill 합니다.
-    monthly = df.resample("M").last().ffill()
-    yoy = monthly.pct_change(12)
-    mom = monthly.pct_change()
-    diff = monthly.diff()
-    return monthly, yoy, mom, diff
-
-market_level_m, market_ret_m = to_monthly_market(daily_prices)
-macro_level_m, macro_yoy_m, macro_mom_m, macro_diff_m = to_monthly_macro(fred_df)
-
-analysis_df = pd.concat(
-    [
-        market_ret_m.add_suffix("_ret"),
-        macro_yoy_m[["US_CPI", "US_PPI", "US_REAL_GDP"]].add_suffix("_yoy"),
-        macro_diff_m[["US_UNRATE", "FEDFUNDS", "US10Y_FRED", "US10Y2Y_SPREAD"]].add_suffix("_diff"),
-    ],
-    axis=1,
-).dropna(how="all")
-
-analysis_df = analysis_df.dropna(thresh=4)
-analysis_df.to_csv("macro_analysis_monthly.csv", encoding="utf-8-sig")
-print(analysis_df.tail())
-```
 
 **변환 선택 원칙**
 
@@ -973,29 +593,6 @@ print(analysis_df.tail())
 
 #### 5-8. 5단계: 상관관계 히트맵
 
-```python
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-corr = analysis_df.corr(method="pearson")
-corr.to_csv("macro_correlation.csv", encoding="utf-8-sig")
-
-plt.figure(figsize=(12, 9))
-sns.heatmap(
-    corr,
-    annot=True,
-    fmt=".2f",
-    cmap="RdYlGn",
-    center=0,
-    vmin=-1,
-    vmax=1,
-    linewidths=0.5,
-)
-plt.title("주요 경제지표 상관관계: 월별 변환 기준")
-plt.tight_layout()
-plt.savefig("macro_correlation.png", dpi=150, bbox_inches="tight")
-plt.show()
-```
 
 **해석 기준**
 
@@ -1015,47 +612,9 @@ plt.show()
 
 전체 기간 상관계수 하나만 보면 국면 변화를 놓칩니다. 12개월 롤링 상관관계로 관계가 언제 강해졌는지 확인합니다.
 
-```python
-pair_a = "WTI_ret"
-pair_b = "US_CPI_yoy"
-
-rolling_corr = analysis_df[pair_a].rolling(12).corr(analysis_df[pair_b])
-
-plt.figure(figsize=(11, 5))
-rolling_corr.plot(color="darkorange", linewidth=2)
-plt.axhline(0, color="black", linewidth=1)
-plt.title(f"12개월 롤링 상관관계: {pair_a} vs {pair_b}")
-plt.ylabel("Correlation")
-plt.grid(True, alpha=0.3)
-plt.tight_layout()
-plt.savefig("macro_rolling_corr.png", dpi=150, bbox_inches="tight")
-plt.show()
-```
 
 시차 상관관계는 “A가 먼저 움직이고 B가 뒤따르는가?”를 보는 기초 도구입니다.
 
-```python
-def lag_correlation(df, x, y, max_lag=6):
-    rows = []
-    for lag in range(-max_lag, max_lag + 1):
-        if lag < 0:
-            corr_value = df[x].shift(-lag).corr(df[y])
-        else:
-            corr_value = df[x].corr(df[y].shift(lag))
-        rows.append({"lag_months": lag, "correlation": corr_value})
-    return pd.DataFrame(rows)
-
-lag_df = lag_correlation(analysis_df, "WTI_ret", "US_CPI_yoy", max_lag=6)
-print(lag_df)
-
-plt.figure(figsize=(9, 4))
-sns.barplot(data=lag_df, x="lag_months", y="correlation", color="steelblue")
-plt.axhline(0, color="black", linewidth=1)
-plt.title("시차 상관관계: WTI 월간수익률 vs CPI YoY")
-plt.tight_layout()
-plt.savefig("macro_lag_correlation.png", dpi=150, bbox_inches="tight")
-plt.show()
-```
 
 `lag_months > 0`에서 상관관계가 높으면 `x`가 먼저 움직인 뒤 `y`가 뒤따랐을 가능성을 검토합니다. 단, 통계적 검정과 경제적 해석을 함께 해야 합니다.
 
@@ -1063,20 +622,6 @@ plt.show()
 
 #### 5-10. 7단계: 산점도와 회귀선
 
-```python
-plt.figure(figsize=(7, 5))
-sns.regplot(
-    data=analysis_df,
-    x="US10Y_FRED_diff",
-    y="SP500_ret",
-    scatter_kws={"alpha": 0.65},
-    line_kws={"color": "crimson"},
-)
-plt.title("금리 변화와 S&P500 월간 수익률")
-plt.tight_layout()
-plt.savefig("macro_scatter_rate_sp500.png", dpi=150, bbox_inches="tight")
-plt.show()
-```
 
 위 코드의 x축은 FRED 10년물 금리의 월간 변화폭입니다. yfinance의 `US10Y_ret`를 쓰면 금리 자체의 변화율이 되므로, 금리 분석에서는 보통 `US10Y_FRED_diff`처럼 금리 차분을 쓰는 편이 더 자연스럽습니다.
 
@@ -1116,43 +661,9 @@ sequenceDiagram
 
 **요청 예시**
 
-```python
-import requests
-
-payload = {
-    "indicators": ["WTI", "DollarIndex", "US10Y", "SP500", "US_CPI", "US_UNRATE"],
-    "start": "2020-01-01",
-    "end": "2024-12-31",
-    "frequency": "M",
-    "transforms": {
-        "WTI": "return",
-        "DollarIndex": "return",
-        "US10Y": "diff",
-        "SP500": "return",
-        "US_CPI": "yoy",
-        "US_UNRATE": "diff",
-    },
-}
-
-response = requests.post("http://localhost:8000/api/macro/correlation", json=payload)
-print(response.json())
-```
 
 **응답 예시**
 
-```python
-{
-    "period": {"start": "2020-01-01", "end": "2024-12-31"},
-    "frequency": "M",
-    "columns": ["WTI_ret", "DollarIndex_ret", "US10Y_diff", "SP500_ret", "US_CPI_yoy"],
-    "correlation": [[1.0, -0.25, 0.31, 0.18, 0.42], "..."],
-    "chart": "static/reports/macro_correlation.png",
-    "warnings": [
-        "GDP는 분기 자료라 월별로 forward-fill 처리했습니다.",
-        "상관관계는 인과관계를 의미하지 않습니다."
-    ]
-}
-```
 
 ---
 
@@ -1165,7 +676,6 @@ print(response.json())
 
 ## 1. 분석 조건
 
-> 📺 [🎬 분석 조건](https://www.youtube.com/results?search_query=분석+조건+한국어)
 
 - 기간:
 - 사용 데이터:
@@ -1175,7 +685,6 @@ print(response.json())
 
 ## 2. 주요 결과
 
-> 📺 [🎬 주요 결과](https://www.youtube.com/results?search_query=주요+결과+한국어)
 
 - 가장 강한 양의 상관:
 - 가장 강한 음의 상관:
@@ -1184,7 +693,6 @@ print(response.json())
 
 ## 3. 해석
 
-> 📺 [🎬 해석](https://www.youtube.com/results?search_query=해석+한국어)
 
 - 물가와 유가:
 - 달러와 주식:
@@ -1193,7 +701,6 @@ print(response.json())
 
 ## 4. 한계
 
-> 📺 [🎬 한계](https://www.youtube.com/results?search_query=한계+한국어)
 
 - 상관관계는 인과관계가 아님
 - 월별/분기별 데이터 정렬 방식에 따라 결과가 달라질 수 있음
@@ -1218,7 +725,6 @@ print(response.json())
 
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 1. FRED에서 `CPIAUCSL`, `PPIACO`, `UNRATE`, `GDPC1`, `DGS10`, `T10Y2Y`를 수집하고 각 지표의 주기와 단위를 표로 정리하세요.
 2. yfinance에서 `CL=F`, `DX-Y.NYB`, `GC=F`, `^GSPC`, `^KS11`, `KRW=X`를 수집해 월별 수익률 데이터로 변환하세요.

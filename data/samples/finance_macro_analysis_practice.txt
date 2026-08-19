@@ -1,7 +1,6 @@
 # 거시경제 상황 분석 실습
 
 
-> 📺 **YouTube 강의**: [🎬 거시경제 상황 분석 실습](https://www.youtube.com/results?search_query=거시경제+분석+실습+경제지표+파이썬+한국어)
 >
 > 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
 
@@ -13,38 +12,6 @@
 - 경기 선행/동행/후행 지표
 - 통화량(M1, M2)과 유동성 분석
 - 실습: 거시경제 대시보드 구성 및 현황 분석
-
----
-
-## 🗓 세부 일정 (1일 8시간)
-
-
-
-> **강의 5시간** (5개 단락 × 50분 + 도입·마무리 50분) + **실습 3시간** = 총 8시간
-
-| 시간 | 구분 | 내용 | 형태 |
-|------|------|------|------|
-| 09:00 – 09:10 | 도입 | 오늘 학습 목표 확인 | 강의 |
-| 09:10 – 09:30 | **1단락** 설명 20분 | 경기 사이클(Expansion, Peak, Contraction, Trough) 이해 | 강의 |
-| 09:30 – 10:00 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:00 – 10:20 | **2단락** 설명 20분 | 경기 선행/동행/후행 지표 | 강의 |
-| 10:20 – 10:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:50 – 11:00 | ☕ 휴식 | — | — |
-| 11:00 – 11:20 | **3단락** 설명 20분 | 통화량(M1, M2)과 유동성 분석 | 강의 |
-| 11:20 – 11:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 11:50 – 12:10 | **4단락** 설명 20분 | 거시경제 대시보드 설계 및 지표 선정 | 강의 |
-| 12:10 – 12:40 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 12:40 – 13:00 | **5단락** 설명 20분 | 경기국면 점수화 및 위험 경보 시스템 | 강의 |
-| 13:00 – 13:30 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 13:30 – 14:00 | 강의 마무리 | Q&A · 핵심 복습 | 강의 |
-| 14:00 – 15:00 | 💻 **실습 1부** 60분 | 대시보드 1~3단계 구현 (시장 데이터·변화율·FRED 지표 수집) | 실습 |
-| 15:00 – 15:10 | ☕ 휴식 | — | — |
-| 15:10 – 16:00 | 💻 **실습 2부** 50분 | 경기국면 점수화·위험 경보·대시보드 레이아웃 구현 | 실습 |
-| 16:00 – 16:10 | ☕ 휴식 | — | — |
-| 16:10 – 17:00 | 💻 **실습 발표 & 리뷰** 50분 | 코드 리뷰 · 발표 · 피드백 | 실습 |
-
-> 강의 5시간: 도입 10분 + 단락 5개×50분 + 마무리 30분 = **300분**  
-> 실습 3시간: 1부 60분 + 휴식 10분 + 2부 50분 + 휴식 10분 + 발표·리뷰 50분 = **180분**
 
 ---
 
@@ -130,7 +97,6 @@ stateDiagram-v2
 | **Contraction(수축)** | GDP↓, 실업↑, 기업이익↓ | 채권, 금, 방어주 |
 | **Trough(저점)** | 침체 바닥, 정부 부양 시작 | 경기민감주 선매수 기회 |
 
-> 📺 [🎬 경기 사이클 투자 전략](https://www.youtube.com/results?search_query=경기사이클+투자전략+확장+수축+한국어)
 
 **경기 사이클별 섹터 로테이션**
 
@@ -163,41 +129,6 @@ flowchart LR
 | 수축 | 헬스케어, 유틸리티, 필수소비재 | 에너지, 소재, 금융 |
 | 저점 | IT, 경기소비재 | 필수소비재 |
 
-> 📺 [🎬 섹터 로테이션 경기 사이클](https://www.youtube.com/results?search_query=섹터로테이션+경기사이클+주식투자+한국어)
-
-#### 🔗 Python 소스 연계
-
-웹앱의 **거시경제현황 2 (시뮬레이션)** 탭은 GBM 기반 4단계 경기 사이클을 직접 시뮬레이션합니다. 각 국면은 `mu` 배수로 구현됩니다.
-
-```mermaid
-flowchart TD
-    A["/api/macro/simulation 호출"] --> B["4단계 경기 사이클 GBM 생성"]
-    B --> C1["상승기\nmu × 1.0"]
-    B --> C2["과열기\nmu × 0.5"]
-    B --> C3["침체기\nmu × -0.5"]
-    B --> C4["회복기\nmu × 1.2"]
-    C1 & C2 & C3 & C4 --> D["6개 지표 시계열 반환\n기준금리 · CPI · WTI\nUSD/KRW · KOSPI · S&P500"]
-
-    style A fill:#2980b9,color:#fff
-    style D fill:#27ae60,color:#fff
-```
-
-```python
-# 웹앱 시뮬레이션 API 호출 예시
-import requests
-
-# 1년(252 영업일) 시뮬레이션
-response = requests.post("http://localhost:8000/api/macro/simulation", json={
-    "n_days": 252,
-    "seed": 42       # 동일 seed → 재현 가능
-})
-data = response.json()
-# data["image"] : 6개 지표 멀티 패널 차트 (base64 PNG)
-```
-
-### 위의 BE 소스를 찾고, BE 모듈 실행 및 검증 하세요.
-
----
 
 ### 2. 경기 선행/동행/후행 지표
 
@@ -243,7 +174,6 @@ flowchart LR
     style E fill:#922b21,color:#fff
 ```
 
-> 📺 [🎬 경기선행지수 PMI 금리스프레드 설명](https://www.youtube.com/results?search_query=경기선행지수+PMI+금리스프레드+경기예측+한국어)
 
 **동행지표 (Coincident Indicators)**
 
@@ -266,7 +196,6 @@ flowchart LR
 | 대출 잔액 | 경기 이후 금융 반응 |
 | CPI | 물가는 경기 후행 |
 
-> 📺 [🎬 경기 선행 동행 후행 지표 차이](https://www.youtube.com/results?search_query=경기+선행지표+동행지표+후행지표+투자+한국어)
 
 
 ---
@@ -280,26 +209,6 @@ flowchart LR
 ### 아래 이미지와 같이 본인의 이용 현황 중 API 이용 건을 10회 이상으로 하여, 화면 캡쳐 및 공유 하세요.
 
 ![alt text](image-1.png)
-
----
-
-#### 🔗 Python 소스 연계
-
-장단기 금리 스프레드(경기침체 선행 신호)를 실시간으로 조회하는 방법입니다.
-
-```mermaid
-sequenceDiagram
-    participant F as Frontend<br/>(macroRealtime.js)
-    participant A as /api/macro/realtime
-    participant Y as yfinance
-
-    F->>A: POST {tickers: ["^TNX", "^IRX"], period: "2y"}
-    Note over A: ^TNX = 10년채, ^IRX = 3개월채<br/>스프레드 = 10년 - 3개월
-    A->>Y: yf.download(["^TNX","^IRX"], period="2y")
-    Y-->>A: 금리 시계열
-    A-->>F: {summary: {"^TNX": {current:4.35}, "^IRX": {current:5.20}}}
-    Note over F: 스프레드 = 4.35 - 5.20 = -0.85%<br/>음수 → 경기침체 경보
-```
 
 ---
 
@@ -331,7 +240,6 @@ flowchart TD
 | **M1 (협의통화)** | 현금 + 요구불예금 | 즉시 사용 가능한 돈 |
 | **M2 (광의통화)** | M1 + 저축예금 + 단기 금융상품 | 일반적인 통화량 기준 |
 
-> 📺 [🎬 통화량 M1 M2 유동성 설명](https://www.youtube.com/results?search_query=통화량+M1+M2+유동성+중앙은행+한국어)
 
 **양적완화(QE)와 양적긴축(QT) 파급 경로**
 
@@ -355,7 +263,6 @@ flowchart TD
     style QT1 fill:#c0392b,color:#fff
 ```
 
-> 📺 [🎬 양적완화 양적긴축 차이 주식](https://www.youtube.com/results?search_query=양적완화+양적긴축+QE+QT+주식시장+한국어)
 
 **M2 증가율과 자산 시장 관계**
 
@@ -369,23 +276,6 @@ flowchart LR
     style C fill:#c0392b,color:#fff
     style D fill:#922b21,color:#fff
 ```
-
-#### 🔗 Python 소스 연계
-
-통화량 M2 데이터는 yfinance가 아닌 FRED(연방준비은행 경제 데이터)에서 제공됩니다. 웹앱 시뮬레이션은 M2 효과를 GBM의 드리프트 파라미터(mu)로 모델링합니다.
-
-```mermaid
-sequenceDiagram
-    participant F as Frontend<br/>(macroSimulation.js)
-    participant A as /api/macro/simulation
-
-    F->>A: POST {n_days: 504, seed: 7}
-    Note over A: 504일 = 약 2년치 영업일<br/>4단계 경기 사이클 × 2회 반복 가능
-    A-->>F: {<br/>  image: base64_png,<br/>  지표: [기준금리, CPI, WTI, USD/KRW, KOSPI, S&P500]<br/>}
-    Note over F: QE 국면(회복기 mu×1.2) vs<br/>QT 국면(침체기 mu×-0.5) 비교 가능
-```
-
----
 
 ### 4. 실습: 거시경제 대시보드 구성 및 현황 분석
 
@@ -458,52 +348,6 @@ pip install requests seaborn plotly statsmodels reportlab
 
 API Key 없이 바로 실행할 수 있는 기본 버전입니다.
 
-```python
-import yfinance as yf
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-
-MARKET_INDICATORS = {
-    "SP500": "^GSPC",
-    "KOSPI": "^KS11",
-    "US10Y": "^TNX",
-    "WTI": "CL=F",
-    "Gold": "GC=F",
-    "DollarIndex": "DX-Y.NYB",
-    "USDKRW": "KRW=X",
-    "VIX": "^VIX",
-}
-
-def fetch_yfinance_panel(tickers, start="2022-01-01", end="2025-12-31"):
-    data = {}
-    for name, ticker in tickers.items():
-        raw = yf.download(ticker, start=start, end=end, auto_adjust=True, progress=False)
-        if raw.empty:
-            print(f"skip: {name} ({ticker})")
-            continue
-        data[name] = raw["Close"]
-    return pd.DataFrame(data).sort_index()
-
-market_df = fetch_yfinance_panel(MARKET_INDICATORS)
-market_df.to_csv("macro_dashboard_raw.csv", encoding="utf-8-sig")
-
-fig = plt.figure(figsize=(16, 12))
-fig.suptitle("Macro Dashboard: Market Indicators", fontsize=16, fontweight="bold")
-gs = gridspec.GridSpec(4, 2, figure=fig, hspace=0.45, wspace=0.25)
-
-colors = ["steelblue", "navy", "crimson", "darkorange", "goldenrod", "seagreen", "purple", "gray"]
-for idx, col in enumerate(market_df.columns):
-    ax = fig.add_subplot(gs[idx // 2, idx % 2])
-    series = market_df[col].dropna()
-    ax.plot(series.index, series.values, color=colors[idx % len(colors)], linewidth=1.2)
-    ax.set_title(col)
-    ax.grid(True, alpha=0.3)
-    ax.tick_params(axis="x", rotation=25, labelsize=8)
-
-plt.savefig("macro_dashboard.png", dpi=150, bbox_inches="tight")
-plt.show()
-```
 
 ---
 
@@ -511,32 +355,6 @@ plt.show()
 
 대시보드는 단순 현재값보다 “최근 변화가 평소보다 큰가?”를 보여줘야 합니다.
 
-```python
-def make_market_features(df):
-    monthly = df.resample("M").last()
-    returns_1m = monthly.pct_change(1)
-    returns_3m = monthly.pct_change(3)
-    returns_12m = monthly.pct_change(12)
-    vol_3m = df.pct_change().rolling(63).std() * (252 ** 0.5)
-    zscore = (monthly - monthly.rolling(36).mean()) / monthly.rolling(36).std()
-
-    latest_rows = []
-    for col in monthly.columns:
-        latest_rows.append({
-            "indicator": col,
-            "latest": monthly[col].dropna().iloc[-1],
-            "return_1m": returns_1m[col].dropna().iloc[-1],
-            "return_3m": returns_3m[col].dropna().iloc[-1],
-            "return_12m": returns_12m[col].dropna().iloc[-1],
-            "vol_3m": vol_3m[col].dropna().iloc[-1] if col in vol_3m else None,
-            "zscore_36m": zscore[col].dropna().iloc[-1],
-        })
-    return pd.DataFrame(latest_rows), monthly, returns_1m, zscore
-
-signal_table, monthly_market, monthly_returns, market_zscore = make_market_features(market_df)
-signal_table.to_csv("macro_signal_table.csv", index=False, encoding="utf-8-sig")
-print(signal_table)
-```
 
 **z-score 해석**
 
@@ -554,49 +372,6 @@ print(signal_table)
 
 FRED 지표를 붙이면 시장 가격뿐 아니라 경기의 실제 체력까지 볼 수 있습니다.
 
-```python
-import os
-import requests
-
-FRED_API_KEY = os.getenv("FRED_API_KEY")
-
-FRED_SERIES = {
-    "YieldSpread_10Y2Y": "T10Y2Y",
-    "YieldSpread_10Y3M": "T10Y3M",
-    "M2": "M2SL",
-    "CPI": "CPIAUCSL",
-    "Unemployment": "UNRATE",
-    "IndustrialProduction": "INDPRO",
-    "Payrolls": "PAYEMS",
-    "ConsumerSentiment": "UMCSENT",
-    "VIX_FRED": "VIXCLS",
-}
-
-def fetch_fred(series_id, start="2022-01-01", end="2025-12-31"):
-    url = "https://api.stlouisfed.org/fred/series/observations"
-    params = {
-        "series_id": series_id,
-        "api_key": FRED_API_KEY,
-        "file_type": "json",
-        "observation_start": start,
-        "observation_end": end,
-    }
-    data = requests.get(url, params=params, timeout=20).json()
-    rows = data.get("observations", [])
-    frame = pd.DataFrame(rows)
-    if frame.empty:
-        return pd.Series(dtype="float64", name=series_id)
-    values = pd.to_numeric(frame["value"].replace(".", pd.NA), errors="coerce")
-    return pd.Series(values.values, index=pd.to_datetime(frame["date"]), name=series_id).dropna()
-
-fred_df = pd.DataFrame({
-    name: fetch_fred(series_id)
-    for name, series_id in FRED_SERIES.items()
-})
-
-fred_monthly = fred_df.resample("M").last().ffill()
-fred_monthly.to_csv("macro_fred_dashboard.csv", encoding="utf-8-sig")
-```
 
 ---
 
@@ -613,37 +388,6 @@ fred_monthly.to_csv("macro_fred_dashboard.csv", encoding="utf-8-sig")
 | 고용 | 실업률 하락 | 실업률 상승 |
 | 유동성 | M2 YoY 상승 | M2 YoY 둔화/감소 |
 
-```python
-def classify_cycle(market_monthly, fred_monthly):
-    features = pd.DataFrame(index=fred_monthly.index)
-    features["sp500_6m"] = market_monthly["SP500"].pct_change(6)
-    features["vix"] = market_monthly["VIX"].resample("M").last()
-    features["spread_10y2y"] = fred_monthly["YieldSpread_10Y2Y"]
-    features["cpi_yoy"] = fred_monthly["CPI"].pct_change(12)
-    features["cpi_yoy_diff"] = features["cpi_yoy"].diff()
-    features["unrate_diff_3m"] = fred_monthly["Unemployment"].diff(3)
-    features["m2_yoy"] = fred_monthly["M2"].pct_change(12)
-
-    score = pd.Series(0, index=features.index, dtype="float64")
-    score += (features["sp500_6m"] > 0).astype(int)
-    score += (features["vix"] < 20).astype(int)
-    score += (features["spread_10y2y"] > 0).astype(int)
-    score += (features["cpi_yoy_diff"] < 0).astype(int)
-    score += (features["unrate_diff_3m"] < 0).astype(int)
-    score += (features["m2_yoy"] > 0).astype(int)
-
-    features["macro_score"] = score
-    features["cycle"] = pd.cut(
-        score,
-        bins=[-1, 1, 3, 4, 6],
-        labels=["Contraction", "Trough/Recovery", "Expansion", "Peak/Overheat"],
-    )
-    return features
-
-cycle_df = classify_cycle(monthly_market, fred_monthly)
-cycle_df.to_csv("macro_dashboard_features.csv", encoding="utf-8-sig")
-print(cycle_df.tail(12)[["macro_score", "cycle"]])
-```
 
 **점수 해석**
 
@@ -660,25 +404,6 @@ print(cycle_df.tail(12)[["macro_score", "cycle"]])
 
 대시보드에는 사용자가 바로 볼 수 있는 경보가 필요합니다.
 
-```python
-def build_alerts(latest):
-    alerts = []
-    if latest.get("spread_10y2y", 0) < 0:
-        alerts.append({"level": "warning", "message": "장단기 금리차가 역전되어 경기 둔화 위험이 높습니다."})
-    if latest.get("vix", 0) > 25:
-        alerts.append({"level": "danger", "message": "VIX가 25를 넘어 시장 스트레스가 높습니다."})
-    if latest.get("cpi_yoy_diff", 0) > 0:
-        alerts.append({"level": "warning", "message": "CPI YoY 상승세가 재가속되고 있습니다."})
-    if latest.get("m2_yoy", 0) < 0:
-        alerts.append({"level": "warning", "message": "M2 증가율이 음수로 유동성 축소 압력이 있습니다."})
-    if not alerts:
-        alerts.append({"level": "normal", "message": "주요 위험 경보가 제한적입니다."})
-    return alerts
-
-latest_features = cycle_df.dropna().iloc[-1].to_dict()
-alerts = build_alerts(latest_features)
-print(alerts)
-```
 
 ---
 
@@ -740,46 +465,9 @@ print(alerts)
 
 **요청 예시**
 
-```python
-import requests
-
-payload = {
-    "country": "US",
-    "start": "2020-01-01",
-    "end": "2024-12-31",
-    "frequency": "M",
-    "market_indicators": ["SP500", "US10Y", "WTI", "Gold", "DollarIndex", "VIX"],
-    "macro_indicators": ["T10Y2Y", "M2SL", "CPIAUCSL", "UNRATE", "INDPRO"],
-}
-
-result = requests.post("http://localhost:8000/api/macro/dashboard", json=payload).json()
-print(result["cycle"])
-print(result["alerts"])
-```
 
 **응답 예시**
 
-```python
-{
-    "as_of": "2024-12-31",
-    "cycle": {"score": 3, "label": "Trough/Recovery"},
-    "kpis": {
-        "sp500_6m": 0.08,
-        "spread_10y2y": -0.25,
-        "cpi_yoy": 0.032,
-        "unemployment": 3.9,
-        "m2_yoy": 0.015,
-        "vix": 16.5
-    },
-    "alerts": [
-        {"level": "warning", "message": "장단기 금리차가 역전되어 경기 둔화 위험이 높습니다."}
-    ],
-    "charts": {
-        "dashboard_png": "static/reports/macro_dashboard.png",
-        "cycle_score_png": "static/reports/macro_cycle_score.png"
-    }
-}
-```
 
 **권장 파일 구조**
 
@@ -814,19 +502,6 @@ app
 | `oil_shock` | `-0.15` | 유가 충격 |
 | `risk_aversion` | `0.4` | VIX/주가 변동성 확대 |
 
-```python
-import requests
-
-scenarios = {
-    "base": {"n_days": 504, "seed": 42},
-    "inflation_reacceleration": {"n_days": 504, "seed": 42, "inflation_shock": 0.3, "rate_shock": 0.2},
-    "growth_slowdown": {"n_days": 504, "seed": 42, "oil_shock": -0.15, "risk_aversion": 0.4},
-}
-
-for name, payload in scenarios.items():
-    result = requests.post("http://localhost:8000/api/macro/simulation", json=payload).json()
-    print(name, result.keys())
-```
 
 ---
 
@@ -839,7 +514,6 @@ for name, payload in scenarios.items():
 
 ## 1. 분석 조건
 
-> 📺 [🎬 분석 조건](https://www.youtube.com/results?search_query=분석+조건+한국어)
 
 - 기준일:
 - 기간:
@@ -849,7 +523,6 @@ for name, payload in scenarios.items():
 
 ## 2. 현재 경기국면
 
-> 📺 [🎬 현재 경기국면](https://www.youtube.com/results?search_query=현재+경기국면+한국어)
 
 - Macro Score:
 - 추정 국면:
@@ -857,7 +530,6 @@ for name, payload in scenarios.items():
 
 ## 3. 선행/동행/후행 지표 점검
 
-> 📺 [🎬 선행 동행 후행 지표](https://www.youtube.com/results?search_query=선행+동행+후행+지표+점검+한국어)
 
 - 선행지표:
 - 동행지표:
@@ -865,7 +537,6 @@ for name, payload in scenarios.items():
 
 ## 4. 위험 경보
 
-> 📺 [🎬 위험 경보](https://www.youtube.com/results?search_query=위험+경보+한국어)
 
 - 금리:
 - 물가:
@@ -875,7 +546,6 @@ for name, payload in scenarios.items():
 
 ## 5. 투자 관점 요약
 
-> 📺 [🎬 투자 관점 요약](https://www.youtube.com/results?search_query=투자+관점+요약+한국어)
 
 - 주식:
 - 채권:
@@ -885,7 +555,6 @@ for name, payload in scenarios.items():
 
 ## 6. 한계
 
-> 📺 [🎬 한계](https://www.youtube.com/results?search_query=한계+한국어)
 
 - 점수화 규칙은 학습용이며 검증이 필요함
 - 시장 데이터와 공식 통계의 발표 시차가 다름
@@ -910,7 +579,6 @@ for name, payload in scenarios.items():
 
 ## 웹앱 실습 연계
 
-> 📺 [🎬 웹앱 실습 연계](https://www.youtube.com/results?search_query=웹앱+실습+연계+한국어)
 
 이 챕터의 개념은 Python Quant Lab 웹앱의 두 거시경제 탭으로 직접 체험할 수 있습니다.
 
@@ -972,7 +640,6 @@ flowchart TD
 
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 1. yfinance 기본 대시보드에서 `S&P500`, `KOSPI`, `US10Y`, `WTI`, `Gold`, `DollarIndex`, `USDKRW`, `VIX`를 수집하고 `macro_dashboard.png`를 생성하세요.
 2. FRED에서 `T10Y2Y`, `M2SL`, `CPIAUCSL`, `UNRATE`, `INDPRO`, `PAYEMS`를 수집해 `macro_fred_dashboard.csv`를 만드세요.
@@ -1096,7 +763,6 @@ flowchart TD
 
 > 📖 **Wikipedia**: [계절 효과](https://ko.wikipedia.org/wiki/계절_효과) · [턴 오브 더 먼스 효과](https://en.wikipedia.org/wiki/Turn_of_the_month_effect)
 >
-> 📺 [🎬 월초 효과 캘린더 이펙트 증시](https://www.youtube.com/results?search_query=월초+효과+캘린더+이펙트+증시+한국어)
 
 매달 초만 되면 증시가 유독 출렁이는 것처럼 느껴지는 경험은 착각이 아닙니다. 금융 학계와 투자 업계에서는 이를 **'계절 효과(Calendar Effect)'** 또는 **'월말·월초 효과'**라는 시장 이상 현상(Anomaly)으로 분석합니다. 위 [요일별 증시 패턴](#-최근-5년간-요일별-증시-패턴-분석)이 "요일" 단위의 계절 효과라면, 아래 4가지는 "월(月)" 단위의 계절 효과입니다.
 

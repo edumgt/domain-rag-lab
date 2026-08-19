@@ -1,10 +1,8 @@
 # 상대가치 평가 (밸류에이션 멀티플)
 
-> **모듈 7: 투자분석 기초 방법론** | 8/10일차 | 💹 | 학습시간: 8시간
 
 ---
 
-> 📺 **YouTube 강의**: [🎬 밸류에이션 멀티플 PER PBR](https://www.youtube.com/results?search_query=밸류에이션+멀티플+PER+PBR+주식+한국어)
 >
 > 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
 
@@ -16,38 +14,6 @@
 - PBR, EV/EBITDA, PSR 멀티플
 - 업종별 적정 멀티플 기준
 - 실습: 국내 종목 멀티플 스크리닝 및 비교
-
----
-
-## 🗓 세부 일정 (1일 8시간)
-
-
-
-> **강의 5시간** (5개 단락 × 50분 + 도입·마무리 50분) + **실습 3시간** = 총 8시간
-
-| 시간 | 구분 | 내용 | 형태 |
-|------|------|------|------|
-| 09:00 – 09:10 | 도입 | 오늘 학습 목표 확인 | 강의 |
-| 09:10 – 09:30 | **1단락** 설명 20분 | 티커(Ticker) 개념 & PER(주가수익비율) 개요 | 강의 |
-| 09:30 – 10:00 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:00 – 10:20 | **2단락** 설명 20분 | PBR, EV/EBITDA, PSR 멀티플 | 강의 |
-| 10:20 – 10:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:50 – 11:00 | ☕ 휴식 | — | — |
-| 11:00 – 11:20 | **3단락** 설명 20분 | 업종별 적정 멀티플 기준 | 강의 |
-| 11:20 – 11:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 11:50 – 12:10 | **4단락** 설명 20분 | 멀티플 스크리닝 방법론 및 데이터 원천 | 강의 |
-| 12:10 – 12:40 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 12:40 – 13:00 | **5단락** 설명 20분 | 시각화 및 데이터 품질 유의사항 | 강의 |
-| 13:00 – 13:30 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 13:30 – 14:00 | 강의 마무리 | Q&A · 핵심 복습 | 강의 |
-| 14:00 – 15:00 | 💻 **실습 1부** 60분 | yfinance로 국내 종목 멀티플 수집 및 표준 데이터셋 생성 | 실습 |
-| 15:00 – 15:10 | ☕ 휴식 | — | — |
-| 15:10 – 16:00 | 💻 **실습 2부** 50분 | 멀티플 스크리닝 필터 · 비교 차트 시각화 구현 | 실습 |
-| 16:00 – 16:10 | ☕ 휴식 | — | — |
-| 16:10 – 17:00 | 💻 **실습 발표 & 리뷰** 50분 | 코드 리뷰 · 발표 · 피드백 | 실습 |
-
-> 강의 5시간: 도입 10분 + 단락 5개×50분 + 마무리 30분 = **300분**  
-> 실습 3시간: 1부 60분 + 휴식 10분 + 2부 50분 + 휴식 10분 + 발표·리뷰 50분 = **180분**
 
 ---
 
@@ -98,7 +64,6 @@
 
 ## 1. 유래
 
-> 📺 [🎬 유래](https://www.youtube.com/results?search_query=유래+한국어)
 
 과거에는 주식 시세를 종이 띠(**Ticker Tape**)에 인쇄하여 전달했습니다. 이때 회사 이름을 모두 기입하기에는 지면이 부족하고 시간이 오래 걸렸기 때문에, 짧은 알파벳 기호로 표시하던 습관에서 유래되었습니다.
 
@@ -106,7 +71,6 @@
 
 ## 2. 국가별 티커의 형태
 
-> 📺 [🎬 국가별 티커의 형태](https://www.youtube.com/results?search_query=국가별+티커의+형태+한국어)
 
 국가마다 티커를 구성하는 방식에는 차이가 있습니다.
 
@@ -127,7 +91,6 @@
 
 ## 3. 티커 사용의 장점
 
-> 📺 [🎬 티커 사용의 장점](https://www.youtube.com/results?search_query=티커+사용의+장점+한국어)
 
 1.  **정확성**: 이름이 유사한 기업 간의 혼동을 방지합니다. (예: Zoom Video Communications의 티커는 `ZM`)
 2.  **신속성**: 긴 회사명 대신 짧은 코드를 입력하여 빠르게 검색 및 매매가 가능합니다.
@@ -137,7 +100,6 @@
 
 ## 💡 참고사항
 
-> 📺 [🎬 참고사항](https://www.youtube.com/results?search_query=참고사항+한국어)
 
 해외 주식 시장에서는 티커 대신 **'심볼(Symbol)'**이라는 용어를 혼용해서 사용하기도 합니다. HTS나 MTS에서 종목을 찾을 때 이 티커를 활용하면 가장 정확한 검색 결과를 얻을 수 있습니다.
 
@@ -145,7 +107,6 @@
 
 > 📖 **Wikipedia**: [주가수익비율](https://ko.wikipedia.org/wiki/주가수익비율)
 
-> 📺 [🎬 PER 주가수익비율 뜻 활용법](https://www.youtube.com/results?search_query=PER+주가수익비율+뜻+활용법+한국어)
 
 **PER 계산 공식**
 
@@ -154,38 +115,7 @@ PER = 주가 / 주당순이익(EPS)
     = 시가총액 / 당기순이익
 ```
 
-**Python 코드 예시**
 
-```python
-# PER / PBR 계산 예시
-def calc_per(price: float, eps: float) -> float:
-    """주가수익비율 계산. eps <= 0 이면 None 반환 (적자 기업)."""
-    if eps <= 0:
-        return None
-    return round(price / eps, 2)
-
-def calc_pbr(price: float, bps: float) -> float:
-    """주가순자산비율 계산."""
-    if bps <= 0:
-        return None
-    return round(price / bps, 2)
-
-def calc_psr(market_cap: float, revenue: float) -> float:
-    """주가매출비율 계산."""
-    if revenue <= 0:
-        return None
-    return round(market_cap / revenue, 2)
-
-# 삼성전자 예시 (가상 수치)
-samsung = {"price": 75_000, "eps": 5_000, "bps": 50_000, "revenue": 300_000_000}
-samsung_market_cap = samsung["price"] * 5_969_782_550  # 발행주식수
-
-per = calc_per(samsung["price"], samsung["eps"])   # → 15.0
-pbr = calc_pbr(samsung["price"], samsung["bps"])   # → 1.5
-psr = calc_psr(samsung_market_cap, samsung["revenue"])
-
-print(f"PER: {per}배  |  PBR: {pbr}배  |  PSR: {psr:.1f}배")
-```
 
 - PER 20배 = 지금 이익 수준이라면 20년이 지나야 투자금을 회수한다는 뜻
 - 높은 PER: 시장이 미래 고성장을 기대 / 낮은 PER: 저평가이거나 성장 정체·위험 반영
@@ -279,7 +209,6 @@ quadrantChart
 
 > 📖 **Wikipedia**: [주가순자산비율](https://ko.wikipedia.org/wiki/주가순자산비율) · [기업가치](https://ko.wikipedia.org/wiki/기업가치) · [EBITDA](https://ko.wikipedia.org/wiki/EBITDA)
 
-> 📺 [🎬 PBR EV EBITDA PSR 멀티플 비교](https://www.youtube.com/results?search_query=PBR+EV+EBITDA+PSR+멀티플+비교+한국어)
 
 | 멀티플 | 공식 | 언제 유용한가 |
 |--------|------|---------------|
@@ -292,27 +221,6 @@ quadrantChart
 
 **EV/EBITDA를 조금 더 풀어서 보기**
 
-```python
-def calc_ev_ebitda(
-    market_cap: float,
-    total_debt: float,
-    cash: float,
-    ebitda: float
-) -> float:
-    """
-    EV = 시가총액 + 순차입금(총차입금 - 현금성자산)
-    EV/EBITDA = 사업 전체 가치 ÷ 감가상각 전 영업현금창출력
-    """
-    ev = market_cap + (total_debt - cash)
-    if ebitda <= 0:
-        return None
-    return round(ev / ebitda, 2)
-
-# 예시: A사(무차입) vs B사(고차입) — 시가총액 동일
-ev_a = calc_ev_ebitda(market_cap=1_000_000, total_debt=50_000,  cash=200_000, ebitda=80_000)
-ev_b = calc_ev_ebitda(market_cap=1_000_000, total_debt=500_000, cash=50_000,  ebitda=80_000)
-# ev_a → 10.6배,  ev_b → 18.1배  ← 같은 시총이어도 EV/EBITDA 크게 다름
-```
 
 - **시가총액만 보면 놓치는 것**: 부채가 많은 회사와 무차입 회사는 같은 시가총액이어도 실제 인수 부담이 다릅니다.
 - **EBITDA가 유용한 이유**: 감가상각, 이자, 세금 영향을 덜 받아 업종 내 비교가 쉬워집니다.
@@ -322,7 +230,6 @@ ev_b = calc_ev_ebitda(market_cap=1_000_000, total_debt=500_000, cash=50_000,  eb
 
 > 📖 **Wikipedia**: [기업 가치 평가](https://ko.wikipedia.org/wiki/기업_가치_평가)
 
-> 📺 [🎬 업종별 적정 PER PBR 기준](https://www.youtube.com/results?search_query=업종별+적정+PER+PBR+기준+한국어+주식)
 
 | 업종 | 주요 멀티플 | 대략적 범위 | 이유 |
 |------|-------------|-------------|------|
@@ -422,81 +329,9 @@ pip install yfinance pandas matplotlib seaborn
 
 **국내 업종 대표 종목 티커 정의**
 
-```python
-# 업종별 대표 종목 (실습용 가상 구성)
-SECTOR_PEERS = {
-    "반도체": {
-        "삼성전자":  "005930.KS",
-        "SK하이닉스": "000660.KS",
-        "DB하이텍":  "000990.KS",
-    },
-    "인터넷·플랫폼": {
-        "NAVER":   "035420.KS",
-        "카카오":   "035720.KS",
-        "카카오페이": "377300.KS",
-    },
-    "은행": {
-        "KB금융":  "105560.KS",
-        "신한지주":  "055550.KS",
-        "하나금융지주": "086790.KS",
-    },
-    "바이오": {
-        "셀트리온":  "068270.KS",
-        "삼성바이오로직스": "207940.KS",
-        "한미약품":  "128940.KS",
-    },
-}
-```
 
 **멀티플 수집 함수**
 
-```python
-import math
-import yfinance as yf
-import pandas as pd
-
-def safe_float(value, multiplier=1.0):
-    """None·NaN 입력은 None을 반환하고, 유효한 숫자는 multiplier를 곱한 뒤 반올림하여 반환합니다."""
-    try:
-        if value is None or (isinstance(value, float) and math.isnan(value)):
-            return None
-        return round(float(value) * multiplier, 2)
-    except Exception:
-        return None
-
-def fetch_multiples(sector_peers: dict) -> pd.DataFrame:
-    """
-    섹터별 종목 딕셔너리를 받아 PER·PBR·PSR·EV/EBITDA·ROE·영업이익률을 수집합니다.
-    yfinance.info 필드는 결측이 있을 수 있으므로 safe_float 처리를 합니다.
-    """
-    rows = []
-    for sector, companies in sector_peers.items():
-        for name, ticker in companies.items():
-            try:
-                info = yf.Ticker(ticker).info
-                rows.append({
-                    "섹터":          sector,
-                    "기업":          name,
-                    "티커":          ticker,
-                    "시가총액(억)":   safe_float(info.get("marketCap"), 1e-8),
-                    "PER":           safe_float(info.get("trailingPE")),
-                    "Forward PER":   safe_float(info.get("forwardPE")),
-                    "PBR":           safe_float(info.get("priceToBook")),
-                    "PSR":           safe_float(info.get("priceToSalesTrailing12Months")),
-                    "EV/EBITDA":     safe_float(info.get("enterpriseToEbitda")),
-                    "ROE(%)":        safe_float(info.get("returnOnEquity"), 100),
-                    "영업이익률(%)":  safe_float(info.get("operatingMargins"), 100),
-                    "매출성장률(%)":  safe_float(info.get("revenueGrowth"), 100),
-                    "부채비율":       safe_float(info.get("debtToEquity")),
-                })
-            except Exception as exc:
-                print(f"[skip] {name} ({ticker}): {exc}")
-    return pd.DataFrame(rows)
-
-df_all = fetch_multiples(SECTOR_PEERS)
-df_all.to_csv("multiples_raw.csv", index=False, encoding="utf-8-sig")
-print(df_all.to_string(index=False))
-```
 
 ---
 
@@ -528,62 +363,6 @@ print(df_all.to_string(index=False))
 
 조건 기반 필터로 후보 종목을 좁힙니다. 먼저 2~3개 핵심 조건으로 시작한 뒤, 추가 조건을 붙이는 방식이 실무적입니다.
 
-```python
-def screen_multiples(
-    df: pd.DataFrame,
-    sector: str | None = None,
-    per_max: float | None = 20.0,
-    pbr_max: float | None = 2.0,
-    roe_min: float | None = 8.0,
-    op_margin_min: float | None = 5.0,
-    ev_ebitda_max: float | None = 15.0,
-) -> pd.DataFrame:
-    """
-    멀티플 조건 기반 스크리닝 함수.
-    조건을 None으로 전달하면 해당 필터는 건너뜁니다.
-    """
-    result = df.copy()
-
-    if sector:
-        result = result[result["섹터"] == sector]
-    if per_max is not None:
-        result = result[result["PER"].notna() & (result["PER"] <= per_max)]
-    if pbr_max is not None:
-        result = result[result["PBR"].notna() & (result["PBR"] <= pbr_max)]
-    if roe_min is not None:
-        result = result[result["ROE(%)"].notna() & (result["ROE(%)"] >= roe_min)]
-    if op_margin_min is not None:
-        result = result[result["영업이익률(%)"].notna() & (result["영업이익률(%)"] >= op_margin_min)]
-    if ev_ebitda_max is not None:
-        result = result[result["EV/EBITDA"].notna() & (result["EV/EBITDA"] <= ev_ebitda_max)]
-
-    return result.sort_values("PER").reset_index(drop=True)
-
-# 예시 1: 전체 섹터에서 저PER·고ROE 후보
-candidates_value = screen_multiples(
-    df_all,
-    per_max=15.0,
-    pbr_max=1.5,
-    roe_min=10.0,
-    op_margin_min=8.0,
-    ev_ebitda_max=None,  # EV/EBITDA 필터 생략
-)
-print("=== 저PER·고ROE 후보 ===")
-print(candidates_value[["기업", "섹터", "PER", "PBR", "ROE(%)", "영업이익률(%)"]].to_string(index=False))
-
-# 예시 2: 은행 섹터 — PBR 중심 스크리닝 (적자 없는 경우 PER 의미 있음)
-candidates_bank = screen_multiples(
-    df_all,
-    sector="은행",
-    per_max=None,        # 은행은 PBR이 더 유의미
-    pbr_max=0.8,
-    roe_min=7.0,
-    op_margin_min=None,
-    ev_ebitda_max=None,
-)
-print("\n=== 은행 저PBR 후보 ===")
-print(candidates_bank[["기업", "PBR", "ROE(%)"]].to_string(index=False))
-```
 
 **스크리닝 조건 선택 가이드**
 
@@ -602,94 +381,12 @@ print(candidates_bank[["기업", "PBR", "ROE(%)"]].to_string(index=False))
 
 **① 섹터별 PER·PBR 막대 차트 비교**
 
-```python
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-
-# 한글 폰트 설정 (macOS: AppleGothic, Windows: Malgun Gothic, Linux: NanumGothic)
-plt.rcParams["font.family"] = "NanumGothic"
-plt.rcParams["axes.unicode_minus"] = False
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-for ax, metric in zip(axes, ["PER", "PBR"]):
-    sector_mean = (
-        df_all.dropna(subset=[metric])
-        .groupby("섹터")[metric]
-        .mean()
-        .sort_values()
-    )
-    sector_mean.plot(kind="barh", ax=ax, color="steelblue", edgecolor="white")
-    ax.set_title(f"섹터별 평균 {metric}", fontsize=13)
-    ax.set_xlabel(f"{metric} (배)")
-    median_val = sector_mean.median()
-    ax.axvline(median_val, color="crimson", linestyle="--", linewidth=1.2,
-               label=f"중앙값 {median_val:.1f}배")
-    ax.legend(fontsize=9)
-    ax.grid(axis="x", alpha=0.3)
-
-plt.suptitle("국내 업종별 평균 밸류에이션 멀티플", fontsize=14, y=1.01)
-plt.tight_layout()
-plt.savefig("sector_multiples_bar.png", dpi=150, bbox_inches="tight")
-plt.show()
-```
 
 **② ROE vs PBR 산점도 — "성장 대비 저평가" 식별**
 
-```python
-fig, ax = plt.subplots(figsize=(9, 6))
-
-for sector, grp in df_all.dropna(subset=["ROE(%)", "PBR"]).groupby("섹터"):
-    ax.scatter(grp["ROE(%)"], grp["PBR"], label=sector, s=100, alpha=0.8)
-    for _, row in grp.iterrows():
-        ax.annotate(row["기업"], (row["ROE(%)"], row["PBR"]),
-                    textcoords="offset points", xytext=(5, 3), fontsize=8)
-
-# PBR = ROE / 기대수익률 (이론 기준선, 기대수익률 10% 가정)
-import numpy as np
-roe_clean = df_all["ROE(%)"].dropna()
-roe_range = np.linspace(roe_clean.min(), roe_clean.max(), 100)
-ax.plot(roe_range, roe_range / 10, color="gray", linestyle="--",
-        linewidth=1.2, label="이론선 (기대수익률 10%)")
-
-ax.set_xlabel("ROE (%)")
-ax.set_ylabel("PBR (배)")
-ax.set_title("ROE vs PBR — 이론선 아래: 저평가 후보")
-ax.legend(fontsize=8, loc="upper left")
-ax.grid(alpha=0.3)
-plt.tight_layout()
-plt.savefig("roe_vs_pbr_scatter.png", dpi=150, bbox_inches="tight")
-plt.show()
-```
 
 **③ 멀티플 히트맵 — 종목 간 지표 한눈에 비교**
 
-```python
-import seaborn as sns
-
-heatmap_cols = ["PER", "PBR", "PSR", "EV/EBITDA", "ROE(%)", "영업이익률(%)"]
-hm_data = (
-    df_all.dropna(subset=heatmap_cols, how="all")
-    .set_index("기업")[heatmap_cols]
-)
-
-# 표준화(Z-score)로 척도 통일
-hm_norm = (hm_data - hm_data.mean()) / hm_data.std()
-
-plt.figure(figsize=(10, max(4, len(hm_norm) * 0.55)))
-sns.heatmap(
-    hm_norm,
-    annot=hm_data.round(1),
-    fmt=".1f",
-    cmap="RdYlGn_r",   # 낮을수록 녹색(저평가), 높을수록 빨간색
-    linewidths=0.5,
-    cbar_kws={"label": "Z-score (낮을수록 상대적 저평가)"},
-)
-plt.title("국내 종목 멀티플 비교 히트맵 (원본 수치 표기, 색상=Z-score)")
-plt.tight_layout()
-plt.savefig("multiples_heatmap.png", dpi=150, bbox_inches="tight")
-plt.show()
-```
 
 **최종 산출물 목록**
 
@@ -713,95 +410,10 @@ multiples_heatmap.png      ← 종목 간 멀티플 히트맵
 
 ---
 
-## 🔗 Python 소스 연계
-
-> 📺 [🎬 Python 소스 연계](https://www.youtube.com/results?search_query=Python+소스+연계+한국어)
-
-이 문서에서 학습한 멀티플 개념은 **`valuation.js`** 프론트엔드 모듈로 직접 구현되어 있습니다.
-
-**valuation.js 탭 구조**
-
-```mermaid
-flowchart LR
-    A[valuation.js\n기업가치 분석 모듈] --> T1[Tab 1\n기업선정\n분석 대상 기업 입력]
-    A --> T2[Tab 2\nFCF 계산기\n5년 CFO/Capex 입력\n→ 막대차트]
-    A --> T3[Tab 3\nDCF 밸류에이터\nWACC·성장률 입력\n→ PV + 터미널밸류]
-    A --> T4[Tab 4\nEVA 계산기\nNOPAT·IC·Ke·Kd\n→ EVA 산출]
-    A --> T5[Tab 5\n종합 투자 리포트\nBUY / HOLD / SELL]
-
-    style T1 fill:#e8f4fd,stroke:#2196F3
-    style T2 fill:#e8f5e9,stroke:#4CAF50
-    style T3 fill:#fff3e0,stroke:#FF9800
-    style T4 fill:#fce4ec,stroke:#E91E63
-    style T5 fill:#f3e5f5,stroke:#9C27B0
-```
-
-**Tab 2 (FCF) ↔ Tab 3 (DCF) 연계 흐름**
-
-```mermaid
-flowchart TD
-    In1[5년 CFO 입력] --> FCF[FCF = CFO - Capex\nTab 2 막대차트 시각화]
-    In2[5년 Capex 입력] --> FCF
-    FCF --> DCF[Tab 3: DCF 계산\nPV = FCF ÷ 1+WACC^t]
-    WACC[WACC 입력] --> DCF
-    GR[장기 성장률 입력] --> TV[Terminal Value\n= FCF_5 × 1+g ÷ WACC-g]
-    TV --> DCF
-    DCF --> IV[내재가치 = Σ PV + TV]
-    IV --> RPT[Tab 5: 종합 리포트\n현재주가 대비 상승여력\n→ BUY / HOLD / SELL]
-```
-
-**Tab 4 EVA 계산 핵심 공식**
-
-```python
-# valuation.js의 EVA 계산 로직 (Python 등가 표현)
-def calc_eva(nopat: float, ic: float, ke: float, kd: float,
-             debt_ratio: float, tax_rate: float) -> dict:
-    """
-    NOPAT  = 세후 영업이익
-    IC     = 투하자본 (영업자산 - 영업부채)
-    WACC   = Ke × E/(D+E) + Kd × (1-t) × D/(D+E)
-    EVA    = NOPAT - WACC × IC
-    """
-    equity_ratio = 1 - debt_ratio
-    wacc = ke * equity_ratio + kd * (1 - tax_rate) * debt_ratio
-    cost_of_capital = wacc * ic
-    eva = nopat - cost_of_capital
-    return {
-        "WACC": round(wacc * 100, 2),
-        "자본비용": round(cost_of_capital, 0),
-        "EVA": round(eva, 0),
-        "평가": "가치창출" if eva > 0 else "가치훼손"
-    }
-
-# 예시 (가상 수치)
-result = calc_eva(
-    nopat=500_000,       # 5억 원
-    ic=3_000_000,        # 30억 원
-    ke=0.10,             # 자기자본비용 10%
-    kd=0.04,             # 타인자본비용 4%
-    debt_ratio=0.40,     # 부채비율 40%
-    tax_rate=0.22        # 법인세율 22%
-)
-# → {'WACC': 7.05, '자본비용': 211500, 'EVA': 288500, '평가': '가치창출'}
-```
-
-**`/api/quant/pipeline` 과의 연계**
-
-`valuation.js`는 순수 프론트엔드 계산 모듈이며, 백엔드 `/api/quant/pipeline` API의 **Stage 4 Portfolio Construction**과 개념적으로 연결됩니다. DCF/EVA로 내재가치를 산출한 뒤 포지션 사이징 로직으로 넘기는 흐름입니다.
-
-```mermaid
-flowchart LR
-    V[valuation.js\n내재가치 산출] -- "BUY 신호 종목" --> P[/api/quant/pipeline\nStage 4: Portfolio\nConstruction]
-    P -- "포지션 비중·리스크" --> D[최종 투자 결정]
-```
-
----
-
 ## 📌 멀티플에 영향을 주는 외부 요인
 
 ### 기준금리 (Base Rate) — 적정 PER의 기준선이 바뀐다
 
-> 📺 [🎬 기준금리 주식 영향 쉽게](https://www.youtube.com/results?search_query=기준금리+주식+PER+영향+한국어)
 
 주식의 **적정 PER**은 금리 수준에 따라 달라집니다.
 
@@ -827,7 +439,6 @@ flowchart LR
 
 ### 시장금리 (Market Rate) — 기준금리보다 빠른 선행 지표
 
-> 📺 [🎬 국고채 금리 주가 관계](https://www.youtube.com/results?search_query=국고채금리+주가관계+시장금리+한국어)
 
 시장금리는 기준금리 결정 이전에 경기 기대를 선반영합니다.
 
@@ -863,7 +474,6 @@ flowchart LR
 
 ### 투자자 심리 (Investor Sentiment) — 단기 주가를 움직이는 감정
 
-> 📺 [🎬 투자자 심리 공포탐욕 역발상 전략](https://www.youtube.com/results?search_query=투자자심리+공포탐욕지수+역발상전략+한국어)
 
 **"시장은 단기적으로 투표 기계, 장기적으로 저울이다."** — 벤저민 그레이엄
 
@@ -986,7 +596,6 @@ flowchart LR
 
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 멀티플 비교는 "숫자 읽기"보다 "비교 이유 설명하기"가 더 중요합니다.
 

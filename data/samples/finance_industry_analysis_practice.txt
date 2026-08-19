@@ -1,10 +1,8 @@
-# Day 046 — 산업 분석 실습
+# 산업 분석 실습
 
-> **모듈 7: 투자분석 기초 방법론** | 5/10일차 | 💹 | 학습시간: 8시간
 
 ---
 
-> 📺 **YouTube 강의**: [🎬 산업 분석 실습 파이썬](https://www.youtube.com/results?search_query=산업분석+실습+파이썬+섹터+한국어)
 >
 > 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
 
@@ -14,36 +12,6 @@
 - 동종 업계 비교 분석 (Peer Comparison)
 - 산업 뉴스·공시 데이터 활용
 - 실습: 산업별 주요 종목 재무 비교
-
----
-
-## 🗓 세부 일정 (1일 8시간)
-
-> **강의 5시간** (5개 단락 × 50분 + 도입·마무리 50분) + **실습 3시간** = 총 8시간
-
-| 시간 | 구분 | 내용 | 형태 |
-|------|------|------|------|
-| 09:00 – 09:10 | 도입 | 오늘 학습 목표 확인 | 강의 |
-| 09:10 – 09:30 | **1단락** 설명 20분 | 산업별 핵심 지표(KPI) 정리 | 강의 |
-| 09:30 – 10:00 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:00 – 10:20 | **2단락** 설명 20분 | 동종 업계 비교 분석(Peer Comparison) 방법론 | 강의 |
-| 10:20 – 10:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 10:50 – 11:00 | ☕ 휴식 | — | — |
-| 11:00 – 11:20 | **3단락** 설명 20분 | 산업 뉴스·공시 데이터 활용 | 강의 |
-| 11:20 – 11:50 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 11:50 – 12:10 | **4단락** 설명 20분 | 다차원 Peer 비교 및 점수화 설계 | 강의 |
-| 12:10 – 12:40 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 12:40 – 13:00 | **5단락** 설명 20분 | 산업별 KPI 입체 시각화 방법 | 강의 |
-| 13:00 – 13:30 | 각자 정리 & 유튜브 30분 | 노트 정리 · 관련 영상 검색 | 자율 |
-| 13:30 – 14:00 | 강의 마무리 | Q&A · 핵심 복습 | 강의 |
-| 14:00 – 15:00 | 💻 **실습 1부** 60분 | 다차원 지표 수집 및 표준 비교 데이터 생성 | 실습 |
-| 15:00 – 15:10 | ☕ 휴식 | — | — |
-| 15:10 – 16:00 | 💻 **실습 2부** 50분 | Peer 점수화 · 히트맵 · 산점도 시각화 구현 | 실습 |
-| 16:00 – 16:10 | ☕ 휴식 | — | — |
-| 16:10 – 17:00 | 💻 **실습 발표 & 리뷰** 50분 | 코드 리뷰 · 발표 · 피드백 | 실습 |
-
-> 강의 5시간: 도입 10분 + 단락 5개×50분 + 마무리 30분 = **300분**  
-> 실습 3시간: 1부 60분 + 휴식 10분 + 2부 50분 + 휴식 10분 + 발표·리뷰 50분 = **180분**
 
 ---
 
@@ -94,7 +62,6 @@
 
 KPI(Key Performance Indicator)는 산업마다 다릅니다. 어떤 숫자를 먼저 봐야 하는지 알아야 분석이 깊어집니다.
 
-> 📺 [🎬 산업별 핵심 KPI 선정법](https://www.youtube.com/results?search_query=산업별+KPI+핵심지표+선정+한국어+주식분석)
 
 | 산업 | 핵심 KPI | 의미 |
 |------|----------|------|
@@ -116,7 +83,6 @@ KPI(Key Performance Indicator)는 산업마다 다릅니다. 어떤 숫자를 �
 
 한 회사를 혼자 보지 않고 비슷한 구조의 경쟁사와 나란히 놓고 상대 평가합니다.
 
-> 📺 [🎬 Peer Comparison 동종업체 비교 분석](https://www.youtube.com/results?search_query=피어비교+동종업체+비교분석+주식+한국어)
 
 비교 항목 예시:
 
@@ -151,7 +117,6 @@ flowchart LR
 
 재무 숫자만으로는 "왜 숫자가 바뀌었는지" 알 수 없습니다. 뉴스와 공시를 병행해야 원인을 파악할 수 있습니다.
 
-> 📺 [🎬 DART 공시 뉴스 활용 주식분석](https://www.youtube.com/results?search_query=DART+공시+뉴스+주식분석+한국어)
 
 **공시 종류와 투자 관련도**
 
@@ -179,36 +144,6 @@ flowchart TD
 
 ### 4. 실습: 산업별 주요 종목 재무 비교 고도화
 
-```python
-import yfinance as yf
-import pandas as pd
-
-# 반도체 섹터 Peer Comparison
-peers = {
-    "삼성전자":  "005930.KS",
-    "SK하이닉스": "000660.KS",
-    "엔비디아":  "NVDA",
-    "인텔":      "INTC",
-}
-
-rows = []
-for name, ticker in peers.items():
-    try:
-        info = yf.Ticker(ticker).info
-        rows.append({
-            "기업":       name,
-            "시가총액(억)": round(info.get("marketCap", 0) / 1e8, 0),
-            "PER":        round(info.get("trailingPE", float("nan")), 1),
-            "PBR":        round(info.get("priceToBook", float("nan")), 2),
-            "영업이익률(%)": round(info.get("operatingMargins", 0) * 100, 1),
-            "ROE(%)":     round(info.get("returnOnEquity", 0) * 100, 1),
-        })
-    except Exception as e:
-        print(f"{name} 데이터 오류: {e}")
-
-df = pd.DataFrame(rows).set_index("기업")
-print(df.to_string())
-```
 
 #### 4-1. 고도화 목표: 단순 재무 4종에서 다차원 Peer 비교로 확장
 
@@ -239,15 +174,6 @@ peer_comparison_report.md
 
 #### 4-2. 비교 대상과 원천 식별자 정리
 
-```python
-PEERS = {
-    "Samsung Electronics": {"ticker": "005930.KS", "country": "KR", "group": "Memory/Foundry"},
-    "SK Hynix": {"ticker": "000660.KS", "country": "KR", "group": "Memory"},
-    "NVIDIA": {"ticker": "NVDA", "country": "US", "group": "AI GPU"},
-    "Intel": {"ticker": "INTC", "country": "US", "group": "CPU/Foundry"},
-    "TSMC ADR": {"ticker": "TSM", "country": "TW/US ADR", "group": "Foundry"},
-}
-```
 
 비교 대상은 “같은 산업”이라는 이름만으로 묶지 말고, 실제 사업 구조가 얼마나 비슷한지 먼저 기록합니다. 예를 들어 NVIDIA와 SK하이닉스는 모두 반도체지만 매출 구조와 마진 구조가 크게 다르므로, 멀티플 차이를 그대로 저평가/고평가로 해석하면 위험합니다.
 
@@ -255,64 +181,6 @@ PEERS = {
 
 #### 4-3. 다차원 지표 수집 코드
 
-```python
-import math
-import yfinance as yf
-import pandas as pd
-
-def safe_float(value):
-    try:
-        if value is None or (isinstance(value, float) and math.isnan(value)):
-            return None
-        return float(value)
-    except Exception:
-        return None
-
-def fetch_peer_metrics(peers):
-    rows = []
-    for company, meta in peers.items():
-        ticker = meta["ticker"]
-        try:
-            t = yf.Ticker(ticker)
-            info = t.info
-            hist = t.history(period="1y", auto_adjust=True)
-            close = hist["Close"].dropna()
-
-            return_1y = (close.iloc[-1] / close.iloc[0] - 1) if len(close) > 1 else None
-            volatility_1y = close.pct_change().std() * (252 ** 0.5) if len(close) > 30 else None
-            mdd_1y = (close / close.cummax() - 1).min() if len(close) > 30 else None
-
-            rows.append({
-                "company": company,
-                "ticker": ticker,
-                "country": meta["country"],
-                "group": meta["group"],
-                "market_cap": safe_float(info.get("marketCap")),
-                "revenue": safe_float(info.get("totalRevenue")),
-                "revenue_growth": safe_float(info.get("revenueGrowth")),
-                "gross_margin": safe_float(info.get("grossMargins")),
-                "operating_margin": safe_float(info.get("operatingMargins")),
-                "net_margin": safe_float(info.get("profitMargins")),
-                "roe": safe_float(info.get("returnOnEquity")),
-                "roa": safe_float(info.get("returnOnAssets")),
-                "debt_to_equity": safe_float(info.get("debtToEquity")),
-                "current_ratio": safe_float(info.get("currentRatio")),
-                "trailing_pe": safe_float(info.get("trailingPE")),
-                "forward_pe": safe_float(info.get("forwardPE")),
-                "price_to_book": safe_float(info.get("priceToBook")),
-                "price_to_sales": safe_float(info.get("priceToSalesTrailing12Months")),
-                "ev_to_ebitda": safe_float(info.get("enterpriseToEbitda")),
-                "return_1y": safe_float(return_1y),
-                "volatility_1y": safe_float(volatility_1y),
-                "mdd_1y": safe_float(mdd_1y),
-            })
-        except Exception as e:
-            print(f"{company} error: {e}")
-    return pd.DataFrame(rows)
-
-peer_raw = fetch_peer_metrics(PEERS)
-peer_raw.to_csv("peer_raw_metrics.csv", index=False, encoding="utf-8-sig")
-```
 
 `yfinance.info`는 결측이 있을 수 있으므로, 실제 보고서에서는 DART/SEC/사업보고서 원문으로 중요한 수치를 재확인합니다.
 
@@ -320,29 +188,6 @@ peer_raw.to_csv("peer_raw_metrics.csv", index=False, encoding="utf-8-sig")
 
 #### 4-4. 표준 비교 데이터 만들기
 
-```python
-ratio_columns = [
-    "revenue_growth", "gross_margin", "operating_margin",
-    "net_margin", "roe", "roa", "return_1y",
-    "volatility_1y", "mdd_1y",
-]
-
-peer = peer_raw.copy()
-for col in ratio_columns:
-    if col in peer.columns:
-        peer[col] = peer[col] * 100
-
-display_columns = [
-    "company", "group", "market_cap", "revenue",
-    "revenue_growth", "operating_margin", "roe",
-    "debt_to_equity", "trailing_pe", "price_to_book",
-    "return_1y", "volatility_1y", "mdd_1y",
-]
-
-peer_dataset = peer[[c for c in display_columns if c in peer.columns]]
-peer_dataset.to_csv("peer_comparison_dataset.csv", index=False, encoding="utf-8-sig")
-print(peer_dataset)
-```
 
 ---
 
@@ -350,90 +195,11 @@ print(peer_dataset)
 
 낮을수록 좋은 지표(`부채비율`, `PER`, `변동성`)는 점수 방향을 뒤집습니다.
 
-```python
-higher_is_better = [
-    "revenue_growth", "gross_margin", "operating_margin",
-    "net_margin", "roe", "roa", "current_ratio", "return_1y",
-]
-
-lower_is_better = [
-    "debt_to_equity", "trailing_pe", "forward_pe",
-    "price_to_book", "price_to_sales", "ev_to_ebitda",
-    "volatility_1y",
-]
-
-def percentile_score(series, higher=True):
-    numeric = pd.to_numeric(series, errors="coerce")
-    score = numeric.rank(pct=True) * 100
-    return score if higher else 100 - score
-
-score_df = peer[["company", "group"]].copy()
-for col in higher_is_better:
-    if col in peer.columns:
-        score_df[f"{col}_score"] = percentile_score(peer[col], True)
-for col in lower_is_better:
-    if col in peer.columns:
-        score_df[f"{col}_score"] = percentile_score(peer[col], False)
-
-score_groups = {
-    "growth_score": ["revenue_growth_score"],
-    "profitability_score": ["gross_margin_score", "operating_margin_score", "net_margin_score", "roe_score", "roa_score"],
-    "stability_score": ["debt_to_equity_score", "current_ratio_score"],
-    "valuation_score": ["trailing_pe_score", "forward_pe_score", "price_to_book_score", "price_to_sales_score", "ev_to_ebitda_score"],
-    "momentum_score": ["return_1y_score"],
-    "risk_score": ["volatility_1y_score"],
-}
-
-for group_name, cols in score_groups.items():
-    valid_cols = [c for c in cols if c in score_df.columns]
-    score_df[group_name] = score_df[valid_cols].mean(axis=1) if valid_cols else None
-
-score_df["total_score"] = score_df[
-    ["growth_score", "profitability_score", "stability_score", "valuation_score", "momentum_score", "risk_score"]
-].mean(axis=1)
-
-score_df.sort_values("total_score", ascending=False).to_csv("peer_score_table.csv", index=False, encoding="utf-8-sig")
-```
 
 ---
 
 #### 4-6. 입체적 시각화: 히트맵, 산점도, 종합 점수
 
-```python
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-metric_cols = [
-    "revenue_growth", "operating_margin", "roe",
-    "debt_to_equity", "trailing_pe", "price_to_book",
-    "return_1y", "volatility_1y",
-]
-heatmap_data = peer.set_index("company")[[c for c in metric_cols if c in peer.columns]]
-
-fig, axes = plt.subplots(2, 2, figsize=(15, 10))
-fig.suptitle("Advanced Peer Comparison Dashboard", fontsize=16, fontweight="bold")
-
-sns.heatmap(heatmap_data, annot=True, fmt=".1f", cmap="RdYlGn", center=0, ax=axes[0, 0])
-axes[0, 0].set_title("Metric Heatmap")
-
-sns.scatterplot(data=peer, x="trailing_pe", y="revenue_growth", size="market_cap", hue="company", sizes=(80, 800), ax=axes[0, 1])
-axes[0, 1].set_title("Valuation vs Growth")
-axes[0, 1].grid(True, alpha=0.3)
-
-sns.scatterplot(data=peer, x="roe", y="price_to_book", size="market_cap", hue="company", sizes=(80, 800), ax=axes[1, 0])
-axes[1, 0].set_title("ROE vs PBR")
-axes[1, 0].grid(True, alpha=0.3)
-
-ranked = score_df.sort_values("total_score")
-axes[1, 1].barh(ranked["company"], ranked["total_score"], color="steelblue")
-axes[1, 1].set_title("Composite Peer Score")
-axes[1, 1].set_xlim(0, 100)
-axes[1, 1].grid(True, axis="x", alpha=0.3)
-
-plt.tight_layout()
-plt.savefig("peer_comparison_dashboard.png", dpi=150, bbox_inches="tight")
-plt.show()
-```
 
 ---
 
@@ -449,20 +215,6 @@ plt.show()
 | 은행 | NIM, 연체율, CET1, 대손비용률 | 수익성과 건전성 |
 | 바이오 | 파이프라인 단계, 임상 성공률, R&D/매출 | 기술 옵션 가치 |
 
-```python
-industry_kpi = pd.DataFrame([
-    {"company": "Samsung Electronics", "hbm_score": 70, "capex_score": 90, "tech_score": 75},
-    {"company": "SK Hynix", "hbm_score": 95, "capex_score": 85, "tech_score": 90},
-    {"company": "NVIDIA", "hbm_score": 100, "capex_score": 60, "tech_score": 98},
-    {"company": "Intel", "hbm_score": 30, "capex_score": 95, "tech_score": 55},
-    {"company": "TSMC ADR", "hbm_score": 80, "capex_score": 100, "tech_score": 95},
-])
-
-score_with_kpi = score_df.merge(industry_kpi, on="company", how="left")
-score_with_kpi["industry_kpi_score"] = score_with_kpi[["hbm_score", "capex_score", "tech_score"]].mean(axis=1)
-score_with_kpi["final_score"] = score_with_kpi[["total_score", "industry_kpi_score"]].mean(axis=1)
-print(score_with_kpi.sort_values("final_score", ascending=False))
-```
 
 ---
 
@@ -539,7 +291,6 @@ print(score_with_kpi.sort_values("final_score", ascending=False))
 
 ## 1. 비교 대상
 
-> 📺 [🎬 비교 대상](https://www.youtube.com/results?search_query=비교+대상+한국어)
 
 - 산업:
 - 기업:
@@ -548,7 +299,6 @@ print(score_with_kpi.sort_values("final_score", ascending=False))
 
 ## 2. 종합 결론
 
-> 📺 [🎬 종합 결론](https://www.youtube.com/results?search_query=종합+결론+한국어)
 
 - 가장 균형 잡힌 기업:
 - 성장성 1위:
@@ -558,7 +308,6 @@ print(score_with_kpi.sort_values("final_score", ascending=False))
 
 ## 3. 지표별 분석
 
-> 📺 [🎬 지표별 분석](https://www.youtube.com/results?search_query=지표별+분석+한국어)
 
 - 성장성:
 - 수익성:
@@ -569,7 +318,6 @@ print(score_with_kpi.sort_values("final_score", ascending=False))
 
 ## 4. 산업 KPI 분석
 
-> 📺 [🎬 산업 KPI 분석](https://www.youtube.com/results?search_query=산업+KPI+분석+한국어)
 
 - 핵심 KPI:
 - KPI 기준 우위 기업:
@@ -577,7 +325,6 @@ print(score_with_kpi.sort_values("final_score", ascending=False))
 
 ## 5. 투자 판단
 
-> 📺 [🎬 투자 판단](https://www.youtube.com/results?search_query=투자+판단+한국어)
 
 - 관심 기업:
 - 관망 기업:
@@ -602,7 +349,6 @@ print(score_with_kpi.sort_values("final_score", ascending=False))
 
 ## 웹앱 실습 연계
 
-> 📺 [🎬 웹앱 실습 연계](https://www.youtube.com/results?search_query=웹앱+실습+연계+한국어)
 
 Python Quant Lab 웹앱의 **산업 분석** 메뉴는 현재 4개의 탭으로 구성됩니다. 이번 실습에서는 기존 탭을 유지하되, Peer Comparison 탭을 `peer-advanced` 방식으로 확장하는 방향을 설계합니다.
 
@@ -825,7 +571,6 @@ flowchart LR
 
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 1. 관심 있는 산업 1개를 고르고 비교 기업 4~6개를 선정하세요. 비교 대상의 사업 구조가 어떻게 비슷하고 어떻게 다른지 먼저 적으세요.
 2. 성장성, 수익성, 안정성, 밸류에이션, 모멘텀, 리스크 지표를 각각 2개 이상 골라 `peer_comparison_dataset.csv`를 만드세요.
@@ -940,7 +685,6 @@ M7과 **MANGOS(망고스)**는 개별 기업의 이름이 아니라, **미국 �
 
 > 📖 **Wikipedia**: [무어의 법칙](https://ko.wikipedia.org/wiki/무어의_법칙)
 >
-> 📺 [🎬 무어의 법칙 황의 법칙 반도체 투자](https://www.youtube.com/results?search_query=무어의+법칙+황의+법칙+반도체+투자+한국어)
 
 M7·MANGOS에 속한 기업 대부분(NVIDIA, Google, Meta, Apple)의 사업 기반은 결국 **반도체 성능이 얼마나 빨리, 얼마나 싸게 좋아지는가**에 달려 있습니다. 이 흐름을 설명하는 두 가지 핵심 법칙이 무어의 법칙과 황의 법칙입니다. 위 4-7절의 반도체 KPI(HBM 비중, Capex, 가동률, ASP)를 해석할 때도 이 두 법칙이 배경 논리로 자주 쓰입니다.
 
@@ -1018,7 +762,6 @@ flowchart LR
 
 > 📖 **Wikipedia**: [반도체](https://ko.wikipedia.org/wiki/반도체) · [닷컴 버블](https://ko.wikipedia.org/wiki/닷컴_버블) · [반도체 슈퍼사이클](https://ko.wikipedia.org/wiki/반도체_산업)
 >
-> 📺 [🎬 반도체 소비 역사 슈퍼사이클 주식투자](https://www.youtube.com/results?search_query=반도체+소비+역사+슈퍼사이클+주식투자+한국어)
 
 반도체는 "무엇에 쓰이는가"가 시대마다 바뀌면서 소비량이 계단식으로 폭증해 왔고, 그 계단마다 증시에서는 관련 기업을 중심으로 한 투자 열풍이 함께 일어났습니다. 위에서 다룬 무어의 법칙·황의 법칙이 "얼마나 빨리 좋아지는가"를 설명한다면, 이 절은 "무엇이 그 성능을 다 소비했는가 — 그리고 그때 투자자들은 무엇을 샀는가"를 시대순으로 정리합니다.
 
@@ -1106,7 +849,6 @@ timeline
 
 > 📖 **Wikipedia**: [반도체 소자 제작](https://ko.wikipedia.org/wiki/반도체_소자_제작) · [FinFET](https://ko.wikipedia.org/wiki/FinFET) · [극자외선 노광](https://ko.wikipedia.org/wiki/극자외선_노광)
 >
-> 📺 [🎬 나노공정 미세공정 원리 EUV FinFET](https://www.youtube.com/results?search_query=나노공정+미세공정+원리+EUV+FinFET+한국어)
 
 앞서 무어의 법칙에서 "미세공정(Process Node)"이라는 표현이 나왔습니다. 뉴스에서 흔히 "삼성전자 3나노 파운드리", "TSMC 2나노 양산" 같은 문구를 접하는데, 이 "나노(nm)"가 실제로 무엇을 의미하는지 정확히 아는 투자자는 많지 않습니다. 이 절에서는 나노공정의 기술적 실체와, 그것이 왜 반도체 기업의 경쟁력·주가를 좌우하는지 설명합니다.
 
@@ -1149,7 +891,6 @@ timeline
 
 > 📖 **Wikipedia**: [대한민국의 반도체 산업](https://ko.wikipedia.org/wiki/대한민국의_반도체_산업) · [삼성전자](https://ko.wikipedia.org/wiki/삼성전자) · [SK하이닉스](https://ko.wikipedia.org/wiki/SK하이닉스)
 >
-> 📺 [🎬 한국 반도체 강국 삼성전자 주식투자 역사](https://www.youtube.com/results?search_query=한국+반도체+강국+삼성전자+주식투자+역사+한국어)
 
 한국이 메모리 반도체 세계 1위 국가가 된 과정과, 국내 증시에서 반도체주가 "국민주"로 자리잡은 과정은 서로 떼어놓고 볼 수 없습니다. 반도체 산업의 성장이 곧 한국 개인투자자들의 자산 형성 역사와 겹치기 때문입니다.
 
@@ -1215,7 +956,6 @@ flowchart TD
 
 > 📖 **Wikipedia**: [주식예탁증서](https://ko.wikipedia.org/wiki/주식예탁증서) · [American depositary receipt](https://en.wikipedia.org/wiki/American_depositary_receipt)
 >
-> 📺 [🎬 SK하이닉스 ADR 나스닥 상장 투자 의미](https://www.youtube.com/results?search_query=SK하이닉스+ADR+나스닥+상장+투자+한국어)
 >
 > ⚠️ 아래 일정·금액은 2026년 7월 상장 시점 기준 **잠정(Pending)** 수치이며, 실제 발행가·물량은 수요예측 결과에 따라 변동될 수 있습니다.
 
@@ -1315,7 +1055,6 @@ Sources:
 
 > 📖 **Wikipedia**: [대한민국의 대기업 집단](https://ko.wikipedia.org/wiki/대한민국의_대기업_집단) · [지주회사](https://ko.wikipedia.org/wiki/지주회사) · [슈퍼사이클](https://ko.wikipedia.org/wiki/슈퍼사이클)
 >
-> 📺 [🎬 그룹주 계열사 동조화 슈퍼사이클 투자](https://www.youtube.com/results?search_query=그룹주+계열사+동조화+슈퍼사이클+투자+한국어)
 
 코스피 시가총액 상위 종목 상당수는 삼성·SK·현대차·LG·롯데·두산 같은 대기업 집단(재벌 그룹)의 계열사입니다. 이 종목들은 서로 업종이 다르더라도 **같은 그룹이라는 이유만으로 함께 움직이는 "그룹주 동조화" 현상**이 자주 나타나며, 동시에 각 그룹이 주력으로 삼는 산업마다 고유한 슈퍼사이클(장기 호황·불황 파동)을 갖습니다. 위에서 다룬 반도체 슈퍼사이클(삼성전자·SK하이닉스)이 그 대표적 사례이며, 이 절에서는 다른 그룹으로 시야를 넓혀 비교합니다.
 

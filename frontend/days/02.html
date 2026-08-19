@@ -17,7 +17,6 @@
     <script defer src="assets/visuals.js"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js"></script>
-    <script defer src="assets/data-library-reader.js"></script>
   </head>
   <body data-day="2">
     <header class="day-appbar">
@@ -41,8 +40,6 @@
         ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
         ><a href="/?view=simulation"
           ><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</a
-        ><a href="/?view=backtest"
-          ><i class="fa-solid fa-flask"></i> LEAN 백테스트</a
         ><a href="/?view=calendar"
           ><i class="fa-solid fa-calendar-days"></i> 캘린더</a
         >
@@ -59,11 +56,11 @@
     <aside class="day-offcanvas" id="dayOffcanvas" aria-label="5일 학습 목차">
       <h2>5일 이론 학습</h2>
       <p>일차를 선택해 정적 학습 페이지로 이동합니다.</p>
-      <a href="01.html">DAY 01 · 금융상품 기초</a
-      ><a class="active" href="02.html">DAY 02 · 펀드 · ETF</a
-      ><a href="03.html">DAY 03 · 채권 · 외환 · 파생상품</a
-      ><a href="04.html">DAY 04 · 포트폴리오와 위험</a
-      ><a href="05.html">DAY 05 · 자산배분</a>
+      <a href="01.html">01 · 금융상품 기초</a
+      ><a class="active" href="02.html">02 · 펀드 · ETF</a
+      ><a href="03.html">03 · 채권 · 외환 · 파생상품</a
+      ><a href="04.html">04 · 포트폴리오와 위험</a
+      ><a href="05.html">05 · 자산배분</a>
     </aside>
     <nav aria-label="5일 학습 목차">
       <a class="brand" href="index.html">5일 금융 이론</a>
@@ -84,7 +81,7 @@
     <main id="app">
       <article>
         <header class="lesson-head">
-          <p class="eyebrow">DAY 02 / 05</p>
+          <p class="eyebrow">02 / 05</p>
           <h1>펀드 · ETF · 리츠 · ETN</h1>
           <p>
             여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다.
@@ -102,6 +99,7 @@
           <div>
             <span>펀드</span><span>ETF</span><span>파생상품 ETF</span
             ><span>기초자산</span><span>NAV</span><span>괴리율</span
+            ><span>주식 대여</span><span>대차수수료</span><span>의결권</span
             ><span>사모펀드</span><span>자산운용사</span><span>ETF 브랜드</span>
           </div>
         </section>
@@ -426,6 +424,103 @@
           <section class="lesson">
             <span>09</span>
             <div class="lesson-content">
+              <h2>주식 대여 서비스: 장기 보유 주식을 잠시 빌려주는 구조</h2>
+              <div class="lesson-body">
+                <p>
+                  주식 대여는 장기 보유할 주식을 증권사 중개를 통해 필요한
+                  차입자에게 잠시 빌려주고, 실제 대여가 성사된 기간에
+                  대차수수료를 받는 서비스입니다. 내가 살던 아파트를 파는 대신
+                  전·월세로 잠시 임대하고 임대료를 받는 모습에 비유할 수
+                  있습니다. 다만 대여를 신청했다고 바로 수수료가 생기는 것은
+                  아니며, 실제로 빌려 나간 종목·수량·기간에만 수수료가 붙습니다.
+                </p>
+                <p>
+                  현금배당이나 무상증자처럼 경제적 권리는 증권사 약관에 따라
+                  보전되는 것이 일반적입니다. 그러나 배당 기준일의 주주명부에
+                  내 이름이 그대로 남는다는 뜻은 아니며, 대여 상태에서는 의결권,
+                  공개매수, 주식매수청구권 행사 등에 제한이 생길 수 있습니다.
+                  이런 권리를 행사하려면 증권사가 정한 기한 전에 상환을
+                  신청해야 합니다.
+                </p>
+                <p>
+                  대여된 주식은 결제, 차익거래, 헤지 또는 공매도 등에 쓰일 수
+                  있습니다. 내 주식이 공매도에 활용되는 것이 불편하다면,
+                  수수료만 보고 서비스가 항상 유리하다고 볼 수는 없습니다.
+                  대여수수료율, 세금, 대상 종목, 권리 보전과 상환 조건은
+                  증권사·국내외 주식·시장 상황에 따라 다릅니다.
+                </p>
+                <p>
+                  대여 중 매도 가능 여부와 처리 방식도 증권사별로 확인해야
+                  합니다. 일부 서비스는 대여 주식을 즉시 매도할 수 있지만,
+                  다른 서비스는 먼저 상환 신청을 하거나 해외주식에는 별도 제한이
+                  있을 수 있습니다. 신청 전에는 앱의 서비스 안내와 약관에서
+                  수수료 지급일, 매도·상환 가능 시점, 배당·의결권 처리, 세금을
+                  확인하세요.
+                </p>
+              </div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="주식 대여 서비스 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section>
+          <section class="lesson">
+            <span>10</span>
+            <div class="lesson-content">
+              <h2>개인대주와 신용융자: 무엇을 빌리는 거래인가요?</h2>
+              <div class="lesson-body">
+                <p>
+                  개인이 공매도를 위해 증권사에서 주식을 빌리는 거래를
+                  <strong>신용대주(개인대주)</strong>라고 합니다. 주식 대여
+                  서비스에 동의한 다른 개인의 주식이 재원이 될 수는 있지만,
+                  공매도 신청자가 특정 대여자를 지정해 1:1로 빌리는 구조는
+                  아닙니다. 증권사가 재고를 관리하고, 증권사 또는
+                  한국증권금융의 대주 가능 종목·수량 범위에서 대여가 이뤄집니다.
+                </p>
+                <p>
+                  흐름을 단순화하면 <strong>대여 가능한 주식 또는 대주 재고
+                  → 증권사 → 개인대주 이용자</strong>입니다. 이용자는 빌린
+                  주식을 먼저 매도하고, 나중에 같은 종목·수량을 다시 사서
+                  상환합니다. 대주 가능 수량과 종목은 고정돼 있지 않으며,
+                  증권사의 재고·정책과 시장 상황에 따라 달라질 수 있습니다.
+                </p>
+                <p>
+                  <strong>신용융자</strong>는 반대 방향의 거래가 아니라,
+                  아예 빌리는 대상이 다른 거래입니다. 신용융자는 증권사에서
+                  <strong>현금</strong>을 빌려 주식을 매수하고, 나중에 매도대금이나
+                  현금으로 융자 원금과 이자를 갚는 방식입니다. 반면 신용대주는
+                  <strong>주식</strong>을 빌려 먼저 매도한 뒤 같은 주식으로 갚습니다.
+                </p>
+                <p>
+                  쉽게 구분하면 “상승을 예상해 돈을 빌려 더 사는 것”은
+                  신용융자, “하락을 예상해 주식을 빌려 먼저 파는 것”은
+                  신용대주입니다. 둘 다 담보·이자 또는 수수료·상환기한·반대매매
+                  위험이 있을 수 있으며, 주가가 예상과 반대로 움직이면 손실이
+                  커질 수 있습니다. 실제 가능 종목, 담보유지비율, 만기와 비용은
+                  거래 전 증권사 안내에서 확인하세요.
+                </p>
+              </div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="개인대주와 신용융자 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section>
+          <section class="lesson">
+            <span>11</span>
+            <div class="lesson-content">
               <h2>선물은 누구와 계약하고, 베팅일까요?</h2>
               <div class="lesson-body">
                 <p>
@@ -467,7 +562,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>10</span>
+            <span>12</span>
             <div class="lesson-content">
               <h2>왜 미래 가격을 맞히려는 거래가 생길까요?</h2>
               <div class="lesson-body">
@@ -509,7 +604,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>11</span>
+            <span>13</span>
             <div class="lesson-content">
               <h2>주식 앱으로도 거래할 수 있나요?</h2>
               <div class="lesson-body">
@@ -537,7 +632,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>12</span>
+            <span>14</span>
             <div class="lesson-content">
               <h2>리츠와 ETN의 구조</h2>
               <div class="lesson-body">
@@ -570,7 +665,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>13</span>
+            <span>15</span>
             <div class="lesson-content">
               <h2>상품 설명서에서 비교할 항목</h2>
               <div class="lesson-body">
@@ -604,7 +699,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>14</span>
+            <span>16</span>
             <div class="lesson-content">
               <h2>목적에 따라 상품을 나누어 보기</h2>
               <div class="lesson-body">
@@ -639,7 +734,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>15</span>
+            <span>17</span>
             <div class="lesson-content">
               <h2>한국에서 펀드 신뢰가 크게 흔들렸던 사례</h2>
               <div class="lesson-body">
@@ -923,7 +1018,7 @@
           </dl>
         </section>
         <div class="pager">
-          <a href="01.html">← DAY 01</a><a href="03.html">DAY 03 →</a>
+          <a href="01.html">← 01</a><a href="03.html">03 →</a>
         </div>
       </article>
       <footer>

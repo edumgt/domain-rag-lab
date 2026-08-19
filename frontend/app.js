@@ -124,7 +124,7 @@
       title: '펀드 · ETF · 리츠 · ETN',
       subtitle: '여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다.',
       goal: '펀드, ETF, 리츠, ETN의 구조와 비용·유동성·발행자 위험을 비교하고, ETF 브랜드·운용사, 기초자산·파생상품 활용·NAV 괴리율을 구분할 수 있어요.',
-      keywords: ['펀드', 'ETF', 'ETF 브랜드', '자산운용사', '파생상품 ETF', '기초자산', 'NAV', '괴리율'],
+      keywords: ['펀드', 'ETF', 'ETF 브랜드', '자산운용사', '파생상품 ETF', '기초자산', 'NAV', '괴리율', '주식 대여', '대차수수료', '의결권'],
       lessons: [
         ['펀드와 ETF는 어떻게 다른가요?', ['펀드와 ETF는 주식·채권·원자재·부동산 관련 자산 등을 한 상품에 담을 수 있는 그릇입니다. 상품 이름보다 어떤 자산과 전략을 담는지 먼저 확인하세요.', 'ETF는 거래소에서 장중에 사고팔고, 일반 펀드는 보통 하루 한 번 산정하는 기준가격으로 가입·환매됩니다. 거래 방식이 다르므로 필요한 현금 시점과 거래비용도 달라질 수 있습니다.', '여러 자산을 담았다고 위험이 사라지지는 않습니다. 특정 국가·자산군·테마에 집중된 상품은 여전히 크게 움직일 수 있습니다.']],
         ['국내 ETF 브랜드와 운용사: 주문 증권사와 구분하기', ['KODEX, TIGER, RISE, ACE, SOL처럼 ETF 이름 앞에 붙는 말은 보통 상품을 설계·운용하는 자산운용사의 브랜드입니다. ETF를 주문받아 거래소에 연결하는 증권사와는 역할이 다릅니다.', '대표적으로 KODEX는 삼성자산운용, TIGER는 미래에셋자산운용, RISE는 KB자산운용, ACE는 한국투자신탁운용, SOL은 신한자산운용의 ETF 브랜드입니다. 따라서 어느 증권사 앱을 쓰는지와 어느 운용사의 ETF인지를 별도로 확인해야 합니다.', '브랜드는 상품을 고르는 추천 신호가 아닙니다. 같은 기초지수를 추종하는 ETF라도 총보수, 순자산 규모, 거래량, 분배 방식, 환헤지 여부와 지수 방법론이 다를 수 있으므로 상품설명서와 KRX ETF/ETN 정보를 비교하세요.']],
@@ -134,6 +134,7 @@
         ['NAV·iNAV와 괴리율: ETF 가격은 왜 다를까요?', ['NAV(순자산가치)는 ETF가 보유한 자산에서 부채를 뺀 가치를 발행 주식 수로 나눈 값입니다. ETF 시장가격은 거래소에서 매수자와 매도자가 정하므로 NAV와 같을 수도, 다를 수도 있습니다. 장중 추정값인 iNAV가 제공되는 상품은 현재 가격을 가늠하는 참고값이 됩니다.', '괴리율은 보통 `(ETF 시장가격 − NAV) ÷ NAV × 100`으로 계산합니다. 양수면 시장가격이 NAV보다 높은 프리미엄, 음수면 낮은 디스카운트를 뜻합니다. 예를 들어 NAV가 10,000원이고 시장가격이 10,200원이면 괴리율은 약 +2%입니다.', '괴리율은 거래량 부족, 넓은 호가 차이, 해외 기초자산 시장의 휴장·시차, 급격한 시장 변동 등에서 커질 수 있습니다. 매수 전에는 현재 시장가격, NAV 또는 iNAV, 매수·매도 호가 차이와 거래량을 함께 보고 지정가 주문을 검토하세요. 괴리율이 작아도 기초자산 자체의 가격 위험은 사라지지 않습니다.']],
         ['괴리율과 추적오차는 다른 질문입니다', ['괴리율은 지금 ETF를 거래소에서 사거나 팔 때 시장가격이 NAV와 얼마나 다른지 보는 지표입니다. 반면 추적오차는 일정 기간 ETF의 수익률이 목표 지수의 수익률을 얼마나 잘 따라갔는지 보는 지표입니다.', '예를 들어 장중에 ETF 시장가격이 NAV보다 높으면 괴리율이 클 수 있지만, ETF의 NAV 기준 수익률은 장기간 목표 지수를 잘 추종할 수도 있습니다. 반대로 당장 괴리율이 작아도 보수, 현금 보유, 세금, 롤오버 비용 때문에 장기 수익률 차이가 날 수 있습니다.', '따라서 매매 순간에는 괴리율·호가 차이·거래량을, 보유 전 비교에는 기초자산·추종 방식·총보수·추적오차를 함께 확인하는 것이 좋습니다.']],
         ['일반 매도와 숏 포지션은 다릅니다', ['이미 가진 ETF나 주식을 파는 것은 일반 매도입니다. 현금으로 바꾸는 거래일 뿐, 가격 하락에 따로 베팅하는 것은 아닙니다.', '선물 계약을 먼저 매도하는 것은 보통 숏 포지션이라고 하며 가격 하락에 유리한 구조입니다. 공매도도 빌린 주식을 먼저 팔기 때문에 가격이 오르면 손실이 커질 수 있습니다.']],
+        ['주식 대여 서비스: 장기 보유 주식을 잠시 빌려주는 구조', ['주식 대여는 장기 보유할 주식을 증권사 중개를 통해 필요한 차입자에게 잠시 빌려주고, 실제 대여가 성사된 기간에 대차수수료를 받는 서비스입니다. 내가 살던 아파트를 파는 대신 전·월세로 잠시 임대하고 임대료를 받는 모습에 비유할 수 있습니다. 다만 주식은 대여 신청만으로 수수료가 생기는 것이 아니라, 실제로 빌려 나간 종목·수량·기간에만 수수료가 붙습니다.', '현금배당이나 무상증자처럼 경제적 권리는 증권사 약관에 따라 보전되는 것이 일반적입니다. 그러나 이는 배당 기준일의 주주명부에 내 이름이 그대로 남는다는 뜻은 아니며, 대여 상태에서는 의결권·공개매수·주식매수청구권 행사 등에 제한이 생길 수 있습니다. 이런 권리를 행사하려면 각 증권사가 정한 기한 전에 상환을 신청해야 합니다.', '대여된 주식은 결제, 차익거래, 헤지 또는 공매도 등에 쓰일 수 있습니다. 그래서 내 주식이 공매도에 활용될 수 있다는 점이 불편하다면, 수수료만 보고 서비스가 항상 유리하다고 볼 수는 없습니다. 대여수수료율, 세금, 대상 종목, 권리 보전과 상환 조건은 증권사·국내외 주식·시장 상황에 따라 다릅니다.', '대여 중 매도 가능 여부와 처리 방식도 증권사별로 확인해야 합니다. 일부 서비스는 대여 주식을 즉시 매도할 수 있지만, 다른 서비스는 먼저 상환 신청을 하거나 해외주식에는 별도 제한이 있을 수 있습니다. 신청 전에는 앱의 서비스 안내와 약관에서 수수료 지급일, 매도·상환 가능 시점, 배당·의결권 처리, 세금을 확인하세요.']],
         ['선물은 누구와 계약하고, 베팅일까요?', ['거래소 선물은 특정 사람과 이름을 알고 직접 약속하는 계약이 아닙니다. 내가 선물을 매도하면 반대편의 누군가가 매수 주문을 내어 거래가 체결되고, 거래소와 청산기관이 중간에서 증거금·손익정산·만기결제를 관리합니다. 쉽게 말해 “나 ↔ 거래소·청산기관 ↔ 반대편 투자자” 구조입니다.', '반대편이 모두 투기 거래자는 아닙니다. 항공사는 유가 급등, 수출기업은 환율 하락, 주식 ETF 보유자는 시장 급락을 줄이려는 헤지 목적으로 거래할 수 있고, 시장조성자·금융기관은 고객 주문에 유동성을 제공한 뒤 다른 거래로 자신의 위험을 조정할 수 있습니다.', '보유 자산 없이 선물 매수·매도로 가격 방향만 맞히려 하면 low/high 게임처럼 보이는 투기적 거래가 됩니다. 반대로 이미 가진 가격 위험을 반대 방향 계약으로 줄이면 헤지, 현물과 선물의 비정상적인 가격 차이를 이용하면 차익거래라고 부릅니다.', '같은 선물·옵션도 누가 왜, 어느 정도 규모로 쓰는지가 핵심입니다. 헤지라도 계약 규모가 보유 자산보다 크면 오히려 위험과 증거금 부담이 커질 수 있습니다.']],
         ['왜 미래 가격을 맞히려는 거래가 생길까요?', ['첫째는 위험을 옮기기 위해서입니다. 농부는 수확물 가격 하락이, 식품회사는 원재료 가격 상승이 걱정될 수 있습니다. 선물 계약으로 미래 가격을 미리 정하면 두 쪽 모두 불확실성을 줄일 수 있고, 그 위험을 받아 주는 반대편 거래도 필요해집니다.', '둘째는 정보와 전망이 서로 다르기 때문입니다. 어떤 사람은 금리가 내려갈 것이라고, 다른 사람은 경기가 나빠져 지수가 떨어질 것이라고 볼 수 있습니다. 선물·옵션 가격에는 이런 서로 다른 기대가 거래를 통해 반영됩니다.', '셋째는 가격 차이를 줄이고 거래를 원활하게 하기 위해서입니다. 현물과 선물 가격이 크게 벌어지면 차익거래자가 두 시장을 함께 사고팔아 차이를 좁히려 하고, 시장조성자는 매수·매도 주문이 잘 만나도록 유동성을 제공합니다.', '따라서 모든 방향 거래가 단순 도박은 아니지만, 이해 없이 “오를 것 같으니 크게 사자”처럼 거래하면 투기와 매우 가까워집니다. 특히 선물은 증거금으로 큰 계약을 다루므로 손실도 빠르게 커질 수 있습니다.']],
         ['주식 앱으로도 거래할 수 있나요?', ['많은 증권사 MTS·HTS는 한 앱 안에서 주식과 선물·옵션 메뉴를 함께 제공합니다. 하지만 주식 계좌만으로 바로 거래하는 것은 아니며, 파생상품 거래가 가능한 계좌와 거래 권한이 필요합니다.', '앱에 “선물/옵션” 메뉴가 보여도 거래가 허용됐다는 뜻은 아닙니다. 계좌 개설, 투자자 정보, 교육·모의거래, 예탁금, 거래 가능 단계가 모두 완료됐는지 차례로 확인해야 합니다.']],
@@ -1556,7 +1557,7 @@ KOSDAQ|웹젠|게임`,
   function renderTheoryIndex() {
     const dayCards = THEORY_DAYS.map(item => `
       <button class="theory-day-card" data-theory-day-link="${item.day}">
-        <span class="theory-day-number">DAY ${item.day}</span>
+        <span class="theory-day-number">${item.day}</span>
         <i class="fa-solid ${item.icon}"></i>
         <h2>${escHtml(item.title)}</h2>
         <p>${escHtml(item.subtitle)}</p>
@@ -1568,7 +1569,7 @@ KOSDAQ|웹젠|게임`,
       <article class="content-page theory-page">
         <header class="theory-index-head">
           <div>
-            <div class="content-kicker">5-DAY FINANCE THEORY</div>
+            <div class="content-kicker">5일 금융 이론</div>
             <h1><mark>금융상품·자산배분</mark> 이론</h1>
           </div>
           <p class="content-lead">각 일차 메뉴는 독립적으로 읽을 수 있습니다. 개념을 먼저 읽고, 궁금한 점은 RAG 학습으로 이어서 질문해 보세요.</p>
@@ -1600,7 +1601,7 @@ KOSDAQ|웹젠|게임`,
     $messages.innerHTML = `
       <article class="content-page theory-page theory-detail-page theory-day-${lesson.day}">
         <div class="theory-detail-heading">
-          <div class="theory-title-copy"><span class="theory-day-number">DAY ${lesson.day} / ${THEORY_DAYS.length}</span><i class="fa-solid ${lesson.icon}"></i><h1>${escHtml(lesson.title)}</h1><p>${escHtml(lesson.subtitle)}</p></div>
+          <div class="theory-title-copy"><span class="theory-day-number">${lesson.day} / ${THEORY_DAYS.length}</span><i class="fa-solid ${lesson.icon}"></i><h1>${escHtml(lesson.title)}</h1><p>${escHtml(lesson.subtitle)}</p></div>
           <div class="theory-title-side"><section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section><section class="lesson-dashboard" aria-label="오늘의 학습 대시보드"><div><span>READ</span><strong>${lesson.lessons.length}</strong><small>개념 카드</small></div><div><span>KEYWORDS</span><strong>${lesson.keywords.length}</strong><small>핵심 용어</small></div><div><span>CHECK</span><strong><i class="fa-solid fa-pen"></i></strong><small>마무리 질문</small></div></section></div>
         </div>
         <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄 용어를 누르면 상세 용어 설명이 열립니다.</p>
@@ -1652,7 +1653,7 @@ KOSDAQ|웹젠|게임`,
 
   function renderDayRoadmap(lesson) {
     return `<section class="day-roadmap" aria-label="${escHtml(lesson.title)} 전체 학습 목차">
-      <header><span>DAY ${String(lesson.day).padStart(2, '0')} · LEARNING MAP</span><h2>이 일차에서 확인할 모든 내용</h2><p>아래 항목은 이 페이지의 개념 카드로 바로 이동합니다. 핵심 개념, 국내 사례, 위험 점검을 한 일차 안에서 이어서 확인하세요.</p></header>
+      <header><span>${String(lesson.day).padStart(2, '0')} · LEARNING MAP</span><h2>이 일차에서 확인할 모든 내용</h2><p>아래 항목은 이 페이지의 개념 카드로 바로 이동합니다. 핵심 개념, 국내 사례, 위험 점검을 한 일차 안에서 이어서 확인하세요.</p></header>
       <ol>${lesson.lessons.map(([heading], index) => `<li><a href="#day-${lesson.day}-lesson-${index + 1}"><b>${String(index + 1).padStart(2, '0')}</b><span>${escHtml(heading)}</span><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a></li>`).join('')}</ol>
     </section>`;
   }
@@ -1735,7 +1736,7 @@ KOSDAQ|웹젠|게임`,
       },
     };
     const journey = journeys[day];
-    return `<section class="product-journey" aria-label="${journey.title}"><div class="product-journey-heading"><span>PRODUCT LENS · DAY ${String(day).padStart(2, '0')}</span><h2>${journey.title}</h2><p>${journey.lead}</p></div><div class="product-journey-grid">${journey.cards.map(([name, role, check]) => `<article><h3>${name}</h3><p>${role}</p><small><i class="fa-solid fa-check"></i> ${check}</small></article>`).join('')}</div><p class="product-journey-note"><i class="fa-solid fa-circle-info"></i> 상품별 설명서·약관·공시에서 실제 조건과 비용을 확인하세요. 이 내용은 교육용이며 매수·매도 권유가 아닙니다.</p></section>`;
+    return `<section class="product-journey" aria-label="${journey.title}"><div class="product-journey-heading"><span>PRODUCT LENS · ${String(day).padStart(2, '0')}</span><h2>${journey.title}</h2><p>${journey.lead}</p></div><div class="product-journey-grid">${journey.cards.map(([name, role, check]) => `<article><h3>${name}</h3><p>${role}</p><small><i class="fa-solid fa-check"></i> ${check}</small></article>`).join('')}</div><p class="product-journey-note"><i class="fa-solid fa-circle-info"></i> 상품별 설명서·약관·공시에서 실제 조건과 비용을 확인하세요. 이 내용은 교육용이며 매수·매도 권유가 아닙니다.</p></section>`;
   }
 
   function renderLendingFunnel() {
@@ -1863,7 +1864,7 @@ effective_date: [기준일]
   function renderDailyMarketMagazine(day) {
     const editions = {
       1: {
-        eyebrow: 'DAY 01 · MONEY & MARKET FIELD GUIDE',
+        eyebrow: '01 · MONEY & MARKET FIELD GUIDE',
         title: '내 돈은 어느 문을 통해<br><em>시장으로 들어갈까?</em>',
         deck: '투자의 첫 장면은 종목 화면이 아니라 계좌·상품·거래소의 역할을 이해하는 일입니다. 은행, 증권사, 자산운용사, 한국거래소가 맡은 일을 실제 이름과 함께 읽어 봅니다.',
         pulse: [['은행', 42], ['증권사', 76], ['운용사', 65], ['거래소', 88]],
@@ -1880,7 +1881,7 @@ effective_date: [기준일]
         checklist: ['상품 이름 대신 기초자산을 한 문장으로 쓰기', '운용사와 주문을 받는 증권사를 구분하기', '“언제 써야 하는 돈인가”를 상품보다 먼저 정하기'],
       },
       2: {
-        eyebrow: 'DAY 02 · ETF & FUND READING ROOM',
+        eyebrow: '02 · ETF & FUND READING ROOM',
         title: '유명한 이름보다 먼저,<br><em>상품의 구조를 읽기</em>',
         deck: 'ETF·펀드·리츠·ETN은 모두 여러 자산 또는 지수와 연결되지만, 운용 주체, 거래 방식, 비용과 위험은 다릅니다. 상품명에서 확인 항목까지 한 흐름으로 살펴봅니다.',
         pulse: [['기초지수', 92], ['총보수', 67], ['유동성', 79], ['구조 위험', 58]],
@@ -1897,7 +1898,7 @@ effective_date: [기준일]
         checklist: ['ETF 브랜드와 운용사를 한 쌍으로 적기', '주문 증권사와 상품 운용사를 구분하기', 'ETF 두 개의 기초지수·비용·거래량을 비교하기'],
       },
       3: {
-        eyebrow: 'DAY 03 · RATES, BONDS & HEDGING DESK',
+        eyebrow: '03 · RATES, BONDS & HEDGING DESK',
         title: '금리 한 번의 변화가<br><em>채권과 기업을 잇는 방식</em>',
         deck: '기준금리는 예금·대출만의 숫자가 아닙니다. 채권 가격, 금융주 이익, 원화 가치, 성장주 할인율까지 연결됩니다. 선물·옵션은 이 연결을 거래하는 도구지만 위험도 함께 커집니다.',
         pulse: [['기준금리', 68], ['국채', 84], ['환율', 73], ['파생상품', 91]],
@@ -1914,7 +1915,7 @@ effective_date: [기준일]
         checklist: ['채권 ETF의 평균 만기와 듀레이션 확인하기', '금리 기사에서 기준금리와 시장금리를 구분하기', '파생 주문 전 최대손실·유지증거금부터 적기'],
       },
       4: {
-        eyebrow: 'DAY 04 · RISK, DRAWDOWN & DIVERSIFICATION',
+        eyebrow: '04 · RISK, DRAWDOWN & DIVERSIFICATION',
         title: '좋은 종목을 많이 사도<br><em>위험은 겹칠 수 있습니다</em>',
         deck: '포트폴리오 위험은 종목 개수만으로 줄지 않습니다. 한국 대형주, 반도체 ETF, AI 테마 ETF가 같은 방향으로 움직일 때 생기는 겹침과 최대낙폭을 시각적으로 읽어 봅니다.',
         pulse: [['집중위험', 88], ['상관관계', 74], ['변동성', 66], ['유동성', 52]],
@@ -1931,7 +1932,7 @@ effective_date: [기준일]
         checklist: ['ETF와 직접 보유 종목의 중복 비중 합산하기', '가장 큰 하락을 견딜 수 있는지 금액으로 써 보기', '테마가 아니라 수요·원가·환율의 공통 변수를 찾기'],
       },
       5: {
-        eyebrow: 'DAY 05 · PORTFOLIO EDITORIAL',
+        eyebrow: '05 · PORTFOLIO EDITORIAL',
         title: '종목을 고른 뒤가 아니라,<br><em>목표부터 포트폴리오로</em>',
         deck: '자산배분은 시장을 예측하는 게임보다 목표·기간·손실 허용범위를 역할별로 나누는 과정에 가깝습니다. 국내 대표 ETF와 기업 사례를 “성장·완충·유동성”의 언어로 다시 배치합니다.',
         pulse: [['성장자산', 78], ['채권완충', 56], ['현금유동성', 43], ['리밸런싱', 86]],
@@ -1964,7 +1965,7 @@ effective_date: [기준일]
     const companies = COMPANY_ATLAS[day] || [];
     const counts = companies.reduce((acc, [market]) => ({ ...acc, [market]: (acc[market] || 0) + 1 }), {});
     return `<section class="company-atlas" aria-label="${day}일차 국내 상장사 40개 아틀라스">
-      <header class="atlas-header"><div><span>KOREAN LISTED COMPANY ATLAS · DAY ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를<br>사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>DAY<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
+      <header class="atlas-header"><div><span>KOREAN LISTED COMPANY ATLAS · ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를<br>사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>일차<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
       <div class="atlas-toolbar"><div class="atlas-count"><span><b>${companies.length}</b> COMPANIES</span><i></i><span>KOSPI <b>${counts.KOSPI || 0}</b></span><i></i><span>KOSDAQ <b>${counts.KOSDAQ || 0}</b></span></div><div class="atlas-filters" role="group" aria-label="시장별 기업 필터"><button class="active" data-atlas-filter="all">전체 ${companies.length}</button><button data-atlas-filter="KOSPI">KOSPI ${counts.KOSPI || 0}</button><button data-atlas-filter="KOSDAQ">KOSDAQ ${counts.KOSDAQ || 0}</button></div></div>
       <div class="atlas-arrow-line"><span>시장</span><i></i><span>산업</span><i></i><span>핵심 변수</span><i></i><span>위험</span></div>
       <div class="atlas-grid">${companies.map(([market, name, sector], index) => {

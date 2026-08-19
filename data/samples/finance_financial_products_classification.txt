@@ -1,25 +1,3 @@
-# 모듈 8 도입 — 금융상품의 구분 (자본시장법 기준)
-
-> **모듈 8: 퀀트를 위한 금융 필수 지식** | 도입 | 🏦
-
-> 이 모듈에서 배울 주식, ETF, 펀드는 모두 자본시장법상 **금융투자상품**에 해당합니다.  
-> 상품을 배우기 전에 법적 분류 체계를 먼저 확인하면, 각 상품의 규제·위험·운용 방식을 맥락 있게 이해할 수 있습니다.  
-> 자세한 내용은 [42.md — 금융 규제·산업 구조 기초](42.md)를 참고하세요.
->
-> 📝 **한자 병기 및 어원 사전**: 이 문서에 등장하는 용어의 한자·어원·일제강점기 유래는 → [voca.md](voca.md)
-
-### 금융상품 분류 한눈에 보기
-
-| 대분류 | 소분류 | 원본 손실 | 이 모듈 연관 |
-|--------|--------|-----------|--------------|
-| **금융투자상품** | 지분증권 (주식) | 가능 | Day 052 |
-| **금융투자상품** | 수익증권 (ETF·펀드) | 가능 | Day 052 |
-| **비금융투자상품** | 예금·보험 | 원본 보장 | 참고용 |
-
-> 금융회사의 종류, 자본시장법, 위탁·수탁·신탁, 수신·여신의 개념 → [42.md](42.md) 참조
-
----
-
 # 투자자산운용사(2과목) 문항 구성 한눈에 보기
 
 > 과목: **투자운용 및 전략 Ⅱ(2) 및 투자분석**  
@@ -70,13 +48,11 @@
 
 ---
 
-# Day 052 — 주식 및 ETF 상품 이해
+# 주식 및 ETF 상품 이해
 
-> **모듈 8: 퀀트를 위한 금융 필수 지식** | 1/5일차 | 🏦 | 학습시간: 8시간
 
 ---
 
-> 📺 **YouTube 강의**: [🎬 주식 ETF 상품 투자 이해](https://www.youtube.com/results?search_query=주식+ETF+상품+투자+한국어+설명+강의)
 
 ## 오늘 배울 것
 
@@ -85,36 +61,6 @@
 - ETF(상장지수펀드)의 구조와 종류
 - ETF 운용 전략: 패시브, 액티브, 팩터 ETF
 - 실습: ETF 성과 비교 분석
-
----
-
-## 🗓 세부 일정 (1일 8시간)
-
-> **강의 5시간** (5개 단락 × 50분 + 도입·마무리 50분) + **실습 3시간** = 총 8시간
-
-| 시간 | 구분 | 내용 | 형태 |
-|------|------|------|------|
-| 09:00 – 09:10 | 도입 | 오늘 학습 목표 확인 | 강의 |
-| 09:10 – 09:30 | **1단락** 설명 20분 | 주식 시장 구조 | 강의 |
-| 09:30 – 10:00 | 각자 정리 & 유튜브 30분 | 코스피·코스닥·나스닥 비교 영상 검색 | 자율 |
-| 10:00 – 10:20 | **2단락** 설명 20분 | EPS, 배당, 시가총액 | 강의 |
-| 10:20 – 10:50 | 각자 정리 & 유튜브 30분 | 기업 재무지표 노트 정리 | 자율 |
-| 10:50 – 11:00 | ☕ 휴식 | — | — |
-| 11:00 – 11:20 | **3단락** 설명 20분 | ETF 구조와 종류 | 강의 |
-| 11:20 – 11:50 | 각자 정리 & 유튜브 30분 | ETF 상품 설명서 읽기 | 자율 |
-| 11:50 – 12:10 | **4단락** 설명 20분 | ETF 운용 전략 | 강의 |
-| 12:10 – 12:40 | 각자 정리 & 유튜브 30분 | 패시브·액티브·팩터 ETF 사례 정리 | 자율 |
-| 12:40 – 13:00 | **5단락** 설명 20분 | ETF 성과 비교 방법 | 강의 |
-| 13:00 – 13:30 | 각자 정리 & 유튜브 30분 | 성과 지표 복습 | 자율 |
-| 13:30 – 14:00 | 강의 마무리 | Q&A · 핵심 복습 | 강의 |
-| 14:00 – 15:00 | 💻 **실습 1부** 60분 | ETF 가격 데이터 수집 및 수익률 계산 | 실습 |
-| 15:00 – 15:10 | ☕ 휴식 | — | — |
-| 15:10 – 16:00 | 💻 **실습 2부** 50분 | 누적수익률·변동성·MDD 비교 | 실습 |
-| 16:00 – 16:10 | ☕ 휴식 | — | — |
-| 16:10 – 17:00 | 💻 **실습 발표 & 리뷰** 50분 | ETF 비교 결과 발표 · 피드백 | 실습 |
-
-> 강의 5시간: 도입 10분 + 단락 5개×50분 + 마무리 30분 = **300분**  
-> 실습 3시간: 1부 60분 + 휴식 10분 + 2부 50분 + 휴식 10분 + 발표·리뷰 50분 = **180분**
 
 ---
 
@@ -157,7 +103,6 @@
 
 ## 🧒 주식이란? — 초급자도 이해하는 설명
 
-> 📺 [🎬 주식이란 초급자도 이해하는 설명](https://www.youtube.com/results?search_query=주식이란+초급자도+이해하는+설명+한국어)
 
 > **한 줄 요약**: 회사의 아주 작은 주인이 되는 것
 
@@ -199,19 +144,7 @@
 | 코스닥 | 성장주·중소형주 중심 | 변동성, 거래대금, 테마 민감도 |
 | 나스닥 | 기술주·성장주 비중 높음 | 금리 민감도, 성장률, 밸류에이션 |
 
-> 📺 [🎬 코스피 코스닥 나스닥 차이](https://www.youtube.com/results?search_query=코스피+코스닥+나스닥+차이+한국어)
 
-```python
-markets = {
-    "KOSPI": {"return": 0.08, "volatility": 0.18},
-    "KOSDAQ": {"return": 0.12, "volatility": 0.30},
-    "NASDAQ": {"return": 0.15, "volatility": 0.25},
-}
-
-for market, stats in markets.items():
-    score = stats["return"] / stats["volatility"]
-    print(f"{market}: 단순 위험대비수익 {score:.2f}")
-```
 
 ---
 
@@ -257,7 +190,6 @@ for market, stats in markets.items():
 
 #### 1-C. 코스닥의 역사
 
-> 📺 [🎬 코스닥 역사 설명](https://www.youtube.com/results?search_query=코스닥+역사+설립+배경+한국어)
 
 ```
 1996 ─ 코스닥 설립 (7월 1일)
@@ -296,7 +228,6 @@ for market, stats in markets.items():
 
 #### 1-D. 코스피 vs 코스닥 — 상세 비교
 
-> 📺 [🎬 코스피 코스닥 차이 비교](https://www.youtube.com/results?search_query=코스피+코스닥+차이+비교+한국어)
 
 두 시장은 같은 KRX 내에서 운영되지만 **상장 기업의 성격, 요건, 투자자 행동, 리스크 프로파일**이 크게 다릅니다.
 
@@ -342,31 +273,6 @@ for market, stats in markets.items():
 
 ##### 5) 퀀트 분석 관점 비교
 
-```python
-# 코스피 vs 코스닥 대표 특성 비교 (개념 예시)
-market_profile = {
-    "KOSPI": {
-        "avg_market_cap_억원": 15_000,   # 대형주 중심
-        "annual_volatility": 0.18,        # 상대적으로 낮은 변동성
-        "foreign_ownership_pct": 0.33,    # 높은 외국인 비중
-        "key_sector": "반도체·자동차·금융",
-        "tax_rate": 0.0003 + 0.0015,      # 매도 시 0.18%
-    },
-    "KOSDAQ": {
-        "avg_market_cap_억원": 1_200,     # 중소형주 중심
-        "annual_volatility": 0.30,        # 높은 변동성
-        "foreign_ownership_pct": 0.12,    # 낮은 외국인 비중
-        "key_sector": "바이오·IT·게임",
-        "tax_rate": 0.0018,               # 매도 시 0.18%
-    },
-}
-
-for mkt, info in market_profile.items():
-    print(f"[{mkt}]")
-    for k, v in info.items():
-        print(f"  {k}: {v}")
-    print()
-```
 
 ##### 6) 초급자도 이해하는 비유
 
@@ -389,7 +295,6 @@ for mkt, info in market_profile.items():
 | 이차전지·소재 | 배터리 셀·소재·부품 | 수주 잔고, 고객사 다변화, 원재료 가격 |
 | 반도체 장비·부품 | 팹리스, 테스트 장비, 소재 | 삼성·SK하이닉스 의존도, 글로벌 수주 |
 
-> 📺 [🎬 코스닥 대표 섹터 투자](https://www.youtube.com/results?search_query=코스닥+섹터+바이오+IT+게임+투자+한국어)
 
 ---
 
@@ -573,22 +478,7 @@ for mkt, info in market_profile.items():
 | 배당수익률 | 주당배당금 ÷ 주가 | 현금 배당 매력 |
 | 시가총액 | 주가 × 발행주식수 | 시장이 평가한 기업 전체 가치 |
 
-> 📺 [🎬 EPS PER 배당수익률 설명](https://www.youtube.com/results?search_query=EPS+PER+배당수익률+주식+한국어)
 
-```python
-price = 50000
-net_income = 1_200_000_000_000
-shares = 100_000_000
-dividend_per_share = 1500
-
-eps = net_income / shares
-per = price / eps
-dividend_yield = dividend_per_share / price
-
-print(f"EPS: {eps:,.0f}원")
-print(f"PER: {per:.1f}배")
-print(f"배당수익률: {dividend_yield:.2%}")
-```
 
 #### 배당 심화 — 언제 받나? 누가 정하나? 주총이란? 법적 의무인가?
 
@@ -663,14 +553,6 @@ print(f"배당수익률: {dividend_yield:.2%}")
 > 💡 **배당성향(Payout Ratio)**: 당기순이익 중 배당금으로 지급한 비율 (`배당총액 ÷ 당기순이익`).  
 > 성숙 기업(통신, 유틸리티 등)은 배당성향이 높고, 성장 기업은 낮거나 0%인 경우가 많습니다.
 
-```python
-# 배당성향 계산 예시
-net_income = 1_200_000_000_000   # 당기순이익 1.2조원
-total_dividend = 150_000_000_000  # 배당총액 1500억원
-
-payout_ratio = total_dividend / net_income
-print(f"배당성향: {payout_ratio:.1%}")   # → 12.5%
-```
 
 ---
 
@@ -695,21 +577,11 @@ print(f"배당성향: {payout_ratio:.1%}")   # → 12.5%
 | **호가 스프레드** | `최우선 매도호가 - 최우선 매수호가` | 좁을수록 거래비용·슬리피지 부담↓ |
 | **체결 원리** | 매수호가가 매도호가 이상이면 체결 | 주문 가격을 공격적으로 넣을수록 체결 속도↑ |
 
-```python
-# 호가 예시
-best_bid = 50_000   # 최우선 매수호가
-best_ask = 50_050   # 최우선 매도호가
-spread = best_ask - best_bid
-spread_pct = spread / best_bid * 100
-
-print(f"호가 스프레드: {spread}원 ({spread_pct:.3f}%)")
-```
 
 ---
 
 ## 🧒 펀드란? — 초급자도 이해하는 설명
 
-> 📺 [🎬 펀드란 초급자도 이해하는 설명](https://www.youtube.com/results?search_query=펀드란+초급자도+이해하는+설명+한국어)
 
 > **한 줄 요약**: 여럿이 돈을 모아 전문가에게 대신 투자하게 맡기는 것
 
@@ -753,20 +625,6 @@ print(f"호가 스프레드: {spread}원 ({spread_pct:.3f}%)")
 
 **비용 계산 예시** — 1,000만원을 2년간 투자했을 때
 
-```python
-investment = 10_000_000  # 1,000만원
-
-# A클래스: 선취수수료 1% + 연간 보수 0.8%
-class_A_cost = investment * 0.01 + investment * 0.008 * 2
-# C클래스: 선취수수료 0% + 연간 보수 1.5%
-class_C_cost = investment * 0.00 + investment * 0.015 * 2
-# Ae클래스: 선취수수료 0.5% + 연간 보수 0.6%
-class_Ae_cost = investment * 0.005 + investment * 0.006 * 2
-
-print(f"A클래스  총비용: {class_A_cost:,.0f}원")   # 선취+보수
-print(f"C클래스  총비용: {class_C_cost:,.0f}원")   # 보수만
-print(f"Ae클래스 총비용: {class_Ae_cost:,.0f}원")  # 온라인 할인
-```
 
 > 💡 **클래스 선택 기준**: 2년 이상 장기라면 A(Ae), 1년 미만 단기라면 C(Ce)가 일반적으로 유리합니다.  
 > 동일한 펀드라도 클래스별 ISIN 코드가 다르므로, 가입 전 클래스명과 보수를 반드시 확인하세요.
@@ -775,7 +633,6 @@ print(f"Ae클래스 총비용: {class_Ae_cost:,.0f}원")  # 온라인 할인
 
 ## 🧒 ETF란? — 초급자도 이해하는 설명
 
-> 📺 [🎬 ETF란 초급자도 이해하는 설명](https://www.youtube.com/results?search_query=ETF란+초급자도+이해하는+설명+한국어)
 
 > **한 줄 요약**: 주식처럼 실시간으로 사고팔 수 있는 펀드
 
@@ -849,7 +706,6 @@ KODEX 200 ETF 한 주를 사면
 
 ETF는 펀드처럼 여러 자산을 담고 있지만 주식처럼 거래소에서 실시간 매매할 수 있는 상품입니다. 퀀트 실습에서는 개별 종목보다 데이터가 안정적이고, 섹터·국가·팩터를 쉽게 비교할 수 있어 자주 사용합니다.
 
-> 📺 [🎬 ETF란 무엇인가](https://www.youtube.com/results?search_query=ETF란+무엇인가+상장지수펀드+한국어)
 
 #### 3-1. NAV(순자산가치)와 괴리율
 
@@ -862,20 +718,6 @@ ETF를 이해하려면 **NAV**를 먼저 알아야 합니다.
 | **괴리율** | ETF 시장가격이 NAV에서 얼마나 벗어났는지 | `(시장가격 - NAV) ÷ NAV × 100` |
 | **추적오차** (Tracking Error) | ETF 수익률과 추종 지수 수익률의 차이 | `std(ETF 수익률 - 지수 수익률)` |
 
-```python
-# NAV·괴리율·추적오차 계산 예시
-total_assets = 10_050_000_000  # 100.5억원 (편입 자산 시가)
-liabilities   = 50_000_000     # 5,000만원 (운용 비용 등)
-shares_out    = 1_000_000      # 발행 주식 수
-
-nav = (total_assets - liabilities) / shares_out  # 주당 NAV
-market_price = 10_100           # 현재 시장가격
-
-gap = (market_price - nav) / nav * 100
-print(f"NAV: {nav:,.0f}원")
-print(f"시장가: {market_price:,}원")
-print(f"괴리율: {gap:+.2f}%")   # 양수=프리미엄, 음수=디스카운트
-```
 
 > 💡 괴리율이 크면 NAV보다 비싸게(또는 싸게) 사게 됩니다. **±1% 이내**의 괴리율이 정상 범위입니다.  
 > 유동성이 낮은 ETF(거래량 적음)는 괴리율이 커질 수 있어 주의가 필요합니다.
@@ -921,21 +763,6 @@ ETF를 고를 때는 단순히 수익률 1개만 보지 말고, 아래 4가지�
 4. 추적오차가 작은 ETF를 우선 고려한다.
 5. 조건이 비슷하면 총보수가 더 낮은 ETF를 선택한다.
 
-```python
-# ETF 2개 비교를 위한 단순 점수 예시 (학습용)
-etf_a = {"name": "ETF_A", "return_pct": 12.4, "gap_pct": 0.15, "te_pct": 0.28, "ter_pct": 0.07}
-etf_b = {"name": "ETF_B", "return_pct": 11.8, "gap_pct": 0.45, "te_pct": 0.62, "ter_pct": 0.20}
-
-def score(x):
-    # 높을수록 좋은 항목: 수익률
-    ret_score = x["return_pct"]
-    # 낮을수록 좋은 항목: 괴리율/추적오차/보수
-    cost_score = 100 - (x["gap_pct"] * 20 + x["te_pct"] * 20 + x["ter_pct"] * 10)
-    return ret_score * 0.6 + cost_score * 0.4
-
-print(etf_a["name"], round(score(etf_a), 2))
-print(etf_b["name"], round(score(etf_b), 2))
-```
 
 > ⚠️ 위 점수식은 학습용입니다. 실제 투자에서는 거래량, 상장폐지 위험, 분배금 정책, 과세 구조까지 함께 확인해야 합니다.
 
@@ -1005,20 +832,6 @@ ETF 문맥에서 **섹터는 업종**을 뜻합니다.
 > 💡 달러 강세 국면에서는 환노출이 유리하고, 달러 약세 국면에서는 환헤지가 유리합니다.  
 > 어느 쪽이 맞는지 알 수 없으므로 **두 ETF를 반반 섞는** 방법도 있습니다.
 
-```python
-# 환헤지 여부에 따른 수익률 차이 시뮬레이션
-import numpy as np
-
-np.random.seed(42)
-usd_index_return  = 0.10   # S&P500 달러 기준 10% 상승
-krw_usd_change    = 0.05   # 원/달러 5% 상승 (원화 약세 = 달러 강세)
-
-hedged_return   = usd_index_return                          # 환헤지: 환율 영향 제거
-unhedged_return = (1 + usd_index_return) * (1 + krw_usd_change) - 1  # 환노출: 환율 반영
-
-print(f"환헤지  수익률: {hedged_return:.1%}")    # 10.0%
-print(f"환노출  수익률: {unhedged_return:.1%}")  # 15.5% (달러 강세 덕분)
-```
 
 ---
 
@@ -1035,7 +848,6 @@ print(f"환노출  수익률: {unhedged_return:.1%}")  # 15.5% (달러 강세 �
 | 팩터 ETF | 특정 요인 노출 | 가치·모멘텀 등 규칙 기반 | 팩터 부진 구간 존재 |
 | 레버리지/인버스 | 단기 방향성 거래 | 큰 수익 가능 | 장기 보유 시 복리 손실 위험 |
 
-> 📺 [🎬 패시브 액티브 팩터 ETF 차이](https://www.youtube.com/results?search_query=패시브+액티브+팩터+ETF+차이+한국어)
 
 ---
 
@@ -1043,50 +855,9 @@ print(f"환노출  수익률: {unhedged_return:.1%}")  # 15.5% (달러 강세 �
 
 이번 실습의 목표는 ETF 가격 데이터를 수집해 **수익률, 누적수익률, 변동성, MDD**를 비교하는 것입니다.
 
-```python
-import yfinance as yf
-import pandas as pd
-
-tickers = ["SPY", "QQQ", "TLT", "GLD"]
-prices = yf.download(tickers, start="2020-01-01", auto_adjust=True)["Close"]
-returns = prices.pct_change().dropna()
-
-cumulative = (1 + returns).cumprod()
-total_return = cumulative.iloc[-1] - 1
-volatility = returns.std() * (252 ** 0.5)
-drawdown = cumulative / cumulative.cummax() - 1
-mdd = drawdown.min()
-
-summary = pd.DataFrame({
-    "total_return": total_return,
-    "volatility": volatility,
-    "mdd": mdd,
-}).sort_values("total_return", ascending=False)
-
-print(summary.round(4))
-```
-
-#### 🔗 Python 소스 연계
-
-웹앱에서는 ETF 티커를 `/api/macro/realtime` 또는 별도 시장 데이터 API에 전달해 같은 성과 비교 화면을 만들 수 있습니다.
-
-```mermaid
-sequenceDiagram
-    participant F as Frontend<br/>(etfCompare.js)
-    participant A as /api/market/history
-    participant Y as yfinance
-
-    F->>A: POST {tickers: ["SPY", "QQQ", "TLT", "GLD"], period: "5y"}
-    A->>Y: yf.download(tickers, period="5y")
-    Y-->>A: OHLCV 시계열
-    A-->>F: 가격·수익률·성과지표 JSON
-```
-
----
 
 ## 6. 한국인을 위한 해외 주식 투자 완전 가이드
 
-> 📺 [🎬 해외주식 투자 방법 총정리](https://www.youtube.com/results?search_query=한국인+해외주식+투자+방법+총정리)
 
 ### 6-0. 왜 해외 투자인가? — 분산 효과 한눈에 보기
 
@@ -1194,21 +965,6 @@ sequenceDiagram
 
 **③ 원/달러 환율이 수익률에 미치는 영향**
 
-```python
-# 미국 주식 원화 환산 실질 수익률 계산 예시
-usd_stock_return = 0.10     # 달러 기준 미국 주식 10% 상승
-krw_per_usd_start = 1300    # 투자 당시 환율: 1달러 = 1300원
-krw_per_usd_end   = 1400    # 회수 당시 환율: 1달러 = 1400원
-
-exchange_rate_change = krw_per_usd_end / krw_per_usd_start - 1  # +7.7%
-
-# 원화 환산 수익률
-krw_total_return = (1 + usd_stock_return) * (1 + exchange_rate_change) - 1
-
-print(f"달러 수익률: {usd_stock_return:.1%}")          # 10.0%
-print(f"환율 변동률: {exchange_rate_change:.1%}")      # +7.7% (원화 약세)
-print(f"원화 실질 수익률: {krw_total_return:.1%}")     # 18.5% (환차익 추가)
-```
 
 > ⚠️ 반대로 원화 강세(달러 약세) 시에는 달러 수익이 원화 환산 시 줄어들 수 있습니다.
 
@@ -1446,7 +1202,6 @@ print(f"원화 실질 수익률: {krw_total_return:.1%}")     # 18.5% (환차익
 
 ## 해보기 활동
 
-> 📺 [🎬 해보기 활동](https://www.youtube.com/results?search_query=해보기+활동+한국어)
 
 1. 국내 ETF 3개와 해외 ETF 3개를 골라 운용보수, 거래대금, 추종지수를 비교해보세요.
 2. `SPY`, `QQQ`, `TLT`, `GLD`의 누적수익률과 MDD를 계산해 어떤 자산이 방어 역할을 했는지 확인해보세요.
@@ -1599,4 +1354,3 @@ print(f"원화 실질 수익률: {krw_total_return:.1%}")     # 18.5% (환차익
 ### 💡 요약
 * 장 초반(09:00~10:00) 거래대금이 몰리는 **핫한 주도주**에서는 **1분~3분** 내외 도달이 이상적입니다.
 * 장중(11:00 이후) 완만하게 흘러가는 **추세 매매**에서는 **10분~20분** 정도를 대략적인 기준으로 잡고 대응하는 것이 좋습니다.
-
