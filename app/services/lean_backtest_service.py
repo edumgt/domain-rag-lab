@@ -61,7 +61,10 @@ class LeanBacktestService:
 
         buffer_days = self._lookback_buffer(strategy, long_window, breakout_window)
         fetch_start = min(start_date, compare_start_date) - timedelta(days=buffer_days)
-        prices = yf.download(ticker, start=fetch_start.isoformat(), end=max(end_date, compare_end_date).isoformat(), auto_adjust=True, progress=False)
+        # yfinance's end argument is exclusive. Include the selected final day so the
+        # on-screen date range and the calculation match.
+        download_end = max(end_date, compare_end_date) + timedelta(days=1)
+        prices = yf.download(ticker, start=fetch_start.isoformat(), end=download_end.isoformat(), auto_adjust=True, progress=False)
         if prices.empty or "Close" not in prices:
             raise LeanBacktestError("yfinance에서 해당 기간의 종가를 받지 못했습니다.")
         close = prices["Close"]
@@ -105,6 +108,7 @@ class LeanBacktestService:
         benchmark_return = self._return(series)
         comparison_return = self._return(comparison)
         drawdown = (strategy_curve / strategy_curve.cummax() - 1).min() * 100
+        analytics = self._analytics(strategy, close, strategy_curve, start_date, end_date, short_window, long_window, dca_interval_days, breakout_window)
         points = [{"date": idx.strftime("%Y-%m-%d"), "value": round(float(value * initial_cash), 2)} for idx, value in strategy_curve.iloc[::max(1, len(strategy_curve) // 80)].items()]
         return {
             "ticker": ticker,
@@ -116,9 +120,64 @@ class LeanBacktestService:
             "comparison_return_pct": round(comparison_return, 2),
             "outperformance_pct": round(strategy_return - comparison_return, 2),
             "max_drawdown_pct": round(float(drawdown), 2),
+            **analytics,
             "points": points,
             "lean_log": lean_log[-6000:],
             "disclaimer": "yfinance 일봉 기반 교육용 예시입니다. 배당·세금·수수료·슬리피지·데이터 품질과 실제 체결은 반영하지 않으며 투자 권유가 아닙니다.",
+        }
+
+    def _analytics(self, strategy: str, close, strategy_curve, start_date: date, end_date: date, short_window: int, long_window: int, dca_interval_days: int, breakout_window: int) -> dict:
+        """Return descriptive risk and trend facts, not a buy/sell recommendation."""
+        daily = strategy_curve.pct_change().dropna()
+        periods = max(1, len(strategy_curve) - 1)
+        years = periods / 252
+        annualized_return = ((float(strategy_curve.iloc[-1]) / float(strategy_curve.iloc[0])) ** (1 / years) - 1) * 100 if years > 0 else 0.0
+        annualized_volatility = float(daily.std(ddof=0) * (252 ** 0.5) * 100) if len(daily) else 0.0
+        sharpe = ((annualized_return / 100) - 0.02) / (annualized_volatility / 100) if annualized_volatility else 0.0
+
+        if strategy == "ma_cross":
+            position = self._position_ma_cross(close, short_window, long_window)
+        elif strategy == "momentum":
+            position = self._position_momentum(close, breakout_window)
+        elif strategy == "dca":
+            position = close * 0
+            window = position.loc[(position.index.date >= start_date) & (position.index.date <= end_date)]
+            for i, idx in enumerate(window.index):
+                position.loc[idx] = min(1.0, (i // max(1, dca_interval_days) + 1) / max(1, (len(window) - 1) // max(1, dca_interval_days) + 1))
+        else:
+            position = close * 0 + 1.0
+        position_window = position.loc[(position.index.date >= start_date) & (position.index.date <= end_date)]
+        invested_days = float(position_window.mean() * 100) if len(position_window) else 0.0
+        changes = position_window.diff().fillna(position_window.iloc[0] if len(position_window) else 0)
+        trade_count = int((changes.abs() > 0.001).sum())
+
+        price_window = close.loc[(close.index.date >= start_date) & (close.index.date <= end_date)]
+        last = float(price_window.iloc[-1])
+        ma20 = float(price_window.rolling(20).mean().iloc[-1]) if len(price_window) >= 20 else None
+        ma60 = float(price_window.rolling(60).mean().iloc[-1]) if len(price_window) >= 60 else None
+        ret20 = self._return(price_window.iloc[-21:]) if len(price_window) >= 21 else None
+        high_252 = float(price_window.iloc[-252:].max())
+        low_252 = float(price_window.iloc[-252:].min())
+        range_position = ((last - low_252) / (high_252 - low_252) * 100) if high_252 > low_252 else 50.0
+        if ma20 is not None and ma60 is not None:
+            trend = "상승 추세 관찰" if last > ma20 > ma60 else "하락·횡보 구간 관찰" if last < ma20 < ma60 else "추세 혼조 구간"
+        else:
+            trend = "추세 판단에 필요한 거래일이 부족함"
+        return {
+            "annualized_return_pct": round(annualized_return, 2),
+            "annualized_volatility_pct": round(annualized_volatility, 2),
+            "sharpe_ratio": round(sharpe, 2),
+            "invested_days_pct": round(invested_days, 1),
+            "trade_count": trade_count,
+            "market_snapshot": {
+                "as_of": price_window.index[-1].strftime("%Y-%m-%d"),
+                "last_price": round(last, 2),
+                "return_20d_pct": round(ret20, 2) if ret20 is not None else None,
+                "ma20": round(ma20, 2) if ma20 is not None else None,
+                "ma60": round(ma60, 2) if ma60 is not None else None,
+                "range_252d_position_pct": round(range_position, 1),
+                "trend": trend,
+            },
         }
 
     # ── strategy dispatch ────────────────────────────────────────────

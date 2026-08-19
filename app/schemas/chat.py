@@ -107,6 +107,12 @@ class BacktestResponse(BaseModel):
     comparison_return_pct: float
     outperformance_pct: float
     max_drawdown_pct: float
+    annualized_return_pct: float
+    annualized_volatility_pct: float
+    sharpe_ratio: float
+    invested_days_pct: float
+    trade_count: int
+    market_snapshot: dict
     points: list[dict]
     lean_log: str
     disclaimer: str
