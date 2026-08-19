@@ -162,7 +162,7 @@ API_BASE_URL=http://localhost:8190 streamlit run streamlit_app.py
 
 ### 일자별 학습
 
-일자별 학습은 메인 화면의 5일 이론 메뉴에서 제공합니다. 학습 내용은 정적 프런트엔드 자산으로 구성하며, TXT 원문을 브라우저에서 불러오는 별도 학습 라이브러리는 제공하지 않습니다.
+일자별 학습은 메인 화면의 5일 이론 메뉴에서 제공합니다. 핵심 개념은 정적 프런트엔드 자산으로 구성하고, `data` 아래의 모든 텍스트 학습 문서는 주제별로 1~5일차 페이지에 한 번씩 배정해 **DATA 원문 상세 학습 자료**로 표시합니다. 따라서 문서를 갱신하면 배정된 일차의 원문 학습 자료에도 반영됩니다.
 
 ### 선물·옵션 교육용 시뮬레이터
 
@@ -222,7 +222,7 @@ done
 | `finance_financial_products_classification.txt` | 금융투자상품 분류, 주식·ETF·펀드 기초 |
 | `finance_etf_deep_dive.txt` | 일반펀드와 ETF의 비용·유동성·추적오차 비교 |
 | `finance_portfolio_theory.txt` | MPT, 효율적 투자선, CAGR·MDD·샤프 비율 |
-| `finance_asset_allocation.txt` | 평균-분산, 블랙-리터만, Risk Parity, 자산배분 사례 |
+| `finance_asset_allocation.txt` | 평균-분산, 블랙-리터만, Risk Parity, 자산배분 사례 및 증권사·HTS/MTS 주문 구조, KRX·NXT 통합시세·SOR |
 | `finance_stock_dividend_basics.txt` | 주식·배당 및 금융상품 기초 |
 | `finance_valuation_multiples.txt` | PER·PBR 등 상대가치 평가 |
 | `finance_quantopian_intro.txt` | 퀀토피안의 역사적 역할, Zipline 등 오픈소스 도구, LEAN과의 차이와 백테스트 유의사항 |

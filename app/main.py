@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
+from pathlib import Path
 
 from pgvector.sqlalchemy import Vector  # noqa: F401 — SQLAlchemy type 등록
 
@@ -44,52 +45,60 @@ app.include_router(chat_router)
 
 # Serve frontend static files
 _frontend_dir = os.path.join(os.path.dirname(__file__), "..", "frontend")
-_sample_documents_dir = os.path.join(os.path.dirname(__file__), "..", "data", "samples")
+_data_dir = Path(os.path.join(os.path.dirname(__file__), "..", "data")).resolve()
+_learning_text_extensions = {".txt", ".md", ".mdx"}
 
 
-def _sample_document_title(path: str) -> str:
+def _learning_document_title(path: Path) -> str:
     """Return the first Markdown H1, falling back to the file stem."""
     try:
-        with open(path, "r", encoding="utf-8") as source:
+        with path.open("r", encoding="utf-8") as source:
             for line in source:
                 if line.startswith("# "):
                     return line[2:].strip()
     except OSError:
         pass
-    return os.path.splitext(os.path.basename(path))[0]
+    return path.stem
 
 
 @app.get("/learning/documents")
 def list_learning_documents():
-    """Expose every bundled TXT learning document to the HTML learning library."""
-    if not os.path.isdir(_sample_documents_dir):
+    """Expose every text learning document stored beneath ``data``."""
+    if not _data_dir.is_dir():
         return []
 
     documents = []
-    for filename in sorted(os.listdir(_sample_documents_dir)):
-        if not filename.endswith(".txt"):
+    for path in sorted(_data_dir.rglob("*")):
+        if not path.is_file() or path.suffix.lower() not in _learning_text_extensions:
             continue
-        path = os.path.join(_sample_documents_dir, filename)
-        if os.path.isfile(path):
-            documents.append({"filename": filename, "title": _sample_document_title(path)})
+        documents.append(
+            {
+                "path": path.relative_to(_data_dir).as_posix(),
+                "filename": path.name,
+                "title": _learning_document_title(path),
+            }
+        )
     return documents
 
 
-@app.get("/learning/documents/{filename}")
-def read_learning_document(filename: str):
-    """Return one bundled TXT document without allowing path traversal."""
-    if os.path.basename(filename) != filename or not filename.endswith(".txt"):
-        raise HTTPException(status_code=404, detail="학습 문서를 찾을 수 없습니다.")
-
-    path = os.path.join(_sample_documents_dir, filename)
-    if not os.path.isfile(path):
+@app.get("/learning/document")
+def read_learning_document(path: str):
+    """Return one text document beneath ``data`` without path traversal."""
+    requested_path = (_data_dir / path).resolve()
+    if (
+        requested_path == _data_dir
+        or _data_dir not in requested_path.parents
+        or not requested_path.is_file()
+        or requested_path.suffix.lower() not in _learning_text_extensions
+    ):
         raise HTTPException(status_code=404, detail="학습 문서를 찾을 수 없습니다.")
 
     try:
-        with open(path, "r", encoding="utf-8") as source:
+        with requested_path.open("r", encoding="utf-8") as source:
             return {
-                "filename": filename,
-                "title": _sample_document_title(path),
+                "path": requested_path.relative_to(_data_dir).as_posix(),
+                "filename": requested_path.name,
+                "title": _learning_document_title(requested_path),
                 "content": source.read(),
             }
     except OSError as error:
