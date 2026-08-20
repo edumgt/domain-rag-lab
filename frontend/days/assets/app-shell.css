@@ -156,39 +156,30 @@ body > nav {
   background: transparent;
 }
 .lesson-head {
-  display: grid;
-  grid-template-columns: 1fr 1.35fr;
-  gap: 30px;
-  padding: 0 0 28px;
-  border-bottom: 0;
+  padding: 0 0 20px;
+  border-bottom: 1px solid var(--app-line);
 }
-.lesson-head .eyebrow {
-  align-self: end;
+.lesson-head-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
 }
-.lesson-head h1 {
-  grid-column: 1;
-  font-size: 32px;
+.lesson-head-line h1 {
+  margin: 0;
+  color: var(--app-ink);
+  font-size: 21px;
+  font-weight: 800;
   white-space: normal;
 }
-.lesson-head > p:not(.eyebrow) {
-  grid-column: 1;
-  color: #234a78;
-}
-.goal {
-  grid-column: 2;
-  grid-row: 1 / span 2;
+.lesson-head-line p {
   margin: 0;
-  padding: 22px 26px;
-  background: #fff;
-  border: 1px solid var(--app-line);
-  border-left: 4px solid #1b60e6;
+  color: #5d7191;
+  font-size: 14px;
 }
-.keywords {
-  margin-top: 18px;
-  background: #fff;
-  border: 1px solid var(--app-line);
-  border-radius: 10px;
-  padding: 18px;
+.lesson-head-line p::before {
+  content: "· ";
+  color: #a9bfdd;
 }
 .lesson {
   padding: 30px 44px 30px 0;
@@ -315,11 +306,13 @@ body > nav {
     width: 100%;
     padding: 26px 16px 50px;
   }
-  .lesson-head {
-    display: block;
+  .lesson-head-line {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
   }
-  .goal {
-    margin: 18px 0;
+  .lesson-head-line p::before {
+    content: none;
   }
   .lesson h2 {
     font-size: 20px;

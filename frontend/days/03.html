@@ -81,32 +81,11 @@
     <main id="app">
       <article>
         <header class="lesson-head">
-          <p class="eyebrow">03 / 05</p>
-          <h1>채권 · 외환 · 원자재 · 파생상품</h1>
-          <p>
-            금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다.
-          </p>
-        </header>
-        <section class="goal">
-          <p>오늘의 학습 목표</p>
-          <strong
-            >채권 가격과 금리, 외환·원자재의 가격 변수, 파생상품의 헤지 목적과
-            위험을 설명할 수 있어요.</strong
-          >
-        </section>
-        <section class="keywords">
-          <p>핵심 단어</p>
-          <div>
-            <span>현물</span><span>선물</span><span>만기</span><span>이자</span
-            ><span>금리</span><span>환율</span><span>원자재</span
-            ><span>헤지</span><span>콜옵션</span><span>풋옵션</span
-            ><span>증거금</span><span>장외채권</span><span>장내채권</span
-            ><span>신용등급</span><span>지방채</span><span>특수채</span
-            ><span>금융채</span><span>성장잠재력</span><span>할인율</span
-            ><span>옵션 프리미엄</span><span>시간가치</span
-            ><span>내재가치</span><span>호가 스프레드</span>
+          <div class="lesson-head-line">
+            <h1>채권 · 외환 · 원자재 · 파생상품</h1>
+            <p>금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다.</p>
           </div>
-        </section>
+        </header>
         <section class="lesson-list">
           <section class="lesson">
             <span>01</span>
@@ -630,107 +609,6 @@
           <section class="lesson">
             <span>12</span>
             <div class="lesson-content">
-              <h2>“파생”은 무슨 뜻일까요?</h2>
-              <div class="lesson-body">
-                <p>
-                  파생(派生)은 “어떤 것에서 갈라져 나와 생긴다”는 뜻입니다.
-                  파생상품(derivatives, 데리버티브)은
-                  주식·주가지수·금리·환율·원자재처럼 기초가 되는 자산의 가격이나
-                  조건에서 가치가 따라 나오는 금융 계약입니다.
-                </p>
-                <p>
-                  예를 들어 KOSPI 200 선물은 KOSPI 200 지수 자체가 아니라 그
-                  지수의 미래 가격 변동을 대상으로 만든 계약입니다. 이처럼
-                  기초자산의 가격 변동에서 별도 계약의 가치가 정해지기 때문에
-                  “파생”상품이라고 부릅니다.
-                </p>
-                <p>
-                  영어 derivative(데리버티브)는 미적분에서 도함수라는 뜻으로도
-                  쓰이지만, 금융에서는 기초자산에서 가치가 파생되는 계약을
-                  뜻합니다.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="“파생”은 무슨 뜻일까요? 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
-            <span>13</span>
-            <div class="lesson-content">
-              <h2>배추 판매로 보는 선물 계약</h2>
-              <div class="lesson-body">
-                <p>
-                  배추 농부가 가을에 배추 1,000포기를 수확해 팔 예정인데, 가을
-                  가격이 포기당 1,000원이 될지 6,000원이 될지 알 수 없다고 해
-                  보세요. 농부와 김치공장이 지금 “가을에 포기당 3,000원으로
-                  1,000포기를 사고팔자”고 약속할 수 있습니다.
-                </p>
-                <p>
-                  여기서 실제 배추는 기초자산이고, 미래에 정한 가격으로
-                  사고팔겠다는 약속은 배추 가격에서 파생된 계약입니다. 농부는
-                  가격 폭락 위험을 줄이고, 김치공장은 가격 급등 위험을 줄일 수
-                  있습니다.
-                </p>
-                <p>
-                  가을 시장가격이 1,000원이면 농부에게, 6,000원이면 김치공장에게
-                  이 약속이 유리합니다. 따라서 파생상품은 위험을 줄이는 데 쓸 수
-                  있지만, 가격이 한쪽으로 크게 움직이면 상대방의 손실도 커질 수
-                  있습니다.
-                </p>
-                <figure class="concept-visual trade-futures">
-                  <p class="visual-kicker">TRADE VS FUTURES</p>
-                  <div class="visual-row">
-                    <div class="visual-card">
-                      <strong>무역</strong
-                      ><span
-                        >실물 재화·서비스를 계약하고 인도·통관·물류 또는 서비스
-                        제공으로 이행합니다.</span
-                      >
-                    </div>
-                    <div class="visual-card blue">
-                      <strong>선물거래</strong
-                      ><span
-                        >미래 가격을 정한 표준 금융계약으로, 대개 반대매매로
-                        차액을 정산합니다.</span
-                      >
-                    </div>
-                    <div class="visual-card">
-                      <strong>원유 수입 헤지</strong
-                      ><span
-                        >원유 수입회사는 원유선물 매수로 유가 상승 부담을 완화할
-                        수 있습니다.</span
-                      >
-                    </div>
-                  </div>
-                  <figcaption>
-                    <b>무역은 실물을 확보하고, 선물은 가격 위험을 관리합니다</b>
-                    · 헤지는 위험을 줄이는 방법입니다.
-                  </figcaption>
-                </figure>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="배추 판매로 보는 선물 계약 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
-            <span>14</span>
-            <div class="lesson-content">
               <h2>주식선물의 대상 종목은 어떻게 정할까요?</h2>
               <div class="lesson-body">
                 <p>
@@ -780,7 +658,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>15</span>
+            <span>13</span>
             <div class="lesson-content">
               <h2>거래소가 보증하는 것은 계약 이행입니다</h2>
               <div class="lesson-body">
@@ -842,7 +720,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>16</span>
+            <span>14</span>
             <div class="lesson-content">
               <h2>옵션은 미래 거래를 선택할 수 있는 권리</h2>
               <div class="lesson-body">
@@ -879,7 +757,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>17</span>
+            <span>15</span>
             <div class="lesson-content">
               <h2>선물과 옵션의 차이: '의무'와 '권리'</h2>
               <div class="lesson-body">
@@ -957,7 +835,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>18</span>
+            <span>16</span>
             <div class="lesson-content">
               <h2>콜옵션을 사려면 왜 프리미엄을 낼까요?</h2>
               <div class="lesson-body">
@@ -1013,7 +891,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>19</span>
+            <span>17</span>
             <div class="lesson-content">
               <h2>옵션 프리미엄은 호가가 만날 때 정해집니다</h2>
               <div class="lesson-body">
@@ -1062,7 +940,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>20</span>
+            <span>18</span>
             <div class="lesson-content">
               <h2>거래를 시작하기 전의 준비</h2>
               <div class="lesson-body">
@@ -1100,7 +978,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>21</span>
+            <span>19</span>
             <div class="lesson-content">
               <h2>사전교육 신청: 금융투자교육원(KIFIN)</h2>
               <div class="lesson-body">
@@ -1138,7 +1016,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>22</span>
+            <span>20</span>
             <div class="lesson-content">
               <h2>모의거래 신청: KRX 또는 증권사 시스템</h2>
               <div class="lesson-body">
@@ -1175,7 +1053,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>23</span>
+            <span>21</span>
             <div class="lesson-content">
               <h2>이수증 등록과 계좌 활성화</h2>
               <div class="lesson-body">
@@ -1210,7 +1088,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>24</span>
+            <span>22</span>
             <div class="lesson-content">
               <h2>신청 전·후 체크리스트</h2>
               <div class="lesson-body">
@@ -1246,7 +1124,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>25</span>
+            <span>23</span>
             <div class="lesson-content">
               <h2>거래 단계와 옵션 매도 요건</h2>
               <div class="lesson-body">

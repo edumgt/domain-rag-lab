@@ -81,62 +81,12 @@
     <main id="app">
       <article>
         <header class="lesson-head">
-          <p class="eyebrow">01 / 05</p>
-          <h1>금융상품과 생활 거래 기초</h1>
-          <p>
-            돈을 쓰는 목적, 거래 대상의 상태와 위험을 먼저 정하면 선택이
-            쉬워집니다.
-          </p>
-        </header>
-        <section class="goal">
-          <p>오늘의 학습 목표</p>
-          <strong
-            >저축·투자·생활 거래의 차이와 파생상품·현물·선물·옵션의 기초 구조,
-            AI Hub 등 출처가 있는 문서를 RAG로 등록할 때의 기본 확인 항목을
-            설명할 수 있어요.</strong
-          >
-        </section>
-        <section class="keywords">
-          <p>핵심 단어</p>
-          <div>
-            <span>원금</span><span>수익률</span><span>위험</span
-            ><span>유동성</span><span>파생상품</span><span>만기</span
-            ><span>청산</span><span>AI Hub</span><span>출처</span>
+          <div class="lesson-head-line">
+            <h1>금융상품과 생활 거래 기초</h1>
+            <p>돈을 쓰는 목적, 거래 대상의 상태와 위험을 먼저 정하면 선택이 쉬워집니다.</p>
           </div>
-        </section>
-        <section class="lesson-list">
-          <section class="lesson">
-            <span>01</span>
-            <div class="lesson-content">
-              <h2>저축과 투자는 무엇이 다른가요?</h2>
-              <div class="lesson-body">
-                <p>
-                  저축은 가까운 미래에 쓸 돈을 비교적 안전하게 보관하는 데
-                  알맞습니다. 예금·적금이 대표적입니다.
-                </p>
-                <p>
-                  투자는 시간이 지나며 자산을 키우기 위해 가격 변동을 감수하는
-                  선택입니다. 주식, 채권, 펀드, ETF 등이 여기에 해당합니다.
-                </p>
-                <p>
-                  둘 중 하나만 고르는 문제가 아닙니다. 생활비와 비상금은 먼저
-                  확보하고, 남는 돈의 기간과 목표에 맞춰 투자 여부를 판단합니다.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="저축과 투자는 무엇이 다른가요? 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
-            <span>02</span>
+        </header>
+        <section class="lesson-list"><section class="lesson"><span>01</span>
             <div class="lesson-content">
               <h2>상품을 고를 때 보는 세 가지</h2>
               <div class="lesson-body">
@@ -165,9 +115,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>03</span>
+          </section><section class="lesson"><span>02</span>
             <div class="lesson-content">
               <h2>기본 금융상품 지도</h2>
               <div class="lesson-body">
@@ -196,17 +144,29 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>04</span>
+          </section><section class="lesson"><span>03</span>
             <div class="lesson-content">
               <h2>파생상품은 “가격에서 나온 계약”입니다</h2>
               <div class="lesson-body">
                 <p>
+                  파생(派生)은 “어떤 것에서 갈라져 나와 생긴다”는 뜻입니다.
                   파생상품은 주식·주가지수·금리·환율·원자재처럼 기준이 되는
                   대상의 가격 변화에 따라 가치가 달라지는 계약입니다. 기준이
                   되는 대상을 기초자산이라고 합니다.
                 </p>
+                <figure class="lesson-figure">
+                  <img
+                    src="assets/derivatives-risk-guide.webp"
+                    alt="쌀과 쌀국수 비유로 정리한 파생상품 개념도: 1단계 파생상품의 탄생, 2단계 선물은 무조건 지켜야 하는 약속, 3단계 옵션은 유리할 때만 행사하는 권리, 4단계 레버리지의 위험, 5단계 개인 투자자의 손실 현실, 6단계 해외 파생상품 사전교육 의무화"
+                    loading="lazy"
+                  />
+                  <figcaption>
+                    쌀(기초자산)과 쌀국수(파생상품) 비유로 정리한 선물·옵션
+                    개념도입니다. 손실 규모나 제도 시행일 같은 구체적인
+                    수치·일정은 금융투자협회 등 공식 공지에서 다시
+                    확인하세요.
+                  </figcaption>
+                </figure>
                 <p>
                   예를 들어 KOSPI 200 선물은 KOSPI 200 지수 자체를 사는 것이
                   아니라, 그 지수의 미래 가격 변화와 연결된 계약을 거래하는
@@ -219,6 +179,24 @@
                   단위·만기·증거금 때문에 현물 주식보다 손익이 더 빠르게 커질 수
                   있으므로, 먼저 계약 구조와 최대 손실을 이해해야 합니다.
                 </p>
+                <p>
+                  영어 derivative(데리버티브)는 미적분에서 도함수라는 뜻으로도
+                  쓰이지만, 금융에서는 이처럼 기초자산에서 가치가 파생되는
+                  계약을 뜻합니다.
+                </p>
+                <p class="lesson-video-cta">
+                  <a
+                    href="https://notebook.google.com/notebook/50fe65c2-ed04-496f-9b23-1c4320f9c19c/artifact/724cc0d8-ed79-4101-9216-690773df4273"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="lesson-video-link"
+                  >
+                    <i class="fa-solid fa-circle-play"></i> 파생상품 개념
+                    동영상으로 보기
+                  </a>
+                  <small>NotebookLM으로 만든 요약 영상입니다 · 구글 계정
+                    로그인이 필요할 수 있습니다.</small>
+                </p>
               </div>
             </div>
             <button
@@ -227,6 +205,72 @@
               data-lesson-toggle
               aria-expanded="true"
               aria-label="파생상품은 “가격에서 나온 계약”입니다 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section>
+          <section class="lesson">
+            <span>04</span>
+            <div class="lesson-content">
+              <h2>배추 판매로 보는 선물 계약</h2>
+              <div class="lesson-body">
+                <p>
+                  배추 농부가 가을에 배추 1,000포기를 수확해 팔 예정인데, 가을
+                  가격이 포기당 1,000원이 될지 6,000원이 될지 알 수 없다고 해
+                  보세요. 농부와 김치공장이 지금 “가을에 포기당 3,000원으로
+                  1,000포기를 사고팔자”고 약속할 수 있습니다.
+                </p>
+                <p>
+                  여기서 실제 배추는 기초자산이고, 미래에 정한 가격으로
+                  사고팔겠다는 약속은 배추 가격에서 파생된 계약입니다. 농부는
+                  가격 폭락 위험을 줄이고, 김치공장은 가격 급등 위험을 줄일 수
+                  있습니다.
+                </p>
+                <p>
+                  가을 시장가격이 1,000원이면 농부에게, 6,000원이면
+                  김치공장에게 이 약속이 유리합니다. 따라서 파생상품은 위험을
+                  줄이는 데 쓸 수 있지만, 가격이 한쪽으로 크게 움직이면
+                  상대방의 손실도 커질 수 있습니다.
+                </p>
+                <figure class="concept-visual trade-futures">
+                  <p class="visual-kicker">TRADE VS FUTURES</p>
+                  <div class="visual-row">
+                    <div class="visual-card">
+                      <strong>무역</strong
+                      ><span
+                        >실물 재화·서비스를 계약하고 인도·통관·물류 또는 서비스
+                        제공으로 이행합니다.</span
+                      >
+                    </div>
+                    <div class="visual-card blue">
+                      <strong>선물거래</strong
+                      ><span
+                        >미래 가격을 정한 표준 금융계약으로, 대개 반대매매로
+                        차액을 정산합니다.</span
+                      >
+                    </div>
+                    <div class="visual-card">
+                      <strong>원유 수입 헤지</strong
+                      ><span
+                        >원유 수입회사는 원유선물 매수로 유가 상승 부담을 완화할
+                        수 있습니다.</span
+                      >
+                    </div>
+                  </div>
+                  <figcaption>
+                    <b>무역은 실물을 확보하고, 선물은 가격 위험을 관리합니다</b>
+                    · 헤지는 위험을 줄이는 방법입니다.
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="배추 판매로 보는 선물 계약 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -278,9 +322,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>06</span>
+          </section><section class="lesson"><span>06</span>
             <div class="lesson-content">
               <h2>선물은 미래 거래를 미리 정하는 약속</h2>
               <div class="lesson-body">
@@ -324,9 +366,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>07</span>
+          </section><section class="lesson"><span>07</span><div class="lesson-content"><h2>주문이 만나야 선물·옵션 계약이 생깁니다</h2><div class="lesson-body"><p>선물이나 옵션은 한쪽의 주문만으로는 생기지 않습니다. 같은 계약을 사려는 주문과 팔려는 주문이 가격·수량 조건에서 만나야 체결됩니다. 예를 들어 어떤 사람은 지수가 오를 것이라 보고 선물 매수 주문을, 다른 사람은 내릴 것이라 보고 같은 선물 매도 주문을 낼 수 있습니다. 두 주문의 가격이 맞으면 계약이 하나 생기고, 오르면 매수 쪽이, 내리면 매도 쪽이 유리해집니다.</p><p>다만 항상 “한 사람은 상승, 다른 사람은 하락”이라고만 생각하면 좁습니다. 주식 보유자는 하락 위험을 줄이려고 선물을 매도할 수 있고, 기업은 원재료 가격 상승을 걱정해 선물을 매수할 수 있습니다. 즉 반대 주문은 서로 다른 전망 때문에 나오기도 하고, 이미 가진 위험을 줄이려는 헤지나 가격 차이를 이용하려는 거래 때문에 나오기도 합니다.</p><p>거래소에서는 서로의 이름을 보고 1:1로 상대를 골라 계약하지 않습니다. 투자자가 증권사 앱에 계약 종류·만기·가격·수량을 넣어 주문하면, 거래소의 주문장에 익명으로 쌓입니다. 시스템은 살 가격이 팔 가격과 만나는지 확인해 자동으로 체결합니다. 보통 더 높은 매수호가와 더 낮은 매도호가가 먼저, 같은 가격이면 먼저 들어온 주문이 먼저 처리됩니다.</p><p>예를 들어 ‘340.00에 1계약 매수’와 ‘340.00에 1계약 매도’가 주문장에 있으면 시스템이 이를 연결합니다. 매수 주문이 3계약이고 반대 주문이 여러 개라면 여러 주문과 나누어 체결될 수도 있습니다. 반대로 매수 339.95와 매도 340.00처럼 가격이 만나지 않으면 주문장에 남아 기다립니다. 체결 뒤에는 거래소·청산기관이 정해진 방식으로 결제와 증거금 관리를 맡으므로, 개인이 특정 반대편의 신원을 알아야 거래할 수 있는 구조가 아닙니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="주문이 만나야 선물·옵션 계약이 생깁니다 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section><section class="lesson"><span>08</span>
             <div class="lesson-content">
               <h2>옥수수 선물: 항구·창고까지 이어지는 실물인도 예시</h2>
               <div class="lesson-body">
@@ -402,9 +442,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>08</span>
+          </section><section class="lesson"><span>09</span>
             <div class="lesson-content">
               <h2>옵션은 선택권입니다: 콜과 풋</h2>
               <div class="lesson-body">
@@ -452,9 +490,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>09</span>
+          </section><section class="lesson"><span>10</span>
             <div class="lesson-content">
               <h2>프리미엄과 증거금, 미리 구분하기</h2>
               <div class="lesson-body">
@@ -491,9 +527,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>10</span>
+          </section><section class="lesson"><span>11</span>
             <div class="lesson-content">
               <h2>만기와 청산: 계약을 끝내는 방법</h2>
               <div class="lesson-body">
@@ -528,9 +562,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>10A</span>
+          </section><section class="lesson"><span>12</span>
             <div class="lesson-content">
               <h2>선물 만기일은 왜 3개월 단위(분기월)로 정해질까요?</h2>
               <div class="lesson-body">
@@ -573,9 +605,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>11</span>
+          </section><section class="lesson"><span>13</span>
             <div class="lesson-content">
               <h2>만기일에는 선물가격과 현물가격이 왜 가까워질까요?</h2>
               <div class="lesson-body">
@@ -611,7 +641,59 @@
             </button>
           </section>
           <section class="lesson">
-            <span>12</span>
+            <span>14</span>
+            <div class="lesson-content">
+              <h2>평균으로 회귀와 수렴, 헷갈리기 쉬운 두 단어</h2>
+              <div class="lesson-body">
+                <p>
+                  두 단어는 모두 통계학과 일상 대화에서 데이터나 현상이 특정
+                  기준으로 모이는 모습을 나타내지만, 정확히는 서로 다른
+                  개념입니다.
+                </p>
+                <p>
+                  평균으로 회귀(regression to the mean)는 일시적인 운이나
+                  변수 때문에 아주 좋거나 나쁜 결과가 나왔더라도, 시행을
+                  반복하면 결국 원래의 평균적인 수준으로 돌아가는 통계적
+                  현상입니다. 예를 들어 어떤 선수가 한 경기에서 기록적인
+                  활약을 했다면, 다음 경기에서는 평소 평균에 더 가까운
+                  성적을 낼 가능성이 큽니다. 극단적인 결과일수록 다음번에는
+                  평균에 가까워지는 경향이 있습니다.
+                </p>
+                <p>
+                  수렴(convergence)은 서로 다르거나 흩어져 있던 값들이
+                  시간이 지나거나 관찰 횟수가 늘어남에 따라 하나의 특정
+                  지점으로 모여드는 것을 뜻합니다. 주사위를 10번 던지면
+                  특정 숫자가 몰릴 수 있지만, 10,000번 던지면 각 숫자가
+                  나올 비율은 모두 6분의 1에 가까워지는 것이 대표적인
+                  예입니다. 앞서 “만기일에는 선물가격과 현물가격이 왜
+                  가까워질까요?”에서 본 내용도 수렴의 예입니다. 만기 전에는
+                  거래비용·금리·배당 때문에 선물가격과 현물가격이 다를 수
+                  있지만, 만기가 다가올수록 두 가격이 하나의 결제가격으로
+                  좁혀집니다.
+                </p>
+                <p>
+                  두 단어의 핵심 차이는 초점입니다. 평균으로 회귀는 튀어
+                  나갔던 극단적인 값이 기준점(평균)으로 돌아오는 성질에
+                  초점이 있고, 수렴은 여러 값이나 데이터가 시행을 반복할수록
+                  하나의 값으로 좁혀져 모이는 상태 자체에 초점이 있습니다.
+                  두 개념 모두 특이한 결과 하나만 보고 앞으로도 계속될
+                  것이라고 단정하지 않도록 주의하는 데 도움이 됩니다.
+                </p>
+              </div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="평균으로 회귀와 수렴, 헷갈리기 쉬운 두 단어 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section>
+          <section class="lesson">
+            <span>15</span>
             <div class="lesson-content">
               <h2>한국 투자자가 만나는 기관들</h2>
               <div class="lesson-body">
@@ -645,9 +727,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>13</span>
+          </section><section class="lesson"><span>16</span><div class="lesson-content"><h2>버틀러로 기업 분석을 시작해 볼까요?</h2><div class="lesson-body"><p><a href="https://www.butler.works/ko/home" target="_blank" rel="noopener noreferrer">버틀러</a>는 투자자가 기업의 재무제표·실적·공시를 이해하기 쉽게 살펴볼 수 있도록 돕는 기업 분석 플랫폼입니다. 여러 증권 계좌와 관심 기업의 정보를 모아, 개인 투자자가 기업의 펀더멘털과 자신의 포트폴리오를 점검하는 ‘투자 비서’처럼 활용할 수 있습니다.</p><p>복잡한 숫자는 매출, 영업이익, 수주잔고, 지역별 실적 등의 그래프로 확인할 수 있습니다. 기업공시에서는 많은 공시 가운데 투자 판단에 중요한 내용을 빠르게 찾도록 돕고, 관심기업은 그룹별로 묶어 꾸준히 추적할 수 있습니다.</p><p>포트폴리오 관리 기능으로 여러 증권 계좌에 흩어진 종목을 한 화면에서 살펴볼 수 있으며, 기업 스크리너에서는 다양한 조건을 조합해 자신의 기준에 맞는 기업 후보를 찾을 수 있습니다. 초보자는 성장 추세를 읽는 데, 중·장기 투자자는 공시와 펀더멘털을 비교하는 데 활용할 수 있습니다.</p><p>다만 플랫폼이 제공하는 데이터와 시각화는 투자 판단을 돕는 정보입니다. 매매를 대신 결정하거나 수익을 보장하지 않으므로, 최신 공시 원문·재무제표·상품 이용 조건을 다시 확인하고 자신의 투자 목적과 위험 감수 수준에 맞춰 판단하세요. 일부 기능은 유료 구독으로 제공될 수 있으며, 지원 시장과 기능은 서비스 정책에 따라 달라질 수 있습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="버틀러로 기업 분석을 시작해 볼까요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section><section class="lesson"><span>17</span>
             <div class="lesson-content">
               <h2>AI Hub 데이터로 RAG 시작하기</h2>
               <div class="lesson-body">
@@ -680,9 +760,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson">
-            <span>14</span>
+          </section><section class="lesson"><span>18</span>
             <div class="lesson-content">
               <h2>모든 거래에 공통인 확인 순서</h2>
               <div class="lesson-body">
@@ -823,6 +901,7 @@
         금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.
       </footer>
     </main>
+    
     <script>
       document.querySelectorAll("[data-lesson-toggle]").forEach((button) => {
         button.addEventListener("click", () => {
@@ -838,87 +917,5 @@
       });
     </script>
     <script src="assets/app-shell.js"></script>
-    <script>
-      document
-        .querySelector(".keywords div")
-        .insertAdjacentHTML(
-          "beforeend",
-          "<span>주문 매칭</span><span>호가</span><span>가격·시간 우선</span>",
-        );
-      document
-        .querySelector(".lesson-list > .lesson:nth-child(6)")
-        .insertAdjacentHTML(
-          "afterend",
-          `<section class="lesson"><span>07</span><div class="lesson-content"><h2>주문이 만나야 선물·옵션 계약이 생깁니다</h2><div class="lesson-body"><p>선물이나 옵션은 한쪽의 주문만으로는 생기지 않습니다. 같은 계약을 사려는 주문과 팔려는 주문이 가격·수량 조건에서 만나야 체결됩니다. 예를 들어 어떤 사람은 지수가 오를 것이라 보고 선물 매수 주문을, 다른 사람은 내릴 것이라 보고 같은 선물 매도 주문을 낼 수 있습니다. 두 주문의 가격이 맞으면 계약이 하나 생기고, 오르면 매수 쪽이, 내리면 매도 쪽이 유리해집니다.</p><p>다만 항상 “한 사람은 상승, 다른 사람은 하락”이라고만 생각하면 좁습니다. 주식 보유자는 하락 위험을 줄이려고 선물을 매도할 수 있고, 기업은 원재료 가격 상승을 걱정해 선물을 매수할 수 있습니다. 즉 반대 주문은 서로 다른 전망 때문에 나오기도 하고, 이미 가진 위험을 줄이려는 헤지나 가격 차이를 이용하려는 거래 때문에 나오기도 합니다.</p><p>거래소에서는 서로의 이름을 보고 1:1로 상대를 골라 계약하지 않습니다. 투자자가 증권사 앱에 계약 종류·만기·가격·수량을 넣어 주문하면, 거래소의 주문장에 익명으로 쌓입니다. 시스템은 살 가격이 팔 가격과 만나는지 확인해 자동으로 체결합니다. 보통 더 높은 매수호가와 더 낮은 매도호가가 먼저, 같은 가격이면 먼저 들어온 주문이 먼저 처리됩니다.</p><p>예를 들어 ‘340.00에 1계약 매수’와 ‘340.00에 1계약 매도’가 주문장에 있으면 시스템이 이를 연결합니다. 매수 주문이 3계약이고 반대 주문이 여러 개라면 여러 주문과 나누어 체결될 수도 있습니다. 반대로 매수 339.95와 매도 340.00처럼 가격이 만나지 않으면 주문장에 남아 기다립니다. 체결 뒤에는 거래소·청산기관이 정해진 방식으로 결제와 증거금 관리를 맡으므로, 개인이 특정 반대편의 신원을 알아야 거래할 수 있는 구조가 아닙니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="주문이 만나야 선물·옵션 계약이 생깁니다 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`,
-        );
-      document
-        .querySelector(".glossary-grid")
-        .insertAdjacentHTML(
-          "beforeend",
-          '<div class="glossary-item"><dt>주문 매칭 <small>Order Matching</small></dt><dd>거래소 시스템이 매수·매도 주문의 계약 조건, 가격과 수량을 비교해 체결시키는 과정입니다. 일반적인 장중 거래에서는 가격 우선, 같은 가격에서는 시간 우선 원칙이 적용됩니다. 한 주문은 여러 익명 반대 주문과 나누어 체결될 수 있습니다.</dd></div>',
-        );
-      document
-        .querySelectorAll(".lesson-list > .lesson")
-        .forEach((lesson, index) => {
-          lesson.querySelector(":scope > span").textContent = String(
-            index + 1,
-          ).padStart(2, "0");
-        });
-      document
-        .querySelector(
-          ".lesson-list > .lesson:nth-child(7) [data-lesson-toggle]",
-        )
-        .addEventListener("click", () => {
-          const button = document.querySelector(
-            ".lesson-list > .lesson:nth-child(7) [data-lesson-toggle]",
-          );
-          const section = button.closest(".lesson");
-          const collapsed = section.classList.toggle("is-collapsed");
-          button.setAttribute("aria-expanded", String(!collapsed));
-          button.setAttribute(
-            "aria-label",
-            collapsed ? "내용 펼치기" : "내용 접기",
-          );
-          button.title = collapsed ? "내용 펼치기" : "내용 접기";
-        });
-    </script>
-    <script>
-      document
-        .querySelector(".keywords div")
-        .insertAdjacentHTML(
-          "beforeend",
-          "<span>버틀러</span><span>기업 분석</span><span>기업공시</span><span>포트폴리오</span><span>스크리너</span>",
-        );
-      document
-        .querySelector(".lesson-list > .lesson:nth-child(14)")
-        .insertAdjacentHTML(
-          "afterend",
-          `<section class="lesson"><span>15</span><div class="lesson-content"><h2>버틀러로 기업 분석을 시작해 볼까요?</h2><div class="lesson-body"><p><a href="https://www.butler.works/ko/home" target="_blank" rel="noopener noreferrer">버틀러</a>는 투자자가 기업의 재무제표·실적·공시를 이해하기 쉽게 살펴볼 수 있도록 돕는 기업 분석 플랫폼입니다. 여러 증권 계좌와 관심 기업의 정보를 모아, 개인 투자자가 기업의 펀더멘털과 자신의 포트폴리오를 점검하는 ‘투자 비서’처럼 활용할 수 있습니다.</p><p>복잡한 숫자는 매출, 영업이익, 수주잔고, 지역별 실적 등의 그래프로 확인할 수 있습니다. 기업공시에서는 많은 공시 가운데 투자 판단에 중요한 내용을 빠르게 찾도록 돕고, 관심기업은 그룹별로 묶어 꾸준히 추적할 수 있습니다.</p><p>포트폴리오 관리 기능으로 여러 증권 계좌에 흩어진 종목을 한 화면에서 살펴볼 수 있으며, 기업 스크리너에서는 다양한 조건을 조합해 자신의 기준에 맞는 기업 후보를 찾을 수 있습니다. 초보자는 성장 추세를 읽는 데, 중·장기 투자자는 공시와 펀더멘털을 비교하는 데 활용할 수 있습니다.</p><p>다만 플랫폼이 제공하는 데이터와 시각화는 투자 판단을 돕는 정보입니다. 매매를 대신 결정하거나 수익을 보장하지 않으므로, 최신 공시 원문·재무제표·상품 이용 조건을 다시 확인하고 자신의 투자 목적과 위험 감수 수준에 맞춰 판단하세요. 일부 기능은 유료 구독으로 제공될 수 있으며, 지원 시장과 기능은 서비스 정책에 따라 달라질 수 있습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="버틀러로 기업 분석을 시작해 볼까요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`,
-        );
-      document
-        .querySelectorAll(".lesson-list > .lesson")
-        .forEach((lesson, index) => {
-          lesson.querySelector(":scope > span").textContent = String(
-            index + 1,
-          ).padStart(2, "0");
-        });
-      document
-        .querySelector(
-          ".lesson-list > .lesson:nth-child(15) [data-lesson-toggle]",
-        )
-        .addEventListener("click", () => {
-          const button = document.querySelector(
-            ".lesson-list > .lesson:nth-child(15) [data-lesson-toggle]",
-          );
-          const section = button.closest(".lesson");
-          const collapsed = section.classList.toggle("is-collapsed");
-          button.setAttribute("aria-expanded", String(!collapsed));
-          button.setAttribute(
-            "aria-label",
-            collapsed ? "내용 펼치기" : "내용 접기",
-          );
-          button.title = collapsed ? "내용 펼치기" : "내용 접기";
-        });
-    </script>
   </body>
 </html>
