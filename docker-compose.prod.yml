@@ -60,7 +60,9 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - app_uploads:/app/data
+      # Keep the image-bundled learning samples read-only in /app/data while
+      # retaining user uploads across image rebuilds and container replacement.
+      - app_uploads:/app/data/uploads
       - ${LEAN_SSH_KEY_HOST_PATH:-/dev/null}:${LEAN_SSH_KEY_PATH:-/run/secrets/lean.pem}:ro
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     depends_on:
