@@ -1200,7 +1200,23 @@ body.right-panel-open .ref-panel { transform: translateX(0); }
 .offcanvas-backdrop.visible { opacity: 1; pointer-events: auto; }
 
 .chat-area { min-height: 100vh; background: var(--bg); }
-.chat-header { padding: 13px 22px; border-bottom: 1px solid var(--border); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03); }
+.chat-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  padding: 13px 22px;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+.brand-nav {
+  min-width: 0;
+  justify-content: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+}
+.brand-nav::-webkit-scrollbar { display: none; }
+.header-actions { flex-shrink: 0; }
 .panel-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .panel-close,
 .panel-toggle {
@@ -1378,7 +1394,7 @@ body.modal-open { overflow: hidden; }
 .messages {
   min-height: 0;
   flex: 1 1 auto;
-  padding: 0;
+  padding: clamp(16px, 2vw, 32px);
   overscroll-behavior: contain;
 }
 
@@ -1408,12 +1424,13 @@ body.modal-open { overflow: hidden; }
 .ref-card { box-shadow: 0 2px 7px rgba(15, 23, 42, 0.03); }
 
 @media (max-width: 700px) {
-  .chat-header { padding: 10px 12px; gap: 8px; }
+  .chat-header { gap: 8px; padding: 10px 12px; }
   .panel-toggle span { display: none; }
   .panel-toggle { padding: 8px 10px; }
   .brand-nav { gap: 2px; }
   .brand-nav-btn { padding: 7px 6px; }
   .header-actions { gap: 5px; }
+  .header-actions .btn-ghost { padding: 8px 10px; }
   .content-page { padding: 28px 16px 52px; }
   .theory-detail-page { padding-top: 34px; }
   .stocks-page-head { grid-template-columns: 1fr; gap: 13px; }
