@@ -187,6 +187,39 @@ docker compose --env-file .env.prod -f docker-compose.prod.yml up --build -d
 docker compose --env-file .env.prod -f docker-compose.prod.yml ps
 ```
 
+### Caddy 운영 프록시
+
+Caddy는 Python 모듈이 아니라 웹 서버이자 리버스 프록시입니다. 이 프로젝트에서는 외부 요청을 80/443 포트에서 받고, Docker 네트워크 내부의 FastAPI 컨테이너(`api:8000`)로 전달합니다.
+
+```text
+브라우저 → Caddy (HTTP/HTTPS, 압축) → FastAPI (api:8000)
+```
+
+현재 [Caddyfile](Caddyfile)은 아래처럼 도메인별 프록시를 간결하게 정의합니다. 도메인의 DNS가 서버를 가리키고 80/443 포트가 열려 있으면, Caddy는 기본 설정으로 HTTPS 인증서를 자동 발급·갱신합니다.
+
+```caddy
+pr.edumgt.co.kr {
+    encode zstd gzip
+    reverse_proxy api:8000
+}
+```
+
+#### Caddy와 Nginx 비교
+
+둘 다 성능이 뛰어난 웹 서버·리버스 프록시입니다. Nginx는 세밀한 제어와 폭넓은 운영 사례에, Caddy는 HTTPS 자동화와 간결한 설정에 특히 강점이 있습니다.
+
+| 비교 항목 | Caddy | Nginx |
+| --- | --- | --- |
+| 핵심 성격 | 자동화와 간결한 운영 경험 | 세밀한 제어와 폭넓은 프로덕션 활용 |
+| 개발 언어 | Go | C |
+| HTTPS (SSL/TLS) | 도메인 설정 시 자동 인증서 발급·갱신 지원 | 인증서 발급·갱신 및 서버 설정을 별도로 구성하는 경우가 일반적 |
+| 설정 방식 | `Caddyfile`로 짧게 작성 가능 | `nginx.conf`와 사이트별 설정으로 세부 항목을 명시 |
+| HTTP/3 | 지원하며 설정이 비교적 간단함 | 버전·빌드·배포 환경에 따라 별도 설정 또는 모듈 확인 필요 |
+| 성능 | 대부분의 웹 서비스에 충분한 높은 성능 | 고트래픽 및 복잡한 프록시 요구에 널리 검증됨 |
+| 생태계 | 성장 중이며 기본 기능의 자동화에 강점 | 오래된 업계 표준으로 자료·모듈·운영 사례가 매우 풍부함 |
+
+이 프로젝트는 단일 FastAPI 서비스의 HTTPS 공개가 주목적이므로 인증서 관리 부담을 줄이기 위해 Caddy를 사용합니다. 매우 높은 트래픽, 복잡한 L7 라우팅, 기존 Nginx 운영 표준과의 통합이 핵심이라면 Nginx를 검토할 수 있습니다.
+
 운영 전 확인 사항:
 
 - AWS 보안 그룹에는 웹 공개가 필요할 때만 TCP 80/443을 허용합니다. PostgreSQL(5432), Redis(6379), Qdrant(6333/6334)는 열지 않습니다.

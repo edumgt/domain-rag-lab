@@ -665,6 +665,9 @@ KOSDAQ|웹젠|게임`,
   const $closeRefBtn = document.getElementById('closeRefBtn');
   const $theoryDayButtons = Array.from(document.querySelectorAll('[data-theory-day]'));
   const $modelSelect = document.getElementById('modelSelect');
+  const $simModelNote = document.getElementById('simModelNote');
+  const $simChoiceSummary = document.getElementById('simChoiceSummary');
+  const $simPresetButtons = Array.from(document.querySelectorAll('.sim-preset'));
   const $stockWeight = document.getElementById('stockWeight');
   const $bondWeight = document.getElementById('bondWeight');
   const $altWeight = document.getElementById('altWeight');
@@ -719,7 +722,7 @@ KOSDAQ|웹젠|게임`,
   // 좌측은 학습 메뉴, 우측은 RAG 자료와 참고 문서에만 집중합니다.
   $referencePanel.insertBefore($ragPanel, $refList);
 
-  document.querySelectorAll('.sim-preset').forEach(btn => {
+  $simPresetButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       $stockWeight.value = btn.dataset.stock;
       $bondWeight.value = btn.dataset.bond;
@@ -2303,6 +2306,8 @@ effective_date: [기준일]
     const { weights, model, total, derivatives } = snapshot;
     const normalizedSuffix = total === 100 ? '' : ' (정규화)';
 
+    $simModelNote.textContent = model.note;
+    renderChoiceSummary(snapshot);
     $stockWeightLabel.textContent = `${percent(weights.stock)}${normalizedSuffix}`;
     $bondWeightLabel.textContent = `${percent(weights.bond)}${normalizedSuffix}`;
     $altWeightLabel.textContent = `${percent(weights.alt)}${normalizedSuffix}`;
@@ -2401,6 +2406,28 @@ effective_date: [기준일]
     renderScenarioResult(state.currentSimulation);
     renderOptionChainSample(state.currentSimulation);
     renderSavedComparison(state.currentSimulation);
+  }
+
+  function renderChoiceSummary(snapshot) {
+    const { raw, model } = snapshot;
+    const selectedPreset = $simPresetButtons.find((button) => (
+      Number(button.dataset.stock) === raw.stock
+      && Number(button.dataset.bond) === raw.bond
+      && Number(button.dataset.alt) === raw.alt
+    ));
+
+    $simPresetButtons.forEach((button) => {
+      const isSelected = button === selectedPreset;
+      button.classList.toggle('active', isSelected);
+      button.setAttribute('aria-pressed', String(isSelected));
+    });
+
+    const allocation = `주식/ETF ${raw.stock}% · 채권 ${raw.bond}% · 대체/현금 ${raw.alt}%`;
+    if (selectedPreset) {
+      $simChoiceSummary.textContent = `현재 조합: ${model.label} 모델 + ${selectedPreset.dataset.presetName}. ${model.label}은 계산 관점이고, ${selectedPreset.dataset.presetName}은 ${allocation}로 시작하는 비중 선택입니다.`;
+      return;
+    }
+    $simChoiceSummary.textContent = `현재 조합: ${model.label} 모델 + 직접 조정 비중. ${model.label}은 계산 관점이고, 현재 비중은 ${allocation}입니다.`;
   }
 
   function renderScenarioResult(snapshot) {

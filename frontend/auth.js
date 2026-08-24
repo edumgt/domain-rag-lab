@@ -6,7 +6,7 @@
   const auth = () => localStorage.getItem(tokenKey);
   const headers = () => ({ 'Content-Type': 'application/json', Authorization: `Bearer ${auth()}` });
   function show(open) { modal.hidden = !open; document.body.classList.toggle('modal-open', open); }
-  function updateButton(user) { button.innerHTML = user ? `<i class="fa-solid fa-user-check"></i> ${user.display_name}` : '<i class="fa-solid fa-user"></i> 로그인'; button.dataset.loggedIn = user ? 'true' : ''; }
+  function updateButton(user) { button.innerHTML = user ? '<i class="fa-solid fa-right-from-bracket"></i> 로그아웃' : '<i class="fa-solid fa-user"></i> 로그인'; button.title = user ? `${user.display_name}님으로 로그인됨 · 클릭하면 로그아웃` : ''; button.dataset.loggedIn = user ? 'true' : ''; }
   async function restore() { if (!auth()) return; const r = await fetch('/auth/me', { headers: headers() }); if (r.ok) updateButton(await r.json()); else localStorage.removeItem(tokenKey); }
   button.addEventListener('click', async () => { if (button.dataset.loggedIn) { await fetch('/auth/logout', { method: 'POST', headers: headers() }); localStorage.removeItem(tokenKey); updateButton(); return; } show(true); });
   document.querySelectorAll('[data-auth-close]').forEach(x => x.addEventListener('click', () => show(false)));

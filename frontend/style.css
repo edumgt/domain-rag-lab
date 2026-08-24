@@ -914,6 +914,74 @@ html, body {
   font-family: var(--font);
 }
 
+.sim-model-note {
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  background: var(--accent-dim2);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.sim-choice-guide {
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface2);
+}
+
+.sim-choice-guide h4 {
+  margin: 0 0 10px;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.sim-choice-guide h4 i {
+  color: var(--accent);
+  margin-right: 4px;
+}
+
+.sim-choice-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.sim-choice-guide-grid > div {
+  padding: 10px;
+  border-radius: 7px;
+  background: var(--surface);
+}
+
+.sim-choice-guide-grid strong {
+  display: block;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.sim-choice-guide-grid p,
+.sim-choice-caution,
+.sim-choice-summary {
+  margin: 5px 0 0;
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.sim-choice-guide em {
+  color: var(--text);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.sim-choice-caution {
+  padding-top: 9px;
+  color: var(--text-muted);
+}
+
 .preset-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -932,9 +1000,37 @@ html, body {
   cursor: pointer;
 }
 
+.sim-preset small {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 500;
+}
+
 .sim-preset:hover {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.sim-preset.active {
+  border-color: var(--accent);
+  background: var(--accent-dim2);
+  color: var(--accent);
+}
+
+.sim-choice-summary {
+  margin-top: -5px;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-dim2);
+  color: var(--text);
+}
+
+@media (max-width: 480px) {
+  .sim-choice-guide-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .sim-control {

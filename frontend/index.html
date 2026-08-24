@@ -160,12 +160,30 @@
               <option value="black_litterman">블랙-리터만</option>
               <option value="risk_parity">Risk-Parity</option>
             </select>
+            <p class="sim-model-note" id="simModelNote"></p>
 
+            <section class="sim-choice-guide" aria-labelledby="choiceGuideTitle">
+              <h4 id="choiceGuideTitle"><i class="fa-solid fa-circle-info"></i> 두 선택은 역할이 다릅니다</h4>
+              <div class="sim-choice-guide-grid">
+                <div>
+                  <strong>1. 자산배분 모델</strong>
+                  <p>위험과 기대수익을 <em>어떤 원리로 해석할지</em> 정합니다. 현재 앱에서는 계산의 기대수익률·변동성 보정 방식이 바뀝니다.</p>
+                </div>
+                <div>
+                  <strong>2. 투자 성향</strong>
+                  <p>주식·채권·대체/현금을 <em>얼마나 담을지</em> 정하는 시작 비중입니다. 버튼을 누르면 아래 슬라이더 값이 바뀝니다.</p>
+                </div>
+              </div>
+              <p class="sim-choice-caution">모델은 특정 비중을 자동 추천하지 않습니다. 두 선택은 조합할 수 있으며, 이후 슬라이더로 직접 조정할 수 있습니다.</p>
+            </section>
+
+            <label class="sim-label" for="presetStable">투자 성향 / 시작 비중</label>
             <div class="preset-grid" aria-label="투자 성향 프리셋">
-              <button class="sim-preset" data-stock="35" data-bond="45" data-alt="20">안정형</button>
-              <button class="sim-preset" data-stock="50" data-bond="30" data-alt="20">균형형</button>
-              <button class="sim-preset" data-stock="65" data-bond="20" data-alt="15">성장형</button>
+              <button class="sim-preset" id="presetStable" data-preset-name="안정형" data-stock="35" data-bond="45" data-alt="20">안정형<small>주식 35% · 채권 45%</small></button>
+              <button class="sim-preset" data-preset-name="균형형" data-stock="50" data-bond="30" data-alt="20">균형형<small>주식 50% · 채권 30%</small></button>
+              <button class="sim-preset" data-preset-name="성장형" data-stock="65" data-bond="20" data-alt="15">성장형<small>주식 65% · 채권 20%</small></button>
             </div>
+            <p class="sim-choice-summary" id="simChoiceSummary" aria-live="polite"></p>
 
             <div class="sim-control">
               <div class="sim-control-head">
