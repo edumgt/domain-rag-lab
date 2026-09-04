@@ -174,6 +174,16 @@ API_BASE_URL=http://localhost:8300 streamlit run streamlit_app.py
 
 이 모듈과 옵션 체인 표의 숫자는 학습을 위한 가정값입니다. 실시간 시세·호가·옵션가격·만기·증거금·수수료·세금·개별 상품의 거래 제약을 반영하지 않으며, 매매 신호나 투자 권유가 아닙니다.
 
+### 종목보기의 과거 데이터 차트
+
+`?view=stocks`에서 종목을 클릭하면 열리는 기업 매거진 모달에 **과거 데이터 보기** 버튼이 있습니다. 이 버튼은 PostgreSQL의 `stock_price_history` 테이블에 해당 종목의 일별 OHLCV가 저장되어 있을 때만 활성화되며, 클릭하면 캔들차트와 거래량, 기간(1개월·3개월·6개월·전체) 전환, 호버 툴팁을 보여 줍니다. `/market/history` API는 Yahoo Finance를 직접 조회하지 않고 이미 저장된 데이터만 읽으므로, 데이터가 없는 종목은 버튼이 비활성 상태로 남습니다.
+
+`stock_price_history`를 채우거나 갱신하려면 API 컨테이너 안에서 백필 스크립트를 실행합니다. 이 스크립트는 `frontend/app.js`의 종목 atlas(200개 종목)를 그대로 읽어 Yahoo Finance에서 1년치 일봉을 내려받아 upsert합니다.
+
+```bash
+docker compose exec api python -m app.ops.backfill_ohlcv
+```
+
 ### 3. AWS EC2에서 실행 (Production)
 
 AWS 서버에서만 아래 명령을 실행합니다. 운영 Compose는 소스 바인드 마운트와 `--reload`를 쓰지 않고, PostgreSQL·Redis·Qdrant 포트를 외부에 노출하지 않습니다. 웹 트래픽은 Caddy가 FastAPI의 프론트엔드와 API로 전달합니다.

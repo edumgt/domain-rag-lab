@@ -67,7 +67,7 @@
         <a class="" href="01.html"
           ><b>01</b><span>금융상품과 생활 거래 기초</span></a
         ><a class="" href="02.html"
-          ><b>02</b><span>펀드 · ETF · 리츠 · ETN</span></a
+          ><b>02</b><span>펀드 · ETF</span></a
         ><a class="" href="03.html"
           ><b>03</b><span>채권 · 외환 · 원자재 · 파생상품</span></a
         ><a class="active" href="04.html"
@@ -99,6 +99,20 @@
                   자산을 많이 담는 것만으로는 충분하지 않습니다. 비슷한
                   산업·국가에 몰려 있으면 실제로는 한 방향으로 움직일 수
                   있습니다.
+                </p>
+                <p class="lesson-video-cta">
+                  <button
+                    type="button"
+                    class="lesson-video-link"
+                    id="correlationSimTrigger"
+                  >
+                    <i class="fa-solid fa-arrows-left-right"></i> 상관관계
+                    시뮬레이터 해보기
+                  </button>
+                  <small>
+                    두 자산의 상관계수를 직접 조절하며 분산투자 효과를 눈으로
+                    확인하세요.
+                  </small>
                 </p>
               </div>
             </div>
@@ -388,6 +402,20 @@
                   상품명세와 증권사 주문 화면의 계약 단위를 기준으로 판단해야
                   합니다.
                 </p>
+                <p class="lesson-video-cta">
+                  <button
+                    type="button"
+                    class="lesson-video-link"
+                    id="futuresPnlSimTrigger"
+                  >
+                    <i class="fa-solid fa-calculator"></i> 선물 손익 계산
+                    시뮬레이터 해보기
+                  </button>
+                  <small>
+                    거래승수·진입가·청산가·계약 수를 직접 바꿔 가며 손익
+                    계산을 연습해 보세요.
+                  </small>
+                </p>
               </div>
             </div>
             <button
@@ -583,6 +611,27 @@
                   좌우하지 않게 설계하자는 생각입니다.
                 </p>
                 <p>
+                  리스크 패리티(Risk Parity)는 “얼마나 벌 것 같은가”를
+                  예측하기보다, “각 자산이 포트폴리오 전체의 흔들림(위험)에
+                  얼마나 기여하는가”를 맞추는 데 집중하는 자산배분 방식입니다.
+                  예를 들어 주식과 채권에 절반씩(50:50) 투자했다고 해도,
+                  주식의 변동성이 채권보다 훨씬 크면 포트폴리오 전체 위험의
+                  대부분은 사실상 주식에서 나옵니다. 즉 “투입 금액이
+                  균형 잡혔다”는 것이 “위험이 균형 잡혔다”는 뜻은 아닙니다.
+                </p>
+                <p>
+                  그래서 리스크 패리티는 변동성이 큰 자산(주식)은 적게,
+                  상대적으로 안정적인 자산(채권 등)은 더 많이 담아서, 각
+                  자산이 전체 흔들림에 기여하는 몫을 서로 비슷하게 맞춥니다.
+                  이렇게 하면 특정 한 자산의 충격이 포트폴리오 전체를 크게
+                  흔드는 상황을 줄일 수 있습니다. 다만 안정적인 자산 위주로
+                  짜면 기대수익률 자체는 낮아질 수 있어서, 실제 운용에서는
+                  채권 등 안정적인 자산에 레버리지(빌린 돈)를 더해 기대수익률을
+                  끌어올리는 방식을 함께 쓰기도 합니다. 올웨더 포트폴리오는
+                  이런 리스크 패리티 사고방식을 자산군별 위험 요인(성장·물가)
+                  관점으로 확장한 접근입니다.
+                </p>
+                <p>
                   주식, 경기 둔화 때 방어 역할을 기대하는 명목채권, 물가
                   상승에 대비하는 물가연동채·원자재·금처럼 서로 다른 위험
                   요인을 가진 자산을 함께 검토합니다. 다른 자산이 항상
@@ -590,10 +639,33 @@
                   위험을 줄이려는 것입니다.
                 </p>
                 <p>
-                  인터넷의 개인용 올웨더 비중은 하나의 예시일 뿐 실제
-                  브리지워터 운용과 같지 않습니다. 투자 기간, 현금 필요 시점,
-                  세금·거래비용, 환율 위험, 상품의 만기 구조에 따라 적합한
-                  비중은 달라집니다.
+                  여기서 “인터넷의 개인용 올웨더 비중”이란, 토니 로빈스의
+                  책 등을 통해 널리 퍼진 “주식 30% · 장기국채 40% · 중기국채
+                  15% · 금 7.5% · 원자재 7.5%”처럼 고정된 숫자로 소개되는
+                  버전을 말합니다. 이 비율은 이해를 돕는 단순화된 예시일
+                  뿐이며, 브리지워터가 기관 고객을 대상으로 실제 운용하는
+                  올웨더 펀드와는 다음과 같은 점에서 다릅니다.
+                </p>
+                <p>
+                  첫째, 브리지워터의 실제 운용은 국채처럼 상대적으로
+                  안정적인 자산에 레버리지(빌린 돈)를 더해 기대수익률을
+                  끌어올리지만, 인터넷에 도는 개인용 비중은 보통 레버리지
+                  없이 그대로 담는 것을 전제로 합니다. 둘째, 브리지워터는
+                  “주식 30%”처럼 고정된 숫자를 유지하는 것이 아니라, 각
+                  자산이 전체 위험에 기여하는 정도를 계속 다시 계산해 비중을
+                  동적으로 조정하는 리스크 패리티 모형을 씁니다. 셋째, 실제
+                  운용에는 여러 국가의 국채·물가연동채·원자재 선물 등 개인이
+                  직접 접근하기 어려운 다양한 상품이 포함되고, 기관 고객을
+                  대상으로 한 최소 투자금액·수수료 구조도 개인 투자와
+                  다릅니다.
+                </p>
+                <p>
+                  따라서 “30/40/15/7.5/7.5” 같은 숫자를 그대로 따라 하는
+                  것은 올웨더의 사고방식(위험을 고르게 나누기)을 이해하는
+                  출발점은 될 수 있어도, 브리지워터의 실제 전략을 복제하는
+                  것은 아닙니다. 투자 기간, 현금 필요 시점, 세금·거래비용,
+                  환율 위험, 상품의 만기 구조에 따라 개인에게 적합한 비중은
+                  달라집니다.
                 </p>
                 <p>
                   올웨더도 손실을 없애 주지 않습니다. 주식·채권이 함께
@@ -645,6 +717,18 @@
             <div class="lesson-content">
               <h2>자산배분과 마켓 타이밍은 다릅니다: 달러통장 사례</h2>
               <div class="lesson-body">
+                <p>
+                  달러통장(외화예금)은 실제로 존재하는 은행 상품입니다.
+                  정식 명칭은 외화보통예금·외화정기예금 등이며, 원화를
+                  달러로 환전해 넣어 두거나 처음부터 달러로 입금할 수 있는
+                  계좌입니다. 예금한 달러에는 원화 예금과 별도로 외화 기준
+                  이자가 붙고, 나중에 원화로 다시 바꿀 때는 그 시점의
+                  환율이 적용됩니다. 환전할 때마다 은행이 제시하는
+                  매매기준율에 스프레드(수수료)가 붙으므로, 자주 사고팔수록
+                  비용이 누적된다는 점도 함께 봐야 합니다. 예금자보호
+                  여부·한도는 상품과 은행에 따라 다르므로 가입 전 확인이
+                  필요합니다.
+                </p>
                 <p>
                   “달러통장에 달러를 넣어 두었다가 환율이 오른 것 같을 때
                   은행에 가서 판다”는 방식은 외화라는 자산군을 보유한다는
@@ -729,7 +813,7 @@
                   <strong>퀄리티(Quality)</strong>는 안정적인 수익성, 건전한
                   재무구조, 꾸준한 이익 창출력을 보이는 기업을 선호합니다. 빚은
                   적고 매달 튼튼한 흑자를 내는 사람에게 돈을 맡기는 비유가
-                  어울립니다. ROE, 부채 수준, 영업이익률 등이 판단 재료가 되지만
+                  어울립니다. ROE, 부채비율, 영업이익률 등이 판단 재료가 되지만
                   위기 방어력이 항상 보장되는 것은 아닙니다.
                 </p>
                 <p>
@@ -746,18 +830,84 @@
                   모든 시장 국면에서 시장 평균을 이기거나 위험을 낮춰 주지는
                   않으므로, 장기 성과·비용·회전율·집중 위험을 함께 확인해야 합니다.
                 </p>
+                <h3>수익률 하나로는 부족한 이유: 위험을 읽는 네 가지 숫자</h3>
                 <p>
-                  변동성은 수익률이 평소에 얼마나 크게 흔들렸는지 보여 줍니다.
-                  숫자가 크면 오르내림도 큰 편입니다.
+                  “얼마나 벌었나?”라는 수익률 하나만으로는 그 성과가 얼마나
+                  힘들게, 또는 얼마나 안정적으로 만들어졌는지 알 수
+                  없습니다. 아래 네 가지 숫자를 함께 읽으면 같은 수익률도
+                  훨씬 입체적으로 비교할 수 있습니다.
+                </p>
+                <div class="risk-metric-cards">
+                  <div class="risk-metric-card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h4>수익률</h4>
+                    <p>얼마나 벌었는지 보여주는 가장 기본 숫자입니다. 과거
+                    수익률이 미래를 보장하지는 않습니다.</p>
+                  </div>
+                  <div class="risk-metric-card">
+                    <i class="fa-solid fa-wave-square"></i>
+                    <h4>변동성</h4>
+                    <p>수익률이 평소 얼마나 크게 흔들렸는지 보여줍니다.
+                    숫자가 크면 오르내림도 큰 편입니다.</p>
+                  </div>
+                  <div class="risk-metric-card">
+                    <i class="fa-solid fa-arrow-trend-down"></i>
+                    <h4>MDD(최대낙폭)</h4>
+                    <p>최고점에서 가장 크게 떨어진 폭입니다. 내가 실제로
+                    견딜 수 있는 손실을 가늠하는 데 도움이 됩니다.</p>
+                  </div>
+                  <div class="risk-metric-card">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <h4>샤프 비율</h4>
+                    <p>감수한 위험 대비 얼마나 효율적으로 수익을 냈는지
+                    보여주는 지표입니다. 아래에서 자세히 설명합니다.</p>
+                  </div>
+                </div>
+                <p>
+                  샤프 비율은 감수한 위험(변동성) 대비 얼마나 효율적으로
+                  수익을 냈는지 보여주는 지표입니다. 계산식은
+                  <strong>(포트폴리오 수익률 − 무위험수익률) ÷ 변동성</strong>입니다.
+                  무위험수익률은 예금·국채처럼 위험이 거의 없는 투자로도 얻을
+                  수 있었던 수익이므로, 이를 빼서 “위험을 감수한 대가로 추가로
+                  번 몫”만 남기려는 조정입니다.
                 </p>
                 <p>
-                  MDD(최대낙폭)는 최고점에서 가장 크게 떨어진 폭입니다. 내가
-                  실제로 견딜 수 있는 손실을 생각하는 데 도움이 됩니다.
+                  쉽게 비유하면 등산으로 같은 정상에 오른 두 사람을 비교하는
+                  것과 비슷합니다. A는 완만한 길로 편안하게 올랐고, B는
+                  가파르고 위험한 절벽길로 아슬아슬하게 올랐다면, 같은
+                  높이(수익률)에 도달했더라도 A의 등반이 훨씬 더 “효율적인”
+                  등반입니다. 샤프 비율이 높다는 것은 A처럼 더 적은 위험으로
+                  같은 수익을 내거나, 같은 위험으로 더 높은 수익을 냈다는
+                  뜻입니다.
                 </p>
                 <p>
-                  샤프 비율은 감수한 변동성에 비해 수익이 어느 정도였는지
-                  비교하는 지표입니다. 하나의 숫자만으로 투자 결정을 내리면 안
-                  됩니다.
+                  예를 들어 무위험수익률이 3%이고, 포트폴리오 A는 연 수익률
+                  10%·변동성 8%, 포트폴리오 B는 연 수익률 10%·변동성 20%라면
+                  A의 샤프 비율은 <code>(10 − 3) ÷ 8 ≈ 0.88</code>, B는
+                  <code>(10 − 3) ÷ 20 = 0.35</code>입니다. 두 포트폴리오의
+                  수익률은 같지만 A가 같은 수익을 훨씬 적은 흔들림으로
+                  만들었으므로, 위험조정 성과는 A가 더 좋다고 해석합니다.
+                </p>
+                <p>
+                  다만 하나의 숫자만으로 투자 결정을 내리면 안 됩니다. 샤프
+                  비율은 수익률의 분포가 종 모양에 가깝다고 가정하는 지표라서,
+                  급격한 폭락처럼 한쪽으로 크게 치우친 손실(꼬리 위험)은 잘
+                  드러내지 못할 수 있습니다. 계산 기간과 무위험수익률 기준이
+                  다르면 값을 직접 비교할 수 없다는 점도 함께 기억하세요.
+                </p>
+                <p class="lesson-video-cta">
+                  <button
+                    type="button"
+                    class="lesson-video-link"
+                    id="sharpeSimTrigger"
+                  >
+                    <i class="fa-solid fa-scale-balanced"></i> 샤프 비율 비교
+                    계산기 해보기
+                  </button>
+                  <small>
+                    두 포트폴리오의 수익률·변동성을 직접 입력해 위험조정
+                    성과를 비교해 보세요.
+                  </small>
                 </p>
                 <h3>252 연환산 수익률: 투자 속도를 1년 기준으로 보기</h3>
                 <p>
@@ -794,84 +944,6 @@
             </button>
           </section><section class="lesson" data-alpha-beta-lesson><span>18</span><div class="lesson-content"><h2>알파와 베타: 초과성과와 시장 노출을 구분하기</h2><div class="lesson-body"><p>베타(beta)는 시장이 움직일 때 전략·종목이 평균적으로 얼마나 민감하게 움직였는지를 나타내는 시장 노출도입니다. KOSPI 200을 벤치마크로 했을 때 베타가 1이면 시장과 비슷한 폭, 1보다 크면 더 큰 폭으로, 음수면 반대 방향으로 움직이는 경향을 뜻합니다. 과거 자료에서 추정한 값이므로 미래에도 유지된다는 보장은 없습니다.</p><p>알파(alpha)는 같은 베타와 위험을 감수했을 때 벤치마크 또는 CAPM이 설명하는 수준을 넘어선 수익입니다. 실제 수익률에서 무위험수익률과 베타를 반영한 기대수익률을 뺀 값으로 생각할 수 있습니다. 양(+)의 알파는 같은 기간·비용·벤치마크 기준에서 초과성과가 있었다는 뜻일 뿐, 미래 수익 보장이나 운용자의 실력 증명은 아닙니다.</p><p>따라서 “알파 팩터는 새로운 알고리즘, 베타 팩터는 이미 알려진 알고리즘”이라는 구분은 표준 금융 용어가 아닙니다. 알파 신호는 알려진 공통 팩터를 통제한 뒤에도 초과수익을 기대하게 하는 예측 신호를, 베타 팩터는 시장·가치·규모·모멘텀처럼 널리 알려진 공통 수익 원천에 대한 노출을 뜻합니다. 다만 알파처럼 보이던 규칙이 공개·복제로 널리 알려지고 저비용으로 구현되면 팩터 베타 또는 대체 베타로 재분류될 수 있습니다.</p><p>알파·베타는 변동성·MDD·샤프 비율과 함께 읽어야 합니다. 특히 벤치마크, 측정 기간, 수수료·세금·거래비용이 다르면 수치를 직접 비교할 수 없습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="알파와 베타 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section><section class="lesson"><span>19</span>
             <div class="lesson-content">
-              <h2>수익률보다 먼저 물어볼 질문</h2>
-              <div class="lesson-body">
-                <p>
-                  “얼마나 벌었나?”와 함께 “얼마나 크게, 얼마나 오래 손실을
-                  견뎠나?”를 봐야 합니다.
-                </p>
-                <p>
-                  같은 수익률이라도 손실 폭이 작고 회복 과정이 안정적인
-                  포트폴리오가 어떤 사람에게는 더 적합할 수 있습니다.
-                </p>
-                <p>
-                  내 투자 기간, 목표, 손실 허용 범위가 위험 지표를 해석하는
-                  기준입니다.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="수익률보다 먼저 물어볼 질문 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section><section class="lesson"><span>20</span>
-            <div class="lesson-content">
-              <h2>한국 ETF 시장에서 위험을 읽는 법</h2>
-              <div class="lesson-body">
-                <p>
-                  KRX ETP 시장에는 2026년 기준 1,000개가 넘는 ETF와 여러
-                  운용사의 상품이 상장되어 있습니다. 상품이 많다는 것은 선택지가
-                  많다는 뜻이지, 비슷한 이름의 ETF를 여러 개 사면 자동으로
-                  분산된다는 뜻은 아닙니다.
-                </p>
-                <p>
-                  예를 들어 반도체·2차전지·방산·조선·금융처럼 특정 산업을 담은
-                  ETF는 관련 업황과 몇 개 대형 종목에 함께 흔들릴 수 있습니다.
-                  단일종목 레버리지·인버스 ETF는 일간 수익률을 목표 배수로
-                  추적하므로 장기 보유 때 기초자산의 단순 누적 수익률과 차이가
-                  커질 수 있습니다.
-                </p>
-                <p>
-                  실제 매수 전에는 KRX ETF/ETN 정보에서 기초자산, 추적배수,
-                  운용사, NAV·iNAV, 거래량과 괴리율을 확인하세요. 괴리율이
-                  양수면 시장가격이 순자산가치보다 높게 거래될 수 있다는 뜻이며,
-                  특히 장 마감 무렵이나 해외자산 ETF에서는 주의가 필요합니다.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="한국 ETF 시장에서 위험을 읽는 법 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-</section><section class="lesson"><span>21</span>
-            <div class="lesson-content">
-              <h2>퀀트 투자란 무엇인가요?</h2>
-              <div class="lesson-body"><p>퀀트(quant)는 quantitative, 즉 “정량적인”이라는 말에서 왔습니다. 퀀트 투자는 가격·거래량·재무정보·금리처럼 측정할 수 있는 데이터를 바탕으로 가설을 세우고, 일정한 규칙으로 투자 판단과 위험관리를 돕는 접근입니다.</p><p>중요한 점은 숫자나 코드가 미래를 맞혀 주는 마법이 아니라는 것입니다. 좋은 퀀트 분석은 어떤 데이터를 썼는지, 규칙이 과거에만 잘 맞았던 것은 아닌지, 수수료·세금·거래비용과 큰 손실 구간까지 반영했는지를 함께 점검합니다.</p><p>따라서 퀀트는 “한 번에 크게 맞히기”보다 검증 가능한 규칙과 위험 한도를 세우는 데 가깝습니다. 이 날 앞서 배운 분산, 변동성, 최대낙폭(MDD), 샤프 비율은 이런 전략과 포트폴리오를 평가하는 공통 언어로 다시 쓰입니다.</p></div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="퀀트 투자란 무엇인가요? 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section><section class="lesson"><span>22</span>
-            <div class="lesson-content">
               <h2>개인이 퀀트를 이용하는 세 가지 경로: 일임·플랫폼·직접 API</h2>
               <div class="lesson-body"><p>개인도 퀀트 방식을 이용할 수 있지만, “퀀트 전용 계좌” 하나가 있는 것은 아닙니다. 첫째는 로보어드바이저나 증권사 랩처럼 등록된 사업자가 계약에 따라 운용하는 투자일임·자문 서비스입니다. 일임은 운용 판단과 주문을 맡기는 구조이고, 자문은 조언을 받은 뒤 고객이 주문을 결정하는 구조일 수 있으므로 역할·보수·위험등급·해지 조건을 확인해야 합니다.</p><p>둘째는 조건식을 조합해 데이터를 분석하고 백테스트하는 노코드·플랫폼 방식입니다. 일부 서비스는 증권사 계좌 연결과 주문 기능을 제공할 수 있지만, 지원 증권사·시장·주문 범위·연동 가능 여부는 달라질 수 있습니다.</p><p>셋째는 증권사 Open API로 직접 프로그램을 만드는 개발자형 방식입니다. 한국투자증권 KIS Developers와 키움 Open API+처럼 시세·잔고 조회와 주문 기능을 제공하는 공식 API가 예시입니다. 계좌·서비스 등록, 앱 키·인증, 호출 한도와 허용 상품을 확인하고 모의환경에서 먼저 검증하세요.</p><p>직접 자동주문에는 앱 키 유출, 중복 주문, 통신 장애, 잘못된 수량·가격, 급변동 위험이 있습니다. 데이터 조회 → 모의투자 → 매우 작은 규모의 실거래처럼 단계를 나누고, 주문 한도·중지 스위치·알림·로그·수동 점검 규칙을 갖추는 것이 중요합니다.</p></div>
             </div>
@@ -885,7 +957,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>23</span>
+          </section><section class="lesson"><span>20</span>
             <div class="lesson-content">
               <h2>젠포트·퀀터스 같은 노코드 퀀트 플랫폼: 전략을 만들고 검증하는 흐름</h2>
               <div class="lesson-body"><p>젠포트(뉴지스탁)와 퀀터스는 코드를 직접 작성하지 않고 조건·팩터·비중을 화면에서 조합해 전략을 만들고 백테스트할 수 있는 국내 퀀트 플랫폼의 예입니다. 두 서비스 모두 전략을 실전 계좌 운용에 연결하는 기능을 안내하지만, 이용 가능한 자산·증권사·거래소·주문 방식과 비용은 상품·계좌·시점에 따라 달라질 수 있습니다.</p><p>전략은 “재무 지표가 일정 기준을 충족하는 종목 중 최근 3개월 성과가 좋은 20종목을 고르고, 매월 한 번 다시 구성한다”처럼 간단한 규칙부터 시작합니다. 백테스트에서는 CAGR만 보지 말고 MDD, 거래 횟수·보유기간·회전율과 비용 차감 뒤 성과를 함께 확인합니다.</p><p>실전 연결 전에는 표본 밖 기간에서도 결과가 유지되는지, 작은 종목에서 실제 체결이 가능한지, 수수료·세금·슬리피지와 리밸런싱 비용을 넣었는지, 자동주문 대신 알림·수동 주문도 가능한지 확인하세요. 가입 전 계좌 연동 범위와 수수료·이용권 정책은 공식 화면에서 다시 확인해야 합니다.</p><p>조건을 계속 늘려 과거 수익률만 높이는 과적합은 흔한 함정입니다. 자동 주문을 켜더라도 주문 결과·오류 알림을 확인하고, 예상 밖 손실이나 급변동 때 중단할 기준을 미리 정해야 합니다. 플랫폼은 도구이지 수익을 보장하는 전략이 아닙니다.</p></div>
@@ -900,7 +972,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>24</span>
+          </section><section class="lesson"><span>21</span>
             <div class="lesson-content">
               <h2>에드워드 소프 교수: 확률과 검증을 시장에 적용한 선구자</h2>
               <div class="lesson-body"><p>에드워드 O. 소프(Edward O. Thorp) 교수는 수학과 확률을 활용해 블랙잭을 분석한 뒤, 그 방법을 금융시장 연구로 확장한 수학자·금융 연구자입니다. 그는 카드 게임과 시장 모두에서 직감보다 관찰 가능한 정보, 확률, 반복 가능한 규칙을 중시했습니다.</p><p>소프 교수는 옵션 가격과 시장의 가격 차이를 분석하는 방식 등 초기 정량투자의 발전에 영향을 주었습니다. 그의 사례는 과거의 성공 공식을 그대로 따라 하자는 뜻이 아니라, 투자 아이디어도 데이터와 가정으로 검증하고 위험을 제한해야 한다는 태도를 보여 줍니다.</p><p>과거 성과나 유명 인물의 방법은 미래 수익을 보장하지 않습니다. 특히 실제 시장에서는 거래비용, 유동성 부족, 모델의 오류와 예상 밖 사건이 생길 수 있으므로, 전략을 적용하기 전에는 작은 가정부터 검증하고 손실 한도를 정해야 합니다.</p></div>
@@ -915,7 +987,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>25</span>
+          </section><section class="lesson"><span>22</span>
             <div class="lesson-content">
               <h2>벰버거의 페어 트레이딩: 함께 움직이던 두 가격의 간격 보기</h2>
               <div class="lesson-body"><p>페어 트레이딩(pair trading)은 비슷한 업종·사업 구조처럼 과거에 함께 움직이는 경향이 있었던 두 자산의 가격 간격이 일시적으로 벌어졌을 때, 비싸진 쪽은 매도(숏)하고 싼 쪽은 매수해 간격이 다시 좁아지는지를 보는 통계적 차익거래 접근입니다. 1980년대 모건스탠리의 제리(제럴드) 벰버거가 개척한 방식으로 널리 알려져 있습니다.</p><p>아주 단순한 예를 들어 A와 B 주가가 모두 100원에서 출발해 비슷하게 움직였는데, 어느 날 A만 110원으로 오르고 B는 100원에 머문다고 해 보세요. 전략은 A 1주를 매도하고 B 1주를 매수한 뒤, 둘 다 105원 부근으로 돌아올 때 청산하는 것입니다. 수수료·세금·대차비용은 빼지 않은 이해용 예시입니다.</p><p>알고리즘은 보통 ① 경제적으로 비교할 만한 두 자산을 고르고 ② 과거 가격 간격이 평균으로 돌아오는 성질이 있는지 검정한 뒤 ③ 간격이 평소보다 크게 벌어졌을 때만 진입하고 ④ 간격이 정상화되거나 손실 한도를 넘으면 청산하는 규칙으로 구성됩니다. 단순 상관관계가 높다는 사실만으로 평균 회귀가 보장되지는 않으므로, 스프레드·표준편차·Z-점수와 표본 밖 데이터로 함께 점검합니다.</p><p>두 가격이 다시 만나지 않고 A가 더 오르거나 B가 더 내리면 양쪽 포지션에서 손실이 날 수 있습니다. 공매도 가능 여부와 대차비용, 거래비용, 유동성, 기업 합병·실적 같은 구조 변화도 결과를 바꿉니다. 따라서 “시장 중립”은 시장 방향 위험을 일부 줄이려는 설계일 뿐 손실이 없는 전략이라는 뜻은 아닙니다.</p></div>
@@ -930,7 +1002,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>26</span>
+          </section><section class="lesson"><span>23</span>
             <div class="lesson-content">
               <h2>국내 3개 페어로 보는 과거 신호</h2>
               <div class="lesson-body"><p>삼성전자·삼성전자우, 카카오·NAVER, 기아·현대차처럼 사업 구조가 겹치거나 지배구조로 연결된 국내 페어를 예로 들어, 최근 120거래일 가격 간격을 Z-점수로 계산했다고 가정해 보세요. Z가 -2 이하면 첫 종목 매수·둘째 종목 매도, +2 이상이면 반대로 진입하고, Z가 0을 통과하면 청산하는 규칙을 세울 수 있습니다.</p><p>이런 방식에서는 당일 종가를 본 뒤 같은 날 거래할 수 없으므로, 실제로는 다음 거래일 체결가를 기준으로 재현해야 신호가 의미를 가집니다. 상관계수가 0.9를 넘는 페어라도 실제 가상 신호를 검증해 보면, 기업별 이슈나 지배구조 변화로 보유 기간과 손익이 크게 달라지는 경우가 흔합니다.</p><p>이 사례는 높은 상관관계나 ±2 Z-점수가 수익을 보장하지 않음을 보여 줍니다. 실제 검토에서는 다음 거래일 체결가, 수수료·세금·대차료, 공매도 가능 여부, 손절선과 최대 보유기간을 반영하고 표본 밖 기간에서 다시 검증해야 합니다.</p></div>
@@ -945,7 +1017,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>27</span>
+          </section><section class="lesson"><span>24</span>
             <div class="lesson-content">
               <h2>공매도: 빌려서 먼저 팔고 나중에 갚는 거래</h2>
               <div class="lesson-body"><p>공매도(Short Selling, 空賣渡)는 보유하지 않은 주식을 먼저 빌려 매도한 뒤, 나중에 다시 사서 빌린 주식을 갚는 거래입니다. 일반 매수와 반대로 가격이 내리면 이익이 날 수 있으며, 페어 트레이딩의 “비싸진 쪽 매도”는 실제로 이 공매도 절차와 연결될 수 있습니다.</p><p>예를 들어 A 주식을 10,000원에 빌려 팔고 7,000원에 다시 사서 갚으면 수수료 전 3,000원의 차익이지만, 13,000원에 사서 갚으면 3,000원 손실입니다. 가격 상승에는 이론적인 상한이 없으므로 공매도 손실도 커질 수 있습니다.</p><p>순서는 ① 먼저 차입 ② 매도 ③ 재매수 ④ 상환입니다. 대차·대주 수수료, 상환 기한, 담보·증거금, 강제 상환 가능성, 배당·권리 처리와 실제 주문 가능 종목을 확인해야 합니다. 한국에서는 무차입 공매도가 금지되고 차입 공매도만 허용됩니다. 이 레슨의 숏 포지션은 구조를 이해하기 위한 가상 예시이며 실제 주문 권유가 아닙니다.</p></div>
@@ -960,7 +1032,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>28</span>
+          </section><section class="lesson"><span>25</span>
             <div class="lesson-content">
               <h2>제임스 사이먼스: 과학자 팀과 데이터로 접근한 퀀트 투자자</h2>
               <div class="lesson-body"><p>제임스 사이먼스(James H. Simons)는 수학자였으며, 1978년 훗날 르네상스 테크놀로지스가 된 회사를 세웠습니다. 이 회사는 수학적 모형과 데이터를 활용한 정량투자 접근을 발전시킨 곳으로 알려져 있습니다.</p><p>사이먼스의 사례에서 배울 점은 비밀 공식을 찾는 것보다, 수학자·물리학자·컴퓨터 과학자처럼 서로 다른 전문성을 가진 사람들이 데이터를 검토하고 가설을 계속 시험하는 과정입니다. 데이터 품질, 거래비용, 시장 변화와 위험 한도를 함께 보는 연구 태도가 중요합니다.</p><p>르네상스 테크놀로지스의 과거 성과나 특정 운용 방식은 미래 수익을 보장하지 않으며 내부 전략도 공개되어 있지 않습니다. 이 사례는 수익을 따라 하라는 뜻이 아니라, 가설 설정 → 검증 → 실행 → 재검토라는 퀀트 연구의 작업 방식을 이해하기 위한 소개입니다.</p></div>
@@ -975,7 +1047,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>29</span>
+          </section><section class="lesson"><span>26</span>
             <div class="lesson-content">
               <h2>히든 마코프 모델(HMM): 보이지 않는 시장 국면을 추정하는 방법</h2>
               <div class="lesson-body"><p>히든 마코프 모델(Hidden Markov Model, HMM)은 우리가 직접 볼 수 없는 상태가 있고, 가격 수익률·변동성·거래량 같은 관측값이 그 상태에 따라 달라진다고 가정하는 확률 모형입니다. 특정 운용사의 실제 전체 운용 모델은 공개되어 있지 않으므로, HMM을 특정 인물의 비공개 전략이라고 단정할 수는 없습니다.</p><p>쉬운 예로 시장에 “잔잔한 국면”과 “불안한 국면”이 있다고 생각해 보세요. 이름표는 보이지 않지만 잔잔한 날에는 작은 등락과 낮은 변동성이, 불안한 날에는 큰 등락과 높은 변동성이 자주 관측됩니다. HMM은 최근 수익률·변동성을 보고 오늘이 어느 국면일 가능성이 더 큰지 확률로 추정합니다.</p><p>예를 들어 잔잔한 국면 확률이 75%이면 페어 트레이딩 신호를 평소 규칙으로 검토하고, 불안한 국면 확률이 80%이면 같은 신호라도 거래 규모를 줄이거나 새 진입을 멈추는 안전 규칙을 둘 수 있습니다. HMM은 방향을 예언하는 기계가 아니며, 상태 수·입력 데이터에 따라 결과가 달라지므로 표본 밖 검증과 거래비용을 함께 점검해야 합니다.</p></div>
@@ -990,7 +1062,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>30</span>
+          </section><section class="lesson"><span>27</span>
             <div class="lesson-content">
               <h2>시타델·메릴린치 사례로 보는 초단타와 주문 처리의 공정성</h2>
               <div class="lesson-body"><p>시타델 증권과 메릴린치는 하나의 공동 사건으로 제재받은 것이 아니라, 미국 SEC가 각각 다른 주문 처리 문제를 지적한 별도 사례입니다. 핵심은 초단타의 속도 자체가 아니라 고객 주문정보 보호, 실제 체결 경로와 가격의 투명성입니다.</p><p>메릴린치 사례는 고객이 외부 거래회사로 보내지 말아 달라고 한 주문을 실제로는 외부에 보내고도 내부 처리처럼 알린 문제입니다. 큰 주문의 방향이 새면 다른 거래자가 먼저 움직일 수 있으므로 고객은 주문이 어디에서 체결되는지 알고 선택할 권리가 있습니다.</p><p>시타델 증권 사례는 최선 가격을 제공하거나 찾겠다는 설명과 달리 일부 알고리즘이 작동해 더 나은 가격을 확인·제공하지 못했다고 SEC가 판단한 문제입니다. 10,000원에 산 주문에 9,990원 호가가 있었는데 이를 확인하지 못했다면 10원 차이도 주문이 많아지면 중요한 비용이 됩니다.</p><p>따라서 주문 전에는 내 주문이 어디로 가는지, 이해상충·정보 유출 위험이 있는지, 최선집행 기준과 실제 체결가격이 맞는지를 점검해야 합니다. 이는 특정 회사나 초단타 전체를 단정하는 내용이 아니라, 자동화된 주문 시스템도 투명성·기록·감독이 필요하다는 교육 사례입니다.</p></div>
@@ -1005,7 +1077,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>31</span>
+          </section><section class="lesson"><span>28</span>
             <div class="lesson-content">
               <h2>한국의 고빈도 알고리즘 거래 규제: 등록·위험관리·시장감시</h2>
               <div class="lesson-body"><p>한국에서 고빈도 알고리즘 거래(HFT) 자체가 전면 금지된 것은 아닙니다. 2023년 1월 25일 거래자 등록·위험관리 제도가 시행됐고, 3개월 유예 뒤 4월 25일부터 등록이 의무화됐습니다. 거래자는 한국거래소에 사전 등록하고, 거래소는 식별코드(ID)로 거래를 모니터링합니다.</p><p>전산설비의 안정성·적정성, 거래 전문성, 내부통제 관리체계가 필요하며, 증권사도 주문사고 예방을 위해 주문 시스템을 사전에 점검해야 합니다. 거래소는 고빈도 알고리즘 거래에 특화한 시장감시 기준과 이상거래 적출·분석 체계를 운영합니다.</p><p>규제 시행 초기에는 해외 소재 증권사의 고빈도 알고리즘 시장질서 교란행위에 큰 규모의 과징금이 의결된 사례도 있었습니다. 반복적 고가·물량소진 매수나 호가공백 메우기처럼 시장을 오인하게 하는 주문은 속도가 아니라 목적·반복성·시장 영향 때문에 문제가 됩니다.</p><p>알고리즘 매매는 유동성과 가격발견에 도움을 줄 수도 있지만, 속도만으로 공정성이 보장되지는 않습니다. 주문 취소 수수료·최소 호가 유지시간은 해외 사례를 참고한 추가 규제 논의 대상일 뿐, 현행 국내 의무로 단정하지 않습니다.</p></div>
@@ -1020,7 +1092,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>32</span>
+          </section><section class="lesson"><span>29</span>
             <div class="lesson-content">
               <h2>스캘핑·데이트레이딩·스윙: 보유 기간으로 보는 단기 매매</h2>
               <div class="lesson-body"><p>스캘핑(scalping)은 가격의 아주 작은 움직임을 노리고 수초~수분처럼 짧게 보유하며 여러 번 거래하는 방식입니다. 데이트레이딩은 당일 안에 진입과 청산을 끝내 밤새 포지션을 넘기지 않으려는 방식이고, 스윙 트레이딩은 보통 며칠~수주 동안 단기 파동이나 추세를 관찰하는 방식입니다.</p><p>스캘핑은 거래량이 충분하고 호가 차이가 좁은 종목에서 체결을 빠르게 관리해야 합니다. 다만 개인이 수동으로도 할 수 있는 스캘핑과 기관이 알고리즘·전용 시스템으로 실행하는 초단타 매매(HFT)는 같은 뜻이 아닙니다. 모든 스캘핑이 HFT인 것은 아닙니다.</p><p>짧게 보유한다고 위험이 없어지는 것은 아닙니다. 뉴스·변동성·체결 지연·호가 공백은 수초 안에도 생기고, 잦은 매매는 수수료·세금·호가 차이·슬리피지를 누적시킵니다. 한 번에 0.1%의 작은 가격 차이를 기대해도 왕복 비용이 더 크면 전략은 손실입니다.</p><p>따라서 단기 매매는 승률만 보지 말고 거래당 평균 이익·손실, 비용 차감 후 손익, 최대 연속 손실과 실제 체결 비율을 함께 평가해야 합니다. 세금·수수료 조건은 상품과 시점에 따라 달라 실제 거래 전 최신 안내를 확인하세요.</p></div>
@@ -1035,7 +1107,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>33</span>
+          </section><section class="lesson"><span>30</span>
             <div class="lesson-content">
               <h2>허수성 주문(스푸핑): 호가창 착시를 이용한 시세조종</h2>
               <div class="lesson-body"><p>허수성 주문은 실제로 체결할 의사 없이 많은 주문을 냈다가 체결될 것 같아지면 취소해 다른 투자자가 수요·공급을 잘못 판단하도록 유도하는 행위입니다. 해외에서는 스푸핑(spoofing)이라고도 부릅니다. 정상적인 주문 취소와 달리 처음부터 시장을 속일 목적이 핵심입니다.</p><p>개념 예시로 대량 매수세가 있는 것처럼 보여 다른 사람이 수요가 강하다고 오인하게 한 뒤, 가격이 움직이면 미리 가진 물량을 반대 방향으로 거래하고 주문을 취소하는 상황을 생각할 수 있습니다. 판단할 때는 한 주문만이 아니라 반복된 주문·취소, 실제 체결 의사, 반대편 거래와 시장을 오인하게 한 목적을 함께 봅니다.</p><p>한국거래소는 체결 가능성이 낮은 가격의 대량 주문을 반복해 다른 사람의 거래를 유인하는 행위를 허수성 주문을 이용한 불공정거래 사례로 안내합니다. 시세조종은 자본시장법상 금지되며 제재·형사처벌 대상이 될 수 있습니다.</p><p>자동화·초단타 시스템이 빠르게 주문을 수정·취소한다고 해서 곧바로 허수성 주문은 아닙니다. 호가창의 큰 잔량 하나만 보고 판단하지 말고 체결량, 지속 시간, 공시·뉴스를 함께 확인하세요.</p></div>
@@ -1050,7 +1122,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>34</span>
+          </section><section class="lesson"><span>31</span>
             <div class="lesson-content">
               <h2>제로섬 게임: 한쪽의 이익이 다른 쪽의 손실인 거래</h2>
               <div class="lesson-body"><p>제로섬 게임(zero-sum game)은 참여자들의 이익과 손실을 모두 더하면 0이 되는 구조입니다. 예를 들어 선물 계약에서 A가 10만 원을 벌면 같은 계약의 반대편 B는 비용 전 10만 원을 잃습니다.</p><p>공매도와 페어 트레이딩의 롱·숏 조합도 비용 전에는 제로섬에 가까운 구조입니다. 하지만 수수료, 세금, 스프레드, 대차료까지 더하면 참여자 전체의 합은 음수가 되는데, 이를 네거티브섬이라고 합니다. 두 참여자의 손익 합계가 0이어도 각각 수수료 1,000원씩을 내면 최종 합계는 -2,000원입니다.</p><p>모든 주식투자가 제로섬이라는 뜻은 아닙니다. 기업이 이익을 내고 배당을 지급하거나 장기적으로 가치가 성장하면 주식을 보유한 투자자 전체가 혜택을 볼 수 있습니다. 따라서 파생상품·단기 상대매매의 손익 구조와 기업의 장기 가치 창출을 구분해야 합니다.</p></div>
@@ -1065,7 +1137,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>35</span>
+          </section><section class="lesson"><span>32</span>
             <div class="lesson-content">
               <h2>블랙 스완: 평소 모형 밖의 큰 충격에 대비하기</h2>
               <div class="lesson-body"><p>블랙 스완(Black Swan)은 평소의 경험과 통상적인 예측 모형이 놓치기 쉬운데, 발생하면 시장과 사회에 매우 큰 영향을 주는 사건을 가리키는 비유입니다. 나심 니콜라스 탈레브가 2007년 책 《블랙 스완》에서 널리 알렸고, 오스트레일리아에서 검은 백조가 발견되어 기존 상식이 깨진 일에서 이름을 가져왔습니다.</p><p>핵심은 ① 당시의 기대 밖에 있는 예외적 사건 ② 매우 큰 파급효과 ③ 사건 뒤 “원래 알 수 있었다”는 사후 합리화입니다. 9·11 테러, 2008년 글로벌 금융위기, 2020년 코로나19 팬데믹은 큰 충격 사례로 자주 언급되지만, 엄밀히 블랙 스완인지에는 견해 차이가 있습니다.</p><p>중요한 것은 사건을 정확히 맞히는 것이 아니라 손실 한도·분산·유동성 확보·과도한 레버리지 제한·스트레스 시나리오로 견디는 힘을 만드는 것입니다. 회색 코뿔소는 눈앞의 위험을 무시하는 경우, 하얀 코끼리는 비용은 크지만 효용이 낮아 부담이 되는 자산·사업을 비유합니다.</p></div>
@@ -1124,10 +1196,13 @@
                 샤프 비율 <small>Sharpe Ratio · 危險調整收益率 · SR</small>
               </dt>
               <dd>
-                감수한 변동성 대비 초과수익을 비교하는 위험조정 성과 지표입니다.
-                일반적으로 값이 높을수록 같은 변동성에서 더 나은 성과로 해석할
-                수 있습니다. 다만 과거 자료와 계산 기간에 따라 달라지며, 손실의
-                모양이나 미래 성과를 모두 설명하지는 못합니다.
+                감수한 변동성(위험) 대비 초과수익을 비교하는 위험조정 성과
+                지표입니다. (포트폴리오 수익률 − 무위험수익률) ÷ 변동성으로
+                계산하며, 같은 정상에 오르더라도 완만한 길로 오른 등반이 더
+                “효율적인” 등반이듯, 값이 높을수록 같은 위험으로 더 나은
+                성과를 냈다는 뜻입니다. 다만 과거 자료와 계산 기간에 따라
+                달라지고, 급격한 폭락 같은 손실의 모양이나 미래 성과를 모두
+                설명하지는 못합니다.
               </dd>
             </div>
             <div class="glossary-item">
@@ -1215,6 +1290,46 @@
                 확인해야 합니다.
               </dd>
             </div>
+            <div class="glossary-item">
+              <dt>리스크 패리티 <small>Risk Parity · 危險均衡 · RP</small></dt>
+              <dd>
+                기대수익을 예측하는 대신, 각 자산이 포트폴리오 전체 위험에
+                기여하는 몫을 서로 비슷하게 맞추는 자산배분 방식입니다.
+                변동성이 큰 자산은 적게, 안정적인 자산은 더 많이 담아
+                위험 기여도를 고르게 나누며, 브리지워터의 올웨더
+                포트폴리오가 대표적으로 이런 접근을 씁니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>ROE <small>자기자본이익률 · 自己資本利益率 · Return on Equity</small></dt>
+              <dd>
+                기업이 주주가 투자한 자기자본으로 얼마나 이익을 냈는지
+                보여주는 지표입니다. 당기순이익을 자기자본으로 나누어
+                계산하며, 값이 높을수록 같은 자본으로 더 많은 이익을 냈다는
+                뜻입니다. 다만 빚을 많이 낼수록 자기자본이 줄어 ROE가
+                인위적으로 높아질 수 있으므로 부채비율과 함께 봐야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>부채비율 <small>負債比率 · Debt Ratio</small></dt>
+              <dd>
+                기업이 자기자본 대비 얼마나 많은 빚(부채)을 지고 있는지
+                보여주는 지표입니다. 총부채를 자기자본으로 나눈 값이며,
+                높을수록 이자 부담과 재무 위험이 커질 수 있습니다. 업종마다
+                평균 수준이 달라서, 같은 업종 내 다른 기업과 비교하는 것이
+                더 의미가 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>영업이익률 <small>營業利益率 · Operating Margin</small></dt>
+              <dd>
+                매출액 가운데 본업에서 남긴 영업이익이 차지하는 비율입니다.
+                영업이익을 매출액으로 나누어 계산하며, 값이 높을수록 같은
+                매출로 더 많은 이익을 남기는 효율적인 사업 구조라는 뜻입니다.
+                일회성 손익이 섞이는 순이익률과 달리 본업의 수익성만 보여주는
+                편이라, 기업의 핵심 경쟁력을 가늠할 때 자주 쓰입니다.
+              </dd>
+            </div>
           </dl>
         </section>
         <div class="pager">
@@ -1225,7 +1340,260 @@
         금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.
       </footer>
     </main>
-    
+
+    <div class="glossary-modal correlation-sim-modal" id="correlationSimModal" hidden>
+      <div class="glossary-modal__backdrop" data-corr-sim-close></div>
+      <section
+        class="glossary-modal__dialog correlation-sim-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="corrSimTitle"
+      >
+        <button
+          class="glossary-modal__close"
+          type="button"
+          aria-label="닫기"
+          data-corr-sim-close
+        >
+          ×
+        </button>
+        <p class="glossary-modal__label">SIMULATION · 교육용</p>
+        <h2 id="corrSimTitle">상관관계와 분산투자 시뮬레이션</h2>
+        <p class="corr-sim-intro">
+          두 자산의 상관계수를 조절하면, 개별 자산은 그대로 흔들려도 절반씩
+          담은 포트폴리오의 흔들림이 어떻게 달라지는지 확인할 수 있습니다.
+        </p>
+
+        <div class="corr-sim-stats">
+          <div class="corr-sim-stat">
+            <span>자산 A 변동성</span><strong id="corrSimVolA">20.0%</strong>
+          </div>
+          <div class="corr-sim-stat">
+            <span>자산 B 변동성</span><strong id="corrSimVolB">20.0%</strong>
+          </div>
+          <div class="corr-sim-stat">
+            <span>단순 평균 변동성</span><strong id="corrSimAvgVol">20.0%</strong>
+          </div>
+          <div class="corr-sim-stat highlight">
+            <span>포트폴리오 변동성</span><strong id="corrSimPortVol">18.6%</strong>
+          </div>
+        </div>
+        <p class="corr-sim-benefit" id="corrSimBenefit"></p>
+
+        <div class="corr-sim-control">
+          <div class="corr-sim-control-head">
+            <span>상관계수 (ρ)</span>
+            <strong id="corrSimRhoLabel">+0.30</strong>
+          </div>
+          <input type="range" id="corrSimRho" min="-100" max="100" step="5" value="30" />
+        </div>
+        <div class="corr-sim-scenarios" role="group" aria-label="상관관계 시나리오">
+          <button type="button" class="corr-sim-scenario-btn" data-rho="100">완전 동조 +1.0</button>
+          <button type="button" class="corr-sim-scenario-btn" data-rho="50">약한 동조 +0.5</button>
+          <button type="button" class="corr-sim-scenario-btn" data-rho="0">무상관 0.0</button>
+          <button type="button" class="corr-sim-scenario-btn" data-rho="-50">약한 반대 −0.5</button>
+          <button type="button" class="corr-sim-scenario-btn" data-rho="-100">완전 반대 −1.0</button>
+        </div>
+
+        <div class="corr-sim-vol-controls">
+          <div class="corr-sim-control">
+            <div class="corr-sim-control-head">
+              <span>자산 A 변동성</span><strong id="corrSimVolALabel">20%</strong>
+            </div>
+            <input type="range" id="corrSimVolAInput" min="5" max="40" step="1" value="20" />
+          </div>
+          <div class="corr-sim-control">
+            <div class="corr-sim-control-head">
+              <span>자산 B 변동성</span><strong id="corrSimVolBLabel">20%</strong>
+            </div>
+            <input type="range" id="corrSimVolBInput" min="5" max="40" step="1" value="20" />
+          </div>
+        </div>
+
+        <div class="corr-sim-chart-stage">
+          <svg
+            viewBox="0 0 640 220"
+            class="corr-sim-svg"
+            id="corrSimSvg"
+            role="img"
+            aria-label="자산 A, 자산 B, 포트폴리오의 모의 가격 추이"
+          ></svg>
+          <div class="corr-sim-tooltip" id="corrSimTooltip" hidden></div>
+        </div>
+        <ul class="corr-sim-legend">
+          <li><i style="background: #2a78d6"></i>자산 A</li>
+          <li><i style="background: #eb6834"></i>자산 B</li>
+          <li><i style="background: #1baf7a"></i>포트폴리오(50:50)</li>
+        </ul>
+        <button type="button" class="corr-sim-redraw-btn" id="corrSimRedrawBtn">
+          <i class="fa-solid fa-shuffle"></i> 다른 경로로 다시 시뮬레이션
+        </button>
+
+        <p class="corr-sim-disclaimer">
+          <i class="fa-solid fa-circle-info"></i> 실제 시세가 아니라 상관계수
+          개념을 보여주기 위한 가상의 랜덤 가격 경로입니다.
+        </p>
+      </section>
+    </div>
+
+    <div class="glossary-modal futures-pnl-sim-modal" id="futuresPnlSimModal" hidden>
+      <div class="glossary-modal__backdrop" data-fps-close></div>
+      <section
+        class="glossary-modal__dialog futures-pnl-sim-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="fpsTitle"
+      >
+        <button
+          class="glossary-modal__close"
+          type="button"
+          aria-label="닫기"
+          data-fps-close
+        >
+          ×
+        </button>
+        <p class="glossary-modal__label">SIMULATION · 교육용</p>
+        <h2 id="fpsTitle">선물 손익 계산 시뮬레이터</h2>
+        <p class="fps-intro">
+          거래승수·진입가격·청산가격·계약 수를 직접 바꿔 가며 선물 1계약의
+          손익이 어떻게 계산되는지 연습해 보세요.
+        </p>
+
+        <div class="fps-controls">
+          <div class="fps-field">
+            <label for="fpsMultiplier">거래승수</label>
+            <select id="fpsMultiplier">
+              <option value="250000">표준 계약 (250,000원)</option>
+              <option value="50000">미니 계약 (50,000원)</option>
+              <option value="custom">직접 입력</option>
+            </select>
+          </div>
+          <div class="fps-field" id="fpsCustomMultiplierField" hidden>
+            <label for="fpsCustomMultiplier">거래승수 직접 입력 (원)</label>
+            <input type="number" id="fpsCustomMultiplier" min="1000" step="1000" value="250000" />
+          </div>
+          <div class="fps-field">
+            <label>포지션</label>
+            <div class="fps-side-toggle">
+              <button type="button" class="fps-side-btn buy active" data-side="buy">매수</button>
+              <button type="button" class="fps-side-btn sell" data-side="sell">매도</button>
+            </div>
+          </div>
+          <div class="fps-field">
+            <label for="fpsEntryPrice">진입가격 (포인트)</label>
+            <input type="number" id="fpsEntryPrice" min="0" step="0.05" value="340.00" />
+          </div>
+          <div class="fps-field">
+            <label for="fpsExitPrice">청산가격 (포인트)</label>
+            <input type="number" id="fpsExitPrice" min="0" step="0.05" value="341.20" />
+          </div>
+          <div class="fps-field">
+            <div class="fps-field-head">
+              <label for="fpsContracts">계약 수</label>
+              <strong id="fpsContractsLabel">1계약</strong>
+            </div>
+            <input type="range" id="fpsContracts" min="1" max="5" step="1" value="1" />
+          </div>
+        </div>
+
+        <div class="fps-scenarios" role="group" aria-label="예제 시나리오">
+          <button type="button" class="fps-scenario-btn" data-scenario="standard-up">표준계약 · 상승 예시</button>
+          <button type="button" class="fps-scenario-btn" data-scenario="standard-down">표준계약 · 하락 예시</button>
+          <button type="button" class="fps-scenario-btn" data-scenario="mini-up">미니계약 · 상승 예시</button>
+        </div>
+
+        <div class="fps-result" id="fpsResult"></div>
+
+        <p class="fps-disclaimer">
+          <i class="fa-solid fa-circle-info"></i> 거래승수·최소호가단위·증거금은
+          실제 상품·시장 상황에 따라 다를 수 있습니다. 계산 연습용이며 실제
+          거래에서는 거래소 상품명세와 증권사 화면을 기준으로 판단하세요.
+        </p>
+      </section>
+    </div>
+
+    <div class="glossary-modal sharpe-sim-modal" id="sharpeSimModal" hidden>
+      <div class="glossary-modal__backdrop" data-sharpe-sim-close></div>
+      <section
+        class="glossary-modal__dialog sharpe-sim-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="sharpeSimTitle"
+      >
+        <button
+          class="glossary-modal__close"
+          type="button"
+          aria-label="닫기"
+          data-sharpe-sim-close
+        >
+          ×
+        </button>
+        <p class="glossary-modal__label">SIMULATION · 교육용</p>
+        <h2 id="sharpeSimTitle">샤프 비율 비교 계산기</h2>
+        <p class="sharpe-sim-intro">
+          두 포트폴리오의 연 수익률·변동성을 입력하면, 무위험수익률을 기준으로
+          샤프 비율을 계산해 어느 쪽이 위험 대비 더 효율적인지 비교합니다.
+        </p>
+
+        <div class="sharpe-sim-rf">
+          <label for="sharpeSimRf">무위험수익률</label>
+          <input type="number" id="sharpeSimRf" min="0" max="15" step="0.5" value="3" />
+          <span>%</span>
+        </div>
+
+        <div class="sharpe-sim-scenarios" role="group" aria-label="비교 예시">
+          <button type="button" class="sharpe-sim-scenario-btn" data-scenario="lesson">레슨 예시 그대로</button>
+          <button type="button" class="sharpe-sim-scenario-btn" data-scenario="same-risk">같은 위험, 다른 수익</button>
+          <button type="button" class="sharpe-sim-scenario-btn" data-scenario="same-return">같은 수익, 다른 위험</button>
+        </div>
+
+        <div class="sharpe-sim-portfolios">
+          <div class="sharpe-sim-portfolio">
+            <h3>포트폴리오 A</h3>
+            <div class="sharpe-sim-control">
+              <div class="sharpe-sim-control-head"><span>연 수익률</span><strong id="sharpeSimReturnALabel">10%</strong></div>
+              <input type="range" id="sharpeSimReturnA" min="-10" max="30" step="1" value="10" />
+            </div>
+            <div class="sharpe-sim-control">
+              <div class="sharpe-sim-control-head"><span>변동성</span><strong id="sharpeSimVolALabel">8%</strong></div>
+              <input type="range" id="sharpeSimVolA" min="1" max="40" step="1" value="8" />
+            </div>
+          </div>
+          <div class="sharpe-sim-portfolio">
+            <h3>포트폴리오 B</h3>
+            <div class="sharpe-sim-control">
+              <div class="sharpe-sim-control-head"><span>연 수익률</span><strong id="sharpeSimReturnBLabel">10%</strong></div>
+              <input type="range" id="sharpeSimReturnB" min="-10" max="30" step="1" value="10" />
+            </div>
+            <div class="sharpe-sim-control">
+              <div class="sharpe-sim-control-head"><span>변동성</span><strong id="sharpeSimVolBLabel">20%</strong></div>
+              <input type="range" id="sharpeSimVolB" min="1" max="40" step="1" value="20" />
+            </div>
+          </div>
+        </div>
+
+        <div class="sharpe-sim-results">
+          <div class="sharpe-sim-result-card" id="sharpeSimCardA">
+            <span>포트폴리오 A 샤프 비율</span>
+            <strong id="sharpeSimValueA">0.88</strong>
+            <div class="sharpe-sim-bar"><i id="sharpeSimBarA"></i></div>
+          </div>
+          <div class="sharpe-sim-result-card" id="sharpeSimCardB">
+            <span>포트폴리오 B 샤프 비율</span>
+            <strong id="sharpeSimValueB">0.35</strong>
+            <div class="sharpe-sim-bar"><i id="sharpeSimBarB"></i></div>
+          </div>
+        </div>
+        <p class="sharpe-sim-verdict" id="sharpeSimVerdict"></p>
+
+        <p class="sharpe-sim-disclaimer">
+          <i class="fa-solid fa-circle-info"></i> 학습용 계산기입니다. 실제
+          투자 판단에는 계산 기간, 수수료·세금, 손실의 분포(꼬리 위험)까지
+          함께 확인해야 합니다.
+        </p>
+      </section>
+    </div>
+
     <script>
       document.querySelectorAll("[data-lesson-toggle]").forEach((button) => {
         button.addEventListener("click", () => {
@@ -1239,6 +1607,384 @@
           button.title = collapsed ? "내용 펼치기" : "내용 접기";
         });
       });
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("correlationSimModal");
+        const trigger = document.getElementById("correlationSimTrigger");
+        if (!modal || !trigger) return;
+        const closeEls = modal.querySelectorAll("[data-corr-sim-close]");
+        const closeButton = modal.querySelector(".glossary-modal__close");
+
+        const rhoSlider = document.getElementById("corrSimRho");
+        const rhoLabel = document.getElementById("corrSimRhoLabel");
+        const volAInput = document.getElementById("corrSimVolAInput");
+        const volBInput = document.getElementById("corrSimVolBInput");
+        const volALabel = document.getElementById("corrSimVolALabel");
+        const volBLabel = document.getElementById("corrSimVolBLabel");
+        const volAStat = document.getElementById("corrSimVolA");
+        const volBStat = document.getElementById("corrSimVolB");
+        const avgVolStat = document.getElementById("corrSimAvgVol");
+        const portVolStat = document.getElementById("corrSimPortVol");
+        const benefitEl = document.getElementById("corrSimBenefit");
+        const scenarioButtons = modal.querySelectorAll(".corr-sim-scenario-btn");
+        const svg = document.getElementById("corrSimSvg");
+        const tooltip = document.getElementById("corrSimTooltip");
+        const redrawBtn = document.getElementById("corrSimRedrawBtn");
+
+        const DAYS = 60;
+        let baseZ = null;
+        let chartGeom = null;
+
+        function gaussianRandom() {
+          let u = 0, v = 0;
+          while (u === 0) u = Math.random();
+          while (v === 0) v = Math.random();
+          return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+        }
+
+        function generateBaseZ() {
+          const z1 = [], z2 = [];
+          for (let i = 0; i < DAYS; i++) {
+            z1.push(gaussianRandom());
+            z2.push(gaussianRandom());
+          }
+          return { z1, z2 };
+        }
+
+        function seriesFromZ(z, rho, volA, volB) {
+          const dailyVolA = volA / Math.sqrt(252);
+          const dailyVolB = volB / Math.sqrt(252);
+          let priceA = 100, priceB = 100, priceP = 100;
+          const a = [priceA], b = [priceB], p = [priceP];
+          for (let i = 0; i < DAYS; i++) {
+            const retA = dailyVolA * z.z1[i];
+            const retB = dailyVolB * (rho * z.z1[i] + Math.sqrt(1 - rho * rho) * z.z2[i]);
+            const retP = 0.5 * retA + 0.5 * retB;
+            priceA *= 1 + retA;
+            priceB *= 1 + retB;
+            priceP *= 1 + retP;
+            a.push(priceA);
+            b.push(priceB);
+            p.push(priceP);
+          }
+          return { a, b, p };
+        }
+
+        function computeStats(rho, volA, volB) {
+          const w = 0.5;
+          const portVar = w * w * volA * volA + w * w * volB * volB + 2 * w * w * volA * volB * rho;
+          const portVol = Math.sqrt(Math.max(0, portVar));
+          const avgVol = (volA + volB) / 2;
+          return { avgVol, portVol, benefit: avgVol - portVol };
+        }
+
+        function renderChart(series) {
+          const width = 640, height = 220;
+          const padL = 8, padR = 8, padT = 14, padB = 22;
+          const plotW = width - padL - padR;
+          const plotH = height - padT - padB;
+          const all = [...series.a, ...series.b, ...series.p];
+          let maxP = Math.max(...all), minP = Math.min(...all);
+          const pad = (maxP - minP) * 0.08 || 5;
+          maxP += pad;
+          minP -= pad;
+          const y = (v) => padT + (1 - (v - minP) / (maxP - minP)) * plotH;
+          const x = (i) => padL + (i / (series.a.length - 1)) * plotW;
+          const toPoints = (arr) => arr.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+
+          svg.innerHTML = `
+            <polyline points="${toPoints(series.a)}" fill="none" stroke="#2a78d6" stroke-width="2"/>
+            <polyline points="${toPoints(series.b)}" fill="none" stroke="#eb6834" stroke-width="2"/>
+            <polyline points="${toPoints(series.p)}" fill="none" stroke="#1baf7a" stroke-width="3"/>
+          `;
+          chartGeom = { padL, plotW, width, height, series };
+        }
+
+        function render(regenerate) {
+          const rho = Number(rhoSlider.value) / 100;
+          const volA = Number(volAInput.value) / 100;
+          const volB = Number(volBInput.value) / 100;
+
+          rhoLabel.textContent = `${rho >= 0 ? "+" : ""}${rho.toFixed(2)}`;
+          volALabel.textContent = `${volAInput.value}%`;
+          volBLabel.textContent = `${volBInput.value}%`;
+
+          scenarioButtons.forEach((btn) => {
+            btn.classList.toggle("active", Number(btn.dataset.rho) === Number(rhoSlider.value));
+          });
+
+          const stats = computeStats(rho, volA, volB);
+          volAStat.textContent = `${(volA * 100).toFixed(1)}%`;
+          volBStat.textContent = `${(volB * 100).toFixed(1)}%`;
+          avgVolStat.textContent = `${(stats.avgVol * 100).toFixed(1)}%`;
+          portVolStat.textContent = `${(stats.portVol * 100).toFixed(1)}%`;
+
+          const benefitPct = stats.benefit * 100;
+          if (benefitPct > 0.05) {
+            benefitEl.innerHTML = `<i class="fa-solid fa-arrow-down"></i> 분산 효과: 변동성이 단순 평균보다 <strong>${benefitPct.toFixed(1)}%p</strong> 낮아집니다.`;
+            benefitEl.className = "corr-sim-benefit positive";
+          } else if (benefitPct < -0.05) {
+            benefitEl.innerHTML = `<i class="fa-solid fa-arrow-up"></i> 상관관계가 높아 분산 효과가 거의 없거나, 오히려 변동성이 <strong>${Math.abs(benefitPct).toFixed(1)}%p</strong> 커집니다.`;
+            benefitEl.className = "corr-sim-benefit negative";
+          } else {
+            benefitEl.textContent = "분산 효과가 거의 없습니다 (단순 평균과 비슷).";
+            benefitEl.className = "corr-sim-benefit";
+          }
+
+          if (regenerate || !baseZ) baseZ = generateBaseZ();
+          renderChart(seriesFromZ(baseZ, rho, volA, volB));
+        }
+
+        rhoSlider.addEventListener("input", () => render(false));
+        volAInput.addEventListener("input", () => render(false));
+        volBInput.addEventListener("input", () => render(false));
+        scenarioButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            rhoSlider.value = btn.dataset.rho;
+            render(false);
+          });
+        });
+        redrawBtn.addEventListener("click", () => render(true));
+
+        svg.addEventListener("mousemove", (event) => {
+          if (!chartGeom) return;
+          const rect = svg.getBoundingClientRect();
+          const xRatio = (event.clientX - rect.left) / rect.width;
+          const xSvg = xRatio * chartGeom.width;
+          const idx = Math.round(((xSvg - chartGeom.padL) / chartGeom.plotW) * (chartGeom.series.a.length - 1));
+          const a = chartGeom.series.a[idx], b = chartGeom.series.b[idx], p = chartGeom.series.p[idx];
+          if (a === undefined) { tooltip.hidden = true; return; }
+          tooltip.innerHTML = `<b>${idx}일차</b><span style="color:#2a78d6">자산A ${a.toFixed(1)}</span><span style="color:#eb6834">자산B ${b.toFixed(1)}</span><span style="color:#1baf7a">포트폴리오 ${p.toFixed(1)}</span>`;
+          tooltip.hidden = false;
+          tooltip.style.left = `${event.clientX - rect.left + 12}px`;
+          tooltip.style.top = `${event.clientY - rect.top - 8}px`;
+        });
+        svg.addEventListener("mouseleave", () => { tooltip.hidden = true; });
+
+        function open() {
+          modal.hidden = false;
+          render(true);
+          closeButton?.focus();
+        }
+        function close() {
+          if (modal.hidden) return;
+          modal.hidden = true;
+          trigger.focus();
+        }
+        trigger.addEventListener("click", open);
+        closeEls.forEach((el) => el.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && !modal.hidden) close();
+        });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("futuresPnlSimModal");
+        const trigger = document.getElementById("futuresPnlSimTrigger");
+        if (!modal || !trigger) return;
+        const closeEls = modal.querySelectorAll("[data-fps-close]");
+        const closeButton = modal.querySelector(".glossary-modal__close");
+
+        const multiplierSelect = document.getElementById("fpsMultiplier");
+        const customField = document.getElementById("fpsCustomMultiplierField");
+        const customInput = document.getElementById("fpsCustomMultiplier");
+        const sideButtons = modal.querySelectorAll(".fps-side-btn");
+        const entryInput = document.getElementById("fpsEntryPrice");
+        const exitInput = document.getElementById("fpsExitPrice");
+        const contractsInput = document.getElementById("fpsContracts");
+        const contractsLabel = document.getElementById("fpsContractsLabel");
+        const resultEl = document.getElementById("fpsResult");
+        const scenarioButtons = modal.querySelectorAll(".fps-scenario-btn");
+
+        const state = { side: "buy" };
+        const fmt = (n) => Math.round(n).toLocaleString("ko-KR");
+        const fmtSigned = (n) => `${n >= 0 ? "+" : "−"}${fmt(Math.abs(n))}원`;
+
+        function getMultiplier() {
+          if (multiplierSelect.value === "custom") {
+            return Math.max(1, Number(customInput.value) || 0);
+          }
+          return Number(multiplierSelect.value);
+        }
+
+        function render() {
+          customField.hidden = multiplierSelect.value !== "custom";
+          const multiplier = getMultiplier();
+          const entry = Number(entryInput.value) || 0;
+          const exit = Number(exitInput.value) || 0;
+          const contracts = Number(contractsInput.value);
+          contractsLabel.textContent = `${contracts}계약`;
+
+          const pointChange = exit - entry;
+          const directionSign = state.side === "buy" ? 1 : -1;
+          const contractNotional = entry * multiplier;
+          const perContractPnl = pointChange * multiplier * directionSign;
+          const totalPnl = perContractPnl * contracts;
+
+          resultEl.innerHTML = `
+            <div class="fps-result-row"><span>포인트 변화</span><b class="${pointChange >= 0 ? "up" : "down"}">${pointChange >= 0 ? "+" : ""}${pointChange.toFixed(2)}포인트</b></div>
+            <div class="fps-result-row"><span>계약금액 (1계약, 진입가 기준)</span><b>${fmt(contractNotional)}원</b></div>
+            <div class="fps-result-row"><span>1계약 손익</span><b class="${perContractPnl >= 0 ? "up" : "down"}">${fmtSigned(perContractPnl)}</b></div>
+            <div class="fps-result-row total"><span>총 손익 (${contracts}계약, ${state.side === "buy" ? "매수" : "매도"})</span><b class="${totalPnl >= 0 ? "up" : "down"}">${fmtSigned(totalPnl)}</b></div>
+          `;
+        }
+
+        multiplierSelect.addEventListener("change", render);
+        customInput.addEventListener("input", render);
+        entryInput.addEventListener("input", render);
+        exitInput.addEventListener("input", render);
+        contractsInput.addEventListener("input", render);
+        sideButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            state.side = btn.dataset.side;
+            sideButtons.forEach((b) => b.classList.toggle("active", b === btn));
+            render();
+          });
+        });
+
+        const SCENARIOS = {
+          "standard-up": { multiplier: "250000", entry: 340.00, exit: 341.20, contracts: 1, side: "buy" },
+          "standard-down": { multiplier: "250000", entry: 340.00, exit: 338.80, contracts: 1, side: "buy" },
+          "mini-up": { multiplier: "50000", entry: 340.00, exit: 341.20, contracts: 1, side: "buy" },
+        };
+        scenarioButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const scenario = SCENARIOS[btn.dataset.scenario];
+            if (!scenario) return;
+            multiplierSelect.value = scenario.multiplier;
+            entryInput.value = scenario.entry.toFixed(2);
+            exitInput.value = scenario.exit.toFixed(2);
+            contractsInput.value = scenario.contracts;
+            state.side = scenario.side;
+            sideButtons.forEach((b) => b.classList.toggle("active", b.dataset.side === scenario.side));
+            render();
+          });
+        });
+
+        function open() {
+          modal.hidden = false;
+          render();
+          closeButton?.focus();
+        }
+        function close() {
+          if (modal.hidden) return;
+          modal.hidden = true;
+          trigger.focus();
+        }
+        trigger.addEventListener("click", open);
+        closeEls.forEach((el) => el.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && !modal.hidden) close();
+        });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("sharpeSimModal");
+        const trigger = document.getElementById("sharpeSimTrigger");
+        if (!modal || !trigger) return;
+        const closeEls = modal.querySelectorAll("[data-sharpe-sim-close]");
+        const closeButton = modal.querySelector(".glossary-modal__close");
+
+        const rfInput = document.getElementById("sharpeSimRf");
+        const returnA = document.getElementById("sharpeSimReturnA");
+        const volA = document.getElementById("sharpeSimVolA");
+        const returnB = document.getElementById("sharpeSimReturnB");
+        const volB = document.getElementById("sharpeSimVolB");
+        const returnALabel = document.getElementById("sharpeSimReturnALabel");
+        const volALabel = document.getElementById("sharpeSimVolALabel");
+        const returnBLabel = document.getElementById("sharpeSimReturnBLabel");
+        const volBLabel = document.getElementById("sharpeSimVolBLabel");
+        const valueA = document.getElementById("sharpeSimValueA");
+        const valueB = document.getElementById("sharpeSimValueB");
+        const barA = document.getElementById("sharpeSimBarA");
+        const barB = document.getElementById("sharpeSimBarB");
+        const cardA = document.getElementById("sharpeSimCardA");
+        const cardB = document.getElementById("sharpeSimCardB");
+        const verdict = document.getElementById("sharpeSimVerdict");
+        const scenarioButtons = modal.querySelectorAll(".sharpe-sim-scenario-btn");
+
+        function sharpe(ret, vol, rf) {
+          if (vol <= 0) return 0;
+          return (ret - rf) / vol;
+        }
+
+        function render() {
+          const rf = Number(rfInput.value) || 0;
+          const rA = Number(returnA.value);
+          const vA = Number(volA.value);
+          const rB = Number(returnB.value);
+          const vB = Number(volB.value);
+
+          returnALabel.textContent = `${rA}%`;
+          volALabel.textContent = `${vA}%`;
+          returnBLabel.textContent = `${rB}%`;
+          volBLabel.textContent = `${vB}%`;
+
+          const sA = sharpe(rA, vA, rf);
+          const sB = sharpe(rB, vB, rf);
+          valueA.textContent = sA.toFixed(2);
+          valueB.textContent = sB.toFixed(2);
+
+          const maxAbs = Math.max(Math.abs(sA), Math.abs(sB), 0.5);
+          barA.style.width = `${Math.min(100, (Math.abs(sA) / maxAbs) * 100)}%`;
+          barB.style.width = `${Math.min(100, (Math.abs(sB) / maxAbs) * 100)}%`;
+          barA.style.background = sA >= 0 ? "#dc2626" : "#2563eb";
+          barB.style.background = sB >= 0 ? "#dc2626" : "#2563eb";
+
+          cardA.classList.toggle("winner", sA > sB);
+          cardB.classList.toggle("winner", sB > sA);
+
+          if (Math.abs(sA - sB) < 0.01) {
+            verdict.textContent = "두 포트폴리오의 위험조정 성과가 비슷합니다.";
+          } else if (sA > sB) {
+            verdict.textContent = `포트폴리오 A가 위험 대비 더 효율적입니다 (샤프 비율 ${sA.toFixed(2)} > ${sB.toFixed(2)}).`;
+          } else {
+            verdict.textContent = `포트폴리오 B가 위험 대비 더 효율적입니다 (샤프 비율 ${sB.toFixed(2)} > ${sA.toFixed(2)}).`;
+          }
+        }
+
+        [rfInput, returnA, volA, returnB, volB].forEach((input) => {
+          input.addEventListener("input", render);
+        });
+
+        const SCENARIOS = {
+          lesson: { rf: 3, rA: 10, vA: 8, rB: 10, vB: 20 },
+          "same-risk": { rf: 3, rA: 12, vA: 15, rB: 6, vB: 15 },
+          "same-return": { rf: 3, rA: 9, vA: 10, rB: 9, vB: 25 },
+        };
+        scenarioButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const s = SCENARIOS[btn.dataset.scenario];
+            if (!s) return;
+            rfInput.value = s.rf;
+            returnA.value = s.rA;
+            volA.value = s.vA;
+            returnB.value = s.rB;
+            volB.value = s.vB;
+            scenarioButtons.forEach((b) => b.classList.toggle("active", b === btn));
+            render();
+          });
+        });
+
+        function open() {
+          modal.hidden = false;
+          render();
+          closeButton?.focus();
+        }
+        function close() {
+          if (modal.hidden) return;
+          modal.hidden = true;
+          trigger.focus();
+        }
+        trigger.addEventListener("click", open);
+        closeEls.forEach((el) => el.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && !modal.hidden) close();
+        });
+      })();
     </script>
     <script src="assets/app-shell.js"></script>
   </body>

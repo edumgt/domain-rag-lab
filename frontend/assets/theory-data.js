@@ -29,7 +29,7 @@ window.THEORY_DAYS = [
     {
       day: 2,
       icon: 'fa-chart-line',
-      title: '펀드 · ETF · 리츠 · ETN',
+      title: '펀드 · ETF',
       subtitle: '여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다.',
       goal: '펀드, ETF, 리츠, ETN의 구조와 비용·유동성·발행자 위험을 비교하고, ETF의 기초자산·파생상품 활용·NAV 괴리율을 구분할 수 있어요.',
       keywords: ['펀드', 'ETF', '파생상품 ETF', '기초자산', 'NAV', '괴리율', '주식 대여', '대차수수료', '의결권', '사모펀드', '자산운용사', 'ETF 브랜드'],

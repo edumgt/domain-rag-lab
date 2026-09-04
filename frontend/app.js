@@ -10,8 +10,6 @@
     activeView: 'home',
     activeTheoryDay: 1,
     activeScenario: 'equity',
-    savedSimulation: null,
-    currentSimulation: null,
     calendarCursor: null,
   };
 
@@ -121,7 +119,7 @@
     {
       day: 2,
       icon: 'fa-chart-line',
-      title: '펀드 · ETF · 리츠 · ETN',
+      title: '펀드 · ETF',
       subtitle: '여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다.',
       goal: '펀드, ETF, 리츠, ETN의 구조와 비용·유동성·발행자 위험을 비교하고, ETF 브랜드·운용사, 기초자산·파생상품 활용·NAV 괴리율을 구분할 수 있어요.',
       keywords: ['펀드', 'ETF', 'ETF 브랜드', '자산운용사', '파생상품 ETF', '기초자산', 'NAV', '괴리율', '주식 대여', '대차수수료', '의결권'],
@@ -311,44 +309,7 @@
     { id: 'evt-kr-samsung-q3-preview', date: '2026-10-08', time: '오전(예정)', category: 'earnings', market: '한국', importance: 'medium', title: '삼성전자 2026년 3분기 잠정실적 발표', summary: '삼성전자가 3분기 매출·영업이익 잠정치를 공개합니다.', detail: '잠정실적은 사업부문별 세부 수치 없이 매출·영업이익 총액만 먼저 공개되는 경우가 많습니다. 반도체(메모리·파운드리)와 디바이스 부문의 세부 실적은 이후 확정 실적 발표와 사업보고서에서 확인할 수 있습니다.' },
   ];
 
-  const MODEL_META = {
-    mean_variance: {
-      label: '평균분산',
-      returnBoost: 0.004,
-      volMultiplier: 1.02,
-      note: '기대수익률과 공분산을 바탕으로 효율적 투자선을 찾는 접근입니다.',
-    },
-    black_litterman: {
-      label: '블랙-리터만',
-      returnBoost: 0.002,
-      volMultiplier: 0.95,
-      note: '시장 균형수익률에 전망을 섞어 평균분산의 입력 민감도를 완화합니다.',
-    },
-    risk_parity: {
-      label: 'Risk-Parity',
-      returnBoost: -0.001,
-      volMultiplier: 0.88,
-      note: '자본 비중보다 위험기여도를 고르게 맞추는 접근입니다.',
-    },
-  };
-
-  // 학습용 시뮬레이션 가정치입니다. 선물·옵션 손익은 아래의 단순화된 지수·등가격 풋옵션 가정으로 계산합니다.
-  const SIMULATION_ASSUMPTIONS = {
-    riskFreeRate: 0.02,
-    diversificationBonusScale: 0.004,
-    stressVolatilityMultiplier: 1.55,
-    equityStressPenalty: 0.08,
-    indexFuturesMultiplier: 250000,
-    expectedReturns: [0.082, 0.038, 0.052],
-    annualVolatility: [0.19, 0.065, 0.11],
-    correlationMatrix: [
-      [1.0, 0.18, 0.42],
-      [0.18, 1.0, 0.10],
-      [0.42, 0.10, 1.0],
-    ],
-  };
-
-  // 5일 × 40개: 시장 구분과 산업별로 읽는 국내 상장사 학습 아틀라스
+  // 4일 × 40개: 시장 구분과 산업별로 읽는 국내 상장사 학습 아틀라스
   // 실시간 가격·투자의견이 아닌 사업 구조와 공시 확인 포인트를 위한 학습 데이터입니다.
   const COMPANY_ATLAS = Object.fromEntries(Object.entries({
     1: `KOSPI|삼성전자|반도체
@@ -664,37 +625,8 @@ KOSDAQ|웹젠|게임`,
   const $clearChatBtn = document.getElementById('clearChatBtn');
   const $closeRefBtn = document.getElementById('closeRefBtn');
   const $theoryDayButtons = Array.from(document.querySelectorAll('[data-theory-day]'));
-  const $modelSelect = document.getElementById('modelSelect');
-  const $simModelNote = document.getElementById('simModelNote');
-  const $simChoiceSummary = document.getElementById('simChoiceSummary');
-  const $simPresetButtons = Array.from(document.querySelectorAll('.sim-preset'));
-  const $stockWeight = document.getElementById('stockWeight');
-  const $bondWeight = document.getElementById('bondWeight');
-  const $altWeight = document.getElementById('altWeight');
-  const $portfolioCapital = document.getElementById('portfolioCapital');
-  const $futuresIndexLevel = document.getElementById('futuresIndexLevel');
-  const $futuresContracts = document.getElementById('futuresContracts');
-  const $putCoverage = document.getElementById('putCoverage');
-  const $putPremium = document.getElementById('putPremium');
-  const $stockWeightLabel = document.getElementById('stockWeightLabel');
-  const $bondWeightLabel = document.getElementById('bondWeightLabel');
-  const $altWeightLabel = document.getElementById('altWeightLabel');
-  const $futuresContractsLabel = document.getElementById('futuresContractsLabel');
-  const $putCoverageLabel = document.getElementById('putCoverageLabel');
-  const $putPremiumLabel = document.getElementById('putPremiumLabel');
-  const $simReturn = document.getElementById('simReturn');
-  const $simVolatility = document.getElementById('simVolatility');
-  const $simSharpe = document.getElementById('simSharpe');
-  const $simDrawdown = document.getElementById('simDrawdown');
   const $simPromptBtn = document.getElementById('simPromptBtn');
-  const $simAllocation = document.getElementById('simAllocation');
-  const $simNarrative = document.getElementById('simNarrative');
-  const $simCompare = document.getElementById('simCompare');
   const $simScenarioResult = document.getElementById('simScenarioResult');
-  const $optionChainSample = document.getElementById('optionChainSample');
-  const $simDonut = document.getElementById('simDonut');
-  const $simRiskBars = document.getElementById('simRiskBars');
-  const $simSaveBtn = document.getElementById('simSaveBtn');
   const $simScenarioButtons = Array.from(document.querySelectorAll('.sim-scenario'));
   const $chatInputArea = document.querySelector('.chat-input-area');
   const $viewButtons = Array.from(document.querySelectorAll('.brand-nav-btn'));
@@ -721,15 +653,6 @@ KOSDAQ|웹젠|게임`,
 
   // 좌측은 학습 메뉴, 우측은 RAG 자료와 참고 문서에만 집중합니다.
   $referencePanel.insertBefore($ragPanel, $refList);
-
-  $simPresetButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      $stockWeight.value = btn.dataset.stock;
-      $bondWeight.value = btn.dataset.bond;
-      $altWeight.value = btn.dataset.alt;
-      updateSimulation();
-    });
-  });
 
   $theoryDayButtons.forEach(btn => {
     btn.addEventListener('click', () => openTheoryDay(Number(btn.dataset.theoryDay)));
@@ -806,22 +729,12 @@ KOSDAQ|웹젠|게임`,
 
   $ingestTextBtn.addEventListener('click', ingestText);
 
-  [$modelSelect, $stockWeight, $bondWeight, $altWeight, $portfolioCapital, $futuresIndexLevel, $futuresContracts, $putCoverage, $putPremium].forEach(input => {
-    input.addEventListener('input', updateSimulation);
-  });
-
   $simScenarioButtons.forEach(button => {
     button.addEventListener('click', () => {
       state.activeScenario = button.dataset.scenario;
       $simScenarioButtons.forEach(item => item.classList.toggle('active', item === button));
-      updateSimulation();
+      renderScenarioResult();
     });
-  });
-
-  $simSaveBtn.addEventListener('click', () => {
-    if (!state.currentSimulation) return;
-    state.savedSimulation = { ...state.currentSimulation };
-    updateSimulation();
   });
 
   $simPromptBtn.addEventListener('click', () => {
@@ -1008,6 +921,7 @@ KOSDAQ|웹젠|게임`,
 
   let tickChartGeom = null;
   let tickOutsideClickBound = false;
+  let atlasHistoryGeom = null;
 
   function renderTickChartSVG(bars) {
     const width = 720, height = 260;
@@ -1294,7 +1208,7 @@ KOSDAQ|웹젠|게임`,
   function renderHome() {
     const modules = [
       ['4일 이론 학습', '금융상품부터 자산배분·리밸런싱까지 하루 한 주제씩 읽습니다.', 'fa-calendar-days', 'theory'],
-      ['자산배분 실습', '평균분산·블랙-리터만·Risk Parity를 같은 포트폴리오에 적용합니다.', 'fa-sliders', 'simulation'],
+      ['자산배분 실습', '포트폴리오 비중을 구성하고 다양한 시장 충격 시나리오에서 손익을 비교합니다.', 'fa-sliders', 'simulation'],
     ].map(([title, copy, icon, target]) => `
       <button class="home-module" data-go="${target}">
         <i class="fa-solid ${icon}"></i><strong>${title}</strong><span>${copy}</span><em>학습 시작 <i class="fa-solid fa-arrow-right"></i></em>
@@ -1349,9 +1263,9 @@ KOSDAQ|웹젠|게임`,
   }
 
   function renderSimulationGuide() {
-    $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">ALLOCATION WORKBENCH</div><h1>자산배분 <mark>실습</mark></h1></div><p class="content-lead">비중·헤지를 조절하고 성과, 시장 충격, 저장한 설정을 비교합니다.</p></header><div class="simulation-steps" aria-label="실습 순서"><div><span>01</span><h3>설계</h3></div><i class="fa-solid fa-arrow-right"></i><div><span>02</span><h3>검증</h3></div><i class="fa-solid fa-arrow-right"></i><div><span>03</span><h3>비교</h3></div></div><div class="simulation-workbench" id="simulationMount"></div></article>`;
+    $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">MARKET SHOCK WORKBENCH</div><h1>시장 충격 <mark>시뮬레이션</mark></h1></div><p class="content-lead">다양한 시장 충격 시나리오를 골라 주식/ETF·채권·대체자산이 각각 어떻게 반응하는지 비교합니다.</p></header><div class="simulation-steps" aria-label="실습 순서"><div><span>01</span><h3>시장 충격 선택</h3></div><i class="fa-solid fa-arrow-right"></i><div><span>02</span><h3>자산군별 영향 확인</h3></div><i class="fa-solid fa-arrow-right"></i><div><span>03</span><h3>RAG로 더 알아보기</h3></div></div><div class="simulation-workbench" id="simulationMount"></div></article>`;
     document.getElementById('simulationMount').appendChild($simulationPanel);
-    updateSimulation();
+    renderScenarioResult();
   }
 
   const BACKTEST_STRATEGIES = [
@@ -2004,7 +1918,7 @@ effective_date: [기준일]
     const modal = document.createElement('div');
     modal.className = 'atlas-magazine-modal';
     modal.id = 'atlasMagazineModal';
-    modal.innerHTML = `<div class="atlas-magazine-backdrop" data-atlas-close></div><article class="atlas-magazine-sheet" role="dialog" aria-modal="true" aria-label="${escHtml(company.name)} 기업 매거진"><button class="atlas-magazine-close" data-atlas-close aria-label="닫기"><i class="fa-solid fa-xmark"></i></button><header><span>COMPANY MAGAZINE · ${escHtml(company.market)}</span><h2>${escHtml(company.name)} <small>${escHtml(company.ticker)}</small></h2><p>${escHtml(company.sector)} · 사업 구조와 시장 정보를 한 화면에서 읽는 학습 노트</p></header><section class="atlas-magazine-lead"><div><span>BUSINESS SNAPSHOT</span><h3>${escHtml(company.summary)}</h3><p><b>관찰 변수</b>${escHtml(company.watch)}</p><p><b>핵심 위험</b>${escHtml(company.risk)}</p></div><div class="atlas-price-panel" id="atlasPricePanel"><span>MARKET SNAPSHOT</span><strong><i class="fa-solid fa-spinner fa-spin"></i> 시세 불러오는 중</strong><small>지연 시세 · 교육용 참고</small></div></section><section class="atlas-magazine-links"><a href="https://search.naver.com/search.naver?where=nexearch&query=${searchQuery}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-house"></i> 공식 홈페이지 찾기</a><a href="${kindUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-lines"></i> KIND 공시·기업정보</a><a href="${naverFinanceUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-chart-line"></i> 시세 상세</a></section><section class="atlas-news"><div><span>RECENT NEWS</span><h3>최근 뉴스</h3></div><div id="atlasNewsList"><p><i class="fa-solid fa-spinner fa-spin"></i> 최신 뉴스를 불러오는 중입니다.</p></div></section><footer>시세와 뉴스는 외부 공개 데이터에서 조회한 참고 정보이며, 지연·누락될 수 있습니다. 투자 권유가 아닙니다.</footer></article>`;
+    modal.innerHTML = `<div class="atlas-magazine-backdrop" data-atlas-close></div><article class="atlas-magazine-sheet" role="dialog" aria-modal="true" aria-label="${escHtml(company.name)} 기업 매거진"><button class="atlas-magazine-close" data-atlas-close aria-label="닫기"><i class="fa-solid fa-xmark"></i></button><header><span>COMPANY MAGAZINE · ${escHtml(company.market)}</span><h2>${escHtml(company.name)} <small>${escHtml(company.ticker)}</small></h2><p>${escHtml(company.sector)} · 사업 구조와 시장 정보를 한 화면에서 읽는 학습 노트</p></header><section class="atlas-magazine-lead"><div><span>BUSINESS SNAPSHOT</span><h3>${escHtml(company.summary)}</h3><p><b>관찰 변수</b>${escHtml(company.watch)}</p><p><b>핵심 위험</b>${escHtml(company.risk)}</p></div><div class="atlas-price-panel" id="atlasPricePanel"><span>MARKET SNAPSHOT</span><strong><i class="fa-solid fa-spinner fa-spin"></i> 시세 불러오는 중</strong><small>지연 시세 · 교육용 참고</small></div></section><section class="atlas-magazine-links"><a href="https://search.naver.com/search.naver?where=nexearch&query=${searchQuery}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-house"></i> 공식 홈페이지 찾기</a><a href="${kindUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-lines"></i> KIND 공시·기업정보</a><a href="${naverFinanceUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-chart-line"></i> 시세 상세</a><button type="button" class="atlas-history-btn" id="atlasHistoryBtn" disabled><i class="fa-solid fa-chart-candlestick"></i> 과거 데이터 보기</button></section><section class="atlas-history" id="atlasHistoryPanel" hidden><div><span>OHLCV HISTORY</span><h3>일별 과거 시세</h3></div><div id="atlasHistoryBody"></div></section><section class="atlas-news"><div><span>RECENT NEWS</span><h3>최근 뉴스</h3></div><div id="atlasNewsList"><p><i class="fa-solid fa-spinner fa-spin"></i> 최신 뉴스를 불러오는 중입니다.</p></div></section><footer>시세와 뉴스는 외부 공개 데이터에서 조회한 참고 정보이며, 지연·누락될 수 있습니다. 투자 권유가 아닙니다.</footer></article>`;
     document.body.appendChild(modal);
     document.body.classList.add('modal-open');
     modal.querySelectorAll('[data-atlas-close]').forEach(item => item.addEventListener('click', () => { modal.remove(); document.body.classList.remove('modal-open'); }));
@@ -2017,7 +1931,171 @@ effective_date: [기준일]
     } catch (_) {
       if (!document.body.contains(modal)) return;
       modal.querySelector('#atlasPricePanel').innerHTML = '<span>MARKET SNAPSHOT</span><strong>시세를 불러오지 못했습니다</strong><small>아래 시세 상세 링크에서 확인하세요.</small>';
-      modal.querySelector('#atlasNewsList').innerHTML = '<p>최근 뉴스를 불러오지 못했습니다. 공식 공시와 뉴스 검색을 함께 확인하세요.</p>';
+      modal.querySelector('#atlasNewsList').innerHTML = '<p>최근 뉴스를 불러오지 못했습니다. 공시와 뉴스 검색을 함께 확인하세요.</p>';
+    }
+    bindAtlasHistory(modal, company);
+  }
+
+  function bindAtlasHistory(modal, company) {
+    const btn = modal.querySelector('#atlasHistoryBtn');
+    const panel = modal.querySelector('#atlasHistoryPanel');
+    const body = modal.querySelector('#atlasHistoryBody');
+    if (!btn || !panel || !body) return;
+    let bars = null;
+    let opened = false;
+
+    fetch(`/market/history?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}`)
+      .then(response => response.ok ? response.json() : Promise.reject(new Error('history unavailable')))
+      .then(data => {
+        if (!document.body.contains(modal)) return;
+        if (data.available && data.bars?.length) {
+          bars = data.bars;
+          btn.disabled = false;
+          btn.title = `PostgreSQL에 저장된 ${data.count}일치 데이터`;
+        } else {
+          btn.title = '이 종목은 아직 저장된 과거 데이터가 없습니다.';
+        }
+      })
+      .catch(() => { btn.title = '과거 데이터를 확인하지 못했습니다.'; });
+
+    btn.addEventListener('click', () => {
+      if (!bars) return;
+      opened = !opened;
+      panel.hidden = !opened;
+      btn.classList.toggle('active', opened);
+      btn.innerHTML = opened
+        ? '<i class="fa-solid fa-chart-candlestick"></i> 과거 데이터 닫기'
+        : '<i class="fa-solid fa-chart-candlestick"></i> 과거 데이터 보기';
+      if (opened && !body.dataset.rendered) {
+        body.innerHTML = renderHistoryPanelShell();
+        body.dataset.rendered = '1';
+        bindHistoryRangeButtons(body, bars);
+        bindHistoryTooltip(body);
+        renderHistoryChartFrame(body, bars, 63);
+      }
+      if (opened) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+
+  function renderHistoryPanelShell() {
+    return `
+      <div class="atlas-history-controls" role="group" aria-label="기간 선택">
+        <button type="button" class="atlas-history-range-btn" data-range="21">1개월</button>
+        <button type="button" class="atlas-history-range-btn active" data-range="63">3개월</button>
+        <button type="button" class="atlas-history-range-btn" data-range="126">6개월</button>
+        <button type="button" class="atlas-history-range-btn" data-range="0">전체</button>
+        <span class="atlas-history-summary"></span>
+      </div>
+      <div class="atlas-history-chart-stage">
+        <div class="atlas-history-chart-wrap"></div>
+        <div class="atlas-history-tooltip tick-chart-tooltip" role="status"></div>
+      </div>
+      <ul class="tick-legend">
+        <li class="up"><i></i>상승(양봉) · 거래량</li>
+        <li class="down"><i></i>하락(음봉) · 거래량</li>
+      </ul>
+      <p class="atlas-history-disclaimer"><i class="fa-solid fa-circle-info"></i> PostgreSQL에 저장된 일별 종가 기준 데이터이며 실시간 시세가 아닙니다.</p>
+    `;
+  }
+
+  function bindHistoryRangeButtons(container, bars) {
+    container.querySelectorAll('.atlas-history-range-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('.atlas-history-range-btn').forEach(b => b.classList.toggle('active', b === btn));
+        const range = Number(btn.dataset.range);
+        renderHistoryChartFrame(container, bars, range || null);
+      });
+    });
+  }
+
+  function bindHistoryTooltip(container) {
+    const wrap = container.querySelector('.atlas-history-chart-wrap');
+    const tooltip = container.querySelector('.atlas-history-tooltip');
+    if (!wrap || !tooltip) return;
+    wrap.addEventListener('mousemove', (event) => {
+      if (!atlasHistoryGeom) return;
+      const svg = wrap.querySelector('svg');
+      if (!svg) return;
+      const rect = svg.getBoundingClientRect();
+      const xRatio = (event.clientX - rect.left) / rect.width;
+      const xSvg = xRatio * atlasHistoryGeom.width;
+      const idx = Math.floor((xSvg - atlasHistoryGeom.padL) / atlasHistoryGeom.slot);
+      const item = atlasHistoryGeom.visible[idx];
+      if (!item) { tooltip.classList.remove('is-visible'); return; }
+      const rising = item.close > item.open, falling = item.close < item.open;
+      tooltip.innerHTML = `<b>${item.date}</b><span class="${rising ? 'up' : falling ? 'down' : 'flat'}">종가 ${fmtWon(item.close)}원</span><small>시 ${fmtWon(item.open)} · 고 ${fmtWon(item.high)} · 저 ${fmtWon(item.low)} · 거래량 ${Number(item.volume).toLocaleString('ko-KR')}</small>`;
+      tooltip.classList.add('is-visible');
+      tooltip.style.left = `${event.clientX - rect.left + 12}px`;
+      tooltip.style.top = `${event.clientY - rect.top - 8}px`;
+    });
+    wrap.addEventListener('mouseleave', () => tooltip.classList.remove('is-visible'));
+  }
+
+  function renderHistoryChartFrame(container, bars, rangeDays) {
+    const wrap = container.querySelector('.atlas-history-chart-wrap');
+    const summaryEl = container.querySelector('.atlas-history-summary');
+    const width = 720, height = 300;
+    const padL = 8, padR = 56, padT = 14;
+    const priceH = 170;
+    const volTop = padT + priceH + 12;
+    const volH = 46;
+    const visible = rangeDays ? bars.slice(-rangeDays) : bars;
+    if (!visible.length) {
+      wrap.innerHTML = '<div class="tick-chart-empty"><i class="fa-solid fa-chart-simple"></i><p>표시할 데이터가 없습니다.</p></div>';
+      atlasHistoryGeom = null;
+      if (summaryEl) summaryEl.textContent = '';
+      return;
+    }
+    const plotW = width - padL - padR;
+    const slot = plotW / visible.length;
+    const barW = Math.max(1.5, Math.min(9, slot * 0.62));
+
+    let maxP = Math.max(...visible.map(b => b.high));
+    let minP = Math.min(...visible.map(b => b.low));
+    if (maxP === minP) { maxP += 1; minP -= 1; }
+    const pricePad = (maxP - minP) * 0.08;
+    maxP += pricePad; minP -= pricePad;
+    const y = (p) => padT + (1 - (p - minP) / (maxP - minP)) * priceH;
+
+    const upColor = '#dc2626', downColor = '#2563eb', flatColor = '#94a3b8';
+    const maxVol = Math.max(...visible.map(b => b.volume), 1);
+
+    let candleSvg = '', volSvg = '';
+    visible.forEach((b, i) => {
+      const cx = padL + slot * i + slot / 2;
+      const rising = b.close > b.open, falling = b.close < b.open;
+      const color = rising ? upColor : falling ? downColor : flatColor;
+      const yOpen = y(b.open), yClose = y(b.close), yHigh = y(b.high), yLow = y(b.low);
+      const bodyTop = Math.min(yOpen, yClose);
+      const bodyH = Math.max(1, Math.abs(yClose - yOpen));
+      candleSvg += `<line x1="${cx.toFixed(1)}" y1="${yHigh.toFixed(1)}" x2="${cx.toFixed(1)}" y2="${yLow.toFixed(1)}" stroke="${color}" stroke-width="1"/><rect x="${(cx - barW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${barW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}"/>`;
+      const volBarH = (b.volume / maxVol) * volH;
+      volSvg += `<rect x="${(cx - barW / 2).toFixed(1)}" y="${(volTop + volH - volBarH).toFixed(1)}" width="${barW.toFixed(1)}" height="${volBarH.toFixed(1)}" fill="${color}" opacity="0.55"/>`;
+    });
+
+    const gridCount = 4;
+    let gridSvg = '';
+    for (let g = 0; g <= gridCount; g++) {
+      const price = minP + ((maxP - minP) * g) / gridCount;
+      const gy = y(price);
+      gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR + 6}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/><text x="${width - padR + 10}" y="${(gy + 3).toFixed(1)}" font-size="10" fill="var(--text-muted)">${fmtWon(Math.round(price))}</text>`;
+    }
+
+    const labelCount = Math.min(6, visible.length);
+    let axisSvg = '';
+    for (let i = 0; i < labelCount; i++) {
+      const idx = Math.round((i / Math.max(1, labelCount - 1)) * (visible.length - 1));
+      const cx = padL + slot * idx + slot / 2;
+      axisSvg += `<text x="${cx.toFixed(1)}" y="${height - 8}" font-size="9" fill="var(--text-muted)" text-anchor="middle">${visible[idx].date.slice(2)}</text>`;
+    }
+
+    atlasHistoryGeom = { padL, plotW, slot, visible, width, height };
+    wrap.innerHTML = `<svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none" role="img" aria-label="일별 시세와 거래량 차트">${gridSvg}${candleSvg}${volSvg}${axisSvg}</svg>`;
+
+    if (summaryEl) {
+      const first = visible[0], last = visible[visible.length - 1];
+      const pct = first.close ? ((last.close - first.close) / first.close) * 100 : 0;
+      summaryEl.innerHTML = `${escHtml(first.date)} ~ ${escHtml(last.date)} <strong class="${pct >= 0 ? 'up' : 'down'}">${pct >= 0 ? '+' : ''}${pct.toFixed(1)}%</strong>`;
     }
   }
 
@@ -2301,260 +2379,87 @@ effective_date: [기준일]
     }
   }
 
-  function updateSimulation() {
-    const snapshot = getSimulationSnapshot();
-    const { weights, model, total, derivatives } = snapshot;
-    const normalizedSuffix = total === 100 ? '' : ' (정규화)';
+  const SHOCK_SCENARIOS = {
+    equity: {
+      title: '주식 급락', detail: '주식/ETF가 크게 하락하고 채권의 완충 효과가 일부 나타나는 상황', stock: -0.22, bond: 0.04, alt: -0.08,
+      reasons: {
+        stock: '투자심리 위축과 이익 전망 하향으로 매도가 몰리며 주가가 크게 하락합니다.',
+        bond: '위험자산을 팔고 국채 같은 안전자산으로 자금이 옮겨가는 안전자산 선호(flight to quality) 현상이 나타나 채권 가격이 오릅니다.',
+        alt: '부동산·원자재 등 대체자산도 위험자산으로 함께 분류돼 자금 유출의 영향을 받지만, 채권만큼 안전자산 대우를 받지 못해 소폭 하락합니다.',
+      },
+    },
+    rates: {
+      title: '금리 급등', detail: '채권 가격 하락과 위험자산 약세가 동시에 발생하는 상황', stock: -0.07, bond: -0.12, alt: -0.03,
+      reasons: {
+        stock: '할인율(요구수익률)이 높아지면서 미래 이익의 현재가치가 낮아져 주가에 부담을 줍니다.',
+        bond: '시장금리가 오르면 이미 발행된 낮은 금리의 채권은 상대적 매력이 떨어져 가격이 하락합니다. 만기가 길수록 하락폭이 커집니다.',
+        alt: '대체자산도 조달금리 상승과 할인율 부담으로 소폭 하락하지만, 채권만큼 금리에 직접 민감하지는 않습니다.',
+      },
+    },
+    inflation: {
+      title: '인플레이션 재확산', detail: '채권 부담과 자산 전반의 변동성이 높아지는 상황', stock: -0.08, bond: -0.09, alt: -0.02,
+      reasons: {
+        stock: '원가 상승과 소비 위축 우려로 기업 이익 전망이 낮아지고, 추가 금리 인상 경계감도 주가에 부담을 줍니다.',
+        bond: '물가가 오르면 채권이 주는 고정 이자의 실질 가치가 줄고, 중앙은행의 긴축 우려로 시장금리가 함께 올라 채권 가격이 하락합니다.',
+        alt: '원자재·실물자산은 물가 상승의 수혜를 일부 누릴 수 있어 상대적으로 낙폭이 작습니다.',
+      },
+    },
+    stagflation: {
+      title: '스태그플레이션', detail: '경기 둔화와 물가 상승이 겹쳐 주식과 채권이 함께 약세를 보이는 상황', stock: -0.18, bond: -0.14, alt: 0.06,
+      reasons: {
+        stock: '경기는 둔화되는데 비용 부담은 계속 커지는 이중고로 기업 이익이 크게 훼손됩니다.',
+        bond: '물가는 높은데 성장까지 둔화되면 중앙은행의 정책 대응이 어려워지고, 물가와 금리 부담이 겹쳐 채권 가격이 크게 하락합니다.',
+        alt: '원자재·금처럼 물가 상승에 연동되는 자산은 인플레이션 헤지 수요가 몰리며 오히려 강세를 보일 수 있습니다.',
+      },
+    },
+    credit_crunch: {
+      title: '신용경색', detail: '자금 경색으로 위험자산은 물론 유동성이 낮은 대체자산까지 함께 흔들리는 상황', stock: -0.30, bond: -0.06, alt: -0.15,
+      reasons: {
+        stock: '자금 조달이 막히면서 기업의 유동성 위기 우려가 커지고, 투매에 가까운 매도가 나타납니다.',
+        bond: '국채는 안전자산으로 일부 매수세가 유입될 수 있지만, 신용 스프레드 확대와 담보 자산 매도(디레버리징)로 채권 가격도 함께 눌립니다.',
+        alt: '유동성이 낮은 자산은 현금을 확보하려는 급매물이 몰리며 가장 크게 흔들립니다.',
+      },
+    },
+    geopolitical: {
+      title: '지정학적 충격', detail: '안전자산 선호가 강해지며 채권·대체자산이 방어력을 보이는 상황', stock: -0.12, bond: 0.05, alt: 0.10,
+      reasons: {
+        stock: '불확실성이 커지며 위험자산에 대한 투자심리가 위축돼 주가가 하락합니다.',
+        bond: '지정학적 긴장이 커질수록 투자자들은 국채 같은 안전자산으로 이동해 채권 가격이 오릅니다.',
+        alt: '금처럼 전통적인 안전자산 성격을 가진 대체자산은 위기 국면에서 선호도가 높아져 가격이 오릅니다.',
+      },
+    },
+    pandemic: {
+      title: '팬데믹형 셧다운', detail: '짧은 기간에 매도가 집중되며 유동성이 낮은 자산까지 함께 급락하는 상황', stock: -0.34, bond: 0.03, alt: -0.10,
+      reasons: {
+        stock: '경제활동이 급격히 멈추면서 매출·이익 전망이 짧은 기간에 크게 악화돼 대규모 매도가 집중됩니다.',
+        bond: '위험자산 회피 심리로 안전자산 수요가 늘지만, 시장 전체의 현금 확보 움직임 때문에 상승폭은 제한적입니다.',
+        alt: '부동산 등 유동성이 낮은 자산은 거래 자체가 위축되고, 현금화가 필요한 투자자들의 매도 압력을 함께 받습니다.',
+      },
+    },
+  };
 
-    $simModelNote.textContent = model.note;
-    renderChoiceSummary(snapshot);
-    $stockWeightLabel.textContent = `${percent(weights.stock)}${normalizedSuffix}`;
-    $bondWeightLabel.textContent = `${percent(weights.bond)}${normalizedSuffix}`;
-    $altWeightLabel.textContent = `${percent(weights.alt)}${normalizedSuffix}`;
-    $futuresContractsLabel.textContent = `${derivatives.futuresContracts}계약`;
-    $putCoverageLabel.textContent = percent(derivatives.putCoverage);
-    $putPremiumLabel.textContent = percent(derivatives.putPremiumRate);
-
-    if (total === 0) {
-      state.currentSimulation = null;
-      $simReturn.textContent = '-';
-      $simVolatility.textContent = '-';
-      $simSharpe.textContent = '-';
-      $simDrawdown.textContent = '-';
-      $simAllocation.innerHTML = '<span>자산 비중 합계가 0%입니다. 슬라이더를 조정해 포트폴리오를 구성하세요.</span>';
-      $simNarrative.innerHTML = '<strong>실습 안내</strong><br>주식/ETF, 채권, 대체·현금 중 하나 이상에 비중을 배분하면 리스크와 성과 지표를 계산합니다.';
-      $simScenarioResult.innerHTML = '';
-      renderOptionChainSample(snapshot);
-      $simCompare.innerHTML = '';
-      $simDonut.style.background = '#e2e8f0';
-      $simRiskBars.innerHTML = '';
-      return;
-    }
-
-    const returns = SIMULATION_ASSUMPTIONS.expectedReturns;
-    const vols = SIMULATION_ASSUMPTIONS.annualVolatility;
-    const corr = SIMULATION_ASSUMPTIONS.correlationMatrix;
-    const vector = [weights.stock, weights.bond, weights.alt];
-
-    let variance = 0;
-    for (let i = 0; i < vector.length; i += 1) {
-      for (let j = 0; j < vector.length; j += 1) {
-        variance += vector[i] * vector[j] * vols[i] * vols[j] * corr[i][j];
-      }
-    }
-
-    const baseReturn = vector.reduce((sum, value, idx) => sum + value * returns[idx], 0);
-    // 가장 큰 자산 집중도를 제외한 나머지 비중을 단순 분산효과로 보는 학습용 휴리스틱
-    const diversification = 1 - Math.max(...vector);
-    const expectedReturn = baseReturn + model.returnBoost + diversification * SIMULATION_ASSUMPTIONS.diversificationBonusScale;
-    const volatility = Math.max(
-      0.03,
-      Math.sqrt(variance) * model.volMultiplier,
-    );
-    const sharpe = (expectedReturn - SIMULATION_ASSUMPTIONS.riskFreeRate) / volatility;
-    // 스트레스 손실은 학습자에게 손실값으로 보이도록 음수로 표기합니다.
-    const drawdown = -Math.max(0, (
-      volatility * SIMULATION_ASSUMPTIONS.stressVolatilityMultiplier
-      + Math.max(0, weights.stock - 0.5) * SIMULATION_ASSUMPTIONS.equityStressPenalty
-    ));
-
-    $simReturn.textContent = percent(expectedReturn);
-    $simVolatility.textContent = percent(volatility);
-    $simSharpe.textContent = sharpe.toFixed(2);
-    $simDrawdown.textContent = percent(drawdown);
-
-    state.currentSimulation = {
-      expectedReturn,
-      volatility,
-      sharpe,
-      drawdown,
-      weights: { ...weights },
-      derivatives,
-      model: model.label,
-    };
-
-    $simAllocation.innerHTML = `
-      <div class="allocation-bar" aria-label="정규화 자산 비중">
-        <i style="width:${weights.stock * 100}%"></i><i style="width:${weights.bond * 100}%"></i><i style="width:${weights.alt * 100}%"></i>
-      </div>
-      <div class="allocation-legend">
-        <span><b></b>주식/ETF ${percent(weights.stock)}</span>
-        <span><b></b>채권 ${percent(weights.bond)}</span>
-        <span><b></b>대체·현금 ${percent(weights.alt)}</span>
-      </div>
-      <small>지수선물 숏 ${derivatives.futuresContracts}계약 · 선물 명목금액 ${formatWon(derivatives.futuresNotional)} · 풋옵션 보호 ${percent(derivatives.putCoverage)} (${formatWon(derivatives.putProtectedNotional)})</small>
-    `;
-    const stockStop = weights.stock * 100;
-    const bondStop = stockStop + weights.bond * 100;
-    $simDonut.style.background = `conic-gradient(#2563eb 0 ${stockStop}%, #14b8a6 ${stockStop}% ${bondStop}%, #f59e0b ${bondStop}% 100%)`;
-    $simDonut.innerHTML = `<div><strong>${derivatives.futuresContracts} / ${Math.round(derivatives.putCoverage * 100)}%</strong><span>선물 / 풋 보호</span></div>`;
-    const riskScale = Math.min(100, volatility * 400);
-    const returnScale = Math.min(100, Math.max(0, expectedReturn * 600));
-    const stressScale = Math.min(100, Math.abs(drawdown) * 300);
-    $simRiskBars.innerHTML = `
-      <div><span>기대수익</span><i><b style="width:${returnScale}%"></b></i><strong>${percent(expectedReturn)}</strong></div>
-      <div><span>예상변동성</span><i><b style="width:${riskScale}%"></b></i><strong>${percent(volatility)}</strong></div>
-      <div class="loss"><span>스트레스 손실</span><i><b style="width:${stressScale}%"></b></i><strong>${percent(drawdown)}</strong></div>`;
-
-    // 정규화 비중 기준의 학습용 분류: 대략적인 성향 비교를 위한 규칙입니다.
-    const tilt = weights.stock >= 0.55 ? '공격형' : weights.bond >= 0.4 ? '방어형' : '균형형';
-    $simNarrative.innerHTML = `
-      <strong>${model.label}</strong> 기준 ${tilt} 포트폴리오입니다.<br>
-      ${model.note}<br>
-      현재 설정은 기대수익률 ${percent(expectedReturn)}, 예상 변동성 ${percent(volatility)}, 샤프 비율 ${sharpe.toFixed(2)} 수준으로 계산됩니다. 아래 스트레스 테스트에서만 선물 숏과 풋옵션의 단순 손익을 합산합니다.
-    `;
-    renderScenarioResult(state.currentSimulation);
-    renderOptionChainSample(state.currentSimulation);
-    renderSavedComparison(state.currentSimulation);
-  }
-
-  function renderChoiceSummary(snapshot) {
-    const { raw, model } = snapshot;
-    const selectedPreset = $simPresetButtons.find((button) => (
-      Number(button.dataset.stock) === raw.stock
-      && Number(button.dataset.bond) === raw.bond
-      && Number(button.dataset.alt) === raw.alt
-    ));
-
-    $simPresetButtons.forEach((button) => {
-      const isSelected = button === selectedPreset;
-      button.classList.toggle('active', isSelected);
-      button.setAttribute('aria-pressed', String(isSelected));
-    });
-
-    const allocation = `주식/ETF ${raw.stock}% · 채권 ${raw.bond}% · 대체/현금 ${raw.alt}%`;
-    if (selectedPreset) {
-      $simChoiceSummary.textContent = `현재 조합: ${model.label} 모델 + ${selectedPreset.dataset.presetName}. ${model.label}은 계산 관점이고, ${selectedPreset.dataset.presetName}은 ${allocation}로 시작하는 비중 선택입니다.`;
-      return;
-    }
-    $simChoiceSummary.textContent = `현재 조합: ${model.label} 모델 + 직접 조정 비중. ${model.label}은 계산 관점이고, 현재 비중은 ${allocation}입니다.`;
-  }
-
-  function renderScenarioResult(snapshot) {
-    const scenarios = {
-      equity: { title: '주식 급락', detail: '주식/ETF가 크게 하락하고 채권의 완충 효과가 일부 나타나는 상황', stock: -0.22, bond: 0.04, alt: -0.08 },
-      rates: { title: '금리 급등', detail: '채권 가격 하락과 위험자산 약세가 동시에 발생하는 상황', stock: -0.07, bond: -0.12, alt: -0.03 },
-      inflation: { title: '인플레이션 재확산', detail: '채권 부담과 자산 전반의 변동성이 높아지는 상황', stock: -0.08, bond: -0.09, alt: -0.02 },
-    };
-    const scenario = scenarios[state.activeScenario];
-    const { weights, derivatives } = snapshot;
-    const cashPortfolioPnL = derivatives.capital * (
-      weights.stock * scenario.stock + weights.bond * scenario.bond + weights.alt * scenario.alt
-    );
-    // 지수선물 매도는 지수가 내려가면 이익, 오르면 손실이 나는 단순 일일 손익 구조입니다.
-    const futuresPnL = derivatives.futuresNotional * -scenario.stock;
-    // 등가격 풋옵션은 지수 하락분만큼 보호금액에서 이익이 난다고 단순화했습니다.
-    const putPayoff = Math.max(0, -scenario.stock) * derivatives.putProtectedNotional;
-    const putPremiumCost = derivatives.putProtectedNotional * derivatives.putPremiumRate;
-    const putPnL = putPayoff - putPremiumCost;
-    const totalPnL = cashPortfolioPnL + futuresPnL + putPnL;
-    const plainLoss = cashPortfolioPnL / derivatives.capital;
-    const hedgedLoss = totalPnL / derivatives.capital;
-    const change = totalPnL - cashPortfolioPnL;
+  function renderScenarioResult() {
+    const scenario = SHOCK_SCENARIOS[state.activeScenario] || SHOCK_SCENARIOS.equity;
+    const cls = (value) => (value >= 0 ? 'up' : 'down');
     $simScenarioResult.innerHTML = `
-      <div class="scenario-result-head"><span>${scenario.title} 가정</span><strong>${formatSignedWon(totalPnL)}</strong></div>
+      <div class="scenario-result-head"><span>${scenario.title} 가정</span></div>
       <div class="scenario-breakdown">
-        <span>현물 포트폴리오 <b>${formatSignedWon(cashPortfolioPnL)}</b></span>
-        <span>지수선물 매도 <b>${formatSignedWon(futuresPnL)}</b></span>
-        <span>풋옵션 (행사차익 − 권리금) <b>${formatSignedWon(putPnL)}</b></span>
+        <span>주식/ETF <b class="${cls(scenario.stock)}">${formatSignedPercent(scenario.stock)}</b></span>
+        <span>채권 <b class="${cls(scenario.bond)}">${formatSignedPercent(scenario.bond)}</b></span>
+        <span>대체·현금 <b class="${cls(scenario.alt)}">${formatSignedPercent(scenario.alt)}</b></span>
       </div>
-      <p>헤지 전 ${percent(plainLoss)} → 헤지 후 ${percent(hedgedLoss)} (차이 ${formatSignedWon(change)}). ${scenario.detail}입니다. 풋옵션 권리금은 하락하지 않아도 비용이 되며, 선물은 반대로 움직이면 손실·증거금 부담이 생길 수 있습니다.</p>`;
-  }
-
-  function renderOptionChainSample(snapshot) {
-    const { indexLevel } = snapshot.derivatives;
-    const step = indexLevel >= 100 ? 5 : 1;
-    const atTheMoney = Math.round(indexLevel / step) * step;
-    const strikes = [-2, -1, 0, 1, 2].map(offset => atTheMoney + offset * step);
-    const rows = strikes.map((strike, index) => {
-      const distance = strike - indexLevel;
-      const timeValue = 7 + Math.max(0, 8 - Math.abs(distance) * 0.45);
-      const callPremium = Math.max(0, -distance) + timeValue;
-      const putPremium = Math.max(0, distance) + timeValue;
-      const impliedVolatility = 17 + Math.abs(distance) * 0.16;
-      const callOi = 780 + (4 - index) * 165;
-      const putOi = 720 + index * 175;
-      const marker = Math.abs(distance) < step / 2 ? '<small class="atm-marker">ATM</small>' : '';
-      return `<tr>
-        <td>${callPremium.toFixed(1)}</td><td>${impliedVolatility.toFixed(1)}%</td><td>${callOi.toLocaleString('ko-KR')}</td>
-        <th>${strike.toFixed(step === 1 ? 0 : 1)}${marker}</th>
-        <td>${putPremium.toFixed(1)}</td><td>${impliedVolatility.toFixed(1)}%</td><td>${putOi.toLocaleString('ko-KR')}</td>
-      </tr>`;
-    }).join('');
-    $optionChainSample.innerHTML = `
-      <div class="option-chain-summary">
-        <strong>가정 지수 ${indexLevel.toFixed(1)}</strong>
-        <span>가운데 행의 ATM(등가격)은 현재 지수와 행사가가 가장 가까운 계약입니다.</span>
-      </div>
-      <div class="option-chain-scroll">
-        <table class="option-chain-table">
-          <caption>만기까지 약 30일 남은 지수옵션의 예시 표</caption>
-          <thead><tr><th colspan="3" scope="colgroup">콜옵션: 오를 때 유리한 살 권리</th><th scope="col">행사가</th><th colspan="3" scope="colgroup">풋옵션: 내릴 때 유리한 팔 권리</th></tr>
-          <tr><th>프리미엄</th><th>IV</th><th>OI</th><th>정한 가격</th><th>프리미엄</th><th>IV</th><th>OI</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-      <div class="option-chain-explainer">
-        <p><b>프리미엄</b>은 옵션 한 계약의 권리 가격입니다. 콜은 지수가 오를수록, 풋은 지수가 내릴수록 보통 가치가 커집니다.</p>
-        <p><b>IV(내재변동성)</b>는 시장이 예상하는 앞으로의 흔들림을 숫자로 나타낸 것입니다. 높을수록 옵션 프리미엄도 비싸질 수 있습니다.</p>
-        <p><b>OI(미결제약정)</b>는 아직 청산되지 않은 계약 수입니다. 거래량이나 OI가 많다고 가격 방향이 확정되는 것은 아닙니다.</p>
-      </div>
-      <p class="option-chain-disclaimer">표의 프리미엄·IV·OI는 입력한 가정 지수를 기준으로 만든 예시입니다. 실제 옵션 체인, 호가, 만기, 수수료, 거래 가능 여부를 반영하지 않으며 매매 신호가 아닙니다.</p>`;
-  }
-
-  function renderSavedComparison(snapshot) {
-    if (!state.savedSimulation) {
-      $simCompare.innerHTML = '<span><i class="fa-regular fa-bookmark"></i> 현재 설정을 저장하면 다음 조정안과 수익률·변동성을 비교할 수 있습니다.</span>';
-      return;
-    }
-    const saved = state.savedSimulation;
-    const diff = (value, previous) => `${value - previous >= 0 ? '+' : ''}${percent(value - previous)}`;
-    $simCompare.innerHTML = `<strong><i class="fa-solid fa-code-compare"></i> 저장한 설정과 비교</strong><div><span>기대수익률 ${diff(snapshot.expectedReturn, saved.expectedReturn)}</span><span>변동성 ${diff(snapshot.volatility, saved.volatility)}</span><span>스트레스 손실 ${diff(snapshot.drawdown, saved.drawdown)}</span></div><small>기준: ${saved.model} · 주식/ETF ${percent(saved.weights.stock)} · 채권 ${percent(saved.weights.bond)}</small>`;
+      <p>${scenario.detail}입니다. 자산군별 값은 교육용 가정 수익률이며, 실제 상관관계·변동성·기간에 따라 결과는 달라질 수 있습니다.</p>
+      <div class="scenario-reasons">
+        <p class="scenario-reasons-label"><i class="fa-solid fa-circle-question"></i> 왜 이렇게 움직일까요?</p>
+        <div class="scenario-reason"><b class="${cls(scenario.stock)}">주식/ETF ${formatSignedPercent(scenario.stock)}</b><span>${scenario.reasons.stock}</span></div>
+        <div class="scenario-reason"><b class="${cls(scenario.bond)}">채권 ${formatSignedPercent(scenario.bond)}</b><span>${scenario.reasons.bond}</span></div>
+        <div class="scenario-reason"><b class="${cls(scenario.alt)}">대체·현금 ${formatSignedPercent(scenario.alt)}</b><span>${scenario.reasons.alt}</span></div>
+      </div>`;
   }
 
   function buildSimulationPrompt() {
-    const snapshot = getSimulationSnapshot();
-    const model = snapshot.model.label;
-    const { derivatives } = snapshot;
-    const allocation = `포트폴리오 금액은 ${formatWon(derivatives.capital)}이고, 정규화 비중은 주식/ETF ${percent(snapshot.weights.stock)}, 채권 ${percent(snapshot.weights.bond)}, 대체·현금 ${percent(snapshot.weights.alt)}입니다. 지수선물 ${derivatives.futuresContracts}계약 매도(명목 ${formatWon(derivatives.futuresNotional)})와 주식/ETF 노출의 ${percent(derivatives.putCoverage)}를 보호하는 풋옵션(권리금 가정 ${percent(derivatives.putPremiumRate)})을 사용합니다.`;
-    return `${model} 기준 실습 포트폴리오를 설명해줘. ${allocation}. 금융상품과 자산배분 관점에서 선물 매도와 풋옵션 매수의 역할, 주요 위험, 리밸런싱 포인트를 정리해줘.`;
-  }
-
-  function getSimulationSnapshot() {
-    const raw = {
-      stock: Number($stockWeight.value),
-      bond: Number($bondWeight.value),
-      alt: Number($altWeight.value),
-    };
-    const total = raw.stock + raw.bond + raw.alt;
-    const safeTotal = total || 0.001;
-    const capital = Math.max(1000000, Number($portfolioCapital.value) || 100000000);
-    const indexLevel = Math.max(100, Number($futuresIndexLevel.value) || 400);
-    const futuresContracts = Number($futuresContracts.value);
-    const putCoverage = Number($putCoverage.value) / 100;
-    const putPremiumRate = Number($putPremium.value) / 100;
-    const stockWeight = raw.stock / safeTotal;
-    const futuresNotional = indexLevel * SIMULATION_ASSUMPTIONS.indexFuturesMultiplier * futuresContracts;
-    const putProtectedNotional = capital * stockWeight * putCoverage;
-    return {
-      raw,
-      total,
-      model: MODEL_META[$modelSelect.value],
-      weights: {
-        stock: stockWeight,
-        bond: raw.bond / safeTotal,
-        alt: raw.alt / safeTotal,
-      },
-      derivatives: {
-        capital,
-        indexLevel,
-        futuresContracts,
-        futuresNotional,
-        putCoverage,
-        putPremiumRate,
-        putProtectedNotional,
-      },
-    };
+    const scenario = SHOCK_SCENARIOS[state.activeScenario] || SHOCK_SCENARIOS.equity;
+    return `${scenario.title} 시나리오를 설명해줘. 이 시나리오는 교육용 가정으로 주식/ETF ${percent(scenario.stock)}, 채권 ${percent(scenario.bond)}, 대체·현금 ${percent(scenario.alt)}의 수익률을 가정합니다. 금융상품과 자산배분 관점에서 이 시장 충격이 자산군별로 다르게 작용하는 이유와, 이런 충격에 대비하는 리밸런싱·분산투자 포인트를 정리해줘.`;
   }
 
   function formatContent(text) {
@@ -2592,12 +2497,8 @@ effective_date: [기준일]
     return `${(value * 100).toFixed(1)}%`;
   }
 
-  function formatWon(value) {
-    return `${Math.round(value).toLocaleString('ko-KR')}원`;
-  }
-
-  function formatSignedWon(value) {
-    return `${value >= 0 ? '+' : '−'}${formatWon(Math.abs(value))}`;
+  function formatSignedPercent(value) {
+    return `${value >= 0 ? '+' : '−'}${percent(Math.abs(value))}`;
   }
 
   function escHtml(str) {
@@ -2608,7 +2509,7 @@ effective_date: [기준일]
       .replace(/"/g, '&quot;');
   }
 
-  updateSimulation();
+  renderScenarioResult();
   const requestedView = new URLSearchParams(window.location.search).get('view');
   const initialView = ['home', 'stocks', 'learn', 'simulation', 'backtest', 'calendar'].includes(requestedView)
     ? requestedView

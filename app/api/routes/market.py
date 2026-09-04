@@ -8,7 +8,11 @@ from urllib.parse import quote_plus
 import xml.etree.ElementTree as ET
 
 import httpx
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy.orm import Session
+
+from app.core.database import get_db
+from app.models.stock_price_history import StockPriceHistory
 
 router = APIRouter(prefix="/market", tags=["market"])
 
@@ -136,6 +140,38 @@ async def intraday_chart(
     payload = {"ticker": ticker, "symbol": symbol, "market": market, "bars": bars, "meta": meta_out, "updated_at": now.isoformat(), "error": error}
     _intraday_cache[cache_key] = (now, payload)
     return payload
+
+
+@router.get("/history")
+def price_history(
+    ticker: str = Query(pattern=r"^\d{6}$"),
+    market: str = Query(pattern=r"^(KOSPI|KOSDAQ)$"),
+    db: Session = Depends(get_db),
+) -> dict[str, Any]:
+    """Return cached daily OHLCV history for a ticker from PostgreSQL, if any has been backfilled.
+
+    This never reaches out to Yahoo Finance itself — it only reports what is
+    already stored, so the frontend can enable a "과거 데이터 보기" button only
+    when real historical data exists.
+    """
+    rows = (
+        db.query(StockPriceHistory)
+        .filter(StockPriceHistory.ticker == ticker, StockPriceHistory.market == market)
+        .order_by(StockPriceHistory.date.asc())
+        .all()
+    )
+    bars = [
+        {
+            "date": row.date.isoformat(),
+            "open": float(row.open),
+            "high": float(row.high),
+            "low": float(row.low),
+            "close": float(row.close),
+            "volume": int(row.volume or 0),
+        }
+        for row in rows
+    ]
+    return {"ticker": ticker, "market": market, "available": len(bars) > 0, "count": len(bars), "bars": bars}
 
 
 async def _fetch_all(client: httpx.AsyncClient, chart_url: str, news_url: str) -> tuple[httpx.Response | Exception, httpx.Response | Exception]:
