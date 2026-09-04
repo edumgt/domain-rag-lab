@@ -168,14 +168,14 @@ body > nav {
 .lesson-head-line h1 {
   margin: 0;
   color: var(--app-ink);
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 800;
   white-space: normal;
 }
 .lesson-head-line p {
   margin: 0;
   color: #5d7191;
-  font-size: 14px;
+  font-size: 15px;
 }
 .lesson-head-line p::before {
   content: "· ";
@@ -185,7 +185,7 @@ body > nav {
   padding: 30px 44px 30px 0;
 }
 .lesson h2 {
-  font-size: 22px;
+  font-size: 23px;
 }
 .lesson p {
   color: #284b77;
@@ -315,7 +315,7 @@ body > nav {
     content: none;
   }
   .lesson h2 {
-    font-size: 20px;
+    font-size: 21px;
   }
   .glossary-modal {
     padding: 12px;
