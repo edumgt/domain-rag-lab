@@ -1293,7 +1293,7 @@ KOSDAQ|웹젠|게임`,
 
   function renderHome() {
     const modules = [
-      ['5일 이론 학습', '금융상품부터 자산배분·리밸런싱까지 하루 한 주제씩 읽습니다.', 'fa-calendar-days', 'theory'],
+      ['4일 이론 학습', '금융상품부터 자산배분·리밸런싱까지 하루 한 주제씩 읽습니다.', 'fa-calendar-days', 'theory'],
       ['자산배분 실습', '평균분산·블랙-리터만·Risk Parity를 같은 포트폴리오에 적용합니다.', 'fa-sliders', 'simulation'],
     ].map(([title, copy, icon, target]) => `
       <button class="home-module" data-go="${target}">
@@ -1328,7 +1328,7 @@ KOSDAQ|웹젠|게임`,
           <p class="content-lead">금·부동산·수집품·중고거래를 포함해, 가격뿐 아니라 상태·권리·비용·사기 위험을 함께 확인하는 학습 흐름을 제공합니다.</p>
         </header>
         <div class="home-actions">
-          <button class="content-cta" data-go="theory"><i class="fa-solid fa-calendar-days"></i> 5일 이론 학습 시작</button>
+          <button class="content-cta" data-go="theory"><i class="fa-solid fa-calendar-days"></i> 4일 이론 학습 시작</button>
           <button class="content-cta" data-go="learn"><i class="fa-solid fa-comments"></i> RAG에게 질문하기</button>
           <button class="content-secondary" data-go="stocks"><i class="fa-solid fa-building-columns"></i> 종목보기로 이동</button>
         </div>
@@ -1572,7 +1572,7 @@ KOSDAQ|웹젠|게임`,
       <article class="content-page theory-page">
         <header class="theory-index-head">
           <div>
-            <div class="content-kicker">5일 금융 이론</div>
+            <div class="content-kicker">4일 금융 이론</div>
             <h1><mark>금융상품·자산배분</mark> 이론</h1>
           </div>
           <p class="content-lead">각 일차 메뉴는 독립적으로 읽을 수 있습니다. 개념을 먼저 읽고, 궁금한 점은 RAG 학습으로 이어서 질문해 보세요.</p>
@@ -1585,7 +1585,7 @@ KOSDAQ|웹젠|게임`,
   }
 
   function openTheoryDay(day) {
-    if (!Number.isInteger(day) || day < 1 || day > 5) return;
+    if (!Number.isInteger(day) || day < 1 || day > 4) return;
     window.location.assign(`/static/days/${String(day).padStart(2, '0')}.html`);
   }
 
@@ -2097,7 +2097,7 @@ effective_date: [기준일]
       <div class="welcome-msg">
         <div class="welcome-icon"><i class="fa-solid fa-graduation-cap"></i></div>
         <h2>금융·투자 RAG 질문</h2>
-        <p>5일 이론에서 읽은 내용을 바탕으로 궁금한 점을 자유롭게 질문하세요. 답변에 사용한 참고 문서도 함께 확인할 수 있습니다.</p>
+        <p>4일 이론에서 읽은 내용을 바탕으로 궁금한 점을 자유롭게 질문하세요. 답변에 사용한 참고 문서도 함께 확인할 수 있습니다.</p>
 
         <section class="rag-flow" aria-label="RAG 답변 과정"><div><i class="fa-solid fa-keyboard"></i><b>질문</b><span>궁금한 점을 입력</span></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-file-lines"></i><b>문서 탐색</b><span>등록 자료에서 근거 찾기</span></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-lightbulb"></i><b>답변</b><span>핵심 내용과 참고 문서</span></div></section>
 

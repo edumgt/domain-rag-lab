@@ -30,8 +30,6 @@
       'samples/finance_kospi200_foreign_futures_options_hts_guide.txt',
       'samples/finance_pair_trading_cases.txt',
       'samples/finance_industry_analysis_practice.txt',
-    ],
-    5: [
       'samples/finance_asset_allocation.txt',
       'samples/finance_portfolio_theory.txt',
       'samples/finance_valuation_multiples.txt',
@@ -89,8 +87,8 @@
       const byPath = new Map(available.map((document) => [document.path, document]));
       const assignedPaths = Object.values(dayDocuments).flat();
       // 새로 추가된 data 텍스트 파일도 누락하지 않도록, 사전 분류되지 않은 문서는
-      // 5일차의 통합 자료에 자동 배정한다.
-      const additionalPaths = day === 5
+      // 4일차의 통합 자료에 자동 배정한다.
+      const additionalPaths = day === 4
         ? available.map((document) => document.path).filter((path) => !assignedPaths.includes(path))
         : [];
       const paths = [...(dayDocuments[day] || []), ...additionalPaths];
@@ -101,7 +99,7 @@
         if (!item.ok) throw new Error(`unable to load ${path}`);
         return item.json();
       }));
-      target.insertAdjacentHTML('beforeend', `<section class="source-library" aria-label="data 원문 상세 학습 자료"><div class="source-library-head"><span>DATA 원문 상세 학습 자료</span><h2>이 일차에 배정된 학습 문서 전체</h2><p><code>data</code> 아래의 텍스트 문서를 한 번씩 1~5일차에 배정해, 원문 전체를 HTML 학습 화면에서 표시합니다.</p></div><div class="source-library-body">${documents.map(renderDocument).join('')}</div></section>`);
+      target.insertAdjacentHTML('beforeend', `<section class="source-library" aria-label="data 원문 상세 학습 자료"><div class="source-library-head"><span>DATA 원문 상세 학습 자료</span><h2>이 일차에 배정된 학습 문서 전체</h2><p><code>data</code> 아래의 텍스트 문서를 한 번씩 1~4일차에 배정해, 원문 전체를 HTML 학습 화면에서 표시합니다.</p></div><div class="source-library-body">${documents.map(renderDocument).join('')}</div></section>`);
     } catch (error) {
       target.insertAdjacentHTML('beforeend', '<section class="source-library source-library-error"><strong>데이터 학습 자료를 불러오지 못했습니다.</strong><p>서버 실행 상태와 문서 경로를 확인한 뒤 다시 시도해 주세요.</p></section>');
     }
