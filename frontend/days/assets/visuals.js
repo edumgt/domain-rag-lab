@@ -24,7 +24,6 @@
 
   if (day === 3) {
     addAfterText(target('금리가 오르면 채권 가격'), `<figure class="concept-visual"><p class="visual-kicker">BOND PRICE & RATE</p><div class="visual-row"><div class="visual-card blue"><strong>시장금리 ↑</strong><span>새로 발행되는 채권의 이자가 높아짐</span></div><div class="visual-card"><strong>기존 채권 가격 ↓</strong><span>낮은 쿠폰의 매력을 조정하는 과정</span></div><div class="visual-card"><strong>듀레이션</strong><span>만기가 길수록 가격 변화가 커질 수 있음</span></div></div>${caption('금리와 채권 가격의 기본 방향', '다른 조건이 같다는 단순화된 설명입니다. 신용위험과 만기 구조도 함께 작용합니다.')}</figure>`);
-    addAfterText(target('배추 판매로 보는 선물 계약'), `<figure class="concept-visual"><p class="visual-kicker">HEDGE EXAMPLE</p><div class="flow-visual"><div class="step">농부<small>가격 하락이 걱정</small></div><b class="flow-arrow">↔</b><div class="step">미래 가격 약속<small>수량·가격·시점 표준화</small></div><b class="flow-arrow">↔</b><div class="step">구매자<small>가격 상승이 걱정</small></div></div>${caption('선물은 가격 위험을 나누는 도구이기도 합니다', '가격 방향을 맞히는 거래와 위험을 줄이는 헤지는 목적이 다릅니다.')}</figure>`);
   }
 
   if (day === 4) {
