@@ -1171,7 +1171,7 @@ body.right-panel-open .ref-panel { transform: translateX(0); }
 .theory-lesson { position: relative; display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 24px 58px 24px 24px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
 .theory-lesson > span { color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .08em; }
 .theory-lesson h2 { margin: 0 0 12px; font-size: 21px; }
-.theory-lesson p { margin: 0 0 10px; color: var(--text-2); line-height: 1.8; }
+.theory-lesson p { margin: 0 0 10px; color: var(--text-2); font-size: 17.6px; line-height: 1.8; }
 .theory-lesson p:last-child { margin-bottom: 0; }
 .lesson-accordion-toggle { position: absolute; z-index: 1; top: 16px; right: 16px; display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 1px solid #bfdbfe; border-radius: 999px; background: #eff6ff; color: var(--accent); font: 800 18px/1 var(--font); cursor: pointer; transition: transform .16s ease, background .16s ease; }
 .lesson-accordion-toggle:hover { background: var(--accent-dim); }

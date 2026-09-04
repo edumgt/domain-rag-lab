@@ -7,7 +7,7 @@
       name="description"
       content="돈을 쓰는 목적, 거래 대상의 상태와 위험을 먼저 정하면 선택이 쉬워집니다."
     />
-    <title>01일차 | 4일 금융 이론 — 금융상품과 생활 거래 기초</title>
+    <title>01일차 | 4일 금융 이론 — 선물과 옵션</title>
     <link rel="stylesheet" href="assets/site.css" />
     <link rel="stylesheet" href="assets/app-shell.css" />
     <link
@@ -65,7 +65,7 @@
       <a class="brand" href="index.html">4일 금융 이론</a>
       <div class="day-nav">
         <a class="active" href="01.html"
-          ><b>01</b><span>금융상품과 생활 거래 기초</span></a
+          ><b>01</b><span>선물과 옵션</span></a
         ><a class="" href="02.html"
           ><b>02</b><span>펀드 · ETF</span></a
         ><a class="" href="03.html"
@@ -79,7 +79,7 @@
       <article>
         <header class="lesson-head">
           <div class="lesson-head-line">
-            <h1>금융상품과 생활 거래 기초</h1>
+            <h1>선물과 옵션</h1>
             <p>돈을 쓰는 목적, 거래 대상의 상태와 위험을 먼저 정하면 선택이 쉬워집니다.</p>
           </div>
         </header>
@@ -164,7 +164,7 @@
                 </p>
                 <figure class="lesson-figure">
                   <img
-                    src="assets/derivatives-risk-guide.webp"
+                    src="assets/123.png"
                     alt="쌀과 쌀국수 비유로 정리한 파생상품 개념도: 1단계 파생상품의 탄생, 2단계 선물은 무조건 지켜야 하는 약속, 3단계 옵션은 유리할 때만 행사하는 권리, 4단계 레버리지의 위험, 5단계 개인 투자자의 손실 현실, 6단계 해외 파생상품 사전교육 의무화"
                     loading="lazy"
                   />
@@ -299,6 +299,12 @@
                     · 헤지는 위험을 줄이는 방법입니다.
                   </figcaption>
                 </figure>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="futuresSettlementTrigger">
+                    <i class="fa-solid fa-scale-balanced"></i> 매수자·매도자 손익 시뮬레이션
+                  </button>
+                  <small>가격과 수량을 바꿔 만기 청산 결과를 비교해 보세요.</small>
+                </p>
               </div>
             </div>
             <button
@@ -389,6 +395,26 @@
                   선물은 가격 변동 위험을 줄이는 헤지에 쓸 수 있지만, 가격
                   방향만 보고 거래하면 손실이 빠르게 커질 수 있습니다. 거래
                   단위·만기·증거금과 최악의 손실을 먼저 확인해야 합니다.
+                </p>
+                <h3>선물의 일일정산: 만기까지 손익을 미루지 않습니다</h3>
+                <p>
+                  선물은 보통 만기일에만 손익을 계산하는 것이 아니라, 매 거래일 장이 끝난 뒤
+                  그날의 정산가격을 기준으로 손익을 계좌에 반영합니다. 이를 <b>일일정산
+                  (일일 시가평가)</b>이라고 합니다. 다음 날의 손익은 최초 진입가격이 아니라
+                  전날 정산가격과 오늘 정산가격의 차이로 다시 계산합니다.
+                </p>
+                <p>
+                  예를 들어 코스피200 선물 1계약을 보유한 상태에서 전날 정산가격이
+                  340포인트, 오늘 정산가격이 342포인트이고 거래승수가 25만 원/포인트라면,
+                  매수자는 2포인트 × 25만 원 = 50만 원을 받고 매도자는 같은 금액을 냅니다.
+                  손실이 쌓여 계좌가 유지증거금 기준 아래로 내려가면 추가 증거금 납부를
+                  요구받을 수 있으며, 채우지 못하면 포지션이 청산될 수 있습니다.
+                </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="dailySettlementTrigger">
+                    <i class="fa-solid fa-calendar-day"></i> 일일정산 시뮬레이터
+                  </button>
+                  <small>전일·오늘 정산가격과 계약 수를 바꿔 당일 손익을 확인해 보세요.</small>
                 </p>
               </div>
             </div>
@@ -543,6 +569,81 @@
                   넘겨야 할 수도 있어 큰 손실 위험이 있습니다. 기관·기업은
                   금융회사와 조건을 직접 정하는 장외 맞춤계약을 맺기도 하지만,
                   개인의 일반 거래소 주문과는 다릅니다.
+                </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="optionSettlementTrigger">
+                    <i class="fa-solid fa-right-left"></i> 콜·풋 매수자·매도자 손익 시뮬레이션
+                  </button>
+                  <small>행사가·프리미엄·만기 가격을 바꿔 권리와 의무의 차이를 확인해 보세요.</small>
+                </p>
+                <h3>KRX에서 실제로 확인할 수 있는 선물·옵션</h3>
+                <p>
+                  한국거래소(KRX)에는 주가지수·개별주식·통화·금리 등을 기초자산으로 하는
+                  파생상품이 상장되어 있습니다. 아래는 학습에서 자주 보는 주가지수·개별주식
+                  상품의 예시입니다. <b>계약금액은 ‘현재 가격 × 거래승수’</b>이므로 시세에 따라
+                  바뀌며, 아래 금액은 증거금이나 실제 필요한 예탁금이 아닙니다.
+                </p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>주요 KRX 선물·옵션 상품명세 요약 — 주문 전에는 반드시 공식 페이지에서 최신 조건을 다시 확인하세요.</caption>
+                    <thead>
+                      <tr><th scope="col">종류</th><th scope="col">기초자산·거래승수</th><th scope="col">금액·최소 변동 예시</th><th scope="col">KRX 공식 확인</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><th scope="row">코스피200 선물</th><td>코스피200 지수 · 25만 원/포인트</td><td>340포인트면 1계약 약 8,500만 원<br>0.05포인트 = 12,500원</td><td><a href="https://open.krx.co.kr/contents/OPN/01/01040201/OPN01040201.jsp" target="_blank" rel="noopener noreferrer">상품명세 보기</a></td></tr>
+                      <tr><th scope="row">미니 코스피200 선물</th><td>코스피200 지수 · 5만 원/포인트</td><td>340포인트면 1계약 약 1,700만 원<br>0.02포인트 = 1,000원</td><td><a href="https://open.krx.co.kr/contents/OPN/01/01040204/OPN01040204.jsp" target="_blank" rel="noopener noreferrer">상품명세 보기</a></td></tr>
+                      <tr><th scope="row">코스닥150 선물</th><td>코스닥150 지수 · 1만 원/포인트</td><td>지수 1포인트 = 1만 원<br>0.10포인트 = 1,000원</td><td><a href="https://open.krx.co.kr/contents/OPN/01/01040208/OPN01040208.jsp" target="_blank" rel="noopener noreferrer">상품명세 보기</a></td></tr>
+                      <tr><th scope="row">코스피200 옵션</th><td>코스피200 지수 · 25만 원/포인트</td><td>프리미엄 5포인트면 1계약 프리미엄 125만 원<br>프리미엄 10포인트 미만은 0.01포인트 = 2,500원</td><td><a href="https://open.krx.co.kr/contents/OPN/01/01041401/Guide_to_Night_Session_in_KRX_Derivatives_Market.pdf" target="_blank" rel="noopener noreferrer">KRX 안내서 보기</a></td></tr>
+                      <tr><th scope="row">개별주식 선물·옵션</th><td>거래소가 선정한 기초주권 · 10주/계약</td><td>주가 7만 원이면 1계약 약 70만 원<br>주가·호가단위에 따라 손익 변동</td><td><a href="https://open.krx.co.kr/contents/OPN/01/01040401/OPN01040401T1.jsp" target="_blank" rel="noopener noreferrer">주식선물</a> · <a href="https://open.krx.co.kr/contents/OPN/01/01040402/OPN01040402T1.jsp" target="_blank" rel="noopener noreferrer">주식옵션</a></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>
+                  코스피200 선물·옵션과 미니 코스피200 선물·옵션, 코스닥150 선물·옵션 등은
+                  야간거래 대상에도 포함될 수 있습니다. 다만 상장 종목·결제월·거래시간·호가단위·
+                  거래 가능 단계와 기본예탁금은 상품과 증권사에 따라 다를 수 있습니다. KRX의
+                  <a href="https://open.krx.co.kr/contents/OPN/01/0104/01040100/OPN01040100.jsp" target="_blank" rel="noopener noreferrer">파생상품시장 안내</a>와 증권사 약관·주문 화면을 함께 확인하세요.
+                </p>
+                <h3>누가 상품을 만들고, 나는 무엇을 거래하나요?</h3>
+                <p>
+                  개인이 선물·옵션을 임의의 이름·만기·행사가격으로 새로 만들 수는 없습니다.
+                  장내 파생상품은 한국거래소(KRX)가 <b>기초자산, 만기, 행사가격, 거래승수,
+                  결제 방법</b>을 미리 정해 상장한 표준 계약입니다. 투자자는 증권사 화면에서
+                  이미 상장된 종목을 골라 주문합니다.
+                </p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>선물·옵션 거래에서 ‘상품’, ‘주문’, ‘포지션’을 구분하는 법</caption>
+                    <thead><tr><th scope="col">단계</th><th scope="col">무엇을 뜻하나요?</th><th scope="col">코스피200 옵션 예시</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">상장 계약 종목</th><td>거래소가 미리 정한 표준 계약 조건</td><td>코스피200 콜옵션 · 특정 결제월 · 특정 행사가격</td></tr>
+                      <tr><th scope="row">주문</th><td>투자자가 증권사를 통해 내는 매수·매도 의사</td><td>해당 콜옵션 1계약을 프리미엄 5포인트에 매도</td></tr>
+                      <tr><th scope="row">체결</th><td>반대 주문과 가격·수량이 맞아 거래가 성립</td><td>매도 주문과 다른 투자자의 매수 주문이 만남</td></tr>
+                      <tr><th scope="row">포지션</th><td>체결 후 계좌에 남는 계약의 방향과 수량</td><td>매수자는 롱 포지션(권리), 매도자는 숏 포지션(의무)</td></tr>
+                      <tr><th scope="row">청산</th><td>같은 종목을 반대 방향으로 거래해 포지션을 0으로 만듦</td><td>매도한 옵션 1계약을 다시 매수</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>
+                  따라서 “옵션을 만들어 판다”보다는 <b>상장된 옵션 종목의 매도 포지션을
+                  만든다</b>고 이해하는 편이 정확합니다. 선물은 매수·매도 모두 계약 이행 의무를
+                  지며, 옵션은 매수자가 권리를 갖고 매도자는 그 권리에 대응할 의무를 집니다.
+                  거래소와 청산기관은 익명으로 체결된 양쪽 거래의 증거금·손익정산·결제를
+                  관리합니다.
+                </p>
+                <p>
+                  일반 개인은 옵션 매도를 바로 할 수 있는 것이 아닙니다. 교육·모의거래와
+                  기본예탁금, 거래 경험 등 단계별 요건을 충족해야 하며 증권사는 자체 위험관리
+                  기준에 따라 추가 제한을 둘 수 있습니다. 특히 옵션 매도는 받은 프리미엄보다
+                  훨씬 큰 손실이 날 수 있으므로, 계약 규모·증거금·최대 손실·만기 전 청산 계획을
+                  먼저 확인해야 합니다. 최신 기준은
+                  <a href="https://trn.krx.co.kr/pages/0101?cmd=base" target="_blank" rel="noopener noreferrer">KRX 모의거래·제도 안내</a>와
+                  <a href="https://regulation.krx.co.kr/contents/RGL/03/03050200/RGL03050200.jsp" target="_blank" rel="noopener noreferrer">KRX 파생상품 매매절차</a>에서 확인할 수 있습니다.
+                </p>
+                <p>
+                  기업과 금융회사가 거래소 밖에서 개별 조건을 합의하는 <b>장외(OTC) 파생상품</b>은
+                  맞춤형 계약을 설계할 수 있습니다. 그러나 신용·담보·법무 관리가 필요한 별도
+                  거래이며, 개인이 증권사 앱에서 내는 일반 장내 주문과는 다릅니다.
                 </p>
               </div>
             </div>
@@ -795,49 +896,9 @@
               <span aria-hidden="true">⌃</span>
             </button>
           </section>
+
           
-          <section class="lesson"><span>16</span><div class="lesson-content"><h2>버틀러로 기업 분석을 시작해 볼까요?</h2><div class="lesson-body"><p><a href="https://www.butler.works/ko/home" target="_blank" rel="noopener noreferrer">버틀러</a>는 투자자가 기업의 재무제표·실적·공시를 이해하기 쉽게 살펴볼 수 있도록 돕는 기업 분석 플랫폼입니다. 여러 증권 계좌와 관심 기업의 정보를 모아, 개인 투자자가 기업의 펀더멘털과 자신의 포트폴리오를 점검하는 ‘투자 비서’처럼 활용할 수 있습니다.</p><p>복잡한 숫자는 매출, 영업이익, 수주잔고, 지역별 실적 등의 그래프로 확인할 수 있습니다. 기업공시에서는 많은 공시 가운데 투자 판단에 중요한 내용을 빠르게 찾도록 돕고, 관심기업은 그룹별로 묶어 꾸준히 추적할 수 있습니다.</p><p>포트폴리오 관리 기능으로 여러 증권 계좌에 흩어진 종목을 한 화면에서 살펴볼 수 있으며, 기업 스크리너에서는 다양한 조건을 조합해 자신의 기준에 맞는 기업 후보를 찾을 수 있습니다. 초보자는 성장 추세를 읽는 데, 중·장기 투자자는 공시와 펀더멘털을 비교하는 데 활용할 수 있습니다.</p><p>다만 플랫폼이 제공하는 데이터와 시각화는 투자 판단을 돕는 정보입니다. 매매를 대신 결정하거나 수익을 보장하지 않으므로, 최신 공시 원문·재무제표·상품 이용 조건을 다시 확인하고 자신의 투자 목적과 위험 감수 수준에 맞춰 판단하세요. 일부 기능은 유료 구독으로 제공될 수 있으며, 지원 시장과 기능은 서비스 정책에 따라 달라질 수 있습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="버틀러로 기업 분석을 시작해 볼까요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section><section class="lesson"><span>17</span>
-            <div class="lesson-content">
-              <h2>AI Hub 데이터로 RAG 시작하기</h2>
-              <div class="lesson-body">
-                <p>
-                  AI Hub의 금융·법률 분야 데이터셋은 먼저 상세 페이지의 이용
-                  조건, 출처 표기, 버전, 개인정보 처리 조건을 확인합니다. 허용된
-                  원문만 내려받아 사용하며 로그인 우회·자동 수집·재배포를 전제로
-                  하지 않습니다.
-                </p>
-                <p>
-                  금융 FAQ는 질문·답변·기준일 단위로, 법률 자료는
-                  법령명·조문·항·호·시행일이 끊기지 않도록 정리합니다. 각 청크에
-                  source, dataset, version, license, topic, effective_date 같은
-                  메타데이터를 남기면 근거와 최신성을 추적하기 쉽습니다.
-                </p>
-                <p>
-                  등록 후에는 답변에 출처와 기준일을 보이고, 개정될 수 있는
-                  금융법률은 최신 공식 원문으로 다시 확인합니다. 이후 수업에서는
-                  이 근거를 상품 비교와 투자 유의사항 확인에 연결합니다.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="AI Hub 데이터로 RAG 시작하기 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
         </section>
-        <aside class="check">
-          <p>오늘의 확인</p>
-          <strong
-            >AI Hub 금융·법률 자료 하나를 골라 출처·이용 조건·기준일을
-            적어 보세요.</strong
-          >
-        </aside>
         <section class="glossary">
           <p>오늘의 용어집</p>
           <dl class="glossary-grid">
@@ -974,6 +1035,91 @@
         금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.
       </footer>
     </main>
+
+    <div class="glossary-modal daily-settlement-modal" id="dailySettlementModal" hidden>
+      <div class="glossary-modal__backdrop" data-daily-settlement-close></div>
+      <section class="glossary-modal__dialog daily-settlement-dialog" role="dialog" aria-modal="true" aria-labelledby="dailySettlementTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-daily-settlement-close>×</button>
+        <p class="glossary-modal__label">SIMULATION · 교육용 가정</p>
+        <h2 id="dailySettlementTitle">선물 일일정산: 오늘의 손익을 반영하기</h2>
+        <p class="daily-settlement-intro">코스피200 선물의 거래승수 25만 원/포인트를 가정합니다. 실제 증거금, 수수료, 세금, 강제청산 기준은 증권사와 상품별로 다릅니다.</p>
+        <div class="daily-settlement-controls">
+          <label class="daily-settlement-field">전일 정산가격 (포인트)<input id="dailySettlementPrevious" type="number" step="0.05" value="340"></label>
+          <label class="daily-settlement-field">오늘 정산가격 (포인트)<input id="dailySettlementToday" type="number" step="0.05" value="342"></label>
+          <label class="daily-settlement-field">계약 수<input id="dailySettlementContracts" type="number" min="1" value="1"></label>
+          <label class="daily-settlement-field">예치 증거금 (원)<input id="dailySettlementMargin" type="number" min="0" step="100000" value="10000000"></label>
+        </div>
+        <div class="daily-settlement-direction" id="dailySettlementDirection"></div>
+        <div class="daily-settlement-sides">
+          <article class="daily-settlement-side buyer"><p>매수자 · 롱 포지션</p><strong id="dailySettlementBuyer">—</strong><small id="dailySettlementBuyerBalance"></small></article>
+          <article class="daily-settlement-side seller"><p>매도자 · 숏 포지션</p><strong id="dailySettlementSeller">—</strong><small id="dailySettlementSellerBalance"></small></article>
+        </div>
+        <section class="daily-settlement-expiry"><strong>다음 거래일에는?</strong><p id="dailySettlementNext"></p></section>
+        <p class="daily-settlement-formula" id="dailySettlementFormula"></p>
+      </section>
+    </div>
+
+    <div class="glossary-modal option-settlement-modal" id="optionSettlementModal" hidden>
+      <div class="glossary-modal__backdrop" data-option-settlement-close></div>
+      <section class="glossary-modal__dialog option-settlement-dialog" role="dialog" aria-modal="true" aria-labelledby="optionSettlementTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-option-settlement-close>×</button>
+        <p class="glossary-modal__label">SIMULATION · 교육용 가정</p>
+        <h2 id="optionSettlementTitle">옵션 만기 정산: 권리를 산 사람과 판 사람</h2>
+        <p class="option-settlement-intro">옵션 매수자는 처음 프리미엄을 내고 권리를 얻습니다. 만기에 권리가 유리할 때만 행사하며, 매도자는 그 반대 의무와 손익을 갖습니다.</p>
+        <div class="option-settlement-controls">
+          <label class="option-settlement-field">옵션 종류
+            <select id="optionSettlementType"><option value="call">콜옵션 · 살 권리</option><option value="put">풋옵션 · 팔 권리</option></select>
+          </label>
+          <label class="option-settlement-field">행사가격 <input id="optionSettlementStrike" type="number" value="100"></label>
+          <label class="option-settlement-field">프리미엄 <input id="optionSettlementPremium" type="number" min="0" step="0.1" value="5"></label>
+          <label class="option-settlement-field">만기 기초자산 가격 <input id="optionSettlementFinal" type="number" value="115"></label>
+          <label class="option-settlement-field">계약 수 <input id="optionSettlementContracts" type="number" min="1" value="1"></label>
+          <label class="option-settlement-field">계약승수 (주/계약) <input id="optionSettlementMultiplier" type="number" min="1" value="10"></label>
+        </div>
+        <div class="option-settlement-direction" id="optionSettlementDirection"></div>
+        <div class="option-settlement-sides">
+          <article class="option-settlement-side buyer"><p>옵션 매수자 · 권리</p><strong id="optionSettlementBuyer">—</strong><small id="optionSettlementBuyerNote"></small></article>
+          <article class="option-settlement-side seller"><p>옵션 매도자 · 의무</p><strong id="optionSettlementSeller">—</strong><small id="optionSettlementSellerNote"></small></article>
+        </div>
+        <section class="option-settlement-expiry"><strong>만기일에는 어떻게 되나요?</strong><p id="optionSettlementExpiry"></p></section>
+        <p class="option-settlement-formula" id="optionSettlementFormula"></p>
+      </section>
+    </div>
+
+    <div class="glossary-modal futures-settlement-modal" id="futuresSettlementModal" hidden>
+      <div class="glossary-modal__backdrop" data-futures-settlement-close></div>
+      <section class="glossary-modal__dialog futures-settlement-dialog" role="dialog" aria-modal="true" aria-labelledby="futuresSettlementTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-futures-settlement-close>×</button>
+        <p class="glossary-modal__label">SIMULATION · 교육용 가정</p>
+        <h2 id="futuresSettlementTitle">선물 만기 정산: 매수자와 매도자</h2>
+        <p class="futures-settlement-intro">선물 매수자는 가격 상승에, 매도자는 가격 하락에 유리합니다. 아래 값은 실제 시세·증거금·수수료를 반영하지 않은 학습용 계산입니다.</p>
+        <div class="futures-settlement-controls">
+          <label class="futures-settlement-field">거래 대상
+            <select id="futuresSettlementAsset">
+              <option value="cabbage">배추 선물 (실물인도 가정)</option>
+              <option value="kospi">KOSPI 200 선물 (현금결제 가정)</option>
+            </select>
+          </label>
+          <label class="futures-settlement-field">계약 가격 <input id="futuresSettlementEntry" type="number" inputmode="decimal" value="3000"></label>
+          <label class="futures-settlement-field">만기 가격 <input id="futuresSettlementFinal" type="number" inputmode="decimal" value="5000"></label>
+          <label class="futures-settlement-field"><span id="futuresSettlementQtyLabel">수량 (포기)</span> <input id="futuresSettlementQty" type="number" min="1" step="1" value="1000"></label>
+        </div>
+        <div class="futures-settlement-direction" id="futuresSettlementDirection"></div>
+        <div class="futures-settlement-sides">
+          <article class="futures-settlement-side buyer">
+            <p>매수자 · 롱 포지션</p><strong id="futuresSettlementBuyer">—</strong><small id="futuresSettlementBuyerNote"></small>
+          </article>
+          <article class="futures-settlement-side seller">
+            <p>매도자 · 숏 포지션</p><strong id="futuresSettlementSeller">—</strong><small id="futuresSettlementSellerNote"></small>
+          </article>
+        </div>
+        <section class="futures-settlement-expiry">
+          <strong>만기일에는 어떻게 되나요?</strong>
+          <p id="futuresSettlementExpiry"></p>
+        </section>
+        <p class="futures-settlement-formula" id="futuresSettlementFormula"></p>
+      </section>
+    </div>
 
     <div class="glossary-modal market-size-modal" id="marketSizeModal" hidden>
       <div class="glossary-modal__backdrop" data-market-size-close></div>
@@ -1128,6 +1274,94 @@
     </div>
 
     <script>
+      (() => {
+        const modal = document.getElementById("dailySettlementModal");
+        const trigger = document.getElementById("dailySettlementTrigger");
+        if (!modal || !trigger) return;
+        const previous = document.getElementById("dailySettlementPrevious");
+        const today = document.getElementById("dailySettlementToday");
+        const contracts = document.getElementById("dailySettlementContracts");
+        const margin = document.getElementById("dailySettlementMargin");
+        const buyer = document.getElementById("dailySettlementBuyer");
+        const seller = document.getElementById("dailySettlementSeller");
+        const buyerBalance = document.getElementById("dailySettlementBuyerBalance");
+        const sellerBalance = document.getElementById("dailySettlementSellerBalance");
+        const direction = document.getElementById("dailySettlementDirection");
+        const next = document.getElementById("dailySettlementNext");
+        const formula = document.getElementById("dailySettlementFormula");
+        const multiplier = 250000;
+        const fmt = value => new Intl.NumberFormat("ko-KR").format(Math.round(value));
+        const signed = value => `${value > 0 ? "+" : value < 0 ? "−" : ""}${fmt(Math.abs(value))}원`;
+        function render() {
+          const prev = Number(previous.value) || 0, current = Number(today.value) || 0;
+          const count = Math.max(1, Number(contracts.value) || 1), deposit = Math.max(0, Number(margin.value) || 0);
+          const pointChange = current - prev, pnl = pointChange * multiplier * count;
+          buyer.textContent = signed(pnl); seller.textContent = signed(-pnl);
+          buyer.className = pnl >= 0 ? "gain" : "loss"; seller.className = pnl <= 0 ? "gain" : "loss";
+          buyerBalance.textContent = `가정한 증거금 반영 후: ${fmt(deposit + pnl)}원`;
+          sellerBalance.textContent = `가정한 증거금 반영 후: ${fmt(deposit - pnl)}원`;
+          direction.textContent = pointChange === 0 ? "전일과 오늘의 정산가격이 같아 당일 손익은 0원입니다." : `오늘 정산가격이 ${fmt(Math.abs(pointChange))}포인트 ${pointChange > 0 ? "올라" : "내려"} 1계약당 ${fmt(Math.abs(pointChange) * multiplier)}원이 정산됩니다.`;
+          next.textContent = `내일의 손익은 최초 진입가격이 아니라 오늘 정산가격 ${fmt(current)}포인트를 새 기준으로 계산합니다. 손실 후 계좌 잔액이 증권사의 유지 기준 아래이면 추가 증거금 요구 또는 청산 가능성이 있습니다.`;
+          formula.textContent = `당일 매수자 손익 = (오늘 ${fmt(current)} − 전일 ${fmt(prev)})포인트 × 250,000원 × ${fmt(count)}계약 = ${signed(pnl)}`;
+        }
+        function open() { modal.hidden = false; render(); modal.querySelector(".glossary-modal__close").focus(); }
+        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } }
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-daily-settlement-close]").forEach(el => el.addEventListener("click", close));
+        [previous, today, contracts, margin].forEach(el => el.addEventListener("input", render));
+        document.addEventListener("keydown", event => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+
+    <script>
+      (() => {
+        const modal = document.getElementById("optionSettlementModal");
+        const trigger = document.getElementById("optionSettlementTrigger");
+        if (!modal || !trigger) return;
+        const type = document.getElementById("optionSettlementType");
+        const strike = document.getElementById("optionSettlementStrike");
+        const premium = document.getElementById("optionSettlementPremium");
+        const finalPrice = document.getElementById("optionSettlementFinal");
+        const contracts = document.getElementById("optionSettlementContracts");
+        const multiplier = document.getElementById("optionSettlementMultiplier");
+        const buyer = document.getElementById("optionSettlementBuyer");
+        const seller = document.getElementById("optionSettlementSeller");
+        const buyerNote = document.getElementById("optionSettlementBuyerNote");
+        const sellerNote = document.getElementById("optionSettlementSellerNote");
+        const direction = document.getElementById("optionSettlementDirection");
+        const expiry = document.getElementById("optionSettlementExpiry");
+        const formula = document.getElementById("optionSettlementFormula");
+        const fmt = value => new Intl.NumberFormat("ko-KR").format(Math.round(value));
+        const signed = value => `${value > 0 ? "+" : value < 0 ? "−" : ""}${fmt(Math.abs(value))}원`;
+        function render() {
+          const isCall = type.value === "call";
+          const k = Number(strike.value) || 0, s = Number(finalPrice.value) || 0;
+          const count = Math.max(1, Number(contracts.value) || 1), unit = Math.max(1, Number(multiplier.value) || 1);
+          const intrinsicPerUnit = isCall ? Math.max(s - k, 0) : Math.max(k - s, 0);
+          const premiumTotal = (Number(premium.value) || 0) * count * unit;
+          const exerciseValue = intrinsicPerUnit * count * unit;
+          const buyerPnl = exerciseValue - premiumTotal;
+          const exercised = intrinsicPerUnit > 0;
+          buyer.textContent = signed(buyerPnl); seller.textContent = signed(-buyerPnl);
+          buyer.className = buyerPnl >= 0 ? "gain" : "loss"; seller.className = buyerPnl <= 0 ? "gain" : "loss";
+          buyerNote.textContent = buyerPnl >= 0 ? "권리 가치가 프리미엄을 웃돈 결과" : "낸 프리미엄이 권리 가치를 웃돈 결과";
+          sellerNote.textContent = buyerPnl <= 0 ? "받은 프리미엄이 의무 이행액보다 큰 결과" : "의무 이행액이 받은 프리미엄보다 큰 결과";
+          direction.textContent = `${isCall ? "콜" : "풋"}옵션: 만기 가격 ${fmt(s)}원, 행사가격 ${fmt(k)}원 · 권리의 만기 가치는 ${fmt(intrinsicPerUnit)}원/주 × ${fmt(unit)}주 × ${fmt(count)}계약 = ${fmt(exerciseValue)}원`;
+          expiry.textContent = exercised
+            ? `행사가격보다 유리해 매수자가 권리를 행사하는 가정입니다. 실제 계약의 결제 방식에 따라 기초자산을 사고팔거나, 이 시뮬레이터처럼 그 차액을 정산합니다. 매도자는 행사에 응할 의무가 있습니다.`
+            : `권리를 행사해도 이익이 없으므로 매수자는 행사하지 않고 옵션은 만료됩니다. 매수자의 손실은 낸 프리미엄 ${fmt(premiumTotal)}원이며, 매도자는 받은 프리미엄만큼 이익입니다.`;
+          formula.textContent = `매수자 손익 = {max(${isCall ? "만기 가격 − 행사가격" : "행사가격 − 만기 가격"}, 0) − 프리미엄} × ${fmt(unit)}주 × ${fmt(count)}계약`;
+        }
+        function open() { modal.hidden = false; render(); modal.querySelector(".glossary-modal__close").focus(); }
+        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } }
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-option-settlement-close]").forEach(el => el.addEventListener("click", close));
+        [type, strike, premium, finalPrice, contracts, multiplier].forEach(el => el.addEventListener("input", render));
+        document.addEventListener("keydown", event => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+
+    <script>
       document.querySelectorAll("[data-lesson-toggle]").forEach((button) => {
         button.addEventListener("click", () => {
           const section = button.closest(".lesson");
@@ -1268,6 +1502,63 @@
         document.addEventListener("keydown", (event) => {
           if (event.key === "Escape") close();
         });
+      })();
+    </script>
+
+    <script>
+      (() => {
+        const modal = document.getElementById("futuresSettlementModal");
+        const trigger = document.getElementById("futuresSettlementTrigger");
+        if (!modal || !trigger) return;
+        const asset = document.getElementById("futuresSettlementAsset");
+        const entry = document.getElementById("futuresSettlementEntry");
+        const finalPrice = document.getElementById("futuresSettlementFinal");
+        const qty = document.getElementById("futuresSettlementQty");
+        const qtyLabel = document.getElementById("futuresSettlementQtyLabel");
+        const buyer = document.getElementById("futuresSettlementBuyer");
+        const seller = document.getElementById("futuresSettlementSeller");
+        const buyerNote = document.getElementById("futuresSettlementBuyerNote");
+        const sellerNote = document.getElementById("futuresSettlementSellerNote");
+        const direction = document.getElementById("futuresSettlementDirection");
+        const expiry = document.getElementById("futuresSettlementExpiry");
+        const formula = document.getElementById("futuresSettlementFormula");
+        const fmt = value => new Intl.NumberFormat("ko-KR").format(Math.round(value));
+        const signed = value => `${value > 0 ? "+" : value < 0 ? "−" : ""}${fmt(Math.abs(value))}원`;
+        function configure() {
+          const cabbage = asset.value === "cabbage";
+          entry.value = cabbage ? 3000 : 340;
+          finalPrice.value = cabbage ? 5000 : 350;
+          qty.value = cabbage ? 1000 : 1;
+          qtyLabel.textContent = cabbage ? "수량 (포기)" : "계약 수";
+          render();
+        }
+        function render() {
+          const cabbage = asset.value === "cabbage";
+          const multiplier = cabbage ? 1 : 250000;
+          const units = Math.max(1, Number(qty.value) || 1);
+          const change = (Number(finalPrice.value) || 0) - (Number(entry.value) || 0);
+          const pnl = change * units * multiplier;
+          buyer.textContent = signed(pnl);
+          seller.textContent = signed(-pnl);
+          buyer.className = pnl >= 0 ? "gain" : "loss";
+          seller.className = pnl <= 0 ? "gain" : "loss";
+          buyerNote.textContent = pnl >= 0 ? "가격 상승으로 매수자 이익" : "가격 하락으로 매수자 손실";
+          sellerNote.textContent = pnl <= 0 ? "가격 상승으로 매도자 손실" : "가격 하락으로 매도자 이익";
+          direction.textContent = cabbage
+            ? (change === 0 ? "만기 가격이 계약 가격과 같아 손익은 0원입니다." : `만기 가격이 계약 가격보다 ${fmt(Math.abs(change))}원/포기 ${change > 0 ? "올랐습니다" : "내렸습니다"}.`)
+            : `가격 차이: ${fmt(Math.abs(change))}포인트 = ${fmt(Math.abs(change) * multiplier)}원/계약 · 계약 가격 기준 1계약 금액: ${fmt((Number(entry.value) || 0) * multiplier)}원`;
+          formula.textContent = cabbage ? `손익 = (만기 배추 가격 − 계약 가격) × ${fmt(units)}포기` : `손익 = (만기 선물 가격 − 계약 가격) 포인트 × 250,000원 × ${fmt(units)}계약`;
+          expiry.textContent = cabbage
+            ? `실물인도 가정: 매수자는 약속한 포기당 ${fmt(Number(entry.value) || 0)}원으로 배추 ${fmt(units)}포기를 받고, 매도자는 이를 인도합니다. 시장가격과의 차이 ${signed(pnl)}이 매수자의 경제적 손익이며 매도자는 정확히 반대입니다.`
+            : `현금결제 가정: 실물 주식을 주고받지 않고, 계약 가격과 최종결제가격의 차이 ${signed(pnl)}을 매수자에게 정산합니다. 매도자는 같은 금액을 반대로 정산합니다.`;
+        }
+        function open() { modal.hidden = false; render(); modal.querySelector(".glossary-modal__close").focus(); }
+        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } }
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-futures-settlement-close]").forEach(el => el.addEventListener("click", close));
+        [entry, finalPrice, qty].forEach(el => el.addEventListener("input", render));
+        asset.addEventListener("change", configure);
+        document.addEventListener("keydown", event => { if (event.key === "Escape") close(); });
       })();
     </script>
 
