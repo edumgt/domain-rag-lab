@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/static/style.css?v=20260824-29" />
+  <link rel="stylesheet" href="/static/style.css?v=20260904-lean-split" />
 </head>
 <body>
   <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
@@ -30,10 +30,10 @@
           <span class="day-menu-number">2일차</span> 펀드 · ETF
         </button>
         <button class="topic-btn theory-menu-btn" data-theory-day="3">
-          <span class="day-menu-number">3일차</span> 채권 · 외환 · 원자재
+          <span class="day-menu-number">3일차</span> 채권
         </button>
         <button class="topic-btn theory-menu-btn" data-theory-day="4">
-          <span class="day-menu-number">4일차</span> 포트폴리오와 위험 지표
+          <span class="day-menu-number">4일차</span> 퀀트 정보
         </button>
 
         <p class="nav-label">실습 도구</p>
@@ -140,22 +140,8 @@
 
     <div id="simulationStaging" hidden>
       <div class="simulation-panel" id="simulationPanel">
-        <div class="ref-header simulation-header">
-          <div>
-            <p class="simulation-eyebrow">INTERACTIVE WORKBENCH</p>
-            <h3><i class="fa-solid fa-calculator"></i> 자산배분 실습</h3>
-          </div>
-          <span class="simulation-live"><i class="fa-solid fa-circle"></i> 실시간 계산</span>
-        </div>
         <section class="sim-scenario-lab" aria-labelledby="scenarioLabTitle">
-          <div class="scenario-lab-heading">
-            <div>
-              <p class="sim-label">STRESS TEST</p>
-              <h4 id="scenarioLabTitle">시장 충격을 가정해 보세요</h4>
-            </div>
-            <p>선택한 시나리오는 교육용 가정입니다.</p>
-          </div>
-          <p class="section-copy">시장에 충격이 오면 자산군마다 다르게 반응합니다. 아래에서 시나리오를 하나 골라 주식/ETF·채권·대체자산이 각각 어떻게 움직이는지 비교해 보세요.</p>
+          <h3 id="scenarioLabTitle" class="sr-only">시장 충격 시나리오 선택</h3>
           <div class="scenario-actions" role="group" aria-label="스트레스 시나리오 선택">
             <button class="sim-scenario active" data-scenario="equity"><i class="fa-solid fa-arrow-trend-down"></i> 주식 급락</button>
             <button class="sim-scenario" data-scenario="rates"><i class="fa-solid fa-percent"></i> 금리 급등</button>
@@ -165,6 +151,7 @@
             <button class="sim-scenario" data-scenario="geopolitical"><i class="fa-solid fa-globe"></i> 지정학적 충격</button>
             <button class="sim-scenario" data-scenario="pandemic"><i class="fa-solid fa-virus"></i> 팬데믹형 셧다운</button>
           </div>
+          <p class="section-copy">시나리오를 하나 골라 주식/ETF·채권·대체자산이 각각 어떻게 움직이는지 비교해 보세요. 선택한 값은 교육용 가정입니다.</p>
           <div class="scenario-result" id="simScenarioResult"></div>
         </section>
 
@@ -225,7 +212,7 @@
   </div>
 
   <script src="/static/assets/theory-data.js?v=20260819-1"></script>
-  <script src="/static/app.js?v=20260819-3"></script>
+  <script src="/static/app.js?v=20260904-lean-split"></script>
   <script src="/static/auth.js"></script>
 </body>
 </html>

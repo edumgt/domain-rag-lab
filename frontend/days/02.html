@@ -8,7 +8,7 @@
       content="여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다."
     />
     <title>02일차 | 4일 금융 이론 — 펀드 · ETF</title>
-    <link rel="stylesheet" href="assets/site.css" />
+    <link rel="stylesheet" href="assets/site.css?v=20260904-body-card" />
     <link rel="stylesheet" href="assets/app-shell.css" />
     <link
       rel="stylesheet"
@@ -56,10 +56,10 @@
     <aside class="day-offcanvas" id="dayOffcanvas" aria-label="4일 학습 목차">
       <h2>4일 이론 학습</h2>
       <p>일차를 선택해 정적 학습 페이지로 이동합니다.</p>
-      <a href="01.html">01 · 금융상품 기초</a
+      <a href="01.html">01 · 선물과 옵션</a
       ><a class="active" href="02.html">02 · 펀드 · ETF</a
-      ><a href="03.html">03 · 채권 · 외환 · 파생상품</a
-      ><a href="04.html">04 · 포트폴리오와 위험</a>
+      ><a href="03.html">03 · 채권</a
+      ><a href="04.html">04 · 퀀트 정보</a>
     </aside>
     <nav aria-label="4일 학습 목차">
       <a class="brand" href="index.html">4일 금융 이론</a>
@@ -69,9 +69,9 @@
         ><a class="active" href="02.html"
           ><b>02</b><span>펀드 · ETF</span></a
         ><a class="" href="03.html"
-          ><b>03</b><span>채권 · 외환 · 원자재 · 파생상품</span></a
+          ><b>03</b><span>채권</span></a
         ><a class="" href="04.html"
-          ><b>04</b><span>포트폴리오와 위험 지표</span></a
+          ><b>04</b><span>퀀트 정보</span></a
         >
       </div>
     </nav>
@@ -368,6 +368,13 @@
                   됩니다.
                 </p>
                 <p>
+                  여기서 부채는 보통 ETF가 큰돈을 빌렸다는 뜻이 아니라,
+                  운용보수·수탁 및 사무관리 비용·결제 대금처럼 아직 지급하지 않은
+                  비용과 미지급금 등 회계상 앞으로 지급할 금액을 말합니다. 일반
+                  ETF에서는 이런 항목이 자산 대비 작은 편이지만, 레버리지·파생형
+                  ETF는 구조가 더 복잡할 수 있으므로 상품설명서를 함께 확인하세요.
+                </p>
+                <p>
                   iNAV(Indicative NAV, 실시간 추정 순자산가치)는 쉽게 말해
                   “지금 이 순간의 NAV를 대략 계산한 값”입니다. 정식 NAV는
                   보통 하루 장이 끝난 뒤 한 번만 확정되지만, 그동안 ETF가
@@ -462,6 +469,17 @@
                   비교에는 기초자산·추종 방식·총보수·추적오차를 함께 확인하는
                   것이 좋습니다.
                 </p>
+                <p class="lesson-video-cta">
+                  <button
+                    type="button"
+                    class="lesson-video-link"
+                    id="gapTrackingSimTrigger"
+                  >
+                    <i class="fa-solid fa-chart-line"></i> 괴리율·추적오차
+                    비교 시뮬레이션
+                  </button>
+                  <small>한 시점의 가격 차이와 기간 수익률 차이를 나누어 확인하세요.</small>
+                </p>
               </div>
             </div>
             <button
@@ -478,55 +496,6 @@
           
           <section class="lesson">
             <span>09</span>
-            <div class="lesson-content">
-              <h2>주식 대여 서비스: 장기 보유 주식을 잠시 빌려주는 구조</h2>
-              <div class="lesson-body">
-                <p>
-                  주식 대여는 장기 보유할 주식을 증권사 중개를 통해 필요한
-                  차입자에게 잠시 빌려주고, 실제 대여가 성사된 기간에
-                  대차수수료를 받는 서비스입니다. 내가 살던 아파트를 파는 대신
-                  전·월세로 잠시 임대하고 임대료를 받는 모습에 비유할 수
-                  있습니다. 다만 대여를 신청했다고 바로 수수료가 생기는 것은
-                  아니며, 실제로 빌려 나간 종목·수량·기간에만 수수료가 붙습니다.
-                </p>
-                <p>
-                  현금배당이나 무상증자처럼 경제적 권리는 증권사 약관에 따라
-                  보전되는 것이 일반적입니다. 그러나 배당 기준일의 주주명부에
-                  내 이름이 그대로 남는다는 뜻은 아니며, 대여 상태에서는 의결권,
-                  공개매수, 주식매수청구권 행사 등에 제한이 생길 수 있습니다.
-                  이런 권리를 행사하려면 증권사가 정한 기한 전에 상환을
-                  신청해야 합니다.
-                </p>
-                <p>
-                  대여된 주식은 결제, 차익거래, 헤지 또는 공매도 등에 쓰일 수
-                  있습니다. 내 주식이 공매도에 활용되는 것이 불편하다면,
-                  수수료만 보고 서비스가 항상 유리하다고 볼 수는 없습니다.
-                  대여수수료율, 세금, 대상 종목, 권리 보전과 상환 조건은
-                  증권사·국내외 주식·시장 상황에 따라 다릅니다.
-                </p>
-                <p>
-                  대여 중 매도 가능 여부와 처리 방식도 증권사별로 확인해야
-                  합니다. 일부 서비스는 대여 주식을 즉시 매도할 수 있지만,
-                  다른 서비스는 먼저 상환 신청을 하거나 해외주식에는 별도 제한이
-                  있을 수 있습니다. 신청 전에는 앱의 서비스 안내와 약관에서
-                  수수료 지급일, 매도·상환 가능 시점, 배당·의결권 처리, 세금을
-                  확인하세요.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="주식 대여 서비스 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
-            <span>10</span>
             <div class="lesson-content">
               <h2>개인대주와 신용융자: 무엇을 빌리는 거래인가요?</h2>
               <div class="lesson-body">
@@ -574,93 +543,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>11</span>
-            <div class="lesson-content">
-              <h2>선물은 누구와 계약하고, 베팅일까요?</h2>
-              <div class="lesson-body">
-                <p>
-                  거래소 선물은 특정 사람과 이름을 알고 직접 약속하는 계약이
-                  아닙니다. 내가 선물을 매도하면 반대편의 누군가가 매수 주문을
-                  내어 거래가 체결되고, 거래소와 청산기관이 중간에서
-                  증거금·손익정산·만기결제를 관리합니다. 쉽게 말해 “나 ↔
-                  거래소·청산기관 ↔ 반대편 투자자” 구조입니다.
-                </p>
-                <p>
-                  반대편이 모두 투기 거래자는 아닙니다. 항공사는 유가 급등,
-                  수출기업은 환율 하락, 주식 ETF 보유자는 시장 급락을 줄이려는
-                  헤지 목적으로 거래할 수 있고, 시장조성자·금융기관은 고객
-                  주문에 유동성을 제공한 뒤 다른 거래로 자신의 위험을 조정할 수
-                  있습니다.
-                </p>
-                <p>
-                  보유 자산 없이 선물 매수·매도로 가격 방향만 맞히려 하면
-                  low/high 게임처럼 보이는 투기적 거래가 됩니다. 반대로 이미
-                  가진 가격 위험을 반대 방향 계약으로 줄이면 헤지, 현물과 선물의
-                  비정상적인 가격 차이를 이용하면 차익거래라고 부릅니다.
-                </p>
-                <p>
-                  같은 선물·옵션도 누가 왜, 어느 정도 규모로 쓰는지가
-                  핵심입니다. 헤지라도 계약 규모가 보유 자산보다 크면 오히려
-                  위험과 증거금 부담이 커질 수 있습니다.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="선물은 누구와 계약하고, 베팅일까요? 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
-            <span>12</span>
-            <div class="lesson-content">
-              <h2>왜 미래 가격을 맞히려는 거래가 생길까요?</h2>
-              <div class="lesson-body">
-                <p>
-                  첫째는 위험을 옮기기 위해서입니다. 농부는 수확물 가격 하락이,
-                  식품회사는 원재료 가격 상승이 걱정될 수 있습니다. 선물
-                  계약으로 미래 가격을 미리 정하면 두 쪽 모두 불확실성을 줄일 수
-                  있고, 그 위험을 받아 주는 반대편 거래도 필요해집니다.
-                </p>
-                <p>
-                  둘째는 정보와 전망이 서로 다르기 때문입니다. 어떤 사람은
-                  금리가 내려갈 것이라고, 다른 사람은 경기가 나빠져 지수가
-                  떨어질 것이라고 볼 수 있습니다. 선물·옵션 가격에는 이런 서로
-                  다른 기대가 거래를 통해 반영됩니다.
-                </p>
-                <p>
-                  셋째는 가격 차이를 줄이고 거래를 원활하게 하기 위해서입니다.
-                  현물과 선물 가격이 크게 벌어지면 차익거래자가 두 시장을 함께
-                  사고팔아 차이를 좁히려 하고, 시장조성자는 매수·매도 주문이 잘
-                  만나도록 유동성을 제공합니다.
-                </p>
-                <p>
-                  따라서 모든 방향 거래가 단순 도박은 아니지만, 이해 없이 “오를
-                  것 같으니 크게 사자”처럼 거래하면 투기와 매우 가까워집니다.
-                  특히 선물은 증거금으로 큰 계약을 다루므로 손실도 빠르게 커질
-                  수 있습니다.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="왜 미래 가격을 맞히려는 거래가 생길까요? 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          
-          <section class="lesson">
-            <span>13</span>
+            <span>10</span>
             <div class="lesson-content">
               <h2>상품 설명서에서 비교할 항목</h2>
               <div class="lesson-body">
@@ -694,7 +577,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>14</span>
+            <span>11</span>
             <div class="lesson-content">
               <h2>한국시장으로 만드는 가상 포트폴리오 · 리밸런싱 실습</h2>
               <div class="lesson-body">
@@ -754,7 +637,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>15</span>
+            <span>12</span>
             <div class="lesson-content">
               <h2>목적에 따라 상품을 나누어 보기</h2>
               <div class="lesson-body">
@@ -789,10 +672,10 @@
             </button>
           </section>
           <section class="lesson">
-            <span>16</span>
+            <span>13</span>
             <div class="lesson-content">
               <h2>한국에서 펀드 신뢰가 크게 흔들렸던 사례</h2>
-              <div class="lesson-body">
+              <div class="lesson-body paragraph-grouped">
                 <p>
                   사모펀드(Private Equity Fund, PEF)의 사모(私募)는 ‘사적으로
                   모으다’라는 뜻으로, 한자로는 간사할 사(私), 모을 모(募)를
@@ -888,7 +771,18 @@
               <span aria-hidden="true">⌃</span>
             </button>
           </section>
-          <section class="lesson"><span>17</span><div class="lesson-content"><h2>버틀러로 기업 분석을 시작해 볼까요?</h2><div class="lesson-body"><p><a href="https://www.butler.works/ko/home" target="_blank" rel="noopener noreferrer">버틀러</a>는 투자자가 기업의 재무제표·실적·공시를 이해하기 쉽게 살펴볼 수 있도록 돕는 기업 분석 플랫폼입니다. 여러 증권 계좌와 관심 기업의 정보를 모아, 개인 투자자가 기업의 펀더멘털과 자신의 포트폴리오를 점검하는 ‘투자 비서’처럼 활용할 수 있습니다.</p><p>복잡한 숫자는 매출, 영업이익, 수주잔고, 지역별 실적 등의 그래프로 확인할 수 있습니다. 기업공시에서는 많은 공시 가운데 투자 판단에 중요한 내용을 빠르게 찾도록 돕고, 관심기업은 그룹별로 묶어 꾸준히 추적할 수 있습니다.</p><p>포트폴리오 관리 기능으로 여러 증권 계좌에 흩어진 종목을 한 화면에서 살펴볼 수 있으며, 기업 스크리너에서는 다양한 조건을 조합해 자신의 기준에 맞는 기업 후보를 찾을 수 있습니다. 초보자는 성장 추세를 읽는 데, 중·장기 투자자는 공시와 펀더멘털을 비교하는 데 활용할 수 있습니다.</p><p>다만 플랫폼이 제공하는 데이터와 시각화는 투자 판단을 돕는 정보입니다. 매매를 대신 결정하거나 수익을 보장하지 않으므로, 최신 공시 원문·재무제표·상품 이용 조건을 다시 확인하고 자신의 투자 목적과 위험 감수 수준에 맞춰 판단하세요. 일부 기능은 유료 구독으로 제공될 수 있으며, 지원 시장과 기능은 서비스 정책에 따라 달라질 수 있습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="버틀러로 기업 분석을 시작해 볼까요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>
+          <section class="lesson">
+            <span>14</span>
+            <div class="lesson-content">
+              <h2>시장 급락에 대비하는 두 가지 헤지</h2>
+              <div class="lesson-body">
+                <p>주식이나 주식 ETF를 가진 사람이 시장 급락이 걱정될 때는 풋옵션을 사거나 지수선물을 매도하는 방식을 생각해 볼 수 있습니다. 둘 다 시장이 내려갈 때 생기는 이익으로 보유 주식의 손실 일부를 줄이려는 방법입니다.</p>
+                <p>풋옵션 매수는 ‘정해진 가격에 팔 수 있는 권리’를 사는 것입니다. 시장이 크게 내리면 이 권리의 가치가 올라갈 수 있습니다. 자동차 보험처럼 처음에 프리미엄이라는 보험료를 내는 대신, 시장이 오르거나 움직임이 작으면 낸 프리미엄은 비용으로 남습니다.</p>
+                <p>지수선물 매도는 KOSPI 200 같은 지수 선물을 먼저 파는 숏 포지션입니다. 시장이 내리면 선물 매도 포지션에서 이익이 날 수 있지만, 시장이 오르면 손실이 납니다. 풋옵션 매수와 달리 프리미엄만 내고 끝나는 구조가 아니며 증거금·추가증거금·강제청산 위험이 있으므로, 보유 자산 규모와 계약 규모를 이해하지 못하면 헤지가 아니라 위험 확대가 될 수 있습니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="시장 급락에 대비하는 두 가지 헤지 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
         </section>
         <section class="glossary">
           <p>오늘의 용어집</p>
@@ -995,9 +889,11 @@
                 순자산가치 <small>Net Asset Value · 純資産價値 · NAV</small>
               </dt>
               <dd>
-                펀드가 보유한 자산에서 빚을 뺀 실제 가치입니다. ETF 1주에 담긴
-                자산의 값이라고 생각할 수 있습니다. 시장에서 거래되는 ETF 가격이
-                NAV와 다르면 괴리율이 생깁니다.
+                펀드가 보유한 자산에서 부채를 뺀 실제 가치입니다. 여기서 부채는
+                보통 큰 차입금보다 운용보수·결제 대금 등 아직 지급하지 않은 비용과
+                미지급금을 뜻합니다. ETF 1주에 담긴 자산의 값이라고 생각할 수
+                있으며, 시장에서 거래되는 ETF 가격이 NAV와 다르면 괴리율이
+                생깁니다.
               </dd>
             </div>
             <div class="glossary-item">
@@ -1187,6 +1083,57 @@
       </section>
     </div>
 
+    <div class="glossary-modal gap-tracking-sim-modal" id="gapTrackingSimModal" hidden>
+      <div class="glossary-modal__backdrop" data-gap-tracking-sim-close></div>
+      <section class="glossary-modal__dialog gap-tracking-sim-dialog" role="dialog" aria-modal="true" aria-labelledby="gapTrackingSimTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-gap-tracking-sim-close>×</button>
+        <p class="glossary-modal__label">SIMULATION · 교육용</p>
+        <h2 id="gapTrackingSimTitle">괴리율과 추적오차: 서로 다른 두 질문</h2>
+        <p class="gap-tracking-sim-intro">
+          괴리율은 <b>지금 이 순간</b> ETF 시장가격이 NAV와 얼마나 떨어져 있는지,
+          추적오차는 <b>일정 기간</b> ETF의 NAV 수익률이 목표 지수 수익률과 얼마나 달랐는지 보여줍니다.
+        </p>
+
+        <div class="gap-tracking-sim-fields">
+          <label>현재 NAV (원)<input id="gtsNav" type="number" value="10000" min="1" step="10" /></label>
+          <label>현재 시장가격 (원)<input id="gtsMarket" type="number" value="10300" min="1" step="10" /></label>
+          <label>기간 시작 목표지수<input id="gtsIndexStart" type="number" value="10000" min="1" step="10" /></label>
+          <label>기간 종료 목표지수<input id="gtsIndexEnd" type="number" value="10400" min="1" step="10" /></label>
+          <label>기간 시작 ETF NAV (원)<input id="gtsEtfStart" type="number" value="10000" min="1" step="10" /></label>
+          <label>기간 종료 ETF NAV (원)<input id="gtsEtfEnd" type="number" value="10350" min="1" step="10" /></label>
+        </div>
+
+        <div class="gap-tracking-sim-results">
+          <article class="gap-tracking-result gap-result">
+            <span>현재 괴리율</span>
+            <strong id="gtsGap">+3.00%</strong>
+            <small id="gtsGapNote">시장가격이 NAV보다 300원 높습니다.</small>
+          </article>
+          <article class="gap-tracking-result tracking-result">
+            <span>목표지수 수익률</span>
+            <strong id="gtsIndexReturn">+4.00%</strong>
+            <small>기간 시작값과 종료값으로 계산</small>
+          </article>
+          <article class="gap-tracking-result tracking-result">
+            <span>ETF NAV 수익률</span>
+            <strong id="gtsEtfReturn">+3.50%</strong>
+            <small>시장가격이 아닌 NAV 기준</small>
+          </article>
+          <article class="gap-tracking-result tracking-result highlight">
+            <span>추적 차이</span>
+            <strong id="gtsTrackingDiff">−0.50%p</strong>
+            <small id="gtsTrackingNote">ETF가 지수보다 0.50%p 덜 올랐습니다.</small>
+          </article>
+        </div>
+
+        <div class="gap-tracking-sim-message" id="gtsMessage"></div>
+        <p class="gap-tracking-sim-formula">
+          괴리율 = (시장가격 − NAV) ÷ NAV × 100 · 추적 차이 = ETF NAV 수익률 − 목표지수 수익률
+        </p>
+        <p class="gap-tracking-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 단순 계산 예시입니다. 실제 추적오차는 보수·세금·현금 보유·복제 방식·기간 등에 따라 달라집니다.</p>
+      </section>
+    </div>
+
     <div class="glossary-modal fund-manager-sim-modal" id="fundManagerSimModal" hidden>
       <div class="glossary-modal__backdrop" data-fms-close></div>
       <section
@@ -1370,6 +1317,55 @@
           );
           button.title = collapsed ? "내용 펼치기" : "내용 접기";
         });
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("gapTrackingSimModal");
+        const trigger = document.getElementById("gapTrackingSimTrigger");
+        if (!modal || !trigger) return;
+
+        const fields = {
+          nav: document.getElementById("gtsNav"), market: document.getElementById("gtsMarket"),
+          indexStart: document.getElementById("gtsIndexStart"), indexEnd: document.getElementById("gtsIndexEnd"),
+          etfStart: document.getElementById("gtsEtfStart"), etfEnd: document.getElementById("gtsEtfEnd"),
+        };
+        const output = {
+          gap: document.getElementById("gtsGap"), gapNote: document.getElementById("gtsGapNote"),
+          indexReturn: document.getElementById("gtsIndexReturn"), etfReturn: document.getElementById("gtsEtfReturn"),
+          trackingDiff: document.getElementById("gtsTrackingDiff"), trackingNote: document.getElementById("gtsTrackingNote"),
+          message: document.getElementById("gtsMessage"),
+        };
+        const fmtNumber = (value) => Math.round(Math.abs(value)).toLocaleString("ko-KR");
+        const fmtPct = (value, suffix = "%") => `${value >= 0 ? "+" : "−"}${Math.abs(value).toFixed(2)}${suffix}`;
+
+        function numberOf(input) { return Math.max(1, Number(input.value) || 1); }
+        function render() {
+          const nav = numberOf(fields.nav), market = numberOf(fields.market);
+          const indexStart = numberOf(fields.indexStart), indexEnd = numberOf(fields.indexEnd);
+          const etfStart = numberOf(fields.etfStart), etfEnd = numberOf(fields.etfEnd);
+          const gap = ((market - nav) / nav) * 100;
+          const indexReturn = ((indexEnd - indexStart) / indexStart) * 100;
+          const etfReturn = ((etfEnd - etfStart) / etfStart) * 100;
+          const trackingDiff = etfReturn - indexReturn;
+
+          output.gap.textContent = fmtPct(gap);
+          output.gap.style.color = gap > 0 ? "#c23a32" : gap < 0 ? "#2563eb" : "var(--ink)";
+          output.gapNote.textContent = gap === 0 ? "시장가격과 NAV가 같습니다." : `시장가격이 NAV보다 ${fmtNumber(market - nav)}원 ${gap > 0 ? "높습니다" : "낮습니다"}.`;
+          output.indexReturn.textContent = fmtPct(indexReturn);
+          output.etfReturn.textContent = fmtPct(etfReturn);
+          output.trackingDiff.textContent = fmtPct(trackingDiff, "%p");
+          output.trackingDiff.style.color = trackingDiff < 0 ? "#c23a32" : trackingDiff > 0 ? "#16794b" : "var(--ink)";
+          output.trackingNote.textContent = trackingDiff === 0 ? "ETF NAV 수익률이 지수 수익률과 같습니다." : `ETF가 지수보다 ${Math.abs(trackingDiff).toFixed(2)}%p ${trackingDiff > 0 ? "더 올랐습니다" : "덜 올랐습니다"}.`;
+          output.message.textContent = `지금의 괴리율 ${fmtPct(gap)}과 ${trackingDiff === 0 ? "기간 추적 차이 0.00%p" : `기간 추적 차이 ${fmtPct(trackingDiff, "%p")}`}는 서로 별개입니다. 시장가격을 NAV와 같게 만들어도 추적 차이는 남을 수 있습니다.`;
+        }
+
+        function open() { modal.hidden = false; render(); modal.querySelector(".glossary-modal__close")?.focus(); }
+        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } }
+        Object.values(fields).forEach((input) => input.addEventListener("input", render));
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-gap-tracking-sim-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
     </script>
     <script>
       (() => {

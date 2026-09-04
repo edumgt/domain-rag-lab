@@ -7,9 +7,13 @@
       name="description"
       content="금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다."
     />
-    <title>03일차 | 4일 금융 이론 — 채권 · 외환 · 원자재 · 파생상품</title>
-    <link rel="stylesheet" href="assets/site.css" />
+    <title>03일차 | 4일 금융 이론 — 채권</title>
+    <link rel="stylesheet" href="assets/site.css?v=20260904-duration-explained" />
     <link rel="stylesheet" href="assets/app-shell.css" />
+    <style>
+      /* 옵션 학습 단원은 01일차로 이동했습니다. */
+      body[data-day="3"] .lesson-list > .lesson:nth-child(n + 13) { display: none; }
+    </style>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -56,10 +60,10 @@
     <aside class="day-offcanvas" id="dayOffcanvas" aria-label="4일 학습 목차">
       <h2>4일 이론 학습</h2>
       <p>일차를 선택해 정적 학습 페이지로 이동합니다.</p>
-      <a href="01.html">01 · 금융상품 기초</a
+      <a href="01.html">01 · 선물과 옵션</a
       ><a href="02.html">02 · 펀드 · ETF</a
-      ><a class="active" href="03.html">03 · 채권 · 외환 · 파생상품</a
-      ><a href="04.html">04 · 포트폴리오와 위험</a>
+      ><a class="active" href="03.html">03 · 채권</a
+      ><a href="04.html">04 · 퀀트 정보</a>
     </aside>
     <nav aria-label="4일 학습 목차">
       <a class="brand" href="index.html">4일 금융 이론</a>
@@ -69,9 +73,9 @@
         ><a class="" href="02.html"
           ><b>02</b><span>펀드 · ETF</span></a
         ><a class="active" href="03.html"
-          ><b>03</b><span>채권 · 외환 · 원자재 · 파생상품</span></a
+          ><b>03</b><span>채권</span></a
         ><a class="" href="04.html"
-          ><b>04</b><span>포트폴리오와 위험 지표</span></a
+          ><b>04</b><span>퀀트 정보</span></a
         >
       </div>
     </nav>
@@ -79,7 +83,7 @@
       <article>
         <header class="lesson-head">
           <div class="lesson-head-line">
-            <h1>채권 · 외환 · 원자재 · 파생상품</h1>
+            <h1>채권</h1>
             <p>금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다.</p>
           </div>
         </header>
@@ -100,6 +104,12 @@
                 <p>
                   만기가 길수록 금리 변화에 가격이 더 민감해지는 경향이
                   있습니다. 이를 설명할 때 듀레이션이라는 지표를 사용합니다.
+                </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="bondDurationSimTrigger">
+                    <i class="fa-solid fa-scale-balanced"></i> 금리·듀레이션 시뮬레이터
+                  </button>
+                  <small>금리 변화와 듀레이션에 따라 예상 가격 변화가 어떻게 달라지는지 확인하세요.</small>
                 </p>
               </div>
             </div>
@@ -161,6 +171,35 @@
                   안전하게 평가되는 경우도 있으므로, 종류 이름만 보지 말고 개별
                   발행자의 신용등급을 함께 확인해야 합니다.
                 </p>
+                <h3>채권의 이율은 어떻게 읽을까요?</h3>
+                <p>
+                  채권 화면의 <b>표면금리(쿠폰금리)</b>는 발행할 때 정한 이자율입니다.
+                  예를 들어 액면 1,000만 원·표면금리 연 3%·연 2회 이자 지급 채권이라면,
+                  조건이 유지된다는 가정 아래 6개월마다 세전 15만 원의 이자를 받습니다.
+                  반면 <b>수익률</b>은 지금 가격에 사서 만기까지 보유할 때의 수익을 연율로
+                  환산한 값이라 시장가격에 따라 계속 바뀝니다. 보통 시장금리가 오르면
+                  기존 채권 가격은 내려가고 수익률은 올라가는 방향으로 움직입니다.
+                </p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>종류별 금리·발행 정보 확인 경로</caption>
+                    <thead><tr><th scope="col">채권 종류</th><th scope="col">이율을 볼 때</th><th scope="col">공식 확인</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">국고채</th><td>만기별 입찰금리·유통수익률, 표면금리와 이자 지급일</td><td><a href="https://ktb.moef.go.kr/main.do" target="_blank" rel="noopener noreferrer">기획재정부 국채시장</a></td></tr>
+                      <tr><th scope="row">개인투자용 국채</th><td>월별 청약 공고 금리, 만기·가산금리·중도환매 조건</td><td><a href="https://ktb.moef.go.kr/perIsuProcss.do" target="_blank" rel="noopener noreferrer">개인투자용 국채 안내</a></td></tr>
+                      <tr><th scope="row">통안채·특수채</th><td>발행기관, 만기, 입찰·유통수익률, 신용등급</td><td><a href="https://www.bok.or.kr/portal/main/main.do" target="_blank" rel="noopener noreferrer">한국은행</a> · <a href="https://www.kofiabond.or.kr/" target="_blank" rel="noopener noreferrer">금융투자협회 채권정보센터</a></td></tr>
+                      <tr><th scope="row">금융채·회사채</th><td>표면금리뿐 아니라 신용등급, 동일 만기 국고채 대비 가산금리(스프레드), 조기상환 조건</td><td><a href="https://www.kofiabond.or.kr/" target="_blank" rel="noopener noreferrer">금융투자협회 채권정보센터</a> · <a href="https://seibro.or.kr/" target="_blank" rel="noopener noreferrer">SEIBro 증권정보포털</a></td></tr>
+                      <tr><th scope="row">지방채</th><td>발행 지방자치단체, 상환 재원, 만기와 이율</td><td><a href="https://www.mois.go.kr/" target="_blank" rel="noopener noreferrer">행정안전부</a> 및 해당 지자체 공고</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>
+                  회사채나 금융채의 수익률이 국고채보다 높아 보인다면, 같은 기간 돈을
+                  빌려줄 때 추가로 감수하는 신용위험·유동성위험 등에 대한 보상인
+                  <b>신용스프레드</b>가 반영됐을 수 있습니다. 높은 이율만으로 유리하다고
+                  판단하지 말고, 발행자·신용등급·만기·중도매도 가능성·세전/세후 수익률과
+                  증권사 매수·매도 가격을 함께 비교하세요.
+                </p>
               </div>
             </div>
             <button
@@ -201,6 +240,19 @@
                   국내에서 개인이 실제로 접하는 채권 매매의 상당수는 이 장외채권
                   방식입니다.
                 </p>
+                <figure class="lesson-figure mts-bond-screen">
+                  <img
+                    src="assets/mts-bond-trading-example.jpg"
+                    alt="증권사 모바일 앱의 장외채권 상품 목록과 채권 상세·매수 화면 예시"
+                  />
+                  <figcaption>
+                    실제 증권사 MTS 장외채권 화면 예시입니다. 왼쪽에서는 채권 목록과
+                    수익률·신용등급·가능수량을, 오른쪽에서는 선택한 채권의 상세 정보와
+                    매수 버튼을 확인할 수 있습니다. 화면 출처:
+                    <a href="https://www.ajunews.com/view/20241016145823315" target="_blank" rel="noopener noreferrer">아주경제</a>
+                    (2024년 10월 16일 보도 이미지).
+                  </figcaption>
+                </figure>
                 <p>
                   장내채권은 거래소 시세가 공개되어 가격을 비교적 투명하게
                   확인할 수 있지만, 개인이 접근하기 좋은 종목은 국채 등 일부로
@@ -302,46 +354,6 @@
           <section class="lesson">
             <span>06</span>
             <div class="lesson-content">
-              <h2>금리와 채권 가격, 듀레이션으로 크기를 가늠해보기</h2>
-              <div class="lesson-body">
-                <p>
-                  듀레이션은 “금리가 1%포인트 변할 때 채권 가격이 대략 몇 %
-                  움직이는가”를 어림잡는 지표입니다. 근사식으로 `가격 변화율 ≈
-                  -듀레이션 × 금리 변화(%포인트)`를 씁니다. 예를 들어 듀레이션이
-                  5인 채권은 금리가 1%포인트 오르면 가격이 대략 5% 내려가고,
-                  듀레이션이 15인 채권은 같은 금리 변화에 가격이 대략 15% 내려갈
-                  수 있습니다.
-                </p>
-                <p>
-                  일반적으로 잔존만기가 길고 표면금리가 낮을수록 듀레이션이
-                  커지는 경향이 있습니다. 그래서 “장기채”라는 이름이 붙은 상품은
-                  단기채보다 같은 금리 변화에도 가격이 훨씬 크게 움직일 수
-                  있습니다. 반대로 만기가 얼마 남지 않은 채권은 금리가 크게
-                  흔들려도 가격 변화가 상대적으로 작은 편입니다.
-                </p>
-                <p>
-                  다만 이 근사식은 금리 변화가 크지 않을 때 참고하는 값이며,
-                  실제 가격 변화는 컨벡시티라는 곡률 효과 때문에 근사값과 정확히
-                  일치하지 않을 수 있습니다. 특정 채권·ETF의 정확한 듀레이션은
-                  상품설명서나 운용사 홈페이지의 “실효 듀레이션(effective
-                  duration)” 수치를 확인하세요.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="금리와 채권 가격, 듀레이션으로 크기를 가늠해보기 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
-            <span>07</span>
-            <div class="lesson-content">
               <h2>금리와 성장잠재력: 할인율이 기업 가치에 미치는 영향</h2>
               <div class="lesson-body">
                 <p>
@@ -398,7 +410,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>08</span>
+            <span>07</span>
             <div class="lesson-content">
               <h2>미국 장기채 ETF, 국내에서 투자하는 방법</h2>
               <div class="lesson-body">
@@ -449,7 +461,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>09</span>
+            <span>08</span>
             <div class="lesson-content">
               <h2>채권 투자와 세금: 매매차익과 월배당 구분하기</h2>
               <div class="lesson-body">
@@ -501,7 +513,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>10</span>
+            <span>09</span>
             <div class="lesson-content">
               <h2>한국 금리·채권시장 사례</h2>
               <div class="lesson-body">
@@ -538,7 +550,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>11</span>
+            <span>10</span>
             <div class="lesson-content">
               <h2>국채·우량 회사채, 증권사 앱에서 고르고 사는 방법</h2>
               <div class="lesson-body">
@@ -604,120 +616,31 @@
             </button>
           </section>
           <section class="lesson">
+            <span>11</span>
+            <div class="lesson-content">
+              <h2>분산투자는 왜 필요한가요?</h2>
+              <div class="lesson-body">
+                <p>서로 다른 방식으로 움직이는 자산을 섞으면 한 자산의 하락이 전체 포트폴리오에 미치는 충격을 줄일 수 있습니다.</p>
+                <p>이를 판단할 때 <b>상관관계</b>를 봅니다. 상관관계가 낮다는 것은 두 자산이 같은 방향으로만 움직이지 않을 가능성이 있다는 뜻입니다. 자산을 많이 담는 것만으로는 충분하지 않으며, 비슷한 산업·국가에 몰려 있으면 실제로는 한 방향으로 움직일 수 있습니다.</p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="correlationSimTrigger"><i class="fa-solid fa-arrows-left-right"></i> 상관관계 시뮬레이터 해보기</button><small>두 자산의 상관계수를 직접 조절하며 분산 효과를 확인하세요.</small></p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="분산투자는 왜 필요한가요 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
             <span>12</span>
             <div class="lesson-content">
-              <h2>주식선물의 대상 종목은 어떻게 정할까요?</h2>
+              <h2>변동성 매매: 방향보다 움직임의 크기를 보는 거래</h2>
               <div class="lesson-body">
-                <p>
-                  한국거래소(KRX)의 주식선물은 모든 상장주식에 자동으로 붙는
-                  상품이 아닙니다. 선물의 기준이 되는 주식을
-                  <b>기초주권</b>이라고 하며, 거래소가 정한 대상만 주식선물로
-                  거래할 수 있습니다. 계약 단위와 만기가 표준화된
-                  장내상품이므로, 투자자가 임의의 종목·만기·행사가를 만들어
-                  주문하는 방식과는 다릅니다.
-                </p>
-                <p>
-                  현행 KRX 시행세칙은 기초주권을 코스피200 구성종목,
-                  코스닥글로벌 구성종목, 또는 거래수요 등을 고려해 이들에
-                  준한다고 거래소가 인정하는 주권 가운데 선정하도록 정합니다.
-                  따라서 “코스닥150이면 모두 주식선물 대상”이라고 단정하면
-                  정확하지 않습니다. 실제 대상 종목은 거래소가 공지하는 최신
-                  기초주권 목록으로 확인해야 합니다.
-                </p>
-                <p>
-                  거래소가 대상을 관리할 때는 시장 대표성뿐 아니라 충분한
-                  거래수요와 유동성이 중요합니다. 거래가 지나치게 적으면 호가가
-                  벌어지고 원하는 가격에 청산하기 어려우며, 가격 왜곡 위험도
-                  커질 수 있기 때문입니다. 시가총액·유통주식수·거래대금과 기업의
-                  상장 유지 상태는 이런 시장성과 안정성을 점검하는 데 활용되는
-                  요소이지만, 학습자는 이를 모든 종목에 똑같이 적용되는 공개된
-                  단일 숫자 기준으로 이해해서는 안 됩니다.
-                </p>
-                <p>
-                  정기 선정은 코스피200선물의 6월물 또는 12월물 최종결제일을
-                  기준으로 이뤄질 수 있습니다. 또 상장폐지 사유, 합병·분할·감자,
-                  주식교환·이전 등 기초주권에 중대한 변동이 생기면 거래소는 별도
-                  조치를 하고 해당 주식선물의 최종거래일을 변경할 수 있습니다.
-                  이미 보유한 계약의 처리 방식은 공지와 증권사의 안내를 반드시
-                  확인하세요.
-                </p>
+                <p>변동성 매매는 주가가 오를지 내릴지보다 앞으로 가격이 얼마나 크게 움직일지를 보는 방식입니다. 예를 들어 실적 발표를 앞둔 주식이 어느 방향으로 갈지는 몰라도 크게 움직일 것 같다고 판단하는 경우가 있습니다.</p>
+                <p>옵션 가격에는 시장이 예상하는 미래 움직임의 크기가 어느 정도 반영됩니다. 큰 움직임을 예상한 사람은 콜옵션과 풋옵션을 함께 사는 것처럼 양쪽 방향의 옵션을 활용할 수 있습니다. 실제로 큰 폭의 상승이나 하락이 나오면 유리할 수 있지만, 움직임이 작거나 프리미엄이 비싸면 손실이 날 수 있습니다.</p>
+                <p>반대로 큰 움직임이 없을 것이라고 보고 옵션을 팔아 프리미엄을 받는 방식도 있습니다. 그러나 예상 밖 급등·급락 때 손실이 매우 커질 수 있어, ‘방향을 맞히지 않아도 되는 안전한 거래’가 아닙니다. 만기·프리미엄·거래비용과 최악의 손실을 이해하지 못했다면 실거래보다 모의 학습으로 구조를 먼저 확인해야 합니다.</p>
               </div>
             </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="주식선물의 대상 종목은 어떻게 정할까요? 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="변동성 매매 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
-            <span>13</span>
-            <div class="lesson-content">
-              <h2>거래소가 보증하는 것은 계약 이행입니다</h2>
-              <div class="lesson-body">
-                <p>
-                  거래소 파생상품은 매수자와 매도자가 서로의 신용을 직접 확인해
-                  계약을 끝까지 이행해야 하는 구조가 아닙니다. 체결 뒤 KRX의
-                  청산 기능은 <b>중앙청산상대방(CCP)</b>으로서 청산회원 사이에
-                  들어가, 모든 매도자에게는 매수자 역할을 하고 모든 매수자에게는
-                  매도자 역할을 합니다. 이를 통해 원래 두 당사자 사이의 계약은
-                  청산기관과 각 당사자 사이의 결제 의무로 바뀝니다.
-                </p>
-                <p>
-                  이행 안정성은 증거금, 매일의 손익정산, 미결제약정 위험에 맞춘
-                  추가 증거금, 강제청산, 공동기금 등으로 관리합니다. 어느
-                  청산회원이 결제 의무를 제때 이행하기 어려운 상황이 생겨도,
-                  청산기관은 정해진 절차에 따라 결제를 완료하도록 조치합니다.
-                  개인 투자자는 보통 증권사를 통해 거래하므로, 실제 증거금
-                  납부·추가 납부 요구·강제청산 안내는 증권사 계좌에서 받습니다.
-                </p>
-                <p>
-                  다만 “거래소가 보증한다”는 말은
-                  <b>계약의 결제 이행과 상대방 결제불이행 위험을 관리한다</b>는
-                  뜻입니다. 내가 선물 가격을 잘못 예상해 발생한 평가손실, 추가
-                  증거금, 강제청산 손실을 거래소가 대신 보상하거나 수익을
-                  보장한다는 뜻은 아닙니다.
-                </p>
-                <figure class="concept-visual trade-futures">
-                  <p class="visual-kicker">CENTRAL CLEARING</p>
-                  <div class="visual-row">
-                    <div class="visual-card">
-                      <strong>매수·매도 주문</strong
-                      ><span>증권사를 통해 익명으로 체결됩니다.</span>
-                    </div>
-                    <div class="visual-card blue">
-                      <strong>KRX 청산기관 (CCP)</strong
-                      ><span>증거금·일일정산·결제이행을 관리합니다.</span>
-                    </div>
-                    <div class="visual-card">
-                      <strong>결제 안정성</strong
-                      ><span>상대방 결제불이행 위험을 줄이는 구조입니다.</span>
-                    </div>
-                  </div>
-                  <figcaption>
-                    <b>계약 이행 보증 ≠ 투자 손실 보전</b> · 가격 변동으로 인한
-                    손익은 투자자에게 귀속됩니다.
-                  </figcaption>
-                </figure>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="거래소가 보증하는 것은 계약 이행입니다 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
-            <span>14</span>
+            <span>11</span>
             <div class="lesson-content">
               <h2>옵션은 미래 거래를 선택할 수 있는 권리</h2>
               <div class="lesson-body">
@@ -754,7 +677,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>15</span>
+            <span>12</span>
             <div class="lesson-content">
               <h2>선물과 옵션의 차이: '의무'와 '권리'</h2>
               <div class="lesson-body">
@@ -832,7 +755,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>16</span>
+            <span>13</span>
             <div class="lesson-content">
               <h2>콜옵션을 사려면 왜 프리미엄을 낼까요?</h2>
               <div class="lesson-body">
@@ -888,7 +811,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>17</span>
+            <span>14</span>
             <div class="lesson-content">
               <h2>옵션 프리미엄은 호가가 만날 때 정해집니다</h2>
               <div class="lesson-body">
@@ -937,7 +860,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>18</span>
+            <span>15</span>
             <div class="lesson-content">
               <h2>거래를 시작하기 전의 준비</h2>
               <div class="lesson-body">
@@ -975,7 +898,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>19</span>
+            <span>16</span>
             <div class="lesson-content">
               <h2>사전교육 신청: 금융투자교육원(KIFIN)</h2>
               <div class="lesson-body">
@@ -1013,7 +936,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>20</span>
+            <span>17</span>
             <div class="lesson-content">
               <h2>모의거래 신청: KRX 또는 증권사 시스템</h2>
               <div class="lesson-body">
@@ -1050,7 +973,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>21</span>
+            <span>18</span>
             <div class="lesson-content">
               <h2>이수증 등록과 계좌 활성화</h2>
               <div class="lesson-body">
@@ -1085,7 +1008,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>22</span>
+            <span>19</span>
             <div class="lesson-content">
               <h2>신청 전·후 체크리스트</h2>
               <div class="lesson-body">
@@ -1121,7 +1044,7 @@
             </button>
           </section>
           <section class="lesson">
-            <span>23</span>
+            <span>20</span>
             <div class="lesson-content">
               <h2>거래 단계와 옵션 매도 요건</h2>
               <div class="lesson-body">
@@ -1331,6 +1254,59 @@
         금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.
       </footer>
     </main>
+    <div class="glossary-modal correlation-sim-modal" id="correlationSimModal" hidden>
+      <div class="glossary-modal__backdrop" data-corr-sim-close></div>
+      <section class="glossary-modal__dialog correlation-sim-dialog" role="dialog" aria-modal="true" aria-labelledby="corrSimTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-corr-sim-close>×</button>
+        <p class="glossary-modal__label">SIMULATION · 교육용</p>
+        <h2 id="corrSimTitle">상관관계와 분산투자 시뮬레이션</h2>
+        <p class="corr-sim-intro">두 자산을 절반씩 담았다고 가정하고, 상관관계가 바뀔 때 포트폴리오의 예상 변동성이 어떻게 달라지는지 확인합니다.</p>
+        <div class="corr-sim-stats">
+          <div class="corr-sim-stat"><span>자산 A 변동성</span><strong id="corrSimVolA">20.0%</strong></div>
+          <div class="corr-sim-stat"><span>자산 B 변동성</span><strong id="corrSimVolB">20.0%</strong></div>
+          <div class="corr-sim-stat highlight"><span>포트폴리오 변동성</span><strong id="corrSimPortVol">18.6%</strong></div>
+        </div>
+        <p class="corr-sim-benefit positive" id="corrSimBenefit"></p>
+        <div class="corr-sim-control">
+          <div class="corr-sim-control-head"><span>상관계수 (ρ)</span><strong id="corrSimRhoLabel">+0.30</strong></div>
+          <input type="range" id="corrSimRho" min="-100" max="100" step="5" value="30" />
+        </div>
+        <div class="corr-sim-scenarios" role="group" aria-label="상관관계 시나리오">
+          <button type="button" class="corr-sim-scenario-btn" data-rho="100">완전 동조 +1.0</button><button type="button" class="corr-sim-scenario-btn" data-rho="0">무상관 0.0</button><button type="button" class="corr-sim-scenario-btn" data-rho="-50">반대 경향 −0.5</button>
+        </div>
+        <p class="corr-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 실제 시세 예측이 아닌 상관관계와 변동성의 관계를 보여 주는 단순 계산입니다. 상관관계는 시간에 따라 달라질 수 있습니다.</p>
+      </section>
+    </div>
+    <div class="glossary-modal bond-duration-sim-modal" id="bondDurationSimModal" hidden>
+      <div class="glossary-modal__backdrop" data-bond-duration-close></div>
+      <section class="glossary-modal__dialog bond-duration-sim-dialog" role="dialog" aria-modal="true" aria-labelledby="bondDurationSimTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-bond-duration-close>×</button>
+        <p class="glossary-modal__label">SIMULATION · 교육용</p>
+        <h2 id="bondDurationSimTitle">금리 변화와 채권 가격</h2>
+        <div class="bond-duration-sim-intro">
+          <p>듀레이션은 채권 가격의 <strong>금리 민감도 자</strong>입니다. 금리가 1%포인트 움직일 때 채권 가격이 대략 몇 % 반대 방향으로 움직일지 가늠하게 해 줍니다.</p>
+          <p>예를 들어 듀레이션이 5라면 금리가 1%포인트 오를 때 가격은 약 5% 내리고, 금리가 1%포인트 내릴 때는 약 5% 오르는 것으로 먼저 계산합니다. 1,000만 원 채권이라면 약 950만 원 또는 1,050만 원 부근으로 보는 셈입니다. 듀레이션이 15라면 같은 금리 변화에 약 15% 움직일 수 있어 훨씬 민감합니다.</p>
+          <p><code>가격 변화율 ≈ −듀레이션 × 금리 변화(%포인트)</code>에서 <strong>≈</strong>는 ‘거의 같다’, 즉 정확한 값이 아니라 빠르게 가늠하는 <strong>근사</strong>라는 뜻입니다. 일반적으로 만기가 길고 쿠폰금리가 낮을수록 듀레이션은 커지는 경향이 있습니다.</p>
+          <p class="bond-duration-convexity"><strong>컨벡시티: 실제 가격 곡선이 휘는 효과</strong>듀레이션 계산은 가격이 직선처럼 움직인다고 가정한 간단한 계산입니다. 하지만 실제 채권 가격과 금리의 관계는 완만하게 휜 곡선입니다. <strong>컨벡시티</strong>는 그 휜 정도를 나타냅니다. 금리 변화가 작을 때는 듀레이션만으로도 충분히 가깝지만, 변화 폭이 커질수록 실제 가격은 계산값과 달라질 수 있습니다. 일반적인 양(+)의 컨벡시티 채권은 같은 폭의 금리 하락에서 얻는 가격 상승이 금리 상승 때의 가격 하락보다 조금 더 클 수 있지만, 상품 구조에 따라 다릅니다.</p>
+          <p>따라서 이 결과는 이해를 위한 첫 추정치입니다. 실제 투자 전에는 상품설명서의 실효 듀레이션과 컨벡시티, 쿠폰·만기·신용위험·유동성을 함께 확인하세요.</p>
+        </div>
+        <div class="bond-duration-sim-fields">
+          <label>현재 채권 가격 (원)<input id="bdsPrice" type="number" min="1000" step="1000" value="10000000" /></label>
+          <label>듀레이션 (년)<input id="bdsDuration" type="number" min="0.1" max="30" step="0.1" value="7" /></label>
+          <label>금리 변화 (%p)<input id="bdsRateChange" type="number" min="-5" max="5" step="0.1" value="1" /></label>
+        </div>
+        <div class="bond-duration-sim-results">
+          <article><span>예상 가격 변화율</span><strong id="bdsChangeRate">−7.00%</strong><small>−듀레이션 × 금리 변화</small></article>
+          <article><span>예상 가격 변화액</span><strong id="bdsChangeWon">−700,000원</strong><small>이자·세금·수수료 전 단순 근사</small></article>
+          <article class="highlight"><span>예상 변경 가격</span><strong id="bdsNewPrice">9,300,000원</strong><small id="bdsDirection">금리가 1.00%p 올랐을 때</small></article>
+        </div>
+        <div class="bond-duration-sim-compare">
+          <div><b>단기채 예시 · 듀레이션 2년</b><span id="bdsShortCompare">금리 +1.00%p → 약 −2.00% (−200,000원)</span></div>
+          <div><b>입력한 채권 · 듀레이션 <em id="bdsDurationCompare">7.0년</em></b><span id="bdsLongCompare">금리 +1.00%p → 약 −7.00% (−700,000원)</span></div>
+        </div>
+        <p class="bond-duration-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 이 시뮬레이터는 듀레이션만으로 계산한 교육용 근사값입니다. 실제 가격에는 컨벡시티와 쿠폰, 만기, 신용위험, 유동성 등이 함께 반영됩니다.</p>
+      </section>
+    </div>
     <script>
       document.querySelectorAll("[data-lesson-toggle]").forEach((button) => {
         button.addEventListener("click", () => {
@@ -1344,6 +1320,81 @@
           button.title = collapsed ? "내용 펼치기" : "내용 접기";
         });
       });
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("correlationSimModal");
+        const trigger = document.getElementById("correlationSimTrigger");
+        if (!modal || !trigger) return;
+        const slider = document.getElementById("corrSimRho");
+        const label = document.getElementById("corrSimRhoLabel");
+        const portVol = document.getElementById("corrSimPortVol");
+        const benefit = document.getElementById("corrSimBenefit");
+        const scenarioButtons = modal.querySelectorAll("[data-rho]");
+        const render = () => {
+          const rho = Number(slider.value) / 100;
+          const result = Math.sqrt(0.25 * 0.2 ** 2 + 0.25 * 0.2 ** 2 + 0.5 * 0.2 * 0.2 * rho) * 100;
+          const reduction = 20 - result;
+          label.textContent = `${rho >= 0 ? "+" : ""}${rho.toFixed(2)}`;
+          portVol.textContent = `${result.toFixed(1)}%`;
+          benefit.textContent = reduction > 0.05 ? `분산 효과: 포트폴리오 변동성이 각 자산의 20.0%보다 ${reduction.toFixed(1)}%p 낮아집니다.` : "상관관계가 +1에 가까우면 분산 효과가 거의 없습니다.";
+          benefit.className = `corr-sim-benefit ${reduction > 0.05 ? "positive" : ""}`;
+          scenarioButtons.forEach((button) => button.classList.toggle("active", Number(button.dataset.rho) === Number(slider.value)));
+        };
+        const open = () => { modal.hidden = false; render(); modal.querySelector(".glossary-modal__close")?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        slider.addEventListener("input", render);
+        scenarioButtons.forEach((button) => button.addEventListener("click", () => { slider.value = button.dataset.rho; render(); }));
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-corr-sim-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("bondDurationSimModal");
+        const trigger = document.getElementById("bondDurationSimTrigger");
+        if (!modal || !trigger) return;
+        const price = document.getElementById("bdsPrice");
+        const duration = document.getElementById("bdsDuration");
+        const rateChange = document.getElementById("bdsRateChange");
+        const changeRate = document.getElementById("bdsChangeRate");
+        const changeWon = document.getElementById("bdsChangeWon");
+        const newPrice = document.getElementById("bdsNewPrice");
+        const direction = document.getElementById("bdsDirection");
+        const durationCompare = document.getElementById("bdsDurationCompare");
+        const shortCompare = document.getElementById("bdsShortCompare");
+        const longCompare = document.getElementById("bdsLongCompare");
+        const value = (element, minimum) => Math.max(minimum, Number(element.value) || minimum);
+        const signed = (number, digits, unit) => `${number >= 0 ? "+" : "−"}${Math.abs(number).toFixed(digits)}${unit}`;
+        const won = (number) => `${number >= 0 ? "+" : "−"}${Math.round(Math.abs(number)).toLocaleString("ko-KR")}원`;
+
+        function render() {
+          const currentPrice = value(price, 1000);
+          const currentDuration = value(duration, 0.1);
+          const rates = Math.max(-5, Math.min(5, Number(rateChange.value) || 0));
+          const percent = -currentDuration * rates;
+          const amount = currentPrice * percent / 100;
+          const after = currentPrice + amount;
+          const shortPercent = -2 * rates;
+          const shortAmount = currentPrice * shortPercent / 100;
+          changeRate.textContent = signed(percent, 2, "%");
+          changeRate.style.color = percent < 0 ? "#c23a32" : percent > 0 ? "#16794b" : "var(--ink)";
+          changeWon.textContent = won(amount);
+          changeWon.style.color = changeRate.style.color;
+          newPrice.textContent = `${Math.round(after).toLocaleString("ko-KR")}원`;
+          direction.textContent = `금리가 ${signed(rates, 2, "%p")} 변했을 때`;
+          durationCompare.textContent = `${currentDuration.toFixed(1)}년`;
+          shortCompare.textContent = `금리 ${signed(rates, 2, "%p")} → 약 ${signed(shortPercent, 2, "%")} (${won(shortAmount)})`;
+          longCompare.textContent = `금리 ${signed(rates, 2, "%p")} → 약 ${signed(percent, 2, "%")} (${won(amount)})`;
+        }
+        function open() { modal.hidden = false; render(); modal.querySelector(".glossary-modal__close")?.focus(); }
+        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } }
+        [price, duration, rateChange].forEach((input) => input.addEventListener("input", render));
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-bond-duration-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
     </script>
     <script src="assets/app-shell.js"></script>
   </body>

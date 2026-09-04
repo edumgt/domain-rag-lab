@@ -232,10 +232,10 @@ body > nav {
 }
 .glossary-modal__dialog {
   position: relative;
-  width: min(660px, 100%);
-  max-height: min(720px, calc(100vh - 40px));
-  overflow: auto;
-  padding: 30px;
+  width: min(1120px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  overflow: hidden;
+  padding: 34px 38px;
   background: #fff;
   border: 1px solid var(--app-line);
   border-radius: 14px;
@@ -278,6 +278,13 @@ body > nav {
   line-height: 1.8;
 }
 @media (max-width: 760px) {
+  .glossary-modal { padding: 12px; }
+  .glossary-modal__dialog {
+    width: calc(100vw - 24px);
+    max-height: calc(100vh - 24px);
+    overflow: auto;
+    padding: 28px 22px;
+  }
   .day-appbar {
     padding: 0 12px;
   }
@@ -326,4 +333,18 @@ body > nav {
   .glossary-modal h2 {
     font-size: 22px;
   }
+}
+
+/* Shared footer for daily learning pages */
+#app > footer {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 24px max(20px, calc((100vw - 1160px) / 2));
+  border: 0;
+  background: #080d1a;
+  color: #cbd5e1;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
 }

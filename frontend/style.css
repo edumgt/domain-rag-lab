@@ -338,26 +338,31 @@ html, body {
 }
 
 .welcome-msg {
-  text-align: center;
-  padding: 70px 20px;
+  text-align: left;
+  padding: 20px 24px 16px;
+}
+
+.welcome-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .welcome-icon {
-  font-size: 52px;
-  margin-bottom: 20px;
+  font-size: 22px;
   color: var(--accent);
 }
 
 .welcome-msg h2 {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 800;
   color: var(--text);
-  margin-bottom: 12px;
   letter-spacing: -0.02em;
 }
 
 .welcome-msg > p {
-  font-size: 17px;
+  font-size: 15px;
   color: var(--text-muted);
 }
 
@@ -682,10 +687,10 @@ html, body {
   font-size: 14px;
 }
 
-.quick-examples { margin-top: 30px; }
+.quick-examples { margin-top: 22px; }
 
 .examples-label {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -696,12 +701,12 @@ html, body {
 .example-chip {
   display: inline-block;
   margin: 5px;
-  padding: 8px 18px;
+  padding: 11px 22px;
   background: var(--surface2);
   border: 1.5px solid var(--border);
   border-radius: 4px;
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: 17px;
   font-family: var(--font);
   font-weight: 500;
   cursor: pointer;
@@ -1352,8 +1357,10 @@ body.modal-open { overflow: hidden; }
 .map-steps b, .rag-flow b { font-size: 13px; }
 .map-steps small, .rag-flow span { color: var(--text-muted); font-size: 11px; line-height: 1.4; }
 .map-steps > i, .rag-flow > i { color: #93c5fd; font-size: 12px; }
-.rag-flow { margin: 26px 0 22px; padding: 19px 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface2); }
-.rag-flow > div > i { background: #0f766e; }
+.rag-flow { margin: 20px 0 18px; padding: 20px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface2); }
+.rag-flow > div > i { background: #0f766e; width: 42px; height: 42px; font-size: 17px; }
+.rag-flow b { font-size: 15px; }
+.rag-flow span { font-size: 13px; }
 
 .theory-roadmap { margin: 25px 0; padding: 19px 21px; border: 1px solid var(--border); border-radius: 13px; background: var(--surface2); }
 .theory-roadmap > div:last-child { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
@@ -1633,3 +1640,152 @@ body.modal-open { overflow: hidden; }
   .theory-day-2 .theory-lesson:nth-child(n+4)::after { position: static; display: block; margin-bottom: 8px; }
   .theory-day-2 .theory-lesson:nth-child(n+4) h2 { padding-right: 0; }
 }
+
+/* Compact calendar header */
+.calendar-page { padding-top: 20px; }
+.calendar-page-head { align-items: center; gap: 16px; }
+.calendar-page-head .content-kicker { margin-bottom: 3px; font-size: 10px; }
+.calendar-page-head h1 { font-size: clamp(24px, 2vw, 30px); line-height: 1.15; }
+.calendar-page-head .content-lead { max-width: 430px; margin: 0; font-size: 13px; line-height: 1.45; }
+.calendar-page .personal-schedule { margin: 12px 0; padding: 12px 16px; border-radius: 10px; }
+.calendar-page .personal-schedule p { margin: 0; font-size: 14px; }
+.calendar-page .calendar-board { margin: 16px 0 28px; }
+@media (max-width: 860px) {
+  .calendar-page { padding-top: 18px; }
+  .calendar-page-head { gap: 5px; }
+  .calendar-page-head h1 { font-size: 26px; }
+}
+
+/* Compact listed-company atlas introduction */
+.stocks-page { padding-top: 18px; }
+.stocks-page-head { grid-template-columns: minmax(0, 1fr) minmax(260px, .7fr); gap: 18px; align-items: center; margin-bottom: 10px; padding: 0; }
+.stocks-page-head > div > span { font-size: 10px; }
+.stocks-page-head h1 { margin-top: 5px; font-size: clamp(26px, 2.4vw, 34px); line-height: 1.08; }
+.stocks-page-head > p { font-size: 13px; line-height: 1.5; }
+.atlas-day-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 10px 0 8px; }
+.atlas-day-tabs button { min-height: 40px; padding: 7px; border-radius: 8px; font-size: 15px; }
+.stocks-page-note { margin-bottom: 6px; padding: 9px 12px; font-size: 12px; line-height: 1.45; }
+.company-atlas { margin: 18px 0 26px; border-radius: 14px; }
+@media (max-width: 700px) {
+  .stocks-page { padding-top: 16px; }
+  .stocks-page-head { gap: 6px; }
+  .stocks-page-head h1 { font-size: 27px; }
+  .atlas-day-tabs button { min-height: 38px; }
+}
+
+/* Compact one-line page titles */
+.content-page { padding-top: 16px; padding-bottom: 44px; }
+.content-kicker { margin-bottom: 5px; font-size: 10px; }
+.content-page h1 { margin: 0 0 6px; font-size: clamp(22px, 2vw, 30px); line-height: 1.12; white-space: nowrap; }
+.content-lead { margin: 0; font-size: 14px; line-height: 1.5; }
+.simulation-guide-head { align-items: center; gap: 16px; }
+.simulation-guide-head .content-kicker { margin-bottom: 3px; }
+.simulation-guide-head h1 { font-size: clamp(22px, 2vw, 30px); white-space: nowrap; }
+.simulation-guide-head .content-lead { font-size: 13px; line-height: 1.45; }
+.simulation-steps { margin: 10px 0 14px; padding: 9px 12px; }
+.simulation-workbench .simulation-panel { border-radius: 14px; }
+.stocks-page-head h1, .atlas-header h2 { white-space: nowrap; }
+@media (max-width: 700px) {
+  .content-page { padding-top: 14px; }
+  .content-page h1 { font-size: 24px; }
+  .simulation-guide-head { gap: 4px; }
+  .stocks-page-head h1, .atlas-header h2 { white-space: normal; }
+}
+
+/* Application footer */
+.app-footer { min-height: 52px; padding: 14px clamp(16px, 2.5vw, 32px); border-top: 1px solid #25324a; background: #080d1a; color: #aebbd0; }
+.app-footer span:first-child { color: #f1f5f9; }
+
+/* Two-pane calendar workspace */
+.calendar-page { padding-bottom: 16px; }
+.calendar-split { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(290px, .85fr); gap: 14px; align-items: stretch; margin-top: 12px; }
+.calendar-page .calendar-board { margin: 0; }
+.calendar-page .calendar-agenda-section { min-width: 0; margin: 0; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+.calendar-page .calendar-agenda-section .section-heading { margin-bottom: 10px; }
+.calendar-page .calendar-agenda-section .section-heading h2 { margin: 0; font-size: 18px; }
+.calendar-page .calendar-agenda-list { gap: 7px; }
+.calendar-page .calendar-agenda-item { grid-template-columns: 48px minmax(0, 1fr); gap: 9px; padding: 9px; border-radius: 8px; }
+.calendar-page .calendar-agenda-date { padding: 5px; }
+.calendar-page .calendar-agenda-date b { font-size: 13px; }
+.calendar-page .calendar-agenda-body { gap: 3px; }
+.calendar-page .calendar-tag { font-size: 9px; }
+.calendar-page .calendar-agenda-title { font-size: 13px; }
+.calendar-page .calendar-agenda-body p { display: -webkit-box; overflow: hidden; font-size: 11px; line-height: 1.4; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+
+@media (min-width: 861px) {
+  .calendar-page .calendar-split { height: min(590px, calc(100dvh - 325px)); }
+  .calendar-page .calendar-board { display: flex; flex-direction: column; }
+  .calendar-page .calendar-grid { flex: 1 1 auto; grid-auto-rows: minmax(0, 1fr); }
+  .calendar-page .calendar-cell { min-height: 0; padding: 5px; }
+  .calendar-page .calendar-daynum { margin-bottom: 3px; font-size: 11px; }
+  .calendar-page .calendar-cell.is-today .calendar-daynum { min-width: 18px; height: 18px; }
+  .calendar-page .calendar-chips { gap: 2px; }
+  .calendar-page .calendar-chip { padding: 3px 5px; font-size: 10px; }
+  .calendar-page .calendar-agenda-item:nth-child(n + 5) { display: none; }
+  .calendar-page .content-disclaimer { margin: 9px 0 0; font-size: 11px; line-height: 1.35; }
+}
+
+@media (max-width: 860px) {
+  .calendar-split { grid-template-columns: 1fr; }
+  .calendar-page .calendar-board { margin: 12px 0 0; }
+  .calendar-page .calendar-agenda-section { margin: 0; }
+}
+
+/* LEAN 투자 판단 실습: 테스트 목록과 상세 해석을 나란히 표시 */
+.backtest-workspace { display: grid; grid-template-columns: minmax(250px, 300px) minmax(0, 1fr); gap: 16px; align-items: start; margin-top: 16px; }
+.backtest-page .backtest-examples { position: sticky; top: 12px; margin: 0; padding: 16px; background: linear-gradient(150deg, #eff6ff, #f8fafc); }
+.backtest-page .backtest-examples > div:first-child { display: block; }
+.backtest-page .backtest-examples > div:first-child span { font-size: 10px; }
+.backtest-page .backtest-examples h2 { margin-top: 5px; font-size: 17px; }
+.backtest-page .backtest-examples > div:first-child p { margin-top: 6px; color: #64748b; font-size: 12px; line-height: 1.45; }
+.backtest-page .backtest-example-grid { grid-template-columns: 1fr; gap: 7px; margin-top: 13px; }
+.backtest-page .backtest-example { position: relative; min-height: 0; padding: 11px 29px 11px 12px; }
+.backtest-page .backtest-example strong { margin-top: 4px; font-size: 13px; }
+.backtest-page .backtest-example small { margin-top: 4px; font-size: 10px; }
+.backtest-page .backtest-example > i { position: absolute; top: 50%; right: 11px; color: #93c5fd; font-size: 10px; transform: translateY(-50%); }
+.backtest-page .backtest-example.selected > i { color: #0284c7; }
+.backtest-main { min-width: 0; }
+.backtest-test-detail { padding: 18px; border: 1px solid #bae6fd; border-radius: 14px; background: linear-gradient(120deg, #f0f9ff, #f8fafc); }
+.backtest-test-detail header > span { color: #0284c7; font-size: 10px; font-weight: 850; letter-spacing: .1em; }
+.backtest-test-detail h2 { margin: 5px 0 4px; color: #0f172a; font-size: 21px; line-height: 1.3; }
+.backtest-test-detail header > p { margin: 0; color: #475569; font-size: 13px; line-height: 1.5; }
+.backtest-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+.backtest-detail-grid article { min-height: 106px; padding: 12px; border: 1px solid #dbeafe; border-radius: 9px; background: #fff; }
+.backtest-detail-grid article > i { margin-right: 6px; color: #0284c7; font-size: 12px; }
+.backtest-detail-grid article > b { color: #0f172a; font-size: 12px; }
+.backtest-detail-grid article p { margin: 6px 0 0; color: #475569; font-size: 11px; line-height: 1.5; }
+.backtest-detail-grid article.caution { border-color: #fde68a; background: #fffbeb; }
+.backtest-detail-grid article.caution > i { color: #d97706; }
+.backtest-page .backtest-canvas { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 12px 0; padding: 14px; }
+.backtest-page .backtest-canvas > i { display: none; }
+.backtest-page .workflow-node { min-height: 122px; padding: 12px; }
+.backtest-page .workflow-node input, .backtest-page .workflow-node select { margin: 8px 0 5px; padding: 7px; font-size: 12px; }
+.backtest-page .workflow-node small { font-size: 10px; }
+.backtest-page .workflow-node strong { margin: 18px 0 10px; font-size: 20px; }
+.backtest-page .backtest-parameters { margin-bottom: 12px; padding: 12px; }
+.backtest-page .backtest-result { margin-top: 16px; }
+
+@media (max-width: 860px) {
+  .backtest-workspace { grid-template-columns: 1fr; }
+  .backtest-page .backtest-examples { position: static; }
+  .backtest-page .backtest-example-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .backtest-page .backtest-canvas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .backtest-detail-grid, .backtest-page .backtest-example-grid, .backtest-page .backtest-canvas { grid-template-columns: 1fr; }
+  .backtest-detail-grid article { min-height: 0; }
+}
+
+/* 시뮬레이션: 시나리오 탭을 실습 패널 최상단에 배치 */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.simulation-workbench .simulation-panel { border-top: 0; }
+.simulation-workbench .sim-scenario-lab { max-width: 960px; margin: 0 auto; padding: 16px 0 22px; border-top: 0; }
+.simulation-workbench .scenario-actions { margin: 0 0 10px; }
+.simulation-workbench .sim-scenario-lab > .section-copy { margin: 0 0 12px; color: var(--text-muted); font-size: 12px; line-height: 1.45; }
+
+/* RAG 화면의 데이터 이용·근거 안내 */
+.rag-source-guide { margin: 18px 0 0; padding: 18px 22px; color: #334155; background: #f8fbff; border: 1px solid #dbeafe; border-radius: 10px; text-align: left; }
+.rag-source-guide > span { display: block; margin-bottom: 8px; color: #2563eb; font-size: 12px; font-weight: 850; letter-spacing: .08em; }
+.rag-source-guide p { margin: 0; font-size: 15px; line-height: 1.65; }
+.rag-source-guide code { padding: 1px 5px; color: #1d4ed8; background: #eff6ff; border-radius: 3px; font-size: 13px; }

@@ -1,0 +1,54 @@
+# domain-rag-lab
+
+> Domain-specific RAG (Retrieval-Augmented Generation) service for Korean financial products and asset allocation education. Answers are grounded in ingested finance documents (stocks/ETFs/bonds/derivatives, portfolio theory, asset allocation models) and are explicitly educational, not investment advice.
+
+This repo also hosts a QuantConnect LEAN backtest workflow (yfinance daily bars + a remote LEAN Docker engine) and a 4-day static theory course (frontend/days/) covering futures/options mechanics, ETF/fund structures, rates, and risk/allocation concepts. It runs alongside a separate infra repo, `aws-ec2-alb-lab` (EC2/VPC/ALB/ECS learning material), which this repo does not depend on at runtime.
+
+Primary documentation is [README.md](README.md), written in Korean, and is the source of truth over this file for anything not listed below.
+
+## Backend (FastAPI, app/)
+
+- [app/main.py](app/main.py): app entrypoint, mounts all routers (no path prefixes)
+- [app/api/routes/health.py](app/api/routes/health.py): `GET /health`
+- [app/api/routes/chat.py](app/api/routes/chat.py): `POST /chat` (fixed RAG pipeline), `POST /chat/orchestrate` (LLM tool-calling: search_documents, get_session_history, get_long_term_memory)
+- [app/api/routes/ingest.py](app/api/routes/ingest.py): `POST /ingest/text`, `POST /ingest/file` (TXT/PDF upload → chunk → embed → store)
+- [app/api/routes/market.py](app/api/routes/market.py): `GET /market/company`, `GET /market/intraday`, `GET /market/history` (reads pre-backfilled `stock_price_history` only, no live Yahoo Finance calls)
+- [app/api/routes/backtest.py](app/api/routes/backtest.py): `POST /backtest/run` (remote QuantConnect LEAN via SSH+Docker)
+- [app/api/routes/auth.py](app/api/routes/auth.py): signup/login/logout/me, calendar-events CRUD
+- [app/services/](app/services/): rag_service, hybrid_search (Qdrant vector + Postgres keyword, RRF merge), embedder (lightweight hash embedding, not sentence-transformers), orchestrator, tool_registry/tool_executor, session_memory, long_term_memory_service (pgvector), chunker, file_parser, llm_service (OpenAI-compatible client), context_router, lean_backtest_service
+- [app/models/](app/models/): document_chunk, chat_log, long_term_memory, stock_price_history, user (SQLAlchemy)
+- [app/core/config.py](app/core/config.py): environment settings
+- [app/ops/backfill_ohlcv.py](app/ops/backfill_ohlcv.py): backfills `stock_price_history` from yfinance using the ~200-symbol atlas in `frontend/app.js`; run via `docker compose exec api python -m app.ops.backfill_ohlcv`
+
+## Frontend
+
+- [frontend/index.html](frontend/index.html), [frontend/app.js](frontend/app.js), [frontend/auth.js](frontend/auth.js), [frontend/style.css](frontend/style.css): main static SPA (chat, stock view with historical OHLCV charts, allocation practice with a futures/put-option hedging simulator)
+- [frontend/days/](frontend/days/): 4-day static theory course (01–04.html) plus index; each day also surfaces the `data/samples/finance_*.txt` source documents assigned to it as "원문 상세 학습 자료"
+- [frontend/assets/theory-data.js](frontend/assets/theory-data.js): structured theory content data backing the day pages
+
+## Demo UI
+
+- [streamlit_app.py](streamlit_app.py): Streamlit demo comparing plain RAG vs. orchestrated tool-calling, document ingestion form. Talks to the FastAPI backend via `API_BASE_URL`.
+
+## Data
+
+- [data/samples/](data/samples/): `finance_*.txt` seed documents (product classification, ETF deep dive, portfolio theory, asset allocation, valuation multiples, financial statements, macro/industry/technical analysis, lending sectors, AI Hub RAG case, etc.) — ingest with `POST /ingest/file`, `domain=finance`
+- [data/uploads/](data/uploads/): storage for user-uploaded ingest files
+- [init.sql](init.sql): enables the pgvector extension on Postgres init
+
+## Infra
+
+- [docker-compose.yml](docker-compose.yml) + `.env.local`: local dev (Postgres/pgvector, Redis, Qdrant, API, Streamlit all exposed on host ports, hot reload)
+- [docker-compose.prod.yml](docker-compose.prod.yml) + `.env.prod`: AWS EC2 prod (only Caddy's 80/443 exposed; data services stay on the internal Docker network)
+- [Caddyfile](Caddyfile): reverse proxy → `api:8000`
+- [Dockerfile](Dockerfile): API/UI image
+- [requirements.txt](requirements.txt): Python dependencies
+
+## Stack
+
+FastAPI + Uvicorn (API), Streamlit (demo UI), PostgreSQL + pgvector (chunks, chat logs, long-term memory), Qdrant (vector search), Redis (cache, not yet load-bearing), any OpenAI-compatible Chat Completions server (vLLM/Ollama/LM Studio) for the LLM, QuantConnect LEAN + yfinance for backtesting, Caddy for TLS/reverse proxy in prod.
+
+## Optional
+
+- [.env.local.example](.env.local.example), [.env.prod.example](.env.prod.example): environment variable templates (never commit the real `.env*` files or the LEAN SSH PEM key)
+- `domain` field accepts `general`/`medical`/`english` in code, but this repo's actual knowledge base and intended use is `finance` only

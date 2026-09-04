@@ -26,69 +26,6 @@
     lastFetchedAt: null,
   };
 
-  const PRODUCT_EXPLAINERS = [
-    {
-      icon: 'fa-piggy-bank', title: '예금·적금',
-      oneLine: '은행에 돈을 맡기고 약속한 이자를 받는 가장 기본적인 금융상품입니다.',
-      analogy: '안전한 저금통에 돈을 넣고, 기다린 시간에 따라 작은 보상을 받는 방식이에요.',
-      check: '이자율, 만기, 중도해지 시 받는 이자, 예금자보호 여부를 확인하세요.',
-    },
-    {
-      icon: 'fa-building-columns', title: '채권',
-      oneLine: '정부나 기업에 돈을 빌려주고 이자와 원금을 받기로 한 ‘차용증’입니다.',
-      analogy: '친구에게 돈을 빌려주고 “언제, 얼마를 돌려줄지” 적은 약속장과 비슷해요.',
-      check: '금리가 오르면 채권 가격은 내려갈 수 있고, 기업 채권은 돈을 못 돌려받을 위험도 있습니다.',
-    },
-    {
-      icon: 'fa-chart-line', title: '주식',
-      oneLine: '기업의 아주 작은 주인이 되는 증서로, 기업 성과에 따라 가격과 배당이 달라집니다.',
-      analogy: '좋아하는 가게의 지분을 조금 갖고 가게가 잘되면 함께 성장하는 것과 같아요.',
-      check: '가격이 크게 오르내릴 수 있으며, 한 기업에만 투자하면 위험이 커집니다.',
-    },
-    {
-      icon: 'fa-boxes-stacked', title: 'ETF',
-      oneLine: '여러 주식이나 채권을 한 바구니에 담아 거래소에서 사고파는 상품입니다.',
-      analogy: '과일을 하나씩 고르기보다 여러 과일이 담긴 선물 세트를 사는 것과 비슷해요.',
-      check: '무엇을 담는 ETF인지, 총보수·거래량·추적오차·괴리율을 함께 살펴보세요.',
-    },
-    {
-      icon: 'fa-folder-tree', title: '펀드',
-      oneLine: '투자자들의 돈을 모아 전문 운용사가 정한 기준에 따라 투자하는 상품입니다.',
-      analogy: '반 친구들이 회비를 모아 대표가 정한 여행 계획을 함께 실행하는 모습과 같아요.',
-      check: '운용 전략, 비용, 환매 가능 시점, 과거 성과가 미래를 보장하지 않는다는 점을 확인하세요.',
-    },
-    {
-      icon: 'fa-shield-halved', title: '파생상품',
-      oneLine: '주식·금리·환율 등의 가격 변화를 바탕으로 약속을 사고파는 고난도 상품입니다.',
-      analogy: '비가 올 때를 대비해 우산을 미리 준비하는 ‘보험’처럼 위험을 줄이는 데 쓸 수 있어요.',
-      check: '손실이 빠르게 커질 수 있어 구조와 최대 손실을 충분히 이해하기 전에는 접근하지 마세요.',
-    },
-    {
-      icon: 'fa-coins', title: '금·귀금속',
-      oneLine: '실물의 희소성과 국제 가격, 환율에 영향을 받는 대표적 실물자산입니다.',
-      analogy: '같은 금이라도 순도와 무게, 매입·매도 가격 차이, 보관 방법에 따라 실제 거래 결과가 달라집니다.',
-      check: '순도·중량·시세 기준·매매 스프레드·보관·진위 확인을 함께 살피세요.',
-    },
-    {
-      icon: 'fa-house', title: '부동산',
-      oneLine: '주거·임대·사업 공간을 거래하거나 이용할 권리와 관련된 실물자산입니다.',
-      analogy: '가격만이 아니라 위치, 권리관계, 관리비, 공실 가능성, 계약 기간을 함께 읽어야 하는 거래예요.',
-      check: '등기·권리관계·계약 조건·유지비·세금·유동성을 전문가와 함께 확인하세요.',
-    },
-    {
-      icon: 'fa-stamp', title: '우표·수석 등 수집품',
-      oneLine: '희소성·상태·진위·출처가 가치에 큰 영향을 주는 취미·수집 거래 대상입니다.',
-      analogy: '같은 종류여도 보존 상태와 감정서, 거래 이력이 다르면 전혀 다른 물건이 될 수 있습니다.',
-      check: '진품 여부·상태 등급·출처·감정 비용·보관·재판매 수요를 확인하세요.',
-    },
-    {
-      icon: 'fa-recycle', title: '중고거래',
-      oneLine: '사용하던 물건의 상태와 거래 조건을 확인해 가치를 교환하는 생활 거래입니다.',
-      analogy: '새 제품 가격이 기준점일 뿐, 실제 가격은 사용감·구성품·수리 이력·인도 방식에서 정해집니다.',
-      check: '실물 상태·작동 여부·시리얼·안전결제·직거래 장소·환불 조건을 기록하세요.',
-    },
-  ];
-
   const FALLBACK_THEORY_DAYS = [
     {
       day: 1,
@@ -127,7 +64,6 @@
         ['신청 전·후 체크리스트', ['신청 전에는 ① 거래하려는 대상이 국내 장내 파생상품인지, 해외선물인지 ② 증권사가 요구한 교육·모의거래 시간은 얼마인지 ③ 계좌 개설과 기본예탁금 요건은 무엇인지 확인합니다. 해외선물은 별도 계좌·교육·위험관리 기준이 적용될 수 있습니다.', '이수 중에는 수료증 번호와 이수증 번호를 저장하고, 계좌 명의·휴대전화 정보가 증권사 정보와 일치하는지 확인합니다. 이수 뒤에는 앱의 등록 완료 화면, 거래 가능 단계, 주문증거금·유지증거금 기준을 다시 확인합니다.', '일부 자격 보유자·금융투자업계 경력자·전문투자자 등은 교육 또는 모의거래가 면제될 수 있습니다. 다만 면제 대상과 인정 서류는 증권사 심사에 따라 달라질 수 있으므로, 스스로 면제라고 판단하지 말고 거래 증권사에 먼저 확인하세요.']],
         ['거래 단계와 옵션 매도 요건', ['일반 개인의 국내 장내 파생상품 거래는 단계적으로 열립니다. 1단계에서는 변동성지수선물을 제외한 선물과 옵션 매수가 가능하며 최소 기본예탁금은 1,000만 원입니다. 2단계에서는 옵션 매도와 변동성지수선물을 포함한 전체 선물·옵션 거래가 가능하며 최소 기본예탁금은 2,000만 원입니다.', '2단계로 올라가려면 계좌 개설 뒤 미결제약정을 10거래일 이상 보유한 경험과 기본예탁금 요건이 필요합니다. 증권사는 투자성향·거래경험·내부 위험관리 기준에 따라 더 엄격한 조건을 적용하거나 주문을 제한할 수 있습니다.', '옵션 매수자는 프리미엄을 내고 권리를 사므로 최대 손실이 보통 그 프리미엄으로 제한됩니다. 반면 옵션 매도자는 프리미엄을 받고 의무를 지므로 큰 손실 위험을 집니다. 특히 콜옵션 매도는 이론상 손실 상한이 없고, 풋옵션 매도도 기초자산 가격 하락 때 매우 큰 손실이 날 수 있습니다.']],        ['만기일에는 선물가격과 현물가격이 왜 가까워질까요?', ['선물가격과 현물가격은 만기 전에는 조금 다를 수 있습니다. 거래비용, 금리, 배당, 사고팔려는 주문의 차이 때문에 같은 지수를 보고 있어도 가격 차이가 생길 수 있습니다.', '하지만 만기가 되면 남아 있는 선물계약은 거래소가 정한 기초자산의 최종결제가격을 기준으로 손익을 정산합니다. 예를 들어 KOSPI 200 선물은 KOSPI 200 지수의 최종결제가격으로 현금 정산하므로, 만기에 가까워질수록 선물가격이 현물 지수와 크게 따로 움직이기 어렵습니다.', '선물가격이 현물보다 지나치게 비싸거나 싸면 전문 투자자가 두 시장을 함께 사고파는 차익거래를 검토해 가격 차이를 줄이려 합니다. 다만 장중 가격이 매 순간 완전히 같다는 뜻은 아니며, 작은 차이는 계속 생길 수 있습니다.']],
         ['한국 투자자가 만나는 기관들', ['한국의 개인 투자자는 은행의 예·적금과 채권 상품, 증권사의 주식·ETF·채권·파생상품 계좌, 자산운용사의 펀드·ETF를 주로 이용합니다. 삼성증권·미래에셋증권·NH투자증권·KB증권·키움증권 등은 거래 서비스를 제공하는 증권사 예시이며, 실제 지원 계좌·수수료·상품은 회사와 계좌 유형별로 다릅니다.', '자산운용사는 투자 상품을 설계·운용하고, 증권사는 그 상품의 매매를 중개하는 역할이 기본입니다. 같은 ETF라도 운용사는 상품설명서와 운용을 맡고, 앱에서 주문을 받는 곳은 증권사라는 점을 구분해 보세요.', '처음 계좌를 고를 때는 “어느 앱이 유명한가?”보다 내가 필요한 시장(국내주식·해외주식·채권·연금·파생상품)을 지원하는지, 비용표와 위험고지를 읽기 쉬운지부터 확인하는 편이 좋습니다.']],
-        ['AI Hub 데이터로 RAG 시작하기', ['AI Hub의 금융·법률 분야 데이터셋은 먼저 상세 페이지의 이용 조건, 출처 표기, 버전, 개인정보 처리 조건을 확인합니다. 허용된 원문만 내려받아 사용하며 로그인 우회·자동 수집·재배포를 전제로 하지 않습니다.', '금융 FAQ는 질문·답변·기준일 단위로, 법률 자료는 법령명·조문·항·호·시행일이 끊기지 않도록 정리합니다. 각 청크에 source, dataset, version, license, topic, effective_date 같은 메타데이터를 남기면 근거와 최신성을 추적하기 쉽습니다.', '등록 후에는 답변에 출처와 기준일을 보이고, 개정될 수 있는 금융법률은 최신 공식 원문으로 다시 확인합니다. 이후 수업에서는 이 근거를 상품 비교와 LEAN 백테스트 결과 해석에 연결합니다.']],
         ['모든 거래에 공통인 확인 순서', ['금·부동산·우표·수석·중고 물건·서비스는 가격을 보기 전에 “내가 실제로 무엇을 받는가”부터 확인해야 합니다. 소유권·이용권·인도 조건처럼 거래 대상의 권리와 범위를 한 문장으로 정리해 보세요.', '다음으로 상태·진위·출처·수리 이력·계약 조건을 확인합니다. 부동산은 등기와 계약서, 금은 순도와 중량, 수집품은 감정과 보존 상태, 중고 물건은 작동 여부와 구성품이 대표적입니다.', '마지막으로 가격 비교, 수수료·배송·보관비, 안전결제·인도 기록, 환불·분쟁 기준을 남깁니다. 이 순서는 투자 판단이 아니라 안전한 생활 거래를 위한 기본 점검입니다.']],
       ],
       ragPrompt: 'AI Hub 금융·법률 데이터를 RAG에 등록할 때 필요한 이용 조건·메타데이터·청킹·최신성 검증과 생활 거래 문서에 적용하는 방법을 설명해줘.',
@@ -144,10 +80,9 @@
         ['국내 ETF 브랜드와 운용사: 주문 증권사와 구분하기', ['KODEX, TIGER, RISE, ACE, SOL처럼 ETF 이름 앞에 붙는 말은 보통 상품을 설계·운용하는 자산운용사의 브랜드입니다. ETF를 주문받아 거래소에 연결하는 증권사와는 역할이 다릅니다.', '대표적으로 KODEX는 삼성자산운용, TIGER는 미래에셋자산운용, RISE는 KB자산운용, ACE는 한국투자신탁운용, SOL은 신한자산운용의 ETF 브랜드입니다. 따라서 어느 증권사 앱을 쓰는지와 어느 운용사의 ETF인지를 별도로 확인해야 합니다.', '브랜드는 상품을 고르는 추천 신호가 아닙니다. 같은 기초지수를 추종하는 ETF라도 총보수, 순자산 규모, 거래량, 분배 방식, 환헤지 여부와 지수 방법론이 다를 수 있으므로 상품설명서와 KRX ETF/ETN 정보를 비교하세요.']],
         ['ETF의 기초자산과 추종 대상, 구분하기', ['ETF의 기초자산은 ETF 가치의 바탕이 되는 주식·채권·원자재·리츠·지수 등입니다. 다만 투자설명서에는 실제로 보유하는 자산과 목표로 삼는 기초지수가 함께 나올 수 있으므로 둘을 구분해 읽어야 합니다.', '예를 들어 주식형 ETF는 지수 구성 주식을 직접 담아 지수를 따라갈 수 있습니다. 반면 해외지수·원자재 ETF는 현지 주식, 예탁증서, 선물계약 등을 활용할 수 있습니다. “S&P 500”, “금”, “원유”라는 이름만으로 어떤 자산을 실제 보유하는지 단정할 수는 없습니다.', '상품설명서에서 기초지수 또는 기초자산, 운용 방법, 상위 편입종목·계약, 환헤지 여부를 차례로 확인하면 내가 어떤 가격 변동과 위험을 갖게 되는지 더 분명해집니다.']],
         ['파생상품 ETF는 무엇이 다른가요?', ['파생상품 ETF는 선물·스왑 등 파생상품을 활용해 특정 지수나 자산의 가격 변화를 추종하는 ETF입니다. 원유처럼 보관이 어렵거나 해외 시장에 직접 접근하기 어려운 자산, 레버리지·인버스처럼 목표 수익률을 설계한 상품에서 이런 방식이 쓰일 수 있습니다.', '이 ETF를 매수하는 투자자가 선물계약을 직접 주문하는 것은 아닙니다. 투자자는 ETF 주식을 거래하고, ETF 내부에서 운용사가 선물·스왑과 현금성 자산 등을 조합해 목표 지수의 움직임을 따라가려 합니다. 따라서 ETF 자체의 거래 방식은 주식과 비슷하지만, 성과와 위험은 내부 파생상품 구조의 영향을 받습니다.', '특히 선물형 ETF는 만기가 가까운 계약을 다음 만기 계약으로 바꾸는 롤오버 비용 또는 수익, 레버리지·인버스 ETF는 일간 수익률을 기준으로 재설정되는 복리 효과를 확인해야 합니다. 파생상품을 쓴다는 사실만으로 위험이 같아지는 것도, 현물보다 항상 더 위험해지는 것도 아니므로 추종배수·목표기간·편입 계약과 설명서를 함께 보세요.']],
-        ['NAV·iNAV와 괴리율: ETF 가격은 왜 다를까요?', ['NAV(순자산가치)는 ETF가 보유한 자산에서 부채를 뺀 가치를 발행 주식 수로 나눈 값입니다. ETF 시장가격은 거래소에서 매수자와 매도자가 정하므로 NAV와 같을 수도, 다를 수도 있습니다. 장중 추정값인 iNAV가 제공되는 상품은 현재 가격을 가늠하는 참고값이 됩니다.', '괴리율은 보통 `(ETF 시장가격 − NAV) ÷ NAV × 100`으로 계산합니다. 양수면 시장가격이 NAV보다 높은 프리미엄, 음수면 낮은 디스카운트를 뜻합니다. 예를 들어 NAV가 10,000원이고 시장가격이 10,200원이면 괴리율은 약 +2%입니다.', '괴리율은 거래량 부족, 넓은 호가 차이, 해외 기초자산 시장의 휴장·시차, 급격한 시장 변동 등에서 커질 수 있습니다. 매수 전에는 현재 시장가격, NAV 또는 iNAV, 매수·매도 호가 차이와 거래량을 함께 보고 지정가 주문을 검토하세요. 괴리율이 작아도 기초자산 자체의 가격 위험은 사라지지 않습니다.']],
+        ['NAV·iNAV와 괴리율: ETF 가격은 왜 다를까요?', ['NAV(순자산가치)는 ETF가 보유한 자산에서 부채를 뺀 가치를 발행 주식 수로 나눈 값입니다. ETF 시장가격은 거래소에서 매수자와 매도자가 정하므로 NAV와 같을 수도, 다를 수도 있습니다. 장중 추정값인 iNAV가 제공되는 상품은 현재 가격을 가늠하는 참고값이 됩니다.', '여기서 부채는 보통 ETF가 큰돈을 빌렸다는 뜻이 아니라, 운용보수·수탁 및 사무관리 비용·결제 대금처럼 아직 지급하지 않은 비용과 미지급금 등 회계상 앞으로 지급할 금액을 말합니다. 일반 ETF에서는 이런 항목이 자산 대비 작은 편이지만, 레버리지·파생형 ETF는 구조가 더 복잡할 수 있으므로 상품설명서를 함께 확인하세요.', '괴리율은 보통 `(ETF 시장가격 − NAV) ÷ NAV × 100`으로 계산합니다. 양수면 시장가격이 NAV보다 높은 프리미엄, 음수면 낮은 디스카운트를 뜻합니다. 예를 들어 NAV가 10,000원이고 시장가격이 10,200원이면 괴리율은 약 +2%입니다.', '괴리율은 거래량 부족, 넓은 호가 차이, 해외 기초자산 시장의 휴장·시차, 급격한 시장 변동 등에서 커질 수 있습니다. 매수 전에는 현재 시장가격, NAV 또는 iNAV, 매수·매도 호가 차이와 거래량을 함께 보고 지정가 주문을 검토하세요. 괴리율이 작아도 기초자산 자체의 가격 위험은 사라지지 않습니다.']],
         ['괴리율과 추적오차는 다른 질문입니다', ['괴리율은 지금 ETF를 거래소에서 사거나 팔 때 시장가격이 NAV와 얼마나 다른지 보는 지표입니다. 반면 추적오차는 일정 기간 ETF의 수익률이 목표 지수의 수익률을 얼마나 잘 따라갔는지 보는 지표입니다.', '예를 들어 장중에 ETF 시장가격이 NAV보다 높으면 괴리율이 클 수 있지만, ETF의 NAV 기준 수익률은 장기간 목표 지수를 잘 추종할 수도 있습니다. 반대로 당장 괴리율이 작아도 보수, 현금 보유, 세금, 롤오버 비용 때문에 장기 수익률 차이가 날 수 있습니다.', '따라서 매매 순간에는 괴리율·호가 차이·거래량을, 보유 전 비교에는 기초자산·추종 방식·총보수·추적오차를 함께 확인하는 것이 좋습니다.']],
         ['일반 매도와 숏 포지션은 다릅니다', ['이미 가진 ETF나 주식을 파는 것은 일반 매도입니다. 현금으로 바꾸는 거래일 뿐, 가격 하락에 따로 베팅하는 것은 아닙니다.', '선물 계약을 먼저 매도하는 것은 보통 숏 포지션이라고 하며 가격 하락에 유리한 구조입니다. 공매도도 빌린 주식을 먼저 팔기 때문에 가격이 오르면 손실이 커질 수 있습니다.']],
-        ['주식 대여 서비스: 장기 보유 주식을 잠시 빌려주는 구조', ['주식 대여는 장기 보유할 주식을 증권사 중개를 통해 필요한 차입자에게 잠시 빌려주고, 실제 대여가 성사된 기간에 대차수수료를 받는 서비스입니다. 내가 살던 아파트를 파는 대신 전·월세로 잠시 임대하고 임대료를 받는 모습에 비유할 수 있습니다. 다만 주식은 대여 신청만으로 수수료가 생기는 것이 아니라, 실제로 빌려 나간 종목·수량·기간에만 수수료가 붙습니다.', '현금배당이나 무상증자처럼 경제적 권리는 증권사 약관에 따라 보전되는 것이 일반적입니다. 그러나 이는 배당 기준일의 주주명부에 내 이름이 그대로 남는다는 뜻은 아니며, 대여 상태에서는 의결권·공개매수·주식매수청구권 행사 등에 제한이 생길 수 있습니다. 이런 권리를 행사하려면 각 증권사가 정한 기한 전에 상환을 신청해야 합니다.', '대여된 주식은 결제, 차익거래, 헤지 또는 공매도 등에 쓰일 수 있습니다. 그래서 내 주식이 공매도에 활용될 수 있다는 점이 불편하다면, 수수료만 보고 서비스가 항상 유리하다고 볼 수는 없습니다. 대여수수료율, 세금, 대상 종목, 권리 보전과 상환 조건은 증권사·국내외 주식·시장 상황에 따라 다릅니다.', '대여 중 매도 가능 여부와 처리 방식도 증권사별로 확인해야 합니다. 일부 서비스는 대여 주식을 즉시 매도할 수 있지만, 다른 서비스는 먼저 상환 신청을 하거나 해외주식에는 별도 제한이 있을 수 있습니다. 신청 전에는 앱의 서비스 안내와 약관에서 수수료 지급일, 매도·상환 가능 시점, 배당·의결권 처리, 세금을 확인하세요.']],
         ['리츠와 ETN의 구조', ['리츠는 오피스·물류센터·리테일 등 부동산 또는 부동산 관련 자산에서 나오는 임대수익과 가치 변동에 참여하는 상품입니다. 공실률, 임대료, 금리, 부동산 경기와 차입 구조를 함께 봅니다.', 'ETN은 증권사가 특정 지수의 수익률을 따르도록 만든 증권입니다. ETF처럼 거래되더라도 펀드가 아니라 발행 증권사의 신용위험이 추가된다는 점이 다릅니다.', '원자재·변동성·레버리지처럼 복잡한 지수를 따르는 ETN은 만기, 지수 산식, 롤오버 비용과 조기청산 조건을 특히 꼼꼼히 읽어야 합니다.']],
         ['상품 설명서에서 비교할 항목', ['펀드·ETF는 기초자산·기초지수, 운용 전략과 실물·파생상품 활용 여부, 총보수, 환매 또는 매매 방식, 거래량·호가 차이·괴리율을 확인합니다.', '파생상품 ETF라면 추종배수와 목표기간, 편입 선물·스왑, 롤오버와 상대방 위험도 추가로 확인합니다. 리츠는 자산 구성, 임대차 현황, 차입금, 배당가능이익과 금리 민감도를, ETN은 발행사, 만기, 기초지수, 신용위험을 봅니다.', '과거 수익률은 비교의 한 자료일 뿐입니다. 내가 언제 쓸 돈인지와 손실이 났을 때 감당 가능한 범위를 먼저 정한 뒤 상품설명서와 투자설명서를 읽으세요.']],
         ['목적에 따라 상품을 나누어 보기', ['단기 목적자금에는 예금·적금·MMF처럼 유동성과 손실 가능성을 먼저 보는 상품이, 장기 목표에는 채권형 펀드·ETF, 주식형 펀드·ETF, 리츠처럼 다른 위험과 수익 원천을 가진 상품이 검토 대상이 될 수 있습니다.', '같은 ETF라도 국내외 주식, 국채·회사채, 금·원자재, 리츠 등 기초자산이 다릅니다. “ETF를 샀다”가 아니라 “무슨 위험을 보유했는가”로 이해하는 습관이 중요합니다.', '보험과 연금은 보장·노후소득이라는 목적을 함께 가진 금융상품입니다. 투자형 상품과 비교할 때는 기대수익률만이 아니라 보장 내용, 해지 비용, 수수료와 유동성을 나누어 살펴보세요.']],
@@ -157,7 +92,7 @@
     {
       day: 3,
       icon: 'fa-landmark',
-      title: '채권 · 외환 · 원자재',
+      title: '채권',
       subtitle: '금리·환율·원자재 가격 변화와 채권 투자에서 확인할 위험을 살펴봅니다.',
       goal: '채권 가격과 금리, 외환·원자재의 가격 변수, 채권 투자 전 확인할 위험을 설명할 수 있어요.',
       keywords: ['현물', '선물', '만기', '이자', '금리', '환율', '원자재', '헤지', '콜옵션', '풋옵션', '증거금'],
@@ -173,7 +108,7 @@
     {
       day: 4,
       icon: 'fa-chart-column',
-      title: '포트폴리오와 위험 지표',
+      title: '퀀트 정보',
       subtitle: '한 종목의 성과보다 여러 자산을 함께 봐야 하는 이유를 배웁니다.',
       goal: '퀀트 투자의 기본 관점과 블랙 스완을 고려한 위험관리, 알파·베타의 구분, 분산투자, 상관관계, 변동성, MDD, 샤프 비율과 파생상품 위험관리의 역할을 말할 수 있어요.',
       keywords: ['퀀트', '퀀트 계좌', '로보어드바이저', '투자일임', '백테스팅', '노코드 퀀트', '젠포트', '퀀터스', '증권사 Open API', '모의투자', '에드워드 소프', '제임스 사이먼스', '히든 마코프 모델', 'HMM', '제로섬 게임', '블랙 스완', '회색 코뿔소', '초단타', '고빈도 알고리즘 거래', '사전 등록제', '스캘핑', '데이트레이딩', '스윙 트레이딩', '허수성 주문', '스푸핑', '최선집행', '주문정보', '페어 트레이딩', 'Z-점수', '공매도', '무차입 공매도', '포지션', '포트폴리오', '헤지', '변동성 매매', '증거금', '마진콜', '알파', '베타', '벤치마크', '상관관계', '변동성', 'MDD', '샤프 비율', '위험기여도', '집중위험'],
@@ -189,7 +124,6 @@
         ['허수성 주문(스푸핑): 호가창 착시를 이용한 시세조종', ['허수성 주문은 실제로 체결할 의사 없이 많은 주문을 냈다가 체결될 것 같아지면 취소해, 다른 투자자가 수요·공급을 잘못 판단하도록 유도하는 행위입니다. 해외에서는 스푸핑(spoofing)이라고도 부릅니다. 정상적인 주문 취소는 가격 판단이나 위험관리 때문에 발생할 수 있지만, 처음부터 시장을 속일 목적이었다면 전혀 다른 문제입니다.', '개념을 위한 예로, 누군가 대량 매수세가 있는 것처럼 보이게 주문을 쌓아 다른 사람이 “수요가 강하다”고 오인하도록 만든 뒤, 그 반응으로 가격이 움직이면 자신이 미리 가진 물량을 반대 방향으로 거래하고 남은 주문을 취소하는 상황을 생각할 수 있습니다. 핵심은 특정 주문 하나가 아니라 반복된 주문·취소, 실제 체결 의사, 반대편 거래와 시장을 오인하게 한 목적을 함께 본다는 점입니다.', '이런 행위는 호가창의 정보 가치를 떨어뜨리고, 일반 투자자의 판단과 공정한 가격 형성을 방해합니다. 한국거래소는 체결 가능성이 낮은 가격의 대량 주문을 반복해 다른 사람의 거래를 유인하는 행위를 허수성 주문을 이용한 불공정거래의 대표 사례로 안내합니다. 시세조종은 자본시장법상 금지되며 제재·형사처벌 대상이 될 수 있습니다.', '자동화·초단타 시스템이 주문을 빠르게 수정하거나 취소한다는 사실만으로 허수성 주문이 되는 것은 아닙니다. 다만 알고리즘을 운용하는 경우에도 실제 거래 의도, 주문·취소 기록, 위험관리 규칙과 시장 영향에 대한 내부 통제가 필요합니다. 호가창의 큰 잔량 하나만 보고 매수·매도하지 말고 체결량, 지속 시간, 공시·뉴스와 함께 확인하세요.']],
         ['스캘핑·데이트레이딩·스윙: 보유 기간으로 보는 단기 매매', ['스캘핑(scalping)은 가격의 아주 작은 움직임을 노리고 수초~수분처럼 짧게 보유하며 여러 번 거래하는 방식입니다. 데이트레이딩(day trading)은 당일 안에 진입과 청산을 끝내 밤새 포지션을 넘기지 않으려는 방식이고, 스윙 트레이딩(swing trading)은 보통 며칠~수주 동안 단기 파동이나 추세를 관찰하는 방식입니다.', '스캘핑은 거래량이 충분하고 호가 차이가 좁은 종목에서 체결을 빠르게 관리해야 한다는 특징이 있습니다. 하지만 스캘핑은 개인이 수동으로 할 수도 있고, 초단타 매매(HFT)는 기관이 알고리즘·전용 시스템으로 실행할 수도 있으므로 두 말은 같은 뜻이 아닙니다. HFT가 더 짧은 시간 단위와 자동화를 사용한다고 해서 모든 스캘핑이 HFT인 것은 아닙니다.', '짧게 보유한다고 위험이 없어지는 것은 아닙니다. 급격한 뉴스·변동성·체결 지연·호가 공백은 수초 안에도 발생할 수 있고, 잦은 매매는 수수료·세금·호가 차이·슬리피지를 누적시킵니다. 예를 들어 한 번에 0.1%의 작은 가격 차이를 기대해도 왕복 비용이 그보다 크면 전략은 손실이 됩니다.', '따라서 단기 매매를 분석할 때는 “몇 번 맞혔는가”보다 거래 한 번당 평균 이익과 평균 손실, 체결비용을 뺀 손익, 최대 연속 손실, 주문이 실제로 체결된 비율을 함께 봐야 합니다. 세금과 수수료 조건은 계좌·상품·시점에 따라 달라질 수 있으므로 실제 거래 전 증권사와 관계 기관의 최신 안내를 확인하세요.']],
         ['벰버거의 페어 트레이딩: 함께 움직이던 두 가격의 간격 보기', ['페어 트레이딩(pair trading)은 비슷한 업종·사업 구조처럼 과거에 함께 움직이는 경향이 있었던 두 자산의 가격 간격이 일시적으로 벌어졌을 때, 비싸진 쪽은 매도(숏)하고 싼 쪽은 매수해 간격이 다시 좁아지는지를 보는 통계적 차익거래 접근입니다. 1980년대 모건스탠리의 제리(제럴드) 벰버거가 개척한 방식으로 널리 알려져 있습니다.', '아주 단순한 예를 들어 A와 B 주가가 모두 100원에서 출발해 비슷하게 움직였는데, 어느 날 A만 110원으로 오르고 B는 100원에 머문다고 해 보세요. 전략은 A 1주를 매도하고 B 1주를 매수한 뒤, 둘 다 105원 부근으로 돌아올 때 청산하는 것입니다. 이 경우 A 매도에서는 5원, B 매수에서는 5원의 이익이 생겨 합계 10원입니다. 수수료·세금·대차비용은 빼지 않은 이해용 예시입니다.', '알고리즘은 보통 ① 경제적으로 비교할 만한 두 자산을 고르고 ② 과거 가격 간격이 평균으로 돌아오는 성질이 있는지 검정한 뒤 ③ 간격이 평소보다 크게 벌어졌을 때만 진입하고 ④ 간격이 정상화되거나 손실 한도를 넘으면 청산하는 규칙으로 구성됩니다. 단순 상관관계가 높다는 사실만으로 평균 회귀가 보장되지는 않으므로, 스프레드·표준편차·Z-점수와 표본 밖 데이터로 함께 점검합니다.', '두 가격이 다시 만나지 않고 A가 더 오르거나 B가 더 내리면 양쪽 포지션에서 손실이 날 수 있습니다. 공매도 가능 여부와 대차비용, 거래비용, 유동성, 기업 합병·실적 같은 구조 변화도 결과를 바꿉니다. 따라서 “시장 중립”은 시장 방향 위험을 일부 줄이려는 설계일 뿐 손실이 없는 전략이라는 뜻은 아닙니다.']],
-        ['공매도: 빌려서 먼저 팔고 나중에 갚는 거래', ['공매도(Short Selling, 空賣渡)는 보유하지 않은 주식을 먼저 빌려 매도한 뒤, 나중에 다시 사서 빌린 주식을 갚는 거래입니다. 일반 매수는 가격이 오르면 이익이지만, 공매도는 가격이 내릴 때 이익이 나는 구조입니다. 페어 트레이딩에서 “비싸진 쪽 매도”는 실제로는 이 공매도 절차·가능 여부와 연결될 수 있습니다.', '예를 들어 A 주식을 10,000원에 1주 빌려 먼저 팔고, 이후 7,000원에 다시 사서 갚으면 수수료 등을 빼기 전 3,000원의 차익입니다. 반대로 13,000원에 사서 갚아야 하면 3,000원의 손실입니다. 가격 상승에는 이론적인 상한이 없으므로 공매도 손실도 커질 수 있습니다.', '순서는 ① 증권을 먼저 차입하고 ② 매도한 뒤 ③ 나중에 시장에서 재매수하고 ④ 빌린 주식을 상환하는 것입니다. 대차·대주 수수료, 상환 기한, 담보와 증거금, 강제 상환 가능성, 배당·권리 처리와 실제 주문 가능 종목을 거래 전 확인해야 합니다.', '한국에서는 빌리지 않은 상태에서 먼저 파는 무차입 공매도는 금지되고, 먼저 차입한 뒤 매도하는 차입 공매도만 허용됩니다. 공매도는 유동성 공급과 헤지에 쓰일 수 있지만, 개인도 실제 차입 가능 물량·비용·증권사 조건의 제약을 받을 수 있습니다. 따라서 이 수업의 숏 포지션은 구조를 이해하기 위한 가상 예시이며, 실제 주문 권유가 아닙니다.']],
         ['제로섬 게임: 한쪽의 이익이 다른 쪽의 손실인 거래', ['제로섬 게임(zero-sum game)은 참여자들의 이익과 손실을 모두 더하면 0이 되는 구조입니다. 예를 들어 A가 B에게서 선물 계약을 매수하고 결제 결과 A가 10만 원을 벌면, 같은 계약의 반대편인 B는 비용 전 10만 원을 잃습니다. 한쪽의 이익이 다른 쪽의 손실과 정확히 짝을 이룹니다.', '공매도도 쉽게 볼 수 있습니다. A가 10,000원에 빌려 판 주식을 7,000원에 사서 갚아 3,000원을 벌었다면, 그 가격 변화에서 반대 방향으로 주식을 보유한 사람은 같은 수량 기준 3,000원의 가격 하락을 겪습니다. 페어 트레이딩의 롱·숏 조합 역시 다른 시장 참여자와의 거래를 통해 상대 가격 차이에 대한 손익이 생기므로 비용 전에는 제로섬에 가까운 구조입니다.', '하지만 수수료, 세금, 스프레드, 대차료처럼 시장에 내는 비용까지 더하면 참여자 전체의 합은 음수가 됩니다. 이를 네거티브섬이라고 합니다. 예를 들어 두 참여자의 매매 손익 합계가 0이어도 각각 수수료 1,000원씩을 냈다면 둘을 합친 최종 손익은 -2,000원입니다.', '모든 주식투자가 제로섬이라는 뜻은 아닙니다. 기업이 이익을 내고 배당을 지급하거나 장기적으로 가치가 성장하면 주식을 보유한 투자자 전체가 혜택을 볼 수 있습니다. 따라서 선물·옵션·단기 상대매매의 손익 구조와 기업의 장기 가치 창출을 구분해 이해하는 것이 중요합니다.']],
         ['블랙 스완: 평소 모형 밖의 큰 충격에 대비하기', ['블랙 스완(Black Swan)은 평소의 경험과 통상적인 예측 모형이 놓치기 쉬운데, 발생하면 시장과 사회에 매우 큰 영향을 주는 사건을 가리키는 비유입니다. 나심 니콜라스 탈레브(Nassim Nicholas Taleb)가 2007년 책 《블랙 스완》에서 널리 알렸습니다. 유럽인이 “백조는 모두 하얗다”고 여겼지만 오스트레일리아에서 검은 백조가 발견된 일에서 이름을 가져왔습니다.', '탈레브가 말한 핵심은 ① 당시의 기대 밖에 있는 예외적 사건 ② 매우 큰 파급효과 ③ 사건 뒤에는 사람들이 “원래 알 수 있었다”고 이야기를 만들어 설명하는 사후 합리화입니다. 따라서 블랙 스완은 수학적으로 절대 예측할 수 없는 사건만을 뜻하지는 않습니다. 무엇을 당시 정보로 예상할 수 있었는지에 따라 분류에는 논쟁이 있을 수 있습니다.', '예를 들어 9·11 테러, 2008년 글로벌 금융위기, 2020년 코로나19 팬데믹은 금융시장의 큰 충격 사례로 자주 언급됩니다. 다만 어떤 사건이 엄밀히 블랙 스완인지에는 견해 차이가 있습니다. 중요한 학습점은 특정 사건의 이름을 맞히는 것이 아니라, 과거 평균과 정상 분포만 믿을 때 큰 손실 위험을 과소평가할 수 있다는 점입니다.', '위험관리는 블랙 스완을 정확히 맞히려 하기보다, 손실 한도·분산·유동성 확보·과도한 레버리지 제한·스트레스 시나리오로 견디는 힘을 만드는 데 초점을 둡니다. 회색 코뿔소(Gray Rhino)는 부채 급증처럼 위험이 눈앞에 보이는데도 무시하는 경우를, 하얀 코끼리(White Elephant)는 비용은 많이 들지만 효용이 낮아 부담이 되는 자산·사업을 비유합니다.']],
         ['국내 3개 페어로 보는 과거 신호: 삼성전자·삼성전자우, 카카오·NAVER, 기아·현대차', ['2023년 8월 1일부터 2026년 8월 7일까지의 조정 종가를 이용해, 두 가격의 로그 차이를 120거래일 평균과 표준편차로 표준화했습니다. Z-점수가 -2 이하이면 첫 종목 매수·둘째 종목 매도, +2 이상이면 첫 종목 매도·둘째 종목 매수라는 가상 신호를 기록하고, Z가 0을 통과하면 가상 청산으로 보았습니다. 당일 종가를 보고 같은 날 체결할 수 없으므로 이는 과거 신호를 읽는 연습일 뿐입니다.', '삼성전자·삼성전자우는 최근 120거래일 수익률 상관계수가 0.96으로 세 쌍 중 가장 높았지만, 2025년 7월의 “삼성전자 매도·삼성전자우 매수” 가상 신호는 2026년 4월까지 이어져 단순 계산상 -16.5%였습니다. 카카오·NAVER는 같은 인터넷 플랫폼 범주라도 기업별 이슈가 달라 신호의 보유기간과 결과가 달랐고, 기아·현대차는 2025년 9월 “기아 매수·현대차 매도” 가상 신호가 2026년 7월 청산 기준 -38.5%로 나타났습니다.', '이 사례의 핵심은 매수·매도 날짜를 외우는 것이 아니라, 높은 상관관계나 ±2 Z-점수가 수익을 보장하지 않는다는 점입니다. 실제 검토에서는 다음 거래일 체결가, 수수료·세금·대차료, 공매도 가능 여부, 손절선과 최대 보유기간을 넣고 표본 밖 기간에서 다시 검증해야 합니다. 세 쌍의 전체 신호표와 재현 코드는 등록 문서 “국내 주식 페어 트레이딩: 최근 3년 일봉으로 보는 교육용 사례”에서 확인할 수 있습니다.']],
@@ -264,7 +198,7 @@
     { terms: ['ETN'], korean: '상장지수증권', hanja: '上場指數證券', abbr: 'ETN', english: 'Exchange-Traded Note', summary: '증권사가 특정 지수의 수익률을 따르도록 만든, 거래소에서 사고파는 증권입니다.', detail: 'ETF처럼 보이지만 펀드가 아니라 증권사의 약속에 기반합니다. 따라서 지수 움직임뿐 아니라 발행 증권사가 약속을 지킬 수 있는지도 살펴야 합니다.' },
     { terms: ['리츠'], korean: '부동산투자회사', hanja: '不動産投資會社', abbr: 'REITs', english: 'Real Estate Investment Trusts', summary: '여러 사람이 돈을 모아 건물·물류센터 같은 부동산에 투자하고 임대수익 등을 나누는 상품입니다.', detail: '직접 건물을 사지 않아도 부동산 투자에 참여하는 방식입니다. 임대료, 공실, 빚의 규모와 금리 변화가 수익에 영향을 줍니다.' },
     { terms: ['기준가격', '기준가'], korean: '기준가격', hanja: '基準價格', abbr: 'NAV', english: 'Net Asset Value', summary: '펀드가 가진 자산의 가치를 계산해 정한 1좌당 가격입니다.', detail: '일반 펀드는 보통 이 가격을 기준으로 가입하거나 환매합니다. 거래소에서 실시간으로 사고파는 ETF의 시장가격과는 다를 수 있습니다.' },
-    { terms: ['NAV', '순자산가치'], korean: '순자산가치', hanja: '純資産價値', abbr: 'NAV', english: 'Net Asset Value', summary: '펀드가 보유한 자산에서 빚을 뺀 실제 가치입니다.', detail: 'ETF 1주에 담긴 자산의 값이라고 생각할 수 있습니다. 시장에서 거래되는 ETF 가격이 NAV와 다르면 괴리율이 생깁니다.' },
+    { terms: ['NAV', '순자산가치'], korean: '순자산가치', hanja: '純資産價値', abbr: 'NAV', english: 'Net Asset Value', summary: '펀드가 보유한 자산에서 부채를 뺀 실제 가치입니다.', detail: '여기서 부채는 보통 큰 차입금보다 운용보수·결제 대금 등 아직 지급하지 않은 비용과 미지급금을 뜻합니다. ETF 1주에 담긴 자산의 값이라고 생각할 수 있으며, 시장에서 거래되는 ETF 가격이 NAV와 다르면 괴리율이 생깁니다.' },
     { terms: ['환매'], korean: '환매', hanja: '還買', abbr: '—', english: 'Redemption', summary: '펀드에 넣은 돈을 되돌려 받기 위해 보유분을 팔아 현금화하는 일입니다.', detail: '주식처럼 즉시 팔리는 방식이 아니라 정해진 기준가격과 처리 시간이 적용될 수 있습니다. 상품에 따라 수수료나 환매 제한도 확인해야 합니다.' },
     { terms: ['증거금'], korean: '증거금', hanja: '證據金', abbr: 'Margin', english: 'Margin', summary: '선물·옵션 거래를 시작할 때 계약 이행을 보장하려고 맡기는 돈입니다.', detail: '계약 금액 전부가 아니라 일부만 내므로 적은 돈으로 큰 계약을 움직일 수 있습니다. 그만큼 가격이 조금만 움직여도 손익이 크게 달라질 수 있습니다.' },
     { terms: ['유지증거금'], korean: '유지증거금', hanja: '維持證據金', abbr: 'Maintenance Margin', english: 'Maintenance Margin', summary: '선물·옵션 포지션을 계속 보유하려면 계좌에 유지해야 하는 최소 금액입니다.', detail: '손실 때문에 이 금액 아래로 내려가면 추가 돈을 넣으라는 요구를 받을 수 있습니다. 제때 채우지 못하면 포지션이 정리될 수 있습니다.' },
@@ -1198,32 +1132,6 @@ KOSDAQ|웹젠|게임`,
   }
 
   function renderHome() {
-    const modules = [
-      ['4일 이론 학습', '금융상품부터 자산배분·리밸런싱까지 하루 한 주제씩 읽습니다.', 'fa-calendar-days', 'theory'],
-      ['자산배분 실습', '포트폴리오 비중을 구성하고 다양한 시장 충격 시나리오에서 손익을 비교합니다.', 'fa-sliders', 'simulation'],
-    ].map(([title, copy, icon, target]) => `
-      <button class="home-module" data-go="${target}">
-        <i class="fa-solid ${icon}"></i><strong>${title}</strong><span>${copy}</span><em>학습 시작 <i class="fa-solid fa-arrow-right"></i></em>
-      </button>`).join('');
-    const explainers = PRODUCT_EXPLAINERS.map(item => `
-      <article class="product-explainer">
-        <i class="fa-solid ${item.icon}"></i>
-        <h3>${item.title}</h3>
-        <p>${item.oneLine}</p>
-        <div><strong>쉽게 말하면</strong><span>${item.analogy}</span></div>
-        <div><strong>확인할 점</strong><span>${item.check}</span></div>
-      </article>`).join('');
-    const lifeTrades = [
-      ['금·귀금속', '순도 · 중량 · 매매 차이 · 보관', 'fa-coins'],
-      ['부동산', '권리관계 · 계약 · 유지비 · 유동성', 'fa-house'],
-      ['자동차·가전', '상태 · 수리이력 · 보증 · 이전', 'fa-car-side'],
-      ['우표·수석·예술품', '진위 · 보존상태 · 출처 · 감정', 'fa-gem'],
-      ['중고 전자기기', '작동 · 계정 해제 · 구성품 · 안전결제', 'fa-mobile-screen-button'],
-      ['티켓·예약권', '양도 가능 여부 · 유효기간 · 사기 위험', 'fa-ticket'],
-      ['서비스 거래', '작업 범위 · 견적 · 결과물 · 분쟁 기준', 'fa-handshake'],
-      ['디지털 자산·콘텐츠', '이용권한 · 약관 · 복제·양도 제한', 'fa-file-code'],
-    ].map(([name, check, icon]) => `<article><i class="fa-solid ${icon}"></i><h3>${name}</h3><p>${check}</p></article>`).join('');
-
     $messages.innerHTML = `
       <article class="content-page home-page">
         <header class="home-page-head">
@@ -1239,9 +1147,6 @@ KOSDAQ|웹젠|게임`,
           <button class="content-secondary" data-go="stocks"><i class="fa-solid fa-building-columns"></i> 종목보기로 이동</button>
         </div>
         ${renderTickDashboardSection()}
-        <section class="content-section"><div class="section-heading"><span>01</span><h2>학습 메뉴</h2></div><div class="home-module-grid">${modules}</div></section>
-        <section class="content-section"><div class="section-heading"><span>02</span><h2>금융상품과 실물자산, 쉽게 시작하기</h2></div><p class="section-intro">투자와 거래는 ‘얼마나 많이 버는가’보다 <strong>무엇을 받고, 어떤 조건에서 가치가 줄어들 수 있는가</strong>를 이해하는 일에서 시작합니다.</p><div class="product-explainer-grid">${explainers}</div></section>
-        <section class="life-trade-guide"><div><span>EVERYDAY EXCHANGE GUIDE</span><h2>사회생활에서 만나는 모든 거래를<br>같은 질문으로 점검합니다.</h2><p>금융상품뿐 아니라 실물자산, 수집품, 중고 물건, 서비스와 디지털 권리도 거래 전 확인 기준이 필요합니다.</p></div><div class="life-trade-grid">${lifeTrades}</div><footer><b>공통 점검 순서</b><span>① 거래 대상과 권리 확인</span><i></i><span>② 상태·진위·가격 비교</span><i></i><span>③ 비용·보관·인도 조건</span><i></i><span>④ 기록·안전결제·분쟁 대비</span></footer></section>
         <section class="markdown-card">
           <p class="markdown-label">LEARNING NOTE</p>
           <h2>좋은 포트폴리오는 ‘정답’보다<br>위험을 감당할 수 있는 구조에 가깝습니다.</h2>
@@ -1268,24 +1173,25 @@ KOSDAQ|웹젠|게임`,
   ];
 
   const BACKTEST_EXAMPLES = [
-    { id: 'samsung-long', title: '처음 시작 · 삼성전자 장기보유', tag: '기준선', ticker: '005930.KS', strategy: 'buy_hold', start: '2021-01-01', compareStart: '2018-01-01', note: '가장 단순한 기준선과 최대 낙폭을 먼저 확인합니다.' },
-    { id: 'kospi-trend', title: '추세 확인 · KOSPI 200 이동평균', tag: '위험관리', ticker: '069500.KS', strategy: 'ma_cross', start: '2021-01-01', compareStart: '2018-01-01', short: 20, long: 60, note: '상승장 참여와 하락 구간 회피의 교환관계를 살펴봅니다.' },
-    { id: 'hyundai-dca', title: '나눠 사기 · 현대차 정액매수', tag: '적립식', ticker: '005380.KS', strategy: 'dca', start: '2022-01-01', compareStart: '2019-01-01', interval: 21, note: '매수 시점을 나누었을 때 낙폭과 수익률이 어떻게 달라지는지 비교합니다.' },
-    { id: 'sk-momentum', title: '돌파 추종 · SK하이닉스', tag: '추세추종', ticker: '000660.KS', strategy: 'momentum', start: '2022-01-01', compareStart: '2019-01-01', breakout: 20, note: '명확한 규칙의 장점과 잦은 신호 손실 가능성을 확인합니다.' },
-    { id: 'spy-dca', title: '해외 ETF · S&P 500 적립식', tag: '분산', ticker: 'SPY', strategy: 'dca', start: '2020-01-01', compareStart: '2017-01-01', interval: 21, note: '지수 ETF에서도 환율·세금 전의 가격 기반 성과를 학습합니다.' },
+    { id: 'samsung-long', title: '처음 시작 · 삼성전자 장기보유', tag: '기준선', ticker: '005930.KS', strategy: 'buy_hold', start: '2021-01-01', compareStart: '2018-01-01', note: '가장 단순한 기준선과 최대 낙폭을 먼저 확인합니다.', focus: '복잡한 규칙을 쓰기 전에, 그냥 보유했을 때의 수익과 견딜 만한 최대 낙폭을 기준선으로 확인합니다.', method: '시작일에 한 번 매수한 뒤 종료일까지 보유합니다. 매수·매도 타이밍 규칙은 없습니다.', read: '전략 수익률보다 최대 낙폭과 시장 노출 일수를 먼저 보세요. 이후 다른 규칙이 이 기준선보다 나은지 비교합니다.', caution: '한 종목 결과에는 기업 고유 위험이 크게 섞입니다. 같은 규칙을 ETF·다른 기간에도 비교해야 합니다.' },
+    { id: 'kospi-trend', title: '추세 확인 · KOSPI 200 이동평균', tag: '위험관리', ticker: '069500.KS', strategy: 'ma_cross', start: '2021-01-01', compareStart: '2018-01-01', short: 20, long: 60, note: '상승장 참여와 하락 구간 회피의 교환관계를 살펴봅니다.', focus: '상승 추세에는 참여하고 하락 구간의 노출을 줄이려는 규칙이 실제로 낙폭을 줄였는지 확인합니다.', method: '20일 이동평균이 60일 이동평균 위면 보유하고, 아래로 내려가면 현금으로 전환하는 단순 규칙입니다.', read: '단순 보유 대비 최대 낙폭이 줄었는지와, 그 대가로 상승 초반 수익을 얼마나 놓쳤는지 함께 비교합니다.', caution: '이동평균은 뒤늦게 반응합니다. 횡보장에서는 잦은 진입·청산으로 비용 전에도 성과가 나빠질 수 있습니다.' },
+    { id: 'hyundai-dca', title: '나눠 사기 · 현대차 정액매수', tag: '적립식', ticker: '005380.KS', strategy: 'dca', start: '2022-01-01', compareStart: '2019-01-01', interval: 21, note: '매수 시점을 나누었을 때 낙폭과 수익률이 어떻게 달라지는지 비교합니다.', focus: '한 번에 사는 대신 정해진 주기로 나누어 샀을 때 매수 시점 위험이 어떻게 달라지는지 살펴봅니다.', method: '21거래일마다 같은 금액을 매수합니다. 가격이 낮을 때는 더 많은 수량, 높을 때는 더 적은 수량을 사게 됩니다.', read: '최종 수익률뿐 아니라 투자금이 시장에 들어간 시점과 최대 낙폭을 장기보유 예시와 비교해 보세요.', caution: '분할매수는 손실을 없애지 않습니다. 하락하는 자산을 계속 사는 결과가 될 수 있고, 현금 보유 기간도 성과에 영향을 줍니다.' },
+    { id: 'sk-momentum', title: '돌파 추종 · SK하이닉스', tag: '추세추종', ticker: '000660.KS', strategy: 'momentum', start: '2022-01-01', compareStart: '2019-01-01', breakout: 20, note: '명확한 규칙의 장점과 잦은 신호 손실 가능성을 확인합니다.', focus: '최근 가격 범위를 돌파할 때만 참여하는 규칙이 강한 추세를 잡는 대신 어떤 비용을 치르는지 확인합니다.', method: '최근 20거래일 최고가를 넘으면 매수하고, 최저가를 밑돌면 청산합니다.', read: '규칙 변경 횟수와 최대 낙폭을 같이 보세요. 거래가 잦아도 수수료·슬리피지 뒤에 남는 성과인지가 핵심입니다.', caution: '돌파 뒤 바로 되돌리는 가짜 신호가 반복될 수 있습니다. 한 종목·한 기간의 좋은 결과만 보고 기준일을 고정하면 과적합 위험이 큽니다.' },
+    { id: 'spy-dca', title: '해외 ETF · S&P 500 적립식', tag: '분산', ticker: 'SPY', strategy: 'dca', start: '2020-01-01', compareStart: '2017-01-01', interval: 21, note: '지수 ETF에서도 환율·세금 전의 가격 기반 성과를 학습합니다.', focus: '개별 기업 대신 넓은 미국 주식시장 ETF를 정액으로 샀을 때 가격 흐름과 분산의 의미를 확인합니다.', method: 'SPY를 21거래일마다 같은 금액으로 매수하는 가격 데이터 기반의 가상 적립식 계산입니다.', read: '개별 종목 예시보다 낙폭이 줄었는지, 그리고 장기 기간·다른 시작일에도 결과가 유지되는지 확인해 보세요.', caution: '이 화면은 달러 가격만 사용합니다. 원화 투자자는 환율, 환전 비용, 세금과 실제 ETF 비용을 별도로 반영해야 합니다.' },
   ];
 
   function renderBacktestWorkflow() {
     const today = new Date().toISOString().slice(0, 10);
     const strategyOptions = BACKTEST_STRATEGIES.map(s => `<option value="${s.value}">${escHtml(s.label)}</option>`).join('');
-    const examples = BACKTEST_EXAMPLES.map(e => `<button class="backtest-example" data-example="${e.id}" type="button"><span>${escHtml(e.tag)}</span><strong>${escHtml(e.title)}</strong><small>${escHtml(e.note)}</small></button>`).join('');
-    $messages.innerHTML = `<article class="content-page backtest-page"><header class="backtest-page-head"><div class="content-kicker">QUANTCONNECT LEAN · YFINANCE WORKFLOW</div><h1>LEAN <mark>투자 판단 실습</mark></h1><p class="content-lead">쉬운 예시를 골라 성과뿐 아니라 위험·추세·검증 항목까지 함께 확인합니다.</p></header><section class="backtest-examples" aria-label="바로 실행할 수 있는 백테스트 예시"><div><span>QUICK START</span><h2>어떤 상황을 확인하고 싶나요?</h2></div><div class="backtest-example-grid">${examples}</div></section><section class="backtest-canvas" aria-label="백테스트 워크플로우"><div class="workflow-node input"><span>01 · 전략</span><select id="btStrategy" aria-label="예시 전략 선택">${strategyOptions}</select><small id="btStrategyHint">${escHtml(BACKTEST_STRATEGIES[0].hint)}</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>02 · 종목 / ETF</span><input id="btTicker" value="005930.KS" maxlength="12" aria-label="종목 티커" /><small>한국: 005930.KS · 미국 ETF: SPY</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>03 · 백테스트 기간</span><div><input id="btStart" type="date" value="2023-01-01" /><input id="btEnd" type="date" value="${today}" /></div><small>전략 성과를 계산할 기간</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>04 · 비교 기간</span><div><input id="btCompareStart" type="date" value="2022-01-01" /><input id="btCompareEnd" type="date" value="${today}" /></div><small>이전 시장 국면과 비교</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node engine"><span>05 · 실행 엔진</span><strong><i class="fa-brands fa-docker"></i> LEAN</strong><small>가격 데이터 → 원격 Docker</small></div></section><section class="backtest-parameters" aria-label="전략 세부 조건"><label>단기 이동평균 <input id="btShortWindow" type="number" min="2" max="120" value="20" /></label><label>장기 이동평균 <input id="btLongWindow" type="number" min="5" max="300" value="60" /></label><label>적립 간격(거래일) <input id="btDcaInterval" type="number" min="1" max="120" value="21" /></label><label>돌파 기준(거래일) <input id="btBreakoutWindow" type="number" min="5" max="120" value="20" /></label><small>선택한 전략에 해당하는 값만 계산에 반영됩니다.</small></section><div class="backtest-actions"><button class="content-cta" id="runBacktest"><i class="fa-solid fa-play"></i> 백테스트 실행</button><span>교육용 과거 검증이며 투자 권유가 아닙니다.</span></div><section class="backtest-result" id="backtestResult"><div class="backtest-empty"><i class="fa-solid fa-diagram-project"></i><p>예시를 고르거나 입력값을 설정한 뒤 실행하세요.</p></div></section></article>`;
+    const examples = BACKTEST_EXAMPLES.map((e, index) => `<button class="backtest-example ${index === 0 ? 'selected' : ''}" data-example="${e.id}" type="button"><span>${escHtml(e.tag)}</span><strong>${escHtml(e.title)}</strong><small>${escHtml(e.note)}</small><i class="fa-solid fa-arrow-right"></i></button>`).join('');
+    $messages.innerHTML = `<article class="content-page backtest-page"><header class="backtest-page-head"><div class="content-kicker">QUANTCONNECT LEAN · YFINANCE WORKFLOW</div><h1>LEAN <mark>투자 판단 실습</mark></h1><p class="content-lead">테스트 하나를 고르고, 무엇을 검증하는지부터 결과 해석까지 순서대로 확인합니다.</p></header><div class="backtest-workspace"><aside class="backtest-examples" aria-label="바로 실행할 수 있는 백테스트 예시"><div><span>TEST LIBRARY</span><h2>확인할 상황 선택</h2><p>선택하면 오른쪽에 테스트의 질문과 해석 기준이 표시됩니다.</p></div><div class="backtest-example-grid">${examples}</div></aside><main class="backtest-main"><section class="backtest-test-detail" id="backtestTestDetail" aria-live="polite"></section><section class="backtest-canvas" aria-label="백테스트 설정"><div class="workflow-node input"><span>01 · 전략</span><select id="btStrategy" aria-label="예시 전략 선택">${strategyOptions}</select><small id="btStrategyHint">${escHtml(BACKTEST_STRATEGIES[0].hint)}</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>02 · 종목 / ETF</span><input id="btTicker" value="005930.KS" maxlength="12" aria-label="종목 티커" /><small>한국: 005930.KS · 미국 ETF: SPY</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>03 · 검증 기간</span><div><input id="btStart" type="date" value="2023-01-01" /><input id="btEnd" type="date" value="${today}" /></div><small>전략 성과를 계산할 기간</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>04 · 비교 기간</span><div><input id="btCompareStart" type="date" value="2022-01-01" /><input id="btCompareEnd" type="date" value="${today}" /></div><small>다른 시장 국면에서도 확인</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node engine"><span>05 · 실행 엔진</span><strong><i class="fa-brands fa-docker"></i> LEAN</strong><small>가격 데이터 → 원격 Docker</small></div></section><section class="backtest-parameters" aria-label="전략 세부 조건"><label>단기 이동평균 <input id="btShortWindow" type="number" min="2" max="120" value="20" /></label><label>장기 이동평균 <input id="btLongWindow" type="number" min="5" max="300" value="60" /></label><label>적립 간격(거래일) <input id="btDcaInterval" type="number" min="1" max="120" value="21" /></label><label>돌파 기준(거래일) <input id="btBreakoutWindow" type="number" min="5" max="120" value="20" /></label><small>선택한 전략에 해당하는 값만 계산에 반영됩니다.</small></section><div class="backtest-actions"><button class="content-cta" id="runBacktest"><i class="fa-solid fa-play"></i> 이 조건으로 검증하기</button><span>교육용 과거 검증이며 투자 권유가 아닙니다.</span></div></main></div><section class="backtest-result" id="backtestResult"><div class="backtest-empty"><i class="fa-solid fa-diagram-project"></i><p>왼쪽 테스트를 고른 뒤 조건을 확인하고 실행하세요.</p></div></section></article>`;
     document.getElementById('runBacktest').addEventListener('click', runBacktest);
     document.getElementById('btStrategy').addEventListener('change', (event) => {
       const chosen = BACKTEST_STRATEGIES.find(s => s.value === event.target.value);
       document.getElementById('btStrategyHint').textContent = chosen ? chosen.hint : '';
     });
     document.querySelectorAll('[data-example]').forEach(button => button.addEventListener('click', () => applyBacktestExample(button.dataset.example)));
+    applyBacktestExample(BACKTEST_EXAMPLES[0].id);
   }
 
   function applyBacktestExample(id) {
@@ -1305,6 +1211,13 @@ KOSDAQ|웹젠|게임`,
     const chosen = BACKTEST_STRATEGIES.find(item => item.value === example.strategy);
     document.getElementById('btStrategyHint').textContent = chosen ? chosen.hint : '';
     document.querySelectorAll('[data-example]').forEach(button => button.classList.toggle('selected', button.dataset.example === id));
+    renderBacktestExampleDetail(example);
+  }
+
+  function renderBacktestExampleDetail(example) {
+    const detail = document.getElementById('backtestTestDetail');
+    if (!detail || !example) return;
+    detail.innerHTML = `<header><span>${escHtml(example.tag)} TEST</span><h2>${escHtml(example.title)}</h2><p>${escHtml(example.note)}</p></header><div class="backtest-detail-grid"><article><i class="fa-solid fa-bullseye"></i><b>이 테스트의 질문</b><p>${escHtml(example.focus)}</p></article><article><i class="fa-solid fa-gears"></i><b>어떻게 계산하나요?</b><p>${escHtml(example.method)}</p></article><article><i class="fa-solid fa-chart-line"></i><b>결과 읽는 법</b><p>${escHtml(example.read)}</p></article><article class="caution"><i class="fa-solid fa-triangle-exclamation"></i><b>놓치기 쉬운 점</b><p>${escHtml(example.caution)}</p></article></div>`;
   }
 
   async function runBacktest() {
@@ -1420,23 +1333,25 @@ KOSDAQ|웹젠|게임`,
           </div>
           <p class="content-lead">주요 경제지표 발표, 기업 실적 발표, 선물·옵션 만기일을 한눈에 확인하세요. 일정 이름을 누르면 상세 설명이 열립니다.</p>
         </header>
-        <section class="calendar-board" aria-label="월간 증시 일정 캘린더">
-          <div class="calendar-toolbar">
-            <div class="calendar-toolbar-nav">
-              <button type="button" class="calendar-nav-btn" data-calendar-nav="-1" aria-label="이전 달"><i class="fa-solid fa-chevron-left"></i></button>
-              <strong>${year}년 ${month + 1}월</strong>
-              <button type="button" class="calendar-nav-btn" data-calendar-nav="1" aria-label="다음 달"><i class="fa-solid fa-chevron-right"></i></button>
-              <button type="button" class="calendar-today-btn" data-calendar-today>오늘</button>
+        <div class="calendar-split">
+          <section class="calendar-board" aria-label="월간 증시 일정 캘린더">
+            <div class="calendar-toolbar">
+              <div class="calendar-toolbar-nav">
+                <button type="button" class="calendar-nav-btn" data-calendar-nav="-1" aria-label="이전 달"><i class="fa-solid fa-chevron-left"></i></button>
+                <strong>${year}년 ${month + 1}월</strong>
+                <button type="button" class="calendar-nav-btn" data-calendar-nav="1" aria-label="다음 달"><i class="fa-solid fa-chevron-right"></i></button>
+                <button type="button" class="calendar-today-btn" data-calendar-today>오늘</button>
+              </div>
+              <div class="calendar-legend"><span class="cal-cat-macro">경제지표</span><span class="cal-cat-earnings">실적발표</span><span class="cal-cat-expiry">선물·옵션 만기</span></div>
             </div>
-            <div class="calendar-legend"><span class="cal-cat-macro">경제지표</span><span class="cal-cat-earnings">실적발표</span><span class="cal-cat-expiry">선물·옵션 만기</span></div>
-          </div>
-          <div class="calendar-weekdays"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
-          <div class="calendar-grid">${cellsHtml}</div>
-        </section>
-        <section class="content-section calendar-agenda-section">
-          <div class="section-heading"><span>UPCOMING</span><h2>다가오는 일정</h2></div>
-          <ul class="calendar-agenda-list">${upcomingHtml || '<li class="calendar-agenda-empty">이번 달 이후 표시할 예정 일정이 없습니다.</li>'}</ul>
-        </section>
+            <div class="calendar-weekdays"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+            <div class="calendar-grid">${cellsHtml}</div>
+          </section>
+          <section class="content-section calendar-agenda-section">
+            <div class="section-heading"><span>UPCOMING</span><h2>주요 일정</h2></div>
+            <ul class="calendar-agenda-list">${upcomingHtml || '<li class="calendar-agenda-empty">이번 달 이후 표시할 예정 일정이 없습니다.</li>'}</ul>
+          </section>
+        </div>
         <p class="content-disclaimer">학습용 예시 일정입니다. 실제 발표 일정·시간은 변경될 수 있으니 거래소·기관의 공식 캘린더에서 다시 확인하세요. 특정 상품의 매수·매도를 권유하지 않습니다.</p>
       </article>`;
     bindCalendarInteractions();
@@ -1546,8 +1461,8 @@ KOSDAQ|웹젠|게임`,
     const selectedDay = Number(day);
     $messages.innerHTML = `<article class="content-page stocks-page">
       <header class="stocks-page-head">
-        <div><span>LISTED COMPANY ATLAS</span><h1>사업과 변수로 읽는<br><mark>국내 상장사</mark></h1></div>
-        <p>5일 학습에서 다룬 국내 상장사 200개를 일차별 40개씩 살펴봅니다. 종목명보다 사업 구조, 다음 실적을 바꾸는 변수와 핵심 위험을 함께 확인하세요.</p>
+        <div><span>LISTED COMPANY ATLAS</span><h1>사업과 변수로 읽는 <mark>국내 상장사</mark></h1></div>
+        <p>국내 상장사의 사업 구조와 실적 변수, 핵심 위험을 함께 확인하세요.</p>
       </header>
       <nav class="atlas-day-tabs" aria-label="일차별 종목 아틀라스">${THEORY_DAYS.map(item => `<button class="${item.day === selectedDay ? 'active' : ''}" data-atlas-day="${item.day}" aria-label="${item.day}일차 종목 보기">${item.day}</button>`).join('')}</nav>
       <p class="stocks-page-note"><i class="fa-solid fa-circle-info"></i> 종목 카드를 누르면 사업·관찰 변수·위험, 지연 시세와 관련 링크를 볼 수 있습니다.</p>
@@ -1873,7 +1788,7 @@ effective_date: [기준일]
     const companies = COMPANY_ATLAS[day] || [];
     const counts = companies.reduce((acc, [market]) => ({ ...acc, [market]: (acc[market] || 0) + 1 }), {});
     return `<section class="company-atlas" aria-label="${day}일차 국내 상장사 40개 아틀라스">
-      <header class="atlas-header"><div><span>KOREAN LISTED COMPANY ATLAS · ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를<br>사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>일차<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
+      <header class="atlas-header"><div><span>KOREAN LISTED COMPANY ATLAS · ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를 사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>일차<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
       <div class="atlas-toolbar"><div class="atlas-count"><span><b>${companies.length}</b> COMPANIES</span><i></i><span>KOSPI <b>${counts.KOSPI || 0}</b></span><i></i><span>KOSDAQ <b>${counts.KOSDAQ || 0}</b></span></div><div class="atlas-filters" role="group" aria-label="시장별 기업 필터"><button class="active" data-atlas-filter="all">전체 ${companies.length}</button><button data-atlas-filter="KOSPI">KOSPI ${counts.KOSPI || 0}</button><button data-atlas-filter="KOSDAQ">KOSDAQ ${counts.KOSDAQ || 0}</button></div></div>
       <div class="atlas-arrow-line"><span>시장</span><i></i><span>산업</span><i></i><span>핵심 변수</span><i></i><span>위험</span></div>
       <div class="atlas-grid">${companies.map(([market, name, sector], index) => {
@@ -2164,9 +2079,12 @@ effective_date: [기준일]
 
     $messages.innerHTML = `
       <div class="welcome-msg">
-        <div class="welcome-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-        <h2>금융·투자 RAG 질문</h2>
+        <div class="welcome-heading">
+          <span class="welcome-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+          <h2>금융·투자 RAG 질문</h2>
+        </div>
         <p>4일 이론에서 읽은 내용을 바탕으로 궁금한 점을 자유롭게 질문하세요. 답변에 사용한 참고 문서도 함께 확인할 수 있습니다.</p>
+        <section class="rag-source-guide" aria-label="AI Hub 데이터로 RAG 시작하기"><span>AI HUB · RAG 시작하기</span><p>금융·법률 데이터셋은 이용 조건·출처 표기·버전·개인정보 조건을 확인한 뒤, 허용된 원문만 등록합니다. 금융 FAQ는 질문·답변·기준일 단위로, 법률 자료는 법령명·조문·항·호·시행일이 이어지도록 정리하고 <code>source</code>·<code>dataset</code>·<code>version</code>·<code>license</code>·<code>topic</code>·<code>effective_date</code>를 남기세요. 답변에는 출처와 기준일을 표시하고, 개정될 수 있는 금융법률은 최신 공식 원문으로 다시 확인합니다.</p></section>
 
         <section class="rag-flow" aria-label="RAG 답변 과정"><div><i class="fa-solid fa-keyboard"></i><b>질문</b><span>궁금한 점을 입력</span></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-file-lines"></i><b>문서 탐색</b><span>등록 자료에서 근거 찾기</span></div><i class="fa-solid fa-arrow-right"></i><div><i class="fa-solid fa-lightbulb"></i><b>답변</b><span>핵심 내용과 참고 문서</span></div></section>
 
