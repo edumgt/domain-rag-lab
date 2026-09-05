@@ -7,12 +7,12 @@
       name="description"
       content="금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다."
     />
-    <title>03일차 | 4일 금융 이론 — 채권</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260905-modal-fit" />
-    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-glossary-drawer" />
+    <title>03일차 | 4일 금융 이론 — 채권 · 코인</title>
+    <link rel="stylesheet" href="assets/site.css?v=20260905-breaktime-modal-unified" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-offcanvas-nav-fix" />
     <style>
       /* 옵션 학습 단원은 01일차로 이동했습니다. */
-      body[data-day="3"] .lesson-list > .lesson:nth-child(n + 13) { display: none; }
+      body[data-day="3"] .lesson-list > .lesson:nth-child(n + 14) { display: none; }
       .bond-market-size-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
       .bond-market-size-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14px; line-height: 1.7; }
       .bond-market-size-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
@@ -69,13 +69,10 @@
       <div class="day-header-actions"></div>
     </header>
     <div class="day-backdrop" id="dayBackdrop"></div>
-    <aside class="day-offcanvas" id="dayOffcanvas" aria-label="4일 학습 목차">
-      <h2>4일 이론 학습</h2>
-      <p>일차를 선택해 정적 학습 페이지로 이동합니다.</p>
-      <a href="01.html">01 · 선물과 옵션</a
-      ><a href="02.html">02 · 펀드 · ETF</a
-      ><a class="active" href="03.html">03 · 채권</a
-      ><a href="04.html">04 · 퀀트 정보</a>
+    <aside class="day-offcanvas" id="dayOffcanvas" aria-label="학습 메뉴">
+      <header class="day-offcanvas-header"><div class="day-offcanvas-title-row"><h2 class="day-offcanvas-title"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h2><button class="day-offcanvas-close" type="button" id="dayMenuClose" aria-label="학습 메뉴 닫기"><i class="fa-solid fa-xmark"></i></button></div><p class="day-offcanvas-subtitle">금융상품 · 실물자산 · 생활거래 이해 · 실습</p></header>
+      <nav class="day-offcanvas-nav" aria-label="4일 이론 학습"><p class="day-offcanvas-nav-label">4일 이론 학습</p><a class="day-offcanvas-link" href="01.html"><span class="day-offcanvas-day">1일차</span> 선물과 옵션</a><a class="day-offcanvas-link" href="02.html"><span class="day-offcanvas-day">2일차</span> 펀드 · ETF</a><a class="day-offcanvas-link active" href="03.html"><span class="day-offcanvas-day">3일차</span> 채권 · 코인</a><a class="day-offcanvas-link" href="04.html"><span class="day-offcanvas-day">4일차</span> 퀀트 정보</a></nav>
+      <footer class="day-offcanvas-footer"><a href="/docs" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book-open"></i> API 문서 (Swagger)</a><a href="/health" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-heart-pulse"></i> 상태 확인</a></footer>
     </aside>
     <nav aria-label="4일 학습 목차">
       <a class="brand" href="index.html">4일 금융 이론</a>
@@ -85,7 +82,7 @@
         ><a class="" href="02.html"
           ><b>02</b><span>펀드 · ETF</span></a
         ><a class="active" href="03.html"
-          ><b>03</b><span>채권</span></a
+          ><b>03</b><span>채권 · 코인</span></a
         ><a class="" href="04.html"
           ><b>04</b><span>퀀트 정보</span></a
         >
@@ -95,7 +92,7 @@
       <article>
         <header class="lesson-head">
           <div class="lesson-head-line">
-            <h1>채권</h1>
+            <h1>채권 · 코인</h1>
             <p>금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다.</p>
           </div>
         </header>
@@ -223,7 +220,7 @@
                     <i class="fa-solid fa-scale-balanced"></i> 금리·듀레이션 시뮬레이터
                   </button>
                   <small>금리 변화와 듀레이션에 따라 예상 가격 변화가 어떻게 달라지는지 확인하세요.</small>
-                  <button type="button" class="lesson-video-link" id="breakTimeTrigger">
+                  <button type="button" class="breaktime-trigger" id="breakTimeTrigger">
                     <i class="fa-solid fa-mug-hot"></i> BreakTime
                   </button>
                   <small>잠시 쉬면서 다음 실습 과제를 확인해 보세요.</small>
@@ -885,6 +882,35 @@
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="변동성 매매 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
+            <span>13</span>
+            <div class="lesson-content">
+              <h2>코인 거래와 블록체인, 거래소의 역할</h2>
+              <div class="lesson-body">
+                <p>코인 거래는 거래소에서 원화·달러 등 법정화폐나 다른 코인으로 가상자산을 사고파는 일입니다. 거래소는 주문을 모아 매수자와 매도자를 연결하고, 계정 인증·입출금·보관 서비스를 제공합니다. 다만 거래소 계정의 잔고와 개인 지갑의 온체인 자산은 구분해야 하며, 출금 주소를 잘못 입력하거나 계정·지갑의 비밀키를 잃으면 되돌리기 어렵습니다.</p>
+                <p>블록체인은 거래 기록을 여러 참여자가 함께 검증하고 이어 붙여 관리하는 분산원장 기술입니다. 메인넷은 특정 코인이 실제로 발행·전송되고 거래가 기록되는 독립적인 블록체인 네트워크를 말합니다. 다른 네트워크에서 만들어진 토큰과 달리, 메인넷의 네이티브 코인은 그 네트워크의 수수료를 내거나 운영에 참여하는 데 쓰일 수 있습니다.</p>
+                <h3>채굴은 해시값을 먼저 찾는 경쟁입니다</h3>
+                <p>채굴은 작업증명(PoW) 방식의 네트워크에서 컴퓨팅 자원으로 거래 묶음을 검증하고 새 블록을 만드는 과정입니다. 채굴기는 블록 후보 데이터에 숫자값(논스) 등을 바꾸어 넣고 해시 함수로 계산한 결과가 네트워크 난이도 조건을 만족할 때까지 매우 많은 계산을 반복합니다. 이때의 결과값은 보통 <b>해시값</b> 또는 <b>해시</b>라고 부릅니다. ‘해시코드’라는 말도 일상적으로 쓰이지만, 채굴 성능과 방식을 설명할 때는 초당 해시 계산 횟수인 <b>해시레이트(hash rate)</b>라는 표현이 더 정확합니다.</p>
+                <p>조건을 먼저 만족한 채굴자는 새 블록을 네트워크에 전파하고, 다른 참여자가 거래와 블록 규칙을 검증합니다. 유효한 블록으로 받아들여지면 블록 보상과 해당 블록의 거래 수수료를 받을 수 있습니다. 다만 보상 규모, 난이도, 코인 가격, 네트워크 참여자 수가 계속 바뀌므로 해시레이트가 높다고 수익이 보장되지는 않습니다.</p>
+                <h3>직접 채굴: 장비와 전력, 운영을 직접 관리하는 방식</h3>
+                <p>직접 채굴은 채굴자가 장비를 구매하거나 조립하고, 채굴 프로그램·지갑 주소·채굴 풀 연결을 직접 설정해 해시 계산을 수행하는 방식입니다. 비트코인처럼 특정 알고리즘에 특화된 장비가 경쟁력을 갖는 네트워크에서는 주로 ASIC(주문형 반도체) 채굴기를 사용합니다. 일부 GPU 친화적인 알고리즘에서는 그래픽카드 여러 장을 장착한 리그를 쓸 수 있지만, 네트워크마다 허용 알고리즘과 효율이 달라 장비를 먼저 사기보다 해당 메인넷의 기술 문서를 확인해야 합니다.</p>
+                <p>직접 채굴의 비용은 장비 가격만이 아닙니다. 전기요금, 냉각·환기, 소음, 인터넷 연결, 고장 대응, 공간 임차료와 세금까지 합쳐 봐야 합니다. 전력 사용량은 보통 와트(W), 효율은 해시레이트를 전력으로 나눈 J/TH 또는 MH/W 같은 지표로 비교합니다. 같은 해시레이트라면 더 적은 전력을 쓰는 장비가 유리할 수 있지만, 장비 가격·수명·중고 가치와 전기 단가를 함께 계산해야 합니다.</p>
+                <h3>간접 채굴: 채굴 풀과 해시파워 임대</h3>
+                <p>개인이 혼자 블록을 찾을 확률은 매우 낮을 수 있어, 많은 채굴자는 <b>채굴 풀</b>에 자신의 해시레이트를 연결합니다. 풀은 참여자들의 계산 작업을 모아 블록을 찾고, 각자가 제공한 작업량(share)에 따라 보상을 나누는 방식입니다. 이는 장비를 직접 운용하되 보상을 더 자주, 작은 단위로 나눠 받는 공동 채굴이며 풀 수수료·보상 산정 방식·최소 출금액을 확인해야 합니다.</p>
+                <p>장비를 직접 두지 않고 사업자에게 해시파워를 빌리는 <b>클라우드 마이닝</b> 또는 <b>해시파워 임대</b>도 간접 채굴로 부를 수 있습니다. 계약 기간과 해시레이트를 구매하면 사업자가 운영하는 장비의 계산 능력 일부에 대한 보상을 배분받는 구조입니다. 그러나 실제 장비와 전력 시설, 수수료·난이도 조정 조건, 출금 가능 여부를 이용자가 직접 통제하기 어렵고 과장 광고·폰지형 사기의 위험도 있습니다. ‘고정 수익’이나 ‘원금 보장’을 내세우는 계약은 특히 경계해야 하며, 사업자 정보와 계약서, 지갑 출금 기록을 독립적으로 확인할 수 없다면 참여하지 않는 편이 안전합니다.</p>
+                <h3>GPU 성능은 숫자 하나로 비교할 수 없습니다</h3>
+                <p>GPU 채굴 성능은 그래픽카드 이름이나 게임용 성능만으로 판단할 수 없습니다. 코어 수·메모리 대역폭·알고리즘 최적화에 따라 해시레이트가 달라지고, 같은 GPU도 오버클럭·언더볼팅·드라이버·냉각 상태에 따라 전력 사용량과 안정성이 달라집니다. 따라서 장비 비교에서는 해당 알고리즘에서의 해시레이트, 실제 소비 전력, 전력 효율, 온도와 팬 소음, 장비 가격과 보증 조건을 함께 살펴야 합니다.</p>
+                <ul>
+                  <li><b>해시레이트:</b> 초당 계산 횟수입니다. kH/s, MH/s, GH/s, TH/s처럼 단위를 확인합니다.</li>
+                  <li><b>전력 효율:</b> 같은 계산량을 얼마나 적은 전력으로 내는지 보여 줍니다. 전기 단가가 높으면 특히 중요합니다.</li>
+                  <li><b>메모리·발열:</b> 일부 알고리즘은 메모리 성능 비중이 크며, 높은 온도는 성능 저하·부품 수명 단축으로 이어질 수 있습니다.</li>
+                  <li><b>난이도와 전환 비용:</b> 다른 코인으로 채굴 대상을 바꾸더라도 알고리즘·소프트웨어·출금 네트워크·거래소 지원 여부가 모두 맞아야 합니다.</li>
+                </ul>
+                <p>모든 코인이 채굴되는 것은 아닙니다. 지분증명(PoS) 네트워크에서는 코인을 예치한 검증자가 블록 검증에 참여하며, 이는 장비 채굴과 다른 구조·위험을 가집니다. 코인은 24시간 거래되고 가격 변동, 해킹·사기, 거래소·지갑 운영 위험이 클 수 있으므로 참여 전에는 발행 구조·네트워크·수수료·보관 방식과 전력·장비 비용을 먼저 확인해야 합니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="코인 거래와 블록체인, 거래소의 역할 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
             <span>11</span>
             <div class="lesson-content">
               <h2>옵션은 미래 거래를 선택할 수 있는 권리</h2>
@@ -1522,13 +1548,12 @@
         </p>
       </section>
     </div>
-    <div class="glossary-modal" id="breakTimeModal" hidden>
+    <div class="glossary-modal breaktime-modal" id="breakTimeModal" hidden>
       <div class="glossary-modal__backdrop" data-break-time-close></div>
-      <section class="glossary-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="breakTimeTitle">
+      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="breakTimeTitle">
         <button class="glossary-modal__close" type="button" aria-label="닫기" data-break-time-close>×</button>
-        <p class="glossary-modal__label">BREAK TIME · 실습 과제</p>
-        <h2 id="breakTimeTitle">잠시 쉬고, 다음 작업을 준비해 보세요</h2>
-        <div class="glossary-modal__detail">
+        <h2 id="breakTimeTitle">BreakTime</h2>
+        <div class="breaktime-message">
           <p><b>investment-analysis</b>의 Markdown 형식 데이터와 <b>domain-rag-lab/frontend/days</b>의 문서 파일을 청킹 작업으로 JSONL로 만들어 보세요.</p>
         </div>
       </section>

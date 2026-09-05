@@ -26,6 +26,18 @@
     lastFetchedAt: null,
   };
 
+  const HOME_DASHBOARD_ASSETS = [
+    { ticker: '005930', market: 'KOSPI', name: '삼성전자', note: '1일차 · 4일차 예시 종목' },
+    { ticker: '000660', market: 'KOSPI', name: 'SK하이닉스', note: '반도체 대표주' },
+    { ticker: '005380', market: 'KOSPI', name: '현대차', note: 'LEAN 백테스트 예시 종목' },
+    { ticker: '373220', market: 'KOSPI', name: 'LG에너지솔루션', note: '2차전지 대표주' },
+    { ticker: '069500', market: 'KOSPI', name: 'KODEX 200', note: 'KOSPI 200 추종 ETF · 백테스트 예시' },
+    { ticker: '122630', market: 'KOSPI', name: 'KODEX 레버리지', note: '2일차 레버리지 ETF 거래대금 사례' },
+    { ticker: '252670', market: 'KOSPI', name: 'KODEX 200선물인버스2X', note: '2일차 레버리지 ETF 거래대금 사례' },
+  ];
+
+  const dashboardState = { items: {}, timer: null };
+
   const FALLBACK_THEORY_DAYS = [
     {
       day: 1,
@@ -666,6 +678,7 @@ KOSDAQ|웹젠|게임`,
 
   function setView(view) {
     stopTickDashboard();
+    stopDashboardAssets();
     state.activeView = view;
     $viewButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
     $chatInputArea.classList.toggle('hidden', view !== 'learn');
@@ -1060,6 +1073,91 @@ KOSDAQ|웹젠|게임`,
     tickState.timer = setInterval(fetchIntraday, 20000);
   }
 
+  function renderDashboardAssetSection() {
+    const cards = HOME_DASHBOARD_ASSETS.map(asset => `
+      <button type="button" class="dashboard-asset-card" data-dashboard-ticker="${asset.ticker}" data-dashboard-market="${asset.market}" data-dashboard-name="${escHtml(asset.name)}">
+        <div class="dashboard-asset-head"><strong>${escHtml(asset.name)}</strong><small>${asset.ticker} · ${asset.market}</small></div>
+        <div class="dashboard-asset-price" data-dashboard-price>-</div>
+        <div class="dashboard-asset-change flat" data-dashboard-change>불러오는 중…</div>
+        <p class="dashboard-asset-note">${escHtml(asset.note)}</p>
+      </button>
+    `).join('');
+    return `
+      <section class="content-section dashboard-asset-grid-section" aria-label="학습에 등장하는 자산 시세">
+        <div class="section-heading"><span>LIVE</span><h2>이 학습에 등장하는 자산 시세</h2></div>
+        <p class="section-intro">4일 과정에서 실제로 다룬 종목·ETF의 지연 시세입니다. 카드를 누르면 아래 실시간 분봉 차트에서 바로 확인할 수 있습니다. 30초마다 자동으로 갱신됩니다.</p>
+        <div class="dashboard-asset-grid">${cards}</div>
+        <p class="tick-disclaimer" id="dashboardAssetUpdatedAt"><i class="fa-solid fa-circle-info"></i> Yahoo Finance 공개 API 기준 지연 시세이며 실제 매매 판단에 사용하지 마세요.</p>
+      </section>`;
+  }
+
+  function renderDashboardAssetCard(asset) {
+    const card = document.querySelector(`[data-dashboard-ticker="${asset.ticker}"][data-dashboard-market="${asset.market}"]`);
+    if (!card) return;
+    const priceEl = card.querySelector('[data-dashboard-price]');
+    const changeEl = card.querySelector('[data-dashboard-change]');
+    const item = dashboardState.items[asset.ticker];
+    if (!item || item.loading) {
+      if (!item?.quote) { if (priceEl) priceEl.textContent = '-'; if (changeEl) { changeEl.className = 'dashboard-asset-change flat'; changeEl.textContent = '불러오는 중…'; } }
+      return;
+    }
+    if (item.error || !item.quote) {
+      if (priceEl) priceEl.textContent = '-';
+      if (changeEl) { changeEl.className = 'dashboard-asset-change flat'; changeEl.textContent = '시세 없음'; }
+      return;
+    }
+    const { price, previous_close: prev, currency } = item.quote;
+    const change = price != null && prev != null ? price - prev : null;
+    const pct = change != null && prev ? (change / prev) * 100 : null;
+    if (priceEl) priceEl.textContent = price != null ? `${Math.round(price).toLocaleString('ko-KR')}${currency === 'USD' ? '' : '원'}` : '-';
+    if (changeEl) {
+      if (change == null) { changeEl.className = 'dashboard-asset-change flat'; changeEl.textContent = '-'; }
+      else {
+        changeEl.className = `dashboard-asset-change ${change > 0 ? 'up' : change < 0 ? 'down' : 'flat'}`;
+        changeEl.textContent = `${change >= 0 ? '▲' : '▼'} ${Math.abs(Math.round(change)).toLocaleString('ko-KR')} (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)`;
+      }
+    }
+  }
+
+  async function fetchDashboardAsset(asset) {
+    dashboardState.items[asset.ticker] = { ...(dashboardState.items[asset.ticker] || {}), loading: true };
+    try {
+      const response = await fetch(`/market/company?ticker=${encodeURIComponent(asset.ticker)}&market=${encodeURIComponent(asset.market)}&name=${encodeURIComponent(asset.name)}`);
+      const payload = await response.json();
+      dashboardState.items[asset.ticker] = { quote: payload.quote, error: payload.quote ? null : '시세 없음', loading: false };
+    } catch (error) {
+      dashboardState.items[asset.ticker] = { quote: null, error: '시세를 불러오지 못했습니다.', loading: false };
+    }
+    renderDashboardAssetCard(asset);
+  }
+
+  async function fetchAllDashboardAssets() {
+    await Promise.all(HOME_DASHBOARD_ASSETS.map(fetchDashboardAsset));
+    const updatedEl = document.getElementById('dashboardAssetUpdatedAt');
+    if (updatedEl) updatedEl.innerHTML = `<i class="fa-solid fa-circle-info"></i> Yahoo Finance 공개 API 기준 지연 시세이며 실제 매매 판단에 사용하지 마세요. 마지막 갱신 ${fmtTime(new Date().toISOString())}`;
+  }
+
+  function bindDashboardAssetEvents() {
+    document.querySelectorAll('[data-dashboard-ticker]').forEach(card => {
+      card.addEventListener('click', () => {
+        const asset = { ticker: card.dataset.dashboardTicker, market: card.dataset.dashboardMarket, name: card.dataset.dashboardName };
+        switchTickSymbol(asset);
+        document.getElementById('tickChartWrap')?.closest('.tick-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
+  function stopDashboardAssets() {
+    if (dashboardState.timer) { clearInterval(dashboardState.timer); dashboardState.timer = null; }
+  }
+
+  function initDashboardAssets() {
+    bindDashboardAssetEvents();
+    stopDashboardAssets();
+    fetchAllDashboardAssets();
+    dashboardState.timer = setInterval(fetchAllDashboardAssets, 30000);
+  }
+
   function renderTickDashboardSection() {
     const buckets = [1, 5, 10, 20];
     const bucketButtons = buckets.map(n => `<button type="button" class="tick-bucket-btn ${n === tickState.bucket ? 'active' : ''}" data-tick-bucket="${n}">${n}분봉</button>`).join('');
@@ -1128,10 +1226,12 @@ KOSDAQ|웹젠|게임`,
   function renderHome() {
     $messages.innerHTML = `
       <article class="content-page home-page">
+        ${renderDashboardAssetSection()}
         ${renderTickDashboardSection()}
         <p class="content-disclaimer">학습용 서비스이며 특정 투자상품의 매수·매도를 권유하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
       </article>`;
     bindViewLinks();
+    initDashboardAssets();
     initTickDashboard();
   }
 

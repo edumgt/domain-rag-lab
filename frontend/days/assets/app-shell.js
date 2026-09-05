@@ -2,6 +2,7 @@
   const button = document.querySelector('#dayMenuButton');
   const panel = document.querySelector('#dayOffcanvas');
   const backdrop = document.querySelector('#dayBackdrop');
+  const closeButton = document.querySelector('#dayMenuClose');
   if (!button || !panel || !backdrop || button.dataset.menuBound === 'true') return;
   button.dataset.menuBound = 'true';
   const close = () => {
@@ -14,6 +15,7 @@
     backdrop.classList.toggle('is-open', open);
     button.setAttribute('aria-expanded', String(open));
   });
+  closeButton?.addEventListener('click', close);
   backdrop.addEventListener('click', close);
   panel.addEventListener('click', (event) => {
     if (event.target.closest('a')) close();

@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>01일차 | 4일 금융 이론 — 선물과 옵션</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260905-course-notice" />
-    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-glossary-drawer" />
+    <link rel="stylesheet" href="assets/site.css?v=20260905-breaktime-modal-unified" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-offcanvas-nav-fix" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -46,13 +46,10 @@
       <div class="day-header-actions"></div>
     </header>
     <div class="day-backdrop" id="dayBackdrop"></div>
-    <aside class="day-offcanvas" id="dayOffcanvas" aria-label="4일 학습 목차">
-      <h2>4일 이론 학습</h2>
-      <p>일차를 선택해 정적 학습 페이지로 이동합니다.</p>
-      <a class="active" href="01.html">01 · 선물과 옵션</a
-      ><a href="02.html">02 · 펀드 · ETF</a
-      ><a href="03.html">03 · 채권</a
-      ><a href="04.html">04 · 퀀트 정보</a>
+    <aside class="day-offcanvas" id="dayOffcanvas" aria-label="학습 메뉴">
+      <header class="day-offcanvas-header"><div class="day-offcanvas-title-row"><h2 class="day-offcanvas-title"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h2><button class="day-offcanvas-close" type="button" id="dayMenuClose" aria-label="학습 메뉴 닫기"><i class="fa-solid fa-xmark"></i></button></div><p class="day-offcanvas-subtitle">금융상품 · 실물자산 · 생활거래 이해 · 실습</p></header>
+      <nav class="day-offcanvas-nav" aria-label="4일 이론 학습"><p class="day-offcanvas-nav-label">4일 이론 학습</p><a class="day-offcanvas-link active" href="01.html"><span class="day-offcanvas-day">1일차</span> 선물과 옵션</a><a class="day-offcanvas-link" href="02.html"><span class="day-offcanvas-day">2일차</span> 펀드 · ETF</a><a class="day-offcanvas-link" href="03.html"><span class="day-offcanvas-day">3일차</span> 채권 · 코인</a><a class="day-offcanvas-link" href="04.html"><span class="day-offcanvas-day">4일차</span> 퀀트 정보</a></nav>
+      <footer class="day-offcanvas-footer"><a href="/docs" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book-open"></i> API 문서 (Swagger)</a><a href="/health" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-heart-pulse"></i> 상태 확인</a></footer>
     </aside>
     <nav aria-label="4일 학습 목차">
       <a class="brand" href="index.html">4일 금융 이론</a>
@@ -62,7 +59,7 @@
         ><a class="" href="02.html"
           ><b>02</b><span>펀드 · ETF</span></a
         ><a class="" href="03.html"
-          ><b>03</b><span>채권</span></a
+          ><b>03</b><span>채권 · 코인</span></a
         ><a class="" href="04.html"
           ><b>04</b><span>퀀트 정보</span></a
         >

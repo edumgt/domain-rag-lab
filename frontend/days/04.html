@@ -8,8 +8,8 @@
       content="한 종목의 성과보다 여러 자산을 함께 보고, 목표 비중을 정해 리밸런싱하는 법을 배웁니다."
     />
     <title>04일차 | 4일 금융 이론 — 퀀트 정보</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260905-modal-fit" />
-    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-glossary-drawer" />
+    <link rel="stylesheet" href="assets/site.css?v=20260905-breaktime-modal-unified" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-offcanvas-nav-fix" />
     <style>
       /* 분산투자·변동성 매매 단원은 03일차로 이동했습니다. */
       body[data-day="4"] .lesson-list > .lesson:nth-child(-n + 12) { display: none; }
@@ -53,13 +53,10 @@
       <div class="day-header-actions"></div>
     </header>
     <div class="day-backdrop" id="dayBackdrop"></div>
-    <aside class="day-offcanvas" id="dayOffcanvas" aria-label="4일 학습 목차">
-      <h2>4일 이론 학습</h2>
-      <p>일차를 선택해 정적 학습 페이지로 이동합니다.</p>
-      <a href="01.html">01 · 선물과 옵션</a
-      ><a href="02.html">02 · 펀드 · ETF</a
-      ><a href="03.html">03 · 채권</a
-      ><a class="active" href="04.html">04 · 퀀트 정보</a>
+    <aside class="day-offcanvas" id="dayOffcanvas" aria-label="학습 메뉴">
+      <header class="day-offcanvas-header"><div class="day-offcanvas-title-row"><h2 class="day-offcanvas-title"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h2><button class="day-offcanvas-close" type="button" id="dayMenuClose" aria-label="학습 메뉴 닫기"><i class="fa-solid fa-xmark"></i></button></div><p class="day-offcanvas-subtitle">금융상품 · 실물자산 · 생활거래 이해 · 실습</p></header>
+      <nav class="day-offcanvas-nav" aria-label="4일 이론 학습"><p class="day-offcanvas-nav-label">4일 이론 학습</p><a class="day-offcanvas-link" href="01.html"><span class="day-offcanvas-day">1일차</span> 선물과 옵션</a><a class="day-offcanvas-link" href="02.html"><span class="day-offcanvas-day">2일차</span> 펀드 · ETF</a><a class="day-offcanvas-link" href="03.html"><span class="day-offcanvas-day">3일차</span> 채권 · 코인</a><a class="day-offcanvas-link active" href="04.html"><span class="day-offcanvas-day">4일차</span> 퀀트 정보</a></nav>
+      <footer class="day-offcanvas-footer"><a href="/docs" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book-open"></i> API 문서 (Swagger)</a><a href="/health" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-heart-pulse"></i> 상태 확인</a></footer>
     </aside>
     <nav aria-label="4일 학습 목차">
       <a class="brand" href="index.html">4일 금융 이론</a>
@@ -69,7 +66,7 @@
         ><a class="" href="02.html"
           ><b>02</b><span>펀드 · ETF</span></a
         ><a class="" href="03.html"
-          ><b>03</b><span>채권</span></a
+          ><b>03</b><span>채권 · 코인</span></a
         ><a class="active" href="04.html"
           ><b>04</b><span>퀀트 정보</span></a
         >
@@ -1016,6 +1013,81 @@
               data-lesson-toggle
               aria-expanded="true"
               aria-label="히든 마코프 모델(HMM): 보이지 않는 시장 국면을 추정하는 방법 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section><section class="lesson"><span>33</span>
+            <div class="lesson-content">
+              <h2>더 알아보기: 퀀트 역사를 만든 인물·회사·매매기법</h2>
+              <div class="lesson-body">
+                <p>
+                  앞서 본 에드워드 소프·벰버거·제임스 사이먼스 외에도 퀀트
+                  투자의 역사에는 이론을 만든 학자, 이를 실전 운용으로 옮긴
+                  회사, 그리고 지금도 쓰이는 매매기법이 있습니다. 아래는
+                  학습용으로 정리한 목록이며, 특정 인물·회사의 전략을
+                  따라 하라는 뜻이 아닙니다. 실제 내부 전략은 대부분
+                  공개되어 있지 않고, 과거 성과는 미래 수익을 보장하지
+                  않습니다.
+                </p>
+                <h3>인물</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>퀀트 이론·투자에 이름을 남긴 대표 인물 — 이론의 존재와 역사적 사실을 소개하는 것이며 투자 조언이 아닙니다.</caption>
+                    <thead><tr><th scope="col">인물</th><th scope="col">시대·소속</th><th scope="col">알려진 이론·기법</th><th scope="col">비고</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">해리 마코위츠(Harry Markowitz)</th><td>1952년 논문</td><td>현대 포트폴리오이론(평균-분산모형)</td><td>자산배분 이론의 출발점, 1990년 노벨경제학상</td></tr>
+                      <tr><th scope="row">피셔 블랙·마이런 숄즈·로버트 머튼</th><td>1973년 논문</td><td>블랙-숄즈 옵션가격모형</td><td>숄즈·머튼 1997년 노벨경제학상, 파생상품 가격결정의 표준 틀</td></tr>
+                      <tr><th scope="row">존 메리웨더 등 / LTCM</th><td>1990년대</td><td>채권 상대가치·차익거래</td><td>1998년 러시아 채무불이행 여파로 대규모 손실, 14개 금융사 공동구제로 마무리 — 정교한 모형도 극단적 상황엔 무너질 수 있다는 대표 반면교사 사례</td></tr>
+                      <tr><th scope="row">리처드 데니스·윌리엄 에크하르트</th><td>1983~1984년</td><td>‘터틀 트레이더’ 실험, 채널 돌파 추세추종</td><td>매매가 가르쳐질 수 있는지를 검증한 실험으로, 전략 자체보다 위험·자금관리의 중요성을 보여준 사례</td></tr>
+                      <tr><th scope="row">레이 달리오(Ray Dalio) / 브리지워터</th><td>현재</td><td>올웨더(리스크 패리티) 전략</td><td>이 수업 앞부분의 ‘올웨더 포트폴리오’ 레슨 참고</td></tr>
+                      <tr><th scope="row">클리프 애스니스(Cliff Asness) / AQR</th><td>현재</td><td>팩터투자(가치·모멘텀 등)의 실전 구현</td><td>학계의 팩터 연구를 대규모 운용전략으로 옮긴 사례</td></tr>
+                      <tr><th scope="row">나심 니콜라스 탈레브</th><td>현재</td><td>블랙스완, 꼬리위험</td><td>이 수업 뒤쪽의 ‘블랙 스완’ 레슨 참고</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>회사·플랫폼</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>퀀트 투자와 관련된 대표 회사·플랫폼 — 성과 수치는 자료마다 수수료·기간 산정 방식이 달라 그대로 비교할 수 없습니다.</caption>
+                    <thead><tr><th scope="col">회사·플랫폼</th><th scope="col">알려진 특징</th><th scope="col">비고</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">르네상스 테크놀로지스(메달리온 펀드)</th><td>1988~2018년 연평균 수익률이 매우 높았다고 알려짐(수수료 포함·차감 여부에 따라 자료마다 수치가 다름)</td><td>앞서 다룬 제임스 사이먼스 레슨 참고, 주로 임직원 자본으로 운용되어 외부 투자자를 상시 모집하지 않는 것으로 알려짐</td></tr>
+                      <tr><th scope="row">시타델(Citadel)·시타델 증권</th><td>헤지펀드와 마켓메이킹(유동성 공급)을 함께 운영</td><td>이 수업 뒤쪽의 ‘시타델·메릴린치 사례’ 레슨 참고</td></tr>
+                      <tr><th scope="row">투시그마(Two Sigma)</th><td>데이터과학·머신러닝 기반 시스템 운용</td><td>대형 퀀트 헤지펀드의 대표 예시</td></tr>
+                      <tr><th scope="row">디이쇼(D. E. Shaw &amp; Co.)</th><td>계량적 시스템 트레이딩의 초기 선구자</td><td>아마존 창업자 제프 베조스가 창업 전 근무했던 곳으로도 잘 알려짐</td></tr>
+                      <tr><th scope="row">월드퀀트(WorldQuant)</th><td>‘WorldQuant BRAIN’이라는 크라우드소싱 알파 발굴 플랫폼 운영</td><td>2일차에서 본 국내(서울) 퀀트 채용 사례와 연결</td></tr>
+                      <tr><th scope="row">QuantConnect / LEAN 엔진</th><td>2012년 시작된 오픈소스 알고리즘 트레이딩·백테스트 엔진(GitHub 공개)</td><td>이 앱의 ‘LEAN 백테스트’ 기능이 실제로 이 오픈소스 엔진을 원격 실행해 결과를 보여줍니다</td></tr>
+                      <tr><th scope="row">Numerai</th><td>데이터 과학자들이 암호화(익명화)된 데이터로 예측 모델을 제출해 경쟁하는 크라우드소싱형 헤지펀드</td><td>모델 제출자에게 암호화폐로 보상하는 독특한 구조로 알려짐</td></tr>
+                      <tr><th scope="row">젠포트·퀀터스</th><td>국내 노코드 퀀트 플랫폼</td><td>이 수업 앞부분의 ‘젠포트·퀀터스’ 레슨 참고</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>매매기법·알고리즘</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>퀀트 투자에서 널리 알려진 매매기법 — 기법의 존재를 소개하는 것이며 특정 전략의 성과를 보장하지 않습니다.</caption>
+                    <thead><tr><th scope="col">기법</th><th scope="col">핵심 아이디어</th><th scope="col">관련 레슨·사례</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">페어 트레이딩(통계적 차익거래)</th><td>함께 움직이던 두 자산의 가격 괴리가 벌어지면 한쪽은 매수, 한쪽은 매도해 좁혀지길 기다리는 기법</td><td>이 수업의 ‘벰버거의 페어 트레이딩’ 레슨</td></tr>
+                      <tr><th scope="row">추세추종(모멘텀, 채널 돌파)</th><td>가격이 일정 구간을 뚫고 오르내리면 그 방향을 따라가는 규칙</td><td>터틀 트레이더 실험이 대표 사례</td></tr>
+                      <tr><th scope="row">팩터 투자</th><td>가치·모멘텀·퀄리티·저변동성 같은 공통 수익 원천(팩터)에 체계적으로 노출을 맞추는 전략</td><td>AQR 등이 대표적으로 활용, 이 수업의 ‘알파와 베타’ 레슨 참고</td></tr>
+                      <tr><th scope="row">리스크 패리티</th><td>자산별 기대수익 예측 대신 위험 기여도를 자산군마다 고르게 맞추는 자산배분 방식</td><td>브리지워터 올웨더 포트폴리오가 대표 사례</td></tr>
+                      <tr><th scope="row">시장 국면 추정</th><td>관측되지 않는 시장 상태(국면)를 확률로 추정해 전략의 강도·규모를 조절</td><td>이 수업의 ‘히든 마코프 모델(HMM)’ 레슨</td></tr>
+                      <tr><th scope="row">실행 알고리즘(VWAP·TWAP)</th><td>큰 주문을 시간·거래량에 나누어 체결시켜 시장 충격과 체결가격 변동을 줄이는 기법</td><td>기관·대형 주문 처리의 기본 도구</td></tr>
+                      <tr><th scope="row">마켓메이킹(유동성 공급)</th><td>매수·매도 호가를 동시에 제시해 그 차이(스프레드)로 수익을 얻는 대신 시장에 유동성을 공급하는 방식</td><td>이 수업의 ‘시타델·메릴린치 사례’ 레슨</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="lesson-video-cta"><small>위 인물·회사·수치는 공개된 보도·자료를 바탕으로 정리했으며, 조사 시점과 산정 방식에 따라 달라질 수 있습니다. 특정 전략을 따라 하기 전에는 반드시 원문 자료와 최신 공시를 확인하세요.</small></p>
+              </div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="더 알아보기: 퀀트 역사를 만든 인물·회사·매매기법 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
