@@ -48,6 +48,15 @@ body {
   border-color: #91b9f4;
   background: #eff6ff;
 }
+.day-kms-title {
+  color: var(--app-ink);
+  font-size: 17px;
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.day-kms-title:hover { color: var(--app-blue); }
 .day-brand-nav,
 .day-header-actions {
   display: flex;
@@ -85,6 +94,35 @@ body {
 .day-rag {
   padding: 8px 10px;
 }
+.day-glossary-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 11px;
+  color: #36506f;
+  background: #fff;
+  border: 1px solid #d7e2f0;
+  border-radius: 5px;
+  font: 700 14px inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.day-glossary-toggle:hover { color: var(--app-blue); border-color: #91b9f4; background: #eff6ff; }
+.glossary-drawer-backdrop { position: fixed; inset: 0; z-index: 45; background: #11274655; opacity: 0; pointer-events: none; transition: opacity .2s; }
+.glossary-drawer-backdrop.is-open { opacity: 1; pointer-events: auto; }
+.glossary-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 50; display: flex; flex-direction: column; width: min(430px, 92vw); padding: 25px 22px; overflow: auto; background: #fff; box-shadow: -12px 0 32px #142c552b; transform: translateX(105%); transition: transform .2s ease; }
+.glossary-drawer.is-open { transform: translateX(0); }
+.glossary-drawer header { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; padding-bottom: 16px; border-bottom: 1px solid var(--app-line); }
+.glossary-drawer header p { margin: 0 0 4px; color: var(--app-blue); font-size: 11px; font-weight: 800; letter-spacing: .09em; }
+.glossary-drawer h2 { margin: 0; color: var(--app-ink); font-size: 25px; }
+.glossary-drawer header button { display: grid; width: 35px; height: 35px; place-items: center; border: 1px solid #d7e2f0; border-radius: 50%; color: #214d7d; background: #fff; font: 700 24px/1 inherit; cursor: pointer; }
+.glossary-drawer-intro { margin: 15px 0; color: #5d7191; font-size: 13px; }
+.glossary-drawer-list { display: grid; gap: 8px; }
+.glossary-drawer-item { border: 1px solid #d8e5f7; border-radius: 9px; background: #fbfdff; }
+.glossary-drawer-item summary { padding: 12px 14px; color: #173e70; font-size: 15px; font-weight: 800; cursor: pointer; }
+.glossary-drawer-item[open] summary { border-bottom: 1px solid #d8e5f7; background: #eff6ff; }
+.glossary-drawer-item small { display: block; margin: 12px 14px 0; color: #5d7191; font-size: 12px; }
+.glossary-drawer-item p { margin: 10px 14px 14px; color: #284b77; font-size: 14px; line-height: 1.65; }
 .day-offcanvas {
   position: fixed;
   top: 0;
@@ -149,10 +187,10 @@ body > nav {
   background: transparent;
 }
 #app article {
-  width: min(1600px, calc(100vw - 48px));
+  width: 100%;
   max-width: none;
-  margin: 0 auto;
-  padding: 36px 24px 80px;
+  margin: 0;
+  padding: 36px 10px 80px;
   background: transparent;
 }
 .lesson-head {
@@ -182,7 +220,16 @@ body > nav {
   color: #a9bfdd;
 }
 .lesson {
-  padding: 30px 44px 30px 0;
+  grid-template-columns: 1fr;
+  padding: 30px 0 30px 54px;
+}
+.lesson > span {
+  display: none;
+}
+.lesson-toggle {
+  top: 30px;
+  right: auto;
+  left: 0;
 }
 .lesson h2 {
   font-size: 23px;
@@ -230,7 +277,7 @@ body > nav {
   inset: 0;
   background: #0b234b80;
 }
-.glossary-modal__dialog {
+.glossary-modal .glossary-modal__dialog {
   position: relative;
   width: min(1120px, calc(100vw - 48px));
   max-height: calc(100vh - 48px);
@@ -262,8 +309,11 @@ body > nav {
   font-weight: 800;
   letter-spacing: 0.08em;
 }
+.glossary-modal__label {
+  display: none;
+}
 .glossary-modal h2 {
-  margin: 0;
+  margin: 0 48px 14px 0;
   color: var(--app-ink);
   font-size: 25px;
 }
@@ -277,9 +327,11 @@ body > nav {
   color: #284b77;
   line-height: 1.8;
 }
+.glossary-modal__detail p { margin: 0 0 16px; }
+.glossary-modal__detail p:last-child { margin-bottom: 0; }
 @media (max-width: 760px) {
   .glossary-modal { padding: 12px; }
-  .glossary-modal__dialog {
+  .glossary-modal .glossary-modal__dialog {
     width: calc(100vw - 24px);
     max-height: calc(100vh - 24px);
     overflow: auto;
@@ -311,7 +363,7 @@ body > nav {
   }
   #app article {
     width: 100%;
-    padding: 26px 16px 50px;
+    padding: 26px 10px 50px;
   }
   .lesson-head-line {
     flex-direction: column;
@@ -347,4 +399,24 @@ body > nav {
   font-size: 13px;
   line-height: 1.5;
   text-align: center;
+}
+
+/* Modal containers always occupy the same large viewport area. */
+.glossary-modal .glossary-modal__dialog {
+  box-sizing: border-box;
+  width: 96vw;
+  height: 96vh;
+  min-height: 0;
+  max-height: none;
+  overflow: auto;
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .glossary-modal .glossary-modal__dialog {
+    width: 96vw;
+    height: 96vh;
+    min-height: 0;
+    max-height: none;
+  }
 }

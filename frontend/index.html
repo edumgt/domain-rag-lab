@@ -7,7 +7,8 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/static/style.css?v=20260904-lean-split" />
+  <link rel="stylesheet" href="/static/style.css?v=20260905-gnb-unified" />
+  <link rel="stylesheet" href="/static/assets/simulation-workbench.css?v=20260905-1" />
 </head>
 <body>
   <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
@@ -78,6 +79,7 @@
         <button class="panel-toggle" id="openLeftPanel" aria-controls="learningPanel" aria-label="학습 패널 열기">
           <i class="fa-solid fa-bars"></i><span>학습</span>
         </button>
+        <a class="main-kms-title" href="/?view=learn">금융상품 이해 KMS</a>
         <div class="brand-nav" aria-label="학습 서비스 메뉴">
           <button class="brand-nav-btn active" data-view="home"><i class="fa-solid fa-house"></i> 홈</button>
           <button class="brand-nav-btn" data-view="stocks"><i class="fa-solid fa-building-columns"></i> 종목보기</button>
@@ -85,16 +87,6 @@
           <button class="brand-nav-btn" data-view="simulation"><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</button>
           <button class="brand-nav-btn" data-view="backtest"><i class="fa-solid fa-flask"></i> LEAN 백테스트</button>
           <button class="brand-nav-btn" data-view="calendar"><i class="fa-solid fa-calendar-days"></i> 캘린더</button>
-        </div>
-        <div class="header-actions">
-          <div class="domain-badge"><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분</div>
-          <button class="btn-ghost" id="authButton"><i class="fa-solid fa-user"></i> 로그인</button>
-          <button class="btn-ghost" id="clearChatBtn" title="대화 초기화">
-            <i class="fa-solid fa-trash-can"></i> 초기화
-          </button>
-          <button class="panel-toggle panel-toggle-right" id="openRightPanel" aria-controls="referencePanel" aria-label="RAG 패널 열기">
-            <i class="fa-solid fa-database"></i><span>RAG</span>
-          </button>
         </div>
       </header>
 
@@ -142,17 +134,25 @@
       <div class="simulation-panel" id="simulationPanel">
         <section class="sim-scenario-lab" aria-labelledby="scenarioLabTitle">
           <h3 id="scenarioLabTitle" class="sr-only">시장 충격 시나리오 선택</h3>
-          <div class="scenario-actions" role="group" aria-label="스트레스 시나리오 선택">
-            <button class="sim-scenario active" data-scenario="equity"><i class="fa-solid fa-arrow-trend-down"></i> 주식 급락</button>
-            <button class="sim-scenario" data-scenario="rates"><i class="fa-solid fa-percent"></i> 금리 급등</button>
-            <button class="sim-scenario" data-scenario="inflation"><i class="fa-solid fa-fire"></i> 인플레이션 재확산</button>
-            <button class="sim-scenario" data-scenario="stagflation"><i class="fa-solid fa-industry"></i> 스태그플레이션</button>
-            <button class="sim-scenario" data-scenario="credit_crunch"><i class="fa-solid fa-money-bill-trend-down"></i> 신용경색</button>
-            <button class="sim-scenario" data-scenario="geopolitical"><i class="fa-solid fa-globe"></i> 지정학적 충격</button>
-            <button class="sim-scenario" data-scenario="pandemic"><i class="fa-solid fa-virus"></i> 팬데믹형 셧다운</button>
+          <div class="sim-scenario-layout">
+            <aside class="sim-scenario-controls">
+              <strong>시장 충격 선택</strong>
+              <p>먼저 시나리오를 선택해 보세요.</p>
+              <div class="scenario-actions" role="group" aria-label="스트레스 시나리오 선택">
+                <button class="sim-scenario active" data-scenario="equity"><i class="fa-solid fa-arrow-trend-down"></i> 주식 급락</button>
+                <button class="sim-scenario" data-scenario="rates"><i class="fa-solid fa-percent"></i> 금리 급등</button>
+                <button class="sim-scenario" data-scenario="inflation"><i class="fa-solid fa-fire"></i> 인플레이션 재확산</button>
+                <button class="sim-scenario" data-scenario="stagflation"><i class="fa-solid fa-industry"></i> 스태그플레이션</button>
+                <button class="sim-scenario" data-scenario="credit_crunch"><i class="fa-solid fa-money-bill-trend-down"></i> 신용경색</button>
+                <button class="sim-scenario" data-scenario="geopolitical"><i class="fa-solid fa-globe"></i> 지정학적 충격</button>
+                <button class="sim-scenario" data-scenario="pandemic"><i class="fa-solid fa-virus"></i> 팬데믹형 셧다운</button>
+              </div>
+            </aside>
+            <div class="sim-scenario-output">
+              <p class="section-copy">선택한 시나리오에서 주식/ETF·채권·대체자산이 각각 어떻게 움직이는지 비교해 보세요. 모든 값은 교육용 가정입니다.</p>
+              <div class="scenario-result" id="simScenarioResult"></div>
+            </div>
           </div>
-          <p class="section-copy">시나리오를 하나 골라 주식/ETF·채권·대체자산이 각각 어떻게 움직이는지 비교해 보세요. 선택한 값은 교육용 가정입니다.</p>
-          <div class="scenario-result" id="simScenarioResult"></div>
         </section>
 
         <div class="sim-footer">
@@ -212,7 +212,10 @@
   </div>
 
   <script src="/static/assets/theory-data.js?v=20260819-1"></script>
-  <script src="/static/app.js?v=20260904-lean-split"></script>
-  <script src="/static/auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
+  <script src="/static/app.js?v=20260905-gnb-unified"></script>
+  <script src="/static/auth.js?v=20260905-gnb-unified"></script>
+  <script src="/static/assets/modal-fit.js?v=20260905-simulator-specific-hints"></script>
+  <script src="/static/assets/click-logger.js?v=20260905"></script>
 </body>
 </html>

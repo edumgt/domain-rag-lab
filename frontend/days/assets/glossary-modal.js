@@ -9,7 +9,9 @@
     return {
       title: clean(clone.textContent),
       aliases: clean(term.querySelector('small')?.textContent || ''),
-      detail: clean(description.textContent),
+      detail: [...description.querySelectorAll(':scope > p')].map((paragraph) => clean(paragraph.textContent)).filter(Boolean).length
+        ? [...description.querySelectorAll(':scope > p')].map((paragraph) => clean(paragraph.textContent)).filter(Boolean)
+        : [clean(description.textContent)],
       item,
     };
   }).filter((entry) => entry && entry.title);
@@ -24,7 +26,7 @@
         <p class="glossary-modal__label">용어 설명</p>
         <h2 id="glossaryModalTitle"></h2>
         <p class="glossary-modal__aliases" id="glossaryModalAliases"></p>
-        <p class="glossary-modal__detail" id="glossaryModalDetail"></p>
+        <div class="glossary-modal__detail" id="glossaryModalDetail"></div>
       </section>
     </div>`);
 
@@ -39,7 +41,11 @@
     title.textContent = entry.title;
     aliases.textContent = entry.aliases;
     aliases.hidden = !entry.aliases;
-    detail.textContent = entry.detail;
+    detail.replaceChildren(...entry.detail.map((paragraph) => {
+      const element = document.createElement('p');
+      element.textContent = paragraph;
+      return element;
+    }));
     modal.hidden = false;
     closeButton.focus();
   };

@@ -8,8 +8,8 @@
       content="금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다."
     />
     <title>03일차 | 4일 금융 이론 — 채권</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260904-duration-explained" />
-    <link rel="stylesheet" href="assets/app-shell.css" />
+    <link rel="stylesheet" href="assets/site.css?v=20260905-modal-fit" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-glossary-drawer" />
     <style>
       /* 옵션 학습 단원은 01일차로 이동했습니다. */
       body[data-day="3"] .lesson-list > .lesson:nth-child(n + 13) { display: none; }
@@ -20,7 +20,8 @@
     />
     <script defer src="assets/visuals.js"></script>
     <script defer src="assets/atlas.js"></script>
-    <script defer src="assets/glossary-modal.js"></script>
+    <script defer src="assets/glossary-modal.js?v=20260905-history"></script>
+    <script defer src="assets/glossary-drawer.js?v=20260905-all-terms"></script>
   </head>
   <body data-day="3">
     <header class="day-appbar">
@@ -33,6 +34,7 @@
       >
         <i class="fa-solid fa-bars"></i><span>학습</span>
       </button>
+      <a class="day-kms-title" href="/?view=learn">금융상품 이해 KMS</a>
       <div
         class="day-brand-nav"
         role="navigation"
@@ -48,13 +50,7 @@
           ><i class="fa-solid fa-calendar-days"></i> 캘린더</a
         >
       </div>
-      <div class="day-header-actions">
-        <span class="day-domain-badge"
-          ><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분</span
-        ><a class="day-login" href="/?view=stocks"
-          ><i class="fa-solid fa-user"></i> 로그인</a
-        ><span class="day-rag"><i class="fa-solid fa-database"></i> RAG</span>
-      </div>
+      <div class="day-header-actions"></div>
     </header>
     <div class="day-backdrop" id="dayBackdrop"></div>
     <aside class="day-offcanvas" id="dayOffcanvas" aria-label="4일 학습 목차">
@@ -1397,5 +1393,7 @@
       })();
     </script>
     <script src="assets/app-shell.js"></script>
+    <script src="../assets/modal-fit.js?v=20260905-simulator-specific-hints"></script>
+    <script src="../assets/click-logger.js?v=20260905"></script>
   </body>
 </html>

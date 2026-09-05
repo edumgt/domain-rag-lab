@@ -79,13 +79,11 @@
         ['펀드와 ETF는 어떻게 다른가요?', ['펀드와 ETF는 주식·채권·원자재·부동산 관련 자산 등을 한 상품에 담을 수 있는 그릇입니다. 상품 이름보다 어떤 자산과 전략을 담는지 먼저 확인하세요.', 'ETF는 거래소에서 장중에 사고팔고, 일반 펀드는 보통 하루 한 번 산정하는 기준가격으로 가입·환매됩니다. 거래 방식이 다르므로 필요한 현금 시점과 거래비용도 달라질 수 있습니다.', '여러 자산을 담았다고 위험이 사라지지는 않습니다. 특정 국가·자산군·테마에 집중된 상품은 여전히 크게 움직일 수 있습니다.']],
         ['국내 ETF 브랜드와 운용사: 주문 증권사와 구분하기', ['KODEX, TIGER, RISE, ACE, SOL처럼 ETF 이름 앞에 붙는 말은 보통 상품을 설계·운용하는 자산운용사의 브랜드입니다. ETF를 주문받아 거래소에 연결하는 증권사와는 역할이 다릅니다.', '대표적으로 KODEX는 삼성자산운용, TIGER는 미래에셋자산운용, RISE는 KB자산운용, ACE는 한국투자신탁운용, SOL은 신한자산운용의 ETF 브랜드입니다. 따라서 어느 증권사 앱을 쓰는지와 어느 운용사의 ETF인지를 별도로 확인해야 합니다.', '브랜드는 상품을 고르는 추천 신호가 아닙니다. 같은 기초지수를 추종하는 ETF라도 총보수, 순자산 규모, 거래량, 분배 방식, 환헤지 여부와 지수 방법론이 다를 수 있으므로 상품설명서와 KRX ETF/ETN 정보를 비교하세요.']],
         ['ETF의 기초자산과 추종 대상, 구분하기', ['ETF의 기초자산은 ETF 가치의 바탕이 되는 주식·채권·원자재·리츠·지수 등입니다. 다만 투자설명서에는 실제로 보유하는 자산과 목표로 삼는 기초지수가 함께 나올 수 있으므로 둘을 구분해 읽어야 합니다.', '예를 들어 주식형 ETF는 지수 구성 주식을 직접 담아 지수를 따라갈 수 있습니다. 반면 해외지수·원자재 ETF는 현지 주식, 예탁증서, 선물계약 등을 활용할 수 있습니다. “S&P 500”, “금”, “원유”라는 이름만으로 어떤 자산을 실제 보유하는지 단정할 수는 없습니다.', '상품설명서에서 기초지수 또는 기초자산, 운용 방법, 상위 편입종목·계약, 환헤지 여부를 차례로 확인하면 내가 어떤 가격 변동과 위험을 갖게 되는지 더 분명해집니다.']],
-        ['파생상품 ETF는 무엇이 다른가요?', ['파생상품 ETF는 선물·스왑 등 파생상품을 활용해 특정 지수나 자산의 가격 변화를 추종하는 ETF입니다. 원유처럼 보관이 어렵거나 해외 시장에 직접 접근하기 어려운 자산, 레버리지·인버스처럼 목표 수익률을 설계한 상품에서 이런 방식이 쓰일 수 있습니다.', '이 ETF를 매수하는 투자자가 선물계약을 직접 주문하는 것은 아닙니다. 투자자는 ETF 주식을 거래하고, ETF 내부에서 운용사가 선물·스왑과 현금성 자산 등을 조합해 목표 지수의 움직임을 따라가려 합니다. 따라서 ETF 자체의 거래 방식은 주식과 비슷하지만, 성과와 위험은 내부 파생상품 구조의 영향을 받습니다.', '특히 선물형 ETF는 만기가 가까운 계약을 다음 만기 계약으로 바꾸는 롤오버 비용 또는 수익, 레버리지·인버스 ETF는 일간 수익률을 기준으로 재설정되는 복리 효과를 확인해야 합니다. 파생상품을 쓴다는 사실만으로 위험이 같아지는 것도, 현물보다 항상 더 위험해지는 것도 아니므로 추종배수·목표기간·편입 계약과 설명서를 함께 보세요.']],
         ['NAV·iNAV와 괴리율: ETF 가격은 왜 다를까요?', ['NAV(순자산가치)는 ETF가 보유한 자산에서 부채를 뺀 가치를 발행 주식 수로 나눈 값입니다. ETF 시장가격은 거래소에서 매수자와 매도자가 정하므로 NAV와 같을 수도, 다를 수도 있습니다. 장중 추정값인 iNAV가 제공되는 상품은 현재 가격을 가늠하는 참고값이 됩니다.', '여기서 부채는 보통 ETF가 큰돈을 빌렸다는 뜻이 아니라, 운용보수·수탁 및 사무관리 비용·결제 대금처럼 아직 지급하지 않은 비용과 미지급금 등 회계상 앞으로 지급할 금액을 말합니다. 일반 ETF에서는 이런 항목이 자산 대비 작은 편이지만, 레버리지·파생형 ETF는 구조가 더 복잡할 수 있으므로 상품설명서를 함께 확인하세요.', '괴리율은 보통 `(ETF 시장가격 − NAV) ÷ NAV × 100`으로 계산합니다. 양수면 시장가격이 NAV보다 높은 프리미엄, 음수면 낮은 디스카운트를 뜻합니다. 예를 들어 NAV가 10,000원이고 시장가격이 10,200원이면 괴리율은 약 +2%입니다.', '괴리율은 거래량 부족, 넓은 호가 차이, 해외 기초자산 시장의 휴장·시차, 급격한 시장 변동 등에서 커질 수 있습니다. 매수 전에는 현재 시장가격, NAV 또는 iNAV, 매수·매도 호가 차이와 거래량을 함께 보고 지정가 주문을 검토하세요. 괴리율이 작아도 기초자산 자체의 가격 위험은 사라지지 않습니다.']],
         ['괴리율과 추적오차는 다른 질문입니다', ['괴리율은 지금 ETF를 거래소에서 사거나 팔 때 시장가격이 NAV와 얼마나 다른지 보는 지표입니다. 반면 추적오차는 일정 기간 ETF의 수익률이 목표 지수의 수익률을 얼마나 잘 따라갔는지 보는 지표입니다.', '예를 들어 장중에 ETF 시장가격이 NAV보다 높으면 괴리율이 클 수 있지만, ETF의 NAV 기준 수익률은 장기간 목표 지수를 잘 추종할 수도 있습니다. 반대로 당장 괴리율이 작아도 보수, 현금 보유, 세금, 롤오버 비용 때문에 장기 수익률 차이가 날 수 있습니다.', '따라서 매매 순간에는 괴리율·호가 차이·거래량을, 보유 전 비교에는 기초자산·추종 방식·총보수·추적오차를 함께 확인하는 것이 좋습니다.']],
         ['일반 매도와 숏 포지션은 다릅니다', ['이미 가진 ETF나 주식을 파는 것은 일반 매도입니다. 현금으로 바꾸는 거래일 뿐, 가격 하락에 따로 베팅하는 것은 아닙니다.', '선물 계약을 먼저 매도하는 것은 보통 숏 포지션이라고 하며 가격 하락에 유리한 구조입니다. 공매도도 빌린 주식을 먼저 팔기 때문에 가격이 오르면 손실이 커질 수 있습니다.']],
         ['리츠와 ETN의 구조', ['리츠는 오피스·물류센터·리테일 등 부동산 또는 부동산 관련 자산에서 나오는 임대수익과 가치 변동에 참여하는 상품입니다. 공실률, 임대료, 금리, 부동산 경기와 차입 구조를 함께 봅니다.', 'ETN은 증권사가 특정 지수의 수익률을 따르도록 만든 증권입니다. ETF처럼 거래되더라도 펀드가 아니라 발행 증권사의 신용위험이 추가된다는 점이 다릅니다.', '원자재·변동성·레버리지처럼 복잡한 지수를 따르는 ETN은 만기, 지수 산식, 롤오버 비용과 조기청산 조건을 특히 꼼꼼히 읽어야 합니다.']],
         ['상품 설명서에서 비교할 항목', ['펀드·ETF는 기초자산·기초지수, 운용 전략과 실물·파생상품 활용 여부, 총보수, 환매 또는 매매 방식, 거래량·호가 차이·괴리율을 확인합니다.', '파생상품 ETF라면 추종배수와 목표기간, 편입 선물·스왑, 롤오버와 상대방 위험도 추가로 확인합니다. 리츠는 자산 구성, 임대차 현황, 차입금, 배당가능이익과 금리 민감도를, ETN은 발행사, 만기, 기초지수, 신용위험을 봅니다.', '과거 수익률은 비교의 한 자료일 뿐입니다. 내가 언제 쓸 돈인지와 손실이 났을 때 감당 가능한 범위를 먼저 정한 뒤 상품설명서와 투자설명서를 읽으세요.']],
-        ['목적에 따라 상품을 나누어 보기', ['단기 목적자금에는 예금·적금·MMF처럼 유동성과 손실 가능성을 먼저 보는 상품이, 장기 목표에는 채권형 펀드·ETF, 주식형 펀드·ETF, 리츠처럼 다른 위험과 수익 원천을 가진 상품이 검토 대상이 될 수 있습니다.', '같은 ETF라도 국내외 주식, 국채·회사채, 금·원자재, 리츠 등 기초자산이 다릅니다. “ETF를 샀다”가 아니라 “무슨 위험을 보유했는가”로 이해하는 습관이 중요합니다.', '보험과 연금은 보장·노후소득이라는 목적을 함께 가진 금융상품입니다. 투자형 상품과 비교할 때는 기대수익률만이 아니라 보장 내용, 해지 비용, 수수료와 유동성을 나누어 살펴보세요.']],
       ],
       ragPrompt: 'ETF의 기초자산·기초지수·실물/파생상품 추종 방식, NAV·iNAV·괴리율과 추적오차의 차이, 파생상품 ETF의 롤오버·일간 추종 위험을 비교해 설명해줘. 특정 상품 매수 추천은 하지 마.',
     },
@@ -589,7 +587,7 @@ KOSDAQ|웹젠|게임`,
   });
 
   $openLeftPanel.addEventListener('click', () => togglePanel('left'));
-  $openRightPanel.addEventListener('click', () => togglePanel('right'));
+  $openRightPanel?.addEventListener('click', () => togglePanel('right'));
   $openSimulationPanel.addEventListener('click', () => {
     setView('simulation');
   });
@@ -621,7 +619,7 @@ KOSDAQ|웹젠|게임`,
   $questionInput.addEventListener('input', resizeInput);
   $sendBtn.addEventListener('click', triggerSend);
 
-  $clearChatBtn.addEventListener('click', () => {
+  $clearChatBtn?.addEventListener('click', () => {
     state.chatHistory = [];
     state.sessionId = crypto.randomUUID();
     $messages.innerHTML = '';
@@ -675,7 +673,7 @@ KOSDAQ|웹젠|게임`,
     state.activeView = view;
     $viewButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
     $chatInputArea.classList.toggle('hidden', view !== 'learn');
-    $clearChatBtn.classList.toggle('hidden', view !== 'learn');
+    $clearChatBtn?.classList.toggle('hidden', view !== 'learn');
 
     if (view === 'home') renderHome();
     if (view === 'stocks') renderStocksView();
@@ -702,7 +700,7 @@ KOSDAQ|웹젠|게임`,
     $offcanvasBackdrop.classList.toggle('visible', isOpen);
     $offcanvasBackdrop.setAttribute('aria-hidden', String(!isOpen));
     $openLeftPanel.setAttribute('aria-expanded', String(panel === 'left' && isOpen));
-    $openRightPanel.setAttribute('aria-expanded', String(panel === 'right' && isOpen));
+    $openRightPanel?.setAttribute('aria-expanded', String(panel === 'right' && isOpen));
   }
 
   function closePanels() {
@@ -710,7 +708,7 @@ KOSDAQ|웹젠|게임`,
     $offcanvasBackdrop.classList.remove('visible');
     $offcanvasBackdrop.setAttribute('aria-hidden', 'true');
     $openLeftPanel.setAttribute('aria-expanded', 'false');
-    $openRightPanel.setAttribute('aria-expanded', 'false');
+    $openRightPanel?.setAttribute('aria-expanded', 'false');
   }
 
   function annotateGlossary(node) {
@@ -1160,7 +1158,7 @@ KOSDAQ|웹젠|게임`,
   }
 
   function renderSimulationGuide() {
-    $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">MARKET SHOCK WORKBENCH</div><h1>시장 충격 <mark>시뮬레이션</mark></h1></div><p class="content-lead">다양한 시장 충격 시나리오를 골라 주식/ETF·채권·대체자산이 각각 어떻게 반응하는지 비교합니다.</p></header><div class="simulation-steps" aria-label="실습 순서"><div><span>01</span><h3>시장 충격 선택</h3></div><i class="fa-solid fa-arrow-right"></i><div><span>02</span><h3>자산군별 영향 확인</h3></div><i class="fa-solid fa-arrow-right"></i><div><span>03</span><h3>RAG로 더 알아보기</h3></div></div><div class="simulation-workbench" id="simulationMount"></div></article>`;
+    $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">MARKET SHOCK WORKBENCH</div><h1>시장 충격 <mark>시뮬레이션</mark></h1></div><p class="content-lead">다양한 시장 충격 시나리오를 골라 주식/ETF·채권·대체자산이 각각 어떻게 반응하는지 비교합니다.</p></header><div class="simulation-workbench" id="simulationMount"></div></article>`;
     document.getElementById('simulationMount').appendChild($simulationPanel);
     renderScenarioResult();
   }
@@ -2347,23 +2345,41 @@ effective_date: [기준일]
     },
   };
 
+  let scenarioChart = null;
+
   function renderScenarioResult() {
     const scenario = SHOCK_SCENARIOS[state.activeScenario] || SHOCK_SCENARIOS.equity;
     const cls = (value) => (value >= 0 ? 'up' : 'down');
+    scenarioChart?.destroy();
+    scenarioChart = null;
     $simScenarioResult.innerHTML = `
-      <div class="scenario-result-head"><span>${scenario.title} 가정</span></div>
+      <div class="scenario-result-head"><span>${scenario.title} 가정</span><p>${scenario.detail}입니다.</p></div>
+      <div class="scenario-chart" id="scenarioShockChart" role="img" aria-label="${scenario.title} 상황의 자산군별 교육용 가정 수익률 차트"></div>
       <div class="scenario-breakdown">
         <span>주식/ETF <b class="${cls(scenario.stock)}">${formatSignedPercent(scenario.stock)}</b></span>
         <span>채권 <b class="${cls(scenario.bond)}">${formatSignedPercent(scenario.bond)}</b></span>
         <span>대체·현금 <b class="${cls(scenario.alt)}">${formatSignedPercent(scenario.alt)}</b></span>
       </div>
-      <p>${scenario.detail}입니다. 자산군별 값은 교육용 가정 수익률이며, 실제 상관관계·변동성·기간에 따라 결과는 달라질 수 있습니다.</p>
       <div class="scenario-reasons">
         <p class="scenario-reasons-label"><i class="fa-solid fa-circle-question"></i> 왜 이렇게 움직일까요?</p>
         <div class="scenario-reason"><b class="${cls(scenario.stock)}">주식/ETF ${formatSignedPercent(scenario.stock)}</b><span>${scenario.reasons.stock}</span></div>
         <div class="scenario-reason"><b class="${cls(scenario.bond)}">채권 ${formatSignedPercent(scenario.bond)}</b><span>${scenario.reasons.bond}</span></div>
         <div class="scenario-reason"><b class="${cls(scenario.alt)}">대체·현금 ${formatSignedPercent(scenario.alt)}</b><span>${scenario.reasons.alt}</span></div>
       </div>`;
+    if (!window.ApexCharts) return;
+    scenarioChart = new ApexCharts(document.getElementById('scenarioShockChart'), {
+      chart: { type: 'bar', height: 250, toolbar: { show: false }, animations: { enabled: true } },
+      series: [{ name: '교육용 가정 수익률', data: [scenario.stock * 100, scenario.bond * 100, scenario.alt * 100] }],
+      colors: ['#2563eb', '#16a34a', '#f59e0b'],
+      plotOptions: { bar: { horizontal: true, distributed: true, borderRadius: 5, barHeight: '52%' } },
+      dataLabels: { enabled: true, formatter: value => `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`, style: { fontSize: '12px', fontWeight: 800 } },
+      xaxis: { categories: ['주식 / ETF', '채권', '대체 · 현금'], labels: { formatter: value => `${value}%`, style: { colors: '#64748b' } } },
+      yaxis: { labels: { style: { colors: '#334155', fontWeight: 700 } } },
+      grid: { borderColor: '#dbe5f5', strokeDashArray: 4 },
+      legend: { show: false },
+      tooltip: { y: { formatter: value => `${value >= 0 ? '+' : ''}${value.toFixed(1)}%` } },
+    });
+    scenarioChart.render();
   }
 
   function buildSimulationPrompt() {

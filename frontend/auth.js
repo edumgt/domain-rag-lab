@@ -3,6 +3,7 @@
   const button = document.querySelector('#authButton'), modal = document.querySelector('#authModal');
   const form = document.querySelector('#authForm'), status = document.querySelector('#authStatus');
   const switcher = document.querySelector('#authSwitch'), nameField = document.querySelector('#authNameField');
+  if (!button || !modal || !form || !status || !switcher || !nameField) return;
   const auth = () => localStorage.getItem(tokenKey);
   const headers = () => ({ 'Content-Type': 'application/json', Authorization: `Bearer ${auth()}` });
   function show(open) { modal.hidden = !open; document.body.classList.toggle('modal-open', open); }

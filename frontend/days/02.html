@@ -8,15 +8,20 @@
       content="여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다."
     />
     <title>02일차 | 4일 금융 이론 — 펀드 · ETF</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260904-body-card" />
-    <link rel="stylesheet" href="assets/app-shell.css" />
+    <link rel="stylesheet" href="assets/site.css?v=20260905-fund-manager-layout" />
+    <link rel="stylesheet" href="assets/fund-case-market.css?v=20260905-1" />
+    <link rel="stylesheet" href="assets/emerging-market-modal.css?v=20260905-1" />
+    <link rel="stylesheet" href="assets/fund-manager-add-row.css?v=20260905-1" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-glossary-drawer" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <script defer src="assets/visuals.js"></script>
     <script defer src="assets/atlas.js"></script>
-    <script defer src="assets/glossary-modal.js"></script>
+    <script defer src="assets/glossary-modal.js?v=20260905-history"></script>
+    <script defer src="assets/glossary-drawer.js?v=20260905-all-terms"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
   </head>
   <body data-day="2">
     <header class="day-appbar">
@@ -29,6 +34,7 @@
       >
         <i class="fa-solid fa-bars"></i><span>학습</span>
       </button>
+      <a class="day-kms-title" href="/?view=learn">금융상품 이해 KMS</a>
       <div
         class="day-brand-nav"
         role="navigation"
@@ -44,13 +50,7 @@
           ><i class="fa-solid fa-calendar-days"></i> 캘린더</a
         >
       </div>
-      <div class="day-header-actions">
-        <span class="day-domain-badge"
-          ><i class="fa-solid fa-graduation-cap"></i> 금융상품·자산배분</span
-        ><a class="day-login" href="/?view=stocks"
-          ><i class="fa-solid fa-user"></i> 로그인</a
-        ><span class="day-rag"><i class="fa-solid fa-database"></i> RAG</span>
-      </div>
+      <div class="day-header-actions"></div>
     </header>
     <div class="day-backdrop" id="dayBackdrop"></div>
     <aside class="day-offcanvas" id="dayOffcanvas" aria-label="4일 학습 목차">
@@ -85,6 +85,85 @@
         </header>
         <section class="lesson-list">
           <section class="lesson">
+            <span>00</span>
+            <div class="lesson-content">
+              <h2>은행·금리·이자율, 금융의 기본 언어</h2>
+              <div class="lesson-body">
+                <p>은행업은 개인·기업이 맡긴 예금, 지급결제, 대출을 연결하는 금융업입니다. 우리는 계좌이체·카드 결제·예금·대출처럼 일상에서 은행 서비스를 쓰지만, 은행은 맡긴 돈을 그대로 보관만 하는 곳이 아니라 대출과 결제를 통해 자금이 흐르도록 만들고 신용·유동성 위험을 관리하는 금융회사입니다.</p>
+                <p>국내 은행은 영업구역과 방식에 따라 대표적으로 <b>시중은행</b>(전국·온오프라인), <b>지방은행</b>(지역 중심), <b>인터넷전문은행</b>(온라인 중심)으로 구분해 볼 수 있습니다. 산업·수출입 등 정책 목적의 <b>특수은행</b>도 있습니다. 저축은행·증권사·보험사는 금융회사이지만 은행과는 다른 법과 업무 범위가 적용되는 업권입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>국내 은행 구분별 대표 은행 예시 — 실제 영업 형태·상품은 각 은행의 최신 공시를 확인하세요.</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">대표 은행 예시</th><th scope="col">특징</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">시중은행</th><td>KB국민·신한·하나·우리·NH농협·SC제일·iM뱅크</td><td>전국 단위의 온·오프라인 영업을 중심으로 합니다.</td></tr>
+                      <tr><th scope="row">지방은행</th><td>부산·경남·광주·전북은행</td><td>지역 고객과 지역 기업 금융을 중심으로 하는 은행입니다.</td></tr>
+                      <tr><th scope="row">인터넷전문은행</th><td>카카오뱅크·케이뱅크·토스뱅크</td><td>온라인 채널을 중심으로 계좌·예금·대출 서비스를 제공합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>은행 서비스를 읽을 때의 기본 구분</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">무엇을 하나요?</th><th scope="col">소비자가 확인할 점</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">예금·적금</th><td>은행에 돈을 맡기고 약정 이자를 받습니다.</td><td>금리, 가입 기간, 우대 조건, 중도해지 이율, 예금자보호 대상 여부를 확인합니다.</td></tr>
+                      <tr><th scope="row">대출</th><td>은행이 돈을 빌려주고 이자와 원금을 받습니다.</td><td>고정·변동금리, 기준금리와 가산금리, 상환 방식, 중도상환수수료를 확인합니다.</td></tr>
+                      <tr><th scope="row">지급결제</th><td>계좌이체, 카드대금 출금, 급여·공과금 납부를 처리합니다.</td><td>출금일, 한도, 수수료, 오류·사기 대응 절차를 확인합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><b>금리</b>와 <b>이자율</b>은 일상적으로 같은 뜻으로 쓰며, 돈을 빌리거나 맡긴 대가를 원금에 대한 비율로 나타낸 것입니다. 예를 들어 연 3% 예금에 1,000만 원을 1년간 단리로 맡기면 세전 이자는 약 30만 원입니다. 복리는 이자가 다음 기간의 원금에 더해져 다시 이자가 붙는 계산이고, 실제 수령액에는 세금·우대조건·가입일수 등이 영향을 줍니다.</p>
+                <p>기준금리가 변해도 모든 예금·대출 금리가 같은 날, 같은 폭으로 움직이지는 않습니다. 은행의 자금조달 비용, 상품 조건, 신용도, 가산·우대금리가 함께 반영됩니다. 그래서 ‘최고 연 이율’만 보지 말고 내가 충족할 수 있는 조건과 실제 적용 금리를 비교해야 합니다.</p>
+                <p>최근 금리의 출발점으로는 한국은행이 발표한 <b>2026년 7월 신규취급액 기준 예금은행 저축성수신금리 연 3.21%</b>를 볼 수 있습니다. 아래 시뮬레이터는 이를 반올림한 연 3.2%를 예금 기본값으로 사용하며, 실제 은행·상품별 금리와 우대 조건은 다르므로 직접 바꿔 비교해 보세요. 한국은행 기준금리는 2026년 8월 27일 기준 연 3.00%이지만, 이것이 곧바로 내가 받는 예금금리는 아닙니다.</p>
+                <h3>은행 관련 상품은 모두 무위험일까요?</h3>
+                <p><b>아닙니다.</b> 은행에서 판매하거나 가입한 상품이라고 모두 무위험은 아닙니다. 은행은 금융회사이자 판매 채널이며, 위험은 ‘어느 은행인가’보다 <b>상품의 구조</b>로 판단해야 합니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>은행에서 접하는 상품별 위험을 구분하는 방법</caption>
+                    <thead><tr><th scope="col">상품·서비스</th><th scope="col">주요 특징</th><th scope="col">남는 위험과 확인할 점</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">예금·적금</th><td>약정 조건을 지키면 원금 변동 위험이 낮은 편입니다.</td><td>중도해지 시 이자가 줄 수 있고, 예금자보호 대상·한도 및 금융회사 신용위험을 확인합니다.</td></tr>
+                      <tr><th scope="row">펀드·ETF·신탁·ELS 등</th><td>은행 창구·앱에서 가입할 수 있어도 금융투자상품일 수 있습니다.</td><td>원금 손실 가능성이 있으며, 기초자산·보수·만기·중도 환매·예금자보호 여부를 확인합니다.</td></tr>
+                      <tr><th scope="row">대출</th><td>돈을 빌리는 서비스입니다.</td><td>변동금리 상승, 상환 부담, 연체 위험이 있으므로 상환 계획과 총비용을 확인합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>또한 물가가 오르면 현금·예금의 <b>실질 구매력</b>이 낮아질 수 있고, 상품에 따라 해지·환매에 시간이 걸릴 수 있습니다. 따라서 ‘원금이 얼마나 흔들리는가’, ‘언제 현금으로 바꿀 수 있는가’, ‘보호 제도가 적용되는가’를 함께 확인해야 합니다.</p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="bankRateSimTrigger"><i class="fa-solid fa-building-columns"></i> 최근 예금금리 기준 시뮬레이션</button><small>연 3.2% 기본값에서 상품·기간·월 납입액을 바꿔 예상 금액을 확인하세요.</small></p>
+                <p class="lesson-source">은행의 시중·지방·인터넷전문 구분과 인가 체계는 <a href="https://www.fsc.go.kr/no010101/81617?curPage=4&amp;srchBeginDt=&amp;srchCtgry=&amp;srchEndDt=&amp;srchKey=&amp;srchText=" target="_blank" rel="noopener noreferrer">금융위원회 안내</a>를 참고했으며, 실제 상품 조건은 각 금융회사의 최신 설명서에서 확인하세요.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="은행 금리 이자율 금융의 기본 언어 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
+            <span>01</span>
+            <div class="lesson-content">
+              <h2>생애주기로 보는 예금·적금·펀드</h2>
+              <div class="lesson-body">
+                <p>금융상품은 ‘수익률이 높은 것’ 하나를 고르는 문제가 아니라, 언제 돈이 필요한지에 맞춰 나누어 쓰는 도구입니다. 사회초년생은 비상자금과 가까운 목표를, 자녀교육·주거를 준비하는 시기에는 필요한 시점의 자금을, 은퇴가 가까운 시기에는 생활비와 큰 손실을 견딜 수 있는 범위를 먼저 정해 볼 수 있습니다.</p>
+                <p><b>은행 예금</b>은 목돈을 일정 기간 맡기고 약정 이자를 받는 상품입니다. <b>적금</b>은 매달 정한 돈을 넣어 목돈을 만드는 방식입니다. 둘 다 예금자보호 대상 여부와 한도, 중도해지 이율을 금융회사별 상품설명서에서 확인해야 합니다. <b>펀드</b>는 여러 투자자의 돈을 모아 주식·채권 등에 투자하는 상품으로, 기준가격이 오르내리고 원금이나 수익률이 보장되지 않습니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>생애주기별로 먼저 점검할 상품 역할과 이용 방법</caption>
+                    <thead><tr><th scope="col">상황 예시</th><th scope="col">우선 점검</th><th scope="col">상품 소개·이용 방법</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">사회초년생·비상자금</th><td>갑자기 쓸 돈, 부채, 짧은 목표</td><td>입출금·예금으로 필요한 현금부터 분리합니다. 예금은 만기와 중도해지 이율을 확인합니다.</td></tr>
+                      <tr><th scope="row">1~5년 목돈 목표</th><td>매월 납입 가능액, 목표 시점</td><td>적금은 자동이체 금액·우대 조건·만기 수령액을 확인합니다. 납입을 못 하는 달도 고려합니다.</td></tr>
+                      <tr><th scope="row">장기 목표·노후 준비</th><td>기간, 손실 감당 범위, 분산</td><td>펀드는 투자설명서의 자산 구성·위험등급·보수·환매 조건을 보고, 한 상품에 집중하지 않습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>은행 앱이나 영업점에서는 예금·적금의 금리, 가입 기간, 우대 조건, 중도해지 조건을 확인한 뒤 가입합니다. 펀드는 은행·증권사 앱에서 투자설명서와 위험등급, 총보수, 환매 소요 기간을 확인하고 투자성향 절차를 거쳐 가입하는 경우가 많습니다. 광고의 최고 금리나 과거 수익률만으로 결정하지 마세요.</p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="lifeCycleSavingsTrigger"><i class="fa-solid fa-chart-line"></i> 생애주기 이율 변화 시뮬레이터</button>
+                  <small>상품·연 수익률·기간·월 납입액을 바꿔 예상 잔액과 시간 흐름을 확인하세요.</small>
+                </p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="생애주기로 보는 예금 적금 펀드 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
             <span>01</span>
             <div class="lesson-content">
               <h2>펀드와 ETF는 어떻게 다른가요?</h2>
@@ -103,6 +182,11 @@
                   여러 자산을 담았다고 위험이 사라지지는 않습니다. 특정
                   국가·자산군·테마에 집중된 상품은 여전히 크게 움직일 수
                   있습니다.
+                </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="fundEtfCompareTrigger"><i class="fa-solid fa-chart-column"></i> 펀드·ETF 수익률 비교 시뮬레이터</button>
+                  <small>각 상품의 예상 수익률과 총보수, 기간을 바꿔 예상 잔액을 비교하세요.</small>
+                  <button type="button" class="breaktime-trigger" id="fundEtfBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime</button>
                 </p>
               </div>
             </div>
@@ -153,7 +237,7 @@
                       <tr><td>RISE</td><td>KB자산운용</td><td><a href="https://www.riseetf.co.kr" target="_blank" rel="noopener noreferrer">riseetf.co.kr</a></td></tr>
                       <tr><td>SOL</td><td>신한자산운용</td><td><a href="https://www.soletf.com" target="_blank" rel="noopener noreferrer">soletf.com</a></td></tr>
                       <tr><td>PLUS</td><td>한화자산운용</td><td><a href="https://www.plusetf.co.kr" target="_blank" rel="noopener noreferrer">plusetf.co.kr</a></td></tr>
-                      <tr><td>KOSEF</td><td>키움투자자산운용</td><td><a href="https://www.kiwoometf.com" target="_blank" rel="noopener noreferrer">kiwoometf.com</a></td></tr>
+                      <tr><td>KIWOOM<br><small>(구 KOSEF·히어로즈)</small></td><td>키움투자자산운용</td><td><a href="https://www.kiwoometf.com" target="_blank" rel="noopener noreferrer">kiwoometf.com</a></td></tr>
                       <tr><td>HANARO</td><td>NH-아문디자산운용</td><td><a href="https://www.hanaroetf.com" target="_blank" rel="noopener noreferrer">hanaroetf.com</a></td></tr>
                     </tbody>
                   </table>
@@ -179,6 +263,7 @@
                       <tr><td>한화자산운용</td><td>ARIRANG</td><td>PLUS</td></tr>
                       <tr><td>KB자산운용</td><td>KBSTAR</td><td>RISE</td></tr>
                       <tr><td>한국투자신탁운용</td><td>KINDEX</td><td>ACE</td></tr>
+                      <tr><td>키움투자자산운용</td><td>KOSEF·히어로즈</td><td>KIWOOM</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -189,6 +274,10 @@
                   확인하세요. 어느 증권사 앱을 쓰든 원하는 브랜드의 ETF를 검색해
                   매매할 수 있으므로, “내 증권사에는 이 브랜드가 없다”고 오해할
                   필요는 없습니다.
+                </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="etfCatalogTrigger"><i class="fa-solid fa-table-list"></i> 전체 ETF 성과·편입종목 보기</button>
+                  <small>8개 운용사 ETF의 최근 3개월 수익률과 기준일별 상위 편입종목을 검색해 보세요.</small>
                 </p>
               </div>
             </div>
@@ -206,22 +295,23 @@
           <section class="lesson">
             <span>03</span>
             <div class="lesson-content">
-              <h2>ETF·선물·옵션은 무엇을 거래하나요?</h2>
+              <h2>상품 설명서에서 비교할 항목</h2>
               <div class="lesson-body">
                 <p>
-                  ETF는 주식·채권 같은 여러 자산을 담은 상품 자체를 사고파는
-                  방식입니다. 예를 들어 KOSPI 200 ETF를 사면 KOSPI 200
-                  구성종목을 담은 바구니에 투자하는 것입니다.
+                  펀드·ETF는 기초자산·기초지수, 운용 전략과 실물·파생상품 활용
+                  여부, 총보수, 환매 또는 매매 방식, 거래량·호가 차이·괴리율을
+                  확인합니다.
                 </p>
                 <p>
-                  선물은 그 자산의 미래 가격을 약속하는 계약이고, 옵션은 미래에
-                  사고팔 수 있는 권리입니다. 같은 지수나 주식을 기준으로 삼아도
-                  거래하는 대상과 위험은 서로 다릅니다.
+                  파생상품 ETF라면 추종배수와 목표기간, 편입 선물·스왑, 롤오버와
+                  상대방 위험도 추가로 확인합니다. 리츠는 자산 구성, 임대차
+                  현황, 차입금, 배당가능이익과 금리 민감도를, ETN은 발행사,
+                  만기, 기초지수, 신용위험을 봅니다.
                 </p>
                 <p>
-                  ETF를 보유한 뒤 파생상품을 쓰는 경우에는 전체 포트폴리오의
-                  위험을 줄이려는 헤지인지, 가격 방향을 예상한 거래인지 먼저
-                  구분해 보세요.
+                  과거 수익률은 비교의 한 자료일 뿐입니다. 내가 언제 쓸 돈인지와
+                  손실이 났을 때 감당 가능한 범위를 먼저 정한 뒤 상품설명서와
+                  투자설명서를 읽으세요.
                 </p>
               </div>
             </div>
@@ -230,7 +320,7 @@
               type="button"
               data-lesson-toggle
               aria-expanded="true"
-              aria-label="ETF·선물·옵션은 무엇을 거래하나요? 내용 접기"
+              aria-label="상품 설명서에서 비교할 항목 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -301,6 +391,10 @@
                   국가를 담아도 세계 경기 침체나 달러 강세처럼 함께 영향을
                   받는 위험은 남습니다.
                 </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="emergingMarketClassTrigger"><i class="fa-solid fa-earth-asia"></i> 국가·분류 기준 보기</button>
+                  <small>주요 국가가 선진·신흥·프런티어 중 어디에 속하는지, 분류 기관마다 왜 달라지는지 확인하세요.</small>
+                </p>
               </div>
             </div>
             <button
@@ -309,47 +403,6 @@
               data-lesson-toggle
               aria-expanded="true"
               aria-label="이머징마켓: 성장 가능성과 함께 보는 시장 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
-            <span>06</span>
-            <div class="lesson-content">
-              <h2>파생상품 ETF는 무엇이 다른가요?</h2>
-              <div class="lesson-body">
-                <p>
-                  파생상품 ETF는 선물·스왑 등 파생상품을 활용해 특정 지수나
-                  자산의 가격 변화를 추종하는 ETF입니다. 원유처럼 보관이
-                  어렵거나 해외 시장에 직접 접근하기 어려운 자산,
-                  레버리지·인버스처럼 목표 수익률을 설계한 상품에서 이런 방식이
-                  쓰일 수 있습니다.
-                </p>
-                <p>
-                  이 ETF를 매수하는 투자자가 선물계약을 직접 주문하는 것은
-                  아닙니다. 투자자는 ETF 주식을 거래하고, ETF 내부에서 운용사가
-                  선물·스왑과 현금성 자산 등을 조합해 목표 지수의 움직임을
-                  따라가려 합니다. 따라서 ETF 자체의 거래 방식은 주식과
-                  비슷하지만, 성과와 위험은 내부 파생상품 구조의 영향을
-                  받습니다.
-                </p>
-                <p>
-                  특히 선물형 ETF는 만기가 가까운 계약을 다음 만기 계약으로
-                  바꾸는 롤오버 비용 또는 수익, 레버리지·인버스 ETF는 일간
-                  수익률을 기준으로 재설정되는 복리 효과를 확인해야 합니다.
-                  파생상품을 쓴다는 사실만으로 위험이 같아지는 것도, 현물보다
-                  항상 더 위험해지는 것도 아니므로 추종배수·목표기간·편입 계약과
-                  설명서를 함께 보세요.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="파생상품 ETF는 무엇이 다른가요? 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -479,6 +532,7 @@
                     비교 시뮬레이션
                   </button>
                   <small>한 시점의 가격 차이와 기간 수익률 차이를 나누어 확인하세요.</small>
+                  <button type="button" class="breaktime-trigger" id="gapTrackingBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime</button>
                 </p>
               </div>
             </div>
@@ -543,40 +597,6 @@
             </button>
           </section>
           <section class="lesson">
-            <span>10</span>
-            <div class="lesson-content">
-              <h2>상품 설명서에서 비교할 항목</h2>
-              <div class="lesson-body">
-                <p>
-                  펀드·ETF는 기초자산·기초지수, 운용 전략과 실물·파생상품 활용
-                  여부, 총보수, 환매 또는 매매 방식, 거래량·호가 차이·괴리율을
-                  확인합니다.
-                </p>
-                <p>
-                  파생상품 ETF라면 추종배수와 목표기간, 편입 선물·스왑, 롤오버와
-                  상대방 위험도 추가로 확인합니다. 리츠는 자산 구성, 임대차
-                  현황, 차입금, 배당가능이익과 금리 민감도를, ETN은 발행사,
-                  만기, 기초지수, 신용위험을 봅니다.
-                </p>
-                <p>
-                  과거 수익률은 비교의 한 자료일 뿐입니다. 내가 언제 쓸 돈인지와
-                  손실이 났을 때 감당 가능한 범위를 먼저 정한 뒤 상품설명서와
-                  투자설명서를 읽으세요.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="상품 설명서에서 비교할 항목 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
             <span>11</span>
             <div class="lesson-content">
               <h2>한국시장으로 만드는 가상 포트폴리오 · 리밸런싱 실습</h2>
@@ -631,41 +651,6 @@
               data-lesson-toggle
               aria-expanded="true"
               aria-label="한국시장으로 만드는 가상 포트폴리오 · 리밸런싱 실습 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
-            <span>12</span>
-            <div class="lesson-content">
-              <h2>목적에 따라 상품을 나누어 보기</h2>
-              <div class="lesson-body">
-                <p>
-                  단기 목적자금에는 예금·적금·MMF처럼 유동성과 손실 가능성을
-                  먼저 보는 상품이, 장기 목표에는 채권형 펀드·ETF, 주식형
-                  펀드·ETF, 리츠처럼 다른 위험과 수익 원천을 가진 상품이 검토
-                  대상이 될 수 있습니다.
-                </p>
-                <p>
-                  같은 ETF라도 국내외 주식, 국채·회사채, 금·원자재, 리츠 등
-                  기초자산이 다릅니다. “ETF를 샀다”가 아니라 “무슨 위험을
-                  보유했는가”로 이해하는 습관이 중요합니다.
-                </p>
-                <p>
-                  보험과 연금은 보장·노후소득이라는 목적을 함께 가진
-                  금융상품입니다. 투자형 상품과 비교할 때는 기대수익률만이
-                  아니라 보장 내용, 해지 비용, 수수료와 유동성을 나누어
-                  살펴보세요.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="목적에 따라 상품을 나누어 보기 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -758,6 +743,10 @@
                   조건과 유동성 위험이 무엇인지를 먼저 점검하는 습관이
                   중요합니다.
                 </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="fundCaseMarketTrigger"><i class="fa-solid fa-chart-line"></i> 사례별 KOSPI 6개월 변동 보기</button>
+                  <small>사건이 알려진 뒤 2주를 강조해 당시 주식시장 흐름을 확인하세요.</small>
+                </p>
               </div>
             </div>
             <button
@@ -779,6 +768,7 @@
                 <p>주식이나 주식 ETF를 가진 사람이 시장 급락이 걱정될 때는 풋옵션을 사거나 지수선물을 매도하는 방식을 생각해 볼 수 있습니다. 둘 다 시장이 내려갈 때 생기는 이익으로 보유 주식의 손실 일부를 줄이려는 방법입니다.</p>
                 <p>풋옵션 매수는 ‘정해진 가격에 팔 수 있는 권리’를 사는 것입니다. 시장이 크게 내리면 이 권리의 가치가 올라갈 수 있습니다. 자동차 보험처럼 처음에 프리미엄이라는 보험료를 내는 대신, 시장이 오르거나 움직임이 작으면 낸 프리미엄은 비용으로 남습니다.</p>
                 <p>지수선물 매도는 KOSPI 200 같은 지수 선물을 먼저 파는 숏 포지션입니다. 시장이 내리면 선물 매도 포지션에서 이익이 날 수 있지만, 시장이 오르면 손실이 납니다. 풋옵션 매수와 달리 프리미엄만 내고 끝나는 구조가 아니며 증거금·추가증거금·강제청산 위험이 있으므로, 보유 자산 규모와 계약 규모를 이해하지 못하면 헤지가 아니라 위험 확대가 될 수 있습니다.</p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="hedgeDiversificationTrigger"><i class="fa-solid fa-shield-halved"></i> 분산·헤지 손실 완화 시뮬레이터</button><small>시장 변동 시 주식 집중, 분산투자, 분산+풋 헤지의 결과를 비교해 보세요.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="시장 급락에 대비하는 두 가지 헤지 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -908,10 +898,12 @@
             <div class="glossary-item">
               <dt>레버리지 <small>Leverage · 槓桿</small></dt>
               <dd>
-                적은 돈으로 더 큰 금액의 자산이나 계약을 움직이는 구조입니다.
-                지렛대처럼 수익을 키울 수도 있지만 손실도 같은 방식으로
-                커집니다. 투자금보다 큰 손실이 날 수 있는지 먼저 확인해야
-                합니다.
+                <p><b>레버리지(leverage)</b>는 원래 지렛대(lever)로 작은 힘을 더 큰 힘처럼 쓰는 물리학의 비유에서 왔습니다. 영어 <i>lever</i>는 ‘들어 올리다’라는 뜻의 프랑스어·라틴어 계통 단어에서 비롯됐고, <i>leverage</i>는 18세기에 ‘지렛대의 작용’을 뜻했습니다. 금융에서는 내 돈에 빌린 돈, 증거금, 선물·스왑 등의 계약 노출을 더해 더 큰 금액의 자산 가격 변화에 연결되는 구조를 말합니다. 한자 槓桿도 바로 ‘지렛대’라는 뜻입니다.</p>
+                <p><b>금융시장이 이를 쓴 계기</b>는 필요한 자산을 모두 현금으로 사지 않아도 상인·기업·농부가 재고와 설비를 마련하고, 미래 가격 변동 위험을 미리 관리할 수 있게 하기 위해서입니다. 예를 들어 수확 전 농부와 곡물 구매자는 선물계약으로 가격을 정하고, 계약 전체 금액을 즉시 주고받는 대신 이행을 보장할 일부 증거금을 맡깁니다. 즉 레버리지는 처음부터 ‘빨리 크게 벌기 위한 장치’만이 아니라, 적은 현금으로도 사업·재고·가격 위험을 관리하려는 신용과 담보의 기능에서 발전했습니다.</p>
+                <p><b>역사에서 하나의 “최초 레버리지 상품”을 고를 수는 없습니다.</b> 신용·담보 거래는 오래전부터 있었고, 현대 증권시장의 중요한 사례로는 19세기 후반~20세기 초 미국의 증권 신용거래(margin credit)가 있습니다. 투자자는 주식을 담보로 일부 자기자금만 내고 나머지를 빌려 주식을 샀습니다. 1920년대에는 일반 투자자에게도 이런 마진계좌가 널리 퍼졌고, 1929년 주가 급락 때 담보가치 하락과 추가 납입 요구가 매도를 키우는 요인 중 하나가 되었습니다. 그 경험 뒤 1934년 미국 의회는 연방준비제도에 주식 신용거래의 증거금 기준을 정할 권한을 부여했습니다.</p>
+                <p><b>선물시장의 레버리지</b>는 계약 이행을 담보하는 증거금 방식으로 발전했습니다. 선물은 미래 인도·가격을 약속하는 계약이므로 계약금 전액이 아니라 손익 변동을 감당할 증거금을 요구하고, 매일 손익을 정산해 부족하면 추가 증거금을 요구합니다. 이 방식은 계약 상대방이 약속을 지키지 못할 위험을 줄이기 위한 것이지만, 가격이 조금만 움직여도 계좌 손익률이 크게 달라지는 이유이기도 합니다.</p>
+                <p><b>레버리지 ETF의 첫 사례</b>는 더 최근입니다. 미국에서는 2006년 SEC가 첫 레버리지·인버스 ETF를 허용했고 ProShares가 이를 출시했습니다. 이 상품들은 주식 자체를 빌려 크게 사는 방식만을 뜻하지 않고, 선물·스왑 등으로 보통 ‘하루’ 기준 지수 수익률의 일정 배수를 목표로 설계됩니다. 그래서 여러 날 보유 성과는 기초지수 누적수익률의 단순 2배·3배와 달라질 수 있습니다.</p>
+                <p><b>핵심 점검:</b> 레버리지는 수익만 확대하지 않고 손실, 이자·수수료, 추가 증거금 요구와 강제청산 가능성도 함께 확대합니다. 상품마다 최대 손실 범위가 다릅니다. 현물 ETF 매수처럼 투자금 범위에서 손실이 제한되는 구조도 있지만, 신용·선물·옵션 매도는 예치금보다 큰 손실과 추가 납입이 발생할 수 있습니다. 거래 전에는 ‘무엇을 통해 노출을 키우는지’, ‘목표기간이 하루인지’, ‘최악의 경우 얼마를 추가로 내야 하는지’를 확인해야 합니다.</p>
               </dd>
             </div>
             <div class="glossary-item">
@@ -999,6 +991,145 @@
       </footer>
     </main>
 
+    <div class="glossary-modal hedge-diversification-modal" id="hedgeDiversificationModal" hidden>
+      <div class="glossary-modal__backdrop" data-hedge-diversification-close></div>
+      <section class="glossary-modal__dialog hedge-diversification-dialog" role="dialog" aria-modal="true" aria-labelledby="hedgeDiversificationTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-hedge-diversification-close>×</button>
+        <h2 id="hedgeDiversificationTitle">분산·헤지 손실 완화 시뮬레이터</h2>
+        <p class="hedge-diversification-intro">교육용 단순 가정입니다. 분산은 서로 다른 자산을 나누어 담아 한 자산의 충격을 완화하려는 방법이고, 풋 헤지는 하락 때의 손실 일부를 보완하려는 별도 계약입니다. 실제 채권·옵션 가격, 상관관계, 세금·수수료는 다를 수 있습니다.</p>
+        <div class="hedge-diversification-layout">
+          <div class="hedge-diversification-controls">
+            <label>투자금 (원)<input id="hedgeCapital" type="number" min="1000000" step="1000000" value="100000000" /></label>
+            <label>시장 변동 <output id="hedgeMarketMoveValue">-20%</output><input id="hedgeMarketMove" type="range" min="-40" max="20" step="1" value="-20" /></label>
+            <label>분산안의 주식 비중 <output id="hedgeEquityWeightValue">60%</output><input id="hedgeEquityWeight" type="range" min="20" max="90" step="5" value="60" /></label>
+            <label>풋옵션 보호 비중 <output id="hedgeCoverageValue">50%</output><input id="hedgeCoverage" type="range" min="0" max="100" step="10" value="50" /></label>
+            <p>분산안의 나머지는 <b id="hedgeBondWeight">30%</b> 채권과 <b>10%</b> 현금으로 가정합니다. 풋옵션 프리미엄은 보호 대상 금액의 2%로 단순 가정합니다.</p>
+          </div>
+          <div class="hedge-diversification-main">
+            <div class="hedge-diversification-cards" aria-live="polite"><article><span>주식 집중</span><strong id="hedgeConcentratedFinal">—</strong><small id="hedgeConcentratedPnl">—</small></article><article><span>분산투자</span><strong id="hedgeDiversifiedFinal">—</strong><small id="hedgeDiversifiedPnl">—</small></article><article><span>분산 + 풋 헤지</span><strong id="hedgeHedgedFinal">—</strong><small id="hedgeHedgedPnl">—</small></article></div>
+            <section class="hedge-diversification-chart-wrap"><div><strong>시장 변동 뒤 예상 금액</strong><small>세금·수수료 등을 제외한 학습용 결과</small></div><div id="hedgeDiversificationChart" role="img" aria-label="주식 집중, 분산투자, 분산과 풋 헤지의 예상 금액 비교 차트"></div></section>
+            <p class="hedge-diversification-note" id="hedgeDiversificationNote"></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="glossary-modal leverage-daily-modal" id="leverageDailySimModal" hidden>
+      <div class="glossary-modal__backdrop" data-leverage-daily-close></div>
+      <section class="glossary-modal__dialog leverage-daily-dialog" role="dialog" aria-modal="true" aria-labelledby="leverageDailyTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-leverage-daily-close>×</button>
+        <h2 id="leverageDailyTitle">레버리지 ETF 일일 재설정 테스트</h2>
+        <p class="leverage-daily-intro">교육용 단순 계산입니다. 매일 목표 배수를 다시 맞춘다고 가정하며, 수수료·세금·추적오차·상장폐지 위험은 반영하지 않습니다. 기본값은 본문의 ‘첫날 +10%, 다음 날 −9.09%, 3배’ 사례입니다.</p>
+        <div class="leverage-daily-layout">
+          <div class="leverage-daily-controls">
+            <label>시작 금액 (원)<input id="leverageDailyCapital" type="number" min="100000" step="100000" value="100000000" /></label>
+            <label>목표 배수<select id="leverageDailyMultiple"><option value="2">2배</option><option value="3" selected>3배</option></select></label>
+            <label>첫째 날 기초지수 변동 <output id="leverageDayOneValue">+10.00%</output><input id="leverageDayOne" type="range" min="-20" max="20" step="0.01" value="10" /></label>
+            <label>둘째 날 기초지수 변동 <output id="leverageDayTwoValue">−9.09%</output><input id="leverageDayTwo" type="range" min="-20" max="20" step="0.01" value="-9.09" /></label>
+          </div>
+          <div class="leverage-daily-main">
+            <div class="leverage-daily-cards" aria-live="polite"><article><span>기초지수 추종</span><strong id="leverageIndexFinal">—</strong><small id="leverageIndexReturn">—</small></article><article><span id="leverageEtfLabel">3배 ETF</span><strong id="leverageEtfFinal">—</strong><small id="leverageEtfReturn">—</small></article></div>
+            <section class="leverage-daily-chart-wrap"><div><strong>매일 다시 곱해지는 잔액</strong><small>기초지수와 레버리지 ETF의 경로 비교</small></div><div id="leverageDailyChart" role="img" aria-label="기초지수와 레버리지 ETF의 일일 잔액 변화 차트"></div></section>
+            <p class="leverage-daily-note" id="leverageDailyNote"></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="glossary-modal etf-catalog-modal" id="etfCatalogModal" hidden>
+      <div class="glossary-modal__backdrop" data-etf-catalog-close></div>
+      <section class="glossary-modal__dialog etf-catalog-dialog" role="dialog" aria-modal="true" aria-labelledby="etfCatalogTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-etf-catalog-close>×</button>
+        <h2 id="etfCatalogTitle">국내 주요 운용사 전체 ETF 탐색</h2>
+        <p class="etf-catalog-intro">최근 3개월 수익률은 공개 ETF 시세 목록의 조회 값이며, 상위 편입종목·비중은 각 응답의 기준일 값입니다. 채권·원자재·파생형 ETF는 개별 주식 대신 채권·선물·현금성 자산을 담을 수 있습니다.</p>
+        <div class="etf-catalog-controls">
+          <label>브랜드<select id="etfCatalogBrand"><option value="all">전체 브랜드</option><option value="KODEX">KODEX</option><option value="TIGER">TIGER</option><option value="ACE">ACE</option><option value="RISE">RISE</option><option value="SOL">SOL</option><option value="PLUS">PLUS</option><option value="KIWOOM">KIWOOM (구 KOSEF)</option><option value="HANARO">HANARO</option></select></label>
+          <label>자산군<select id="etfCatalogAsset"><option value="all">전체 자산군</option><option value="국내주식·혼합">국내주식·혼합</option><option value="해외주식">해외주식</option><option value="채권·현금성">채권·현금성</option><option value="원자재">원자재</option></select></label>
+          <label class="etf-catalog-search">ETF 이름·섹터 검색<input id="etfCatalogSearch" type="search" placeholder="예: 반도체, S&P500, 채권" /></label>
+        </div>
+        <p class="etf-catalog-status" id="etfCatalogStatus" aria-live="polite">데이터를 불러오는 중입니다.</p>
+        <div class="etf-catalog-layout">
+          <div class="etf-catalog-list">
+            <div class="etf-catalog-table-wrap"><table><thead><tr><th>ETF</th><th>3개월</th><th>자산군·섹터</th><th>상세</th></tr></thead><tbody id="etfCatalogRows"></tbody></table></div>
+            <div class="etf-catalog-pages"><button type="button" id="etfCatalogPrevious">이전</button><span id="etfCatalogPage"></span><button type="button" id="etfCatalogNext">다음</button></div>
+          </div>
+          <aside class="etf-catalog-detail" id="etfCatalogDetail" aria-live="polite"><p>왼쪽 목록에서 <b>상세</b>를 선택해 상위 편입종목과 비중을 확인하세요.</p></aside>
+        </div>
+        <p class="etf-catalog-source">학습용 수집 기준: 공개 ETF 시세 목록·공개 구성종목 응답. 섹터는 상품명 기반 보조 분류이며, 실제 매매 전에는 <a href="https://data.krx.co.kr/contents/MDC/MAIN/main/index.cmd?locale=ko_KR" target="_blank" rel="noopener noreferrer">KRX PDF(납입자산구성내역)</a>와 운용사 공식 상품설명서를 확인하세요.</p>
+      </section>
+    </div>
+
+    <div class="glossary-modal breaktime-modal" id="fundEtfBreakTimeModal" hidden>
+      <div class="glossary-modal__backdrop" data-fund-etf-breaktime-close></div>
+      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="fundEtfBreakTimeTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-fund-etf-breaktime-close>×</button>
+        <h2 id="fundEtfBreakTimeTitle">BreakTime</h2>
+        <div class="breaktime-message">
+          <p>개인별로 금융앱을 통한 본인의 금융 상품 사용을 점검해 보세요.</p>
+          <p>가입한 예금·적금·펀드·ETF가 무엇인지, 금리·수익률·보수·만기·환매 조건과 자동이체·정기 납입 내역을 확인해 보세요. 이 활동은 상품 가입이나 매매를 권유하지 않는 개인 현황 점검입니다.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="glossary-modal breaktime-modal" id="gapTrackingBreakTimeModal" hidden>
+      <div class="glossary-modal__backdrop" data-gap-tracking-breaktime-close></div>
+      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="gapTrackingBreakTimeTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-gap-tracking-breaktime-close>×</button>
+        <h2 id="gapTrackingBreakTimeTitle">BreakTime</h2>
+        <div class="breaktime-message">
+          <p>이 웹앱의 시뮬레이션 기능을 본인이 원하는 형태로 수정하세요.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="glossary-modal fund-etf-compare-modal" id="fundEtfCompareModal" hidden>
+      <div class="glossary-modal__backdrop" data-fund-etf-compare-close></div>
+      <section class="glossary-modal__dialog fund-etf-compare-dialog" role="dialog" aria-modal="true" aria-labelledby="fundEtfCompareTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-fund-etf-compare-close>×</button>
+        <h2 id="fundEtfCompareTitle">펀드·ETF 수익률 비교 시뮬레이터</h2>
+        <p class="fund-etf-compare-intro">교육용 가정입니다. 수익률에서 연간 총보수를 뺀 단순 복리로 계산하며, 세금·매매수수료·ETF 호가 차이·펀드 환매 비용과 실제 시장 변동은 반영하지 않습니다.</p>
+        <div class="fund-etf-compare-layout">
+          <div class="fund-etf-compare-controls">
+            <label>시작 금액 (원)<input id="fundEtfPrincipal" type="number" min="0" step="100000" value="10000000" /></label>
+            <label>펀드 예상 연 수익률 <output id="fundEtfFundReturnValue">5.0%</output><input id="fundEtfFundReturn" type="range" min="-10" max="15" step="0.5" value="5" /></label>
+            <label>펀드 총보수 <output id="fundEtfFundFeeValue">1.0%</output><input id="fundEtfFundFee" type="range" min="0" max="3" step="0.1" value="1" /></label>
+            <label>ETF 예상 연 수익률 <output id="fundEtfEtfReturnValue">5.0%</output><input id="fundEtfEtfReturn" type="range" min="-10" max="15" step="0.5" value="5" /></label>
+            <label>ETF 총보수 <output id="fundEtfEtfFeeValue">0.2%</output><input id="fundEtfEtfFee" type="range" min="0" max="3" step="0.1" value="0.2" /></label>
+            <label>비교 기간 <output id="fundEtfYearsValue">5년</output><input id="fundEtfYears" type="range" min="1" max="20" step="1" value="5" /></label>
+          </div>
+          <div class="fund-etf-compare-main">
+            <div class="fund-etf-compare-summary" aria-live="polite"><article><span>펀드 예상 잔액</span><strong id="fundEtfFundFinal">—</strong><small id="fundEtfFundNet">—</small></article><article><span>ETF 예상 잔액</span><strong id="fundEtfEtfFinal">—</strong><small id="fundEtfEtfNet">—</small></article></div>
+            <section class="fund-etf-compare-chart-wrap"><div><strong>보수 차이를 반영한 예상 잔액</strong><small>동일한 기초자산이라도 보수·거래 방식에 따라 결과가 달라질 수 있습니다.</small></div><div id="fundEtfCompareChart" role="img" aria-label="펀드와 ETF 기간별 예상 잔액 비교 차트"></div></section>
+            <p class="fund-etf-compare-note" id="fundEtfCompareNote"></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="glossary-modal lifecycle-savings-modal" id="lifeCycleSavingsModal" hidden>
+      <div class="glossary-modal__backdrop" data-lifecycle-savings-close></div>
+      <section class="glossary-modal__dialog lifecycle-savings-dialog" role="dialog" aria-modal="true" aria-labelledby="lifeCycleSavingsTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-lifecycle-savings-close>×</button>
+        <h2 id="lifeCycleSavingsTitle">생애주기 이율 변화 시뮬레이터</h2>
+        <p class="lifecycle-savings-intro">교육용 단순 계산입니다. 예금 기본값 연 3.2%는 한국은행의 2026년 7월 신규취급액 기준 예금은행 저축성수신금리 연 3.21%를 반올림한 값입니다. 은행·상품별 실제 금리, 세금·수수료·우대조건·중도해지와 실제 펀드 수익률은 반영하지 않으며, 펀드는 원금 손실이 날 수 있습니다.</p>
+        <div class="lifecycle-savings-layout">
+          <div class="lifecycle-savings-controls">
+            <label>생애주기 목표<select id="lifeCycleStage"><option value="starter">사회초년생 · 비상자금과 첫 목돈</option><option value="family">가족·주거 준비 · 중기 목표</option><option value="retirement">은퇴 준비 · 장기 생활비</option></select></label>
+            <label>상품<select id="lifeCycleProduct"><option value="deposit">은행 예금 · 목돈 예치</option><option value="saving">은행 적금 · 매월 납입</option><option value="fund">펀드 · 장기 투자 가정</option></select></label>
+            <label>시작 금액 (원)<input id="lifeCyclePrincipal" type="number" min="0" step="100000" value="10000000" /></label>
+            <label>연 수익률/이율 <output id="lifeCycleRateValue">3.2%</output><input id="lifeCycleRate" type="range" min="-10" max="12" step="0.1" value="3.2" /></label>
+            <label>기간 <output id="lifeCycleYearsValue">5년</output><input id="lifeCycleYears" type="range" min="1" max="20" step="1" value="5" /></label>
+            <label id="lifeCycleMonthlyField">월 납입액 (원)<input id="lifeCycleMonthly" type="number" min="0" step="100000" value="300000" /></label>
+          </div>
+          <div class="lifecycle-savings-main">
+            <div class="lifecycle-savings-summary" aria-live="polite"><article><span>총 납입 원금</span><strong id="lifeCycleContributions">—</strong></article><article><span id="lifeCycleFinalLabel">만기 예상 금액</span><strong id="lifeCycleFinal">—</strong><small id="lifeCycleGain">—</small></article></div>
+            <section class="lifecycle-savings-chart-wrap"><div><strong>시간에 따른 예상 잔액</strong><small>상품별 단순 가정을 비교하는 차트입니다.</small></div><div id="lifeCycleSavingsChart" role="img" aria-label="기간별 예상 잔액 변화 차트"></div></section>
+            <section class="lifecycle-savings-guide"><strong id="lifeCycleGuideTitle">목표 점검</strong><p id="lifeCycleGuide"></p></section>
+          </div>
+        </div>
+      </section>
+    </div>
+
     <div class="glossary-modal inav-sim-modal" id="inavSimModal" hidden>
       <div class="glossary-modal__backdrop" data-inav-sim-close></div>
       <section
@@ -1080,6 +1211,52 @@
           이해를 돕는 가상 시뮬레이션입니다. 실제 매매 판단에 사용하지
           마세요.
         </p>
+      </section>
+    </div>
+
+    <div class="glossary-modal emerging-market-class-modal" id="emergingMarketClassModal" hidden>
+      <div class="glossary-modal__backdrop" data-emerging-market-class-close></div>
+      <section class="glossary-modal__dialog emerging-market-class-dialog" role="dialog" aria-modal="true" aria-labelledby="emergingMarketClassTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-emerging-market-class-close>×</button>
+        <h2 id="emergingMarketClassTitle">이머징마켓은 어떻게 분류할까요?</h2>
+        <p class="emerging-market-class-intro">‘신흥국’은 유엔이나 정부가 투자용으로 단일 지정하는 법적 이름이 아닙니다. 글로벌 지수 제공기관이 국제 투자자가 실제로 거래할 수 있는지 판단해 나누는 <b>시장 분류</b>입니다.</p>
+        <div class="emerging-market-class-grid">
+          <article class="emerging-market-class-card">
+            <h3>MSCI의 분류 기준</h3>
+            <p>경제 발전도, 시장 규모·유동성, 시장 접근성을 함께 봅니다. 접근성에는 외국인 투자 제한, 자금 송금·환전, 결제·청산, 정보 공개, 경쟁 환경 등이 포함됩니다.</p>
+            <ul><li>선진시장(Developed): 미국·일본·영국 등</li><li>신흥시장(Emerging): 한국·중국·대만·인도·브라질·멕시코·사우디아라비아 등</li><li>프런티어(Frontier): 베트남·루마니아·아이슬란드 등 일부 시장</li><li>독립시장(Standalone): 국제 투자 접근성이 더 제한적인 일부 시장</li></ul>
+          </article>
+          <article class="emerging-market-class-card">
+            <h3>FTSE Russell의 분류 기준</h3>
+            <p>시장 품질과 규제 환경, 거래·결제, 보관, 투자자 접근성, 시가총액과 종목 수 등을 정기적으로 평가합니다. 선진·고급 신흥·2차 신흥·프런티어로 세분합니다.</p>
+            <ul><li>선진시장: 한국·미국·일본·영국 등</li><li>고급 신흥시장: 브라질·인도·대만·남아프리카공화국 등</li><li>2차 신흥시장: 중국·칠레·인도네시아·말레이시아·태국 등</li><li>프런티어: 방글라데시·카자흐스탄·베트남 등</li></ul>
+          </article>
+        </div>
+        <table class="emerging-market-class-table"><thead><tr><th>국가</th><th>MSCI 예시</th><th>FTSE Russell 예시</th><th>읽는 방법</th></tr></thead><tbody><tr><td>한국</td><td>신흥시장</td><td>선진시장</td><td>경제 규모만이 아니라 외국인 투자자의 시장 접근성을 함께 본 결과입니다.</td></tr><tr><td>중국·인도·대만</td><td>신흥시장</td><td>2차·고급 신흥시장</td><td>같은 신흥시장이라도 시장별 접근성과 지수 내 비중이 다릅니다.</td></tr><tr><td>베트남</td><td>프런티어시장</td><td>프런티어시장</td><td>승격 검토·시행 시점은 지수 기관의 정기 발표에 따라 달라질 수 있습니다.</td></tr><tr><td>미국·일본</td><td>선진시장</td><td>선진시장</td><td>대표적인 선진시장 예시입니다.</td></tr></tbody></table>
+        <p class="emerging-market-class-note">같은 나라라도 기관·지수·자산군에 따라 분류가 다를 수 있습니다. ETF를 볼 때는 ‘신흥국’이라는 이름만 보지 말고, 실제 편입 국가·비중·기준일과 지수 방법론을 확인하세요.</p>
+        <p class="emerging-market-class-source">기준일과 분류는 바뀔 수 있습니다. 최신 내용은 <a href="https://www.msci.com/indexes/index-resources/market-classification" target="_blank" rel="noopener noreferrer">MSCI Market Classification</a> 및 <a href="https://www.lseg.com/en/ftse-russell/equity-country-classification" target="_blank" rel="noopener noreferrer">FTSE Russell Equity Country Classification</a>에서 확인하세요.</p>
+      </section>
+    </div>
+
+    <div class="glossary-modal fund-case-market-modal" id="fundCaseMarketModal" hidden>
+      <div class="glossary-modal__backdrop" data-fund-case-market-close></div>
+      <section class="glossary-modal__dialog fund-case-market-dialog" role="dialog" aria-modal="true" aria-labelledby="fundCaseMarketTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-fund-case-market-close>×</button>
+        <h2 id="fundCaseMarketTitle">펀드 사태와 KOSPI 시장 흐름</h2>
+        <p class="fund-case-market-intro">각 사례가 알려진 시점이 포함된 <b>6개월 KOSPI 일별 종가</b>입니다. 색칠된 영역은 보도 기준일부터 2주간이며, 사건이 KOSPI 변동의 원인이라는 뜻은 아닙니다.</p>
+        <div class="fund-case-market-tabs" role="tablist" aria-label="사례 선택">
+          <button type="button" class="active" data-fund-case="lime" role="tab" aria-selected="true">라임 · 201910</button>
+          <button type="button" data-fund-case="discovery" role="tab" aria-selected="false">디스커버리 · 201904</button>
+          <button type="button" data-fund-case="optimus" role="tab" aria-selected="false">옵티머스 · 202006</button>
+        </div>
+        <div class="fund-case-market-summary" aria-live="polite">
+          <article><span>보도 기준일</span><strong id="fundCaseMarketDate">2019-10-10</strong></article>
+          <article><span>2주 KOSPI 변동</span><strong id="fundCaseMarketChange">불러오는 중</strong></article>
+          <article><span>조회 기간</span><strong id="fundCaseMarketRange">2019-07 ~ 2019-12</strong></article>
+        </div>
+        <div class="fund-case-market-chart" id="fundCaseMarketChart" aria-label="사례별 6개월 KOSPI 종가 차트"></div>
+        <p class="fund-case-market-status" id="fundCaseMarketStatus" aria-live="polite">차트 데이터를 불러오는 중입니다.</p>
+        <p class="fund-case-market-note">자료: Yahoo Finance의 KOSPI 지수(^KS11) 일별 종가. 휴장일은 데이터에서 제외되며, 실제 투자 판단을 위한 시세 확인은 KRX·증권사 화면을 이용하세요.</p>
       </section>
     </div>
 
@@ -1279,14 +1456,438 @@
         });
       });
     </script>
+    <script>
+      (() => {
+        function init() {
+        const modal = document.getElementById("leverageDailySimModal");
+        const trigger = document.getElementById("leverageDailySimTrigger");
+        if (!modal || !trigger || !window.ApexCharts) return;
+        const capital = document.getElementById("leverageDailyCapital");
+        const multiple = document.getElementById("leverageDailyMultiple");
+        const dayOne = document.getElementById("leverageDayOne");
+        const dayTwo = document.getElementById("leverageDayTwo");
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const won = (value) => `${Math.round(value).toLocaleString("ko-KR")}원`;
+        const signed = (value) => `${value >= 0 ? "+" : "−"}${Math.abs(value).toFixed(2)}%`;
+        let chart;
+        const render = () => {
+          const principal = Math.max(0, Number(capital.value) || 0);
+          const factor = Number(multiple.value);
+          const first = Number(dayOne.value) / 100;
+          const second = Number(dayTwo.value) / 100;
+          const indexPath = [principal, principal * (1 + first), principal * (1 + first) * (1 + second)];
+          const etfPath = [principal, principal * (1 + factor * first), principal * (1 + factor * first) * (1 + factor * second)];
+          const indexReturn = principal ? (indexPath[2] / principal - 1) * 100 : 0;
+          const etfReturn = principal ? (etfPath[2] / principal - 1) * 100 : 0;
+          document.getElementById("leverageDayOneValue").textContent = signed(first * 100);
+          document.getElementById("leverageDayTwoValue").textContent = signed(second * 100);
+          document.getElementById("leverageEtfLabel").textContent = `${factor}배 ETF`;
+          document.getElementById("leverageIndexFinal").textContent = won(indexPath[2]);
+          document.getElementById("leverageIndexReturn").textContent = `누적 ${signed(indexReturn)}`;
+          document.getElementById("leverageEtfFinal").textContent = won(etfPath[2]);
+          document.getElementById("leverageEtfReturn").textContent = `누적 ${signed(etfReturn)}`;
+          const options = { chart: { type: "line", height: 330, toolbar: { show: false }, animations: { enabled: true } }, series: [{ name: "기초지수 추종", data: indexPath.map(Math.round) }, { name: `${factor}배 ETF`, data: etfPath.map(Math.round) }], colors: ["#2563eb", "#dc2626"], stroke: { width: 4, curve: "straight" }, markers: { size: 5 }, dataLabels: { enabled: false }, xaxis: { categories: ["시작", "첫째 날", "둘째 날"] }, yaxis: { labels: { formatter: (value) => `${(value / 100000000).toFixed(1)}억` } }, tooltip: { shared: true, y: { formatter: won } }, grid: { borderColor: "#dbe5f5", strokeDashArray: 4 }, legend: { position: "top", horizontalAlign: "left", fontWeight: 700 } };
+          if (chart) chart.updateOptions(options, true, true); else { chart = new ApexCharts(document.getElementById("leverageDailyChart"), options); chart.render(); }
+          document.getElementById("leverageDailyNote").textContent = `기초지수는 두 날 누적으로 ${signed(indexReturn)}이고 ${factor}배 ETF는 ${signed(etfReturn)}입니다. 매일 ${factor}배를 다시 곱하므로, ${factor} × 기초지수 누적수익률(${signed(indexReturn * factor)})과 실제 결과가 같지 않을 수 있습니다.`;
+        };
+        const open = () => { modal.hidden = false; render(); closeButton?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        [capital, multiple, dayOne, dayTwo].forEach((field) => field.addEventListener("input", render));
+        multiple.addEventListener("change", render);
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-leverage-daily-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+        }
+        document.addEventListener("leverage-daily-simulator-ready", init, { once: true });
+        init();
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("fundEtfBreakTimeModal");
+        const trigger = document.getElementById("fundEtfBreakTimeTrigger");
+        if (!modal || !trigger) return;
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const open = () => { modal.hidden = false; closeButton?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-fund-etf-breaktime-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("gapTrackingBreakTimeModal");
+        const trigger = document.getElementById("gapTrackingBreakTimeTrigger");
+        if (!modal || !trigger) return;
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const open = () => { modal.hidden = false; closeButton?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-gap-tracking-breaktime-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("fundEtfCompareModal");
+        const trigger = document.getElementById("fundEtfCompareTrigger");
+        if (!modal || !trigger || !window.ApexCharts) return;
+        const ids = ["fundEtfPrincipal", "fundEtfFundReturn", "fundEtfFundFee", "fundEtfEtfReturn", "fundEtfEtfFee", "fundEtfYears"];
+        const fields = Object.fromEntries(ids.map((id) => [id, document.getElementById(id)]));
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const won = (value) => `${Math.round(value).toLocaleString("ko-KR")}원`;
+        let chart;
+        const render = () => {
+          const principal = Math.max(0, Number(fields.fundEtfPrincipal.value) || 0);
+          const fundReturn = Number(fields.fundEtfFundReturn.value);
+          const fundFee = Number(fields.fundEtfFundFee.value);
+          const etfReturn = Number(fields.fundEtfEtfReturn.value);
+          const etfFee = Number(fields.fundEtfEtfFee.value);
+          const years = Number(fields.fundEtfYears.value);
+          const fundRate = (fundReturn - fundFee) / 100;
+          const etfRate = (etfReturn - etfFee) / 100;
+          const labels = ["시작"];
+          const fundData = [principal];
+          const etfData = [principal];
+          for (let year = 1; year <= years; year += 1) { labels.push(`${year}년`); fundData.push(Math.round(principal * (1 + fundRate) ** year)); etfData.push(Math.round(principal * (1 + etfRate) ** year)); }
+          document.getElementById("fundEtfFundReturnValue").textContent = `${fundReturn.toFixed(1)}%`;
+          document.getElementById("fundEtfFundFeeValue").textContent = `${fundFee.toFixed(1)}%`;
+          document.getElementById("fundEtfEtfReturnValue").textContent = `${etfReturn.toFixed(1)}%`;
+          document.getElementById("fundEtfEtfFeeValue").textContent = `${etfFee.toFixed(1)}%`;
+          document.getElementById("fundEtfYearsValue").textContent = `${years}년`;
+          const fundFinal = fundData.at(-1), etfFinal = etfData.at(-1);
+          document.getElementById("fundEtfFundFinal").textContent = won(fundFinal);
+          document.getElementById("fundEtfEtfFinal").textContent = won(etfFinal);
+          document.getElementById("fundEtfFundNet").textContent = `보수 차감 후 연 ${fundRate * 100 >= 0 ? "+" : ""}${(fundRate * 100).toFixed(1)}% 가정`;
+          document.getElementById("fundEtfEtfNet").textContent = `보수 차감 후 연 ${etfRate * 100 >= 0 ? "+" : ""}${(etfRate * 100).toFixed(1)}% 가정`;
+          document.getElementById("fundEtfCompareNote").textContent = `이 가정에서는 ${fundFinal === etfFinal ? "두 상품의 예상 결과가 같습니다" : etfFinal > fundFinal ? `ETF가 ${won(etfFinal - fundFinal)} 더 크게 표시됩니다` : `펀드가 ${won(fundFinal - etfFinal)} 더 크게 표시됩니다`}. 수익률과 보수 외에도 편입자산·위험·세금·거래 편의성을 함께 비교하세요.`;
+          const options = { chart: { type: "line", height: 350, toolbar: { show: false }, animations: { enabled: true } }, series: [{ name: "펀드", data: fundData }, { name: "ETF", data: etfData }], colors: ["#7c3aed", "#2563eb"], stroke: { width: [4, 4], curve: "smooth" }, markers: { size: 3 }, dataLabels: { enabled: false }, xaxis: { categories: labels, labels: { style: { colors: "#64748b" } } }, yaxis: { labels: { formatter: (value) => `${(value / 10000).toFixed(0)}만`, style: { colors: "#64748b" } } }, tooltip: { shared: true, y: { formatter: won } }, grid: { borderColor: "#dbe5f5", strokeDashArray: 4 }, legend: { position: "top", horizontalAlign: "left", fontWeight: 700 } };
+          if (chart) chart.updateOptions(options, true, true); else { chart = new ApexCharts(document.getElementById("fundEtfCompareChart"), options); chart.render(); }
+        };
+        const open = () => { modal.hidden = false; render(); closeButton?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        Object.values(fields).forEach((field) => field.addEventListener("input", render));
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-fund-etf-compare-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("lifeCycleSavingsModal");
+        const trigger = document.getElementById("lifeCycleSavingsTrigger");
+        if (!modal || !trigger || !window.ApexCharts) return;
+        const stage = document.getElementById("lifeCycleStage");
+        const product = document.getElementById("lifeCycleProduct");
+        const principal = document.getElementById("lifeCyclePrincipal");
+        const rate = document.getElementById("lifeCycleRate");
+        const years = document.getElementById("lifeCycleYears");
+        const monthly = document.getElementById("lifeCycleMonthly");
+        const monthlyField = document.getElementById("lifeCycleMonthlyField");
+        const rateValue = document.getElementById("lifeCycleRateValue");
+        const yearsValue = document.getElementById("lifeCycleYearsValue");
+        const contributions = document.getElementById("lifeCycleContributions");
+        const finalLabel = document.getElementById("lifeCycleFinalLabel");
+        const finalAmount = document.getElementById("lifeCycleFinal");
+        const gain = document.getElementById("lifeCycleGain");
+        const guideTitle = document.getElementById("lifeCycleGuideTitle");
+        const guide = document.getElementById("lifeCycleGuide");
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const won = (value) => `${Math.round(value).toLocaleString("ko-KR")}원`;
+        const stages = {
+          starter: ["사회초년생의 점검", "생활비 몇 달치와 가까운 목표자금은 수익률보다 언제든 쓸 수 있는지부터 점검하세요."],
+          family: ["중기 목표의 점검", "주거·교육처럼 사용 시점이 정해진 돈은 목표 시점이 가까워질수록 가격 변동 위험을 줄이는 방법을 검토하세요."],
+          retirement: ["은퇴 준비의 점검", "은퇴 뒤 필요한 생활비와 장기 성장 자금을 구분하고, 한 번의 큰 손실을 견딜 수 있는 범위를 먼저 정하세요."],
+        };
+        let chart;
+        const configureRate = () => {
+          const isFund = product.value === "fund";
+          rate.min = isFund ? "-10" : "0";
+          rate.max = isFund ? "12" : "8";
+          rate.step = isFund ? "0.5" : "0.1";
+          if (isFund && Number(rate.value) === 3) rate.value = "5";
+          if (!isFund && Number(rate.value) < 0) rate.value = "3";
+          monthlyField.hidden = product.value !== "saving";
+        };
+        const render = () => {
+          const start = Math.max(0, Number(principal.value) || 0);
+          const annualRate = Number(rate.value) / 100;
+          const term = Number(years.value);
+          const monthlyDeposit = Math.max(0, Number(monthly.value) || 0);
+          const isSaving = product.value === "saving";
+          const labels = ["시작"];
+          const balances = [start];
+          let balance = start;
+          for (let month = 1; month <= term * 12; month += 1) {
+            if (isSaving) balance += monthlyDeposit;
+            balance *= 1 + annualRate / 12;
+            if (month % 12 === 0) { labels.push(`${month / 12}년`); balances.push(Math.round(balance)); }
+          }
+          const paidIn = start + (isSaving ? monthlyDeposit * term * 12 : 0);
+          rateValue.textContent = `${annualRate >= 0 ? "+" : ""}${(annualRate * 100).toFixed(1)}%`;
+          yearsValue.textContent = `${term}년`;
+          contributions.textContent = won(paidIn);
+          finalLabel.textContent = product.value === "fund" ? "기간 후 예상 금액" : "만기 예상 금액";
+          finalAmount.textContent = won(balance);
+          gain.textContent = `납입 원금 대비 ${balance - paidIn >= 0 ? "+" : ""}${won(balance - paidIn)}`;
+          [guideTitle.textContent, guide.textContent] = stages[stage.value];
+          const productName = product.options[product.selectedIndex].text.split(" · ")[0];
+          const options = {
+            chart: { type: "area", height: 330, toolbar: { show: false }, animations: { enabled: true } },
+            series: [{ name: `${productName} 예상 잔액`, data: balances }],
+            colors: [product.value === "fund" ? "#7c3aed" : "#2563eb"],
+            stroke: { width: 4, curve: "smooth" }, fill: { type: "gradient", gradient: { opacityFrom: .35, opacityTo: .03 } },
+            dataLabels: { enabled: false }, markers: { size: 3 },
+            xaxis: { categories: labels, labels: { style: { colors: "#64748b" } } },
+            yaxis: { labels: { formatter: (value) => `${(value / 10000).toFixed(0)}만`, style: { colors: "#64748b" } } },
+            tooltip: { y: { formatter: won } }, grid: { borderColor: "#dbe5f5", strokeDashArray: 4 }, legend: { show: false },
+          };
+          if (chart) chart.updateOptions(options, true, true);
+          else { chart = new ApexCharts(document.getElementById("lifeCycleSavingsChart"), options); chart.render(); }
+        };
+        const update = () => { configureRate(); render(); };
+        const open = () => { modal.hidden = false; update(); closeButton?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        [stage, product].forEach((input) => input.addEventListener("change", update));
+        [principal, rate, years, monthly].forEach((input) => input.addEventListener("input", render));
+        trigger.addEventListener("click", open);
+        document.getElementById("bankRateSimTrigger")?.addEventListener("click", () => trigger.click());
+        modal.querySelectorAll("[data-lifecycle-savings-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("hedgeDiversificationModal");
+        const trigger = document.getElementById("hedgeDiversificationTrigger");
+        if (!modal || !trigger || !window.ApexCharts) return;
+        const capital = document.getElementById("hedgeCapital");
+        const marketMove = document.getElementById("hedgeMarketMove");
+        const equityWeight = document.getElementById("hedgeEquityWeight");
+        const coverage = document.getElementById("hedgeCoverage");
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const won = (value) => `${Math.round(value).toLocaleString("ko-KR")}원`;
+        let chart;
+        const render = () => {
+          const principal = Math.max(0, Number(capital.value) || 0);
+          const market = Number(marketMove.value) / 100;
+          const stockWeight = Number(equityWeight.value) / 100;
+          const bondWeight = Math.max(0, 0.9 - stockWeight);
+          const hedgeRatio = Number(coverage.value) / 100;
+          // A mild opposite bond response is an educational assumption, not a forecast.
+          const bondReturn = Math.max(-0.05, Math.min(0.05, -market * 0.15));
+          const concentrated = principal * (1 + market);
+          const diversified = principal * (1 + stockWeight * market + bondWeight * bondReturn);
+          const optionPremium = principal * stockWeight * hedgeRatio * 0.02;
+          const optionPayout = principal * stockWeight * hedgeRatio * Math.max(-market, 0);
+          const hedged = diversified - optionPremium + optionPayout;
+          const updateCard = (finalId, pnlId, value) => {
+            const pnl = value - principal;
+            document.getElementById(finalId).textContent = won(value);
+            const pnlEl = document.getElementById(pnlId);
+            pnlEl.textContent = `${pnl >= 0 ? "+" : ""}${won(pnl)} (${principal ? ((pnl / principal) * 100).toFixed(1) : "0.0"}%)`;
+            pnlEl.className = pnl >= 0 ? "positive" : "negative";
+          };
+          document.getElementById("hedgeMarketMoveValue").textContent = `${market >= 0 ? "+" : ""}${(market * 100).toFixed(0)}%`;
+          document.getElementById("hedgeEquityWeightValue").textContent = `${(stockWeight * 100).toFixed(0)}%`;
+          document.getElementById("hedgeCoverageValue").textContent = `${(hedgeRatio * 100).toFixed(0)}%`;
+          document.getElementById("hedgeBondWeight").textContent = `${(bondWeight * 100).toFixed(0)}%`;
+          updateCard("hedgeConcentratedFinal", "hedgeConcentratedPnl", concentrated);
+          updateCard("hedgeDiversifiedFinal", "hedgeDiversifiedPnl", diversified);
+          updateCard("hedgeHedgedFinal", "hedgeHedgedPnl", hedged);
+          const options = { chart: { type: "bar", height: 290, toolbar: { show: false }, animations: { enabled: true } }, series: [{ name: "예상 잔액", data: [Math.round(concentrated), Math.round(diversified), Math.round(hedged)] }], colors: ["#ef4444", "#2563eb", "#059669"], plotOptions: { bar: { distributed: true, horizontal: true, borderRadius: 5, barHeight: "55%" } }, dataLabels: { enabled: true, formatter: won, style: { fontSize: "11px" } }, xaxis: { categories: ["주식 집중", "분산투자", "분산 + 풋 헤지"], labels: { formatter: (value) => `${(value / 100000000).toFixed(1)}억` } }, yaxis: { labels: { style: { fontWeight: 700 } } }, grid: { borderColor: "#dbe5f5", strokeDashArray: 4 }, tooltip: { y: { formatter: won } }, legend: { show: false } };
+          if (chart) chart.updateOptions(options, true, true); else { chart = new ApexCharts(document.getElementById("hedgeDiversificationChart"), options); chart.render(); }
+          const difference = hedged - concentrated;
+          document.getElementById("hedgeDiversificationNote").textContent = `${market < 0 ? `이 가정에서 분산 + 풋 헤지는 주식 집중보다 ${won(Math.abs(difference))} ${difference >= 0 ? "더 크게" : "더 작게"} 남습니다.` : `시장이 오르면 풋옵션 프리미엄 ${won(optionPremium)}이 비용이 되어 상승 이익 일부를 줄일 수 있습니다.`} 분산은 손실을 없애지 않으며, 풋 헤지도 가격·만기·보호 비중에 따라 결과가 달라집니다.`;
+        };
+        const open = () => { modal.hidden = false; render(); closeButton?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        [capital, marketMove, equityWeight, coverage].forEach((field) => field.addEventListener("input", render));
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-hedge-diversification-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("emergingMarketClassModal");
+        const trigger = document.getElementById("emergingMarketClassTrigger");
+        if (!modal || !trigger) return;
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const open = () => { modal.hidden = false; closeButton?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-emerging-market-class-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("fundCaseMarketModal");
+        const trigger = document.getElementById("fundCaseMarketTrigger");
+        if (!modal || !trigger || !window.ApexCharts) return;
+        const cases = {
+          lime: { date: "2019-10-10", start: "2019-07-01", end: "2020-01-01", range: "2019-07 ~ 2019-12" },
+          discovery: { date: "2019-04-26", start: "2019-01-01", end: "2019-07-01", range: "2019-01 ~ 2019-06" },
+          optimus: { date: "2020-06-18", start: "2020-03-01", end: "2020-09-01", range: "2020-03 ~ 2020-08" },
+        };
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const tabs = Array.from(modal.querySelectorAll("[data-fund-case]"));
+        const status = document.getElementById("fundCaseMarketStatus");
+        const dateEl = document.getElementById("fundCaseMarketDate");
+        const changeEl = document.getElementById("fundCaseMarketChange");
+        const rangeEl = document.getElementById("fundCaseMarketRange");
+        const cache = new Map();
+        let chart;
+        let activeCase = "lime";
+        const plusDays = (date, days) => new Date(new Date(`${date}T00:00:00+09:00`).getTime() + days * 86400000).getTime();
+        const formatChange = (value) => `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`;
+        async function loadCase(caseKey) {
+          const item = cases[caseKey];
+          activeCase = caseKey;
+          tabs.forEach((tab) => {
+            const selected = tab.dataset.fundCase === caseKey;
+            tab.classList.toggle("active", selected);
+            tab.setAttribute("aria-selected", String(selected));
+          });
+          dateEl.textContent = item.date;
+          rangeEl.textContent = item.range;
+          changeEl.textContent = "불러오는 중";
+          changeEl.className = "";
+          status.textContent = "KOSPI 일별 종가를 불러오는 중입니다.";
+          status.classList.remove("error");
+          try {
+            let points = cache.get(caseKey);
+            if (!points) {
+              const url = `/market/kospi-history?start=${item.start}&end=${item.end}`;
+              const response = await fetch(url);
+              if (!response.ok) throw new Error("시세 조회 실패");
+              const result = await response.json();
+              points = (result.bars || []).map((bar) => [bar.time, bar.close]).filter((point) => Number.isFinite(point[1]));
+              if (!points.length) throw new Error("종가 데이터 없음");
+              cache.set(caseKey, points);
+            }
+            if (activeCase !== caseKey || modal.hidden) return;
+            const eventAt = new Date(`${item.date}T00:00:00+09:00`).getTime();
+            const endAt = plusDays(item.date, 14);
+            const startPoint = points.find((point) => point[0] >= eventAt) || points[0];
+            const endPoint = [...points].reverse().find((point) => point[0] <= endAt) || points.at(-1);
+            const change = ((endPoint[1] / startPoint[1]) - 1) * 100;
+            changeEl.textContent = formatChange(change);
+            changeEl.className = change >= 0 ? "up" : "down";
+            const options = {
+              chart: { type: "area", height: 360, toolbar: { show: false }, animations: { enabled: true } },
+              series: [{ name: "KOSPI 종가", data: points }],
+              colors: ["#2563eb"],
+              stroke: { width: 3, curve: "smooth" },
+              fill: { type: "gradient", gradient: { opacityFrom: 0.3, opacityTo: 0.03 } },
+              dataLabels: { enabled: false }, markers: { size: 0 },
+              xaxis: { type: "datetime", labels: { format: "yyyy-MM", style: { colors: "#64748b" } } },
+              yaxis: { labels: { formatter: (value) => Math.round(value).toLocaleString("ko-KR"), style: { colors: "#64748b" } } },
+              tooltip: { x: { format: "yyyy-MM-dd" }, y: { formatter: (value) => `${Math.round(value).toLocaleString("ko-KR")}p` } },
+              grid: { borderColor: "#dbe5f5", strokeDashArray: 4 },
+              annotations: { xaxis: [{ x: eventAt, x2: endAt, fillColor: "#f59e0b", opacity: 0.18, label: { text: "보도 후 2주", style: { background: "#d97706", color: "#fff" } } }] },
+              legend: { show: false },
+            };
+            if (chart) chart.updateOptions(options, true, true);
+            else { chart = new ApexCharts(document.getElementById("fundCaseMarketChart"), options); chart.render(); }
+            status.textContent = `2주 구간: ${new Date(startPoint[0]).toLocaleDateString("sv-SE")} ~ ${new Date(endPoint[0]).toLocaleDateString("sv-SE")} 종가 기준`;
+          } catch (error) {
+            if (activeCase !== caseKey || modal.hidden) return;
+            changeEl.textContent = "조회 실패";
+            status.textContent = "시세 데이터를 불러오지 못했습니다. 네트워크 연결 후 다시 열어 보세요.";
+            status.classList.add("error");
+          }
+        }
+        const open = () => { modal.hidden = false; loadCase(activeCase); closeButton?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        trigger.addEventListener("click", open);
+        tabs.forEach((tab) => tab.addEventListener("click", () => loadCase(tab.dataset.fundCase)));
+        modal.querySelectorAll("[data-fund-case-market-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("etfCatalogModal");
+        const trigger = document.getElementById("etfCatalogTrigger");
+        if (!modal || !trigger) return;
+        const brand = document.getElementById("etfCatalogBrand");
+        const asset = document.getElementById("etfCatalogAsset");
+        const search = document.getElementById("etfCatalogSearch");
+        const rows = document.getElementById("etfCatalogRows");
+        const detail = document.getElementById("etfCatalogDetail");
+        const status = document.getElementById("etfCatalogStatus");
+        const pageLabel = document.getElementById("etfCatalogPage");
+        const previous = document.getElementById("etfCatalogPrevious");
+        const next = document.getElementById("etfCatalogNext");
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const pageSize = 12;
+        let source = null;
+        let page = 0;
+        const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+        const percentage = (value) => `${Number(value || 0) >= 0 ? "+" : ""}${Number(value || 0).toFixed(2)}%`;
+        const filtered = () => {
+          if (!source) return [];
+          const keyword = search.value.trim().toLowerCase();
+          return source.items.filter((item) =>
+            (brand.value === "all" || item.brand === brand.value)
+            && (asset.value === "all" || item.assetClass === asset.value)
+            && (!keyword || `${item.name} ${item.theme} ${item.assetClass}`.toLowerCase().includes(keyword)),
+          );
+        };
+        const showDetail = (code) => {
+          const item = source?.items.find((entry) => entry.code === code);
+          if (!item) return;
+          const holdings = item.topHoldings?.length
+            ? `<ol>${item.topHoldings.map((holding) => `<li><span>${esc(holding.name)}</span><b>${Number(holding.weight).toFixed(2)}%</b></li>`).join("")}</ol>`
+            : "<p class=\"etf-catalog-empty\">이 ETF는 조회 시점에 개별 편입종목 내역이 없었습니다. 현금성·파생형 상품일 수 있으므로 KRX PDF와 운용사 자료를 확인하세요.</p>";
+          detail.innerHTML = `<span class="etf-catalog-detail-kicker">${esc(item.brand)} · ${esc(item.manager)}</span><h3>${esc(item.name)}</h3><dl><div><dt>최근 3개월 수익률</dt><dd class="${Number(item.return3m) >= 0 ? "positive" : "negative"}">${percentage(item.return3m)}</dd></div><div><dt>분류</dt><dd>${esc(item.assetClass)} · ${esc(item.theme)}</dd></div><div><dt>편입 기준일</dt><dd>${esc(item.holdingsAsOf || "확인 필요")}</dd></div></dl><h4>상위 편입종목·비중</h4>${holdings}<p><a href="${esc(item.managerSite)}" target="_blank" rel="noopener noreferrer">운용사 상품 정보 ↗</a> <a href="${esc(item.detailUrl)}" target="_blank" rel="noopener noreferrer">시세 상세 ↗</a></p>`;
+        };
+        const render = () => {
+          const items = filtered();
+          const maxPage = Math.max(0, Math.ceil(items.length / pageSize) - 1);
+          page = Math.min(page, maxPage);
+          const visible = items.slice(page * pageSize, page * pageSize + pageSize);
+          status.textContent = `총 ${items.length.toLocaleString("ko-KR")}개 ETF · ${source.updatedAt} 수집 기준`;
+          rows.innerHTML = visible.length ? visible.map((item) => `<tr><td><b>${esc(item.name)}</b><small>${esc(item.code)} · ${esc(item.manager)}</small></td><td class="${Number(item.return3m) >= 0 ? "positive" : "negative"}">${percentage(item.return3m)}</td><td>${esc(item.assetClass)}<small>${esc(item.theme)}</small></td><td><button type="button" data-etf-detail="${esc(item.code)}">보기</button></td></tr>`).join("") : "<tr><td colspan=\"4\" class=\"etf-catalog-empty\">조건에 맞는 ETF가 없습니다.</td></tr>";
+          pageLabel.textContent = `${maxPage + 1 ? page + 1 : 0} / ${maxPage + 1}`;
+          previous.disabled = page === 0;
+          next.disabled = page >= maxPage;
+        };
+        const load = async () => {
+          if (source) return;
+          try {
+            const response = await fetch("assets/etf-catalog.json", { cache: "no-store" });
+            if (!response.ok) throw new Error("catalog unavailable");
+            source = await response.json();
+            render();
+          } catch (error) {
+            status.textContent = "ETF 데이터를 불러오지 못했습니다. 잠시 후 다시 시도하세요.";
+          }
+        };
+        const open = async () => { modal.hidden = false; closeButton?.focus(); await load(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        [brand, asset].forEach((field) => field.addEventListener("change", () => { page = 0; render(); }));
+        search.addEventListener("input", () => { page = 0; render(); });
+        previous.addEventListener("click", () => { page -= 1; render(); });
+        next.addEventListener("click", () => { page += 1; render(); });
+        rows.addEventListener("click", (event) => { const button = event.target.closest("[data-etf-detail]"); if (button) showDetail(button.dataset.etfDetail); });
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-etf-catalog-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
     <script src="assets/app-shell.js"></script>
     <script>
       document
         .querySelector(".lesson-list > .lesson:nth-child(5)")
         .insertAdjacentHTML(
           "afterend",
-          `<section class="lesson"><span>17</span><div class="lesson-content"><h2>레버리지 ETF는 왜 선물을 쓰나요?</h2><div class="lesson-body"><p>레버리지 ETF는 기초지수의 장기 누적수익률이 아니라, 보통 하루 수익률의 일정 배수(예: +2배·+3배)를 목표로 합니다. 운용사는 ETF 순자산보다 큰 지수 노출을 만들기 위해 선물 등 파생상품과 현금성 자산을 조합합니다. 예를 들어 순자산이 100억 원인 2배 상품은 하루 시작 시점에 기초지수 약 200억 원에 해당하는 경제적 노출을 목표로 설계할 수 있습니다. 실제 편입 수단과 비중은 상품의 투자설명서에 따라 다릅니다.</p><p>목표 배수는 하루가 끝날 때 다시 맞춥니다. 지수가 올라 ETF 순자산이 커지면 같은 2배 노출을 유지하기 위해 파생상품 노출을 늘리고, 지수가 내려 순자산이 줄면 노출을 줄이는 식입니다. 이를 일일 리밸런싱 또는 일일 재설정이라고 합니다. 따라서 투자자가 선물계약을 직접 주문하지 않아도, ETF 내부에서는 운용사가 목표 노출을 관리합니다.</p><p>이 목표는 하루 단위입니다. 가령 지수가 첫날 +10%, 다음 날 약 -9.09% 움직이면 지수는 처음 수준으로 돌아오지만, 매일 3배를 목표로 한 상품은 수수료·세금 등을 빼기 전에도 <code>100 × 1.30 × (1 − 0.2727) ≈ 94.55</code>가 됩니다. 매일의 수익률에 곱해지는 구조이므로 변동성이 크고 오르내림이 반복될수록 여러 날의 성과는 단순한 2배·3배와 크게 달라질 수 있습니다. 이것은 일일 목표를 달성하지 못한 오류가 아니라 목표기간이 서로 다르기 때문에 생기는 효과입니다.</p><p>일반 ETF와 비교할 때는 추종배수뿐 아니라 ‘목표기간이 일간인지’, 파생상품·롤오버 위험, 총보수와 거래비용, 기초지수의 변동성을 함께 확인하세요. 보유 기간을 정하는 단일 규칙이나 손실 한도는 모든 사람에게 같지 않으므로, 상품설명서와 자신의 투자 목적·손실 감당 범위를 기준으로 판단해야 합니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="레버리지 ETF는 왜 선물을 쓰나요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`,
+          `<section class="lesson"><span>17</span><div class="lesson-content"><h2>레버리지 ETF는 왜 선물을 쓰나요?</h2><div class="lesson-body"><p>레버리지 ETF는 기초지수의 장기 누적수익률이 아니라, 보통 하루 수익률의 일정 배수(예: +2배·+3배)를 목표로 합니다. 운용사는 ETF 순자산보다 큰 지수 노출을 만들기 위해 선물 등 파생상품과 현금성 자산을 조합합니다. 예를 들어 순자산이 100억 원인 2배 상품은 하루 시작 시점에 기초지수 약 200억 원에 해당하는 경제적 노출을 목표로 설계할 수 있습니다. 실제 편입 수단과 비중은 상품의 투자설명서에 따라 다릅니다.</p><p><b>100억 원으로 200억 원을 어떻게 움직일까요?</b> 선물은 200억 원어치 주식을 지금 모두 사는 거래가 아니라, 지수가 움직인 만큼 손익을 주고받는 계약입니다. 그래서 운용사는 ETF의 100억 원 중 일부를 선물 증거금·현금성 자산으로 두고, 계약금액의 합계가 약 200억 원이 되도록 선물을 매수할 수 있습니다. 이것은 “100억 원을 두 배로 빌려 200억 원의 주식을 사 둔다”는 뜻과는 다릅니다. 선물계약 자체가 200억 원의 가격 변동에 연결되는 것입니다.</p><p><b>하루를 숫자로 보면 더 쉽습니다.</b> 100억 원짜리 2배 ETF가 200억 원 노출을 만들었다고 가정해 보세요. 기초지수가 하루 +1%면 계약 손익은 약 +2억 원(200억 원 × 1%)이 되어 ETF 순자산은 약 102억 원, 즉 +2%가 됩니다. 반대로 지수가 -1%면 약 -2억 원으로 순자산은 약 98억 원, 즉 -2%가 됩니다. 선물은 전액을 미리 내지 않기 때문에 이처럼 적은 순자산으로 더 큰 가격 변화에 연결되지만, 손실이 나면 증거금 보충·계약 축소가 필요할 수 있습니다.</p><p>목표 배수는 하루가 끝날 때 다시 맞춥니다. 지수가 올라 ETF 순자산이 커지면 같은 2배 노출을 유지하기 위해 파생상품 노출을 늘리고, 지수가 내려 순자산이 줄면 노출을 줄이는 식입니다. 이를 일일 리밸런싱 또는 일일 재설정이라고 합니다. 따라서 투자자가 선물계약을 직접 주문하지 않아도, ETF 내부에서는 운용사가 목표 노출을 관리합니다.</p><p>이 목표는 하루 단위입니다. 가령 지수가 첫날 +10%, 다음 날 약 -9.09% 움직이면 지수는 처음 수준으로 돌아오지만, 매일 3배를 목표로 한 상품은 수수료·세금 등을 빼기 전에도 <code>100 × 1.30 × (1 − 0.2727) ≈ 94.55</code>가 됩니다. 매일의 수익률에 곱해지는 구조이므로 변동성이 크고 오르내림이 반복될수록 여러 날의 성과는 단순한 2배·3배와 크게 달라질 수 있습니다. 이것은 일일 목표를 달성하지 못한 오류가 아니라 목표기간이 서로 다르기 때문에 생기는 효과입니다.</p><p>일반 ETF와 비교할 때는 추종배수뿐 아니라 ‘목표기간이 일간인지’, 파생상품·롤오버 위험, 총보수와 거래비용, 기초지수의 변동성을 함께 확인하세요. 보유 기간을 정하는 단일 규칙이나 손실 한도는 모든 사람에게 같지 않으므로, 상품설명서와 자신의 투자 목적·손실 감당 범위를 기준으로 판단해야 합니다.</p><p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="leverageDailySimTrigger"><i class="fa-solid fa-chart-line"></i> 일일 재설정 예시 테스트</button><small>시작 금액·목표 배수·첫째 날과 둘째 날의 지수 변동을 바꿔 보세요.</small></p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="레버리지 ETF는 왜 선물을 쓰나요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`,
         );
+      document.dispatchEvent(new Event("leverage-daily-simulator-ready"));
       document
         .querySelector(".glossary-grid")
         .insertAdjacentHTML(
@@ -1757,5 +2358,7 @@
         render();
       })();
     </script>
+    <script src="../assets/modal-fit.js?v=20260905-leverage-daily"></script>
+    <script src="../assets/click-logger.js?v=20260905"></script>
   </body>
 </html>
