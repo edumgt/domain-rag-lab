@@ -562,7 +562,6 @@ KOSDAQ|웹젠|게임`,
   const $learningPanel = document.getElementById('learningPanel');
   const $ragPanel = document.getElementById('ragPanel');
   const $simulationPanel = document.getElementById('simulationPanel');
-  const $openSimulationPanel = document.getElementById('openSimulationPanel');
   const $glossaryModal = document.getElementById('glossaryModal');
   const $glossaryTitle = document.getElementById('glossaryTitle');
   const $glossaryNames = document.getElementById('glossaryNames');
@@ -588,9 +587,6 @@ KOSDAQ|웹젠|게임`,
 
   $openLeftPanel.addEventListener('click', () => togglePanel('left'));
   $openRightPanel?.addEventListener('click', () => togglePanel('right'));
-  $openSimulationPanel.addEventListener('click', () => {
-    setView('simulation');
-  });
   $closeLeftPanel.addEventListener('click', () => setPanel('left', false));
   $offcanvasBackdrop.addEventListener('click', () => closePanels());
   $messages.addEventListener('click', event => {
@@ -1132,25 +1128,7 @@ KOSDAQ|웹젠|게임`,
   function renderHome() {
     $messages.innerHTML = `
       <article class="content-page home-page">
-        <header class="home-page-head">
-          <div>
-            <div class="content-kicker">MONEY & EVERYDAY EXCHANGE · RAG 기반 학습</div>
-            <h1><mark>금융·생활 거래</mark> 학습</h1>
-          </div>
-          <p class="content-lead">금·부동산·수집품·중고거래를 포함해, 가격뿐 아니라 상태·권리·비용·사기 위험을 함께 확인하는 학습 흐름을 제공합니다.</p>
-        </header>
-        <div class="home-actions">
-          <button class="content-cta" data-go="theory"><i class="fa-solid fa-calendar-days"></i> 4일 이론 학습 시작</button>
-          <button class="content-cta" data-go="learn"><i class="fa-solid fa-comments"></i> RAG에게 질문하기</button>
-          <button class="content-secondary" data-go="stocks"><i class="fa-solid fa-building-columns"></i> 종목보기로 이동</button>
-        </div>
         ${renderTickDashboardSection()}
-        <section class="markdown-card">
-          <p class="markdown-label">LEARNING NOTE</p>
-          <h2>좋은 포트폴리오는 ‘정답’보다<br>위험을 감당할 수 있는 구조에 가깝습니다.</h2>
-          <blockquote>수익률만으로 상품을 비교하지 말고 비용, 유동성, 상관관계와 최대낙폭을 함께 검토하세요.</blockquote>
-          <div class="markdown-columns"><div><h3>상품을 볼 때</h3><ul><li>무엇에 투자하는가</li><li>총비용과 거래비용은 얼마인가</li><li>유동성·추적오차·신용위험은 어떤가</li></ul></div><div><h3>배분을 볼 때</h3><ul><li>투자기간과 손실 허용 범위는 어떤가</li><li>자산 간 상관관계가 낮은가</li><li>리밸런싱 규칙이 있는가</li></ul></div></div>
-        </section>
         <p class="content-disclaimer">학습용 서비스이며 특정 투자상품의 매수·매도를 권유하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
       </article>`;
     bindViewLinks();
@@ -2371,10 +2349,10 @@ effective_date: [기준일]
       chart: { type: 'bar', height: 250, toolbar: { show: false }, animations: { enabled: true } },
       series: [{ name: '교육용 가정 수익률', data: [scenario.stock * 100, scenario.bond * 100, scenario.alt * 100] }],
       colors: ['#2563eb', '#16a34a', '#f59e0b'],
-      plotOptions: { bar: { horizontal: true, distributed: true, borderRadius: 5, barHeight: '52%' } },
+      plotOptions: { bar: { horizontal: false, distributed: true, borderRadius: 5, columnWidth: '42%' } },
       dataLabels: { enabled: true, formatter: value => `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`, style: { fontSize: '12px', fontWeight: 800 } },
-      xaxis: { categories: ['주식 / ETF', '채권', '대체 · 현금'], labels: { formatter: value => `${value}%`, style: { colors: '#64748b' } } },
-      yaxis: { labels: { style: { colors: '#334155', fontWeight: 700 } } },
+      xaxis: { categories: ['주식 / ETF', '채권', '대체 · 현금'], labels: { show: false }, axisTicks: { show: false } },
+      yaxis: { labels: { formatter: value => `${value}%`, style: { colors: '#64748b' } } },
       grid: { borderColor: '#dbe5f5', strokeDashArray: 4 },
       legend: { show: false },
       tooltip: { y: { formatter: value => `${value >= 0 ? '+' : ''}${value.toFixed(1)}%` } },

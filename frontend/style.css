@@ -447,6 +447,7 @@ html, body {
 
 /* ===== Tick chart dashboard ===== */
 .tick-dashboard { margin-bottom: 46px; }
+.home-page > .content-section:first-child { margin-top: 0; }
 .tick-card { padding: 22px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
 .tick-card-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px 20px; margin-bottom: 16px; }
 .tick-search { position: relative; max-width: 320px; margin-bottom: 12px; }
