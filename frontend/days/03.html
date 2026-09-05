@@ -13,6 +13,22 @@
     <style>
       /* 옵션 학습 단원은 01일차로 이동했습니다. */
       body[data-day="3"] .lesson-list > .lesson:nth-child(n + 13) { display: none; }
+      .bond-market-size-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
+      .bond-market-size-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+      .bond-market-size-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
+      .bond-market-size-summary article { padding: 13px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; text-align: center; }
+      .bond-market-size-summary span { display: block; color: var(--muted); font-size: 11px; font-weight: 800; }
+      .bond-market-size-summary strong { display: block; margin-top: 6px; color: var(--ink); font-size: 20px; }
+      .bond-market-size-chart { display: grid; gap: 10px; }
+      .bond-market-size-row { display: grid; grid-template-columns: 104px minmax(90px, 1fr) 100px; gap: 10px; align-items: center; }
+      .bond-market-size-country { color: var(--ink); font-size: 13px; font-weight: 800; }
+      .bond-market-size-track { height: 25px; overflow: hidden; border-radius: 5px; background: #edf1f7; }
+      .bond-market-size-bar { display: flex; align-items: center; min-width: 2px; height: 100%; padding-left: 8px; border-radius: inherit; background: linear-gradient(90deg, #2563eb, #5b8ff9); color: #fff; font-size: 11px; font-weight: 800; white-space: nowrap; }
+      .bond-market-size-value { color: var(--ink); font-size: 13px; font-weight: 800; text-align: right; white-space: nowrap; }
+      .bond-market-size-note { margin: 18px 0 0; padding: 12px 14px; border-left: 4px solid var(--blue); border-radius: 8px; background: #f5f8ff; color: #395171; font-size: 12px; line-height: 1.65; }
+      .bond-market-size-source { margin: 12px 0 0; color: var(--muted); font-size: 11.5px; line-height: 1.6; }
+      .bond-market-size-source a { color: var(--blue); font-weight: 800; }
+      @media (max-width: 600px) { .bond-market-size-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .bond-market-size-summary { grid-template-columns: 1fr; } .bond-market-size-row { grid-template-columns: 76px minmax(50px, 1fr) 76px; gap: 7px; } .bond-market-size-country, .bond-market-size-value { font-size: 11px; } .bond-market-size-bar { padding-left: 5px; font-size: 10px; } }
     </style>
     <link
       rel="stylesheet"
@@ -89,9 +105,110 @@
             <div class="lesson-content">
               <h2>채권은 돈을 빌려준 약속장</h2>
               <div class="lesson-body">
+                <h3>‘채권’과 ‘채무’의 한자부터 구분하기</h3>
+                <p>
+                  채권(債權)과 채무(債務)는 모두 ‘빚 채(債)’를 씁니다.
+                  같은 빚의 관계를 서로 다른 입장에서 부르는 말입니다.
+                </p>
+                <ul>
+                  <li><b>채권(債權)</b>: 빚 채(債) + 권리 권(權) — 돈이나 물건을 받을 권리</li>
+                  <li><b>채무(債務)</b>: 빚 채(債) + 의무 무(務) — 빚을 갚아야 하는 의무</li>
+                </ul>
+                <p>
+                  따라서 돈을 받을 권리가 있는 사람은 <b>채권자</b>, 갚아야 할 의무가
+                  있는 사람은 <b>채무자</b>입니다.
+                </p>
+                <p>
+                  다만 ‘채권’은 한자에 따라 뜻이 둘로 나뉩니다.
+                  <b>채권(債權)</b>은 남에게 돈을 받을 권리이고,
+                  <b>채권(債券)</b>은 정부나 기업이 돈을 빌리기 위해 발행하는
+                  유가증권입니다. 이 단원에서 주로 다루는 것은 국채·회사채처럼
+                  두 번째 뜻의 <b>채권(債券)</b>입니다.
+                </p>
+                <h3>약속을 지키지 못하면: 채무불이행</h3>
+                <p>
+                  <b>채무불이행</b>은 채무자가 약속한 내용대로 빚을 갚거나
+                  의무를 이행하지 않는 것을 말합니다. 예를 들어 약정한 날에
+                  원금이나 이자를 지급하지 못하는 경우가 대표적입니다. 채권자는
+                  계약 내용과 법적 절차에 따라 이행을 요구하거나 손해배상을
+                  청구할 수 있고, 채권 투자에서는 이러한 가능성이
+                  <b>신용위험</b>으로 나타납니다.
+                </p>
+                <p>
+                  채무불이행이 발생했다고 해서 모든 돈을 즉시 잃는 것은 아닙니다.
+                  발행자의 재산·담보·보증과 법적 절차에 따라 회수할 수 있는 금액과
+                  시점이 달라질 수 있습니다. 그래서 채권을 고를 때는 이자율뿐 아니라
+                  발행자의 재무 상태와 신용등급도 함께 확인해야 합니다.
+                </p>
+                <h3>어음과 수표: 돈을 지급하라는 증서</h3>
+                <p>
+                  <b>어음</b>은 일정한 금액을 정해진 시점에 지급하겠다는 약속 또는
+                  지급 지시를 적은 증서입니다. 대표적으로 <b>약속어음</b>은 발행인이
+                  받을 사람에게 지급을 약속하는 방식이고, <b>환어음</b>은 발행인이
+                  제3자에게 지급을 지시하는 방식입니다. 어음은 만기 전에 다른 사람에게
+                  넘기거나 금융기관을 통해 현금화하는 거래에도 쓰일 수 있습니다.
+                </p>
+                <p>
+                  <b>수표</b>는 발행인이 은행에 예금에서 일정 금액을 지급하라고
+                  지시하는 증서로, 일반적으로 제시되면 바로 지급하는 것을 전제로 합니다.
+                  어음과 수표 모두 약속한 지급이 이뤄지지 않을 위험이 있으므로,
+                  발행인·지급인과 만기·금액 같은 조건을 확인하는 것이 중요합니다.
+                </p>
                 <p>
                   채권을 산다는 것은 정부나 기업에 돈을 빌려주고 정해진 이자와
                   만기 원금을 받기로 하는 것입니다.
+                </p>
+                <h3>부동산·자동차 등록 때 만나는 의무매입채권(공채)</h3>
+                <p>
+                  법령에 따라 부동산 등기나 자동차 등록 등을 할 때 의무적으로
+                  매입해야 하는 <b>의무매입채권(공채)</b>도 있습니다. 세금처럼
+                  납부 절차에 포함되지만, 매입자는 채권을 보유하므로 약정 조건에
+                  따라 만기에 원금과 이자를 받을 권리가 있다는 점이 세금과 다릅니다.
+                </p>
+                <ul>
+                  <li>
+                    <b>국민주택채권:</b> 주택·상가·토지 등의 소유권 이전 등기나
+                    일정한 인허가 때 매입 대상이 될 수 있습니다. 국민주택사업 등에
+                    필요한 재원을 마련하기 위해 발행합니다.
+                  </li>
+                  <li>
+                    <b>지역개발채권·도시철도채권:</b> 지방자치단체에 자동차를
+                    등록하거나 각종 인허가를 받을 때 매입 대상이 될 수 있습니다.
+                    지역 도로·도시철도 등 공공 인프라 재원에 활용됩니다.
+                  </li>
+                </ul>
+                <p>
+                  실제로는 만기까지 보유하는 대신, 매입과 동시에 금융기관 등에
+                  되파는 <b>즉시매도</b>를 선택하는 경우가 많습니다. 이때 채권의
+                  매입금액과 즉시매도 가격의 차이인 <b>채권 할인액</b>을 부담하며,
+                  등기 비용이나 자동차 등록 비용의 ‘채권 할인료’로 표시되기도 합니다.
+                  이는 별도의 단순 수수료라기보다 채권을 즉시 매도하면서 생기는
+                  가격 차이입니다.
+                </p>
+                <p>
+                  의무매입 여부·매입률·만기·할인액은 부동산의 종류와 금액,
+                  차량과 배기량, 등록 지역, 감면 대상 등에 따라 달라집니다. 실제
+                  거래에서는 법무사·등록 대행기관 또는 관할 행정기관의 안내를
+                  확인하세요.
+                </p>
+                <h3>채권은 현물일까요?</h3>
+                <p>
+                  ‘현물’은 쓰는 맥락에 따라 뜻이 달라집니다. 금·원유·부동산처럼
+                  물리적 형태가 있는 <b>실물자산</b>과 비교한다면, 채권은 실물이
+                  아니라 돈을 받을 권리를 나타내는 <b>금융자산(유가증권)</b>입니다.
+                </p>
+                <p>
+                  반면 선물 같은 파생상품과 비교할 때의 <b>현물(spot)</b>은
+                  파생계약이 아닌 실제 기초자산을 뜻합니다. 이 맥락에서는 실제
+                  채권을 사고파는 거래가 현물거래이고, 3년 국채선물·10년 국채선물처럼
+                  미래 시점의 거래 조건을 먼저 정하는 계약은 선물거래입니다. 현물거래도
+                  계약 즉시 또는 시장별로 정해진 결제일에 채권의 인도와 대금 결제가
+                  이뤄질 수 있습니다.
+                </p>
+                <p>
+                  즉 “금이나 원유처럼 실물인가?”라는 질문에는 <b>아니오</b>이고,
+                  “채권선물과 대비되는 실제 채권인가?”라는 질문에는 <b>현물이다</b>라고
+                  답할 수 있습니다.
                 </p>
                 <p>
                   국채는 정부가 발행하고, 회사채는 기업이 발행합니다. 발행자가
@@ -102,10 +219,14 @@
                   있습니다. 이를 설명할 때 듀레이션이라는 지표를 사용합니다.
                 </p>
                 <p class="lesson-video-cta">
-                  <button type="button" class="lesson-video-link" id="bondDurationSimTrigger">
+                  <button type="button" class="lesson-video-link" id="bondDurationSimTrigger" data-bond-duration-trigger>
                     <i class="fa-solid fa-scale-balanced"></i> 금리·듀레이션 시뮬레이터
                   </button>
                   <small>금리 변화와 듀레이션에 따라 예상 가격 변화가 어떻게 달라지는지 확인하세요.</small>
+                  <button type="button" class="lesson-video-link" id="breakTimeTrigger">
+                    <i class="fa-solid fa-mug-hot"></i> BreakTime
+                  </button>
+                  <small>잠시 쉬면서 다음 실습 과제를 확인해 보세요.</small>
                 </p>
               </div>
             </div>
@@ -130,6 +251,12 @@
                   쉽습니다. 발행 주체에 따라 국채, 지방채, 특수채, 금융채,
                   회사채로 크게 나눌 수 있고, 발행 주체가 다르면 신용위험과
                   수익률도 함께 달라집니다.
+                </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="bondMarketSizeTrigger">
+                    <i class="fa-solid fa-chart-bar"></i> 주요 10개국 채권시장 규모 보기
+                  </button>
+                  <small>국가별 채무증권 잔액과 10개국 합계에서 차지하는 비중을 비교합니다.</small>
                 </p>
                 <p>
                   국채는 정부(기획재정부)가 발행하는 채권입니다. 국고채권이
@@ -159,6 +286,59 @@
                   포함됩니다. 회사채는 삼성전자·현대자동차처럼 일반 기업이 사업
                   자금을 마련하려고 발행하는 채권으로, 발행하는 기업의 실적과
                   재무 상태에 따라 신용위험과 금리가 크게 달라질 수 있습니다.
+                </p>
+                <h3>전환사채(CB): 채권과 주식의 선택권을 함께 가진 회사채</h3>
+                <p>
+                  <b>전환사채(CB, Convertible Bond)</b>는 처음에는 정해진 이자를
+                  받는 채권으로 보유하다가, 정해진 조건 아래 발행 회사의 주식으로
+                  바꿀 수 있는 특수한 회사채입니다. 채권의 이자·상환 구조에
+                  <b>전환청구권</b>을 더한 상품이므로, 채권과 주식의 성격을 함께
+                  갖습니다.
+                </p>
+                <ul>
+                  <li>
+                    <b>주가가 전환가액보다 낮거나 기대에 못 미칠 때:</b> 주식으로
+                    바꾸지 않고 채권으로 보유하며, 약정 조건에 따라 이자와 만기
+                    상환을 기대할 수 있습니다.
+                  </li>
+                  <li>
+                    <b>주가가 크게 올랐을 때:</b> 투자자는 전환청구권을 행사해
+                    미리 정한 가격인 <b>전환가액</b>을 기준으로 주식으로 전환한 뒤,
+                    주가 상승에 따른 이익을 기대할 수 있습니다.
+                  </li>
+                </ul>
+                <p>
+                  발행 기업은 투자자에게 주식 전환 기회를 제공하는 대신 일반 회사채보다
+                  낮은 이자율로 자금을 조달할 수 있습니다. 투자자는 채권으로서의
+                  이자·상환 가능성과 주가 상승에 따른 전환 이익을 함께 고려할 수 있습니다.
+                  다만 발행 기업이 이자나 원금을 지급하지 못하면 손실이 발생할 수 있으므로,
+                  원금이 보장되는 상품은 아닙니다.
+                </p>
+                <p>
+                  <b>기존 주주 유의사항:</b> 전환권 행사로 새 주식이 발행되면 주식 수가
+                  늘어나 기존 주주의 지분율과 주당 가치가 희석될 수 있습니다. 전환가액
+                  조정, 전환 가능 시기, 발행 규모와 같은 조건은 주가와 기존 주주에게
+                  미치는 영향을 판단할 때 함께 확인해야 합니다.
+                </p>
+                <h3>무기명채권: 증서를 가진 사람이 권리자로 보이는 형태</h3>
+                <p>
+                  <b>무기명채권(Bearer Bond)</b>은 채권 증서에 소유자의 이름이 적혀
+                  있지 않은 형태입니다. 기명채권과 달리 원칙적으로 증서를 점유한
+                  사람이 권리자로 인정되므로, 종이를 넘기는 방식으로 양도할 수 있고
+                  별도의 명의개서 절차가 필요하지 않은 것이 특징입니다.
+                </p>
+                <ul>
+                  <li><b>장점:</b> 증서 인도만으로 양도가 비교적 간편합니다.</li>
+                  <li><b>위험:</b> 분실·도난 때 권리 회복과 소유 증명이 어렵고, 거래 경로를 추적하기도 어렵습니다.</li>
+                  <li><b>익명성 문제:</b> 이런 특성은 과거 탈세·자금세탁·비자금 조성 같은 불법적 자금 이동에 악용될 소지가 있었습니다.</li>
+                </ul>
+                <p>
+                  현재 한국의 제도권 자본시장에서는 실물 증서 대신 전자 장부에 권리를
+                  기록하는 전자등록 방식이 널리 사용됩니다. <a href="https://www.law.go.kr/LSW/lsInfoP.do?efYd=20190916&lsiSeq=193480" target="_blank" rel="noopener noreferrer">「주식·사채 등의 전자등록에 관한 법률」</a>은
+                  2019년 9월 16일부터 시행됐으며, 전자등록된 국채·지방채·회사채 등의
+                  권리는 계좌 기록으로 관리됩니다. 따라서 일반 투자자가 거래하는
+                  국채·회사채에서 과거처럼 실물 증서의 점유만으로 익명 소유를 주장하는
+                  무기명채권은 사실상 보기 어렵습니다.
                 </p>
                 <p>
                   일반적으로 국채, 특수채·통안채, 금융채, 회사채 순으로
@@ -322,17 +502,57 @@
               <h2>금리가 오르면 채권 가격은 왜 내려갈까요?</h2>
               <div class="lesson-body">
                 <p>
-                  새로 나온 채권의 이자가 더 높아지면, 기존의 낮은 이자를 주는
-                  채권은 같은 가격으로는 매력이 줄어듭니다. 그래서 기존 채권
-                  가격이 조정될 수 있습니다.
+                  채권 가격과 시장금리(수익률)는 일반적으로 <b>반대 방향</b>으로
+                  움직입니다. 시장금리가 오르면 기존 채권 가격은 내려가고,
+                  시장금리가 내리면 기존 채권 가격은 오르는 경향이 있습니다.
+                </p>
+                <h3>새 채권과 기존 채권을 비교해 보세요</h3>
+                <ul>
+                  <li>
+                    <b>시장금리가 3%에서 5%로 올랐을 때:</b> 새 채권은 더 높은
+                    이자를 주지만 기존 채권은 3% 쿠폰을 유지합니다. 기존 채권을
+                    팔려면 새 채권과 경쟁할 수 있도록 가격이 낮아져야 할 수 있습니다.
+                  </li>
+                  <li>
+                    <b>시장금리가 3%에서 1%로 내렸을 때:</b> 기존의 3% 쿠폰은
+                    새 채권보다 상대적으로 매력적입니다. 이 채권을 사려는 수요가
+                    늘면 가격에 프리미엄이 붙을 수 있습니다.
+                  </li>
+                </ul>
+                <p>
+                  여기서 ‘금리’는 보통 시장에서 요구하는 수익률을 뜻합니다. 이미
+                  발행된 채권의 <b>표면금리(쿠폰금리)</b> 자체가 시장금리에 맞춰
+                  매일 바뀌는 것은 아닙니다. 대신 그 고정된 이자 흐름의 현재가치가
+                  달라지면서 거래 가격과 만기수익률이 조정됩니다.
+                </p>
+                <h3>만기가 길수록 가격 변화가 커지는 이유</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>금리 변화에 대한 단기채와 장기채의 일반적 차이</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">단기채 (예: 1~3년)</th><th scope="col">장기채 (예: 10~30년)</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">금리 변동 시 가격 변화</th><td>상대적으로 작음</td><td>상대적으로 큼</td></tr>
+                      <tr><th scope="row">이유</th><td>유리하거나 불리한 이자를 받는 기간이 짧음</td><td>고정된 이자와 시장금리의 차이가 더 오랫동안 영향을 줌</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>
+                  이 가격 민감도를 가늠하는 지표가 <b>듀레이션</b>입니다. 같은
+                  금리 변화라면 듀레이션이 큰 채권일수록 가격 변동 폭도 커지는
+                  경향이 있습니다. 따라서 금리 방향에 대한 전망이 빗나갈 때 장기채는
+                  단기채보다 큰 가격 손실을 겪을 수 있습니다.
                 </p>
                 <p>
-                  반대로 금리가 내려가면 기존에 높은 이자를 약속한 채권의 매력이
-                  커져 가격이 오를 수 있습니다.
+                  금리 하락을 예상하면 장기채의 가격 상승 가능성을, 금리 상승을
+                  예상하면 장기채의 가격 하락 위험을 검토하는 식으로 이해할 수
+                  있습니다. 다만 금리 전망만으로 매수·매도를 결정하기보다 만기,
+                  듀레이션, 신용위험, 유동성, 투자 기간을 함께 확인해야 합니다.
                 </p>
-                <p>
-                  채권도 중간에 팔면 손익이 생길 수 있으므로 “항상 안전하다”고
-                  단정할 수는 없습니다.
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" data-bond-duration-trigger>
+                    <i class="fa-solid fa-scale-balanced"></i> 금리·듀레이션 시뮬레이터 열기
+                  </button>
+                  <small>금리 변화와 듀레이션을 바꾸어 단기채·장기채의 예상 가격 변화를 비교해 보세요.</small>
                 </p>
               </div>
             </div>
@@ -459,7 +679,7 @@
           <section class="lesson">
             <span>08</span>
             <div class="lesson-content">
-              <h2>채권 투자와 세금: 매매차익과 월배당 구분하기</h2>
+              <h2>채권 투자와 세금: 매매차익·이자수익 구분하기</h2>
               <div class="lesson-body">
                 <p>
                   채권에서 생기는 수익은 크게 두 가지입니다. 하나는 표면금리에
@@ -469,15 +689,44 @@
                   합니다.
                 </p>
                 <p>
-                  개별 채권을 증권사 장외채권 창구에서 직접 사고파는 경우,
-                  이자소득에는 세금(이자소득세)이 붙지만 매매차익 자체는
-                  원칙적으로 과세 대상이 아닙니다. 반면 국내 상장 채권형 ETF는
-                  주식형 ETF와 달리 매매차익도 배당소득으로 과세되는 경우가
-                  일반적이고, 해외 거래소에 상장된 ETF를 직접 매수한 경우에는
-                  매매차익이 양도소득세 대상이 되어 연간 기본공제와 다른 세율
-                  체계가 적용됩니다. 정확한 세율과 공제 한도는 세법 개정에 따라
-                  바뀔 수 있으므로 국세청이나 증권사의 최신 안내로 확인해야
-                  합니다.
+                  개인이 국내외 <b>개별 채권을 직접</b> 사고팔아 얻은 시장가격
+                  기준의 매매차익은 원칙적으로 과세하지 않습니다. 반면 표면이자와
+                  발행 조건에 따른 할인액은 이자소득에 해당합니다. 따라서 “만기에
+                  액면가를 받는다”는 경우라도, 발행 시 할인된 채권의 할인액인지
+                  중간에 시장가격이 올라 생긴 매매차익인지 구분해야 합니다.
+                </p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>개인 일반계좌 기준 채권 관련 과세의 큰 틀</caption>
+                    <thead><tr><th scope="col">투자 방식</th><th scope="col">매매차익</th><th scope="col">이자·분배금</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">국내 개별 채권 직접 투자</th><td>원칙적으로 비과세</td><td>이자소득세 15.4% 원천징수</td></tr>
+                      <tr><th scope="row">해외 개별 채권 직접 투자</th><td>국내 세법상 원칙적으로 비과세<br><small>현지 과세 여부는 국가·조세조약에 따라 다를 수 있음</small></td><td>이자소득 과세 대상<br><small>현지 원천징수·외국납부세액 공제 여부를 함께 확인</small></td></tr>
+                      <tr><th scope="row">국내 상장 채권형 ETF</th><td>배당소득 과세 대상: 실제 매매차익과 과표기준가격 상승분 중 작은 금액에 15.4%</td><td>분배금에 배당소득세 15.4%</td></tr>
+                      <tr><th scope="row">해외 상장 채권형 ETF</th><td>양도소득세 대상: 연간 기본공제 250만 원 초과 순이익에 22%</td><td>배당소득 과세 대상<br><small>현지 원천징수 및 국내 신고·공제 여부 확인</small></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>
+                  이자·배당소득의 연간 합계가 2,000만 원을 넘으면 금융소득종합과세
+                  대상이 될 수 있습니다. 국내 상장 채권형 ETF의 매매차익은 배당소득으로
+                  과세될 수 있어 이 기준을 살필 필요가 있지만, 해외 상장 ETF의 양도차익은
+                  별도 양도소득 과세 체계를 적용받습니다. ETF 과세 방식은
+                  <a href="https://regulation.krx.co.kr/contents/RGL/03/03060105/RGL03060105.jsp" target="_blank" rel="noopener noreferrer">한국거래소 ETF 세금 안내</a>에서도 확인할 수 있습니다.
+                </p>
+                <h3>저쿠폰 채권과 절세 계좌를 볼 때</h3>
+                <p>
+                  표면금리가 낮고 시장가격 할인폭이 큰 채권은, 조건에 따라 이자소득보다
+                  과세되지 않는 매매차익의 비중이 커질 수 있어 세후 수익률 측면에서
+                  검토되기도 합니다. 다만 채권 가격에는 금리·만기·신용위험이 함께
+                  반영되므로 세금만 보고 선택해서는 안 됩니다. 특히 할인액 과세 여부와
+                  중도매도 가격, 매수·매도 호가 차이도 확인하세요.
+                </p>
+                <p>
+                  국내 상장 채권형 ETF는 ISA에서 손익통산과 계좌별 비과세·분리과세
+                  혜택을, 연금저축·IRP에서는 과세이연 혜택을 받을 수 있습니다. 다만
+                  가입 요건·납입 한도·인출 시 과세와 편입 가능 상품이 계좌마다 다르므로,
+                  투자 전 금융회사와 국세청의 최신 안내를 확인해야 합니다.
                 </p>
                 <p>
                   월배당은 채권 ETF가 이자·분배금을 매달 나눠 지급하는
@@ -502,7 +751,7 @@
               type="button"
               data-lesson-toggle
               aria-expanded="true"
-              aria-label="채권 투자와 세금: 매매차익과 월배당 구분하기 내용 접기"
+              aria-label="채권 투자와 세금: 매매차익·이자수익 구분하기 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -1250,6 +1499,40 @@
         금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.
       </footer>
     </main>
+    <div class="glossary-modal bond-market-size-modal" id="bondMarketSizeModal" hidden>
+      <div class="glossary-modal__backdrop" data-bond-market-size-close></div>
+      <section class="glossary-modal__dialog bond-market-size-dialog" role="dialog" aria-modal="true" aria-labelledby="bondMarketSizeTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-bond-market-size-close>×</button>
+        <p class="glossary-modal__label">MARKET SCALE · 교육용 통계</p>
+        <h2 id="bondMarketSizeTitle">주요 10개국 채권시장 규모 분포</h2>
+        <p class="bond-market-size-intro">
+          국가별 <b>채무증권 잔액</b>을 비교한 분포입니다. 막대 길이는 가장 큰 미국 시장을 100으로 놓은 상대 규모이고, 막대 안 숫자는 10개국 합계에서의 비중입니다.
+        </p>
+        <div class="bond-market-size-summary" aria-label="주요 요약">
+          <article><span>10개국 합계</span><strong id="bondMarketSizeTotal">—</strong></article>
+          <article><span>가장 큰 시장</span><strong id="bondMarketSizeLargest">—</strong></article>
+          <article><span>상위 3개국 비중</span><strong id="bondMarketSizeTopThree">—</strong></article>
+        </div>
+        <div id="bondMarketSizeChart" class="bond-market-size-chart" role="img" aria-label="주요 10개국 채권시장 규모를 비교하는 가로 막대 차트"></div>
+        <p class="bond-market-size-note">
+          <b>읽는 법:</b> 이 통계의 ‘채무증권’은 정부채뿐 아니라 기업·금융기관 등이 발행한 채권성 증권을 포함합니다. 국가별 평가 방식과 포괄 범위가 달라 절대적인 우열이나 투자 판단의 근거로 쓰면 안 됩니다.
+        </p>
+        <p class="bond-market-size-source">
+          출처: <a href="https://data.bis.org/topics/DSS/tables-and-dashboards/BIS%2CSEC_C1%2C1.0?time_period=2025-Q4&amp;view=value" target="_blank" rel="noopener noreferrer">BIS Debt securities statistics, C1</a>. 2025년 4분기 말, 발행인 거주지 기준·모든 시장의 채무증권 잔액, 미 달러화 기준(십억 달러). 국가별로 시장가치·명목가치·액면가치 등 평가 방식이 다를 수 있습니다.
+        </p>
+      </section>
+    </div>
+    <div class="glossary-modal" id="breakTimeModal" hidden>
+      <div class="glossary-modal__backdrop" data-break-time-close></div>
+      <section class="glossary-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="breakTimeTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-break-time-close>×</button>
+        <p class="glossary-modal__label">BREAK TIME · 실습 과제</p>
+        <h2 id="breakTimeTitle">잠시 쉬고, 다음 작업을 준비해 보세요</h2>
+        <div class="glossary-modal__detail">
+          <p><b>investment-analysis</b>의 Markdown 형식 데이터와 <b>domain-rag-lab/frontend/days</b>의 문서 파일을 청킹 작업으로 JSONL로 만들어 보세요.</p>
+        </div>
+      </section>
+    </div>
     <div class="glossary-modal correlation-sim-modal" id="correlationSimModal" hidden>
       <div class="glossary-modal__backdrop" data-corr-sim-close></div>
       <section class="glossary-modal__dialog correlation-sim-dialog" role="dialog" aria-modal="true" aria-labelledby="corrSimTitle">
@@ -1319,6 +1602,65 @@
     </script>
     <script>
       (() => {
+        const modal = document.getElementById("breakTimeModal");
+        const trigger = document.getElementById("breakTimeTrigger");
+        if (!modal || !trigger) return;
+        const close = () => {
+          if (modal.hidden) return;
+          modal.hidden = true;
+          trigger.focus();
+        };
+        trigger.addEventListener("click", () => {
+          modal.hidden = false;
+          modal.querySelector(".glossary-modal__close")?.focus();
+        });
+        modal.querySelectorAll("[data-break-time-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") close();
+        });
+      })();
+    </script>
+    <script>
+      (() => {
+        const markets = [
+          { country: "미국", value: 61182.6 }, { country: "중국", value: 28737.4 },
+          { country: "일본", value: 10820.3 }, { country: "프랑스", value: 7119.6 },
+          { country: "영국", value: 6884.4 }, { country: "독일", value: 5256.5 },
+          { country: "캐나다", value: 4646.0 }, { country: "이탈리아", value: 4252.6 },
+          { country: "브라질", value: 3624.0 }, { country: "한국", value: 2687.2 },
+        ];
+        const modal = document.getElementById("bondMarketSizeModal");
+        const trigger = document.getElementById("bondMarketSizeTrigger");
+        if (!modal || !trigger) return;
+        const total = markets.reduce((sum, market) => sum + market.value, 0);
+        const largest = markets[0].value;
+        const formatTrillion = (value) => `$${(value / 1000).toFixed(1)}조`;
+        const chart = document.getElementById("bondMarketSizeChart");
+        chart.innerHTML = markets.map((market) => {
+          const share = market.value / total * 100;
+          const relative = market.value / largest * 100;
+          return `<div class="bond-market-size-row"><span class="bond-market-size-country">${market.country}</span><div class="bond-market-size-track"><div class="bond-market-size-bar" style="width:${relative.toFixed(1)}%">${share.toFixed(1)}%</div></div><span class="bond-market-size-value">${formatTrillion(market.value)}</span></div>`;
+        }).join("");
+        document.getElementById("bondMarketSizeTotal").textContent = formatTrillion(total);
+        document.getElementById("bondMarketSizeLargest").textContent = `미국 ${formatTrillion(largest)}`;
+        document.getElementById("bondMarketSizeTopThree").textContent = `${(markets.slice(0, 3).reduce((sum, market) => sum + market.value, 0) / total * 100).toFixed(1)}%`;
+        const close = () => {
+          if (modal.hidden) return;
+          modal.hidden = true;
+          trigger.focus();
+        };
+        trigger.addEventListener("click", () => {
+          modal.hidden = false;
+          modal.querySelector(".glossary-modal__close")?.focus();
+        });
+        modal.querySelectorAll("[data-bond-market-size-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") close();
+        });
+      })();
+    </script>
+    <script>
+      (() => {
         const modal = document.getElementById("correlationSimModal");
         const trigger = document.getElementById("correlationSimTrigger");
         if (!modal || !trigger) return;
@@ -1349,8 +1691,9 @@
     <script>
       (() => {
         const modal = document.getElementById("bondDurationSimModal");
-        const trigger = document.getElementById("bondDurationSimTrigger");
-        if (!modal || !trigger) return;
+        const triggers = document.querySelectorAll("[data-bond-duration-trigger]");
+        if (!modal || !triggers.length) return;
+        let activeTrigger = triggers[0];
         const price = document.getElementById("bdsPrice");
         const duration = document.getElementById("bdsDuration");
         const rateChange = document.getElementById("bdsRateChange");
@@ -1384,10 +1727,10 @@
           shortCompare.textContent = `금리 ${signed(rates, 2, "%p")} → 약 ${signed(shortPercent, 2, "%")} (${won(shortAmount)})`;
           longCompare.textContent = `금리 ${signed(rates, 2, "%p")} → 약 ${signed(percent, 2, "%")} (${won(amount)})`;
         }
-        function open() { modal.hidden = false; render(); modal.querySelector(".glossary-modal__close")?.focus(); }
-        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } }
+        function open(trigger) { activeTrigger = trigger; modal.hidden = false; render(); modal.querySelector(".glossary-modal__close")?.focus(); }
+        function close() { if (!modal.hidden) { modal.hidden = true; activeTrigger.focus(); } }
         [price, duration, rateChange].forEach((input) => input.addEventListener("input", render));
-        trigger.addEventListener("click", open);
+        triggers.forEach((trigger) => trigger.addEventListener("click", () => open(trigger)));
         modal.querySelectorAll("[data-bond-duration-close]").forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
       })();
