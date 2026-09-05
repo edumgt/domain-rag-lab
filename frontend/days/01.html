@@ -4,13 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>01일차 | 4일 금융 이론 — 선물과 옵션</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260905-breaktime-modal-unified" />
-    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-offcanvas-nav-fix" />
+    <link rel="stylesheet" href="assets/site.css?v=20260905-contract-copy-105" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-modal-large-unified" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <script defer src="assets/visuals.js?v=20260905-decision-map-removed"></script>
+    <script defer src="assets/visuals.js?v=20260905-zero-sum-moved"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260905-history"></script>
     <script defer src="assets/glossary-drawer.js?v=20260905-all-terms"></script>
@@ -27,7 +27,7 @@
       >
         <i class="fa-solid fa-bars"></i><span>학습</span>
       </button>
-      <a class="day-kms-title" href="/?view=learn">금융상품 이해 KMS</a>
+      <a class="day-kms-title" href="/?view=learn">금융과 행동</a>
       <div
         class="day-brand-nav"
         role="navigation"
@@ -39,6 +39,8 @@
         ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
         ><a href="/?view=simulation"
           ><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</a
+        ><a href="/?view=backtest"
+          ><i class="fa-solid fa-flask"></i> LEAN 백테스트</a
         ><a href="/?view=calendar"
           ><i class="fa-solid fa-calendar-days"></i> 캘린더</a
         >
@@ -103,6 +105,30 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="계약과 만기, 먼저 이해하기 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section><section class="lesson"><span>00.1</span>
+            <div class="lesson-content">
+              <h2>선물·옵션은 언제, 왜 만들어졌을까요?</h2>
+              <div class="lesson-body">
+                <p><strong>‘세계 최초’라는 표현은 기준을 함께 붙여야 정확합니다.</strong> 미래에 물건을 주고받기로 하는 약속(선도계약)은 오래전 상업에도 있었기 때문에 최초의 한 건을 단정하기 어렵습니다. 아래에서는 기록과 제도가 비교적 분명한 이정표를 구분합니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th>구분</th><th>시기·장소</th><th>무엇이 처음이었나</th><th>필요했던 이유</th></tr></thead>
+                    <tbody>
+                      <tr><td>조직화된 선물시장</td><td>일본 오사카 도지마, 1730년</td><td>막부가 쌀 증서 현물시장과 장부상 쌀 선물시장을 공식 인가했습니다. 회원제와 청산 기능을 갖춘 <strong>세계 최초의 제도권 선물거래소</strong>로 널리 알려져 있습니다.</td><td>쌀은 세금·주요 자산이었고, 수확·운송·보관 사이 가격이 크게 달라졌습니다. 생산자·번·상인이 미리 가격을 정하고 거래하기 위해서였습니다.</td></tr>
+                      <tr><td>독립형 옵션계약</td><td>벨기에 앤트워프 거래소, 16세기</td><td>연구 문헌은 이곳의 독립적으로 거래되는 옵션계약을 초기 사례로 봅니다. 다만 현존 기록이 제한적이어서 ‘한 날짜의 최초 옵션’으로 단정하지 않습니다.</td><td>먼저 소액의 프리미엄을 내고, 이후 가격이 유리할 때만 거래할 수 있게 해 가격변동 위험을 제한하려는 목적이었습니다.</td></tr>
+                      <tr><td>금융옵션 시장의 정착</td><td>네덜란드 암스테르담, 17세기</td><td>VOC 등 회사 주식에 대한 콜·풋과 정기 만기가 거래됐습니다. 17세기 초 주식시장 형성 뒤 옵션 거래가 나타났다는 도시 기록도 남아 있습니다.</td><td>먼 항해·무역과 주식 가격의 불확실성을 관리하거나, 제한된 비용으로 가격 방향에 참여하려는 수요가 있었습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>약속이 오늘의 거래 방식으로 바뀐 과정</h3>
+                <p><strong>1. 맞춤 선도계약</strong> — 두 사람이 품질·수량·가격·인도일을 직접 정했습니다. 유연하지만 상대방이 약속을 지키지 못할 위험과, 계약을 다른 사람에게 넘기기 어려운 문제가 있었습니다.</p>
+                <p><strong>2. 거래소 선물</strong> — 도지마에서 발전한 장부 거래·회원·청산이라는 발상이 이후 시장의 토대가 됐습니다. 미국 CBOT는 1848년에 만들어져 초기 선도거래를 거친 뒤 1865년 곡물 <strong>표준 선물계약</strong>을 도입했습니다. 오늘날 선물은 거래소가 수량·만기·결제 규칙을 정하고, 증거금·일일정산·청산기관으로 이행 위험을 관리하며 반대매매로 포지션을 끝낼 수 있습니다.</p>
+                <p><strong>3. 옵션</strong> — 매수자는 프리미엄을 내고 정해진 가격(행사가)에 사고팔 <strong>권리</strong>를 얻지만, 행사할 의무는 없습니다. 반대로 매도자는 매수자가 행사하면 이행할 의무를 집니다. 1973년 4월 26일 CBOE가 표준화된 상장 주식옵션을 처음 거래시키면서, 표준 계약·청산·행사·배정 절차를 갖춘 현대 상장 옵션시장이 본격화됐습니다.</p>
+                <p>핵심은 처음부터 ‘수익을 크게 내는 상품’을 만들려던 것이 아니라 <strong>미래 가격과 공급의 불확실성을 미리 나누고 고정</strong>하려는 데 있었습니다. 표준화와 청산이 더해지면서 계약을 쉽게 사고팔 수 있게 됐고, 그만큼 투기와 레버리지 위험도 함께 커졌습니다.</p>
+                <p><small>참고: <a href="https://www.jpx.co.jp/dojima/en/index.html" target="_blank" rel="noopener noreferrer">JPX 도지마 쌀거래소 연혁</a>, <a href="https://ideas.repec.org/h/spr/sprchp/978-3-540-85711-2_24.html" target="_blank" rel="noopener noreferrer">Poitras, 「The Early History of Option Contracts」</a>, <a href="https://www.amsterdam.nl/stadsarchief/stukken/geld/handel-aandelen/" target="_blank" rel="noopener noreferrer">암스테르담 시 기록보관소</a>, <a href="https://www.cmegroup.com/education/courses/introduction-to-futures/midwest-grain-trade-history-of-futures-exchanges" target="_blank" rel="noopener noreferrer">CME Group의 CBOT 연혁</a>, <a href="https://ir.cboe.com/news/news-details/2013/CBOE-Releases-40th-Anniversary-Video-04-19-2013/default.aspx" target="_blank" rel="noopener noreferrer">Cboe의 상장옵션 연혁</a>.</small></p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="선물과 옵션의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section><section class="lesson"><span>01</span>
             <div class="lesson-content">
               <h2>수익률</h2>

@@ -1,8 +1,11 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
+from functools import lru_cache
 import os
 from pathlib import Path
+import re
+import requests
 
 from pgvector.sqlalchemy import Vector  # noqa: F401 — SQLAlchemy type 등록
 
@@ -25,6 +28,36 @@ import app.models.stock_price_history  # noqa: F401
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title=settings.app_name)
+
+_HISTORIC_BOND_DETAIL_URL = "https://www.emuseum.go.kr/detail?relicId=PS0100202500100758500000"
+
+
+@lru_cache(maxsize=1)
+def _load_historic_bond_image() -> tuple[bytes, str]:
+    """Fetch the unchanged, attributed e-Museum image through its required session."""
+    session = requests.Session()
+    detail = session.get(_HISTORIC_BOND_DETAIL_URL, timeout=15)
+    detail.raise_for_status()
+    match = re.search(r'<img src="(?P<path>/IMG/[^"]+)" alt="대한민국정부 건국국채증서 일백환', detail.text)
+    if not match:
+        raise ValueError("Historic bond image path was not found")
+    image = session.get(
+        f"https://www.emuseum.go.kr{match.group('path')}",
+        headers={"Referer": _HISTORIC_BOND_DETAIL_URL},
+        timeout=15,
+    )
+    image.raise_for_status()
+    return image.content, image.headers.get("Content-Type", "image/jpeg").split(";")[0]
+
+
+@app.get("/learning/historic-bond-image", include_in_schema=False)
+def historic_bond_image():
+    """Serve the public e-Museum bond image without browser hotlink failures."""
+    try:
+        content, media_type = _load_historic_bond_image()
+    except (requests.RequestException, ValueError) as error:
+        raise HTTPException(status_code=502, detail="국채 사료 이미지를 불러오지 못했습니다.") from error
+    return Response(content=content, media_type=media_type, headers={"Cache-Control": "public, max-age=86400"})
 
 
 @app.middleware("http")

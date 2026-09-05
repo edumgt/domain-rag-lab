@@ -159,7 +159,6 @@
         ['선물·옵션은 시장의 “기상청”일까요?', ['선물·옵션 시장은 투자자들이 앞으로의 가격 변동을 어떻게 생각하는지 빠르게 모이는 곳이라서 가끔 주식시장의 “기상청”에 비유됩니다. 날씨 예보가 비가 올 가능성을 알려 주지만 비를 확정하지는 않듯이, 선물·옵션 가격도 시장의 기대와 긴장도를 보여 주는 신호이지 미래 주가를 확정하는 답은 아닙니다.', '옵션 가격이 높아졌다는 것은 많은 참여자가 앞으로 가격이 크게 움직일 가능성을 더 크게 보고 있을 수 있다는 뜻입니다. 이를 변동성 기대라고 생각할 수 있습니다. 지수 선물의 거래량, 옵션의 거래량과 미결제약정처럼 아직 끝나지 않은 계약 수, 선물과 현물의 가격 차이도 시장에 매수·매도 관심이 어느 쪽에 몰리는지 살피는 단서가 됩니다.', '퀀트 시스템은 이런 숫자를 “예언”으로 쓰기보다 계산에 넣는 관측값으로 씁니다. 예를 들어 변동성 기대가 높아지면 포지션 크기를 줄이고, 선물·현물 가격 차이와 거래량이 평소와 크게 달라지면 수급 불균형이나 거래비용 변화를 점검할 수 있습니다. 시장 심리도 하나의 숫자로 단정하지 않고 가격·거래량·변동성·뉴스 같은 여러 자료를 함께 봅니다.', '이런 정보는 안전장치로도 쓸 수 있습니다. 시장의 긴장도가 높아 보일 때 “더 크게 베팅한다”가 아니라 계약 수량, 손실 한도, 헤지 필요성을 다시 점검하는 신호로 사용하는 것입니다. 지표 하나만 보고 매수·매도하면 잘못 해석할 수 있으므로, 데이터의 기준 시점·거래비용·최악의 손실 시나리오를 함께 확인해야 합니다.']],
         ['옵션 만기일과 실제 파생상품 보기', ['옵션 만기일에는 계약이 끝나므로, 옵션을 가진 사람과 옵션을 팔아준 금융기관이 포지션을 정리하거나 위험을 줄이기 위한 헤지를 조정할 수 있습니다. 이 과정에서 관련 주식이나 선물의 주문이 늘어나면 지수에 단기 영향이 생길 수 있지만, 만기만으로 가격 방향을 단정할 수는 없습니다.', '한국거래소(KRX)에는 KOSPI 200·미니 KOSPI 200·KOSDAQ 150 선물과 옵션, 미국달러선물, 국채선물, 금선물 등이 있습니다. 상품마다 거래승수·만기·결제 방식·증거금이 다르므로, 실제 주문 전에는 거래소 상품명세와 증권사 주문 화면을 함께 확인해야 합니다.']],
         ['파생상품은 보험처럼도 쓰입니다', ['선물·옵션 같은 파생상품은 주가, 금리, 환율 등의 움직임을 바탕으로 한 계약입니다. 국내에서는 KOSPI 200 선물·옵션, 해외에서는 나스닥 100 지수·원유·금 등을 기초자산으로 한 선물이 예시입니다.', '가격 하락이 걱정될 때 손실을 일부 줄이는 헤지에 활용할 수 있지만, 구조가 복잡하고 손실이 빠르게 커질 수도 있습니다.', '학습 단계에서는 “어떤 위험을 줄이려는 계약인지, 최대 손실은 얼마인지”를 먼저 묻는 습관이 중요합니다.']],
-        ['리밸런싱은 원래 계획으로 돌아오는 규칙', ['시간이 지나면 많이 오른 자산의 비중이 커져 처음 계획보다 위험이 커질 수 있습니다.', '리밸런싱은 일정 기간마다 또는 목표 비중에서 일정 폭 벗어났을 때 비중을 조정하는 방법입니다.', '매일 자주 바꾸기보다, 미리 정한 규칙과 거래비용·세금을 함께 고려하는 것이 좋습니다.']],
         ['나만의 한 장 투자 원칙', ['목표: 언제 어떤 목적으로 돈을 쓸지 적습니다.', '범위: 감당할 수 있는 최대 손실과 각 자산의 목표 비중을 정합니다.', '점검: 분기 또는 반기처럼 점검 시점과 리밸런싱 조건을 미리 기록합니다.']],
         ['한국시장으로 만드는 가상 포트폴리오', ['학습용으로는 “국내 주식시장 전체를 따르는 ETF”, “국고채 또는 우량채 중심 ETF”, “현금성 자산”처럼 역할이 다른 자산군을 먼저 구분해 볼 수 있습니다. 그 뒤 KODEX·TIGER·RISE·ACE 등에서 비슷한 기초지수를 추종하는 실제 상품의 설명서와 비용을 비교해 보세요.', '국내 주식 ETF 안에서도 KOSPI 200 같은 시장대표형, 고배당·금융·반도체·방산 같은 섹터형, 코리아 밸류업 지수처럼 규칙 기반 지수형은 역할이 다릅니다. “국내 ETF를 여러 개 샀다”보다 각 ETF가 어떤 종목과 산업에 겹쳐 있는지가 더 중요합니다.', '연금저축·IRP 계좌는 장기 자산배분을 생각해 볼 수 있는 한국의 대표적 제도권 계좌입니다. 다만 투자 가능 상품, 위험자산 한도, 수수료, 세제 적용은 계좌·금융회사·개인 상황에 따라 달라질 수 있으므로 실제 가입 전에는 해당 금융회사와 국세청·금융감독원 안내를 확인하세요.']],
         ['리밸런싱 실습: 한국 ETF 비교표 만들기', ['관심 있는 시장대표 ETF 하나, 채권 ETF 하나, 섹터 ETF 하나를 골라 표를 만들어 보세요. 표에는 종목명·종목코드·운용사·기초지수·총보수·상위 편입종목·최근 괴리율·거래량을 적습니다.', '예를 들어 시장대표형 ETF와 반도체 테마 ETF를 함께 담는다면 두 상품에 삼성전자·SK하이닉스가 얼마나 겹치는지 확인합니다. 채권 ETF는 만기구조와 듀레이션을 확인해 금리 변화에 어느 정도 민감한지도 써 봅니다.', '목표 비중에서 5%포인트 이상 벗어났을 때만 점검하는 식으로 가상 규칙을 정해 보세요. 이 실습의 목적은 특정 상품을 고르는 것이 아니라, 실제 상품의 구성·비용·집중위험을 근거로 내 비중을 설명하는 것입니다.']],
@@ -222,7 +221,7 @@
     { terms: ['차입금'], korean: '차입금', hanja: '借入金', abbr: 'Debt', english: 'Borrowings', summary: '기업이나 리츠가 은행·채권시장 등에서 빌린 돈입니다.', detail: '빚을 이용하면 투자 규모를 키울 수 있지만 이자와 상환 부담이 생깁니다. 금리가 오르거나 수입이 줄면 부담이 더 커질 수 있습니다.' },
     { terms: ['총보수'], korean: '총보수', hanja: '總報酬', abbr: 'TER', english: 'Total Expense Ratio', summary: '펀드·ETF를 운용하는 데 드는 연간 비용의 비율입니다.', detail: '보수는 보통 펀드 자산에서 조금씩 빠져나가므로 따로 청구서를 받지 않아도 수익률에 영향을 줍니다. 비슷한 상품끼리는 보수를 비교해 보세요.' },
     { terms: ['호가 스프레드', '호가 차이'], korean: '호가 스프레드', hanja: '呼價差', abbr: 'Spread', english: 'Bid-Ask Spread', summary: '살 수 있는 가장 싼 가격과 팔 수 있는 가장 비싼 가격의 차이입니다.', detail: '차이가 크면 사자마자 손해를 보고 시작하는 것처럼 느껴질 수 있습니다. 거래량이 적은 상품일수록 스프레드가 넓어질 수 있습니다.' },
-    { terms: ['연환산'], korean: '연환산', hanja: '年換算', abbr: 'Annualized', english: 'Annualized', summary: '한 달·몇 년 등 서로 다른 기간의 성과를 1년 기준으로 바꾸어 비교하는 방법입니다.', detail: '기간이 짧을수록 연환산 수치는 실제보다 크게 보일 수 있습니다. 원래 기간과 함께 해석해야 합니다.' },
+    { terms: ['연환산'], korean: '연환산', hanja: '年換算', abbr: 'Annualized', english: 'Annualized', summary: '한 달·몇 년 등 서로 다른 기간의 성과를 1년 기준으로 바꾸어 비교하는 방법입니다.', detail: '기간이 짧을수록 연환산 수치는 실제보다 크게 보일 수 있습니다. 달력일 단위 수익률·이자는 보통 365일(윤년 366일), 주식 일간 수익률·변동성은 약 252거래일을 기준으로 연환산합니다. 예금·채권은 상품 약관의 ACT/365·ACT/360 등 일수 계산 기준이 우선하므로, 원래 기간과 데이터 단위를 함께 확인해야 합니다.' },
     { terms: ['무위험수익률'], korean: '무위험수익률', hanja: '無危險收益率', abbr: 'Rf', english: 'Risk-Free Rate', summary: '위험이 거의 없다고 가정한 투자에서 기대하는 기준 수익률입니다.', detail: '실제로 위험이 완전히 없는 투자는 드물지만, 성과를 비교할 때 기준점으로 사용합니다. 보통 단기 국채 수익률 등을 참고합니다.' },
   ];
 
@@ -896,7 +895,7 @@ KOSDAQ|웹젠|게임`,
       const price = minP + ((maxP - minP) * g) / gridCount;
       const gy = y(price);
       gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR + 6}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/>`;
-      gridSvg += `<text x="${width - padR + 10}" y="${(gy + 3).toFixed(1)}" font-size="10" fill="var(--text-muted)">${fmtWon(Math.round(price))}</text>`;
+      gridSvg += `<text x="${width - padR + 10}" y="${(gy + 3).toFixed(1)}" font-size="14.5" fill="var(--text-muted)">${fmtWon(Math.round(price))}</text>`;
     }
 
     tickChartGeom = { padL, plotW, slot, visible, width, height };
@@ -1244,7 +1243,7 @@ KOSDAQ|웹젠|게임`,
   const BACKTEST_STRATEGIES = [
     { value: 'buy_hold', label: '매수 후 보유', hint: '처음 한 번 매수해서 기간 내내 그대로 들고 갑니다. 가장 단순한 기준선입니다.' },
     { value: 'ma_cross', label: '이동평균 교차', hint: '20일 평균이 60일 평균을 웃돌면 매수, 밑돌면 청산합니다. 추세를 따라가는 전략입니다.' },
-    { value: 'dca', label: '정액 적립매수(DCA)', hint: '약 한 달(21거래일)마다 정해진 금액만큼 나눠서 매수합니다. 한 번에 몰빵하는 부담을 줄입니다.' },
+  { value: 'dca', label: '정액 적립매수(Dollar-Cost Averaging, DCA)', hint: 'Dollar-Cost Averaging(DCA)은 약 한 달(21거래일)마다 정해진 금액만큼 나눠서 매수합니다. 한 번에 몰빵하는 부담을 줄입니다.' },
     { value: 'momentum', label: '추세추종(돌파)', hint: '최근 20거래일 최고가를 뚫으면 매수, 최근 20거래일 최저가를 깨면 청산합니다.' },
   ];
 
@@ -2060,7 +2059,7 @@ effective_date: [기준일]
     for (let g = 0; g <= gridCount; g++) {
       const price = minP + ((maxP - minP) * g) / gridCount;
       const gy = y(price);
-      gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR + 6}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/><text x="${width - padR + 10}" y="${(gy + 3).toFixed(1)}" font-size="10" fill="var(--text-muted)">${fmtWon(Math.round(price))}</text>`;
+      gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR + 6}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/><text x="${width - padR + 10}" y="${(gy + 3).toFixed(1)}" font-size="14.5" fill="var(--text-muted)">${fmtWon(Math.round(price))}</text>`;
     }
 
     const labelCount = Math.min(6, visible.length);
@@ -2068,7 +2067,7 @@ effective_date: [기준일]
     for (let i = 0; i < labelCount; i++) {
       const idx = Math.round((i / Math.max(1, labelCount - 1)) * (visible.length - 1));
       const cx = padL + slot * idx + slot / 2;
-      axisSvg += `<text x="${cx.toFixed(1)}" y="${height - 8}" font-size="9" fill="var(--text-muted)" text-anchor="middle">${visible[idx].date.slice(2)}</text>`;
+      axisSvg += `<text x="${cx.toFixed(1)}" y="${height - 8}" font-size="14.5" fill="var(--text-muted)" text-anchor="middle">${visible[idx].date.slice(2)}</text>`;
     }
 
     atlasHistoryGeom = { padL, plotW, slot, visible, width, height };

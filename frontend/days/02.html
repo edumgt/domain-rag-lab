@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="assets/fund-case-market.css?v=20260905-1" />
     <link rel="stylesheet" href="assets/emerging-market-modal.css?v=20260905-1" />
     <link rel="stylesheet" href="assets/fund-manager-add-row.css?v=20260905-1" />
-    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-offcanvas-nav-fix" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-modal-large-unified" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -34,7 +34,7 @@
       >
         <i class="fa-solid fa-bars"></i><span>학습</span>
       </button>
-      <a class="day-kms-title" href="/?view=learn">금융상품 이해 KMS</a>
+      <a class="day-kms-title" href="/?view=learn">금융과 행동</a>
       <div
         class="day-brand-nav"
         role="navigation"
@@ -46,6 +46,8 @@
         ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
         ><a href="/?view=simulation"
           ><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</a
+        ><a href="/?view=backtest"
+          ><i class="fa-solid fa-flask"></i> LEAN 백테스트</a
         ><a href="/?view=calendar"
           ><i class="fa-solid fa-calendar-days"></i> 캘린더</a
         >
@@ -159,6 +161,32 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="생애주기로 보는 예금 적금 펀드 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
+            <span>01.1</span>
+            <div class="lesson-content">
+              <h2>펀드·ETF는 언제, 왜 만들어졌을까요?</h2>
+              <div class="lesson-body">
+                <p><strong>‘최초의 펀드’도 구조를 구분해서 봐야 합니다.</strong> 오늘날 펀드라는 말에는 폐쇄형 펀드·개방형 뮤추얼펀드·ETF가 모두 포함되지만, 투자자가 돈을 넣고 빼는 방식과 거래 장소가 서로 다릅니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">구분</th><th scope="col">시기·장소</th><th scope="col">역사적 이정표</th><th scope="col">만들어진 이유</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">초기 현대 펀드</th><td>1774년, 네덜란드 암스테르담</td><td>중개인 <strong>아브라함 판 케트비흐</strong>가 <em>Eendragt Maakt Magt</em>(‘단결은 힘을 만든다’)를 만들었습니다. 고정된 지분을 발행한 <strong>폐쇄형</strong> 집합투자기구로, 세계 최초의 투자펀드로 널리 평가됩니다.</td><td>1772~1773년 금융위기 뒤, 자금이 작은 투자자도 여러 나라의 채권·플랜테이션 대출채권에 나누어 투자해 위험을 분산하도록 하기 위해서였습니다.</td></tr>
+                      <tr><th scope="row">개방형 펀드</th><td>1924년, 미국 보스턴</td><td><strong>Massachusetts Investors Trust</strong>가 환매 가능한 지분을 내놓았습니다. 미국 최초의 개방형 뮤추얼펀드로, 현대 공모펀드 방식의 중요한 출발점입니다.</td><td>투자자가 펀드에 직접 환매를 청구해 유동성을 얻고, 적은 돈으로 전문 운용과 분산투자에 참여하게 하려는 목적이었습니다.</td></tr>
+                      <tr><th scope="row">ETF</th><td>1990년, 캐나다 토론토증권거래소</td><td><strong>Toronto 35 Index Participation Units (TIPs)</strong>가 상장됐습니다. 거래소가 세계 최초 ETF로 기념하는, 현대 ETF의 원형입니다.</td><td>한 주식처럼 장중에 거래하면서도 한 번의 매수로 지수 전체에 투자할 수 있게 하려는 목적이었습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>모은 돈을 거래하는 방식은 어떻게 발전했나</h3>
+                <p><strong>1. 폐쇄형 펀드</strong> — 처음 정한 수만큼 지분을 발행하고, 이후 투자자는 다른 투자자와 지분을 사고팝니다. 그래서 지분의 시장가격이 실제 보유자산 가치(NAV)보다 높거나 낮아질 수 있습니다. 케트비흐의 펀드도 이 방식에 가까웠습니다.</p>
+                <p><strong>2. 개방형 펀드</strong> — 투자자가 운용사에 가입하거나 환매를 신청하면 펀드는 NAV를 기준으로 지분을 새로 발행하거나 없앱니다. 일반 투자자는 보통 장중 가격이 아니라 하루에 한 번 계산되는 기준가격으로 거래합니다. 1976년에는 Vanguard 500 Index Fund가 개인 투자자용 인덱스펀드를 대중화해, 낮은 비용으로 시장 전체를 추종하는 방식을 넓혔습니다.</p>
+                <p><strong>3. ETF</strong> — 일반 투자자는 거래소에서 ETF 지분을 장중 시장가격으로 사고팝니다. 지정참가회사(AP)는 큰 묶음의 ETF 지분을 펀드와 직접 설정·환매하고, 보통 기초자산 바스켓과 교환합니다. 시장가격과 NAV의 차이가 커지면 AP가 차익거래할 유인이 생겨 둘의 차이를 줄이는 구조입니다. 다만 시장가격과 NAV가 항상 같다는 뜻은 아닙니다.</p>
+                <p>따라서 펀드와 ETF의 공통 출발점은 <strong>소액으로도 위험을 나누고 전문적·규칙 기반 운용에 참여</strong>하게 하려는 데 있습니다. ETF는 여기에 거래소의 장중 유동성을 더한 구조입니다. 분산이 손실을 없애지는 않으므로, 실제 투자 전에는 편입자산·총보수·환매 또는 매매 방식·괴리율을 함께 확인해야 합니다.</p>
+                <p><small>참고: <a href="https://www.amsterdam.nl/stadsarchief/stukken/geld/eendragt-maakt-magt/" target="_blank" rel="noopener noreferrer">암스테르담 시 기록보관소의 Eendragt Maakt Magt</a>, <a href="https://www.mfs.com/en-ie/investment-professional/about-mfs/our-history.html" target="_blank" rel="noopener noreferrer">MFS의 개방형 펀드 연혁</a>, <a href="https://investors.tmx.com/English/News--Events/news/news-details/2020/Toronto-Stock-Exchange-Celebrates-30-Years-of-ETFs-2020-3-9/default.aspx" target="_blank" rel="noopener noreferrer">TSX의 ETF 30주년 자료</a>, <a href="https://corporate.vanguard.com/content/corporatesite/us/en/corp/articles/50-years-50-facts-indexing-since-1976.html" target="_blank" rel="noopener noreferrer">Vanguard 인덱스펀드 연혁</a>, <a href="https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-24" target="_blank" rel="noopener noreferrer">미 SEC Investor.gov의 ETF 설정·환매 안내</a>.</small></p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="펀드와 ETF의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
             <span>01</span>

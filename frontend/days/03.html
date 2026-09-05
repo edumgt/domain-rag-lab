@@ -9,75 +9,108 @@
     />
     <title>03일차 | 4일 금융 이론 — 채권 · 코인</title>
     <link rel="stylesheet" href="assets/site.css?v=20260905-breaktime-modal-unified" />
-    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-offcanvas-nav-fix" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260905-modal-large-unified" />
     <style>
       /* 옵션 학습 단원은 01일차로 이동했습니다. */
-      /* 01~18은 3일차 본문, 그 뒤의 이전 옵션 단원은 숨깁니다. */
-      body[data-day="3"] .lesson-list > .lesson:nth-child(n + 19) { display: none; }
+      /* 01~20은 3일차 본문, 그 뒤의 이전 옵션 단원은 숨깁니다. */
+      body[data-day="3"] .lesson-list > .lesson:nth-child(n + 21) { display: none; }
       .bond-market-size-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
-      .bond-market-size-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+      .bond-market-size-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
       .bond-market-size-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
       .bond-market-size-summary article { padding: 13px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; text-align: center; }
-      .bond-market-size-summary span { display: block; color: var(--muted); font-size: 11px; font-weight: 800; }
+      .bond-market-size-summary span { display: block; color: var(--muted); font-size: 14.5px; font-weight: 800; }
       .bond-market-size-summary strong { display: block; margin-top: 6px; color: var(--ink); font-size: 20px; }
       .bond-market-size-chart { display: grid; gap: 10px; }
       .bond-market-size-row { display: grid; grid-template-columns: 104px minmax(90px, 1fr) 100px; gap: 10px; align-items: center; }
-      .bond-market-size-country { color: var(--ink); font-size: 13px; font-weight: 800; }
+      .bond-market-size-country { color: var(--ink); font-size: 14.5px; font-weight: 800; }
       .bond-market-size-track { height: 25px; overflow: hidden; border-radius: 5px; background: #edf1f7; }
-      .bond-market-size-bar { display: flex; align-items: center; min-width: 2px; height: 100%; padding-left: 8px; border-radius: inherit; background: linear-gradient(90deg, #2563eb, #5b8ff9); color: #fff; font-size: 11px; font-weight: 800; white-space: nowrap; }
-      .bond-market-size-value { color: var(--ink); font-size: 13px; font-weight: 800; text-align: right; white-space: nowrap; }
-      .bond-market-size-note { margin: 18px 0 0; padding: 12px 14px; border-left: 4px solid var(--blue); border-radius: 8px; background: #f5f8ff; color: #395171; font-size: 12px; line-height: 1.65; }
-      .bond-market-size-source { margin: 12px 0 0; color: var(--muted); font-size: 11.5px; line-height: 1.6; }
+      .bond-market-size-bar { display: flex; align-items: center; min-width: 2px; height: 100%; padding-left: 8px; border-radius: inherit; background: linear-gradient(90deg, #2563eb, #5b8ff9); color: #fff; font-size: 14.5px; font-weight: 800; white-space: nowrap; }
+      .bond-market-size-value { color: var(--ink); font-size: 14.5px; font-weight: 800; text-align: right; white-space: nowrap; }
+      .bond-market-size-note { margin: 18px 0 0; padding: 12px 14px; border-left: 4px solid var(--blue); border-radius: 8px; background: #f5f8ff; color: #395171; font-size: 14.5px; line-height: 1.65; }
+      .bond-market-size-source { margin: 12px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
       .bond-market-size-source a { color: var(--blue); font-weight: 800; }
       .crypto-market-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
-      .crypto-market-intro, .crypto-market-source { margin: 4px 0 18px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+      .crypto-market-intro, .crypto-market-source { margin: 4px 0 18px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
       .crypto-market-scale { display: grid; gap: 11px; margin: 16px 0 20px; }
       .crypto-market-row { display: grid; grid-template-columns: 96px minmax(90px, 1fr) 126px; gap: 10px; align-items: center; }
-      .crypto-market-name, .crypto-market-value { color: var(--ink); font-size: 13px; font-weight: 800; }
+      .crypto-market-name, .crypto-market-value { color: var(--ink); font-size: 14.5px; font-weight: 800; }
       .crypto-market-value { text-align: right; white-space: nowrap; }
       .crypto-market-track { height: 26px; overflow: hidden; border-radius: 6px; background: #edf1f7; }
-      .crypto-market-bar { display: flex; align-items: center; min-width: 4px; height: 100%; padding-left: 8px; border-radius: inherit; color: #fff; font-size: 11px; font-weight: 800; white-space: nowrap; }
+      .crypto-market-bar { display: flex; align-items: center; min-width: 4px; height: 100%; padding-left: 8px; border-radius: inherit; color: #fff; font-size: 14.5px; font-weight: 800; white-space: nowrap; }
       .crypto-market-bar.bonds { background: linear-gradient(90deg, #2563eb, #5b8ff9); }
       .crypto-market-bar.stocks { background: linear-gradient(90deg, #147957, #36b37e); }
       .crypto-market-bar.crypto { background: linear-gradient(90deg, #8b5cf6, #b794f4); }
       .crypto-market-insights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0; }
       .crypto-market-insights article { padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }
-      .crypto-market-insights span { display: block; color: var(--muted); font-size: 11px; font-weight: 800; }
+      .crypto-market-insights span { display: block; color: var(--muted); font-size: 14.5px; font-weight: 800; }
       .crypto-market-insights strong { display: block; margin-top: 5px; color: var(--ink); font-size: 19px; }
-      .crypto-market-insights p { margin: 5px 0 0; color: #4c5d7a; font-size: 11px; line-height: 1.55; }
-      .crypto-market-note { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid #8b5cf6; border-radius: 8px; background: #f7f3ff; color: #4a3f70; font-size: 12px; line-height: 1.65; }
-      .crypto-market-source { margin-top: 12px; margin-bottom: 0; font-size: 11.5px; }
+      .crypto-market-insights p { margin: 5px 0 0; color: #4c5d7a; font-size: 14.5px; line-height: 1.55; }
+      .crypto-market-note { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid #8b5cf6; border-radius: 8px; background: #f7f3ff; color: #4a3f70; font-size: 14.5px; line-height: 1.65; }
+      .crypto-market-source { margin-top: 12px; margin-bottom: 0; font-size: 14.5px; }
       .crypto-market-source a { color: var(--blue); font-weight: 800; }
       .defi-insight-dialog { width: min(900px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
-      .defi-insight-intro { margin: 4px 0 18px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+      .defi-insight-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
       .defi-flow { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr; align-items: center; margin: 16px 0; }
       .defi-flow article { min-height: 104px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }
-      .defi-flow strong { display: block; color: var(--ink); font-size: 13px; }
-      .defi-flow span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+      .defi-flow strong { display: block; color: var(--ink); font-size: 14.5px; }
+      .defi-flow span { display: block; margin-top: 5px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
       .defi-flow i { color: #8b5cf6; text-align: center; font-size: 18px; }
       .defi-equity-chart { padding: 16px; border: 1px solid var(--line); border-radius: 11px; background: #fbfcff; }
       .defi-chart-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 8px; }
       .defi-chart-head h3 { margin: 0; color: var(--ink); font-size: 15px; }
-      .defi-chart-head span { color: var(--muted); font-size: 11px; }
+      .defi-chart-head span { color: var(--muted); font-size: 14.5px; }
       .defi-equity-svg { display: block; width: 100%; height: 186px; overflow: visible; }
       .defi-equity-svg .grid { stroke: #dfe5f1; stroke-width: 1; }
-      .defi-equity-svg .axis { fill: #63708a; font-size: 10px; }
+      .defi-equity-svg .axis { fill: #63708a; font-size: 14.5px; }
       .defi-equity-svg polyline { fill: none; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
       .defi-equity-legend { display: flex; flex-wrap: wrap; gap: 8px 13px; margin-top: 8px; }
-      .defi-equity-legend span { color: #455572; font-size: 12px; font-weight: 800; }
+      .defi-equity-legend span { color: #455572; font-size: 14.5px; font-weight: 800; }
       .defi-equity-legend i { display: inline-block; width: 9px; height: 9px; margin-right: 4px; border-radius: 50%; }
       .defi-bars { display: grid; gap: 9px; margin: 18px 0; }
-      .defi-bar-row { display: grid; grid-template-columns: 52px minmax(90px, 1fr) 65px; gap: 10px; align-items: center; font-size: 12px; font-weight: 800; }
+      .defi-bar-row { display: grid; grid-template-columns: 52px minmax(90px, 1fr) 65px; gap: 10px; align-items: center; font-size: 14.5px; font-weight: 800; }
       .defi-bar-track { height: 19px; overflow: hidden; border-radius: 99px; background: #edf1f7; }
       .defi-bar { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #8b5cf6, #b794f4); }
       .defi-bar-row b { color: #16794b; text-align: right; }
-      .defi-insight-note { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid #8b5cf6; border-radius: 8px; background: #f7f3ff; color: #4a3f70; font-size: 12px; line-height: 1.65; }
+      .defi-insight-note { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid #8b5cf6; border-radius: 8px; background: #f7f3ff; color: #4a3f70; font-size: 14.5px; line-height: 1.65; }
       .quant-crypto-pipeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 16px 0; }
       .quant-crypto-pipeline article { position: relative; min-height: 114px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }
       .quant-crypto-pipeline article:not(:last-child)::after { position: absolute; right: -7px; top: 48px; z-index: 1; color: #8b5cf6; content: "›"; font-size: 20px; font-weight: 800; }
-      .quant-crypto-pipeline b { display: block; color: var(--ink); font-size: 12px; }
-      .quant-crypto-pipeline span { display: block; margin-top: 5px; color: var(--muted); font-size: 10.5px; line-height: 1.55; }
-      @media (max-width: 600px) { .bond-market-size-dialog, .crypto-market-dialog, .defi-insight-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .bond-market-size-summary, .crypto-market-insights { grid-template-columns: 1fr; } .bond-market-size-row { grid-template-columns: 76px minmax(50px, 1fr) 76px; gap: 7px; } .crypto-market-row { grid-template-columns: 68px minmax(44px, 1fr) 86px; gap: 7px; } .bond-market-size-country, .bond-market-size-value, .crypto-market-name, .crypto-market-value { font-size: 11px; } .bond-market-size-bar, .crypto-market-bar { padding-left: 5px; font-size: 10px; } .defi-flow { grid-template-columns: 1fr; gap: 8px; } .defi-flow i { transform: rotate(90deg); } .defi-chart-head { display: block; } .defi-equity-svg { height: 155px; } .quant-crypto-pipeline { grid-template-columns: 1fr; gap: 13px; } .quant-crypto-pipeline article:not(:last-child)::after { top: auto; right: 50%; bottom: -17px; transform: rotate(90deg); } }
+      .quant-crypto-pipeline b { display: block; color: var(--ink); font-size: 14.5px; }
+      .quant-crypto-pipeline span { display: block; margin-top: 5px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+      .bond-coupon-figure { max-width: 760px; margin: 18px auto; padding: 10px; border: 1px solid var(--line); border-radius: 14px; background: #fbfcff; }
+      .bond-coupon-figure img { display: block; width: 100%; height: auto; border-radius: 10px; }
+      .bond-coupon-figure figcaption { padding: 9px 5px 1px; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+      .bok-rate-modal .bok-rate-dialog { width: min(940px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
+      .bok-rate-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
+      .bok-rate-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+      .bok-rate-summary article { padding: 13px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; text-align: center; }
+      .bok-rate-summary span { display: block; color: var(--muted); font-size: 14.5px; font-weight: 800; }
+      .bok-rate-summary strong { display: block; margin-top: 5px; color: var(--ink); font-size: 22px; }
+      .bok-rate-chart { padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: #fbfcff; }
+      .bok-rate-chart svg { display: block; width: 100%; height: auto; }
+      .bok-rate-chart .grid { stroke: #dbe4f2; stroke-width: 1; }
+      .bok-rate-chart .axis, .bok-rate-chart .date { fill: #63708a; font-family: Arial, sans-serif; font-size: 13px; }
+      .bok-rate-chart .rate-line { fill: none; stroke: #2563eb; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+      .bok-rate-chart .rate-dot { fill: #2563eb; stroke: #fff; stroke-width: 3; }
+      .bok-rate-chart .rate-label { fill: #123b72; font-family: Arial, sans-serif; font-size: 14px; font-weight: 800; }
+      .bok-rate-events { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 14px 0; }
+      .bok-rate-events span { padding: 9px 11px; border-left: 3px solid var(--blue); border-radius: 7px; background: #f4f7ff; color: #395171; font-size: 14.5px; line-height: 1.5; }
+      .bok-rate-note { margin: 0; padding: 12px 14px; border-left: 4px solid #f0a10a; border-radius: 8px; background: #fff9e8; color: #705316; font-size: 14.5px; line-height: 1.65; }
+      @media (max-width: 600px) { .bok-rate-modal .bok-rate-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .bok-rate-summary, .bok-rate-events { grid-template-columns: 1fr; } .bok-rate-chart { overflow-x: auto; } .bok-rate-chart svg { min-width: 680px; } }
+      .correlation-sim-modal .correlation-sim-dialog { width: min(1040px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
+      .corr-sim-picker { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin: 16px 0 12px; }
+      .corr-sim-picker label { display: grid; grid-template-columns: auto 1fr; gap: 2px 7px; align-items: center; min-height: 68px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); cursor: pointer; }
+      .corr-sim-picker label:has(input:checked) { border-color: var(--blue); background: #eef3ff; box-shadow: 0 0 0 1px #bfd0ff; }
+      .corr-sim-picker input { width: 16px; height: 16px; margin: 0; accent-color: var(--blue); }
+      .corr-sim-picker b { font-size: 14.5px; }
+      .corr-sim-picker small { grid-column: 2; color: var(--muted); font-size: 14.5px; }
+      .corr-sim-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+      .corr-sim-pairs { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 14px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+      .corr-sim-pairs b { flex: 0 0 100%; color: var(--ink); }
+      .corr-sim-pairs span { padding: 3px 7px; border-radius: 99px; background: #eef2f8; white-space: nowrap; }
+      .corr-sim-pairs strong { color: var(--blue); }
+      @media (max-width: 860px) { .corr-sim-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+      @media (max-width: 600px) { .bond-market-size-dialog, .crypto-market-dialog, .defi-insight-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .bond-market-size-summary, .crypto-market-insights { grid-template-columns: 1fr; } .bond-market-size-row { grid-template-columns: 76px minmax(50px, 1fr) 76px; gap: 7px; } .crypto-market-row { grid-template-columns: 68px minmax(44px, 1fr) 86px; gap: 7px; } .bond-market-size-country, .bond-market-size-value, .crypto-market-name, .crypto-market-value { font-size: 14.5px; } .bond-market-size-bar, .crypto-market-bar { padding-left: 5px; font-size: 14.5px; } .defi-flow { grid-template-columns: 1fr; gap: 8px; } .defi-flow i { transform: rotate(90deg); } .defi-chart-head { display: block; } .defi-equity-svg { height: 155px; } .quant-crypto-pipeline { grid-template-columns: 1fr; gap: 13px; } .quant-crypto-pipeline article:not(:last-child)::after { top: auto; right: 50%; bottom: -17px; transform: rotate(90deg); } }
     </style>
     <link
       rel="stylesheet"
@@ -99,7 +132,7 @@
       >
         <i class="fa-solid fa-bars"></i><span>학습</span>
       </button>
-      <a class="day-kms-title" href="/?view=learn">금융상품 이해 KMS</a>
+      <a class="day-kms-title" href="/?view=learn">금융과 행동</a>
       <div
         class="day-brand-nav"
         role="navigation"
@@ -111,6 +144,8 @@
         ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
         ><a href="/?view=simulation"
           ><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</a
+        ><a href="/?view=backtest"
+          ><i class="fa-solid fa-flask"></i> LEAN 백테스트</a
         ><a href="/?view=calendar"
           ><i class="fa-solid fa-calendar-days"></i> 캘린더</a
         >
@@ -288,6 +323,31 @@
             </button>
           </section>
           <section class="lesson">
+            <span>01.1</span>
+            <div class="lesson-content">
+              <h2>채권은 언제, 왜 만들어졌을까요?</h2>
+              <div class="lesson-body">
+                <p><strong>채권의 ‘최초’는 채무 기록과 거래 가능한 증권을 나누어 보아야 합니다.</strong> 돈을 빌리고 갚겠다는 기록은 고대부터 있었지만, 오늘날의 채권은 많은 사람에게서 자금을 모으고 그 권리를 양도할 수 있게 만든 유가증권입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">구분</th><th scope="col">시기·장소</th><th scope="col">역사적 이정표</th><th scope="col">필요했던 이유</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">채무기록의 원형</th><td>기원전 3천년기 무렵, 메소포타미아</td><td>점토판에 대출·이자·상환 의무를 기록한 사례가 남아 있습니다. 이는 채권 그 자체라기보다 채권 계약의 먼 원형입니다.</td><td>곡물·은 등의 대여와 상환을 증명하고, 거래 당사자의 권리와 의무를 분명히 하기 위해서였습니다.</td></tr>
+                      <tr><th scope="row">공공채의 초기 형태</th><td>1171년 무렵, 이탈리아 베네치아</td><td>전쟁 재원을 위해 시민에게서 모은 공공부채가 양도 가능한 권리로 발전했습니다. 현대 국채·지방채로 이어지는 초기 공공채 시장의 대표 사례입니다.</td><td>세금만으로는 부족한 대규모 전쟁·공공 지출을 한 번에 조달하기 위해서였습니다.</td></tr>
+                      <tr><th scope="row">현존 최고(最古) 이자지급 채권</th><td>1624년, 네덜란드 레크다이크 보벤담 수리위원회</td><td>제방 보수 자금을 위해 발행한 영구채는 지금도 이자를 지급하는 가장 오래된 활성 채권으로 기록됩니다. ‘최초의 채권’이라는 뜻은 아닙니다.</td><td>홍수 방어 시설처럼 여러 세대가 쓰는 공공 인프라의 비용을 장기에 걸쳐 조달하기 위해서였습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>차용증에서 오늘의 채권시장으로</h3>
+                <p><strong>1. 개별 대여</strong> — 채권자와 채무자가 금액·이자·상환일을 직접 약정했습니다. 조건은 유연하지만 돈을 빌려준 사람이 만기 전 현금이 필요할 때 권리를 넘기기 쉽지 않았습니다.</p>
+                <p><strong>2. 양도 가능한 공공채·회사채</strong> — 발행자가 많은 투자자에게 자금을 빌리고, 투자자는 이자(쿠폰)와 원금 상환을 받을 권리를 보유하거나 다른 사람에게 팔 수 있게 됐습니다. 1694년 영란은행 설립 때도 영국 정부는 대프랑스 전쟁 자금을 위해 대중으로부터 120만 파운드를 조달했습니다.</p>
+                <p><strong>3. 현대 채권</strong> — 발행시장에서 정부·기업이 만기·표면금리·상환 조건을 정해 발행하고, 유통시장에서 투자자가 가격과 수익률(YTM)을 기준으로 거래합니다. 현재는 대부분 계좌의 전자등록으로 관리되지만, 발행자의 상환 능력과 금리 변화에 따른 가격 위험은 여전히 남습니다.</p>
+                <p><small>참고: <a href="https://academic.oup.com/book/47266/chapter-abstract/422652313" target="_blank" rel="noopener noreferrer">Oxford Academic의 메소포타미아 대출 기록</a>, <a href="https://openurl.ebsco.com/contentitem/doi%3A10.2307%2F1882461" target="_blank" rel="noopener noreferrer">베네치아 공공부채 연구</a>, <a href="https://www.guinnessworldrecords.com/world-records/549529-oldest-active-bond" target="_blank" rel="noopener noreferrer">Guinness의 현존 최고 활성 채권 기록</a>, <a href="https://www.bankofengland.co.uk/explainers/who-owns-the-bank-of-england" target="_blank" rel="noopener noreferrer">영란은행의 1694년 정부 자금조달 설명</a>.</small></p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="채권의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
             <span>02</span>
             <div class="lesson-content">
               <h2>채권의 종류: 누가 발행하는지로 구분하기</h2>
@@ -402,6 +462,10 @@
                   환산한 값이라 시장가격에 따라 계속 바뀝니다. 보통 시장금리가 오르면
                   기존 채권 가격은 내려가고 수익률은 올라가는 방향으로 움직입니다.
                 </p>
+                <figure class="bond-coupon-figure">
+                  <img src="/learning/historic-bond-image" alt="1961년 한국은행 발행 대한민국정부 건국국채증서 일백환 앞면과 이표" />
+                  <figcaption><b>실제 역사 자료:</b> 1961년 한국은행이 발행한 ‘대한민국정부 제14회 오분리 건국국채증서 일백환’입니다. <b>오분리</b>는 연 5% 이율을 뜻하므로, 이 증서에서는 표면금리(쿠폰금리)를 5%로 읽을 수 있습니다. 이표에는 이자 지급에 관한 정보가 표시됩니다. 출처: <a href="https://www.emuseum.go.kr/detail?relicId=PS0100202500100758500000" target="_blank" rel="noopener noreferrer">e뮤지엄 소장품 상세</a> (대한민국역사박물관 소장, 공공누리 제4유형: 출처표시·상업적 이용금지·변경금지).</figcaption>
+                </figure>
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
                     <caption>종류별 금리·발행 정보 확인 경로</caption>
@@ -415,6 +479,21 @@
                     </tbody>
                   </table>
                 </div>
+                <h3>실제 지급 지연·채무조정 사례: ‘채권’이라고 원리금이 자동 보장되지는 않습니다</h3>
+                <p>채무불이행(디폴트)은 약정한 이자나 원금을 제때 지급하지 못하는 일입니다. 곧바로 원금이 0원이 된다는 뜻은 아니지만, 회생·파산·채무조정 절차가 시작되면 만기에 예정됐던 현금 수령이 지연되고, 채권자는 법원·계약에 따른 변제계획과 회수율을 기다리게 될 수 있습니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>지급 불이행 또는 채무조정이 있었던 대표 사례</caption>
+                    <thead><tr><th scope="col">종류</th><th scope="col">사례</th><th scope="col">무슨 일이 있었나</th><th scope="col">읽어야 할 점</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">국내 회사채·CP</th><td>동양그룹, 2013년</td><td>주요 계열사가 2013년 9월 30일 기업회생절차를 신청했습니다. 금융당국은 당시 일반 투자자에게 판매된 동양계열 CP·회사채가 약 1조6천억원, 투자자가 약 4만1천 명이라고 발표했습니다.</td><td>만기일이 와도 발행사의 지급 능력이 흔들리면 약정대로 현금이 들어온다고 단정할 수 없습니다. 회생절차와 채권자 변제계획을 확인해야 합니다.</td></tr>
+                      <tr><th scope="row">해외 국채</th><td>아르헨티나, 2001년</td><td>정부는 2001년 12월 민간 채권자가 보유한 국채의 원리금 지급에 대해 모라토리엄을 선언했고, 이후 채무 재조정이 이어졌습니다.</td><td>국채도 발행국의 재정·외화 유동성·통화 위험에 따라 지급 지연이나 조건 변경이 일어날 수 있습니다. 이는 한국 국고채 사례가 아니라 해외 국채의 신용위험 사례입니다.</td></tr>
+                      <tr><th scope="row">해외 지방채</th><td>미국 디트로이트시, 2013년</td><td>디트로이트시는 2013년 지방정부 파산(Chapter 9)을 신청했고, 이후 채무조정계획에서 일부 기존 지방채를 재구조화했습니다.</td><td>지방채는 세입·사업수입·보증 구조와 법적 우선순위가 다릅니다. ‘지방정부 발행’이라는 이름만으로 동일한 상환 안전성을 가정하면 안 됩니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><b>한국 국고채·지방채와 그대로 동일시하면 안 됩니다.</b> 위 사례는 발행자 유형마다 원리금 지급 위험이 존재할 수 있음을 보여 주기 위한 것입니다. 국내 국고채, 개인투자용 국채, 통안채, 특수채, 금융채·회사채, 지방채는 각각 발행 주체·상환 재원·법적 구조가 다르므로 개별 상품설명서와 발행 공시를 확인해야 합니다. 특히 <b>예금자보호는 예금 상품에 관한 제도이지, 회사채·금융채 원리금을 자동 보장하는 제도가 아닙니다.</b></p>
+                <p><small>출처: <a href="https://www.fsc.go.kr/no010101/70914" target="_blank" rel="noopener noreferrer">금융위원회 ‘동양그룹 문제 유사사례 재발방지 종합대책’</a> 및 <a href="https://www.fsc.go.kr/no010103/24527" target="_blank" rel="noopener noreferrer">동양계열 CP·회사채 판매 규모 발표</a>, <a href="https://www.imf.org/en/news/articles/2015/09/28/04/53/pn0388" target="_blank" rel="noopener noreferrer">IMF의 아르헨티나 국채 디폴트 설명</a>, <a href="https://detroitmi.gov/ar/node/107646" target="_blank" rel="noopener noreferrer">디트로이트시 파산·채무조정 연표</a>.</small></p>
                 <p>
                   회사채나 금융채의 수익률이 국고채보다 높아 보인다면, 같은 기간 돈을
                   빌려줄 때 추가로 감수하는 신용위험·유동성위험 등에 대한 보상인
@@ -658,6 +737,7 @@
                   확인하면, 금리 변화에 따라 내 포트폴리오가 왜 흔들리는지
                   이해하는 데 도움이 됩니다.
                 </p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="bokRateTrendTrigger"><i class="fa-solid fa-chart-line"></i> 한국은행 최근 2년 기준금리 추이</button><button type="button" class="breaktime-trigger" data-break-time-trigger data-break-time-rate-market><i class="fa-solid fa-mug-hot"></i> BreakTime · 시장 변동성 차트 확장</button><small>기준금리의 변경일과 인상·인하 흐름을 차트로 확인하세요.</small></p>
               </div>
             </div>
             <button
@@ -913,22 +993,36 @@
               <div class="lesson-body">
                 <p>서로 다른 방식으로 움직이는 자산을 섞으면 한 자산의 하락이 전체 포트폴리오에 미치는 충격을 줄일 수 있습니다.</p>
                 <p>이를 판단할 때 <b>상관관계</b>를 봅니다. 상관관계가 낮다는 것은 두 자산이 같은 방향으로만 움직이지 않을 가능성이 있다는 뜻입니다. 자산을 많이 담는 것만으로는 충분하지 않으며, 비슷한 산업·국가에 몰려 있으면 실제로는 한 방향으로 움직일 수 있습니다.</p>
-                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="correlationSimTrigger"><i class="fa-solid fa-arrows-left-right"></i> 상관관계 시뮬레이터 해보기</button><small>두 자산의 상관계수를 직접 조절하며 분산 효과를 확인하세요.</small></p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="correlationSimTrigger"><i class="fa-solid fa-arrows-left-right"></i> 상관관계·다중자산 시뮬레이터</button><button type="button" class="breaktime-trigger" data-break-time-trigger data-break-time-edumgt><i class="fa-solid fa-mug-hot"></i> BreakTime · 포트폴리오 완성하기</button><small>10개 자산군을 여러 개 고르고, 교육용 상관관계 가정으로 분산 여부를 확인하세요.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="분산투자는 왜 필요한가요 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
-            <span>12</span>
+            <span>13.1</span>
             <div class="lesson-content">
-              <h2>변동성 매매: 방향보다 움직임의 크기를 보는 거래</h2>
+              <h2>코인은 언제, 왜 만들어졌을까요?</h2>
               <div class="lesson-body">
-                <p>변동성 매매는 주가가 오를지 내릴지보다 앞으로 가격이 얼마나 크게 움직일지를 보는 방식입니다. 예를 들어 실적 발표를 앞둔 주식이 어느 방향으로 갈지는 몰라도 크게 움직일 것 같다고 판단하는 경우가 있습니다.</p>
-                <p>옵션 가격에는 시장이 예상하는 미래 움직임의 크기가 어느 정도 반영됩니다. 큰 움직임을 예상한 사람은 콜옵션과 풋옵션을 함께 사는 것처럼 양쪽 방향의 옵션을 활용할 수 있습니다. 실제로 큰 폭의 상승이나 하락이 나오면 유리할 수 있지만, 움직임이 작거나 프리미엄이 비싸면 손실이 날 수 있습니다.</p>
-                <p>반대로 큰 움직임이 없을 것이라고 보고 옵션을 팔아 프리미엄을 받는 방식도 있습니다. 그러나 예상 밖 급등·급락 때 손실이 매우 커질 수 있어, ‘방향을 맞히지 않아도 되는 안전한 거래’가 아닙니다. 만기·프리미엄·거래비용과 최악의 손실을 이해하지 못했다면 실거래보다 모의 학습으로 구조를 먼저 확인해야 합니다.</p>
+                <p><strong>‘최초의 코인’은 디지털 화폐 전체와 탈중앙 가상자산을 구분해야 정확합니다.</strong> 암호기술을 이용한 전자화폐 연구는 비트코인보다 앞서 있었지만, 비트코인은 중앙 운영자 없이 이중지불 문제를 해결하며 작동·확산한 최초의 대표적 가상자산으로 평가됩니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">구분</th><th scope="col">시기</th><th scope="col">역사적 이정표</th><th scope="col">필요했던 이유</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">전자화폐 연구</th><td>1983년</td><td>데이비드 차움의 블라인드 서명 연구는 추적하기 어려운 전자지급 방법을 제시했습니다. 다만 이 방식은 발행·검증 주체가 있는 전자화폐 구상이지, 블록체인 기반 탈중앙 코인은 아닙니다.</td><td>온라인에서도 지급 사실을 증명하면서 이용자의 프라이버시를 지키려는 목적이었습니다.</td></tr>
+                      <tr><th scope="row">비트코인</th><td>2008년 10월 31일 백서 공개<br />2009년 1월 제네시스 블록</td><td>사토시 나카모토 명의의 백서는 P2P 전자화폐를 제안했고, 비트코인 네트워크가 시작됐습니다. 일반적으로 <strong>최초로 성공한 탈중앙 가상자산</strong>의 출발점으로 봅니다.</td><td>은행·결제회사 같은 신뢰할 제3자 없이도 거래 순서와 소유권을 공동으로 검증하고, 이중지불을 막으려는 목적이었습니다.</td></tr>
+                      <tr><th scope="row">스마트계약 플랫폼</th><td>2015년 7월 30일</td><td>이더리움 메인넷이 시작돼, 화폐 전송을 넘어 블록체인 위에서 프로그램(스마트계약)과 토큰을 만들 수 있는 길을 넓혔습니다.</td><td>개발자가 별도 중앙 서버 없이 조건부 거래·토큰·애플리케이션을 구현하게 하려는 목적이었습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>전자화폐에서 오늘의 코인 거래 방식으로</h3>
+                <p><strong>1. 중앙형 전자화폐</strong> — 은행이나 사업자가 잔고 장부를 관리하고, 사용자는 그 운영자를 신뢰해야 했습니다. 빠르고 복구·고객지원이 가능할 수 있지만, 운영기관의 보안·중단 위험을 함께 집니다.</p>
+                <p><strong>2. 비트코인식 공개 블록체인</strong> — 개인키로 거래에 서명하면 네트워크 참여자가 거래 규칙과 잔고를 검증하고 블록에 기록합니다. 비트코인은 작업증명(PoW)으로 기록 순서에 합의했습니다. 이 방식에서는 개인키를 잃거나 잘못된 주소로 보낸 거래를 일반적으로 되돌릴 수 없습니다.</p>
+                <p><strong>3. 이후의 체인·토큰 경제</strong> — 이더리움처럼 스마트계약을 실행하는 네트워크에서는 토큰·NFT·탈중앙화 애플리케이션을 만들 수 있습니다. 일부 네트워크는 에너지 사용을 줄이기 위해 지분증명(PoS)처럼 검증자가 자산을 예치하고 검증하는 방식을 사용합니다. 이용자는 거래소에서 사고팔거나 개인 지갑으로 직접 보관할 수 있으며, 어느 경우에도 가격·수탁·개인키·스마트계약 위험을 구분해야 합니다.</p>
+                <p>핵심은 코인이 ‘인터넷에 있는 숫자’이기만 한 것이 아니라, <strong>누가 장부를 쓰고 어떤 규칙으로 거래를 확정하는가</strong>가 다른 자산이라는 점입니다. 기술적 탈중앙성은 가격 안정성·사기 방지·투자 수익을 보장하지 않습니다.</p>
+                <p><small>참고: <a href="https://chaum.com/wp-content/uploads/2022/01/Chaum-blind-signatures.pdf" target="_blank" rel="noopener noreferrer">Chaum의 1983년 전자지급 연구</a>, <a href="https://www.thebitcoinpaper.org/white-paper/" target="_blank" rel="noopener noreferrer">Bitcoin 백서</a>, <a href="https://developer.bitcoin.org/reference/block_chain.html" target="_blank" rel="noopener noreferrer">Bitcoin 개발 문서의 제네시스 블록 설명</a>, <a href="https://ethereum.org/ethereum-history-founder-and-ownership/" target="_blank" rel="noopener noreferrer">Ethereum.org 연혁</a>.</small></p>
               </div>
             </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="변동성 매매 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="코인의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
             <span>13</span>
@@ -961,6 +1055,38 @@
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="가상자산의 기초: 블록체인, 코인, 토큰 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
+            <span>13.5</span>
+            <div class="lesson-content">
+              <h2>이더리움과 스마트 컨트랙트: 조건을 코드로 실행하는 장부</h2>
+              <div class="lesson-body">
+                <p><b>이더리움(Ethereum)</b>은 ETH를 보내는 네트워크인 동시에, 누구나 올린 프로그램을 여러 참여자가 같은 규칙으로 실행하고 결과를 기록할 수 있는 블록체인입니다. 쉽게 말해 비트코인이 ‘공동 장부에 돈을 옮기는 기능’에 집중했다면, 이더리움은 <b>공동 장부 위에서 약속을 자동 처리하는 작은 프로그램</b>도 실행할 수 있게 만든 플랫폼입니다.</p>
+                <p><b>스마트 컨트랙트(Smart Contract)</b>는 ‘계약서’ 자체가 아니라 블록체인에 배포된 프로그램입니다. 예를 들어 “A가 10 USDC를 보내면 B에게 디지털 이용권을 발급하고, 조건이 맞지 않으면 실행하지 않는다”는 규칙을 코드로 적어 둘 수 있습니다. 이용자가 지갑에서 거래를 승인하면 네트워크가 그 규칙을 실행하고 결과를 장부에 남깁니다. 이 실행에 드는 비용이 <b>가스비</b>입니다.</p>
+                <h3>세 단계로 이해하기</h3>
+                <ol>
+                  <li><b>규칙을 배포합니다.</b> 개발자가 ‘누가 무엇을 하면 어떻게 처리할지’를 코드로 작성해 블록체인에 올립니다.</li>
+                  <li><b>이용자가 요청하고 서명합니다.</b> 지갑에서 교환·대출·발급 같은 거래 내용을 확인한 뒤 개인키로 승인합니다.</li>
+                  <li><b>네트워크가 실행·기록합니다.</b> 조건이 맞으면 코드가 정해진 대로 실행되고, 결과는 블록체인에서 확인할 수 있습니다. 잘못된 주소나 악성 계약에 서명한 거래는 되돌리기 어렵습니다.</li>
+                </ol>
+                <h3>지금도 쓰이는 대표 사례</h3>
+                <ul>
+                  <li><b>스테이블코인 전송·결제:</b> USDC처럼 가치 안정을 목표로 설계된 토큰을 지갑 사이에서 보내고, 다른 앱의 결제·대기자금으로 활용합니다. ‘안정적’이라는 설계와 발행사의 준비자산·상환 위험은 별도로 확인해야 합니다.</li>
+                  <li><b>탈중앙화 교환·대출:</b> DEX의 교환 규칙이나 대출 서비스의 담보·이자·청산 조건을 스마트 컨트랙트가 처리합니다. 편리해 보여도 가격 급변, 유동성 부족, 오라클·코드 오류와 청산 위험이 있습니다.</li>
+                  <li><b>디지털 이용권·멤버십·티켓:</b> NFT는 행사 참석 증명, 멤버십 접근권, 게임 아이템처럼 고유한 디지털 자산의 소유·이전을 기록하는 데 쓰입니다. NFT가 있다고 해서 해당 자산의 가치·저작권·입장 가능 여부가 자동 보장되는 것은 아닙니다.</li>
+                  <li><b>공동 의사결정(DAO):</b> 구성원의 투표 결과에 따라 금고 지출이나 보조금 배분을 실행하도록 만들 수 있습니다. 그러나 투표권 집중, 코드 설계 오류, 법적 책임 문제는 여전히 남습니다.</li>
+                </ul>
+                <p><b>핵심 유의점:</b> 스마트 컨트랙트는 약속을 ‘자동으로’ 처리할 뿐, 입력된 정보가 맞는지·코드가 안전한지·상품이 좋은 투자인지를 보증하지 않습니다. 지갑의 서명 화면에서 대상 주소, 권한 범위, 승인 금액을 확인하고 모르는 계약에는 연결·서명하지 않는 것이 기본입니다.</p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="breaktime-trigger" data-break-time-trigger data-break-time-token>
+                    <i class="fa-solid fa-mug-hot"></i> BreakTime · Python으로 나만의 토큰 만들기
+                  </button>
+                  <small>테스트 네트워크에서 Python으로 ERC-20 토큰을 배포하는 과정을 찾아 도전해 보세요.</small>
+                </p>
+                <p><small>참고: <a href="https://ethereum.org/what-is-the-ethereum-network/" target="_blank" rel="noopener noreferrer">Ethereum.org의 이더리움 네트워크 소개</a>, <a href="https://ethereum.org/smart-contracts/" target="_blank" rel="noopener noreferrer">스마트 컨트랙트 활용 사례</a>, <a href="https://ethereum.org/stablecoins/" target="_blank" rel="noopener noreferrer">스테이블코인 설명</a>, <a href="https://ethereum.org/nft/" target="_blank" rel="noopener noreferrer">NFT의 활용 사례</a>, <a href="https://ethereum.org/dao/" target="_blank" rel="noopener noreferrer">DAO 소개</a>.</small></p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="이더리움과 스마트 컨트랙트 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
             <span>14</span>
             <div class="lesson-content">
               <h2>코인 거래소와 지갑: 주문부터 보관까지</h2>
@@ -970,6 +1096,10 @@
                 <p>거래 화면에서는 보통 <b>지정가</b>(원하는 가격과 수량을 미리 제시)와 <b>시장가</b>(현재 반대 호가에서 바로 체결)를 선택합니다. 체결 수수료는 거래소·주문 방식·등급에 따라 다르고, 코인을 개인 지갑으로 보낼 때는 거래소 출금 수수료와 해당 블록체인의 네트워크 수수료가 별도로 들 수 있습니다. 현물거래는 산 자산을 실제로 보유하는 거래이지만, 선물·마진·레버리지 상품은 증거금과 청산 위험이 더해져 초보자가 현물과 같은 위험도로 보면 안 됩니다.</p>
                 <p><b>탈중앙화 거래소(DEX)</b>는 개인 지갑을 연결해 스마트계약으로 교환하는 방식입니다. 중개회사가 고객 자산을 대신 보관하지 않는 대신, 이용자가 서명·가스비·가짜 토큰·스마트계약 위험을 직접 확인해야 합니다. 자동화시장조성자(AMM) 방식에서는 유동성 풀의 자산 비율로 가격이 바뀌므로, 주문장 거래소와 가격 형성 방식도 다를 수 있습니다.</p>
                 <p>거래소 계정의 잔고는 거래소 내부 장부에 표시되는 <b>수탁 잔고</b>이고, 개인 지갑의 자산은 블록체인 주소에서 직접 확인하는 <b>온체인 자산</b>입니다. 거래소에 둔 자산은 거래 편의성이 높은 반면 거래소의 보안·운영·출금 정책 위험을 함께 집니다. 개인 지갑은 복구 문구·개인키를 잃거나 피싱 서명에 응하면 되돌리기 매우 어렵습니다. 어느 방식이든 2단계 인증, 공식 주소 확인, 소액 시험 전송이 기본입니다.</p>
+                <h3>에어드롭과 거래소의 홍보 방식</h3>
+                <p><b>에어드롭(Airdrop)</b>은 프로젝트가 이용자 지갑이나 계정에 토큰을 무상으로 배분하는 방식입니다. 초기 이용자에게 보상하거나, 새 서비스·토큰의 존재를 알리고 커뮤니티 참여를 늘리기 위해 활용합니다. 다만 ‘무료 토큰 수령’을 이유로 복구 문구·개인키를 요구하거나 낯선 거래에 서명하게 하면 사기일 가능성이 높습니다. 정상적인 에어드롭도 가격 상승이나 거래소 상장을 보장하지 않으며, 세금·매도 가능 시점·토큰 공급량을 별도로 확인해야 합니다.</p>
+                <p>거래소는 운영 방식에 따라 <b>중앙화 거래소(CEX)</b>, <b>탈중앙화 거래소(DEX)</b>, 그리고 여러 거래소의 가격·유동성을 모아 보여 주는 <b>거래소 집계·중개 서비스</b>로 나누어 볼 수 있습니다. CEX는 원화 입출금과 고객지원이 편할 수 있지만 사업자가 자산을 수탁합니다. DEX는 지갑으로 직접 거래하지만 네트워크 수수료와 스마트계약 위험을 이용자가 부담합니다. 집계 서비스는 실제 주문이 어느 거래소에서 체결되는지와 수수료 구조를 확인해야 합니다.</p>
+                <p>프로젝트와 거래소는 신규 가입 보상, 거래 수수료 할인, 친구 추천, 예치·유동성 공급 보상, 거래 대회, 상장 공지, 인플루언서·커뮤니티 캠페인 등으로 이용자를 모읍니다. 이런 혜택은 참여 조건과 위험을 낮추지 않습니다. 보상 규모만 보지 말고 거래량 부풀리기 가능성, 락업·언락 조건, 원금 손실 가능성, 광고·추천의 이해관계를 함께 살펴야 합니다.</p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="코인 거래소와 지갑: 주문부터 보관까지 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -1527,6 +1657,37 @@
           <p>오늘의 용어집</p>
           <dl class="glossary-grid">
             <div class="glossary-item">
+              <dt>완전희석가치(FDV) <small>Fully Diluted Valuation · FDV</small></dt>
+              <dd>
+                현재 토큰 가격에 최대(또는 예정) 총공급량을 곱한 가정상의
+                규모입니다. 아직 시장에 풀리지 않은 팀·재단·초기 투자자 물량도
+                모두 현재 가격에 유통된다고 가정합니다.
+                <br /><br />시가총액은 현재 가격 × 유통량이므로 FDV와 다를 수
+                있습니다. 예를 들어 가격이 1만원, 유통량이 2천만 개, 최대
+                공급량이 1억 개라면 시가총액은 2천억원이고 FDV는 1조원입니다.
+                <br /><br />FDV가 높다고 가격이 반드시 떨어진다는 뜻은 아닙니다.
+                실제 판단에서는 언락 일정, 추가 발행·소각 규칙, 수요와 유동성,
+                가격 변화를 함께 확인해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>신용스프레드 <small>Credit Spread · CS</small></dt>
+              <dd>
+                회사채·금융채처럼 신용위험이 있는 채권의 수익률이, 같은 만기의
+                국채 수익률보다 얼마나 더 높은지를 뜻합니다. 추가 수익률은
+                발행자의 상환 불확실성, 유동성, 시장 상황에 대한 보상으로 볼 수
+                있습니다.
+                <br /><br />예를 들어 3년 국채 수익률이 연 3.0%, 어떤 회사채의
+                수익률이 연 4.2%라면 신용스프레드는 1.2%포인트(120bp)입니다.
+                스프레드가 넓어지면 시장이 그 채권의 위험을 더 크게 본다는 뜻일
+                수 있고, 좁아지면 반대일 수 있습니다.
+                <br /><br />신용스프레드는 표면금리와 다릅니다. 표면금리는 발행
+                때 정한 이자율이고, 신용스프레드는 현재 시장에서 비교한 수익률의
+                차이입니다. 스프레드가 넓다고 높은 수익이 보장되는 것은 아니므로
+                발행자·신용등급·만기·유동성을 함께 확인해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
               <dt>금리 <small>Interest Rate · 金利 · IR</small></dt>
               <dd>
                 돈을 빌리거나 맡길 때 붙는 이자의 비율입니다. 시장금리가 오르면
@@ -1777,6 +1938,48 @@
           <p><b>실습 안내:</b> 알파카와 바이낸스를 방문해 가입 절차와 보안 설정을 확인해 보세요. 실제 자동 주문은 만들지 말고, 알파카는 Paper Trading, 바이낸스는 공개 시장데이터 또는 Testnet부터 사용하세요.</p>
           <p><a href="https://alpaca.markets/" target="_blank" rel="noopener noreferrer">Alpaca 방문·가입</a> · <a href="https://www.binance.com/" target="_blank" rel="noopener noreferrer">Binance 방문·가입</a></p>
         </div>
+        <div class="breaktime-message" id="breakTimeTokenMessage" hidden>
+          <p><b>도전 과제:</b> Python의 <code>web3.py</code>와 이더리움 테스트 네트워크를 이용해, 이름·심볼·발행량을 정한 ERC-20 토큰을 만들어 보세요. 먼저 Solidity로 표준 토큰 계약을 준비하고, Python 스크립트로 배포·잔액 조회·소액 전송을 호출하는 흐름을 익히면 됩니다.</p>
+          <p><b>안전한 순서:</b> 지갑 생성 → 무료 테스트 ETH 받기 → 테스트넷 배포 → 내 지갑끼리 소액 전송 → 블록 탐색기에서 거래 확인입니다. 실제 메인넷에는 배포하지 말고, 복구 문구·개인키·API 키를 코드나 저장소에 넣지 마세요.</p>
+          <p><a href="https://web3py.readthedocs.io/" target="_blank" rel="noopener noreferrer">web3.py 문서</a> · <a href="https://docs.openzeppelin.com/contracts/" target="_blank" rel="noopener noreferrer">OpenZeppelin ERC-20 계약 라이브러리</a> · <a href="https://ethereum.org/developers/docs/networks/" target="_blank" rel="noopener noreferrer">Ethereum 테스트 네트워크 안내</a></p>
+        </div>
+        <div class="breaktime-message" id="breakTimeEdumgtMessage" hidden>
+          <p><b>실습 안내:</b> <a href="https://st.edumgt.co.kr" target="_blank" rel="noopener noreferrer">st.edumgt.co.kr</a>를 방문해 다양한 자산의 거래 방식을 살펴보고, 자산군을 나누어 나만의 포트폴리오를 완성해 보세요.</p>
+          <p>한 자산의 최근 성과만 보고 고르기보다 주식·채권·원자재·금·부동산·현금성 자산처럼 서로 다른 위험 요인을 가진 자산을 비교해 보세요. 선택 뒤에는 비중, 거래비용, 투자 기간, 손실을 감당할 수 있는 범위를 함께 기록해 보세요.</p>
+          <p><small>외부 서비스의 제공 상품·이용 조건·위험 고지는 해당 사이트의 최신 안내를 직접 확인해야 합니다. 이 안내는 특정 자산의 매수 추천이 아닙니다.</small></p>
+        </div>
+        <div class="breaktime-message" id="breakTimeRateMarketMessage" hidden>
+          <p><b>확장 과제:</b> 기준금리 변동 차트에 주식·채권·원/달러 환율·금·가상자산처럼 서로 다른 시장의 변동성을 함께 표시해 보세요. 금리 변경일 전후뿐 아니라 일정한 월·주간 단위로 수익률과 변동성을 비교해야 합니다.</p>
+          <p><b>구현 힌트:</b> 각 자산의 가격을 같은 시작값(예: 100)으로 맞춘 뒤, 기간별 등락률 또는 이동 변동성을 별도 선·막대로 그려 보세요. 기준금리와 동시에 움직였다고 해서 원인과 결과가 증명되는 것은 아니므로, 데이터 출처·기간·환율 기준·거래일 차이도 화면에 표시하세요.</p>
+          <p><small>목표는 가격 방향을 예측하는 것이 아니라, 금리 변화 국면에서 자산별로 얼마나 다르게 흔들렸는지 관찰하는 것입니다.</small></p>
+        </div>
+      </section>
+    </div>
+    <div class="glossary-modal bok-rate-modal" id="bokRateTrendModal" hidden>
+      <div class="glossary-modal__backdrop" data-bok-rate-close></div>
+      <section class="glossary-modal__dialog bok-rate-dialog" role="dialog" aria-modal="true" aria-labelledby="bokRateTrendTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-bok-rate-close>×</button>
+        <p class="glossary-modal__label">BANK OF KOREA · BASE RATE</p>
+        <h2 id="bokRateTrendTitle">한국은행 기준금리: 최근 2년의 조정 흐름</h2>
+        <p class="bok-rate-intro">2024년 9월 5일부터 2026년 9월 5일까지의 기준금리 변경을 표시했습니다. 변동이 없었던 기간은 직선으로 이어지며, 마지막 변경은 2026년 8월 27일입니다.</p>
+        <div class="bok-rate-summary">
+          <article><span>시작 금리</span><strong>3.50%</strong><small>2024.09.05</small></article>
+          <article><span>기간 중 최저</span><strong>2.50%</strong><small>2025.05.29 ~ 2026.07.15</small></article>
+          <article><span>최근 기준금리</span><strong>3.00%</strong><small>2026.08.27부터</small></article>
+        </div>
+        <div class="bok-rate-chart" role="img" aria-label="2024년 9월 3.50퍼센트에서 2025년 5월 2.50퍼센트까지 인하된 뒤 2026년 8월 3.00퍼센트까지 오른 한국은행 기준금리 추이">
+          <svg viewBox="0 0 900 300" aria-hidden="true">
+            <line class="grid" x1="70" y1="45" x2="860" y2="45"/><line class="grid" x1="70" y1="92" x2="860" y2="92"/><line class="grid" x1="70" y1="139" x2="860" y2="139"/><line class="grid" x1="70" y1="186" x2="860" y2="186"/><line class="grid" x1="70" y1="233" x2="860" y2="233"/>
+            <text class="axis" x="20" y="50">3.50%</text><text class="axis" x="20" y="97">3.25%</text><text class="axis" x="20" y="144">3.00%</text><text class="axis" x="20" y="191">2.75%</text><text class="axis" x="20" y="238">2.50%</text>
+            <polyline class="rate-line" points="70,45 170,45 170,92 272,92 272,139 390,139 390,186 505,186 760,186 760,139 852,139"/>
+            <circle class="rate-dot" cx="70" cy="45" r="6"/><circle class="rate-dot" cx="170" cy="92" r="6"/><circle class="rate-dot" cx="272" cy="139" r="6"/><circle class="rate-dot" cx="390" cy="186" r="6"/><circle class="rate-dot" cx="505" cy="186" r="6"/><circle class="rate-dot" cx="760" cy="139" r="6"/><circle class="rate-dot" cx="852" cy="139" r="6"/>
+            <text class="rate-label" x="55" y="30">3.50</text><text class="rate-label" x="153" y="78">3.25</text><text class="rate-label" x="255" y="125">3.00</text><text class="rate-label" x="373" y="172">2.75</text><text class="rate-label" x="488" y="172">2.50</text><text class="rate-label" x="743" y="125">2.75</text><text class="rate-label" x="835" y="125">3.00</text>
+            <text class="date" x="44" y="270">2024.09</text><text class="date" x="143" y="270">2024.10</text><text class="date" x="245" y="270">2024.11</text><text class="date" x="362" y="270">2025.02</text><text class="date" x="478" y="270">2025.05</text><text class="date" x="733" y="270">2026.07</text><text class="date" x="825" y="270">2026.08</text>
+          </svg>
+        </div>
+        <div class="bok-rate-events"><span><b>인하 구간</b><br />2024.10 ~ 2025.05: 3.50% → 2.50%</span><span><b>유지 구간</b><br />2025.05 ~ 2026.07: 2.50%</span><span><b>인상 구간</b><br />2026.07 ~ 2026.08: 2.50% → 3.00%</span><span><b>변경 단위</b><br />모두 0.25%p(25bp) 단위</span></div>
+        <p class="bok-rate-note"><b>읽는 법:</b> 기준금리는 시장금리·대출금리·채권수익률·환율 기대에 영향을 줄 수 있지만, 이들이 같은 폭·같은 시점에 움직인다는 뜻은 아닙니다. 또한 기준금리 변화만으로 특정 기업이나 주가의 방향을 결정할 수 없습니다.</p>
+        <p class="bok-rate-intro"><small>출처: <a href="https://www.bok.or.kr/portal/singl/baseRate/list.do?menuNo=200643" target="_blank" rel="noopener noreferrer">한국은행 기준금리 추이</a> (2026-09-05 확인).</small></p>
       </section>
     </div>
     <div class="glossary-modal correlation-sim-modal" id="correlationSimModal" hidden>
@@ -1785,21 +1988,29 @@
         <button class="glossary-modal__close" type="button" aria-label="닫기" data-corr-sim-close>×</button>
         <p class="glossary-modal__label">SIMULATION · 교육용</p>
         <h2 id="corrSimTitle">상관관계와 분산투자 시뮬레이션</h2>
-        <p class="corr-sim-intro">두 자산을 절반씩 담았다고 가정하고, 상관관계가 바뀔 때 포트폴리오의 예상 변동성이 어떻게 달라지는지 확인합니다.</p>
+        <p class="corr-sim-intro">아래 10개 자산군 중 2개 이상을 고르면, 같은 비중으로 담았다고 가정해 조합의 분산 정도를 계산합니다. 숫자는 실제 과거 수익률이나 투자 추천이 아닌 교육용 가정입니다.</p>
+        <div class="corr-sim-picker" id="corrSimPicker" role="group" aria-label="비교할 자산군 선택">
+          <label><input type="checkbox" value="krStock" /> <b>국내 주식</b><small>KOSPI 등</small></label>
+          <label><input type="checkbox" value="usStock" checked /> <b>미국 주식</b><small>S&amp;P 500 등</small></label>
+          <label><input type="checkbox" value="techStock" /> <b>글로벌 기술주</b><small>성장주 중심</small></label>
+          <label><input type="checkbox" value="stockFutures" /> <b>주가지수 선물</b><small>KOSPI 200 선물 등</small></label>
+          <label><input type="checkbox" value="govBond" checked /> <b>국채</b><small>중·장기 국채</small></label>
+          <label><input type="checkbox" value="cash" /> <b>현금성 자산</b><small>단기채·예금 등</small></label>
+          <label><input type="checkbox" value="gold" checked /> <b>금</b><small>금 현물·ETF 등</small></label>
+          <label><input type="checkbox" value="commodityFutures" /> <b>원자재 선물</b><small>에너지·산업재 등</small></label>
+          <label><input type="checkbox" value="bitcoin" /> <b>비트코인</b><small>가상자산</small></label>
+          <label><input type="checkbox" value="reit" /> <b>상장 리츠</b><small>부동산 간접투자</small></label>
+        </div>
+        <div class="corr-sim-actions"><button type="button" class="corr-sim-scenario-btn active" id="corrSimBalanced">균형 예시 선택</button><button type="button" class="corr-sim-scenario-btn" id="corrSimClear">모두 해제</button></div>
         <div class="corr-sim-stats">
-          <div class="corr-sim-stat"><span>자산 A 변동성</span><strong id="corrSimVolA">20.0%</strong></div>
-          <div class="corr-sim-stat"><span>자산 B 변동성</span><strong id="corrSimVolB">20.0%</strong></div>
-          <div class="corr-sim-stat highlight"><span>포트폴리오 변동성</span><strong id="corrSimPortVol">18.6%</strong></div>
+          <div class="corr-sim-stat"><span>선택 자산군</span><strong id="corrSimCount">3개</strong></div>
+          <div class="corr-sim-stat"><span>평균 상관관계</span><strong id="corrSimAvgRho">+0.00</strong></div>
+          <div class="corr-sim-stat"><span>단순 평균 변동성</span><strong id="corrSimAvgVol">16.7%</strong></div>
+          <div class="corr-sim-stat highlight"><span>동일비중 예상 변동성</span><strong id="corrSimPortVol">11.2%</strong></div>
         </div>
         <p class="corr-sim-benefit positive" id="corrSimBenefit"></p>
-        <div class="corr-sim-control">
-          <div class="corr-sim-control-head"><span>상관계수 (ρ)</span><strong id="corrSimRhoLabel">+0.30</strong></div>
-          <input type="range" id="corrSimRho" min="-100" max="100" step="5" value="30" />
-        </div>
-        <div class="corr-sim-scenarios" role="group" aria-label="상관관계 시나리오">
-          <button type="button" class="corr-sim-scenario-btn" data-rho="100">완전 동조 +1.0</button><button type="button" class="corr-sim-scenario-btn" data-rho="0">무상관 0.0</button><button type="button" class="corr-sim-scenario-btn" data-rho="-50">반대 경향 −0.5</button>
-        </div>
-        <p class="corr-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 실제 시세 예측이 아닌 상관관계와 변동성의 관계를 보여 주는 단순 계산입니다. 상관관계는 시간에 따라 달라질 수 있습니다.</p>
+        <div class="corr-sim-pairs" id="corrSimPairs" aria-live="polite"></div>
+        <p class="corr-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 상관관계는 시장 국면·측정 기간·통화·상품 구조에 따라 달라지며, 위 계산은 수수료·세금·레버리지·선물 롤오버·부동산 직접투자 위험을 반영하지 않습니다. ‘추천’은 매수 추천이 아니라 분산 관점에서 추가 검토를 권한다는 뜻입니다.</p>
       </section>
     </div>
     <div class="glossary-modal bond-duration-sim-modal" id="bondDurationSimModal" hidden>
@@ -1920,6 +2131,9 @@
         const triggers = document.querySelectorAll("[data-break-time-trigger]");
         const defaultMessage = modal.querySelector(".breaktime-message:not([hidden])");
         const apiMessage = document.getElementById("breakTimeApiMessage");
+        const tokenMessage = document.getElementById("breakTimeTokenMessage");
+        const edumgtMessage = document.getElementById("breakTimeEdumgtMessage");
+        const rateMarketMessage = document.getElementById("breakTimeRateMarketMessage");
         if (!modal || !triggers.length) return;
         let activeTrigger = triggers[0];
         const close = () => {
@@ -1930,8 +2144,14 @@
         triggers.forEach((trigger) => trigger.addEventListener("click", () => {
           activeTrigger = trigger;
           const showApiGuide = trigger.hasAttribute("data-break-time-api");
-          if (defaultMessage) defaultMessage.hidden = showApiGuide;
+          const showTokenGuide = trigger.hasAttribute("data-break-time-token");
+          const showEdumgtGuide = trigger.hasAttribute("data-break-time-edumgt");
+          const showRateMarketGuide = trigger.hasAttribute("data-break-time-rate-market");
+          if (defaultMessage) defaultMessage.hidden = showApiGuide || showTokenGuide || showEdumgtGuide || showRateMarketGuide;
           if (apiMessage) apiMessage.hidden = !showApiGuide;
+          if (tokenMessage) tokenMessage.hidden = !showTokenGuide;
+          if (edumgtMessage) edumgtMessage.hidden = !showEdumgtGuide;
+          if (rateMarketMessage) rateMarketMessage.hidden = !showRateMarketGuide;
           modal.hidden = false;
           modal.querySelector(".glossary-modal__close")?.focus();
         }));
@@ -1982,28 +2202,107 @@
     </script>
     <script>
       (() => {
+        const modal = document.getElementById("bokRateTrendModal");
+        const trigger = document.getElementById("bokRateTrendTrigger");
+        if (!modal || !trigger) return;
+        const open = () => { modal.hidden = false; modal.querySelector(".glossary-modal__close")?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-bok-rate-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      (() => {
         const modal = document.getElementById("correlationSimModal");
         const trigger = document.getElementById("correlationSimTrigger");
         if (!modal || !trigger) return;
-        const slider = document.getElementById("corrSimRho");
-        const label = document.getElementById("corrSimRhoLabel");
+        const assets = {
+          krStock: { name: "국내 주식", group: "equity", vol: 22 },
+          usStock: { name: "미국 주식", group: "equity", vol: 20 },
+          techStock: { name: "글로벌 기술주", group: "tech", vol: 28 },
+          stockFutures: { name: "주가지수 선물", group: "equity", vol: 25 },
+          govBond: { name: "국채", group: "bond", vol: 12 },
+          cash: { name: "현금성 자산", group: "cash", vol: 2 },
+          gold: { name: "금", group: "gold", vol: 18 },
+          commodityFutures: { name: "원자재 선물", group: "commodity", vol: 22 },
+          bitcoin: { name: "비트코인", group: "crypto", vol: 65 },
+          reit: { name: "상장 리츠", group: "reit", vol: 23 }
+        };
+        const checks = [...modal.querySelectorAll("#corrSimPicker input")];
+        const count = document.getElementById("corrSimCount");
+        const avgRho = document.getElementById("corrSimAvgRho");
+        const avgVol = document.getElementById("corrSimAvgVol");
         const portVol = document.getElementById("corrSimPortVol");
         const benefit = document.getElementById("corrSimBenefit");
-        const scenarioButtons = modal.querySelectorAll("[data-rho]");
+        const pairs = document.getElementById("corrSimPairs");
+        const balanced = document.getElementById("corrSimBalanced");
+        const clear = document.getElementById("corrSimClear");
+        const rhoFor = (left, right) => {
+          if (left.group === right.group) return left.group === "cash" ? 0.3 : 0.82;
+          const key = [left.group, right.group].sort().join("|");
+          return ({
+            "bond|equity": -0.1, "bond|tech": -0.15, "bond|reit": 0.1,
+            "bond|gold": 0.05, "bond|commodity": -0.05, "bond|crypto": 0.05,
+            "bond|cash": 0.1, "cash|equity": 0.05, "cash|tech": 0.05,
+            "cash|reit": 0.05, "cash|gold": 0.05, "cash|commodity": 0.05,
+            "cash|crypto": 0.02, "equity|tech": 0.78, "equity|reit": 0.62,
+            "equity|gold": 0.12, "commodity|equity": 0.3, "crypto|equity": 0.45,
+            "gold|tech": 0.08, "reit|tech": 0.55, "commodity|tech": 0.25,
+            "crypto|tech": 0.48, "gold|reit": 0.18, "commodity|reit": 0.28,
+            "crypto|reit": 0.35, "commodity|gold": 0.3, "crypto|gold": 0.2,
+            "commodity|crypto": 0.25
+          })[key] ?? 0.2;
+        };
         const render = () => {
-          const rho = Number(slider.value) / 100;
-          const result = Math.sqrt(0.25 * 0.2 ** 2 + 0.25 * 0.2 ** 2 + 0.5 * 0.2 * 0.2 * rho) * 100;
-          const reduction = 20 - result;
-          label.textContent = `${rho >= 0 ? "+" : ""}${rho.toFixed(2)}`;
-          portVol.textContent = `${result.toFixed(1)}%`;
-          benefit.textContent = reduction > 0.05 ? `분산 효과: 포트폴리오 변동성이 각 자산의 20.0%보다 ${reduction.toFixed(1)}%p 낮아집니다.` : "상관관계가 +1에 가까우면 분산 효과가 거의 없습니다.";
-          benefit.className = `corr-sim-benefit ${reduction > 0.05 ? "positive" : ""}`;
-          scenarioButtons.forEach((button) => button.classList.toggle("active", Number(button.dataset.rho) === Number(slider.value)));
+          const selected = checks.filter((item) => item.checked).map((item) => assets[item.value]);
+          const selectedPairs = [];
+          let rhoTotal = 0;
+          for (let i = 0; i < selected.length; i += 1) {
+            for (let j = i + 1; j < selected.length; j += 1) {
+              const rho = rhoFor(selected[i], selected[j]);
+              rhoTotal += rho;
+              selectedPairs.push({ left: selected[i].name, right: selected[j].name, rho });
+            }
+          }
+          const n = selected.length;
+          const meanRho = selectedPairs.length ? rhoTotal / selectedPairs.length : 0;
+          const meanVol = n ? selected.reduce((sum, asset) => sum + asset.vol, 0) / n : 0;
+          let variance = 0;
+          if (n) {
+            selected.forEach((asset, i) => selected.forEach((other, j) => {
+              variance += (asset.vol / 100) * (other.vol / 100) * (i === j ? 1 : rhoFor(asset, other));
+            }));
+            variance /= n ** 2;
+          }
+          const result = Math.sqrt(Math.max(0, variance)) * 100;
+          count.textContent = `${n}개`;
+          avgRho.textContent = `${meanRho >= 0 ? "+" : ""}${meanRho.toFixed(2)}`;
+          avgVol.textContent = n ? `${meanVol.toFixed(1)}%` : "—";
+          portVol.textContent = n ? `${result.toFixed(1)}%` : "—";
+          if (n < 2) {
+            benefit.textContent = "비교할 자산군을 2개 이상 선택해 주세요. 하나의 자산만으로는 상호 분산 여부를 판단할 수 없습니다.";
+            benefit.className = "corr-sim-benefit negative";
+          } else if (meanRho >= 0.6) {
+            benefit.textContent = `비추천: 평균 상관관계가 ${meanRho.toFixed(2)}로 높습니다. 서로 다른 상품처럼 보여도 주식 위험에 함께 노출돼, 하락장에서 동시에 흔들릴 수 있습니다.`;
+            benefit.className = "corr-sim-benefit negative";
+          } else if (meanRho <= 0.25 && result < meanVol * 0.8) {
+            benefit.textContent = `분산 관점에서 검토 추천: 평균 상관관계가 낮고, 동일비중 가정 변동성이 단순 평균보다 ${(meanVol - result).toFixed(1)}%p 낮습니다. 다만 실제 비중·비용·기간을 별도로 검증해야 합니다.`;
+            benefit.className = "corr-sim-benefit positive";
+          } else {
+            benefit.textContent = "중립: 일부 분산 효과는 보이지만 공통 위험이 남아 있습니다. 같은 경기·금리·유동성 충격에 함께 반응할 가능성과 실제 보유 비중을 확인해 보세요.";
+            benefit.className = "corr-sim-benefit";
+          }
+          pairs.innerHTML = selectedPairs.length
+            ? `<b>선택한 자산 간 교육용 상관관계 가정</b>${selectedPairs.map((pair) => `<span>${pair.left} · ${pair.right} <strong>${pair.rho >= 0 ? "+" : ""}${pair.rho.toFixed(2)}</strong></span>`).join("")}`
+            : "";
+          balanced.classList.toggle("active", ["usStock", "govBond", "gold"].every((key) => checks.find((item) => item.value === key)?.checked) && n === 3);
         };
         const open = () => { modal.hidden = false; render(); modal.querySelector(".glossary-modal__close")?.focus(); };
         const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
-        slider.addEventListener("input", render);
-        scenarioButtons.forEach((button) => button.addEventListener("click", () => { slider.value = button.dataset.rho; render(); }));
+        checks.forEach((item) => item.addEventListener("change", render));
+        balanced.addEventListener("click", () => { checks.forEach((item) => { item.checked = ["usStock", "govBond", "gold"].includes(item.value); }); render(); });
+        clear.addEventListener("click", () => { checks.forEach((item) => { item.checked = false; }); render(); });
         trigger.addEventListener("click", open);
         modal.querySelectorAll("[data-corr-sim-close]").forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });

@@ -53,8 +53,8 @@
   hintStyle.textContent = `
     .simulation-title-row { display:flex; align-items:baseline; flex-wrap:wrap; gap:8px 14px; margin:0 48px 16px 0; }
     .simulation-title-row h2 { margin:0 !important; }
-    .simulation-first-step { color:#dc2626; font:800 13px/1.45 inherit; white-space:nowrap; }
-    .return-sim-title-row .simulation-first-step { color:#dc2626; font:800 13px/1.45 inherit; white-space:nowrap; }
+    .simulation-first-step { color:#dc2626; font:800 14.5px/1.45 inherit; white-space:nowrap; }
+    .return-sim-title-row .simulation-first-step { color:#dc2626; font:800 14.5px/1.45 inherit; white-space:nowrap; }
     @media (max-width: 680px) { .simulation-title-row { align-items:flex-start; margin-right:38px; } .simulation-first-step { width:100%; white-space:normal; } }
   `;
   document.head.append(hintStyle);
