@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="assets/app-shell.css?v=20260905-offcanvas-nav-fix" />
     <style>
       /* 옵션 학습 단원은 01일차로 이동했습니다. */
-      body[data-day="3"] .lesson-list > .lesson:nth-child(n + 14) { display: none; }
+      /* 01~18은 3일차 본문, 그 뒤의 이전 옵션 단원은 숨깁니다. */
+      body[data-day="3"] .lesson-list > .lesson:nth-child(n + 19) { display: none; }
       .bond-market-size-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
       .bond-market-size-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14px; line-height: 1.7; }
       .bond-market-size-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
@@ -28,7 +29,55 @@
       .bond-market-size-note { margin: 18px 0 0; padding: 12px 14px; border-left: 4px solid var(--blue); border-radius: 8px; background: #f5f8ff; color: #395171; font-size: 12px; line-height: 1.65; }
       .bond-market-size-source { margin: 12px 0 0; color: var(--muted); font-size: 11.5px; line-height: 1.6; }
       .bond-market-size-source a { color: var(--blue); font-weight: 800; }
-      @media (max-width: 600px) { .bond-market-size-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .bond-market-size-summary { grid-template-columns: 1fr; } .bond-market-size-row { grid-template-columns: 76px minmax(50px, 1fr) 76px; gap: 7px; } .bond-market-size-country, .bond-market-size-value { font-size: 11px; } .bond-market-size-bar { padding-left: 5px; font-size: 10px; } }
+      .crypto-market-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
+      .crypto-market-intro, .crypto-market-source { margin: 4px 0 18px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+      .crypto-market-scale { display: grid; gap: 11px; margin: 16px 0 20px; }
+      .crypto-market-row { display: grid; grid-template-columns: 96px minmax(90px, 1fr) 126px; gap: 10px; align-items: center; }
+      .crypto-market-name, .crypto-market-value { color: var(--ink); font-size: 13px; font-weight: 800; }
+      .crypto-market-value { text-align: right; white-space: nowrap; }
+      .crypto-market-track { height: 26px; overflow: hidden; border-radius: 6px; background: #edf1f7; }
+      .crypto-market-bar { display: flex; align-items: center; min-width: 4px; height: 100%; padding-left: 8px; border-radius: inherit; color: #fff; font-size: 11px; font-weight: 800; white-space: nowrap; }
+      .crypto-market-bar.bonds { background: linear-gradient(90deg, #2563eb, #5b8ff9); }
+      .crypto-market-bar.stocks { background: linear-gradient(90deg, #147957, #36b37e); }
+      .crypto-market-bar.crypto { background: linear-gradient(90deg, #8b5cf6, #b794f4); }
+      .crypto-market-insights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0; }
+      .crypto-market-insights article { padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }
+      .crypto-market-insights span { display: block; color: var(--muted); font-size: 11px; font-weight: 800; }
+      .crypto-market-insights strong { display: block; margin-top: 5px; color: var(--ink); font-size: 19px; }
+      .crypto-market-insights p { margin: 5px 0 0; color: #4c5d7a; font-size: 11px; line-height: 1.55; }
+      .crypto-market-note { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid #8b5cf6; border-radius: 8px; background: #f7f3ff; color: #4a3f70; font-size: 12px; line-height: 1.65; }
+      .crypto-market-source { margin-top: 12px; margin-bottom: 0; font-size: 11.5px; }
+      .crypto-market-source a { color: var(--blue); font-weight: 800; }
+      .defi-insight-dialog { width: min(900px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
+      .defi-insight-intro { margin: 4px 0 18px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+      .defi-flow { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr; align-items: center; margin: 16px 0; }
+      .defi-flow article { min-height: 104px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }
+      .defi-flow strong { display: block; color: var(--ink); font-size: 13px; }
+      .defi-flow span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+      .defi-flow i { color: #8b5cf6; text-align: center; font-size: 18px; }
+      .defi-equity-chart { padding: 16px; border: 1px solid var(--line); border-radius: 11px; background: #fbfcff; }
+      .defi-chart-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 8px; }
+      .defi-chart-head h3 { margin: 0; color: var(--ink); font-size: 15px; }
+      .defi-chart-head span { color: var(--muted); font-size: 11px; }
+      .defi-equity-svg { display: block; width: 100%; height: 186px; overflow: visible; }
+      .defi-equity-svg .grid { stroke: #dfe5f1; stroke-width: 1; }
+      .defi-equity-svg .axis { fill: #63708a; font-size: 10px; }
+      .defi-equity-svg polyline { fill: none; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+      .defi-equity-legend { display: flex; flex-wrap: wrap; gap: 8px 13px; margin-top: 8px; }
+      .defi-equity-legend span { color: #455572; font-size: 12px; font-weight: 800; }
+      .defi-equity-legend i { display: inline-block; width: 9px; height: 9px; margin-right: 4px; border-radius: 50%; }
+      .defi-bars { display: grid; gap: 9px; margin: 18px 0; }
+      .defi-bar-row { display: grid; grid-template-columns: 52px minmax(90px, 1fr) 65px; gap: 10px; align-items: center; font-size: 12px; font-weight: 800; }
+      .defi-bar-track { height: 19px; overflow: hidden; border-radius: 99px; background: #edf1f7; }
+      .defi-bar { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #8b5cf6, #b794f4); }
+      .defi-bar-row b { color: #16794b; text-align: right; }
+      .defi-insight-note { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid #8b5cf6; border-radius: 8px; background: #f7f3ff; color: #4a3f70; font-size: 12px; line-height: 1.65; }
+      .quant-crypto-pipeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 16px 0; }
+      .quant-crypto-pipeline article { position: relative; min-height: 114px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }
+      .quant-crypto-pipeline article:not(:last-child)::after { position: absolute; right: -7px; top: 48px; z-index: 1; color: #8b5cf6; content: "›"; font-size: 20px; font-weight: 800; }
+      .quant-crypto-pipeline b { display: block; color: var(--ink); font-size: 12px; }
+      .quant-crypto-pipeline span { display: block; margin-top: 5px; color: var(--muted); font-size: 10.5px; line-height: 1.55; }
+      @media (max-width: 600px) { .bond-market-size-dialog, .crypto-market-dialog, .defi-insight-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .bond-market-size-summary, .crypto-market-insights { grid-template-columns: 1fr; } .bond-market-size-row { grid-template-columns: 76px minmax(50px, 1fr) 76px; gap: 7px; } .crypto-market-row { grid-template-columns: 68px minmax(44px, 1fr) 86px; gap: 7px; } .bond-market-size-country, .bond-market-size-value, .crypto-market-name, .crypto-market-value { font-size: 11px; } .bond-market-size-bar, .crypto-market-bar { padding-left: 5px; font-size: 10px; } .defi-flow { grid-template-columns: 1fr; gap: 8px; } .defi-flow i { transform: rotate(90deg); } .defi-chart-head { display: block; } .defi-equity-svg { height: 155px; } .quant-crypto-pipeline { grid-template-columns: 1fr; gap: 13px; } .quant-crypto-pipeline article:not(:last-child)::after { top: auto; right: 50%; bottom: -17px; transform: rotate(90deg); } }
     </style>
     <link
       rel="stylesheet"
@@ -220,7 +269,7 @@
                     <i class="fa-solid fa-scale-balanced"></i> 금리·듀레이션 시뮬레이터
                   </button>
                   <small>금리 변화와 듀레이션에 따라 예상 가격 변화가 어떻게 달라지는지 확인하세요.</small>
-                  <button type="button" class="breaktime-trigger" id="breakTimeTrigger">
+                  <button type="button" class="breaktime-trigger" data-break-time-trigger>
                     <i class="fa-solid fa-mug-hot"></i> BreakTime
                   </button>
                   <small>잠시 쉬면서 다음 실습 과제를 확인해 보세요.</small>
@@ -884,10 +933,87 @@
           <section class="lesson">
             <span>13</span>
             <div class="lesson-content">
-              <h2>코인 거래와 블록체인, 거래소의 역할</h2>
+              <h2>가상자산의 기초: 블록체인, 코인, 토큰</h2>
               <div class="lesson-body">
-                <p>코인 거래는 거래소에서 원화·달러 등 법정화폐나 다른 코인으로 가상자산을 사고파는 일입니다. 거래소는 주문을 모아 매수자와 매도자를 연결하고, 계정 인증·입출금·보관 서비스를 제공합니다. 다만 거래소 계정의 잔고와 개인 지갑의 온체인 자산은 구분해야 하며, 출금 주소를 잘못 입력하거나 계정·지갑의 비밀키를 잃으면 되돌리기 어렵습니다.</p>
-                <p>블록체인은 거래 기록을 여러 참여자가 함께 검증하고 이어 붙여 관리하는 분산원장 기술입니다. 메인넷은 특정 코인이 실제로 발행·전송되고 거래가 기록되는 독립적인 블록체인 네트워크를 말합니다. 다른 네트워크에서 만들어진 토큰과 달리, 메인넷의 네이티브 코인은 그 네트워크의 수수료를 내거나 운영에 참여하는 데 쓰일 수 있습니다.</p>
+                <p>가상자산(일상적으로는 ‘코인’) 거래는 원화·달러 같은 법정화폐 또는 다른 가상자산으로 디지털 자산을 사고파는 일입니다. 가격이 24시간 움직인다는 점은 주식시장과 다르지만, 가격 변동·유동성·수수료·보관 위험을 이해해야 한다는 원칙은 같습니다. 이 단원의 내용은 구조를 익히기 위한 것이며 특정 자산의 매수·매도를 권하지 않습니다.</p>
+                <h3>코인과 토큰: 먼저 ‘어느 네트워크의 자산인가’를 확인하세요</h3>
+                <p>블록체인은 거래 기록을 여러 참여자가 함께 검증하고 이어 붙여 관리하는 분산원장 기술입니다. <b>메인넷</b>은 독립적으로 거래를 기록하고 합의 규칙을 운영하는 블록체인 네트워크입니다. 메인넷의 고유 자산을 <b>네이티브 코인</b>이라고 하며, 전송 수수료(가스비)를 내거나 네트워크 검증·보안에 참여하는 데 쓰입니다. 비트코인의 BTC, 이더리움 메인넷의 ETH가 대표적입니다.</p>
+                <p><b>토큰</b>은 이미 있는 블록체인 위의 스마트계약으로 발행한 자산입니다. 이더리움의 ERC-20 토큰은 이더리움 네트워크 규칙을 따르며, 전송할 때도 보통 ETH로 가스비를 냅니다. 예를 들어 이더리움 위의 USDC는 ERC-20 토큰이고 ETH는 이더리움의 네이티브 코인입니다. 다만 일상 대화와 거래소 화면에서는 토큰까지 모두 ‘코인’이라고 부르는 일이 많습니다.</p>
+                <ul>
+                  <li><b>코인:</b> 자체 메인넷의 원래 자산입니다. 네트워크 수수료와 합의 참여에 쓰일 수 있습니다.</li>
+                  <li><b>이더리움 토큰:</b> 이더리움 스마트계약이 발행한 자산입니다. ERC-20은 대체 가능한 토큰, NFT에는 ERC-721·ERC-1155 같은 별도 표준이 흔히 쓰입니다.</li>
+                  <li><b>가장 중요한 확인:</b> 같은 이름·티커라도 전송 네트워크가 다르면 다른 주소 형식·수수료·복구 절차가 적용될 수 있습니다. 입금 화면의 네트워크와 출금 네트워크를 반드시 일치시켜야 합니다.</li>
+                </ul>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="cryptoMarketScaleTrigger">
+                    <i class="fa-solid fa-chart-pie"></i> 세계 금융시장 속 가상자산 규모 보기
+                  </button>
+                  <small>주식·채권 시장과 비교하고, 가상자산 내부의 비트코인·이더리움·스테이블코인 비중을 확인하세요.</small>
+                </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="defiInsightTrigger">
+                    <i class="fa-solid fa-chart-line"></i> DeFi와 코인 관련 상장사 인사이트 보기
+                  </button>
+                  <small>탈중앙화금융의 의미, DeFi 예치 규모, 코인 관련 상장사의 최근 3개월 주가 흐름을 그래프로 읽어 봅니다.</small>
+                </p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="가상자산의 기초: 블록체인, 코인, 토큰 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
+            <span>14</span>
+            <div class="lesson-content">
+              <h2>코인 거래소와 지갑: 주문부터 보관까지</h2>
+              <div class="lesson-body">
+                <h3>거래소는 무엇을 하나요?</h3>
+                <p><b>중앙화 거래소(CEX)</b>는 회사가 주문장, 고객확인(KYC), 원화 입출금, 체결, 자산 보관과 고객지원을 운영합니다. 매수 주문과 매도 주문이 가격·수량 조건에서 만나면 체결되며, 주문장에서는 가장 높은 매수호가와 가장 낮은 매도호가의 차이(스프레드), 거래량, 호가 잔량을 함께 볼 수 있습니다. 시장가 주문은 빠른 체결을 우선하지만 호가가 얇으면 예상보다 불리한 가격으로 여러 호가를 지나 체결되는 <b>슬리피지</b>가 생길 수 있습니다.</p>
+                <p>거래 화면에서는 보통 <b>지정가</b>(원하는 가격과 수량을 미리 제시)와 <b>시장가</b>(현재 반대 호가에서 바로 체결)를 선택합니다. 체결 수수료는 거래소·주문 방식·등급에 따라 다르고, 코인을 개인 지갑으로 보낼 때는 거래소 출금 수수료와 해당 블록체인의 네트워크 수수료가 별도로 들 수 있습니다. 현물거래는 산 자산을 실제로 보유하는 거래이지만, 선물·마진·레버리지 상품은 증거금과 청산 위험이 더해져 초보자가 현물과 같은 위험도로 보면 안 됩니다.</p>
+                <p><b>탈중앙화 거래소(DEX)</b>는 개인 지갑을 연결해 스마트계약으로 교환하는 방식입니다. 중개회사가 고객 자산을 대신 보관하지 않는 대신, 이용자가 서명·가스비·가짜 토큰·스마트계약 위험을 직접 확인해야 합니다. 자동화시장조성자(AMM) 방식에서는 유동성 풀의 자산 비율로 가격이 바뀌므로, 주문장 거래소와 가격 형성 방식도 다를 수 있습니다.</p>
+                <p>거래소 계정의 잔고는 거래소 내부 장부에 표시되는 <b>수탁 잔고</b>이고, 개인 지갑의 자산은 블록체인 주소에서 직접 확인하는 <b>온체인 자산</b>입니다. 거래소에 둔 자산은 거래 편의성이 높은 반면 거래소의 보안·운영·출금 정책 위험을 함께 집니다. 개인 지갑은 복구 문구·개인키를 잃거나 피싱 서명에 응하면 되돌리기 매우 어렵습니다. 어느 방식이든 2단계 인증, 공식 주소 확인, 소액 시험 전송이 기본입니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="코인 거래소와 지갑: 주문부터 보관까지 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
+            <span>15</span>
+            <div class="lesson-content">
+              <h2>국내 원화 거래와 은행·규제 연동</h2>
+              <div class="lesson-body">
+                <h3>원화 거래는 은행과 어떻게 연결되나요?</h3>
+                <p>국내 원화 거래소의 원화 입출금은 거래소가 제휴한 은행의 <b>실명확인 입출금계정</b>을 통해 이뤄집니다. 이용자는 거래소 본인확인과 은행 계좌의 실명확인을 거쳐, 본인 명의의 연동 계좌에서 원화를 넣고 뺍니다. 거래소가 은행 계좌를 자유롭게 만들어 주는 구조가 아니라, 은행이 거래소의 자금세탁방지 위험 등을 심사하고 실명계정 서비스를 제공하는 구조입니다.</p>
+                <p>따라서 은행 계좌가 있다고 해서 모든 거래소의 원화 거래가 가능한 것은 아니며, 거래소·제휴 은행·이용자 명의가 맞아야 합니다. 은행과 거래소의 연동은 원화 결제 통로와 고객확인을 위한 것이지, 은행이 코인 가격·거래소의 지급 능력·개인지갑 송금을 보증한다는 뜻은 아닙니다. 국내 제도상 가상자산사업자는 신고 대상이며, 실명계정과 고객예치금 분리관리 등의 요건이 적용됩니다. <a href="https://www.fsc.go.kr/eng/pr010101/22526" target="_blank" rel="noopener noreferrer">금융위원회 실명계정·사업자 요건 안내</a>와 <a href="https://www.fsc.go.kr/eng/pr010101/82683" target="_blank" rel="noopener noreferrer">가상자산이용자보호법 안내</a>를 함께 확인하세요.</p>
+                <h3>금융서비스 회사의 거래소 인수: 무엇을 뜻하나요?</h3>
+                <p>가상자산 시장이 커지면서 중개·결제·파생상품 역량을 확보하려는 인수도 이어지고 있습니다. 예를 들어 미국의 금융서비스 회사 Robinhood는 2025년 6월 글로벌 가상자산 거래소 Bitstamp 인수를 완료했습니다. 공시된 현금 대가는 통상 조정 전 약 2억 달러였고, Bitstamp의 다수 지역 인허가·기관 고객 기반을 확보하는 목적이었습니다. <a href="https://robinhood.com/newsroom/robinhood-completes-acquisition-of-bitstamp/" target="_blank" rel="noopener noreferrer">Robinhood의 인수 완료 공지</a>에서 거래 개요를 확인할 수 있습니다.</p>
+                <p>여기서 Robinhood는 예금을 받는 전통적 ‘은행’이라기보다 증권·투자·디지털 금융을 제공하는 금융서비스 회사입니다. 그러므로 ‘금융기관이 거래소를 인수했다’는 표현은 회사의 인허가 범위와 국가별 규제를 따로 확인해야 정확합니다. 인수는 거래소의 고객·기술·라이선스·유동성을 통합하려는 사업 결정일 뿐, 이용자 자산의 가치나 안전을 보장하지 않습니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="국내 원화 거래와 은행·규제 연동 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
+            <span>16</span>
+            <div class="lesson-content">
+              <h2>스테이블코인과 가상자산의 시장 규모</h2>
+              <div class="lesson-body">
+                <h3>스테이블코인: ‘1달러’ 표시는 보장 문구가 아닙니다</h3>
+                <p><b>스테이블코인</b>은 보통 달러 같은 기준자산에 가격을 맞추려는 토큰입니다. 거래소 사이의 자금 이동, 온체인 결제, 디파이에서 현금성 단위처럼 쓰이기도 하지만 법정통화 예금 자체는 아닙니다. ‘1개 = 1달러’를 목표로 해도 발행사의 상환 능력, 준비자산의 질·유동성, 은행·수탁기관, 시장 유동성, 규제와 거래소 상장 유지 여부에 따라 가격이 기준에서 벗어날 수 있습니다(디페그).</p>
+                <ul>
+                  <li><b>법정화폐 담보형:</b> 발행사가 현금·단기 국채 등 준비자산을 보유하고 상환을 약속하는 방식입니다. 준비자산 공개·검증, 누가 어떤 조건으로 상환할 수 있는지를 봐야 합니다. 예컨대 USDC 발행사 Circle은 준비자산에 대한 월별 검증 보고서를 공개한다고 안내합니다.</li>
+                  <li><b>가상자산 담보형:</b> 다른 가상자산을 더 많이 맡기고 토큰을 발행합니다. 담보 가격이 급락하면 청산·디페그 위험이 커질 수 있습니다.</li>
+                  <li><b>알고리즘형:</b> 다른 토큰·차익거래 유인·알고리즘으로 가격 유지를 시도합니다. 충분한 담보나 신뢰가 무너지면 급격히 가치가 훼손될 수 있어 구조를 특히 자세히 확인해야 합니다.</li>
+                </ul>
+                <p>국내 거래 화면에서 달러 스테이블코인의 원화 가격은 달러/원 환율뿐 아니라 국내외 수급과 전송·상장 제약의 영향도 받습니다. 그래서 스테이블코인을 ‘원화 예금’이나 ‘무위험 현금’으로 보면 안 됩니다. <a href="https://www.circle.com/usdc" target="_blank" rel="noopener noreferrer">USDC의 상환·준비자산 안내</a>처럼 발행사가 제공하는 자료와 독립 검증 자료를 구분해 살펴보세요.</p>
+                <h3>‘코인 규모’는 가격 하나가 아니라 세 숫자로 봅니다</h3>
+                <p>자산의 가격이 높다고 반드시 큰 프로젝트는 아닙니다. <b>시가총액</b>은 대략 현재 가격 × 유통량이며, 시장에서 실제 거래 가능한 규모를 비교하는 출발점입니다. <b>완전희석가치(FDV)</b>는 현재 가격 × 최대(또는 예정) 공급량으로, 아직 풀리지 않은 물량까지 반영한 가정치입니다. <b>거래대금·유동성</b>은 일정 기간 실제로 얼마나 거래되는지를 보여 주므로 시가총액과 별개입니다.</p>
+                <p>예를 들어 가격이 10만원인 A와 1만원인 B라도, A의 유통량이 100만 개이고 B가 1억 개라면 단순 시가총액은 둘 다 1,000억원입니다. 토큰은 향후 물량이 풀리는 <b>언락</b>, 재단·초기 투자자·팀의 보유 비중, 소각·발행 규칙에 따라 공급과 매도 압력이 달라질 수 있습니다. 시가총액 순위, 하루 거래량, 거래소별 호가 깊이를 한 숫자로 혼동하지 않는 것이 중요합니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="스테이블코인과 가상자산의 시장 규모 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
+            <span>17</span>
+            <div class="lesson-content">
+              <h2>채굴과 합의 방식: 네트워크는 어떻게 유지되나요?</h2>
+              <div class="lesson-body">
                 <h3>채굴은 해시값을 먼저 찾는 경쟁입니다</h3>
                 <p>채굴은 작업증명(PoW) 방식의 네트워크에서 컴퓨팅 자원으로 거래 묶음을 검증하고 새 블록을 만드는 과정입니다. 채굴기는 블록 후보 데이터에 숫자값(논스) 등을 바꾸어 넣고 해시 함수로 계산한 결과가 네트워크 난이도 조건을 만족할 때까지 매우 많은 계산을 반복합니다. 이때의 결과값은 보통 <b>해시값</b> 또는 <b>해시</b>라고 부릅니다. ‘해시코드’라는 말도 일상적으로 쓰이지만, 채굴 성능과 방식을 설명할 때는 초당 해시 계산 횟수인 <b>해시레이트(hash rate)</b>라는 표현이 더 정확합니다.</p>
                 <p>조건을 먼저 만족한 채굴자는 새 블록을 네트워크에 전파하고, 다른 참여자가 거래와 블록 규칙을 검증합니다. 유효한 블록으로 받아들여지면 블록 보상과 해당 블록의 거래 수수료를 받을 수 있습니다. 다만 보상 규모, 난이도, 코인 가격, 네트워크 참여자 수가 계속 바뀌므로 해시레이트가 높다고 수익이 보장되지는 않습니다.</p>
@@ -908,7 +1034,51 @@
                 <p>모든 코인이 채굴되는 것은 아닙니다. 지분증명(PoS) 네트워크에서는 코인을 예치한 검증자가 블록 검증에 참여하며, 이는 장비 채굴과 다른 구조·위험을 가집니다. 코인은 24시간 거래되고 가격 변동, 해킹·사기, 거래소·지갑 운영 위험이 클 수 있으므로 참여 전에는 발행 구조·네트워크·수수료·보관 방식과 전력·장비 비용을 먼저 확인해야 합니다.</p>
               </div>
             </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="코인 거래와 블록체인, 거래소의 역할 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="채굴과 합의 방식: 네트워크는 어떻게 유지되나요 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
+            <span>18</span>
+            <div class="lesson-content">
+              <h2>알파카·바이낸스 API 연동과 자동화의 기본</h2>
+              <div class="lesson-body">
+                <h3>알파카와 바이낸스: API로 시장데이터·주문 기능을 연결하는 서비스</h3>
+                <p><b>Alpaca(알파카)</b>는 미국 주식·ETF·옵션과 일부 가상자산의 시장데이터 및 주문 기능을 API로 제공하는 브로커리지 플랫폼입니다. 전략을 시험해 보는 <b>Paper Trading</b> 환경과 실제 주문을 내는 Live 환경의 주소·API 키가 분리되어 있어, 학습·개발은 반드시 Paper 환경부터 시작하는 것이 좋습니다. 거래 가능 상품과 계좌 개설 가능 지역은 이용자의 거주지·계좌 유형에 따라 다를 수 있습니다.</p>
+                <p><b>Binance(바이낸스)</b>는 현물·파생상품 등 가상자산 서비스를 제공하는 글로벌 거래소이며, 공개 시세·호가 데이터와 계좌·주문 기능을 API로 제공합니다. 공개 시장데이터는 일반적으로 API 키 없이 조회할 수 있지만, 잔고 조회·주문 같은 개인 기능은 API 키와 요청 서명이 필요합니다. 제공 법인과 가능한 상품은 국가·지역·시점에 따라 달라질 수 있으므로, 서비스 화면과 약관에서 자신의 거주지에 허용된 범위를 먼저 확인해야 합니다.</p>
+                <h3>안전한 연동 순서: 조회 → 모의환경 → 최소 권한</h3>
+                <ol>
+                  <li><b>목적을 나눕니다.</b> 가격 차트·호가를 가져오는 용도라면 공개 시장데이터 API부터 사용합니다. 자동 주문이 필요하지 않다면 거래 권한이 있는 키를 만들 이유가 없습니다.</li>
+                  <li><b>계정 보안을 먼저 설정합니다.</b> 공식 웹사이트에서 계정 본인확인과 2단계 인증을 마치고, 피싱 링크가 아닌 공식 개발자 문서의 API 관리 화면으로 이동합니다.</li>
+                  <li><b>별도 API 키를 만듭니다.</b> 알파카는 Paper Trading 전용 키를 발급해 Paper 엔드포인트에 연결합니다. 바이낸스는 우선 읽기 전용 권한만 켜고, 가능하면 IP 허용목록을 설정합니다. 출금 권한은 자동화 프로그램에 부여하지 않는 것이 원칙입니다.</li>
+                  <li><b>서버에서만 비밀값을 보관합니다.</b> API Key와 Secret은 비밀번호와 같습니다. 브라우저 JavaScript, Git 저장소, 화면 캡처, 채팅창에 넣지 말고 서버의 환경변수·비밀관리 도구에 저장합니다. 화면에는 서버가 필요한 데이터만 전달합니다.</li>
+                  <li><b>모의 주문과 오류 처리를 검증합니다.</b> 주문을 내기 전 잔고·거래 가능 종목·최소 주문단위·수수료·호가 단위를 확인하고, 네트워크 시간 초과 뒤에는 주문이 실제 체결되었는지 주문번호로 다시 조회합니다. 테스트가 끝난 뒤에도 Live 키 전환은 별도 검토 사항입니다.</li>
+                </ol>
+                <p>연동 정보는 다음처럼 <b>서버 환경변수의 이름만</b> 정해 두고 실제 값은 배포 환경에서 입력합니다: <code>ALPACA_API_KEY</code>, <code>ALPACA_API_SECRET</code>, <code>BINANCE_API_KEY</code>, <code>BINANCE_API_SECRET</code>. 키가 노출됐거나 의심스러운 주문이 보이면 즉시 해당 키를 폐기하고 새 키를 발급해야 합니다. 바이낸스의 서명 요청은 키 종류와 권한 설정을 따르며, 공식 문서는 거래 권한을 기본값으로 비활성화하고 키·비밀키를 공유하지 말라고 안내합니다.</p>
+                <p><a href="https://docs.alpaca.markets/us/v1.1/docs/authentication-1" target="_blank" rel="noopener noreferrer">Alpaca 인증·Paper Trading 공식 문서</a> · <a href="https://developers.binance.com/en/docs/products/spot/rest-api" target="_blank" rel="noopener noreferrer">Binance Spot API 공식 문서</a> · <a href="https://developers.binance.com/en/docs/products/spot/testnet" target="_blank" rel="noopener noreferrer">Binance Spot Testnet 공식 문서</a></p>
+                <h3>퀀트 시스템과 코인 거래를 연결하는 방법</h3>
+                <p>퀀트 시스템은 가격 데이터를 규칙으로 해석해 주문 후보를 만들고, 위험 한도를 통과한 경우에만 거래소 API로 주문을 보내는 구조입니다. 핵심은 ‘매수 신호’보다 <b>데이터 품질·백테스트·위험 통제·주문 확인</b>을 분리하는 것입니다. 한 프로그램이 신호를 만들자마자 제한 없이 주문·출금을 모두 실행하게 만들면 오류 한 번이 큰 손실이나 보안 사고로 이어질 수 있습니다.</p>
+                <div class="quant-crypto-pipeline" aria-label="퀀트 시스템과 코인 거래 연동 흐름">
+                  <article><b>1. 데이터 수집</b><span>공개 REST·WebSocket으로 체결·호가·캔들을 수집합니다.</span></article>
+                  <article><b>2. 신호 연구</b><span>정규화한 데이터로 지표·리밸런싱 규칙을 계산합니다.</span></article>
+                  <article><b>3. 백테스트</b><span>수수료·스프레드·슬리피지·상장폐지를 반영해 검증합니다.</span></article>
+                  <article><b>4. 리스크 엔진</b><span>종목별 한도·최대 손실·주문 크기·중단 조건을 검사합니다.</span></article>
+                  <article><b>5. 실행·감사</b><span>서버가 서명 주문을 보내고 체결·잔고·오류를 기록합니다.</span></article>
+                </div>
+                <ul>
+                  <li><b>데이터 계층:</b> 바이낸스의 공개 시세 API와 알파카의 시장데이터 API에서 받은 데이터를 공통 형식(시간, 거래쌍, 가격, 거래량, 통화)으로 저장합니다. BTC/USDT와 BTC/USD는 기준 통화가 다르므로 같은 가격열로 단순 합치면 안 됩니다. 결측 구간, 거래소별 시간대, 상장폐지 종목도 기록해야 미래 정보를 미리 사용한 백테스트 오류를 줄일 수 있습니다.</li>
+                  <li><b>전략·검증 계층:</b> 과거 성과에는 매매 수수료뿐 아니라 호가 스프레드, 시장가 주문 슬리피지, 파생상품이라면 펀딩비·청산 조건을 반영합니다. 학습용으로는 알파카 Paper Trading과 바이낸스 Testnet·공개 데이터에서 먼저 전략을 검증하고, 실제 계좌에서는 ‘신호만 기록하는’ 섀도 모드를 거친 뒤에 판단합니다.</li>
+                  <li><b>주문·위험 계층:</b> 주문 서비스는 전략과 분리해 최대 주문금액·하루 손실 한도·보유 비중·중복 주문·거래 중단 스위치(kill switch)를 검사합니다. API 응답이 시간 초과됐다고 주문이 실패한 것은 아니므로, 고유 주문 ID로 체결 상태를 다시 조회해야 합니다. 자동화 키에는 출금 권한을 주지 않고, 가능하면 읽기용 키와 거래용 키도 분리합니다.</li>
+                  <li><b>모니터링 계층:</b> 주문 요청·응답, 체결, 잔고 변화, 오류, 전략 버전과 설정값을 시간 순서로 남깁니다. 이 기록이 있어야 신호 문제인지 API 장애인지, 예상한 슬리피지인지 확인하고 시스템을 중지·복구할 수 있습니다.</li>
+                </ul>
+                <p><b>권장 도입 순서:</b> ① 공개 데이터 대시보드 → ② 과거 데이터 백테스트 → ③ Paper/Testnet 모의 주문 → ④ 실제 계좌의 신호 비교(섀도 모드) → ⑤ 작게 제한한 현물 주문입니다. 레버리지·파생상품 자동화는 별도의 청산 위험 검증 없이는 이 순서의 다음 단계로 보지 않는 편이 안전합니다.</p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="breaktime-trigger" data-break-time-trigger data-break-time-api>
+                    <i class="fa-solid fa-mug-hot"></i> BreakTime
+                  </button>
+                  <small>알파카와 바이낸스를 방문해 계정 가입·본인확인·모의환경을 살펴보세요.</small>
+                </p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="알파카·바이낸스 API 연동과 자동화의 기본 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
             <span>11</span>
@@ -1548,6 +1718,53 @@
         </p>
       </section>
     </div>
+    <div class="glossary-modal crypto-market-modal" id="cryptoMarketScaleModal" hidden>
+      <div class="glossary-modal__backdrop" data-crypto-market-close></div>
+      <section class="glossary-modal__dialog crypto-market-dialog" role="dialog" aria-modal="true" aria-labelledby="cryptoMarketScaleTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-crypto-market-close>×</button>
+        <p class="glossary-modal__label">MARKET CONTEXT · 교육용 스냅샷</p>
+        <h2 id="cryptoMarketScaleTitle">세계 금융시장 속 가상자산의 위치</h2>
+        <p class="crypto-market-intro">아래 막대는 2025년 말 전 세계 상장주식 시가총액과 채권 잔액, 그리고 2026년 9월 5일 기준 가상자산 시가총액을 나란히 놓은 <b>규모 비교</b>입니다. 채권은 잔액, 주식·가상자산은 시가총액이므로 투자 가능한 ‘파이’를 정확히 나눈 비중은 아닙니다.</p>
+        <div class="crypto-market-scale" role="img" aria-label="세계 채권 160.7조 달러, 상장주식 157.8조 달러, 가상자산 2.77조 달러 규모를 비교한 막대 차트">
+          <div class="crypto-market-row"><span class="crypto-market-name">채권</span><div class="crypto-market-track"><div class="crypto-market-bar bonds" style="width: 100%">50.0%</div></div><span class="crypto-market-value">$160.7조</span></div>
+          <div class="crypto-market-row"><span class="crypto-market-name">상장주식</span><div class="crypto-market-track"><div class="crypto-market-bar stocks" style="width: 98.2%">49.1%</div></div><span class="crypto-market-value">$157.8조</span></div>
+          <div class="crypto-market-row"><span class="crypto-market-name">가상자산</span><div class="crypto-market-track"><div class="crypto-market-bar crypto" style="width: 2%">0.9%</div></div><span class="crypto-market-value">$2.77조</span></div>
+        </div>
+        <div class="crypto-market-insights" aria-label="가상자산 시장 내부 구성 인사이트">
+          <article><span>비트코인 비중</span><strong>57.8%</strong><p>전체 가상자산 시가총액에서 차지하는 비중입니다.</p></article>
+          <article><span>이더리움 비중</span><strong>10.8%</strong><p>두 자산 합계가 약 68.6%로 집중돼 있습니다.</p></article>
+          <article><span>스테이블코인 비중</span><strong>11.1%</strong><p>약 $3,060억이며 가격 방향보다 결제·대기 자금 성격이 큽니다.</p></article>
+        </div>
+        <p class="crypto-market-note"><b>핵심 인사이트:</b> 가상자산 전체는 거대한 글로벌 주식·채권 시장보다 아직 작지만, 내부에서는 소수의 대형 자산 비중이 높습니다. 따라서 ‘시장 전체가 상승했다’는 말과 특정 알트코인이 상승했다는 말은 전혀 같은 뜻이 아닙니다. 시가총액은 유통량 × 가격이라는 평가값일 뿐이며, 실제 매매 가능성은 거래대금·호가 깊이·보관·규제 위험까지 따로 확인해야 합니다.</p>
+        <p class="crypto-market-source">출처: <a href="https://www.sifma.org/research/statistics/fact-book" target="_blank" rel="noopener noreferrer">SIFMA 2026 Capital Markets Fact Book</a> (2025년 세계 채권 잔액·상장주식 시가총액), <a href="https://www.coingecko.com/en/charts" target="_blank" rel="noopener noreferrer">CoinGecko Global Crypto Market Cap</a> (2026-09-05 조회: 총 시가총액·BTC/ETH·스테이블코인 비중). 가상자산 수치는 가격에 따라 수시로 변합니다.</p>
+      </section>
+    </div>
+    <div class="glossary-modal defi-insight-modal" id="defiInsightModal" hidden>
+      <div class="glossary-modal__backdrop" data-defi-insight-close></div>
+      <section class="glossary-modal__dialog defi-insight-dialog" role="dialog" aria-modal="true" aria-labelledby="defiInsightTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-defi-insight-close>×</button>
+        <p class="glossary-modal__label">DEFI · EQUITY INSIGHTS</p>
+        <h2 id="defiInsightTitle">탈중앙화금융과 코인 관련 주식 읽기</h2>
+        <p class="defi-insight-intro"><b>DeFi(Decentralized Finance)</b>는 예금·대출·교환 같은 금융 기능의 실행 규칙을 은행 내부 시스템 대신 공개 블록체인 위 스마트계약으로 옮기는 접근입니다. 중개기관이 사라진다는 뜻보다, 신뢰와 통제의 위치가 바뀐다는 뜻에 가깝습니다.</p>
+        <div class="defi-flow" aria-label="전통 금융과 탈중앙화금융의 통제 구조 비교">
+          <article><strong>이용자 지갑</strong><span>자산을 직접 보관하고 거래 승인에 서명합니다.</span></article><i class="fa-solid fa-arrow-right"></i><article><strong>스마트계약 규칙</strong><span>담보·이자·교환 조건을 코드로 실행합니다.</span></article><i class="fa-solid fa-arrow-right"></i><article><strong>온체인 정산</strong><span>거래 결과가 블록체인에 기록됩니다.</span></article>
+        </div>
+        <p class="defi-insight-note"><b>의미와 한계:</b> DeFi는 국경·영업시간 제약을 줄이고 규칙·거래 기록의 검증 가능성을 높일 수 있습니다. 반면 개인키 분실, 코드 취약점, 오라클 오류, 담보 급락과 청산, 거버넌스 집중, 규제·소비자보호 공백의 위험을 이용자가 더 직접 부담할 수 있습니다. ‘탈중앙화’는 자동으로 안전하거나 수수료가 없다는 뜻이 아닙니다.</p>
+        <div class="defi-equity-chart">
+          <div class="defi-chart-head"><h3>코인 관련 상장사 최근 3개월 주가 흐름</h3><span>2026-06-05 종가 = 100으로 지수화 · 2026-09-05 기준</span></div>
+          <svg class="defi-equity-svg" id="defiEquityChart" viewBox="0 0 720 186" role="img" aria-label="COIN, HOOD, MSTR, GLXY의 최근 3개월 주가를 지수화한 선 그래프"></svg>
+          <div class="defi-equity-legend" id="defiEquityLegend" aria-label="주가 그래프 범례"></div>
+        </div>
+        <div class="defi-bars" aria-label="코인 관련 상장사의 최근 3개월 수익률 막대 그래프">
+          <div class="defi-bar-row"><span>HOOD</span><div class="defi-bar-track"><div class="defi-bar" style="width: 100%"></div></div><b>+48.1%</b></div>
+          <div class="defi-bar-row"><span>COIN</span><div class="defi-bar-track"><div class="defi-bar" style="width: 44%"></div></div><b>+21.2%</b></div>
+          <div class="defi-bar-row"><span>MSTR</span><div class="defi-bar-track"><div class="defi-bar" style="width: 39%"></div></div><b>+18.6%</b></div>
+          <div class="defi-bar-row"><span>GLXY</span><div class="defi-bar-track"><div class="defi-bar" style="width: 10%"></div></div><b>+4.7%</b></div>
+        </div>
+        <p class="defi-insight-note"><b>인기도·관심도는 어떻게 볼까?</b> DeFi의 TVL(예치 자산)은 2026-09-05 약 <b>1,703억 달러</b>였습니다. 다만 TVL은 토큰 가격과 중복 예치의 영향을 받고, 주가도 코인 가격뿐 아니라 거래대금·수수료·규제·금리·기업 인수와 실적 기대를 함께 반영합니다. 위 수익률은 관심도나 미래 성과의 보장이 아니라 ‘최근에 시장이 어떻게 가격을 매겼는지’를 보여 주는 참고 지표입니다.</p>
+        <p class="crypto-market-source">출처: <a href="https://defillama.com/" target="_blank" rel="noopener noreferrer">DefiLlama</a> (TVL, 2026-09-05 조회), <a href="https://finance.yahoo.com/quote/COIN/history/" target="_blank" rel="noopener noreferrer">Yahoo Finance</a> (COIN·HOOD·MSTR·GLXY 일별 종가, 2026-06-05~09-05 조회). COIN=Coinbase, HOOD=Robinhood, MSTR=Strategy, GLXY=Galaxy Digital. 과거 수익률은 미래 성과를 보장하지 않습니다.</p>
+      </section>
+    </div>
     <div class="glossary-modal breaktime-modal" id="breakTimeModal" hidden>
       <div class="glossary-modal__backdrop" data-break-time-close></div>
       <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="breakTimeTitle">
@@ -1555,6 +1772,10 @@
         <h2 id="breakTimeTitle">BreakTime</h2>
         <div class="breaktime-message">
           <p><b>investment-analysis</b>의 Markdown 형식 데이터와 <b>domain-rag-lab/frontend/days</b>의 문서 파일을 청킹 작업으로 JSONL로 만들어 보세요.</p>
+        </div>
+        <div class="breaktime-message" id="breakTimeApiMessage" hidden>
+          <p><b>실습 안내:</b> 알파카와 바이낸스를 방문해 가입 절차와 보안 설정을 확인해 보세요. 실제 자동 주문은 만들지 말고, 알파카는 Paper Trading, 바이낸스는 공개 시장데이터 또는 Testnet부터 사용하세요.</p>
+          <p><a href="https://alpaca.markets/" target="_blank" rel="noopener noreferrer">Alpaca 방문·가입</a> · <a href="https://www.binance.com/" target="_blank" rel="noopener noreferrer">Binance 방문·가입</a></p>
         </div>
       </section>
     </div>
@@ -1627,18 +1848,93 @@
     </script>
     <script>
       (() => {
-        const modal = document.getElementById("breakTimeModal");
-        const trigger = document.getElementById("breakTimeTrigger");
+        const modal = document.getElementById("cryptoMarketScaleModal");
+        const trigger = document.getElementById("cryptoMarketScaleTrigger");
         if (!modal || !trigger) return;
+        const open = () => {
+          modal.hidden = false;
+          modal.querySelector(".glossary-modal__close")?.focus();
+        };
+        const close = () => {
+          if (!modal.hidden) {
+            modal.hidden = true;
+            trigger.focus();
+          }
+        };
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-crypto-market-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") close();
+        });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("defiInsightModal");
+        const trigger = document.getElementById("defiInsightTrigger");
+        const chart = document.getElementById("defiEquityChart");
+        const legend = document.getElementById("defiEquityLegend");
+        if (!modal || !trigger || !chart || !legend) return;
+        const series = [
+          { name: "COIN", color: "#315ff4", values: [152.40, 159.78, 163.26, 149.06, 165.48, 159.07, 157.12, 158.29, 146.26, 153.60, 148.47, 186.49, 178.64, 184.64] },
+          { name: "HOOD", color: "#16794b", values: [82.47, 93.19, 108.15, 98.69, 112.73, 111.97, 99.96, 94.91, 86.56, 93.29, 95.56, 108.13, 104.26, 122.11] },
+          { name: "MSTR", color: "#dc6b19", values: [120.44, 123.97, 112.53, 82.31, 100.77, 94.64, 94.85, 91.67, 93.28, 100.01, 93.04, 119.25, 127.31, 142.80] },
+          { name: "GLXY", color: "#8b5cf6", values: [25.14, 33.36, 34.20, 29.26, 24.59, 24.88, 21.63, 22.68, 21.01, 20.17, 21.66, 23.64, 23.21, 26.33] },
+        ];
+        const ns = "http://www.w3.org/2000/svg";
+        const add = (tag, attributes, text) => {
+          const node = document.createElementNS(ns, tag);
+          Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, value));
+          if (text) node.textContent = text;
+          chart.appendChild(node);
+        };
+        [60, 80, 100, 120, 140, 160].forEach((value) => {
+          const y = 168 - (value - 60) / 100 * 142;
+          add("line", { class: "grid", x1: 40, x2: 706, y1: y, y2: y });
+          add("text", { class: "axis", x: 2, y: y + 3 }, value);
+        });
+        [[40, "6월 5일"], [373, "7월 중순"], [706, "9월 5일"]].forEach(([x, label]) => add("text", { class: "axis", x, y: 184, "text-anchor": x === 40 ? "start" : x === 706 ? "end" : "middle" }, label));
+        series.forEach((item) => {
+          const points = item.values.map((value, index) => {
+            const x = 40 + index / (item.values.length - 1) * 666;
+            const normalized = value / item.values[0] * 100;
+            const y = 168 - (normalized - 60) / 100 * 142;
+            return `${x.toFixed(1)},${y.toFixed(1)}`;
+          }).join(" ");
+          add("polyline", { points, stroke: item.color });
+          const change = (item.values.at(-1) / item.values[0] - 1) * 100;
+          const entry = document.createElement("span");
+          entry.innerHTML = `<i style="background:${item.color}"></i>${item.name} ${change >= 0 ? "+" : ""}${change.toFixed(1)}%`;
+          legend.appendChild(entry);
+        });
+        const open = () => { modal.hidden = false; modal.querySelector(".glossary-modal__close")?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-defi-insight-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("breakTimeModal");
+        const triggers = document.querySelectorAll("[data-break-time-trigger]");
+        const defaultMessage = modal.querySelector(".breaktime-message:not([hidden])");
+        const apiMessage = document.getElementById("breakTimeApiMessage");
+        if (!modal || !triggers.length) return;
+        let activeTrigger = triggers[0];
         const close = () => {
           if (modal.hidden) return;
           modal.hidden = true;
-          trigger.focus();
+          activeTrigger.focus();
         };
-        trigger.addEventListener("click", () => {
+        triggers.forEach((trigger) => trigger.addEventListener("click", () => {
+          activeTrigger = trigger;
+          const showApiGuide = trigger.hasAttribute("data-break-time-api");
+          if (defaultMessage) defaultMessage.hidden = showApiGuide;
+          if (apiMessage) apiMessage.hidden = !showApiGuide;
           modal.hidden = false;
           modal.querySelector(".glossary-modal__close")?.focus();
-        });
+        }));
         modal.querySelectorAll("[data-break-time-close]").forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => {
           if (event.key === "Escape") close();
