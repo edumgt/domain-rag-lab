@@ -138,6 +138,64 @@ async def kospi_history(
     return payload
 
 
+_kospi200_history_cache: dict[str, tuple[datetime, dict[str, Any]]] = {}
+_kospi200_history_ttl = timedelta(minutes=30)
+
+
+@router.get("/kospi200-history")
+async def kospi200_history(
+    start: date = Query(description="조회 시작일(YYYY-MM-DD)"),
+    end: date = Query(description="조회 종료일(YYYY-MM-DD, 미포함)"),
+) -> dict[str, Any]:
+    """Return historical KOSPI 200 index daily closes for the futures-basis educational tool.
+
+    This is the real KOSPI 200 *spot index* only. KRX futures prices are not
+    available from a free, unauthenticated feed, so the basis tool combines
+    this real spot series with a user-adjustable theoretical futures estimate.
+    """
+    if start >= end or (end - start).days > 180:
+        raise HTTPException(status_code=400, detail="조회 기간은 최대 180일이며 시작일은 종료일보다 앞서야 합니다.")
+
+    cache_key = f"{start.isoformat()}:{end.isoformat()}"
+    now = datetime.now(timezone.utc)
+    cached = _kospi200_history_cache.get(cache_key)
+    if cached and now - cached[0] < _kospi200_history_ttl:
+        return cached[1]
+
+    kst = timezone(timedelta(hours=9))
+    period1 = int(datetime.combine(start, datetime.min.time(), tzinfo=kst).timestamp())
+    period2 = int(datetime.combine(end, datetime.min.time(), tzinfo=kst).timestamp())
+    chart_url = f"https://query2.finance.yahoo.com/v8/finance/chart/%5EKS200?period1={period1}&period2={period2}&interval=1d"
+    try:
+        async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+            response = await client.get(chart_url, headers={"User-Agent": "FinanceRagLab/1.0 (educational use)"})
+            response.raise_for_status()
+        result = response.json()["chart"]["result"][0]
+        timestamps = result.get("timestamp") or []
+        closes = result["indicators"]["quote"][0].get("close") or []
+        bars = [
+            {"time": timestamp * 1000, "close": close}
+            for timestamp, close in zip(timestamps, closes)
+            if close is not None
+        ]
+    except (httpx.HTTPError, KeyError, IndexError, TypeError, ValueError) as exc:
+        raise HTTPException(status_code=502, detail="KOSPI 200 지수 종가를 불러오지 못했습니다.") from exc
+
+    if not bars:
+        raise HTTPException(status_code=502, detail="표시할 KOSPI 200 지수 데이터가 없습니다.")
+
+    payload = {
+        "symbol": "^KS200",
+        "start": start.isoformat(),
+        "end": end.isoformat(),
+        "bars": bars,
+        "source": "Yahoo Finance",
+        "updated_at": now.isoformat(),
+    }
+    _kospi200_history_cache[cache_key] = (now, payload)
+    return payload
+
+
 @router.get("/intraday")
 async def intraday_chart(
     ticker: str = Query(pattern=r"^\d{6}$"),

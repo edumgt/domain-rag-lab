@@ -702,6 +702,7 @@ KOSDAQ|웹젠|게임`,
       closePanels();
       requestAnimationFrame(() => $simulationPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }));
     }
+    if (view === 'basis') renderBasisWorkflow();
     if (view === 'backtest') renderBacktestWorkflow();
     if (view === 'calendar') renderCalendar();
   }
@@ -1359,6 +1360,232 @@ KOSDAQ|웹젠|게임`,
     $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">MARKET SHOCK WORKBENCH</div><h1>시장 충격 <mark>시뮬레이션</mark></h1></div><p class="content-lead">다양한 시장 충격 시나리오를 골라 주식/ETF·채권·대체자산이 각각 어떻게 반응하는지 비교합니다.</p></header><div class="simulation-workbench" id="simulationMount"></div></article>`;
     document.getElementById('simulationMount').appendChild($simulationPanel);
     renderScenarioResult();
+  }
+
+  const basisState = { bars: [], loading: false, error: null, rate: 3.0, dividend: 1.5, daysToExpiry: 45, actualFutures: null };
+
+  function basisTheoreticalFutures(spot, rate, dividend, days) {
+    return spot * (1 + ((rate - dividend) / 100) * (days / 365));
+  }
+
+  function computeBasisSeries() {
+    const bars = basisState.bars;
+    if (!bars.length) return [];
+    const lastTime = bars[bars.length - 1].time;
+    const msPerDay = 86400000;
+    return bars.map(bar => {
+      const remainingDays = Math.max(basisState.daysToExpiry + (lastTime - bar.time) / msPerDay, 0);
+      const theory = basisTheoreticalFutures(bar.close, basisState.rate, basisState.dividend, remainingDays);
+      return { time: bar.time, spot: bar.close, theory, basis: theory - bar.close };
+    });
+  }
+
+  function basisBadgeClass(value) {
+    return value > 0 ? 'contango' : value < 0 ? 'backwardation' : 'flat';
+  }
+
+  function basisBadgeLabel(value) {
+    return value > 0 ? '콘탱고' : value < 0 ? '백워데이션' : '평형';
+  }
+
+  function renderBasisSummary(series) {
+    if (!series.length) return '<p class="basis-empty">표시할 데이터가 없습니다.</p>';
+    const latest = series[series.length - 1];
+    let actualCard = '';
+    if (basisState.actualFutures != null && !Number.isNaN(basisState.actualFutures)) {
+      const actualBasis = basisState.actualFutures - latest.spot;
+      const gap = latest.theory ? ((basisState.actualFutures - latest.theory) / latest.theory) * 100 : 0;
+      actualCard = `
+        <div class="basis-summary-card">
+          <span>내가 입력한 실제 선물가격 기준 베이시스</span>
+          <strong class="basis-badge ${basisBadgeClass(actualBasis)}">${actualBasis >= 0 ? '+' : ''}${actualBasis.toFixed(2)} · ${basisBadgeLabel(actualBasis)}</strong>
+        </div>
+        <div class="basis-summary-card">
+          <span>괴리율 = (실제 − 이론) / 이론 × 100</span>
+          <strong class="basis-badge ${Math.abs(gap) < 0.5 ? 'flat' : basisBadgeClass(gap)}">${gap >= 0 ? '+' : ''}${gap.toFixed(2)}%</strong>
+        </div>`;
+    }
+    return `
+      <div class="basis-summary-grid">
+        <div class="basis-summary-card">
+          <span>KOSPI 200 현물 지수 (실제 데이터 · 최근 종가)</span>
+          <strong>${latest.spot.toFixed(2)}</strong>
+        </div>
+        <div class="basis-summary-card">
+          <span>이론 선물가격 (가정 기반 계산값)</span>
+          <strong>${latest.theory.toFixed(2)}</strong>
+        </div>
+        <div class="basis-summary-card">
+          <span>이론 베이시스 = 이론 선물 − 현물</span>
+          <strong class="basis-badge ${basisBadgeClass(latest.basis)}">${latest.basis >= 0 ? '+' : ''}${latest.basis.toFixed(2)} · ${basisBadgeLabel(latest.basis)}</strong>
+        </div>
+        ${actualCard}
+      </div>`;
+  }
+
+  function renderBasisChartSVG(series) {
+    if (series.length < 2) return '<p class="basis-empty">차트를 그리기에 데이터가 부족합니다.</p>';
+    const width = 760, height = 220, padL = 52, padR = 14, padT = 14, padB = 14;
+    const values = series.flatMap(d => [d.spot, d.theory]);
+    const minV = Math.min(...values), maxV = Math.max(...values);
+    const span = Math.max(maxV - minV, 0.01);
+    const plotW = width - padL - padR, plotH = height - padT - padB;
+    const x = (i) => padL + (series.length > 1 ? (i / (series.length - 1)) * plotW : 0);
+    const y = (v) => padT + plotH - ((v - minV) / span) * plotH;
+    const spotPoints = series.map((d, i) => `${x(i).toFixed(1)},${y(d.spot).toFixed(1)}`).join(' ');
+    const theoryPoints = series.map((d, i) => `${x(i).toFixed(1)},${y(d.theory).toFixed(1)}`).join(' ');
+    const gridCount = 4;
+    let gridSvg = '';
+    for (let g = 0; g <= gridCount; g++) {
+      const v = minV + (span * g) / gridCount;
+      const gy = y(v);
+      gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/>`;
+      gridSvg += `<text x="2" y="${(gy + 4).toFixed(1)}" font-size="11" fill="var(--text-muted)">${v.toFixed(1)}</text>`;
+    }
+    return `<svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none" role="img" aria-label="현물 지수와 이론 선물가격 비교 차트">${gridSvg}<polyline points="${spotPoints}" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${theoryPoints}" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  }
+
+  function renderBasisBarStrip(series) {
+    const recent = series.slice(-10);
+    if (!recent.length) return '';
+    const maxAbs = Math.max(...recent.map(d => Math.abs(d.basis)), 0.01);
+    const bars = recent.map(d => {
+      const heightPct = Math.max((Math.abs(d.basis) / maxAbs) * 100, 8);
+      const cls = basisBadgeClass(d.basis);
+      const dateLabel = new Date(d.time).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' });
+      return `<div class="basis-bar-col" title="${dateLabel}: ${d.basis >= 0 ? '+' : ''}${d.basis.toFixed(2)} (${basisBadgeLabel(d.basis)})"><div class="basis-bar ${cls}" style="height:${heightPct}%"></div><small>${dateLabel}</small></div>`;
+    }).join('');
+    return `<div class="basis-bar-strip">${bars}</div>`;
+  }
+
+  function renderBasisOutput() {
+    const output = document.getElementById('basisOutputMount');
+    if (!output) return;
+    if (basisState.loading) {
+      output.innerHTML = '<p class="basis-empty"><i class="fa-solid fa-spinner fa-spin"></i> KOSPI 200 지수 데이터를 불러오는 중입니다…</p>';
+      return;
+    }
+    if (basisState.error) {
+      output.innerHTML = `<p class="basis-empty">${escHtml(basisState.error)}</p>`;
+      return;
+    }
+    const series = computeBasisSeries();
+    output.innerHTML = `
+      ${renderBasisSummary(series)}
+      <div class="basis-chart-wrap">${renderBasisChartSVG(series)}</div>
+      <div class="basis-chart-legend"><span class="spot"><i></i>현물 지수 (실제 데이터)</span><span class="theory"><i></i>이론 선물가격 (가정 기반 계산값)</span></div>
+      <p class="basis-strip-label">최근 거래일 베이시스 한눈에 보기 (콘탱고 · 백워데이션)</p>
+      ${renderBasisBarStrip(series)}`;
+  }
+
+  function renderBasisControls() {
+    return `
+      <div class="basis-controls">
+        <label>금리 (연, %)<input type="number" id="basisRateInput" step="0.1" value="${basisState.rate}"></label>
+        <label>배당수익률 (연, %)<input type="number" id="basisDividendInput" step="0.1" value="${basisState.dividend}"></label>
+        <label>만기까지 잔여일수 (일)<input type="number" id="basisDaysInput" step="1" min="0" value="${basisState.daysToExpiry}"></label>
+        <label>실제 선물가격 (HTS·MTS·KRX에서 확인, 선택)<input type="number" id="basisActualInput" step="0.05" placeholder="예: 352.50"></label>
+        <small>금리·배당수익률·잔여일수는 이론 선물가격을 계산하기 위한 가정값입니다. HTS/MTS나 KRX 정보데이터시스템에서 확인한 실제 선물가격을 입력하면 실제 베이시스·괴리율도 함께 계산합니다.</small>
+      </div>`;
+  }
+
+  function bindBasisControlEvents() {
+    const rateInput = document.getElementById('basisRateInput');
+    const divInput = document.getElementById('basisDividendInput');
+    const daysInput = document.getElementById('basisDaysInput');
+    const actualInput = document.getElementById('basisActualInput');
+    rateInput?.addEventListener('input', () => { basisState.rate = Number(rateInput.value) || 0; renderBasisOutput(); });
+    divInput?.addEventListener('input', () => { basisState.dividend = Number(divInput.value) || 0; renderBasisOutput(); });
+    daysInput?.addEventListener('input', () => { basisState.daysToExpiry = Math.max(Number(daysInput.value) || 0, 0); renderBasisOutput(); });
+    actualInput?.addEventListener('input', () => {
+      basisState.actualFutures = actualInput.value === '' ? null : Number(actualInput.value);
+      renderBasisOutput();
+    });
+  }
+
+  function renderBasisTool() {
+    const mount = document.getElementById('basisToolMount');
+    if (!mount) return;
+    mount.innerHTML = `${renderBasisControls()}<div id="basisOutputMount"></div>`;
+    bindBasisControlEvents();
+    renderBasisOutput();
+  }
+
+  async function fetchBasisHistory() {
+    basisState.loading = true;
+    basisState.error = null;
+    renderBasisOutput();
+    try {
+      const end = new Date();
+      const start = new Date(end.getTime() - 40 * 86400000);
+      const fmt = (d) => d.toISOString().slice(0, 10);
+      const response = await fetch(`/market/kospi200-history?start=${fmt(start)}&end=${fmt(end)}`);
+      if (!response.ok) throw new Error('요청 실패');
+      const payload = await response.json();
+      basisState.bars = payload.bars || [];
+      if (!basisState.bars.length) basisState.error = '표시할 KOSPI 200 지수 데이터가 없습니다.';
+    } catch (error) {
+      basisState.bars = [];
+      basisState.error = 'KOSPI 200 지수 데이터를 불러오지 못했습니다.';
+    }
+    basisState.loading = false;
+    renderBasisOutput();
+  }
+
+  function renderBasisWorkflow() {
+    $messages.innerHTML = `
+      <article class="content-page basis-page">
+        <header>
+          <div class="content-kicker">FUTURES · SPOT BASIS</div>
+          <h1>선현물 <mark>베이시스</mark> 확인하기</h1>
+          <p class="content-lead">KOSPI 200 선물과 현물 지수의 가격 차이(베이시스)를 실제로 어디서 확인하고, 무엇을 체크해야 하는지 정리했습니다.</p>
+        </header>
+
+        <section class="content-section" aria-label="선물·현물 가격 차이 확인 방법">
+          <div class="section-heading"><span>STEP 1</span><h2>KOSPI 200 선물·현물 가격 차이 확인 방법</h2></div>
+          <div class="basis-method-grid">
+            <article class="basis-method-card">
+              <span class="basis-method-tag">① HTS / MTS (증권사 앱)</span>
+              <h3>증권사 거래 프로그램에서 확인</h3>
+              <p>대부분의 증권사 HTS·MTS에는 선물과 현물의 차이를 실시간으로 보여 주는 전용 화면이 있습니다. 메뉴 이름은 증권사마다 다르지만 보통 <b>선현물 베이시스 추이</b>, <b>선물/현물 괴리율</b>, <b>차익거래 동향</b> 같은 이름으로 찾을 수 있습니다.</p>
+              <p>확인할 지표는 <b>시장 베이시스(Market Basis)</b>이며, 화면에서 <b>KOSPI 200 선물(근월물) − KOSPI 200 지수</b> 수치를 보면 됩니다. 차트 형태로 지난 며칠간 베이시스가 +(콘탱고)였는지 −(백워데이션)였는지 한눈에 파악할 수 있습니다.</p>
+            </article>
+            <article class="basis-method-card">
+              <span class="basis-method-tag">② KRX 정보데이터시스템</span>
+              <h3>거래소 공식 데이터로 확인</h3>
+              <p>한국거래소(KRX)의 <a href="http://data.krx.co.kr" target="_blank" rel="noopener noreferrer">정보데이터시스템</a>에서 최근 일자별 데이터를 화면 또는 엑셀로 내려받을 수 있습니다.</p>
+              <p>순서: 정보데이터시스템 접속 → <b>주식</b> 또는 <b>파생상품</b> 메뉴 → <b>지수 / 선물</b> 클릭 → <b>KOSPI 200 선물 거래실적 및 지수 베이시스 추이</b> 조회.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section" aria-label="체크포인트 2가지">
+          <div class="section-heading"><span>STEP 2</span><h2>데이터를 볼 때 체크해야 할 2가지</h2></div>
+          <div class="basis-formula-grid">
+            <article class="basis-formula-card">
+              <h3>① 베이시스(Basis) 수치</h3>
+              <p class="lesson-formula-inline">베이시스 = 선물 가격 − 현물 지수</p>
+              <p>선물 가격에서 현물 지수를 뺀 값이 양수(+)이면 <b>콘탱고</b>(정상 시장), 음수(−)이면 <b>백워데이션</b>(역전 시장)입니다.</p>
+            </article>
+            <article class="basis-formula-card">
+              <h3>② 괴리율(%)</h3>
+              <p class="lesson-formula-inline">괴리율 = (실제 선물가격 − 이론 선물가격) ÷ 이론 선물가격 × 100</p>
+              <p>괴리율이 0% 근처에 머물러 있다면 차익거래가 원활하게 작동해 선물이 현물을 잘 추종하고 있다는 뜻입니다. 괴리율이 크게 벌어지면 거래비용·공매도 제약·시장 상황을 함께 확인해야 합니다.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section basis-tool-section" aria-label="선현물 베이시스 차트 웹앱">
+          <div class="section-heading"><span>TOOL</span><h2>선현물 베이시스 차트</h2></div>
+          <p class="section-intro">아래 차트의 <b>현물 지수</b>는 KOSPI 200의 실제 데이터입니다. KRX 선물 시세는 유료·인증 데이터가 필요해 직접 가져올 수 없으므로, <b>이론 선물가격</b>은 아래 가정(금리·배당수익률·잔여일수)으로 계산한 값입니다. HTS·MTS나 KRX 정보데이터시스템에서 확인한 실제 선물가격을 입력하면 실제 베이시스와 괴리율도 함께 계산해 드립니다.</p>
+          <div id="basisToolMount"></div>
+        </section>
+
+        <p class="content-disclaimer">이 페이지는 학습용입니다. 이론 선물가격은 입력한 금리·배당수익률 가정에 따라 실제 시세와 다를 수 있으며, 특정 상품의 매수·매도를 권유하지 않습니다. 실제 매매 판단에는 사용하지 마세요.</p>
+      </article>`;
+    bindViewLinks();
+    renderBasisTool();
+    fetchBasisHistory();
   }
 
   const BACKTEST_STRATEGIES = [
@@ -2634,7 +2861,7 @@ effective_date: [기준일]
 
   renderScenarioResult();
   const requestedView = new URLSearchParams(window.location.search).get('view');
-  const initialView = ['home', 'stocks', 'learn', 'simulation', 'backtest', 'calendar'].includes(requestedView)
+  const initialView = ['home', 'stocks', 'learn', 'simulation', 'basis', 'backtest', 'calendar'].includes(requestedView)
     ? requestedView
     : 'home';
   setView(initialView);
