@@ -8,7 +8,7 @@
       content="여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다."
     />
     <title>02일차 | 4일 금융 이론 — 펀드 · ETF</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260906-leverage-volume-share" />
+    <link rel="stylesheet" href="assets/site.css?v=20260906-understanding-check" />
     <link rel="stylesheet" href="assets/fund-case-market.css?v=20260905-1" />
     <link rel="stylesheet" href="assets/emerging-market-modal.css?v=20260905-1" />
     <link rel="stylesheet" href="assets/fund-manager-add-row.css?v=20260905-1" />
@@ -21,6 +21,7 @@
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260906-shared-glossary"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
+    <script defer src="assets/lesson-understanding.js?v=20260906-all-days"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
   </head>
   <body data-day="2">
@@ -128,7 +129,6 @@
                 </div>
                 <h3>역사적 의미</h3>
                 <p>중앙은행은 금융 불안이 경제 전체로 번지는 것을 줄이는 <b>안전망</b> 역할을 합니다. 또한 오늘날의 법정화폐는 금과의 교환 약속보다 국가의 법·재정과 통화정책에 대한 신뢰를 바탕으로 작동하므로, 중앙은행의 정책 운영과 신뢰성은 물가·금리·환율과 금융시장에 큰 영향을 줍니다. 그렇다고 중앙은행이 모든 금융위기나 물가 변동을 막거나 어떤 자산의 가치를 보장하는 것은 아닙니다.</p>
-                <p class="lesson-source">참고: <a href="https://www.riksbank.se/en-gb/about-the-riksbank/history/historical-timeline/1600-1699/sveriges-riksbank-is-founded/" target="_blank" rel="noopener noreferrer">스웨덴 릭스방크 연혁</a>, <a href="https://www.bankofengland.co.uk/about/history" target="_blank" rel="noopener noreferrer">영국은행 연혁</a>, <a href="https://www.federalreserve.gov/monetarypolicy/monetary-policy-what-are-its-goals-how-does-it-work.htm" target="_blank" rel="noopener noreferrer">미 연방준비제도 통화정책 목표</a>, <a href="https://www.ecb.europa.eu/press/pr/date/1998/html/pr981013_1.en.html" target="_blank" rel="noopener noreferrer">ECB 물가 안정 목표</a>.</p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="중앙은행 통화와 금융시스템의 기반 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -147,7 +147,7 @@
                     <caption>도덕적 해이를 줄이기 위한 장치</caption>
                     <thead><tr><th scope="col">장치</th><th scope="col">어떻게 위험을 줄이나요?</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">Covenant(특약)</th><td>대출 자금의 용도를 제한하거나 일정 재무비율 유지를 약정합니다.</td></tr>
+                      <tr><th scope="row">Covenant(커버넌트, 특약)</th><td>대출 자금의 용도를 제한하거나 일정 재무비율 유지를 약정합니다.</td></tr>
                       <tr><th scope="row">담보·자기자본</th><td>차입자와 금융회사가 손실 일부를 직접 부담하게 해 과도한 위험 감수를 억제합니다.</td></tr>
                       <tr><th scope="row">감독·규제</th><td>감독당국이 자본적정성(<button type="button" class="lesson-video-link bis-capital-trigger" id="bisCapitalTrigger" aria-haspopup="dialog">BIS 비율 <i class="fa-solid fa-chart-column" aria-hidden="true"></i></button>)과 위험관리 체계를 점검하도록 합니다.</td></tr>
                     </tbody>
@@ -188,7 +188,7 @@
                     <thead><tr><th scope="col">상품·서비스</th><th scope="col">주요 특징</th><th scope="col">남는 위험과 확인할 점</th></tr></thead>
                     <tbody>
                       <tr><th scope="row">예금·적금</th><td>약정 조건을 지키면 원금 변동 위험이 낮은 편입니다.</td><td>중도해지 시 이자가 줄 수 있고, 예금자보호 대상·한도 및 금융회사 신용위험을 확인합니다.</td></tr>
-                      <tr><th scope="row">펀드·ETF·신탁·ELS 등</th><td>은행 창구·앱에서 가입할 수 있어도 금융투자상품일 수 있습니다.</td><td>원금 손실 가능성이 있으며, 기초자산·보수·만기·중도 환매·예금자보호 여부를 확인합니다.</td></tr>
+                      <tr><th scope="row">펀드·ETF·<button type="button" class="glossary-term" data-glossary-term="신탁" aria-haspopup="dialog">신탁</button>·<button type="button" class="glossary-term" data-glossary-term="ELS" aria-haspopup="dialog">ELS</button> 등</th><td>은행 창구·앱에서 가입할 수 있어도 금융투자상품일 수 있습니다.</td><td>원금 손실 가능성이 있으며, 기초자산·보수·만기·중도 환매·예금자보호 여부를 확인합니다.</td></tr>
                       <tr><th scope="row">대출</th><td>돈을 빌리는 서비스입니다.</td><td>변동금리 상승, 상환 부담, 연체 위험이 있으므로 상환 계획과 총비용을 확인합니다.</td></tr>
                     </tbody>
                   </table>
@@ -252,7 +252,7 @@
                     <thead><tr><th scope="col">구분</th><th scope="col">시기·장소</th><th scope="col">역사적 이정표</th><th scope="col">만들어진 이유</th></tr></thead>
                     <tbody>
                       <tr><th scope="row">초기 현대 펀드</th><td>1774년, 네덜란드 암스테르담</td><td>중개인 <strong>아브라함 판 케트비흐</strong>가 <em>Eendragt Maakt Magt</em>(‘단결은 힘을 만든다’)를 만들었습니다. 고정된 지분을 발행한 <strong>폐쇄형</strong> 집합투자기구로, 세계 최초의 투자펀드로 널리 평가됩니다.</td><td>1772~1773년 금융위기 뒤, 자금이 작은 투자자도 여러 나라의 채권·플랜테이션 대출채권에 나누어 투자해 위험을 분산하도록 하기 위해서였습니다.</td></tr>
-                      <tr><th scope="row">개방형 펀드</th><td>1924년, 미국 보스턴</td><td><strong>Massachusetts Investors Trust</strong>가 환매 가능한 지분을 내놓았습니다. 미국 최초의 개방형 뮤추얼펀드로, 현대 공모펀드 방식의 중요한 출발점입니다.</td><td>투자자가 펀드에 직접 환매를 청구해 유동성을 얻고, 적은 돈으로 전문 운용과 분산투자에 참여하게 하려는 목적이었습니다.</td></tr>
+                      <tr><th scope="row">개방형 펀드</th><td>1924년, 미국 보스턴</td><td><strong>Massachusetts Investors Trust</strong>가 환매 가능한 지분을 내놓았습니다. 미국 최초의 개방형 <button type="button" class="glossary-term" data-glossary-term="뮤추얼펀드" aria-haspopup="dialog">뮤추얼펀드</button>로, 현대 <button type="button" class="glossary-term" data-glossary-term="공모펀드" aria-haspopup="dialog">공모펀드</button> 방식의 중요한 출발점입니다.</td><td>투자자가 펀드에 직접 환매를 청구해 유동성을 얻고, 적은 돈으로 전문 운용과 분산투자에 참여하게 하려는 목적이었습니다.</td></tr>
                       <tr><th scope="row">ETF</th><td>1990년, 캐나다 토론토증권거래소</td><td><strong>Toronto 35 Index Participation Units (TIPs)</strong>가 상장됐습니다. 거래소가 세계 최초 ETF로 기념하는, 현대 ETF의 원형입니다.</td><td>한 주식처럼 장중에 거래하면서도 한 번의 매수로 지수 전체에 투자할 수 있게 하려는 목적이었습니다.</td></tr>
                     </tbody>
                   </table>
@@ -262,7 +262,6 @@
                 <p><strong>2. 개방형 펀드</strong> — 투자자가 운용사에 가입하거나 환매를 신청하면 펀드는 NAV를 기준으로 지분을 새로 발행하거나 없앱니다. 일반 투자자는 보통 장중 가격이 아니라 하루에 한 번 계산되는 기준가격으로 거래합니다. 1976년에는 Vanguard 500 Index Fund가 개인 투자자용 인덱스펀드를 대중화해, 낮은 비용으로 시장 전체를 추종하는 방식을 넓혔습니다.</p>
                 <p><strong>3. ETF</strong> — 일반 투자자는 거래소에서 ETF 지분을 장중 시장가격으로 사고팝니다. 지정참가회사(AP)는 큰 묶음의 ETF 지분을 펀드와 직접 설정·환매하고, 보통 기초자산 바스켓과 교환합니다. 시장가격과 NAV의 차이가 커지면 AP가 차익거래할 유인이 생겨 둘의 차이를 줄이는 구조입니다. 다만 시장가격과 NAV가 항상 같다는 뜻은 아닙니다.</p>
                 <p>따라서 펀드와 ETF의 공통 출발점은 <strong>소액으로도 위험을 나누고 전문적·규칙 기반 운용에 참여</strong>하게 하려는 데 있습니다. ETF는 여기에 거래소의 장중 유동성을 더한 구조입니다. 분산이 손실을 없애지는 않으므로, 실제 투자 전에는 편입자산·총보수·환매 또는 매매 방식·괴리율을 함께 확인해야 합니다.</p>
-                <p><small>참고: <a href="https://www.amsterdam.nl/stadsarchief/stukken/geld/eendragt-maakt-magt/" target="_blank" rel="noopener noreferrer">암스테르담 시 기록보관소의 Eendragt Maakt Magt</a>, <a href="https://www.mfs.com/en-ie/investment-professional/about-mfs/our-history.html" target="_blank" rel="noopener noreferrer">MFS의 개방형 펀드 연혁</a>, <a href="https://investors.tmx.com/English/News--Events/news/news-details/2020/Toronto-Stock-Exchange-Celebrates-30-Years-of-ETFs-2020-3-9/default.aspx" target="_blank" rel="noopener noreferrer">TSX의 ETF 30주년 자료</a>, <a href="https://corporate.vanguard.com/content/corporatesite/us/en/corp/articles/50-years-50-facts-indexing-since-1976.html" target="_blank" rel="noopener noreferrer">Vanguard 인덱스펀드 연혁</a>, <a href="https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-24" target="_blank" rel="noopener noreferrer">미 SEC Investor.gov의 ETF 설정·환매 안내</a>.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="펀드와 ETF의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -315,6 +314,59 @@
               data-lesson-toggle
               aria-expanded="true"
               aria-label="펀드와 ETF는 어떻게 다른가요? 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section>
+          <section class="lesson">
+            <span>01.2</span>
+            <div class="lesson-content">
+              <h2>개인대주와 신용융자: 무엇을 빌리는 거래인가요?</h2>
+              <div class="lesson-body">
+                <p>
+                  레버리지 ETF는 운용사가 파생상품 등을 활용해 목표 노출을
+                  조절하는 상품입니다. 이와 달리 개인이 공매도를 위해 증권사에서
+                  주식을 빌리는 거래를 <strong>신용대주(개인대주)</strong>라고
+                  합니다. 주식 대여 서비스에 동의한 다른 개인의 주식이 재원이 될
+                  수는 있지만, 공매도 신청자가 특정 대여자를 지정해 1:1로 빌리는
+                  구조는 아닙니다. 증권사가 재고를 관리하고, 증권사 또는
+                  한국증권금융의 대주 가능 종목·수량 범위에서 대여가 이뤄집니다.
+                </p>
+                <p>
+                  흐름을 단순화하면 <strong>대여 가능한 주식 또는 대주 재고
+                  → 증권사 → 개인대주 이용자</strong>입니다. 이용자는 빌린
+                  주식을 먼저 매도하고, 나중에 같은 종목·수량을 다시 사서
+                  상환합니다. 대주 가능 수량과 종목은 고정돼 있지 않으며,
+                  증권사의 재고·정책과 시장 상황에 따라 달라질 수 있습니다.
+                </p>
+                <p>
+                  <strong>신용융자</strong>는 반대 방향의 거래가 아니라,
+                  아예 빌리는 대상이 다른 거래입니다. 신용융자는 증권사에서
+                  <strong>현금</strong>을 빌려 주식을 매수하고, 나중에 매도대금이나
+                  현금으로 융자 원금과 이자를 갚는 방식입니다. 반면 신용대주는
+                  <strong>주식</strong>을 빌려 먼저 매도한 뒤 같은 주식으로 갚습니다.
+                </p>
+                <p>
+                  쉽게 구분하면 “상승을 예상해 돈을 빌려 더 사는 것”은
+                  신용융자, “하락을 예상해 주식을 빌려 먼저 파는 것”은
+                  신용대주입니다. 둘 다 담보·이자 또는 수수료·상환기한·반대매매
+                  위험이 있을 수 있으며, 주가가 예상과 반대로 움직이면 손실이
+                  커질 수 있습니다. 실제 가능 종목, 담보유지비율, 만기와 비용은
+                  거래 전 증권사 안내에서 확인하세요.
+                </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="creditMarketStatsTrigger"><i class="fa-solid fa-chart-simple"></i> 신용거래·대주 시장 통계 보기</button>
+                  <small>신용융자·신용대주 잔고와 이자율·수수료율 수준을 예시로 확인하세요.</small>
+                </p>
+              </div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="개인대주와 신용융자 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -434,12 +486,12 @@
                     <caption>ETF 위험등급을 이해하기 위한 일반적 예시 — 실제 상품의 공시 등급이 우선입니다.</caption>
                     <thead><tr><th scope="col">등급</th><th scope="col">표준 명칭</th><th scope="col">흔히 볼 수 있는 상품 특성</th><th scope="col">확인할 위험</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">1등급</th><td>매우 높은 위험</td><td>레버리지·인버스, 단일종목 레버리지, 높은 변동성의 파생형·원자재·신흥국 상품</td><td>일일 재설정, 큰 손실, 파생상품 노출과 복리효과</td></tr>
-                      <tr><th scope="row">2등급</th><td>높은 위험</td><td>주식형·섹터형·해외주식형 ETF 등</td><td>주가 하락, 국가·산업 집중, 환율</td></tr>
-                      <tr><th scope="row">3등급</th><td>다소 높은 위험</td><td>혼합형·리츠·하이일드 채권처럼 주식·신용 위험을 함께 가질 수 있는 상품</td><td>주식 비중, 신용스프레드, 금리 민감도</td></tr>
-                      <tr><th scope="row">4등급</th><td>보통 위험</td><td>중장기 국공채·우량채 중심 상품처럼 금리 변화에 노출되는 상품</td><td>듀레이션, 금리 상승 시 가격 하락</td></tr>
-                      <tr><th scope="row">5등급</th><td>낮은 위험</td><td>단기채·단기금리형처럼 가격 변동을 낮추도록 설계한 상품</td><td>신용·유동성·금리 위험은 여전히 존재</td></tr>
-                      <tr><th scope="row">6등급</th><td>매우 낮은 위험</td><td>MMF 등 초단기 금융상품 중심 상품</td><td>원금 보장 상품인지와 편입자산의 신용·유동성 위험</td></tr>
+                      <tr><th scope="row">1등급</th><td>매우 높은 위험</td><td><button type="button" class="glossary-term" data-glossary-term="레버리지" aria-haspopup="dialog">레버리지</button>·<button type="button" class="glossary-term" data-glossary-term="인버스" aria-haspopup="dialog">인버스</button>, <button type="button" class="glossary-term" data-glossary-term="단일종목 레버리지" aria-haspopup="dialog">단일종목 레버리지</button>, 높은 변동성의 <button type="button" class="glossary-term" data-glossary-term="파생형" aria-haspopup="dialog">파생형</button>·<button type="button" class="glossary-term" data-glossary-term="원자재" aria-haspopup="dialog">원자재</button>·<button type="button" class="glossary-term" data-glossary-term="신흥국 상품" aria-haspopup="dialog">신흥국 상품</button></td><td>일일 재설정, 큰 손실, 파생상품 노출과 복리효과</td></tr>
+                      <tr><th scope="row">2등급</th><td>높은 위험</td><td><button type="button" class="glossary-term" data-glossary-term="주식형" aria-haspopup="dialog">주식형</button>·<button type="button" class="glossary-term" data-glossary-term="섹터형" aria-haspopup="dialog">섹터형</button>·<button type="button" class="glossary-term" data-glossary-term="해외주식형 ETF" aria-haspopup="dialog">해외주식형 ETF</button> 등</td><td>주가 하락, 국가·산업 집중, 환율</td></tr>
+                      <tr><th scope="row">3등급</th><td>다소 높은 위험</td><td><button type="button" class="glossary-term" data-glossary-term="혼합형" aria-haspopup="dialog">혼합형</button>·<button type="button" class="glossary-term" data-glossary-term="리츠" aria-haspopup="dialog">리츠</button>·<button type="button" class="glossary-term" data-glossary-term="하이일드 채권" aria-haspopup="dialog">하이일드 채권</button>처럼 주식·신용 위험을 함께 가질 수 있는 상품</td><td>주식 비중, 신용스프레드, 금리 민감도</td></tr>
+                      <tr><th scope="row">4등급</th><td>보통 위험</td><td><button type="button" class="glossary-term" data-glossary-term="중장기 국공채" aria-haspopup="dialog">중장기 국공채</button>·<button type="button" class="glossary-term" data-glossary-term="우량채" aria-haspopup="dialog">우량채</button> 중심 상품처럼 금리 변화에 노출되는 상품</td><td>듀레이션, 금리 상승 시 가격 하락</td></tr>
+                      <tr><th scope="row">5등급</th><td>낮은 위험</td><td><button type="button" class="glossary-term" data-glossary-term="단기채" aria-haspopup="dialog">단기채</button>·<button type="button" class="glossary-term" data-glossary-term="단기금리형" aria-haspopup="dialog">단기금리형</button>처럼 가격 변동을 낮추도록 설계한 상품</td><td>신용·유동성·금리 위험은 여전히 존재</td></tr>
+                      <tr><th scope="row">6등급</th><td>매우 낮은 위험</td><td><button type="button" class="glossary-term" data-glossary-term="MMF" aria-haspopup="dialog">MMF</button> 등 초단기 금융상품 중심 상품</td><td>원금 보장 상품인지와 편입자산의 신용·유동성 위험</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -513,7 +565,7 @@
               <div class="lesson-body">
                 <p>
                   ETF의 기초자산은 ETF 가치의 바탕이 되는
-                  주식·채권·원자재·리츠·지수 등입니다. 다만 투자설명서에는
+                  <button type="button" class="glossary-term" data-glossary-term="주식" aria-haspopup="dialog">주식</button>·<button type="button" class="glossary-term" data-glossary-term="채권" aria-haspopup="dialog">채권</button>·<button type="button" class="glossary-term" data-glossary-term="원자재" aria-haspopup="dialog">원자재</button>·<button type="button" class="glossary-term" data-glossary-term="리츠" aria-haspopup="dialog">리츠</button>·<button type="button" class="glossary-term" data-glossary-term="지수" aria-haspopup="dialog">지수</button> 등입니다. 다만 투자설명서에는
                   실제로 보유하는 자산과 목표로 삼는 기초지수가 함께 나올 수
                   있으므로 둘을 구분해 읽어야 합니다.
                 </p>
@@ -543,6 +595,53 @@
             </button>
           </section>
           <section class="lesson">
+            <span>05</span>
+            <div class="lesson-content">
+              <h2>이머징마켓: 성장 가능성과 함께 보는 시장</h2>
+              <div class="lesson-body">
+                <p>
+                  해외 주식·채권 ETF의 투자 지역을 구분할 때 자주 만나는
+                  이머징마켓(emerging market, 신흥시장)은 경제 규모와
+                  자본시장이 성장하는 과정에 있는 국가·지역의 주식·채권
+                  시장을 가리키는 말입니다. 선진시장과의 경계가 하나의 공식
+                  기준으로 고정되어 있는 것은 아니며, 지수 제공기관마다 시장
+                  접근성·거래 결제·외국인 투자 제도·유동성 등을 기준으로
+                  분류가 달라질 수 있습니다.
+                </p>
+                <p>
+                  이머징마켓은 장기 성장, 인구·소비 확대, 산업화 같은 기회를
+                  반영할 수 있지만 더 높은 기대수익을 뜻하지는 않습니다.
+                  현지 주가 변동에 더해 환율, 정치·규제 변화, 거래 유동성,
+                  특정 국가·산업 집중, 시장 접근 제한이 수익률과 손실 폭에
+                  함께 영향을 줄 수 있습니다.
+                </p>
+                <p>
+                  자산배분에서는 개별 국가를 맞히는 선택이라기보다
+                  국내·선진국 주식과 구분되는 하나의 위험 요인으로 살펴볼 수
+                  있습니다. 광범위한 이머징마켓 ETF나 펀드를 비교할 때는
+                  편입 국가와 상위 종목, 국가·산업 집중도, 기준 통화와
+                  환노출, 총보수, 추적 방식, 거래량을 먼저 확인하세요. 여러
+                  국가를 담아도 세계 경기 침체나 달러 강세처럼 함께 영향을
+                  받는 위험은 남습니다.
+                </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="emergingMarketClassTrigger"><i class="fa-solid fa-earth-asia"></i> 국가·분류 기준 보기</button>
+                  <small>주요 국가가 선진·신흥·프런티어 중 어디에 속하는지, 분류 기관마다 왜 달라지는지 확인하세요.</small>
+                </p>
+              </div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="이머징마켓: 성장 가능성과 함께 보는 시장 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section>
+          <section class="lesson">
             <span>07</span>
             <div class="lesson-content">
               <h2>NAV·iNAV와 괴리율: ETF 가격은 왜 다를까요?</h2>
@@ -562,7 +661,7 @@
                   ETF는 구조가 더 복잡할 수 있으므로 상품설명서를 함께 확인하세요.
                 </p>
                 <p>
-                  iNAV(Indicative NAV, 실시간 추정 순자산가치)는 쉽게 말해
+                  <button type="button" class="glossary-term" data-glossary-term="iNAV" aria-haspopup="dialog">iNAV</button>(Indicative NAV, 실시간 추정 순자산가치)는 쉽게 말해
                   “지금 이 순간의 NAV를 대략 계산한 값”입니다. 정식 NAV는
                   보통 하루 장이 끝난 뒤 한 번만 확정되지만, 그동안 ETF가
                   담고 있는 주식·채권 등의 가격은 장중에도 계속 움직입니다.
@@ -683,58 +782,6 @@
           </section>
           
           <section class="lesson">
-            <span>09</span>
-            <div class="lesson-content">
-              <h2>개인대주와 신용융자: 무엇을 빌리는 거래인가요?</h2>
-              <div class="lesson-body">
-                <p>
-                  개인이 공매도를 위해 증권사에서 주식을 빌리는 거래를
-                  <strong>신용대주(개인대주)</strong>라고 합니다. 주식 대여
-                  서비스에 동의한 다른 개인의 주식이 재원이 될 수는 있지만,
-                  공매도 신청자가 특정 대여자를 지정해 1:1로 빌리는 구조는
-                  아닙니다. 증권사가 재고를 관리하고, 증권사 또는
-                  한국증권금융의 대주 가능 종목·수량 범위에서 대여가 이뤄집니다.
-                </p>
-                <p>
-                  흐름을 단순화하면 <strong>대여 가능한 주식 또는 대주 재고
-                  → 증권사 → 개인대주 이용자</strong>입니다. 이용자는 빌린
-                  주식을 먼저 매도하고, 나중에 같은 종목·수량을 다시 사서
-                  상환합니다. 대주 가능 수량과 종목은 고정돼 있지 않으며,
-                  증권사의 재고·정책과 시장 상황에 따라 달라질 수 있습니다.
-                </p>
-                <p>
-                  <strong>신용융자</strong>는 반대 방향의 거래가 아니라,
-                  아예 빌리는 대상이 다른 거래입니다. 신용융자는 증권사에서
-                  <strong>현금</strong>을 빌려 주식을 매수하고, 나중에 매도대금이나
-                  현금으로 융자 원금과 이자를 갚는 방식입니다. 반면 신용대주는
-                  <strong>주식</strong>을 빌려 먼저 매도한 뒤 같은 주식으로 갚습니다.
-                </p>
-                <p>
-                  쉽게 구분하면 “상승을 예상해 돈을 빌려 더 사는 것”은
-                  신용융자, “하락을 예상해 주식을 빌려 먼저 파는 것”은
-                  신용대주입니다. 둘 다 담보·이자 또는 수수료·상환기한·반대매매
-                  위험이 있을 수 있으며, 주가가 예상과 반대로 움직이면 손실이
-                  커질 수 있습니다. 실제 가능 종목, 담보유지비율, 만기와 비용은
-                  거래 전 증권사 안내에서 확인하세요.
-                </p>
-                <p class="lesson-video-cta">
-                  <button type="button" class="lesson-video-link" id="creditMarketStatsTrigger"><i class="fa-solid fa-chart-simple"></i> 신용거래·대주 시장 통계 보기</button>
-                  <small>신용융자·신용대주 잔고와 이자율·수수료율 수준을 예시로 확인하세요.</small>
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="개인대주와 신용융자 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
             <span>11</span>
             <div class="lesson-content">
               <h2>한국시장으로 만드는 가상 포트폴리오 · 리밸런싱 실습</h2>
@@ -768,7 +815,7 @@
                   비중을 설명하는 것입니다.
                 </p>
                 <p>
-                  실제 <b>펀드매니저</b>라는 직업은 어느 정도 규모일까요.
+                  실제 <strong><button type="button" class="glossary-term" data-glossary-term="펀드매니저" aria-haspopup="dialog">펀드매니저</button></strong>라는 직업은 어느 정도 규모일까요.
                   <a href="https://www.fntimes.com/html/view.php?ud=202403242119577780dd55077bc2_18" target="_blank" rel="noopener noreferrer">한국금융신문 보도</a>에 따르면
                   2024년 3월 기준 국내 57개 자산운용사에 소속된 펀드매니저는
                   약 872명이며, KB자산운용(75명)·미래에셋자산운용(62명)·
@@ -987,7 +1034,7 @@
                     </thead>
                     <tbody>
                       <tr><th scope="row">모집 대상</th><td>소수의 투자자·고액 자산가·기관투자자</td><td>불특정 다수의 일반 대중</td></tr>
-                      <tr><th scope="row">대표 예시</th><td>사모펀드(PEF), 헤지펀드</td><td>일반 주식형 펀드, ETF, 공모채권</td></tr>
+                      <tr><th scope="row">대표 예시</th><td><button type="button" class="glossary-term" data-glossary-term="사모펀드(PEF)" aria-haspopup="dialog">사모펀드(PEF)</button>, <button type="button" class="glossary-term" data-glossary-term="헤지펀드" aria-haspopup="dialog">헤지펀드</button></td><td>일반 주식형 펀드, ETF, 공모채권</td></tr>
                       <tr><th scope="row">규제·공시</th><td>공모보다 모집·공시 규제가 상대적으로 적고, 전략 설계의 재량이 큰 편</td><td>투자자 보호를 위한 공시·판매 규제가 더 엄격한 편</td></tr>
                       <tr><th scope="row">최소 투자금</th><td>상품에 따라 높은 최소 투자금이 요구될 수 있음</td><td>소액으로도 시작할 수 있는 상품이 많음</td></tr>
                     </tbody>
@@ -1072,58 +1119,12 @@
               <h2>시장 급락에 대비하는 두 가지 헤지</h2>
               <div class="lesson-body">
                 <p>주식이나 주식 ETF를 가진 사람이 시장 급락이 걱정될 때는 풋옵션을 사거나 지수선물을 매도하는 방식을 생각해 볼 수 있습니다. 둘 다 시장이 내려갈 때 생기는 이익으로 보유 주식의 손실 일부를 줄이려는 방법입니다.</p>
-                <p>풋옵션 매수는 ‘정해진 가격에 팔 수 있는 권리’를 사는 것입니다. 시장이 크게 내리면 이 권리의 가치가 올라갈 수 있습니다. 자동차 보험처럼 처음에 프리미엄이라는 보험료를 내는 대신, 시장이 오르거나 움직임이 작으면 낸 프리미엄은 비용으로 남습니다.</p>
+                <p><button type="button" class="glossary-term" data-glossary-term="풋 헤지" aria-haspopup="dialog">풋 헤지(Put Hedge)</button>는 ‘정해진 가격에 팔 수 있는 권리’인 풋옵션을 사서 자산 가격의 급락 위험에 대비하는 방법입니다. 시장이 크게 내리면 이 권리의 가치가 올라갈 수 있습니다. 자동차 보험처럼 처음에 프리미엄이라는 보험료를 내는 대신, 시장이 오르거나 움직임이 작으면 낸 프리미엄은 비용으로 남습니다.</p>
                 <p>지수선물 매도는 KOSPI 200 같은 지수 선물을 먼저 파는 숏 포지션입니다. 시장이 내리면 선물 매도 포지션에서 이익이 날 수 있지만, 시장이 오르면 손실이 납니다. 풋옵션 매수와 달리 프리미엄만 내고 끝나는 구조가 아니며 증거금·추가증거금·강제청산 위험이 있으므로, 보유 자산 규모와 계약 규모를 이해하지 못하면 헤지가 아니라 위험 확대가 될 수 있습니다.</p>
                 <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="hedgeDiversificationTrigger"><i class="fa-solid fa-shield-halved"></i> 분산·헤지 손실 완화 시뮬레이터</button><small>시장 변동 시 주식 집중, 분산투자, 분산+풋 헤지의 결과를 비교해 보세요.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="시장 급락에 대비하는 두 가지 헤지 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section>
-          <section class="lesson">
-            <span>05</span>
-            <div class="lesson-content">
-              <h2>이머징마켓: 성장 가능성과 함께 보는 시장</h2>
-              <div class="lesson-body">
-                <p>
-                  이머징마켓(emerging market, 신흥시장)은 경제 규모와
-                  자본시장이 성장하는 과정에 있는 국가·지역의 주식·채권
-                  시장을 가리키는 말입니다. 선진시장과의 경계가 하나의 공식
-                  기준으로 고정되어 있는 것은 아니며, 지수 제공기관마다 시장
-                  접근성·거래 결제·외국인 투자 제도·유동성 등을 기준으로
-                  분류가 달라질 수 있습니다.
-                </p>
-                <p>
-                  이머징마켓은 장기 성장, 인구·소비 확대, 산업화 같은 기회를
-                  반영할 수 있지만 더 높은 기대수익을 뜻하지는 않습니다.
-                  현지 주가 변동에 더해 환율, 정치·규제 변화, 거래 유동성,
-                  특정 국가·산업 집중, 시장 접근 제한이 수익률과 손실 폭에
-                  함께 영향을 줄 수 있습니다.
-                </p>
-                <p>
-                  자산배분에서는 개별 국가를 맞히는 선택이라기보다
-                  국내·선진국 주식과 구분되는 하나의 위험 요인으로 살펴볼 수
-                  있습니다. 광범위한 이머징마켓 ETF나 펀드를 비교할 때는
-                  편입 국가와 상위 종목, 국가·산업 집중도, 기준 통화와
-                  환노출, 총보수, 추적 방식, 거래량을 먼저 확인하세요. 여러
-                  국가를 담아도 세계 경기 침체나 달러 강세처럼 함께 영향을
-                  받는 위험은 남습니다.
-                </p>
-                <p class="lesson-video-cta">
-                  <button type="button" class="lesson-video-link" id="emergingMarketClassTrigger"><i class="fa-solid fa-earth-asia"></i> 국가·분류 기준 보기</button>
-                  <small>주요 국가가 선진·신흥·프런티어 중 어디에 속하는지, 분류 기관마다 왜 달라지는지 확인하세요.</small>
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="이머징마켓: 성장 가능성과 함께 보는 시장 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
           </section>
           <section class="lesson">
             <span>14.5</span>
@@ -1319,6 +1320,212 @@
                 합니다.
               </dd>
             </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>신탁 <small>Trust · 信託</small></dt>
+              <dd>
+                고객이 금융회사 등 수탁자에게 금전이나 재산을 맡기고, 수탁자가
+                정해진 목적과 계약에 따라 이를 관리·운용·처분하는 구조입니다.
+                운용 대상과 수익·손실 부담 방식, 중도해지 조건, 원금 보장 및
+                예금자보호 여부는 상품마다 다르므로 계약서와 설명서를 확인해야
+                합니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>뮤추얼펀드 <small>Mutual Fund</small></dt>
+              <dd>
+                여러 투자자의 돈을 모아 주식·채권 등에 투자하고, 투자자가
+                펀드의 지분을 보유하는 집합투자 상품입니다. 미국에서는 보통
+                펀드가 투자자의 매입·환매 요청에 따라 지분을 발행하거나 회수하는
+                개방형 펀드를 가리킵니다. 운용 성과가 투자자에게 귀속되므로
+                원금과 수익률은 보장되지 않습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>공모펀드 <small>Publicly Offered Fund · 公募펀드</small></dt>
+              <dd>
+                특정 소수만을 대상으로 하지 않고 여러 일반 투자자에게 공개적으로
+                판매하는 펀드입니다. 투자설명서와 운용보고서 등 공시 의무와
+                분산투자 규제를 적용받지만, 이것이 원금 보장이나 손실 방지를
+                뜻하지는 않습니다. 투자 대상, 위험등급, 보수와 환매 조건을
+                확인해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>사모펀드(PEF) <small>Private Equity Fund · 私募펀드</small></dt>
+              <dd>
+                공개 모집이 아니라 제한된 투자자로부터 자금을 모아 운용하는
+                사모 방식의 펀드입니다. 이 가운데 PEF는 보통 기업 지분을 인수해
+                기업가치를 높인 뒤 매각하는 사모투자펀드를 뜻합니다. 넓은 의미의
+                사모펀드에는 여러 전략이 포함될 수 있으며, 투자금 회수 제한과
+                운용·신용 위험을 확인해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>헤지펀드 <small>Hedge Fund</small></dt>
+              <dd>
+                제한된 투자자의 자금을 모아 공매도·레버리지·파생상품 등 다양한
+                전략으로 수익을 추구하는 사모 집합투자기구입니다. 이름의 ‘헤지’가
+                손실 방지를 보장한다는 뜻은 아니며, 전략에 따라 큰 손실과
+                유동성·거래상대방 위험이 발생할 수 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>ELS <small>Equity-Linked Securities · 주가연계증권</small></dt>
+              <dd>
+                개별 주식이나 주가지수 등 기초자산의 가격이 미리 정한 조건을
+                충족하는지에 따라 수익과 상환 시점이 결정되는 파생결합증권입니다.
+                예금이 아니며 조건에 따라 원금 전부를 잃을 수 있습니다. 가입
+                전 조기상환 조건, 손실 발생 기준, 만기와 발행사의 신용위험을
+                확인해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>단일종목 레버리지 <small>Single-Stock Leveraged ETF</small></dt>
+              <dd>
+                하나의 개별 주식을 기초자산으로 삼아 보통 그 주식의 하루 수익률을
+                일정 배수로 추종하는 상품입니다. 분산 효과가 거의 없고 손실도
+                확대되며, 여러 날의 누적수익률은 기초주식 수익률의 단순 배수와
+                달라질 수 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>주식 <small>Stock · Equity · 株式</small></dt>
+              <dd>
+                기업의 소유권 일부를 나타내는 증권입니다. 기업의 성장과 이익에
+                따라 주가 상승이나 배당을 기대할 수 있지만, 실적·시장 상황에
+                따라 가격이 하락하고 원금을 잃을 수 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>채권 <small>Bond · Fixed Income · 債券</small></dt>
+              <dd>
+                정부·기업 등이 자금을 빌리기 위해 발행하는 증권으로, 정해진
+                조건에 따라 이자와 원금을 지급합니다. 발행자의 신용이 나빠지거나
+                시장금리가 오르면 가격이 하락할 수 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>지수 <small>Index · 指數</small></dt>
+              <dd>
+                여러 종목이나 자산의 가격 움직임을 하나의 수치로 나타낸
+                측정 기준입니다. 지수 자체를 직접 보유하는 것은 아니며, ETF는
+                주식·선물·스왑 등을 이용해 목표 지수의 움직임을 추종합니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>파생형 <small>Derivatives-Based Product</small></dt>
+              <dd>
+                선물·옵션·스왑 같은 파생상품을 주된 운용 수단으로 사용하거나
+                성과가 파생상품 구조에 크게 좌우되는 상품입니다. 기초자산의
+                변동뿐 아니라 만기 교체 비용, 거래상대방 위험과 추적오차를 함께
+                확인해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>원자재 <small>Commodity Product</small></dt>
+              <dd>
+                금·원유·농산물 같은 원자재 가격을 추종하는 상품입니다. 현물을
+                직접 보유하기보다 선물을 사용하는 경우가 많아 현물가격과 성과가
+                다를 수 있고, 선물 만기 교체에 따른 롤오버 손익도 발생할 수
+                있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>신흥국 상품 <small>Emerging-Market Product</small></dt>
+              <dd>
+                신흥국의 주식·채권·통화 등에 투자하는 상품입니다. 성장 가능성과
+                함께 정치·제도 변화, 환율, 낮은 시장 유동성과 국가별 집중 위험이
+                크게 나타날 수 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>주식형 <small>Equity Fund · Equity ETF</small></dt>
+              <dd>
+                자산의 대부분을 주식에 투자해 주가 상승에 따른 수익을 추구하는
+                상품 유형입니다. 시장 전체가 하락하면 손실이 날 수 있으며,
+                편입 종목과 국가·업종 비중에 따라 위험이 달라집니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>섹터형 <small>Sector Fund · Sector ETF</small></dt>
+              <dd>
+                반도체·바이오·금융처럼 특정 산업에 집중 투자하는 상품입니다.
+                산업 전망이 좋을 때 수익 기회가 커질 수 있지만, 같은 악재에
+                편입 종목이 함께 하락하는 집중 위험도 큽니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>해외주식형 ETF <small>International Equity ETF</small></dt>
+              <dd>
+                해외 거래소에 상장된 주식이나 해외 주가지수를 추종하는 ETF입니다.
+                주가 위험 외에도 환율, 국가별 제도와 세금, 국내외 시장의 거래시간
+                차이로 인한 괴리 위험을 확인해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>혼합형 <small>Balanced Fund · Mixed-Asset Fund</small></dt>
+              <dd>
+                주식과 채권 등 서로 다른 자산을 한 상품에 함께 담는 유형입니다.
+                자산을 나누어 위험을 완화할 수 있지만, 주식 비중과 채권의 신용·금리
+                위험에 따라 손실 가능성이 달라집니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>리츠 <small>REITs · Real Estate Investment Trusts</small></dt>
+              <dd>
+                여러 투자자의 자금을 모아 건물·물류센터 같은 부동산에 투자하고
+                임대수익 등을 배당하는 부동산투자회사입니다. 공실과 임대료,
+                부동산 가격, 차입금과 금리 변화가 수익에 영향을 줍니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>하이일드 채권 <small>High-Yield Bond</small></dt>
+              <dd>
+                일반적으로 투자적격등급보다 신용등급이 낮은 기업이 발행해 비교적
+                높은 이자를 제시하는 채권입니다. 이자가 높은 만큼 부도와 신용등급
+                하락 위험이 크고, 시장 불안기에는 가격이 크게 떨어질 수 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>중장기 국공채 <small>Medium/Long-Term Government Bond</small></dt>
+              <dd>
+                정부·지방자치단체·공공기관 등이 발행한 채권 중 만기가 비교적 긴
+                채권입니다. 신용위험은 상대적으로 낮을 수 있지만 듀레이션이 길어
+                금리가 오를 때 가격이 크게 하락할 수 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>우량채 <small>Investment-Grade Bond</small></dt>
+              <dd>
+                신용등급이 상대적으로 높아 원리금 상환 능력이 양호하다고 평가되는
+                채권입니다. 신용등급이 높아도 부도 가능성이 사라지는 것은 아니며,
+                금리 상승이나 유동성 악화로 가격이 하락할 수 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>단기채 <small>Short-Term Bond</small></dt>
+              <dd>
+                만기까지 남은 기간이 짧은 채권 또는 그런 채권에 주로 투자하는
+                상품입니다. 장기채보다 금리 변화에 덜 민감한 편이지만 발행자의
+                신용위험과 시장 유동성 위험은 남아 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>단기금리형 <small>Short-Term Rate Product</small></dt>
+              <dd>
+                KOFR·CD금리 같은 단기 기준금리의 수익을 추종하도록 설계한 상품
+                유형입니다. 가격 변동은 비교적 작을 수 있지만 운용 구조와 비용,
+                편입자산 또는 거래상대방의 신용·유동성 위험을 확인해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>MMF <small>Money Market Fund · 머니마켓펀드</small></dt>
+              <dd>
+                단기 국공채·기업어음·양도성예금증서 등 만기가 짧은 금융상품에
+                투자하는 펀드입니다. 현금 관리에 활용되지만 은행 예금이 아니므로
+                원금과 수익률이 보장되지 않으며 신용·유동성 위험이 있습니다.
+              </dd>
+            </div>
             <div class="glossary-item">
               <dt>
                 괴리율
@@ -1387,6 +1594,15 @@
                 생깁니다.
               </dd>
             </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>iNAV <small>Indicative Net Asset Value · 실시간 추정 순자산가치</small></dt>
+              <dd>
+                ETF가 보유한 자산의 장중 가격을 반영해 계산하는 추정 순자산가치입니다.
+                ETF 시장가격이 기초자산 가치와 얼마나 차이 나는지 판단하는 참고값이지만,
+                실제 체결가격이나 장 마감 뒤 확정되는 NAV와 같다는 보장은 없습니다.
+                해외시장 휴장·시차나 급격한 가격 변동 때는 정확도가 낮아질 수 있습니다.
+              </dd>
+            </div>
             <div class="glossary-item">
               <dt>환매 <small>Redemption · 還買</small></dt>
               <dd>
@@ -1405,6 +1621,16 @@
                 <p><b>선물시장의 레버리지</b>는 계약 이행을 담보하는 증거금 방식으로 발전했습니다. 선물은 미래 인도·가격을 약속하는 계약이므로 계약금 전액이 아니라 손익 변동을 감당할 증거금을 요구하고, 매일 손익을 정산해 부족하면 추가 증거금을 요구합니다. 이 방식은 계약 상대방이 약속을 지키지 못할 위험을 줄이기 위한 것이지만, 가격이 조금만 움직여도 계좌 손익률이 크게 달라지는 이유이기도 합니다.</p>
                 <p><b>레버리지 ETF의 첫 사례</b>는 더 최근입니다. 미국에서는 2006년 SEC가 첫 레버리지·인버스 ETF를 허용했고 ProShares가 이를 출시했습니다. 이 상품들은 주식 자체를 빌려 크게 사는 방식만을 뜻하지 않고, 선물·스왑 등으로 보통 ‘하루’ 기준 지수 수익률의 일정 배수를 목표로 설계됩니다. 그래서 여러 날 보유 성과는 기초지수 누적수익률의 단순 2배·3배와 달라질 수 있습니다.</p>
                 <p><b>핵심 점검:</b> 레버리지는 수익만 확대하지 않고 손실, 이자·수수료, 추가 증거금 요구와 강제청산 가능성도 함께 확대합니다. 상품마다 최대 손실 범위가 다릅니다. 현물 ETF 매수처럼 투자금 범위에서 손실이 제한되는 구조도 있지만, 신용·선물·옵션 매도는 예치금보다 큰 손실과 추가 납입이 발생할 수 있습니다. 거래 전에는 ‘무엇을 통해 노출을 키우는지’, ‘목표기간이 하루인지’, ‘최악의 경우 얼마를 추가로 내야 하는지’를 확인해야 합니다.</p>
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>풋 헤지 <small>Put Hedge · Protective Put</small></dt>
+              <dd>
+                보유한 주식이나 ETF와 같거나 관련된 기초자산의 풋옵션을 매수해
+                가격 급락 때 발생하는 손실 일부를 옵션 이익으로 보완하는 전략입니다.
+                상승 가능성을 남겨 두면서 하락 방어선을 마련한다는 점에서 ‘가격
+                하락 보험’에 비유합니다. 다만 프리미엄 비용이 들고, 행사가격·만기·
+                계약 수량이 맞지 않으면 손실을 완전히 막지 못할 수 있습니다.
               </dd>
             </div>
             <div class="glossary-item">
@@ -1451,6 +1677,15 @@
                 기업이나 리츠가 은행·채권시장 등에서 빌린 돈입니다. 빚을
                 이용하면 투자 규모를 키울 수 있지만 이자와 상환 부담이 생깁니다.
                 금리가 오르거나 수입이 줄면 부담이 더 커질 수 있습니다.
+              </dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>펀드매니저 <small>Fund Manager · Portfolio Manager</small></dt>
+              <dd>
+                펀드의 투자 목적과 운용 규정에 따라 편입 자산을 분석하고
+                매매·비중 조정·위험관리를 수행하는 운용 전문가입니다. 개인의
+                주문을 대신 처리하는 판매직과는 역할이 다르며, 운용 성과가
+                투자자의 수익을 보장하는 것은 아닙니다.
               </dd>
             </div>
             <div class="glossary-item">
@@ -1630,21 +1865,21 @@
       <section class="glossary-modal__dialog ai-top-picks-dialog" role="dialog" aria-modal="true" aria-labelledby="aiTopPicksTitle">
         <button class="glossary-modal__close" type="button" aria-label="닫기" data-ai-top-picks-close>×</button>
         <h2 id="aiTopPicksTitle">AI 추천 상품 TOP 5 (학습용 예시)</h2>
-        <p class="ai-top-picks-intro">기초지수·총보수·거래량·괴리율·위험도 등 상품설명서 비교 항목을 기준으로 구성한 <strong>학습용 예시</strong>입니다. 특정 상품의 매수를 권유하는 투자 추천이 아니며, 실제 선택은 최신 상품설명서·투자설명서와 본인의 투자 목적·위험 감수 수준에 따라 판단하세요.</p>
+        <p class="ai-top-picks-intro">기초지수·총보수·최근 3개월 수익률·거래량·괴리율·위험도 등 상품설명서 비교 항목을 기준으로 구성한 <strong>학습용 예시</strong>입니다. 특정 상품의 매수를 권유하는 투자 추천이 아니며, 실제 선택은 최신 상품설명서·투자설명서와 본인의 투자 목적·위험 감수 수준에 따라 판단하세요.</p>
         <div class="lesson-table-wrap">
           <table class="lesson-table">
-            <caption>비교 항목 기준 예시 순위 — 실제 총보수·거래량·괴리율은 시점에 따라 달라지므로 매수 전 다시 확인하세요.</caption>
-            <thead><tr><th scope="col">순위</th><th scope="col">상품명 (예시)</th><th scope="col">기초지수</th><th scope="col">총보수(연)</th><th scope="col">비교 항목 특징</th></tr></thead>
+            <caption>비교 항목 기준 예시 순위 · 최근 3개월 수익률 <span id="aiTopPicksReturnAsOf">2026-09-05 조회 기준</span> — 실제 수치는 시점에 따라 달라지므로 매수 전 다시 확인하세요.</caption>
+            <thead><tr><th scope="col">순위</th><th scope="col">상품명 (예시)</th><th scope="col">기초지수</th><th scope="col">총보수(연)</th><th scope="col">최근 3개월 수익률</th><th scope="col">비교 항목 특징</th></tr></thead>
             <tbody>
-              <tr><th scope="row">1</th><td>KODEX 200</td><td>코스피 200</td><td>약 0.15%</td><td>순자산 규모가 크고 거래량이 많아 호가 차이·괴리율이 작은 편입니다.</td></tr>
-              <tr><th scope="row">2</th><td>TIGER 200</td><td>코스피 200</td><td>약 0.05%</td><td>동일 지수 추종 상품 중 총보수가 낮아 장기 보유 비용 부담이 작습니다.</td></tr>
-              <tr><th scope="row">3</th><td>KODEX 코스닥150</td><td>코스닥 150</td><td>약 0.25%</td><td>중소형 성장주 비중이 높아 변동성과 기대수익이 함께 커질 수 있습니다.</td></tr>
-              <tr><th scope="row">4</th><td>ACE 미국S&amp;P500</td><td>S&amp;P 500</td><td>약 0.07%</td><td>해외 대표지수 분산 효과가 있으나 환노출·환헤지 여부를 확인해야 합니다.</td></tr>
-              <tr><th scope="row">5</th><td>TIGER 미국나스닥100</td><td>나스닥 100</td><td>약 0.07%</td><td>기술주 비중이 높아 변동성이 크고, 성장 기대와 위험이 함께 커집니다.</td></tr>
+              <tr><th scope="row">1</th><td>KODEX 200</td><td>코스피 200</td><td>약 0.15%</td><td class="negative" data-ai-return-code="069500">-23.64%</td><td>순자산 규모가 크고 거래량이 많아 호가 차이·괴리율이 작은 편입니다.</td></tr>
+              <tr><th scope="row">2</th><td>TIGER 200</td><td>코스피 200</td><td>약 0.05%</td><td class="negative" data-ai-return-code="102110">-23.58%</td><td>동일 지수 추종 상품 중 총보수가 낮아 장기 보유 비용 부담이 작습니다.</td></tr>
+              <tr><th scope="row">3</th><td>KODEX 코스닥150</td><td>코스닥 150</td><td>약 0.25%</td><td class="negative" data-ai-return-code="229200">-25.58%</td><td>중소형 성장주 비중이 높아 변동성과 기대수익이 함께 커질 수 있습니다.</td></tr>
+              <tr><th scope="row">4</th><td>ACE 미국S&amp;P500</td><td>S&amp;P 500</td><td>약 0.07%</td><td class="negative" data-ai-return-code="360200">-8.96%</td><td>해외 대표지수 분산 효과가 있으나 환노출·환헤지 여부를 확인해야 합니다.</td></tr>
+              <tr><th scope="row">5</th><td>TIGER 미국나스닥100</td><td>나스닥 100</td><td>약 0.07%</td><td class="negative" data-ai-return-code="133690">-14.06%</td><td>기술주 비중이 높아 변동성이 크고, 성장 기대와 위험이 함께 커집니다.</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="ai-top-picks-note">이 목록은 비교 항목을 익히기 위한 예시 구성이며, 실제 총보수·거래량·괴리율·순위는 시장 상황과 조회 시점에 따라 달라집니다. 매수 전에는 반드시 최신 상품설명서·투자설명서와 실시간 시세를 확인하세요.</p>
+        <p class="ai-top-picks-note">최근 3개월 수익률은 공개 ETF 시세 목록의 조회 시점 값이며 미래 성과를 보장하지 않습니다. 이 목록은 비교 항목을 익히기 위한 예시 구성이며, 실제 총보수·수익률·거래량·괴리율·순위는 시장 상황과 조회 시점에 따라 달라집니다. 매수 전에는 반드시 최신 상품설명서·투자설명서와 실시간 시세를 확인하세요.</p>
       </section>
     </div>
 
@@ -2271,7 +2506,32 @@
         const trigger = document.getElementById("aiTopPicksTrigger");
         if (!modal || !trigger) return;
         const closeButton = modal.querySelector(".glossary-modal__close");
-        const open = () => { modal.hidden = false; closeButton?.focus(); };
+        const returnAsOf = document.getElementById("aiTopPicksReturnAsOf");
+        const returnCells = [...modal.querySelectorAll("[data-ai-return-code]")];
+        let returnsRequest;
+        const percentage = (value) => `${Number(value) >= 0 ? "+" : ""}${Number(value).toFixed(2)}%`;
+        const loadReturns = () => {
+          if (returnsRequest) return returnsRequest;
+          returnsRequest = fetch("assets/etf-catalog.json", { cache: "no-store" })
+            .then((response) => {
+              if (!response.ok) throw new Error("ETF 수익률 데이터를 불러오지 못했습니다.");
+              return response.json();
+            })
+            .then((data) => {
+              const itemsByCode = new Map((data.items || []).map((item) => [item.code, item]));
+              returnCells.forEach((cell) => {
+                const value = Number(itemsByCode.get(cell.dataset.aiReturnCode)?.return3m);
+                if (!Number.isFinite(value)) return;
+                cell.textContent = percentage(value);
+                cell.classList.toggle("positive", value >= 0);
+                cell.classList.toggle("negative", value < 0);
+              });
+              if (returnAsOf && data.updatedAt) returnAsOf.textContent = `${data.updatedAt} 조회 기준`;
+            })
+            .catch(() => {});
+          return returnsRequest;
+        };
+        const open = () => { modal.hidden = false; closeButton?.focus(); loadReturns(); };
         const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
         trigger.addEventListener("click", open);
         modal.querySelectorAll("[data-ai-top-picks-close]").forEach((element) => element.addEventListener("click", close));

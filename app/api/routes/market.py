@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import ast
 from datetime import date, datetime, timedelta, timezone
+from math import isfinite
 from typing import Any
 from urllib.parse import quote_plus
 import xml.etree.ElementTree as ET
@@ -166,6 +168,14 @@ async def kospi200_history(
     period1 = int(datetime.combine(start, datetime.min.time(), tzinfo=kst).timestamp())
     period2 = int(datetime.combine(end, datetime.min.time(), tzinfo=kst).timestamp())
     chart_url = f"https://query2.finance.yahoo.com/v8/finance/chart/%5EKS200?period1={period1}&period2={period2}&interval=1d"
+    naver_url = (
+        "https://api.finance.naver.com/siseJson.naver"
+        f"?symbol=KPI200&requestType=1&startTime={start.strftime('%Y%m%d')}"
+        f"&endTime={(end - timedelta(days=1)).strftime('%Y%m%d')}&timeframe=day"
+    )
+    bars: list[dict[str, int | float]] = []
+    source = "Yahoo Finance"
+    warnings: list[str] = []
     try:
         async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
             response = await client.get(chart_url, headers={"User-Agent": "FinanceRagLab/1.0 (educational use)"})
@@ -178,18 +188,61 @@ async def kospi200_history(
             for timestamp, close in zip(timestamps, closes)
             if close is not None
         ]
-    except (httpx.HTTPError, KeyError, IndexError, TypeError, ValueError) as exc:
-        raise HTTPException(status_code=502, detail="KOSPI 200 지수 종가를 불러오지 못했습니다.") from exc
+    except (httpx.HTTPError, KeyError, IndexError, TypeError, ValueError):
+        bars = []
+
+    # Yahoo may occasionally return only one quote or stop well before the
+    # requested end date for ^KS200. Use the public Naver Finance index
+    # history as a best-effort fallback so the chart remains usable.
+    yahoo_latest_date = (
+        datetime.fromtimestamp(bars[-1]["time"] / 1000, tz=kst).date()
+        if bars else None
+    )
+    yahoo_history_incomplete = (
+        len(bars) < 2
+        or yahoo_latest_date is None
+        or (end - yahoo_latest_date).days > 8
+    )
+    if yahoo_history_incomplete:
+        try:
+            async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+                response = await client.get(naver_url, headers={"User-Agent": "FinanceRagLab/1.0 (educational use)"})
+                response.raise_for_status()
+            response.encoding = "utf-8"
+            rows = ast.literal_eval(response.text.strip())
+            fallback_bars: list[dict[str, int | float]] = []
+            for row in rows[1:]:
+                if not isinstance(row, list) or len(row) < 5:
+                    continue
+                trade_date = datetime.strptime(str(row[0]), "%Y%m%d").date()
+                close = float(row[4])
+                if start <= trade_date < end and isfinite(close):
+                    timestamp = int(datetime.combine(trade_date, datetime.min.time(), tzinfo=kst).timestamp() * 1000)
+                    fallback_bars.append({"time": timestamp, "close": close})
+            if len(fallback_bars) > len(bars):
+                bars = fallback_bars
+                source = "Naver Finance"
+                warnings.append("기본 데이터 제공처의 이력이 부족해 대체 데이터로 표시했습니다.")
+        except (httpx.HTTPError, SyntaxError, ValueError, TypeError, IndexError):
+            pass
 
     if not bars:
         raise HTTPException(status_code=502, detail="표시할 KOSPI 200 지수 데이터가 없습니다.")
+
+    bars.sort(key=lambda bar: bar["time"])
+    if len(bars) < 2:
+        warnings.append("조회된 거래일이 1일뿐이어서 추이 차트를 표시할 수 없습니다.")
+    latest_date = datetime.fromtimestamp(bars[-1]["time"] / 1000, tz=kst).date().isoformat()
 
     payload = {
         "symbol": "^KS200",
         "start": start.isoformat(),
         "end": end.isoformat(),
         "bars": bars,
-        "source": "Yahoo Finance",
+        "bar_count": len(bars),
+        "latest_date": latest_date,
+        "source": source,
+        "warnings": warnings,
         "updated_at": now.isoformat(),
     }
     _kospi200_history_cache[cache_key] = (now, payload)

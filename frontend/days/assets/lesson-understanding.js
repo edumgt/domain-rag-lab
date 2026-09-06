@@ -1,7 +1,8 @@
 (() => {
-  if (document.body.dataset.day !== '1') return;
+  const day = document.body.dataset.day;
+  if (!['1', '2', '3', '4'].includes(day)) return;
 
-  const STORAGE_KEY = 'finance-rag:day-01-understanding:v1';
+  const STORAGE_KEY = `finance-rag:day-${day.padStart(2, '0')}-understanding:v1`;
   const lessons = [...document.querySelectorAll('.lesson-list > .lesson')];
   if (!lessons.length) return;
 

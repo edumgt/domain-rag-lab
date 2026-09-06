@@ -8,13 +8,14 @@
       content="금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다."
     />
     <title>03일차 | 4일 금융 이론 — 채권 · 코인</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260906-current-quality-bonds" />
+    <link rel="stylesheet" href="assets/site.css?v=20260906-understanding-check" />
     <link rel="stylesheet" href="assets/app-shell.css?v=20260905-modal-large-unified" />
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
     <style>
       /* 옵션 학습 단원은 01일차로 이동했습니다. */
-      /* 00·00.05·00.1·02.5~20은 3일차 본문, 그 뒤의 이전 옵션 단원은 숨깁니다. */
-      body[data-day="3"] .lesson-list > .lesson:nth-child(n + 25) { display: none; }
+      /* 코인 단원 뒤에 남은 이전 옵션 단원만 숨깁니다. 단원 추가로 순서가 바뀌어도 코인 본문은 유지됩니다. */
+      body[data-day="3"] .lesson-list > .moved-option-lesson,
+      body[data-day="3"] .lesson-list > .moved-option-lesson ~ .lesson { display: none; }
       .bond-market-size-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
       .bond-market-size-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
       .bond-market-size-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
@@ -81,23 +82,27 @@
       .bond-coupon-figure { max-width: 760px; margin: 18px auto; padding: 10px; border: 1px solid var(--line); border-radius: 14px; background: #fbfcff; }
       .bond-coupon-figure img { display: block; width: 100%; height: auto; border-radius: 10px; }
       .bond-coupon-figure figcaption { padding: 9px 5px 1px; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
-      .bok-rate-modal .bok-rate-dialog { width: min(940px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
-      .bok-rate-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
-      .bok-rate-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
-      .bok-rate-summary article { padding: 13px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; text-align: center; }
-      .bok-rate-summary span { display: block; color: var(--muted); font-size: 14.5px; font-weight: 800; }
-      .bok-rate-summary strong { display: block; margin-top: 5px; color: var(--ink); font-size: 22px; }
-      .bok-rate-chart { padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: #fbfcff; }
-      .bok-rate-chart svg { display: block; width: 100%; height: auto; }
+      .bok-rate-modal .bok-rate-dialog { display: grid; grid-template-rows: auto auto auto minmax(210px, 1fr) auto auto auto; gap: 8px; width: min(1180px, 96vw) !important; height: 96vh !important; padding: 24px 30px !important; overflow: hidden !important; }
+      .bok-rate-dialog h2 { margin: 0 48px 0 0; font-size: clamp(21px, 2vw, 27px); line-height: 1.25; }
+      .bok-rate-intro { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+      .bok-rate-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0; }
+      .bok-rate-summary article { padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcff; text-align: center; }
+      .bok-rate-summary span { display: block; color: var(--muted); font-size: 12px; font-weight: 800; }
+      .bok-rate-summary strong { display: block; margin: 2px 0; color: var(--ink); font-size: 18px; line-height: 1.2; }
+      .bok-rate-summary small { font-size: 11px; }
+      .bok-rate-chart { min-height: 0; padding: 8px; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: #fbfcff; }
+      .bok-rate-chart svg { display: block; width: 100%; height: 100%; min-width: 0; }
       .bok-rate-chart .grid { stroke: #dbe4f2; stroke-width: 1; }
       .bok-rate-chart .axis, .bok-rate-chart .date { fill: #63708a; font-family: Arial, sans-serif; font-size: 13px; }
       .bok-rate-chart .rate-line { fill: none; stroke: #2563eb; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
       .bok-rate-chart .rate-dot { fill: #2563eb; stroke: #fff; stroke-width: 3; }
       .bok-rate-chart .rate-label { fill: #123b72; font-family: Arial, sans-serif; font-size: 14px; font-weight: 800; }
-      .bok-rate-events { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 14px 0; }
-      .bok-rate-events span { padding: 9px 11px; border-left: 3px solid var(--blue); border-radius: 7px; background: #f4f7ff; color: #395171; font-size: 14.5px; line-height: 1.5; }
-      .bok-rate-note { margin: 0; padding: 12px 14px; border-left: 4px solid #f0a10a; border-radius: 8px; background: #fff9e8; color: #705316; font-size: 14.5px; line-height: 1.65; }
-      @media (max-width: 600px) { .bok-rate-modal .bok-rate-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .bok-rate-summary, .bok-rate-events { grid-template-columns: 1fr; } .bok-rate-chart { overflow-x: auto; } .bok-rate-chart svg { min-width: 680px; } }
+      .bok-rate-events { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin: 0; }
+      .bok-rate-events span { padding: 6px 9px; border-left: 3px solid var(--blue); border-radius: 7px; background: #f4f7ff; color: #395171; font-size: 12px; line-height: 1.35; }
+      .bok-rate-note { margin: 0; padding: 8px 10px; border-left: 4px solid #f0a10a; border-radius: 8px; background: #fff9e8; color: #705316; font-size: 12px; line-height: 1.4; }
+      .bok-rate-source { font-size: 11px; line-height: 1.3; }
+      @media (max-width: 760px) { .bok-rate-modal .bok-rate-dialog { grid-template-rows: auto auto auto minmax(180px, 1fr) auto auto auto; width: 96vw !important; padding: 18px 16px !important; } .bok-rate-summary { gap: 5px; } .bok-rate-summary article { padding: 6px 4px; } .bok-rate-summary span { font-size: 10px; } .bok-rate-summary strong { font-size: 15px; } .bok-rate-summary small { font-size: 9px; } .bok-rate-events { grid-template-columns: repeat(2, 1fr); gap: 5px; } .bok-rate-events span { padding: 5px 7px; font-size: 10px; } .bok-rate-note { font-size: 10px; } .bok-rate-source { display: none; } }
+      @media (max-height: 680px) { .bok-rate-modal .bok-rate-dialog { gap: 5px; padding-top: 18px !important; padding-bottom: 18px !important; } .bok-rate-intro { font-size: 11px; } .bok-rate-note { padding-top: 5px; padding-bottom: 5px; } .bok-rate-source { display: none; } }
       .correlation-sim-modal .correlation-sim-dialog { width: min(1040px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
       .corr-sim-picker { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin: 16px 0 12px; }
       .corr-sim-picker label { display: grid; grid-template-columns: auto 1fr; gap: 2px 7px; align-items: center; min-height: 68px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); cursor: pointer; }
@@ -121,6 +126,7 @@
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260906-shared-glossary"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
+    <script defer src="assets/lesson-understanding.js?v=20260906-all-days"></script>
   </head>
   <body data-day="3">
     <header class="day-appbar">
@@ -276,38 +282,37 @@
                   </table>
                 </div>
                 <p>실천적으로는 자산별 역할과 보유 기간, 감당할 수 있는 손실 범위를 먼저 정하고, 정해진 주기에만 포트폴리오를 점검하는 방법을 생각해 볼 수 있습니다. 다만 점검 주기를 줄이는 것이 모든 사람에게 적합한 것은 아니며, 자신의 현금 필요 시점과 위험 수준에 맞춰야 합니다.</p>
-                <p class="lesson-source">참고: <a href="https://www.anderson.ucla.edu/documents/areas/fac/accounting/myopic_loss_aversion.pdf" target="_blank" rel="noopener noreferrer">Benartzi·Thaler, 「Myopic Loss Aversion and the Equity Premium Puzzle」</a>, <a href="https://business.columbia.edu/sites/default/files-efs/pubfiles/555/prospect.pdf" target="_blank" rel="noopener noreferrer">Prospect Theory and Asset Prices</a>.</p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="행동경제학으로 보는 주식과 채권 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
-            <span>00.1</span>
+            <span>00.07</span>
             <div class="lesson-content">
-              <h2>신용위험: 돈을 빌려준 뒤에도 남는 위험</h2>
+              <h2>채권은 언제, 왜 만들어졌을까요?</h2>
               <div class="lesson-body">
-                <p><b>신용위험(Credit Risk)</b>은 돈을 빌린 사람이나 기업이 약속한 대로 원금 또는 이자를 제때 갚지 못해, 돈을 빌려준 금융회사·투자자가 손실을 볼 위험입니다. 채무불이행 위험 또는 부도 위험(Default Risk)은 신용위험의 핵심 유형입니다.</p>
+                <p><strong>채권의 ‘최초’는 채무 기록과 거래 가능한 증권을 나누어 보아야 합니다.</strong> 돈을 빌리고 갚겠다는 기록은 고대부터 있었지만, 오늘날의 채권은 많은 사람에게서 자금을 모으고 그 권리를 양도할 수 있게 만든 유가증권입니다.</p>
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
-                    <caption>신용위험이 손실로 이어지는 주요 경로</caption>
-                    <thead><tr><th scope="col">유형</th><th scope="col">무슨 일이 일어나나요?</th><th scope="col">채권 투자자에게 미치는 영향</th></tr></thead>
+                    <thead><tr><th scope="col">구분</th><th scope="col">시기·장소</th><th scope="col">역사적 이정표</th><th scope="col">필요했던 이유</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">채무불이행·부도</th><td>발행자나 차입자가 원금 또는 이자를 약속대로 지급하지 못합니다.</td><td>회수 절차와 담보·보증에 따라 손실 규모와 회수 시점이 달라집니다.</td></tr>
-                      <tr><th scope="row">신용등급 하락</th><td>재무상태·사업환경 악화 등으로 신용평가사의 등급이 낮아질 수 있습니다.</td><td>시장이 더 높은 수익률을 요구해 보유 채권 가격이 하락할 수 있습니다. 가격 하락 폭은 만기·금리·시장 상황에 따라 다릅니다.</td></tr>
-                      <tr><th scope="row">신용스프레드 확대</th><td>국채 등 상대적으로 안전하다고 여겨지는 채권보다 추가로 요구되는 금리가 커집니다.</td><td>새로 발행되는 채권의 수익률이 높아지면서 기존 채권의 시장가격이 내려갈 수 있습니다.</td></tr>
+                      <tr><th scope="row">채무기록의 원형</th><td>기원전 3천년기 무렵, 메소포타미아</td><td>점토판에 대출·이자·상환 의무를 기록한 사례가 남아 있습니다. 이는 채권 그 자체라기보다 채권 계약의 먼 원형입니다.</td><td>곡물·은 등의 대여와 상환을 증명하고, 거래 당사자의 권리와 의무를 분명히 하기 위해서였습니다.</td></tr>
+                      <tr><th scope="row">공공채의 초기 형태</th><td>1171년 무렵, 이탈리아 베네치아</td><td>전쟁 재원을 위해 시민에게서 모은 공공부채가 양도 가능한 권리로 발전했습니다. 현대 국채·지방채로 이어지는 초기 공공채 시장의 대표 사례입니다.</td><td>세금만으로는 부족한 대규모 전쟁·공공 지출을 한 번에 조달하기 위해서였습니다.</td></tr>
+                      <tr><th scope="row">현존 최고(最古) 이자지급 채권</th><td>1624년, 네덜란드 레크다이크 보벤담 수리위원회</td><td>제방 보수 자금을 위해 발행한 영구채는 지금도 이자를 지급하는 가장 오래된 활성 채권으로 기록됩니다. ‘최초의 채권’이라는 뜻은 아닙니다.</td><td>홍수 방어 시설처럼 여러 세대가 쓰는 공공 인프라의 비용을 장기에 걸쳐 조달하기 위해서였습니다.</td></tr>
                     </tbody>
                   </table>
                 </div>
-                <h3>금융회사와 투자자는 어떻게 관리할까요?</h3>
-                <p><b>사전 심사와 담보</b>로 차입자의 상환능력·재무상태를 확인하고, 필요하면 담보와 약정을 설정합니다. 또 특정 기업·산업·국가에 대출이나 채권 투자가 몰리지 않도록 <b>분산</b>하고, 보유 뒤에도 재무정보·신용등급·담보가치와 한도를 계속 점검합니다.</p>
-                <p><b>신용부도스왑(CDS, Credit Default Swap)</b>은 특정 채무자나 채권의 신용사건 위험을 이전하는 장외 신용파생상품입니다. 보호매수자는 정기적으로 프리미엄을 내고, 계약에서 정한 신용사건이 발생하면 보호매도자로부터 약정된 방식으로 보상을 받습니다. 경제적으로는 ‘부도 보험’과 비슷해 보이지만, 일반 보험과 달리 장외 파생계약이며 보상 범위·정산 방식·상대방 신용위험을 계약별로 확인해야 합니다.</p>
-                <p>신용위험 관리는 위험을 완전히 없애는 방법이 아닙니다. 담보 가격이 함께 하락하거나 여러 차입자가 동시에 어려움을 겪을 수 있고, CDS 보호매도자가 이행하지 못할 위험도 남습니다. 따라서 수익률만 보지 말고 발행자, 만기, 담보·보증, 분산 정도와 거래상대방을 함께 확인해야 합니다.</p>
+                <h3>차용증에서 오늘의 채권시장으로</h3>
+                <p><strong>1. 개별 대여</strong> — 채권자와 채무자가 금액·이자·상환일을 직접 약정했습니다. 조건은 유연하지만 돈을 빌려준 사람이 만기 전 현금이 필요할 때 권리를 넘기기 쉽지 않았습니다.</p>
+                <p><strong>2. 양도 가능한 공공채·회사채</strong> — 발행자가 많은 투자자에게 자금을 빌리고, 투자자는 이자(쿠폰)와 원금 상환을 받을 권리를 보유하거나 다른 사람에게 팔 수 있게 됐습니다. 1694년 영란은행 설립 때도 영국 정부는 대프랑스 전쟁 자금을 위해 대중으로부터 120만 파운드를 조달했습니다.</p>
+                <p><strong>3. 현대 채권</strong> — 발행시장에서 정부·기업이 만기·표면금리·상환 조건을 정해 발행하고, 유통시장에서 투자자가 가격과 수익률(YTM)을 기준으로 거래합니다. 현재는 대부분 계좌의 전자등록으로 관리되지만, 발행자의 상환 능력과 금리 변화에 따른 가격 위험은 여전히 남습니다.</p>
+                <p><small>참고: <a href="https://academic.oup.com/book/47266/chapter-abstract/422652313" target="_blank" rel="noopener noreferrer">Oxford Academic의 메소포타미아 대출 기록</a>, <a href="https://openurl.ebsco.com/contentitem/doi%3A10.2307%2F1882461" target="_blank" rel="noopener noreferrer">베네치아 공공부채 연구</a>, <a href="https://www.guinnessworldrecords.com/world-records/549529-oldest-active-bond" target="_blank" rel="noopener noreferrer">Guinness의 현존 최고 활성 채권 기록</a>, <a href="https://www.bankofengland.co.uk/explainers/who-owns-the-bank-of-england" target="_blank" rel="noopener noreferrer">영란은행의 1694년 정부 자금조달 설명</a>.</small></p>
               </div>
             </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="신용위험 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="채권의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
-            <span>01</span>
+            <span>00.08</span>
             <div class="lesson-content">
               <h2>채권은 돈을 빌려준 약속장</h2>
               <div class="lesson-body">
@@ -448,6 +453,31 @@
             </button>
           </section>
           <section class="lesson">
+            <span>00.1</span>
+            <div class="lesson-content">
+              <h2>신용위험: 돈을 빌려준 뒤에도 남는 위험</h2>
+              <div class="lesson-body">
+                <p><b>신용위험(Credit Risk)</b>은 돈을 빌린 사람이나 기업이 약속한 대로 원금 또는 이자를 제때 갚지 못해, 돈을 빌려준 금융회사·투자자가 손실을 볼 위험입니다. 채무불이행 위험 또는 부도 위험(Default Risk)은 신용위험의 핵심 유형입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>신용위험이 손실로 이어지는 주요 경로</caption>
+                    <thead><tr><th scope="col">유형</th><th scope="col">무슨 일이 일어나나요?</th><th scope="col">채권 투자자에게 미치는 영향</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">채무불이행·부도</th><td>발행자나 차입자가 원금 또는 이자를 약속대로 지급하지 못합니다.</td><td>회수 절차와 담보·보증에 따라 손실 규모와 회수 시점이 달라집니다.</td></tr>
+                      <tr><th scope="row">신용등급 하락</th><td>재무상태·사업환경 악화 등으로 신용평가사의 등급이 낮아질 수 있습니다.</td><td>시장이 더 높은 수익률을 요구해 보유 채권 가격이 하락할 수 있습니다. 가격 하락 폭은 만기·금리·시장 상황에 따라 다릅니다.</td></tr>
+                      <tr><th scope="row">신용스프레드 확대</th><td>국채 등 상대적으로 안전하다고 여겨지는 채권보다 추가로 요구되는 금리가 커집니다.</td><td>새로 발행되는 채권의 수익률이 높아지면서 기존 채권의 시장가격이 내려갈 수 있습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>금융회사와 투자자는 어떻게 관리할까요?</h3>
+                <p><b>사전 심사와 담보</b>로 차입자의 상환능력·재무상태를 확인하고, 필요하면 담보와 약정을 설정합니다. 또 특정 기업·산업·국가에 대출이나 채권 투자가 몰리지 않도록 <b>분산</b>하고, 보유 뒤에도 재무정보·신용등급·담보가치와 한도를 계속 점검합니다.</p>
+                <p><b>신용부도스왑(CDS, Credit Default Swap)</b>은 특정 채무자나 채권의 신용사건 위험을 이전하는 장외 신용파생상품입니다. 보호매수자는 정기적으로 프리미엄을 내고, 계약에서 정한 신용사건이 발생하면 보호매도자로부터 약정된 방식으로 보상을 받습니다. 경제적으로는 ‘부도 보험’과 비슷해 보이지만, 일반 보험과 달리 장외 파생계약이며 보상 범위·정산 방식·상대방 신용위험을 계약별로 확인해야 합니다.</p>
+                <p>신용위험 관리는 위험을 완전히 없애는 방법이 아닙니다. 담보 가격이 함께 하락하거나 여러 차입자가 동시에 어려움을 겪을 수 있고, CDS 보호매도자가 이행하지 못할 위험도 남습니다. 따라서 수익률만 보지 말고 발행자, 만기, 담보·보증, 분산 정도와 거래상대방을 함께 확인해야 합니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="신용위험 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
             <span>01.05</span>
             <div class="lesson-content">
               <h2>무위험수익률·은행 금리·채권: 금리의 기준과 위험</h2>
@@ -504,31 +534,6 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="무위험수익률과 은행 금리, 채권 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section>
-          <section class="lesson">
-            <span>01.1</span>
-            <div class="lesson-content">
-              <h2>채권은 언제, 왜 만들어졌을까요?</h2>
-              <div class="lesson-body">
-                <p><strong>채권의 ‘최초’는 채무 기록과 거래 가능한 증권을 나누어 보아야 합니다.</strong> 돈을 빌리고 갚겠다는 기록은 고대부터 있었지만, 오늘날의 채권은 많은 사람에게서 자금을 모으고 그 권리를 양도할 수 있게 만든 유가증권입니다.</p>
-                <div class="lesson-table-wrap">
-                  <table class="lesson-table">
-                    <thead><tr><th scope="col">구분</th><th scope="col">시기·장소</th><th scope="col">역사적 이정표</th><th scope="col">필요했던 이유</th></tr></thead>
-                    <tbody>
-                      <tr><th scope="row">채무기록의 원형</th><td>기원전 3천년기 무렵, 메소포타미아</td><td>점토판에 대출·이자·상환 의무를 기록한 사례가 남아 있습니다. 이는 채권 그 자체라기보다 채권 계약의 먼 원형입니다.</td><td>곡물·은 등의 대여와 상환을 증명하고, 거래 당사자의 권리와 의무를 분명히 하기 위해서였습니다.</td></tr>
-                      <tr><th scope="row">공공채의 초기 형태</th><td>1171년 무렵, 이탈리아 베네치아</td><td>전쟁 재원을 위해 시민에게서 모은 공공부채가 양도 가능한 권리로 발전했습니다. 현대 국채·지방채로 이어지는 초기 공공채 시장의 대표 사례입니다.</td><td>세금만으로는 부족한 대규모 전쟁·공공 지출을 한 번에 조달하기 위해서였습니다.</td></tr>
-                      <tr><th scope="row">현존 최고(最古) 이자지급 채권</th><td>1624년, 네덜란드 레크다이크 보벤담 수리위원회</td><td>제방 보수 자금을 위해 발행한 영구채는 지금도 이자를 지급하는 가장 오래된 활성 채권으로 기록됩니다. ‘최초의 채권’이라는 뜻은 아닙니다.</td><td>홍수 방어 시설처럼 여러 세대가 쓰는 공공 인프라의 비용을 장기에 걸쳐 조달하기 위해서였습니다.</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <h3>차용증에서 오늘의 채권시장으로</h3>
-                <p><strong>1. 개별 대여</strong> — 채권자와 채무자가 금액·이자·상환일을 직접 약정했습니다. 조건은 유연하지만 돈을 빌려준 사람이 만기 전 현금이 필요할 때 권리를 넘기기 쉽지 않았습니다.</p>
-                <p><strong>2. 양도 가능한 공공채·회사채</strong> — 발행자가 많은 투자자에게 자금을 빌리고, 투자자는 이자(쿠폰)와 원금 상환을 받을 권리를 보유하거나 다른 사람에게 팔 수 있게 됐습니다. 1694년 영란은행 설립 때도 영국 정부는 대프랑스 전쟁 자금을 위해 대중으로부터 120만 파운드를 조달했습니다.</p>
-                <p><strong>3. 현대 채권</strong> — 발행시장에서 정부·기업이 만기·표면금리·상환 조건을 정해 발행하고, 유통시장에서 투자자가 가격과 수익률(YTM)을 기준으로 거래합니다. 현재는 대부분 계좌의 전자등록으로 관리되지만, 발행자의 상환 능력과 금리 변화에 따른 가격 위험은 여전히 남습니다.</p>
-                <p><small>참고: <a href="https://academic.oup.com/book/47266/chapter-abstract/422652313" target="_blank" rel="noopener noreferrer">Oxford Academic의 메소포타미아 대출 기록</a>, <a href="https://openurl.ebsco.com/contentitem/doi%3A10.2307%2F1882461" target="_blank" rel="noopener noreferrer">베네치아 공공부채 연구</a>, <a href="https://www.guinnessworldrecords.com/world-records/549529-oldest-active-bond" target="_blank" rel="noopener noreferrer">Guinness의 현존 최고 활성 채권 기록</a>, <a href="https://www.bankofengland.co.uk/explainers/who-owns-the-bank-of-england" target="_blank" rel="noopener noreferrer">영란은행의 1694년 정부 자금조달 설명</a>.</small></p>
-              </div>
-            </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="채권의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
             <span>02</span>
@@ -920,7 +925,6 @@
                   </table>
                 </div>
                 <p>이 정리는 <b>듀레이션</b>과 <b>볼록성</b>을 이해하는 출발점입니다. 금리 하락 가능성을 염두에 둘 때는 장기·저쿠폰 채권이 더 크게 오를 수 있는 반면, 금리 상승 때는 더 큰 가격 하락을 겪을 수 있습니다. 이는 방향 예측을 위한 권유가 아니라, 보유 기간과 감당 가능한 가격 변동을 계약 조건과 함께 점검해야 한다는 뜻입니다.</p>
-                <p class="lesson-source">참고: <a href="https://faculty.princeton.edu/people/burton-gordon-malkiel" target="_blank" rel="noopener noreferrer">Princeton University의 Burton G. Malkiel 소개</a>, <a href="https://www.jstor.org/stable/1880816" target="_blank" rel="noopener noreferrer">JSTOR의 「Expectations, Bond Prices, and the Term Structure of Interest Rates」(The Quarterly Journal of Economics, 1962, pp. 197–218)</a>.</p>
                 <p class="lesson-video-cta">
                   <button type="button" class="lesson-video-link" data-bond-duration-trigger>
                     <i class="fa-solid fa-scale-balanced"></i> 금리·듀레이션 시뮬레이터 열기
@@ -994,6 +998,43 @@
               data-lesson-toggle
               aria-expanded="true"
               aria-label="금리와 성장잠재력: 할인율이 기업 가치에 미치는 영향 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section>
+          <section class="lesson">
+            <span>06.5</span>
+            <div class="lesson-content">
+              <h2>한국 금리·채권시장 사례</h2>
+              <div class="lesson-body">
+                <p>
+                  한국은행 기준금리는 2026년 7월 16일 기준 연 2.75%입니다.
+                  기준금리 변화는 예·적금 금리, 대출금리, 국고채 수익률과 채권
+                  ETF 가격에 영향을 줄 수 있지만, 각각이 같은 폭·같은 시점에
+                  움직이지는 않습니다.
+                </p>
+                <p>
+                  개인 투자자가 한국 채권시장을 접하는 방법에는 국채·회사채 직접
+                  매매, 개인투자용 국채 청약, 채권형 펀드·ETF 등이 있습니다.
+                  국채는 정부가 발행하고, 회사채는 삼성전자·현대자동차 같은
+                  기업을 포함한 다양한 기업이 발행할 수 있습니다. 발행 주체가
+                  다르면 신용위험과 수익률도 달라집니다.
+                </p>
+                <p>
+                  금리 방향을 맞히려 하기보다 만기와 듀레이션을 먼저 확인하세요.
+                  특히 장기 국채·장기채 ETF는 금리 변화에 가격이 더 민감할 수
+                  있고, “국채”라는 이름만으로 중도 매매 가격 위험이 사라지는
+                  것은 아닙니다.
+                </p>
+              </div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="한국 금리·채권시장 사례 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -1126,43 +1167,6 @@
               data-lesson-toggle
               aria-expanded="true"
               aria-label="채권 투자와 세금: 매매차익·이자수익 구분하기 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section>
-          <section class="lesson">
-            <span>09</span>
-            <div class="lesson-content">
-              <h2>한국 금리·채권시장 사례</h2>
-              <div class="lesson-body">
-                <p>
-                  한국은행 기준금리는 2026년 7월 16일 기준 연 2.75%입니다.
-                  기준금리 변화는 예·적금 금리, 대출금리, 국고채 수익률과 채권
-                  ETF 가격에 영향을 줄 수 있지만, 각각이 같은 폭·같은 시점에
-                  움직이지는 않습니다.
-                </p>
-                <p>
-                  개인 투자자가 한국 채권시장을 접하는 방법에는 국채·회사채 직접
-                  매매, 개인투자용 국채 청약, 채권형 펀드·ETF 등이 있습니다.
-                  국채는 정부가 발행하고, 회사채는 삼성전자·현대자동차 같은
-                  기업을 포함한 다양한 기업이 발행할 수 있습니다. 발행 주체가
-                  다르면 신용위험과 수익률도 달라집니다.
-                </p>
-                <p>
-                  금리 방향을 맞히려 하기보다 만기와 듀레이션을 먼저 확인하세요.
-                  특히 장기 국채·장기채 ETF는 금리 변화에 가격이 더 민감할 수
-                  있고, “국채”라는 이름만으로 중도 매매 가격 위험이 사라지는
-                  것은 아닙니다.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="한국 금리·채권시장 사례 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -1632,7 +1636,7 @@
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="알파카·바이낸스 API 연동과 자동화의 기본 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
-          <section class="lesson">
+          <section class="lesson moved-option-lesson">
             <span>11</span>
             <div class="lesson-content">
               <h2>옵션은 미래 거래를 선택할 수 있는 권리</h2>
@@ -2099,14 +2103,18 @@
                 국채 수익률보다 얼마나 더 높은지를 뜻합니다. 추가 수익률은
                 발행자의 상환 불확실성, 유동성, 시장 상황에 대한 보상으로 볼 수
                 있습니다.
-                <br /><br />예를 들어 3년 국채 수익률이 연 3.0%, 어떤 회사채의
-                수익률이 연 4.2%라면 신용스프레드는 1.2%포인트(120bp)입니다.
-                스프레드가 넓어지면 시장이 그 채권의 위험을 더 크게 본다는 뜻일
+                <br /><br /><b>2026년 9월 4일 기준 한국 시장 예시</b> — 신용등급
+                AA- 3년물 회사채의 신용스프레드는 <b>67.9bp(0.679%포인트)</b>였습니다.
+                일주일 전인 8월 27일의 69.3bp보다 1.4bp 좁혀진 수치입니다. 같은 날
+                AA- 3년 회사채 수익률은 연 4.57%였으므로, 3년 국고채 수익률은 약
+                연 3.89%였던 셈입니다(회사채 수익률 − 스프레드).
+                <br /><br />스프레드가 넓어지면 시장이 그 채권의 위험을 더 크게 본다는 뜻일
                 수 있고, 좁아지면 반대일 수 있습니다.
                 <br /><br />신용스프레드는 표면금리와 다릅니다. 표면금리는 발행
                 때 정한 이자율이고, 신용스프레드는 현재 시장에서 비교한 수익률의
                 차이입니다. 스프레드가 넓다고 높은 수익이 보장되는 것은 아니므로
                 발행자·신용등급·만기·유동성을 함께 확인해야 합니다.
+                <br /><br /><small>수치 출처: <a href="https://www.korearatings.com/cms/frCmnCon/index.do?MENU_ID=490" target="_blank" rel="noopener noreferrer">한국기업평가 등급별 금리·스프레드 통계</a>, <a href="https://kred.dev/ko/series/KRCORPAA" target="_blank" rel="noopener noreferrer">KRED 회사채(AA-) 금리 시계열</a>. 신용스프레드는 시장 상황에 따라 매일 바뀌므로, 최신 수치는 원문에서 다시 확인하세요.</small>
               </dd>
             </div>
             <div class="glossary-item">
@@ -2141,6 +2149,25 @@
                 늘고 환율이 내리면 줄어듭니다. ETF 이름에 “(H)”가 없으면
                 환노출형인 경우가 많아, 기초자산 가격 변화에 환율 변화까지
                 더해지거나 빠진 결과가 내 수익률이 됩니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>전환청구권 <small>Conversion Right</small></dt>
+              <dd>
+                전환사채(CB) 투자자가 정해진 조건에서 채권을 발행 회사의
+                주식으로 바꿔 달라고 요구할 수 있는 권리입니다. 옵션처럼
+                <b>권리</b>일 뿐 의무가 아니므로, 유리할 때만 행사하고
+                불리하면 그냥 채권으로 남아 있어도 됩니다.
+                <br /><br />예를 들어 전환가액이 10,000원인 전환사채를 가진
+                투자자는, 주가가 15,000원까지 오르면 전환청구권을 행사해
+                주당 10,000원에 주식을 받은 뒤 시장에서 15,000원에 팔아 차익을
+                기대할 수 있습니다. 반대로 주가가 8,000원에 머물러 있다면
+                전환하지 않고 채권 이자와 만기 상환을 그대로 받는 쪽이
+                유리합니다.
+                <br /><br />전환청구권을 행사하면 새 주식이 발행되므로 발행
+                주식 수가 늘어 기존 주주의 지분율과 주당 가치가 희석될 수
+                있습니다. 행사 가능 기간, 전환가액 조정 조건, 발행 규모는
+                종목설명서에서 확인해야 합니다.
               </dd>
             </div>
             <div class="glossary-item">
@@ -2436,7 +2463,7 @@
         </div>
         <div class="bok-rate-events"><span><b>인하 구간</b><br />2024.10 ~ 2025.05: 3.50% → 2.50%</span><span><b>유지 구간</b><br />2025.05 ~ 2026.07: 2.50%</span><span><b>인상 구간</b><br />2026.07 ~ 2026.08: 2.50% → 3.00%</span><span><b>변경 단위</b><br />모두 0.25%p(25bp) 단위</span></div>
         <p class="bok-rate-note"><b>읽는 법:</b> 기준금리는 시장금리·대출금리·채권수익률·환율 기대에 영향을 줄 수 있지만, 이들이 같은 폭·같은 시점에 움직인다는 뜻은 아닙니다. 또한 기준금리 변화만으로 특정 기업이나 주가의 방향을 결정할 수 없습니다.</p>
-        <p class="bok-rate-intro"><small>출처: <a href="https://www.bok.or.kr/portal/singl/baseRate/list.do?menuNo=200643" target="_blank" rel="noopener noreferrer">한국은행 기준금리 추이</a> (2026-09-05 확인).</small></p>
+        <p class="bok-rate-intro bok-rate-source"><small>출처: <a href="https://www.bok.or.kr/portal/singl/baseRate/list.do?menuNo=200643" target="_blank" rel="noopener noreferrer">한국은행 기준금리 추이</a> (2026-09-05 확인).</small></p>
       </section>
     </div>
     <div class="glossary-modal correlation-sim-modal" id="correlationSimModal" hidden>
@@ -2497,7 +2524,18 @@
             </div>
           </div>
           <section class="bond-duration-chart-panel">
-            <header><strong>듀레이션과 컨벡시티</strong><small>점선은 듀레이션 근사, 실선은 양(+)의 컨벡시티를 반영한 교육용 곡선</small></header>
+            <header><strong>듀레이션과 컨벡시티</strong><small>회색 점선은 듀레이션 근사, 보라색 실선은 양(+)의 컨벡시티를 반영한 교육용 곡선</small></header>
+            <p class="bond-duration-convexity">
+              <strong>쉽게 말하면</strong>
+              듀레이션은 금리가 움직일 때 채권 가격이 반대 방향으로 얼마나
+              변할지 직선으로 빠르게 어림잡는 ‘민감도 자’입니다. 듀레이션이
+              7이면 금리 1%p 상승 시 가격이 약 7% 하락한다고 먼저 계산하며,
+              반드시 7년 동안 보유해야 한다는 뜻은 아닙니다. 컨벡시티는 실제
+              가격 움직임이 직선이 아니라 휘어진다는 점을 보정하는 ‘곡선
+              보정값’입니다. 일반적인 양(+)의 컨벡시티 채권은 금리가 같은 폭으로
+              오르내릴 때 금리 하락에 따른 가격 상승 폭이 금리 상승에 따른 가격
+              하락 폭보다 조금 더 큰 경향이 있습니다.
+            </p>
             <div id="bondDurationChart" role="img" aria-label="금리 변화에 따른 듀레이션 근사선과 컨벡시티 채권 가격 곡선 비교 차트"></div>
           </section>
         </div>

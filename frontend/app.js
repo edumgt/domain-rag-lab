@@ -1362,7 +1362,11 @@ KOSDAQ|웹젠|게임`,
     renderScenarioResult();
   }
 
-  const basisState = { bars: [], loading: false, error: null, rate: 3.0, dividend: 1.5, daysToExpiry: 45, actualFutures: null };
+  const basisState = {
+    bars: [], loading: false, error: null, warnings: [], source: null, latestDate: null,
+    rangeDays: 90, rate: 3.0, dividend: 1.5, daysToExpiry: 45,
+    actualFutures: null, actualError: null, requestId: 0,
+  };
 
   function basisTheoreticalFutures(spot, rate, dividend, days) {
     return spot * (1 + ((rate - dividend) / 100) * (days / 365));
@@ -1392,16 +1396,16 @@ KOSDAQ|웹젠|게임`,
     if (!series.length) return '<p class="basis-empty">표시할 데이터가 없습니다.</p>';
     const latest = series[series.length - 1];
     let actualCard = '';
-    if (basisState.actualFutures != null && !Number.isNaN(basisState.actualFutures)) {
+    if (basisState.actualFutures != null && !basisState.actualError) {
       const actualBasis = basisState.actualFutures - latest.spot;
       const gap = latest.theory ? ((basisState.actualFutures - latest.theory) / latest.theory) * 100 : 0;
       actualCard = `
-        <div class="basis-summary-card">
-          <span>내가 입력한 실제 선물가격 기준 베이시스</span>
+        <div class="basis-summary-card basis-summary-card-actual">
+          <span>실제 시장 베이시스 = 입력한 근월물 − 현물</span>
           <strong class="basis-badge ${basisBadgeClass(actualBasis)}">${actualBasis >= 0 ? '+' : ''}${actualBasis.toFixed(2)} · ${basisBadgeLabel(actualBasis)}</strong>
         </div>
-        <div class="basis-summary-card">
-          <span>괴리율 = (실제 − 이론) / 이론 × 100</span>
+        <div class="basis-summary-card basis-summary-card-actual">
+          <span>시장 괴리율 = (입력한 근월물 − 이론) / 이론 × 100</span>
           <strong class="basis-badge ${Math.abs(gap) < 0.5 ? 'flat' : basisBadgeClass(gap)}">${gap >= 0 ? '+' : ''}${gap.toFixed(2)}%</strong>
         </div>`;
     }
@@ -1416,8 +1420,8 @@ KOSDAQ|웹젠|게임`,
           <strong>${latest.theory.toFixed(2)}</strong>
         </div>
         <div class="basis-summary-card">
-          <span>이론 베이시스 = 이론 선물 − 현물</span>
-          <strong class="basis-badge ${basisBadgeClass(latest.basis)}">${latest.basis >= 0 ? '+' : ''}${latest.basis.toFixed(2)} · ${basisBadgeLabel(latest.basis)}</strong>
+          <span>이론 베이시스 = 이론 선물 − 현물 (계산값)</span>
+          <strong class="basis-badge ${basisBadgeClass(latest.basis)}">${latest.basis >= 0 ? '+' : ''}${latest.basis.toFixed(2)} · 이론 ${basisBadgeLabel(latest.basis)}</strong>
         </div>
         ${actualCard}
       </div>`;
@@ -1426,7 +1430,9 @@ KOSDAQ|웹젠|게임`,
   function renderBasisChartSVG(series) {
     if (series.length < 2) return '<p class="basis-empty">차트를 그리기에 데이터가 부족합니다.</p>';
     const width = 760, height = 220, padL = 52, padR = 14, padT = 14, padB = 14;
+    const hasActual = basisState.actualFutures != null && !basisState.actualError;
     const values = series.flatMap(d => [d.spot, d.theory]);
+    if (hasActual) values.push(basisState.actualFutures);
     const minV = Math.min(...values), maxV = Math.max(...values);
     const span = Math.max(maxV - minV, 0.01);
     const plotW = width - padL - padR, plotH = height - padT - padB;
@@ -1442,7 +1448,11 @@ KOSDAQ|웹젠|게임`,
       gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/>`;
       gridSvg += `<text x="2" y="${(gy + 4).toFixed(1)}" font-size="11" fill="var(--text-muted)">${v.toFixed(1)}</text>`;
     }
-    return `<svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none" role="img" aria-label="현물 지수와 이론 선물가격 비교 차트">${gridSvg}<polyline points="${spotPoints}" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${theoryPoints}" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const latestIndex = series.length - 1;
+    const actualMarker = hasActual ? `
+      <line x1="${x(latestIndex).toFixed(1)}" y1="${y(series[latestIndex].spot).toFixed(1)}" x2="${x(latestIndex).toFixed(1)}" y2="${y(basisState.actualFutures).toFixed(1)}" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <circle cx="${x(latestIndex).toFixed(1)}" cy="${y(basisState.actualFutures).toFixed(1)}" r="5" fill="#7c3aed" stroke="var(--surface)" stroke-width="2"/>` : '';
+    return `<svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none" role="img" aria-label="현물 지수, 이론 선물가격과 입력한 실제 선물가격 비교 차트">${gridSvg}<polyline points="${spotPoints}" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${theoryPoints}" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round" stroke-linejoin="round"/>${actualMarker}</svg>`;
   }
 
   function renderBasisBarStrip(series) {
@@ -1470,22 +1480,44 @@ KOSDAQ|웹젠|게임`,
       return;
     }
     const series = computeBasisSeries();
+    const hasActual = basisState.actualFutures != null && !basisState.actualError;
+    const source = basisState.source ? escHtml(basisState.source) : '확인 중';
+    const latestDate = basisState.latestDate ? escHtml(basisState.latestDate) : '-';
+    const warningHtml = basisState.warnings.length
+      ? `<p class="basis-data-warning"><i class="fa-solid fa-circle-info"></i> ${basisState.warnings.map(escHtml).join(' ')}</p>`
+      : '';
+    const validationHtml = basisState.actualError
+      ? `<p class="basis-validation-error" role="alert"><i class="fa-solid fa-triangle-exclamation"></i> ${escHtml(basisState.actualError)}</p>`
+      : '';
+    const actualPrompt = hasActual ? '' : '<p class="basis-actual-prompt">실제 시장 베이시스는 같은 기준 시점의 KOSPI 200 근월물 가격을 입력하면 표시됩니다.</p>';
     output.innerHTML = `
+      <div class="basis-data-meta"><span><i class="fa-solid fa-database"></i> 현물 출처: ${source}</span><span>최근 기준일: ${latestDate}</span><span>${basisState.bars.length}개 거래일</span></div>
+      ${warningHtml}
+      ${validationHtml}
       ${renderBasisSummary(series)}
       <div class="basis-chart-wrap">${renderBasisChartSVG(series)}</div>
-      <div class="basis-chart-legend"><span class="spot"><i></i>현물 지수 (실제 데이터)</span><span class="theory"><i></i>이론 선물가격 (가정 기반 계산값)</span></div>
-      <p class="basis-strip-label">최근 거래일 베이시스 한눈에 보기 (콘탱고 · 백워데이션)</p>
+      <div class="basis-chart-legend"><span class="spot"><i></i>현물 지수 (실제 데이터)</span><span class="theory"><i></i>이론 선물가격 (가정 기반 계산값)</span>${hasActual ? '<span class="actual"><i></i>입력한 실제 선물가격 (최근일 1점)</span>' : ''}</div>
+      ${actualPrompt}
+      <p class="basis-strip-label">최근 거래일 이론 베이시스 추이 (계산값)</p>
       ${renderBasisBarStrip(series)}`;
   }
 
   function renderBasisControls() {
     return `
       <div class="basis-controls">
+        <label>현물 조회기간<select id="basisRangeInput">
+          <option value="30" ${basisState.rangeDays === 30 ? 'selected' : ''}>최근 1개월</option>
+          <option value="90" ${basisState.rangeDays === 90 ? 'selected' : ''}>최근 3개월</option>
+          <option value="180" ${basisState.rangeDays === 180 ? 'selected' : ''}>최근 6개월</option>
+        </select></label>
         <label>금리 (연, %)<input type="number" id="basisRateInput" step="0.1" value="${basisState.rate}"></label>
         <label>배당수익률 (연, %)<input type="number" id="basisDividendInput" step="0.1" value="${basisState.dividend}"></label>
-        <label>만기까지 잔여일수 (일)<input type="number" id="basisDaysInput" step="1" min="0" value="${basisState.daysToExpiry}"></label>
-        <label>실제 선물가격 (HTS·MTS·KRX에서 확인, 선택)<input type="number" id="basisActualInput" step="0.05" placeholder="예: 352.50"></label>
-        <small>금리·배당수익률·잔여일수는 이론 선물가격을 계산하기 위한 가정값입니다. HTS/MTS나 KRX 정보데이터시스템에서 확인한 실제 선물가격을 입력하면 실제 베이시스·괴리율도 함께 계산합니다.</small>
+        <label>만기까지 잔여일수 (일)<input type="number" id="basisDaysInput" step="1" min="0" max="365" value="${basisState.daysToExpiry}"></label>
+        <label class="basis-actual-field">KOSPI 200 근월물 실제 선물가격 (선택)
+          <span class="basis-input-row"><input type="number" id="basisActualInput" step="0.05" min="0.01" value="${basisState.actualFutures ?? ''}" placeholder="예: 352.50" aria-describedby="basisActualHelp"><button type="button" id="basisClearActual" class="basis-clear-button">지우기</button></span>
+        </label>
+        <button type="button" id="basisRefreshButton" class="basis-refresh-button"><i class="fa-solid fa-rotate-right"></i> 새로고침</button>
+        <small id="basisActualHelp" class="basis-control-note">금리·배당·잔여일수는 이론값 가정입니다. 실제값은 최근 현물 기준일과 같은 시점의 근월물 가격을 입력하세요.</small>
       </div>`;
   }
 
@@ -1494,13 +1526,35 @@ KOSDAQ|웹젠|게임`,
     const divInput = document.getElementById('basisDividendInput');
     const daysInput = document.getElementById('basisDaysInput');
     const actualInput = document.getElementById('basisActualInput');
+    const rangeInput = document.getElementById('basisRangeInput');
+    const clearActual = document.getElementById('basisClearActual');
+    const refreshButton = document.getElementById('basisRefreshButton');
     rateInput?.addEventListener('input', () => { basisState.rate = Number(rateInput.value) || 0; renderBasisOutput(); });
     divInput?.addEventListener('input', () => { basisState.dividend = Number(divInput.value) || 0; renderBasisOutput(); });
-    daysInput?.addEventListener('input', () => { basisState.daysToExpiry = Math.max(Number(daysInput.value) || 0, 0); renderBasisOutput(); });
+    daysInput?.addEventListener('input', () => { basisState.daysToExpiry = Math.min(Math.max(Number(daysInput.value) || 0, 0), 365); renderBasisOutput(); });
     actualInput?.addEventListener('input', () => {
-      basisState.actualFutures = actualInput.value === '' ? null : Number(actualInput.value);
+      const value = actualInput.value.trim();
+      const parsed = Number(value);
+      basisState.actualError = value !== '' && (!Number.isFinite(parsed) || parsed <= 0) ? '실제 선물가격은 0보다 큰 숫자로 입력해 주세요.' : null;
+      basisState.actualFutures = value === '' || basisState.actualError ? null : parsed;
+      actualInput.setAttribute('aria-invalid', basisState.actualError ? 'true' : 'false');
       renderBasisOutput();
     });
+    clearActual?.addEventListener('click', () => {
+      basisState.actualFutures = null;
+      basisState.actualError = null;
+      if (actualInput) {
+        actualInput.value = '';
+        actualInput.setAttribute('aria-invalid', 'false');
+        actualInput.focus();
+      }
+      renderBasisOutput();
+    });
+    rangeInput?.addEventListener('change', () => {
+      basisState.rangeDays = Number(rangeInput.value) || 90;
+      fetchBasisHistory();
+    });
+    refreshButton?.addEventListener('click', fetchBasisHistory);
   }
 
   function renderBasisTool() {
@@ -1512,22 +1566,37 @@ KOSDAQ|웹젠|게임`,
   }
 
   async function fetchBasisHistory() {
+    const requestId = ++basisState.requestId;
     basisState.loading = true;
     basisState.error = null;
+    basisState.warnings = [];
     renderBasisOutput();
     try {
-      const end = new Date();
-      const start = new Date(end.getTime() - 40 * 86400000);
-      const fmt = (d) => d.toISOString().slice(0, 10);
+      const today = new Date();
+      const start = new Date(today);
+      const end = new Date(today);
+      start.setDate(start.getDate() - basisState.rangeDays + 1);
+      end.setDate(end.getDate() + 1);
+      const fmt = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
       const response = await fetch(`/market/kospi200-history?start=${fmt(start)}&end=${fmt(end)}`);
-      if (!response.ok) throw new Error('요청 실패');
       const payload = await response.json();
+      if (!response.ok) throw new Error(payload.detail || '요청 실패');
+      if (requestId !== basisState.requestId) return;
       basisState.bars = payload.bars || [];
+      basisState.source = payload.source || null;
+      basisState.latestDate = payload.latest_date || null;
+      basisState.warnings = Array.isArray(payload.warnings) ? payload.warnings : [];
       if (!basisState.bars.length) basisState.error = '표시할 KOSPI 200 지수 데이터가 없습니다.';
     } catch (error) {
+      if (requestId !== basisState.requestId) return;
       basisState.bars = [];
-      basisState.error = 'KOSPI 200 지수 데이터를 불러오지 못했습니다.';
+      basisState.source = null;
+      basisState.latestDate = null;
+      basisState.error = error instanceof Error && error.message !== '요청 실패'
+        ? `KOSPI 200 지수 데이터를 불러오지 못했습니다. (${error.message})`
+        : 'KOSPI 200 지수 데이터를 불러오지 못했습니다.';
     }
+    if (requestId !== basisState.requestId) return;
     basisState.loading = false;
     renderBasisOutput();
   }
@@ -1577,7 +1646,7 @@ KOSDAQ|웹젠|게임`,
 
         <section class="content-section basis-tool-section" aria-label="선현물 베이시스 차트 웹앱">
           <div class="section-heading"><span>TOOL</span><h2>선현물 베이시스 차트</h2></div>
-          <p class="section-intro">아래 차트의 <b>현물 지수</b>는 KOSPI 200의 실제 데이터입니다. KRX 선물 시세는 유료·인증 데이터가 필요해 직접 가져올 수 없으므로, <b>이론 선물가격</b>은 아래 가정(금리·배당수익률·잔여일수)으로 계산한 값입니다. HTS·MTS나 KRX 정보데이터시스템에서 확인한 실제 선물가격을 입력하면 실제 베이시스와 괴리율도 함께 계산해 드립니다.</p>
+          <p class="section-intro">파란 선은 KOSPI 200 <b>실제 현물 종가</b>, 빨간 점선은 금리·배당수익률·잔여일수로 계산한 <b>이론 선물가격</b>입니다. 따라서 기본 차트의 차이는 시장 베이시스가 아닌 <b>이론 베이시스</b>입니다. 같은 기준 시점의 KOSPI 200 근월물 가격을 입력하면 보라색 점과 함께 실제 시장 베이시스·괴리율을 따로 계산합니다.</p>
           <div id="basisToolMount"></div>
         </section>
 

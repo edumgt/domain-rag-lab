@@ -1522,10 +1522,24 @@ body.modal-open { overflow: hidden; }
 .basis-tool-section .section-intro { margin-bottom: 16px; }
 .basis-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin: 0 0 18px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface2); }
 .basis-controls label { display: grid; gap: 5px; color: var(--text-2); font-size: 14.5px; font-weight: 750; }
-.basis-controls input { box-sizing: border-box; width: 150px; padding: 8px; border: 1px solid var(--border); border-radius: 7px; color: var(--text); background: var(--surface); font: inherit; }
+.basis-controls input, .basis-controls select { box-sizing: border-box; width: 150px; padding: 8px; border: 1px solid var(--border); border-radius: 7px; color: var(--text); background: var(--surface); font: inherit; }
+.basis-actual-field { flex: 0 1 285px; }
+.basis-input-row { display: flex; gap: 6px; }
+.basis-input-row input { flex: 1 1 auto; min-width: 0; width: auto; }
+.basis-clear-button, .basis-refresh-button { padding: 8px 11px; border: 1px solid var(--border); border-radius: 7px; color: var(--text-2); background: var(--surface); font: inherit; font-size: 13px; font-weight: 750; cursor: pointer; }
+.basis-clear-button:hover, .basis-refresh-button:hover { border-color: var(--accent); color: var(--accent); }
+.basis-refresh-button { white-space: nowrap; }
 .basis-controls small { flex: 1 1 220px; color: var(--text-muted); font-size: 14.5px; line-height: 1.5; }
+.basis-data-meta { display: flex; flex-wrap: wrap; gap: 7px 16px; margin: 0 0 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; color: var(--text-2); background: var(--surface2); font-size: 13px; }
+.basis-data-meta i { margin-right: 4px; color: var(--accent); }
+.basis-data-warning, .basis-validation-error, .basis-actual-prompt { margin: 0 0 12px; padding: 9px 12px; border-radius: 8px; font-size: 13px; line-height: 1.5; }
+.basis-data-warning { color: #1d4ed8; background: #eff6ff; }
+.basis-validation-error { color: #b91c1c; background: #fef2f2; }
+.basis-actual-prompt { color: #6d28d9; background: #f5f3ff; }
+.basis-data-warning i, .basis-validation-error i { margin-right: 5px; }
 .basis-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 18px; }
 .basis-summary-card { padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+.basis-summary-card-actual { border-color: #c4b5fd; box-shadow: inset 3px 0 0 #7c3aed; }
 .basis-summary-card span { display: block; color: var(--text-muted); font-size: 13px; line-height: 1.4; }
 .basis-summary-card strong { display: block; margin-top: 7px; font-size: 20px; color: var(--text); }
 .basis-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 16px !important; }
@@ -1538,6 +1552,7 @@ body.modal-open { overflow: hidden; }
 .basis-chart-legend i { display: inline-block; width: 16px; height: 3px; border-radius: 2px; }
 .basis-chart-legend .spot i { background: #2563eb; }
 .basis-chart-legend .theory i { background: #dc2626; border-top: 2px dashed #dc2626; height: 0; }
+.basis-chart-legend .actual i { width: 9px; height: 9px; border-radius: 50%; background: #7c3aed; }
 .basis-strip-label { margin: 0 0 8px; color: var(--text-2); font-size: 14.5px; font-weight: 750; }
 .basis-bar-strip { display: flex; align-items: end; gap: 8px; height: 110px; padding: 10px 12px 0; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
 .basis-bar-col { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 6px; }
@@ -1549,6 +1564,11 @@ body.modal-open { overflow: hidden; }
 .basis-empty { padding: 24px; color: var(--text-muted); text-align: center; }
 @media (max-width: 700px) {
   .basis-method-grid, .basis-formula-grid { grid-template-columns: 1fr; }
+  .basis-controls { align-items: stretch; }
+  .basis-controls label, .basis-actual-field { flex: 1 1 100%; }
+  .basis-controls input, .basis-controls select { width: 100%; }
+  .basis-input-row input { width: auto; }
+  .basis-chart-legend { flex-wrap: wrap; }
 }
 
 @media (max-width: 860px) { .product-journey-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
