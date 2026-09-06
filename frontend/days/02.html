@@ -8,7 +8,7 @@
       content="여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다."
     />
     <title>02일차 | 4일 금융 이론 — 펀드 · ETF</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260905-breaktime-modal-unified" />
+    <link rel="stylesheet" href="assets/site.css?v=20260906-bis-and-single-stock-etp" />
     <link rel="stylesheet" href="assets/fund-case-market.css?v=20260905-1" />
     <link rel="stylesheet" href="assets/emerging-market-modal.css?v=20260905-1" />
     <link rel="stylesheet" href="assets/fund-manager-add-row.css?v=20260905-1" />
@@ -40,7 +40,7 @@
         role="navigation"
         aria-label="학습 서비스 메뉴"
       >
-        <a href="/?view=stocks"><i class="fa-solid fa-house"></i> 홈</a
+        <a href="/?view=home"><i class="fa-solid fa-house"></i> 홈</a
         ><a href="/?view=stocks"
           ><i class="fa-solid fa-building-columns"></i> 종목보기</a
         ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
@@ -88,6 +88,21 @@
             <div class="lesson-content">
               <h2>은행·금리·이자율, 금융의 기본 언어</h2>
               <div class="lesson-body">
+                <h3>금융회사의 역할과 도덕적 해이</h3>
+                <p>금융회사는 자금의 공급자와 수요자를 연결해 경제 전반의 자금 순환을 돕습니다. 예금자에게서 모은 자금을 기업·개인에게 대출하는 <b>자금 중개</b>를 하고, 여러 고객·거래에 위험을 나누는 <b>위험 관리와 분산</b>, 조사·계약·관리 비용을 낮추는 <b>거래비용 감축</b>, 계좌이체·카드결제·송금을 처리하는 <b>지급결제</b> 기능도 수행합니다.</p>
+                <p>다만 금융 거래에서는 한쪽이 다른 쪽보다 더 많은 정보를 가진 <b>정보의 비대칭성</b>이 발생할 수 있습니다. 특히 계약 뒤 상대방이 완전히 관찰하거나 통제하기 어려운 행동을 <b>감추어진 행동</b>이라고 합니다. 예를 들어 은행이 기업에 대출한 뒤, 그 자금이 안전한 사업이 아닌 고위험 투자에 쓰이는지를 계속 감시하기는 어렵습니다.</p>
+                <p><b>도덕적 해이</b>는 이런 감추어진 행동이 가능한 상황에서 계약 후 한쪽이 자신의 이익을 위해 과도한 위험을 감수하거나 주의를 게을리하는 현상입니다. 차입자는 손실을 모두 부담하지 않는다고 생각해 대출금을 고위험·고수익 사업에 투자할 수 있고, 금융회사도 정부 지원이나 예금자보호에 지나치게 의존하면 위험한 대출·투자를 늘릴 유인이 생길 수 있습니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>도덕적 해이를 줄이기 위한 장치</caption>
+                    <thead><tr><th scope="col">장치</th><th scope="col">어떻게 위험을 줄이나요?</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">Covenant(특약)</th><td>대출 자금의 용도를 제한하거나 일정 재무비율 유지를 약정합니다.</td></tr>
+                      <tr><th scope="row">담보·자기자본</th><td>차입자와 금융회사가 손실 일부를 직접 부담하게 해 과도한 위험 감수를 억제합니다.</td></tr>
+                      <tr><th scope="row">감독·규제</th><td>감독당국이 자본적정성(<button type="button" class="lesson-video-link bis-capital-trigger" id="bisCapitalTrigger" aria-haspopup="dialog">BIS 비율 <i class="fa-solid fa-chart-column" aria-hidden="true"></i></button>)과 위험관리 체계를 점검하도록 합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
                 <p>은행업은 개인·기업이 맡긴 예금, 지급결제, 대출을 연결하는 금융업입니다. 우리는 계좌이체·카드 결제·예금·대출처럼 일상에서 은행 서비스를 쓰지만, 은행은 맡긴 돈을 그대로 보관만 하는 곳이 아니라 대출과 결제를 통해 자금이 흐르도록 만들고 신용·유동성 위험을 관리하는 금융회사입니다.</p>
                 <p>국내 은행은 영업구역과 방식에 따라 대표적으로 <b>시중은행</b>(전국·온오프라인), <b>지방은행</b>(지역 중심), <b>인터넷전문은행</b>(온라인 중심)으로 구분해 볼 수 있습니다. 산업·수출입 등 정책 목적의 <b>특수은행</b>도 있습니다. 저축은행·증권사·보험사는 금융회사이지만 은행과는 다른 법과 업무 범위가 적용되는 업권입니다.</p>
                 <div class="lesson-table-wrap">
@@ -142,6 +157,20 @@
               <div class="lesson-body">
                 <p>금융상품은 ‘수익률이 높은 것’ 하나를 고르는 문제가 아니라, 언제 돈이 필요한지에 맞춰 나누어 쓰는 도구입니다. 사회초년생은 비상자금과 가까운 목표를, 자녀교육·주거를 준비하는 시기에는 필요한 시점의 자금을, 은퇴가 가까운 시기에는 생활비와 큰 손실을 견딜 수 있는 범위를 먼저 정해 볼 수 있습니다.</p>
                 <p><b>은행 예금</b>은 목돈을 일정 기간 맡기고 약정 이자를 받는 상품입니다. <b>적금</b>은 매달 정한 돈을 넣어 목돈을 만드는 방식입니다. 둘 다 예금자보호 대상 여부와 한도, 중도해지 이율을 금융회사별 상품설명서에서 확인해야 합니다. <b>펀드</b>는 여러 투자자의 돈을 모아 주식·채권 등에 투자하는 상품으로, 기준가격이 오르내리고 원금이나 수익률이 보장되지 않습니다.</p>
+                <h3>집합투자란 무엇인가: 법적 개념과 특징</h3>
+                <p>우리나라 <strong>자본시장과 금융투자업에 관한 법률(자본시장법)</strong>은 집합투자를, <strong>2인 이상에게서 모은 금전 등을 투자자의 일상적인 운용지시 없이 투자대상자산에 운용하고, 그 결과를 투자자에게 배분·귀속시키는 것</strong>으로 봅니다. 일반적으로 말하는 펀드는 이 집합투자 구조를 이용한 대표적 상품입니다. <a href="https://www.law.go.kr/LSW/lsLawLinkInfo.do?chrClsCd=010202&amp;lsJoLnkSeq=1000928522" target="_blank" rel="noopener noreferrer">자본시장법 제6조 제5항</a>을 기준으로 이해할 수 있습니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">법적 요소</th><th scope="col">펀드에서의 의미</th><th scope="col">투자자가 확인할 점</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">자금의 집합</th><td>여러 투자자의 돈을 하나의 집합투자재산으로 모아 운용합니다.</td><td>내가 직접 개별 종목을 지시하는 계좌와는 구조가 다릅니다.</td></tr>
+                      <tr><th scope="row">전문 운용과 재량</th><td>집합투자업자가 정해진 투자설명서·운용규약 범위에서 자산을 고르고 사고팝니다.</td><td>편입 기준, 파생상품 사용, 운용보수와 운용사의 역할을 확인합니다.</td></tr>
+                      <tr><th scope="row">성과의 귀속</th><td>운용 성과와 손실은 지분 또는 좌수에 따라 투자자에게 귀속됩니다.</td><td>분산투자라도 원금 손실이 가능하며, 과거 성과가 미래 수익을 보장하지 않습니다.</td></tr>
+                      <tr><th scope="row">재산의 분리·보관</th><td>통상 운용 주체와 자산 보관·관리 주체의 역할을 나누어 집합투자재산을 관리합니다.</td><td>수탁회사, 판매회사, 기준가격 산정·환매 조건을 상품설명서에서 살펴봅니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>집합투자는 소액으로도 여러 자산에 나누어 투자하고 전문 운용을 이용하기 쉬운 장점이 있습니다. 반대로 투자자는 매일 매매 지시를 내리지 않는 만큼, 가입 전에 <strong>투자대상·위험등급·보수·환매 가능 시점·판매 방식</strong>을 확인해야 합니다. ETF도 집합투자기구의 지분을 거래소에서 매매하는 구조이지만, 장중 시장가격과 순자산가치(NAV)가 달라질 수 있습니다.</p>
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
                     <caption>생애주기별로 먼저 점검할 상품 역할과 이용 방법</caption>
@@ -203,6 +232,21 @@
                   산정하는 기준가격으로 가입·환매됩니다. 거래 방식이 다르므로
                   필요한 현금 시점과 거래비용도 달라질 수 있습니다.
                 </p>
+                <h3>ETF는 펀드의 법적 틀 안에서 거래소에 상장된 상품입니다</h3>
+                <p>ETF는 자본시장법상 <strong>상장지수집합투자기구</strong>에 해당하는 집합투자기구입니다. 따라서 일반 펀드처럼 집합투자재산을 운용사 고유재산과 분리해 관리하고, 투자설명서·운용보고서·자산구성내역 등 투자자 보호를 위한 공시 체계를 따릅니다. 다만 모든 ETF가 같은 방식으로 자산을 보관하거나 운용하는 것은 아니므로, 상품별 투자설명서와 규약을 확인해야 합니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>일반 펀드와 ETF의 공통 규율 및 ETF 특성</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">핵심 내용</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">공통 규율</th><td>동일 발행인 증권에 대한 운용한도, 재산의 분리·보관, 공시와 투자자 보호 규율이 기본적으로 적용됩니다. 운용한도에는 법령상 예외와 상품 유형별 특례가 있습니다.</td></tr>
+                      <tr><th scope="row">지수 추종 특성</th><td>상장지수집합투자기구는 법정 요건을 충족해 기초지수 변화를 따라가도록 운용됩니다. 지수의 시가총액 비중을 복제해야 하는 경우에는 집중투자 제한을 기계적으로 적용하지 않는 예외·특례가 문제될 수 있습니다.</td></tr>
+                      <tr><th scope="row">설정·환매 구조</th><td>일반 투자자는 거래소에서 ETF를 매매합니다. 지정참가회사(AP)는 보통 주식 바스켓이나 현금을 이용해 ETF 지분을 설정·환매하여 시장가격과 순자산가치(NAV)의 차이를 줄이는 역할을 합니다.</td></tr>
+                      <tr><th scope="row">파생상품 활용</th><td>해외지수·원자재·레버리지 ETF 등은 선물·스왑을 활용할 수 있지만, 이것이 무제한 투자나 위험 제거를 뜻하지는 않습니다. 파생상품 노출, 거래상대방 위험, 롤오버 비용을 따로 확인해야 합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>즉 ETF는 ‘펀드의 뼈대’ 위에 상장·장중매매·설정·환매 구조를 더한 상품입니다. <strong>ETF라는 이유만으로 10% 제한이 언제나 자동 면제되거나 현물 설정·환매만 허용되는 것은 아닙니다.</strong> 추종 대상과 운용 방식, 법령상 요건에 따라 달라집니다. <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?chrClsCd=010202&amp;lsJoLnkSeq=1032341363" target="_blank" rel="noopener noreferrer">자본시장법 제234조</a>와 앞의 ‘분산투자 10% 규칙’ 단원을 함께 참고하세요.</p>
                 <p>
                   여러 자산을 담았다고 위험이 사라지지는 않습니다. 특정
                   국가·자산군·테마에 집중된 상품은 여전히 크게 움직일 수
@@ -355,6 +399,33 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
+          </section>
+          <section class="lesson">
+            <span>03.5</span>
+            <div class="lesson-content">
+              <h2>분산투자 10% 규칙과 단일종목 레버리지 ETF의 예외</h2>
+              <div class="lesson-body">
+                <p>공모 집합투자기구에는 일반적으로 <strong>같은 법인 등이 발행한 증권에 집합투자재산의 10%를 넘겨 투자하지 못하게 하는</strong> 집중투자 제한이 적용됩니다. 이는 ‘모든 투자자산’에 똑같이 적용되는 단순 규칙이라기보다, 동일 발행인의 증권에 지나치게 쏠리는 위험을 줄이기 위한 법정 운용한도입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>10% 제한을 읽는 방법</caption>
+                    <thead><tr><th scope="col">흔한 표현</th><th scope="col">정확한 이해</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">“한 종목은 10%까지만”</th><td>일반 공모펀드의 동일 발행인 증권 투자에 적용되는 기본 한도입니다. 특정 종목 급락이 펀드 전체에 미치는 영향을 낮추려는 장치입니다.</td></tr>
+                      <tr><th scope="row">“최소 10종목이면 된다”</th><td>10% 한도만으로 포트폴리오의 질이 보장되지는 않습니다. 서로 비슷한 업종·국가·위험요인에 몰리면 여러 종목이어도 함께 손실이 날 수 있습니다.</td></tr>
+                      <tr><th scope="row">“10%를 넘으면 위법”</th><td>국채 등 법령상 예외, 지수 추종 등 예외·완화 규정, 시장가격 변동에 따른 일시적 초과의 조정 규칙이 있어 상품 구조와 규약을 함께 봐야 합니다.</td></tr>
+                      <tr><th scope="row">파생상품을 쓰면 한도가 사라진다</th><td>아닙니다. 파생상품에는 별도의 위험평가·거래상대방·노출 한도가 적용될 수 있습니다. 현물 비중만 보고 실제 특정 종목 노출을 단정하면 안 됩니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>단일종목 레버리지 상품은 왜 가능한가요?</h3>
+                <p>국내에서는 분산투자 요건 때문에 단일종목 레버리지·인버스 상품이 오랫동안 허용되지 않았지만, 2026년 제도 개선 후 일정 요건을 충족한 국내 우량주를 기초로 한 단일종목 레버리지·인버스 <strong>ETF·ETN</strong>이 상장 심사를 거쳐 도입됐습니다. 금융위원회가 안내한 초기 대상에는 삼성전자와 SK하이닉스가 포함됐고, 일간 수익률의 ±2배 이내를 추종하는 구조입니다.</p>
+                <p>따라서 <strong>SK하이닉스 단일종목 레버리지 상품이 ‘10% 규정을 피해 현물은 10%만, 나머지는 스왑 90%’로 운용된다고 일반화할 수는 없습니다.</strong> 상품마다 현물·개별주식선물·스왑·현금성 자산의 조합이 다르고, 실제 편입 비중도 매일 바뀔 수 있습니다. 해당 ETF 또는 ETN의 투자설명서, 자산구성내역(PDF), 일일 기준가격 공시에서 실제 익스포저와 파생상품 사용 여부를 확인하세요.</p>
+                <p>단일종목 레버리지 상품은 분산 효과가 거의 없고, 일일 목표수익률 구조 때문에 장기 누적성과가 단순 배수와 달라질 수 있습니다. 일반 ETF보다 높은 변동성, 음의 복리효과, 괴리율, 파생상품·거래상대방 위험을 함께 고려해야 합니다.</p>
+                <p><small>참고: <a href="https://law.go.kr/lsLinkCommonInfo.do?lsJoLnkSeq=1025079481" target="_blank" rel="noopener noreferrer">자본시장법 시행령 제80조</a>, <a href="https://www.fsc.go.kr/no010101/86910" target="_blank" rel="noopener noreferrer">금융위원회 단일종목 레버리지·인버스 상품 도입 안내</a>, <a href="https://www.fsc.go.kr/no010101/86973?curPage=16" target="_blank" rel="noopener noreferrer">금융위원회 투자자 보호 보완 안내</a>.</small></p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="분산투자 10퍼센트 규칙과 단일종목 레버리지 ETF의 예외 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
             <span>04</span>
@@ -1306,6 +1377,25 @@
         금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.
       </footer>
     </main>
+
+    <div class="glossary-modal bis-capital-modal" id="bisCapitalModal" hidden>
+      <div class="glossary-modal__backdrop" data-bis-capital-close></div>
+      <section class="glossary-modal__dialog bis-capital-dialog" role="dialog" aria-modal="true" aria-labelledby="bisCapitalTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-bis-capital-close>×</button>
+        <h2 id="bisCapitalTitle">BIS 비율: 은행의 손실흡수 여력</h2>
+        <p class="bis-capital-lead"><strong>BIS 비율</strong>은 바젤 기준에 따른 위험가중자산(RWA) 대비 규제자본의 비율입니다. 대출·채권처럼 위험 정도가 다른 자산을 같은 금액으로 단순 합산하지 않고 위험가중치를 반영해, 예상 밖 손실을 흡수할 자본이 어느 정도인지를 봅니다.</p>
+        <p class="bis-capital-formula">BIS 총자본비율 = 총자본 ÷ 위험가중자산(RWA) × 100</p>
+        <h3>바젤Ⅲ 자본비율은 세 층으로 봅니다</h3>
+        <ul>
+          <li><strong>CET1(보통주자본)비율</strong>: 보통주·이익잉여금처럼 손실흡수력이 가장 높은 자본을 기준으로 한 비율입니다.</li>
+          <li><strong>기본자본(Tier 1)비율</strong>: CET1에 기타 기본자본을 더한 비율입니다.</li>
+          <li><strong>총자본비율</strong>: 기본자본에 보완자본(Tier 2)을 더한 넓은 의미의 BIS 비율입니다.</li>
+        </ul>
+        <div id="bisCapitalChart" class="bis-capital-chart" role="img" aria-label="대표 코스피 상장 금융지주 5개사의 CET1 비율 비교 차트"></div>
+        <p class="bis-capital-note"><strong>차트 읽기:</strong> 아래는 대표 코스피 상장 금융지주 5사의 2026년 2분기 말 <strong>CET1 비율</strong>을 비교한 것입니다. BIS 비율은 총자본비율을 뜻하기도 하지만, 시장에서는 손실흡수력이 높은 CET1을 핵심 건전성 지표로 함께 봅니다. 회사별 연결 범위·잠정치 여부·규제 적용 기준이 달라 단순한 우열이나 투자 판단으로 해석해서는 안 됩니다.</p>
+        <p class="bis-capital-note">출처: <a href="https://www.kbfg.com/kor/pr/press/view.htm?B=8&amp;CONTENT=15103&amp;QUERY=list.htm" target="_blank" rel="noopener noreferrer">KB금융</a>, <a href="https://www.shinhangroup.com/kr/ir/finance/investorPresentations/detail/33171" target="_blank" rel="noopener noreferrer">신한금융</a>, <a href="https://www.yna.co.kr/view/AKR20260724108151527" target="_blank" rel="noopener noreferrer">하나금융 2분기 공시 보도</a>, <a href="https://www.bnkfg.com/02/03.jsp?dataSeqNo=6929" target="_blank" rel="noopener noreferrer">BNK금융</a>, <a href="https://www.jbfg.com/ko/prcenter/press/detail/38.do" target="_blank" rel="noopener noreferrer">JB금융</a>.</p>
+      </section>
+    </div>
 
     <div class="glossary-modal hedge-diversification-modal" id="hedgeDiversificationModal" hidden>
       <div class="glossary-modal__backdrop" data-hedge-diversification-close></div>
@@ -2960,6 +3050,35 @@
         });
 
         render();
+      })();
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("bisCapitalModal");
+        const trigger = document.getElementById("bisCapitalTrigger");
+        if (!modal || !trigger || !window.ApexCharts) return;
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        let chart;
+        const renderChart = () => {
+          if (chart) return;
+          chart = new ApexCharts(document.getElementById("bisCapitalChart"), {
+            chart: { type: "bar", height: 300, toolbar: { show: false }, fontFamily: "inherit" },
+            series: [{ name: "CET1 비율", data: [13.74, 13.43, 13.21, 12.52, 12.14] }],
+            xaxis: { categories: ["KB금융", "신한금융", "하나금융", "JB금융", "BNK금융"], labels: { style: { fontSize: "13px" } } },
+            yaxis: { min: 0, max: 16, tickAmount: 4, labels: { formatter: value => `${value.toFixed(0)}%` } },
+            dataLabels: { enabled: true, formatter: value => `${value.toFixed(2)}%`, offsetY: -4, style: { fontSize: "12px", colors: ["#1e3a8a"] } },
+            plotOptions: { bar: { borderRadius: 5, columnWidth: "54%" } },
+            colors: ["#2563eb"],
+            grid: { borderColor: "#e2e8f0" },
+            tooltip: { y: { formatter: value => `${value.toFixed(2)}%` } },
+          });
+          chart.render();
+        };
+        const open = () => { modal.hidden = false; renderChart(); closeButton?.focus(); };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-bis-capital-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !modal.hidden) close(); });
       })();
     </script>
     <script src="../assets/modal-fit.js?v=20260905-leverage-daily"></script>

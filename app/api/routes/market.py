@@ -82,6 +82,9 @@ async def company_snapshot(
 _intraday_cache: dict[str, tuple[datetime, dict[str, Any]]] = {}
 _intraday_ttl = timedelta(seconds=30)
 
+_beta_cache: dict[str, tuple[datetime, dict[str, Any]]] = {}
+_beta_ttl = timedelta(minutes=15)
+
 _kospi_history_cache: dict[str, tuple[datetime, dict[str, Any]]] = {}
 _kospi_history_ttl = timedelta(days=30)
 
@@ -224,6 +227,89 @@ def price_history(
         for row in rows
     ]
     return {"ticker": ticker, "market": market, "available": len(bars) > 0, "count": len(bars), "bars": bars}
+
+
+@router.get("/beta")
+async def market_beta(
+    ticker: str = Query(pattern=r"^\d{6}$"),
+    market: str = Query(pattern=r"^(KOSPI|KOSDAQ)$"),
+) -> dict[str, Any]:
+    """Estimate a stock's 60-trading-day beta against the KOSPI 200.
+
+    Beta is calculated from matched daily close-to-close returns, not today's
+    intraday bars, so the value is less sensitive to a single session's noise.
+    """
+    cache_key = f"{ticker}:{market}"
+    now = datetime.now(timezone.utc)
+    cached = _beta_cache.get(cache_key)
+    if cached and now - cached[0] < _beta_ttl:
+        return cached[1]
+
+    symbol = f"{ticker}.{'KS' if market == 'KOSPI' else 'KQ'}"
+    # Six months normally provides more than 60 common Korean trading days.
+    stock_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=6mo&interval=1d"
+    benchmark_url = "https://query1.finance.yahoo.com/v8/finance/chart/%5EKS200?range=6mo&interval=1d"
+
+    try:
+        async with httpx.AsyncClient(timeout=8.0, follow_redirects=True) as client:
+            stock_response, benchmark_response = await _fetch_all(client, stock_url, benchmark_url)
+        if isinstance(stock_response, Exception) or isinstance(benchmark_response, Exception):
+            raise ValueError("price fetch failed")
+
+        def close_by_date(response: httpx.Response) -> dict[date, float]:
+            result = response.json()["chart"]["result"][0]
+            timestamps = result.get("timestamp") or []
+            closes = result["indicators"]["quote"][0].get("close") or []
+            return {
+                datetime.fromtimestamp(timestamp, tz=timezone.utc).date(): float(close)
+                for timestamp, close in zip(timestamps, closes)
+                if close is not None and float(close) > 0
+            }
+
+        stock_closes = close_by_date(stock_response)
+        benchmark_closes = close_by_date(benchmark_response)
+        common_dates = sorted(set(stock_closes) & set(benchmark_closes))
+        returns: list[tuple[float, float]] = []
+        for previous, current in zip(common_dates, common_dates[1:]):
+            # Only consecutive observations are used; this excludes unmatched holidays.
+            if (current - previous).days > 4:
+                continue
+            stock_return = stock_closes[current] / stock_closes[previous] - 1
+            benchmark_return = benchmark_closes[current] / benchmark_closes[previous] - 1
+            returns.append((stock_return, benchmark_return))
+        returns = returns[-60:]
+        if len(returns) < 30:
+            raise ValueError("insufficient matched returns")
+
+        stock_mean = sum(item[0] for item in returns) / len(returns)
+        benchmark_mean = sum(item[1] for item in returns) / len(returns)
+        covariance = sum((stock - stock_mean) * (benchmark - benchmark_mean) for stock, benchmark in returns)
+        variance = sum((benchmark - benchmark_mean) ** 2 for _, benchmark in returns)
+        if variance == 0:
+            raise ValueError("zero benchmark variance")
+        beta = covariance / variance
+        payload = {
+            "ticker": ticker,
+            "market": market,
+            "benchmark": "KOSPI 200",
+            "window": len(returns),
+            "beta": round(beta, 2),
+            "updated_at": now.isoformat(),
+            "error": None,
+        }
+    except (httpx.HTTPError, KeyError, IndexError, TypeError, ValueError, ZeroDivisionError):
+        payload = {
+            "ticker": ticker,
+            "market": market,
+            "benchmark": "KOSPI 200",
+            "window": 0,
+            "beta": None,
+            "updated_at": now.isoformat(),
+            "error": "베타를 계산할 충분한 일별 시세를 불러오지 못했습니다.",
+        }
+
+    _beta_cache[cache_key] = (now, payload)
+    return payload
 
 
 async def _fetch_all(client: httpx.AsyncClient, chart_url: str, news_url: str) -> tuple[httpx.Response | Exception, httpx.Response | Exception]:

@@ -480,6 +480,9 @@ html, body {
 .tick-change { display: inline-block; margin-top: 4px; font-size: 14.5px; font-weight: 750; font-style: normal; color: var(--text-muted); }
 .tick-change.up { color: #dc2626; }
 .tick-change.down { color: #2563eb; }
+.tick-beta { display: flex; align-items: baseline; gap: 7px; width: fit-content; margin-top: 10px; padding: 5px 9px; border: 1px solid #c7d7f5; border-radius: 999px; color: #334155; background: #f8fbff; font-size: 13px; line-height: 1.3; }
+.tick-beta b { color: #1d4ed8; font-size: 14px; }
+.tick-beta span { color: var(--text-muted); }
 .tick-bucket-group { display: inline-flex; gap: 6px; padding: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; }
 .tick-bucket-btn { padding: 7px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--text-2); font-size: 14.5px; font-weight: 750; cursor: pointer; transition: .15s; }
 .tick-bucket-btn:hover { color: var(--text); }

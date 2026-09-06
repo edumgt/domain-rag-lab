@@ -33,7 +33,7 @@
         role="navigation"
         aria-label="학습 서비스 메뉴"
       >
-        <a href="/?view=stocks"><i class="fa-solid fa-house"></i> 홈</a
+        <a href="/?view=home"><i class="fa-solid fa-house"></i> 홈</a
         ><a href="/?view=stocks"
           ><i class="fa-solid fa-building-columns"></i> 종목보기</a
         ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
@@ -89,6 +89,20 @@
                 <p>
                   <strong>계약</strong>은 두 사람이 “무엇을, 언제, 얼마에 어떻게 하자”라고 약속을 정리한 것입니다. 예를 들어 농부와 식당 주인이 “가을에 배추 1,000포기를 포기당 3,000원에 사고팔자”고 합의하면, 거래 대상·가격·날짜가 들어간 계약이 됩니다.
                 </p>
+                <h3>일반 거래에서 자주 쓰는 용역과 납기</h3>
+                <p><strong>용역</strong>은 물건 자체를 넘기는 거래와 달리, 사람이나 회사가 업무·기술·노무를 제공하는 것을 말합니다. 예를 들어 소프트웨어 개발, 시스템 유지보수, 설계·컨설팅, 운송·청소가 용역 계약의 대상이 될 수 있습니다. 계약서에는 업무 범위, 결과물, 대가, 검수 기준과 책임을 정합니다.</p>
+                <p><strong>납기</strong>는 물건·결과물·용역을 계약 조건에 맞게 납품하거나 완료해야 하는 약정 시점입니다. ‘납기일’에는 완성품을 인도하는 날뿐 아니라 용역의 완료·검수 제출 기한이 포함될 수 있습니다. 납기가 늦어졌을 때의 지연배상, 계약 해제, 대금 지급 조건은 계약서와 거래 규정에 따라 달라집니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>일반 거래의 납기와 파생상품의 만기 비교</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">일반 물품·용역 계약</th><th scope="col">선물·옵션 계약</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">대상</th><td>물건의 납품 또는 서비스·결과물의 완료</td><td>거래소가 정한 기초자산 또는 가격 변동에 연결된 표준 계약</td></tr>
+                      <tr><th scope="row">기준 시점</th><td>납기: 납품·완료·검수 등을 약정한 시점</td><td>만기: 남아 있는 계약을 인도 또는 현금정산으로 끝내는 시점</td></tr>
+                      <tr><th scope="row">주의할 점</th><td>업무 범위·검수·지연 책임·대금 조건을 확인합니다.</td><td>결제 방식·최종거래일·거래승수·증거금과 손익 위험을 확인합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
                 <p>
                   <strong>만기</strong>는 그 약속을 끝내고 정산하는 마지막 날입니다. 약속한 날이 오면 실제 물건을 주고받거나, 계약에서 정한 방식대로 가격 차이를 계산해 돈으로 정산합니다. 선물·옵션에서는 이 마지막 날과 정산 방식이 상품마다 미리 정해져 있습니다.
                 </p>
@@ -105,6 +119,33 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="계약과 만기, 먼저 이해하기 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section><section class="lesson"><span>00.05</span>
+            <div class="lesson-content">
+              <h2>국가의 재정과 위험으로 보는 파생상품의 발달</h2>
+              <div class="lesson-body">
+                <p>파생상품의 역사는 단순히 금융기법이 복잡해진 과정만은 아닙니다. 수확·무역·전쟁·환율·금리처럼 국가와 민간이 통제하기 어려운 위험을 어떻게 나누고 재정을 안정시킬지 고민하는 과정과도 연결됩니다. 다만 파생상품이 오직 국가 존립을 위해 발전했다기보다, <b>국가 재정, 상업 확대, 민간의 위험관리와 거래소 경쟁이 함께 작용했다</b>고 보는 것이 정확합니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>시대별 경제 환경과 위험관리 계약의 발전</caption>
+                    <thead><tr><th scope="col">시대·환경</th><th scope="col">재정·경제적 과제</th><th scope="col">위험관리와 계약의 변화</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">봉건제·농업 중심 경제</th><td>세금과 주요 자산이 곡물에 의존해 기후·수확량·가격 변동이 영지 재정과 생계에 큰 영향을 주었습니다.</td><td>상인과 생산자는 곡물 등을 미래에 정한 가격으로 인도하기로 약속하는 선도 형태의 거래를 활용했습니다.</td></tr>
+                      <tr><th scope="row">근세 상업·전쟁 재정</th><td>해상무역의 운송 위험과 전쟁 비용, 국채·회사채무의 관리가 중요해졌습니다.</td><td>보험, 주식·옵션 거래, 채무의 전환과 유통이 발전했습니다. 이들은 모두 파생상품은 아니지만 위험을 나누고 자금을 조달하는 금융시장의 기반을 넓혔습니다.</td></tr>
+                      <tr><th scope="row">현대 글로벌 경제</th><td>변동환율·금리·원자재 가격의 변화가 기업과 금융기관, 나아가 국가경제에 큰 영향을 미치게 됐습니다.</td><td>통화·금리·주가지수 선물과 스왑이 표준화·확대되며 환율, 금리, 시장가격 위험을 관리하는 수단이 됐습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>농업 경제: 수확과 세입의 불확실성</h3>
+                <p>농업 중심 사회에서 곡물은 식량인 동시에 세금·재산·교환수단이었습니다. 흉작과 풍작은 가격과 세입을 크게 흔들었고, 생산자·상인·영주는 미래 인도와 가격을 미리 약정해 불확실성을 줄이려 했습니다. 에도 시대에는 각 번이 세금으로 거둔 쌀을 오사카로 보내 쌀 증서로 거래했고, 도쿠가와 막부는 1730년 도지마의 현물·장부상 선물 거래를 공식 인가했습니다. 도지마 시장은 회원제와 청산 기능을 갖춘 조직적 선물거래소의 선구자로 평가됩니다.</p>
+                <h3>상업과 국가부채: 위험의 이전과 자금 조달</h3>
+                <p>16~18세기 해상무역은 침몰·해적·가격 변동 위험을 동반했고, 유럽 국가들은 전쟁과 식민지 경쟁에 필요한 자금을 국채와 특허회사를 통해 조달했습니다. 네덜란드·영국의 보험, 주식, 옵션 거래는 이러한 위험을 여러 투자자에게 나누는 방법을 넓혔습니다. 영국 남해회사는 정부채무를 회사 주식으로 전환하는 구조를 활용했지만, 이는 파생상품 자체라기보다 <b>국가채무 관리와 주식시장 발전이 결합한 사례</b>로 이해하는 편이 적절합니다.</p>
+                <h3>변동환율 시대: 금융 파생상품의 확대</h3>
+                <p>1970년대 브레튼우즈 체제가 무너지면서 고정환율의 틀이 약해지고 통화 가치의 변동성이 커졌습니다. CME는 1972년 주요 통화의 선물을 상장했고, 이후 금리·국채 선물과 주가지수선물이 발전했습니다. 오일 쇼크와 금리 변동도 기업과 금융기관에 큰 부담을 주면서, 현물 거래만으로는 관리하기 어려운 가격 위험을 선물·옵션·스왑으로 나누려는 수요가 커졌습니다.</p>
+                <p><b>핵심 흐름:</b> 농업 경제의 수확 위험 → 상업·전쟁 경제의 무역 위험과 국가채무 → 글로벌 경제의 환율·금리·원자재 위험. 파생상품은 이 위험을 없애는 장치가 아니라, 계약 상대방과 시장 참여자 사이에 <b>배분하고 가격을 미리 정하는 장치</b>로 발전했습니다. 따라서 헤지는 위험을 줄일 수 있지만, 잘못된 규모·만기·상대방 선택은 새로운 손실과 신용위험을 만들 수 있습니다.</p>
+                <p class="lesson-source">참고: <a href="https://www.jpx.co.jp/dojima/en/index.html" target="_blank" rel="noopener noreferrer">JPX 도지마 쌀거래소 연혁</a>, <a href="https://www.bankofengland.co.uk/about/history" target="_blank" rel="noopener noreferrer">영란은행의 남해회사·국가부채 역사</a>, <a href="https://www.cmegroup.com/en/education/articles-and-reports/the-genesis-of-currency-futures.html" target="_blank" rel="noopener noreferrer">CME의 통화선물 역사</a>.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="국가의 재정과 위험으로 보는 파생상품의 발달 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section><section class="lesson"><span>00.1</span>
             <div class="lesson-content">
               <h2>선물·옵션은 언제, 왜 만들어졌을까요?</h2>
@@ -124,8 +165,13 @@
                 <p><strong>1. 맞춤 선도계약</strong> — 두 사람이 품질·수량·가격·인도일을 직접 정했습니다. 유연하지만 상대방이 약속을 지키지 못할 위험과, 계약을 다른 사람에게 넘기기 어려운 문제가 있었습니다.</p>
                 <p><strong>2. 거래소 선물</strong> — 도지마에서 발전한 장부 거래·회원·청산이라는 발상이 이후 시장의 토대가 됐습니다. 미국 CBOT는 1848년에 만들어져 초기 선도거래를 거친 뒤 1865년 곡물 <strong>표준 선물계약</strong>을 도입했습니다. 오늘날 선물은 거래소가 수량·만기·결제 규칙을 정하고, 증거금·일일정산·청산기관으로 이행 위험을 관리하며 반대매매로 포지션을 끝낼 수 있습니다.</p>
                 <p><strong>3. 옵션</strong> — 매수자는 프리미엄을 내고 정해진 가격(행사가)에 사고팔 <strong>권리</strong>를 얻지만, 행사할 의무는 없습니다. 반대로 매도자는 매수자가 행사하면 이행할 의무를 집니다. 1973년 4월 26일 CBOE가 표준화된 상장 주식옵션을 처음 거래시키면서, 표준 계약·청산·행사·배정 절차를 갖춘 현대 상장 옵션시장이 본격화됐습니다.</p>
+                <h3>주가지수선물의 등장: 포트폴리오 전체를 헤지하다</h3>
+                <p>세계 최초의 주가지수선물은 1982년 2월 24일 미국 <strong>캔자스시티상품거래소(KCBT)</strong>가 상장한 <strong>밸류라인 종합지수(Value Line Composite Index) 선물</strong>로 알려져 있습니다. 개별 주식이 아니라 주식시장 전체의 움직임을 선물계약의 대상으로 삼은 첫 사례였습니다.</p>
+                <p>1970년대에는 경기·금리·환율의 불확실성이 커지면서 기관투자자와 자산운용사가 포트폴리오 전체의 하락 위험을 관리할 필요가 커졌습니다. 주식을 모두 팔지 않아도 주가지수선물을 매도하면 시장 전반이 하락할 때 현물 주식의 손실 일부를 선물 이익으로 상쇄하는 <strong>헤지</strong>가 가능해졌습니다.</p>
+                <p>당시 곡물 선물이 중심이던 KCBT에는 차별화된 금융상품이 필요했고, 이미 통화·금리 선물을 성공시킨 시카고 거래소들과의 경쟁도 신상품 개발을 뒷받침했습니다. 주가지수선물은 수십·수백 종목을 직접 사고파는 대신 하나의 계약으로 시장 전체에 노출되거나 포트폴리오 비중을 조정할 수 있어 거래비용과 시간을 줄이는 장점도 있었습니다.</p>
+                <p>KCBT의 시도 뒤 CME는 1982년 4월 21일 <strong>S&amp;P 500 지수선물</strong>을 상장했습니다. 이후 주가지수선물은 대표적인 시장 위험 관리 수단이자, 적은 증거금으로 큰 시장 노출을 만들 수 있는 레버리지 상품으로 발전했습니다.</p>
                 <p>핵심은 처음부터 ‘수익을 크게 내는 상품’을 만들려던 것이 아니라 <strong>미래 가격과 공급의 불확실성을 미리 나누고 고정</strong>하려는 데 있었습니다. 표준화와 청산이 더해지면서 계약을 쉽게 사고팔 수 있게 됐고, 그만큼 투기와 레버리지 위험도 함께 커졌습니다.</p>
-                <p><small>참고: <a href="https://www.jpx.co.jp/dojima/en/index.html" target="_blank" rel="noopener noreferrer">JPX 도지마 쌀거래소 연혁</a>, <a href="https://ideas.repec.org/h/spr/sprchp/978-3-540-85711-2_24.html" target="_blank" rel="noopener noreferrer">Poitras, 「The Early History of Option Contracts」</a>, <a href="https://www.amsterdam.nl/stadsarchief/stukken/geld/handel-aandelen/" target="_blank" rel="noopener noreferrer">암스테르담 시 기록보관소</a>, <a href="https://www.cmegroup.com/education/courses/introduction-to-futures/midwest-grain-trade-history-of-futures-exchanges" target="_blank" rel="noopener noreferrer">CME Group의 CBOT 연혁</a>, <a href="https://ir.cboe.com/news/news-details/2013/CBOE-Releases-40th-Anniversary-Video-04-19-2013/default.aspx" target="_blank" rel="noopener noreferrer">Cboe의 상장옵션 연혁</a>.</small></p>
+                <p><small>참고: <a href="https://www.jpx.co.jp/dojima/en/index.html" target="_blank" rel="noopener noreferrer">JPX 도지마 쌀거래소 연혁</a>, <a href="https://ideas.repec.org/h/spr/sprchp/978-3-540-85711-2_24.html" target="_blank" rel="noopener noreferrer">Poitras, 「The Early History of Option Contracts」</a>, <a href="https://www.amsterdam.nl/stadsarchief/stukken/geld/handel-aandelen/" target="_blank" rel="noopener noreferrer">암스테르담 시 기록보관소</a>, <a href="https://www.cmegroup.com/education/courses/introduction-to-futures/midwest-grain-trade-history-of-futures-exchanges" target="_blank" rel="noopener noreferrer">CME Group의 CBOT 연혁</a>, <a href="https://ir.cboe.com/news/news-details/2013/CBOE-Releases-40th-Anniversary-Video-04-19-2013/default.aspx" target="_blank" rel="noopener noreferrer">Cboe의 상장옵션 연혁</a>, <a href="https://www.washingtonpost.com/archive/business/1982/02/25/stock-futures-popular-on-first-day-of-trading/396b9bdc-8811-4b59-b780-9c5db25c425a/" target="_blank" rel="noopener noreferrer">KCBT 밸류라인 지수선물 첫 거래 보도</a>, <a href="https://www.cmegroup.com/media-room/historical-first-trade-dates.html" target="_blank" rel="noopener noreferrer">CME S&amp;P 500 선물 첫 거래일</a>.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="선물과 옵션의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -203,45 +249,6 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="헤지는 큰 손실을 줄이는 안전장치 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson"><span>02</span>
-            <div class="lesson-content">
-              <h2>기본 금융상품 지도</h2>
-              <div class="lesson-body">
-                <p>
-                  예금·적금은 안정성과 목적자금 관리에, 주식은 기업 성장에
-                  참여하는 데 쓰입니다.
-                </p>
-                <p>
-                  채권은 정부나 기업에 돈을 빌려주고 이자와 원금을 받는
-                  구조입니다. ETF·펀드는 여러 자산을 한 상품에 담아 분산투자를
-                  쉽게 합니다.
-                </p>
-                <p>
-                  상품 이름보다 “무엇에 투자하는지, 비용은 얼마인지, 어떤 위험이
-                  있는지”를 먼저 확인하세요.
-                </p>
-                <p class="lesson-video-cta">
-                  <button
-                    type="button"
-                    class="lesson-video-link"
-                    id="marketSizeTrigger"
-                  >
-                    <i class="fa-solid fa-chart-pie"></i> 4개국 자산 분포 비교 보기
-                  </button>
-                  <small>주식·부동산·채권·금·가상자산의 구성비를 비교합니다.</small>
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="기본 금융상품 지도 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
           </section><section class="lesson"><span>03</span>
             <div class="lesson-content">
               <h2>파생상품은 “가격에서 나온 계약”입니다</h2>
@@ -268,11 +275,52 @@
                   것입니다. 옵션은 미래에 정한 가격으로 사고팔 수 있는 권리를
                   거래합니다.
                 </p>
+                <h3>주요 계약 유형과 거래 구조</h3>
+                <p><strong>기초자산(underlying asset)</strong>은 파생상품 계약의 기준이 되는 바탕 자산입니다. 주식·주가지수·국채와 금리·외환·암호화폐 같은 금융자산뿐 아니라 원유·천연가스·금·은·구리·옥수수·원두 같은 실물상품도 기초자산이 될 수 있습니다. 날씨, 신용위험(CDS), 부동산 지수처럼 특정 사건·지표를 기준으로 한 계약도 있습니다.</p>
+                <h3>기초자산으로서의 금: 화폐·안전자산·기회비용</h3>
+                <p><b>금(Gold)</b>은 희소성, 내구성, 분할 가능성과 동질성 때문에 오랫동안 실물화폐로 쓰였습니다. 화폐는 일반적으로 교환의 매개, 가치의 척도, 가치저장의 기능을 하는데, 금은 역사적으로 이 세 기능과 연결돼 왔습니다. 금본위제와 브레튼우즈 체제에서는 금이 국제통화 질서의 기준 역할을 했지만, 1970년대 초 브레튼우즈 체제가 무너지면서 오늘날 대부분의 통화는 법정화폐 체제에서 운용됩니다.</p>
+                <p>현대의 금은 일상 결제 수단이라기보다 인플레이션, 통화가치 하락, 금융불안에 대비하는 <b>실물자산</b>으로 주목받습니다. 다만 금 가격도 금리·달러 가치·실물 수요·투자 수요·시장 심리에 따라 크게 오르내릴 수 있으므로, 어느 시기에도 구매력을 보장하거나 항상 다른 자산보다 안전하다는 뜻은 아닙니다.</p>
+                <p>실물 금은 기업·은행·정부가 발행한 채무가 아니므로, 보유 형태에 따라 발행기관의 신용에 직접 의존하지 않는다는 특징이 있습니다. 그러나 금 ETF, 금 계좌, 금 관련 파생상품은 운용사·보관기관·거래상대방·계약 구조의 위험을 별도로 가질 수 있고, 실물 금도 보관·도난·매매 스프레드와 가격 변동 위험에서 자유롭지 않습니다.</p>
+                <p>주요 중앙은행이 금을 외환보유액의 일부로 보유하는 이유도 준비자산을 다변화하고 위기 상황의 유동성·신뢰를 보완하기 위해서입니다. 금은 이자나 배당을 스스로 만들지 않으므로 <b>실질금리</b>가 오르면 이자수익 자산을 보유하지 않는 기회비용이 커질 수 있고, 실질금리가 낮거나 음수일 때는 그 기회비용이 줄어 금 수요에 영향을 줄 수 있습니다.</p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="centralGoldReservesTrigger"><i class="fa-solid fa-landmark"></i> 주요국 중앙은행 금 보유량 비교</button>
+                  <small>공식 보유량 기준의 교육용 비교입니다. 국가별 보고 시점이 다를 수 있습니다.</small>
+                </p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>법정화폐와 금의 경제적 성격 비교</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">법정화폐</th><th scope="col">금</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">공급</th><td>중앙은행과 금융시스템의 제도 아래 통화량이 조절됩니다.</td><td>채굴·재고·재활용에 영향을 받으며 단기에 공급을 크게 늘리기 어렵습니다.</td></tr>
+                      <tr><th scope="row">신용과 위험</th><td>국가 제도와 중앙은행에 대한 신뢰가 가치의 중요한 바탕입니다.</td><td>실물 자체는 발행자의 채무가 아니지만, 가격·보관·상품구조의 위험은 남습니다.</td></tr>
+                      <tr><th scope="row">현금흐름</th><td>예금·채권 등 금융상품 형태에서는 이자수익이 생길 수 있습니다.</td><td>실물 금 자체는 이자·배당을 만들지 않아 보관비용과 기회비용을 고려합니다.</td></tr>
+                      <tr><th scope="row">경제적 역할</th><td>일상 결제와 가격 표시의 기본 수단입니다.</td><td>가치저장·분산·위기 대비 자산으로 활용될 수 있으나 수익과 안전을 보장하지는 않습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>거래장소에 따른 파생상품의 구분</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">장내 파생상품</th><th scope="col">장외(OTC) 파생상품</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">거래 방식</th><td>KRX·CME 등 거래소에서 거래합니다.</td><td>금융회사끼리 또는 금융회사와 고객이 일대일로 계약합니다.</td></tr>
+                      <tr><th scope="row">계약 조건</th><td>거래 단위·만기·결제 방식이 표준화됩니다.</td><td>당사자의 필요에 맞게 맞춤형으로 정합니다.</td></tr>
+                      <tr><th scope="row">신용위험 관리</th><td>청산소(CCP)가 거래의 중간에 서서 증거금·일일정산 등으로 이행위험을 관리합니다.</td><td>상대방의 신용, 담보, 계약 조건을 당사자가 직접 관리해야 합니다.</td></tr>
+                      <tr><th scope="row">대표 계약</th><td>선물, 장내 옵션</td><td>선도, 스왑</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><strong>선도(Forward)</strong>는 미래 특정 시점에 약정 가격으로 자산을 인수·도하기로 하는 장외 맞춤 계약입니다. 조건을 유연하게 정할 수 있지만, 중도에 계약을 넘기거나 끝내기 어렵고 상대방이 약속을 지키지 못할 위험이 있습니다. 수출기업의 선물환 계약이 대표적인 예입니다.</p>
+                <p><strong>선물(Futures)</strong>은 거래소에서 표준화된 조건으로 거래하는 계약입니다. 증거금과 일일정산(mark-to-market), 청산 제도로 이행위험을 관리하며, 만기 전 반대매매로 포지션을 정리할 수 있습니다. KOSPI 200 선물과 원유 선물이 예입니다.</p>
+                <p><strong>옵션(Option)</strong>의 매수자는 프리미엄을 내고 행사가격에 살 권리(콜) 또는 팔 권리(풋)를 얻습니다. 매수자는 권리를 포기할 수 있어 손실이 낸 프리미엄으로 제한되지만, 이익의 범위는 콜·풋과 기초자산 가격에 따라 다릅니다. 매도자는 프리미엄을 받는 대신 행사에 응해야 하므로 큰 손실이 발생할 수 있습니다.</p>
+                <p><strong>스왑(Swap)</strong>은 두 당사자가 일정 기간 서로 다른 현금흐름을 교환하는 장외계약입니다. <button type="button" class="hedge-info-trigger" id="interestRateSwapTrigger" aria-haspopup="dialog" aria-label="금리스왑 IRS 설명 보기">금리스왑(IRS) <i class="fa-solid fa-circle-question" aria-hidden="true"></i></button>은 고정금리와 변동금리 현금흐름을 바꾸어 금리 변동 위험을 관리하고, <button type="button" class="hedge-info-trigger" id="currencySwapTrigger" aria-haspopup="dialog" aria-label="통화스왑 CRS 설명 보기">통화스왑(CRS) <i class="fa-solid fa-circle-question" aria-hidden="true"></i></button>은 서로 다른 통화의 원금·이자 현금흐름을 교환해 환율과 금리 위험을 함께 관리합니다.</p>
+                <h3>파생상품을 쓰는 세 가지 목적</h3>
+                <p><strong>헤지</strong>는 보유 자산의 가격 하락이나 환율·금리 변동 위험을 줄이려는 거래입니다. <strong>투기</strong>는 증거금을 활용해 가격 방향을 예측하고 수익을 추구하는 거래이며, 레버리지 때문에 손실도 빠르게 커질 수 있습니다. <strong>차익거래</strong>는 현물과 선물처럼 경제적으로 비슷한 대상 사이의 가격 차이를 이용해 위험을 낮춘 수익 기회를 찾는 거래입니다. 실제 거래에는 비용·세금·유동성·체결 위험이 있어 무위험 수익이 보장되지는 않습니다.</p>
                 <p>
-                  파생상품은 가격 변동 위험을 줄이는 헤지에 쓸 수 있지만, 가격
-                  방향을 예상하는 거래에도 쓰일 수 있습니다. 계약
-                  단위·만기·증거금 때문에 현물 주식보다 손익이 더 빠르게 커질 수
-                  있으므로, 먼저 계약 구조와 최대 손실을 이해해야 합니다.
+                  계약 단위·만기·증거금과 청산 방식에 따라 현물 주식보다 손익이
+                  더 빠르게 커질 수 있습니다. 거래 전에는 어떤 기초자산의 어떤
+                  위험을 다루는 계약인지, 최대 손실과 추가 증거금 가능성이 무엇인지
+                  먼저 확인해야 합니다.
                 </p>
                 <p class="lesson-video-cta">
                   <a
@@ -500,6 +548,21 @@
                 <p>
                   개인은 보통 증권사의 <strong>선물·옵션 거래계좌 예수금</strong>에서 정산 손익이 반영되고, 부족한 돈은 본인 명의의 연결 은행계좌에서 이체합니다. 기업은 임직원 개인 통장이 아니라 증권사에 개설한 <strong>법인 파생상품 거래계좌</strong>를 사용하며, 자금부서가 회사의 법인 운영·자금관리 계좌에서 필요한 증거금을 이체해 관리합니다. 정산 계산은 장 마감 뒤 이뤄지며 실제 반영·이체 가능 시각과 부족금 납부 마감은 증권사별 안내를 확인해야 합니다.
                 </p>
+                <h3>증거금은 계약금·중도금·잔금과 무엇이 다를까요?</h3>
+                <p>건설·부동산·주문제작 거래의 <b>계약금·중도금·잔금</b>과 선물의 <b>증거금·마진콜</b>은 모두 계약 이행을 뒷받침한다는 점에서 비교할 수 있습니다. 그러나 일대일로 대응하지는 않습니다. 일반 거래 대금은 물건·서비스의 대가를 단계별로 지급하는 구조인 반면, 선물 증거금은 가격 변동에 따른 결제불이행 위험을 관리하기 위한 담보이며 일일정산에 따라 계속 변합니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>일반 거래 대금과 선물 증거금의 비교</caption>
+                    <thead><tr><th scope="col">상황</th><th scope="col">일반 거래</th><th scope="col">선물·옵션 거래</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">계약을 시작할 때</th><td>계약금·착수금은 계약 체결과 이행 의사를 표시하고, 계약 조건에 따라 해제·손해배상의 기준이 되기도 합니다.</td><td>위탁증거금 또는 개시증거금은 포지션을 열기 위해 계좌에 예치·확보해야 하는 담보입니다. 기본예탁금과는 다른 개념입니다.</td></tr>
+                      <tr><th scope="row">계약을 유지할 때</th><td>중도금은 공정·인도 등 정한 단계에 따라 지급하는 거래대금입니다.</td><td>유지증거금은 포지션을 계속 보유하기 위해 계좌에 남아 있어야 하는 최소 잔액 기준입니다. 상품·시장에 따라 수준이 달라집니다.</td></tr>
+                      <tr><th scope="row">부족하거나 이행하지 못할 때</th><td>계약금 몰수, 해제, 손해배상 등 계약과 법률관계에 따른 처리가 문제됩니다.</td><td>잔액이 유지증거금 아래로 내려가면 추가증거금 납부를 요구받을 수 있고, 기한 내 충족하지 못하면 반대매매로 강제청산될 수 있습니다.</td></tr>
+                      <tr><th scope="row">계약을 끝낼 때</th><td>잔금을 지급하고 물건·서비스를 인도받습니다.</td><td>반대매매, 실물인도 또는 현금결제로 손익과 의무를 확정합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>즉 유지증거금은 ‘중도금을 더 내는 시점’이라기보다 <b>계좌 안전 잔액의 기준선</b>입니다. 일일정산 손실로 이 기준 아래로 내려가면 증권사가 정한 기한과 방식에 따라 추가 자금을 채워야 하며, 이를 흔히 마진콜이라고 부릅니다. 추가 납부액과 강제청산 기준은 거래소·상품·증권사별로 다를 수 있습니다.</p>
                 <p class="lesson-video-cta">
                   <button type="button" class="lesson-video-link" id="dailySettlementTrigger">
                     <i class="fa-solid fa-calendar-day"></i> 일일정산 시뮬레이터
@@ -774,6 +837,19 @@
                   </button>
                   <small>행사가·프리미엄·만기 가격을 바꿔 권리와 의무의 차이를 확인해 보세요.</small>
                 </p>
+                <h3>에스크로와 CCP: 제3자가 안전장치를 만드는 방식</h3>
+                <p>일반 상거래와 파생상품 거래 모두 상대방이 돈만 받고 물건을 주지 않거나 결제 의무를 이행하지 못할 위험이 있습니다. 다만 <b>에스크로(Escrow)</b>와 <b>중앙청산상대방(CCP)</b>은 작동 방식과 책임 범위가 다릅니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>에스크로와 중앙청산상대방(CCP)의 차이</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">에스크로</th><th scope="col">CCP</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">주요 거래</th><td>전자상거래·부동산 등에서 구매대금을 조건부로 보관하는 데 활용됩니다.</td><td>거래소 파생상품 등 청산 대상 거래의 결제 이행을 관리합니다.</td></tr>
+                      <tr><th scope="row">작동 방식</th><td>중립 제3자가 대금을 보관했다가 배송·구매확정 등 약정 조건이 충족되면 지급합니다.</td><td>체결 뒤 매수자와 매도자 사이에 들어가 계약 상대방이 되며, 증거금·일일정산·결제불이행 절차를 운영합니다.</td></tr>
+                      <tr><th scope="row">위험 관리</th><td>대금의 조기 유출을 막고 거래 조건 이행을 확인합니다.</td><td>참가자의 결제불이행 위험이 시장 전체로 번지는 것을 줄이기 위해 증거금, 청산기금 등 다층 안전장치를 사용합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
                 <h3>거래소가 보증하는 것은 계약 이행입니다</h3>
                 <p>
                   거래소 파생상품은 매수자와 매도자가 서로의 신용을 직접 확인해
@@ -1266,7 +1342,13 @@
             </div>
             <div class="glossary-item">
               <dt>거래승수 <small>Contract Multiplier · 交易乘數</small></dt>
-              <dd><p>선물·옵션의 가격 또는 포인트를 실제 계약금액과 손익으로 바꾸는 숫자입니다. 계약금액은 보통 ‘가격 × 거래승수’, 1계약 손익은 ‘가격 변화 × 거래승수’로 계산합니다.</p><p>예를 들어 거래승수가 250,000원인 코스피200 선물이 340포인트라면 1계약의 기준 금액은 340 × 250,000원, 약 8,500만 원입니다. 0.05포인트가 움직이면 12,500원의 손익 변화가 생깁니다. 승수가 작으면 같은 포인트 변화라도 계약 규모와 손익이 작아집니다.</p><p>거래승수는 상품마다 다르며 증거금과는 다른 값입니다. 실제 주문 전에는 거래소 상품명세에서 계약 단위·호가단위·거래승수를 함께 확인해야 합니다.</p></dd>
+              <dd>
+                <p>선물·옵션에서 지수나 가격 단위를 실제 계약금액과 손익으로 환산하기 위해 <b>곱하는 고정된 숫자</b>입니다. 그래서 ‘승수(乘數, multiplier)’라고 부릅니다. 계약금액은 보통 <b>선물지수 또는 가격 × 거래승수</b>, 1계약 손익은 <b>가격 변화 × 거래승수</b>로 계산합니다.</p>
+                <p>예를 들어 KOSPI 200 선물의 거래승수는 1포인트당 25만 원입니다. 선물지수가 350.00포인트라면 1계약의 기준 금액은 <b>350.00 × 250,000원 = 87,500,000원</b>입니다. 지수가 1포인트 움직이면 1계약 손익도 25만 원 움직이고, 호가단위인 0.05포인트가 움직이면 12,500원이 변합니다.</p>
+                <p>거래승수는 계약 규모를 표준화해 적은 수의 계약으로도 포트폴리오 전체의 위험을 헤지하거나 거래할 수 있게 합니다. 동시에 승수가 클수록 같은 포인트 변화의 원화 손익도 커지므로, 증거금이 계약금액보다 작다고 해서 위험도 작은 것은 아닙니다.</p>
+                <p>상품마다 거래승수는 다릅니다. KOSPI 200 선물은 25만 원/포인트, 미니 KOSPI 200 선물은 5만 원/포인트(대형의 1/5), KOSDAQ 150 선물은 1만 원/포인트입니다. 따라서 화면의 지수 숫자만 보지 말고 계약 단위·호가단위·거래승수·필요 증거금을 함께 확인해야 합니다.</p>
+                <p>참고: <a href="https://open.krx.co.kr/contents/OPN/01/01040204/OPN01040204.jsp" target="_blank" rel="noopener noreferrer">KRX 미니 KOSPI 200 선물 상품안내</a>, <a href="https://open.krx.co.kr/contents/OPN/01/01041401/%ED%95%9C%EA%B5%AD%EA%B1%B0%EB%9E%98%EC%86%8C%20%ED%8C%8C%EC%83%9D%EC%83%81%ED%92%88%EC%8B%9C%EC%9E%A5%20%EC%95%BC%EA%B0%84%EA%B1%B0%EB%9E%98%20%EC%95%88%EB%82%B4.pdf" target="_blank" rel="noopener noreferrer">KRX 파생상품시장 상품명세</a>.</p>
+              </dd>
             </div>
             <div class="glossary-item">
               <dt>주식선물 <small>Single Stock Futures</small></dt>
@@ -1360,6 +1442,19 @@
         금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.
       </footer>
     </main>
+
+    <div class="glossary-modal market-size-modal" id="centralGoldReservesModal" hidden>
+      <div class="glossary-modal__backdrop" data-central-gold-reserves-close></div>
+      <section class="glossary-modal__dialog market-size-dialog" role="dialog" aria-modal="true" aria-labelledby="centralGoldReservesTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-central-gold-reserves-close>×</button>
+        <p class="glossary-modal__label">OFFICIAL GOLD RESERVES · 교육용 비교</p>
+        <h2 id="centralGoldReservesTitle">주요국 중앙은행 금 보유량</h2>
+        <p class="market-size-intro">공식 금 보유량을 <b>톤(t)</b> 단위로 비교합니다. 보유량이 많다는 사실만으로 경제력·통화 안정성·투자 매력을 단정할 수는 없으며, 외환보유액에서 금이 차지하는 비중과 보고 시점도 함께 봐야 합니다.</p>
+        <div id="centralGoldReservesChart" class="market-size-distribution-chart" role="img" aria-label="미국, 독일, 이탈리아, 프랑스, 중국, 러시아, 스위스, 인도, 일본의 중앙은행 금 보유량 비교 차트"></div>
+        <p class="market-size-note"><b>읽는 법:</b> 2026년 6월 말 기준 공개자료를 바탕으로 한 반올림값입니다. 각국의 공식 보고 주기·시점과 집계 범위가 달라 실제 최신 수치에는 차이가 날 수 있습니다.</p>
+        <p class="market-size-source">출처: <a href="https://www.gold.org/goldhub/data/gold-reserves-by-country" target="_blank" rel="noopener noreferrer">World Gold Council, Central Banks Gold Reserves by Country</a> (IMF IFS 통계를 바탕으로 집계, 2026-06-30 기준).</p>
+      </section>
+    </div>
 
     <div class="glossary-modal breaktime-modal" id="breakTimeModal" hidden>
       <div class="glossary-modal__backdrop" data-breaktime-close></div>
@@ -1665,6 +1760,34 @@
       </section>
     </div>
 
+    <div class="glossary-modal hedge-info-modal" id="interestRateSwapModal" hidden>
+      <div class="glossary-modal__backdrop" data-interest-rate-swap-close></div>
+      <section class="glossary-modal__dialog hedge-info-dialog" role="dialog" aria-modal="true" aria-labelledby="interestRateSwapTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-interest-rate-swap-close>×</button>
+        <h2 id="interestRateSwapTitle">금리스왑(IRS)이란?</h2>
+        <p class="hedge-info-lead">같은 통화로, 정해진 원금 명목금액을 기준으로 계산한 고정금리 이자와 변동금리 이자 현금흐름을 교환하는 계약입니다.</p>
+        <div class="hedge-info-examples">
+          <p><b>예시</b>변동금리 대출을 받은 기업이 금리 상승이 걱정되면, 변동금리를 내고 고정금리를 받는 구조의 스왑을 이용해 실질 부담을 고정금리에 가깝게 만들 수 있습니다.</p>
+          <p><b>원금은?</b>보통 원금을 실제로 주고받지 않습니다. 계약에서 정한 명목원금에 이자율을 적용해 이자 차액을 정산합니다.</p>
+          <p><b>유의할 점</b>금리가 예상과 반대로 움직이면 헤지 비용이나 기회비용이 생길 수 있고, 장외계약이므로 상대방 신용위험과 중도해지 조건도 확인해야 합니다.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="glossary-modal hedge-info-modal" id="currencySwapModal" hidden>
+      <div class="glossary-modal__backdrop" data-currency-swap-close></div>
+      <section class="glossary-modal__dialog hedge-info-dialog" role="dialog" aria-modal="true" aria-labelledby="currencySwapTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-currency-swap-close>×</button>
+        <h2 id="currencySwapTitle">통화스왑(CRS)이란?</h2>
+        <p class="hedge-info-lead">서로 다른 통화의 원금과 이자 현금흐름을 정한 환율로 교환하는 계약으로, 환율과 금리 변동 위험을 함께 관리하는 데 쓰입니다.</p>
+        <div class="hedge-info-examples">
+          <p><b>예시</b>달러로 자금을 조달한 기업이 원화 수입으로 이자를 낸다면, 달러 지급과 원화 지급을 교환하는 계약으로 환율 변동 부담을 줄이려 할 수 있습니다.</p>
+          <p><b>금리스왑과 차이</b>통화스왑은 계약에 따라 서로 다른 통화의 원금을 처음과 만기에 실제로 교환할 수 있습니다. 금리스왑은 보통 같은 통화 이자 흐름만 바꿉니다.</p>
+          <p><b>유의할 점</b>계약 기간, 약정환율, 각 통화의 금리, 상대방 신용과 담보 조건에 따라 실제 효과와 위험이 달라집니다.</p>
+        </div>
+      </section>
+    </div>
+
     <div class="glossary-modal futures-settlement-modal" id="futuresSettlementModal" hidden>
       <div class="glossary-modal__backdrop" data-futures-settlement-close></div>
       <section class="glossary-modal__dialog futures-settlement-dialog" role="dialog" aria-modal="true" aria-labelledby="futuresSettlementTitle">
@@ -1705,46 +1828,35 @@
       </section>
     </div>
 
-    <div class="glossary-modal market-size-modal" id="marketSizeModal" hidden>
-      <div class="glossary-modal__backdrop" data-market-size-close></div>
-      <section
-        class="glossary-modal__dialog market-size-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="marketSizeTitle"
-      >
-        <button
-          class="glossary-modal__close"
-          type="button"
-          aria-label="닫기"
-          data-market-size-close
-        >
-          ×
-        </button>
-        <h2 id="marketSizeTitle">한국·중국·일본·미국 자산 규모 비교</h2>
-
-        <div class="market-size-panel market-size-distribution">
-          <p class="market-size-intro">
-            각 나라의 자산 구성을 <b>100으로 환산한 학습용 비교 지수</b>입니다.
-            한 나라 안에서 어떤 자산군에 더 많이 배분되는지 살펴보세요.
-          </p>
-          <div
-            id="marketSizeDistributionChart"
-            class="market-size-distribution-chart"
-            role="img"
-            aria-label="한국, 중국, 일본, 미국의 주식, 부동산, 채권, 금, 가상자산, 현금 및 기타 자산 분포 비교 차트"
-          ></div>
-          <div class="market-size-country-grid" id="marketSizeCountryGrid" aria-label="국가별 주요 자산군 요약"></div>
-          <p class="market-size-note">
-            <b>읽는 법:</b> 막대 하나가 한 나라의 자산 구성 100입니다. 부동산 비중이 큰 나라는 자산 가격 변동과 유동성의 영향을 더 크게 받을 수 있고, 주식·채권 비중이 큰 나라는 금융시장 변동의 영향을 더 직접적으로 받을 수 있습니다.
-          </p>
-          <p class="market-size-source">
-            교육용 비교 지수입니다. 국가마다 가계·민간·시장 통계의 범위와 작성 시점이 달라 절대 규모를 합산하거나 투자 판단의 근거로 사용하면 안 됩니다. 금·가상자산은 공식 통계에서 별도 집계가 제한적인 경우가 많아 소규모 자산군으로 단순화했습니다.
-          </p>
-        </div>
-      </section>
-    </div>
-
+    <script>
+      (() => {
+        const modal = document.getElementById("centralGoldReservesModal");
+        const trigger = document.getElementById("centralGoldReservesTrigger");
+        if (!modal || !trigger) return;
+        const holdings = [
+          ["미국", 8133.5], ["독일", 3350.3], ["이탈리아", 2451.8], ["프랑스", 2437.0],
+          ["중국", 2346.0], ["러시아", 2283.0], ["스위스", 1040.0], ["인도", 880.0], ["일본", 846.0],
+        ];
+        let chart;
+        const renderChart = () => {
+          if (chart || !window.ApexCharts) return;
+          chart = new ApexCharts(document.getElementById("centralGoldReservesChart"), {
+            chart: { type: "bar", height: 390, toolbar: { show: false }, fontFamily: "inherit" },
+            series: [{ name: "공식 금 보유량", data: holdings.map(([, value]) => value) }],
+            colors: ["#d8a600"], plotOptions: { bar: { horizontal: true, barHeight: "58%", borderRadius: 3 } },
+            dataLabels: { enabled: true, formatter: (value) => `${value.toLocaleString("ko-KR", { maximumFractionDigits: 0 })}t`, style: { fontSize: "12px", fontWeight: 700 } },
+            xaxis: { categories: holdings.map(([country]) => country), labels: { formatter: (value) => `${Number(value).toLocaleString("ko-KR")}t` } },
+            yaxis: { labels: { style: { fontSize: "14px", fontWeight: 700 } } },
+            grid: { borderColor: "#dbe4f0", strokeDashArray: 3 }, tooltip: { y: { formatter: (value) => `${value.toLocaleString("ko-KR", { maximumFractionDigits: 1 })}톤` } },
+          });
+          chart.render();
+        };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        trigger.addEventListener("click", () => { modal.hidden = false; renderChart(); modal.querySelector(".glossary-modal__close")?.focus(); });
+        modal.querySelectorAll("[data-central-gold-reserves-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
     <script>
       (() => {
         const modal = document.getElementById("hedgeInfoModal");
@@ -1761,6 +1873,28 @@
         modal.querySelectorAll("[data-hedge-info-close]").forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
       })();
+    </script>
+
+    <script>
+      [
+        { modalId: "interestRateSwapModal", triggerId: "interestRateSwapTrigger", closeAttr: "data-interest-rate-swap-close" },
+        { modalId: "currencySwapModal", triggerId: "currencySwapTrigger", closeAttr: "data-currency-swap-close" },
+      ].forEach(({ modalId, triggerId, closeAttr }) => {
+        const modal = document.getElementById(modalId);
+        const trigger = document.getElementById(triggerId);
+        if (!modal || !trigger) return;
+        const close = () => {
+          if (modal.hidden) return;
+          modal.hidden = true;
+          trigger.focus();
+        };
+        trigger.addEventListener("click", () => {
+          modal.hidden = false;
+          modal.querySelector(".glossary-modal__close")?.focus();
+        });
+        modal.querySelectorAll(`[${closeAttr}]`).forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      });
     </script>
 
     <script>
@@ -2284,81 +2418,6 @@
         });
       });
     </script>
-    <script>
-      (() => {
-        const DATA = {
-          countries: ["한국", "중국", "일본", "미국"],
-          series: [
-            { name: "주식", color: "#2563eb", data: [17, 10, 14, 33] },
-            { name: "부동산", color: "#f59e0b", data: [60, 62, 37, 28] },
-            { name: "채권", color: "#0f9f78", data: [8, 7, 14, 16] },
-            { name: "금", color: "#d8a600", data: [1, 2, 2, 2] },
-            { name: "가상자산", color: "#7c3aed", data: [2, 1, 1, 2] },
-            { name: "현금·기타", color: "#94a3b8", data: [12, 18, 32, 19] },
-          ],
-        };
-
-        const modal = document.getElementById("marketSizeModal");
-        const trigger = document.getElementById("marketSizeTrigger");
-        if (!modal || !trigger) return;
-        const closeEls = modal.querySelectorAll("[data-market-size-close]");
-        const closeButton = modal.querySelector(".glossary-modal__close");
-
-        let chart;
-        function renderCountryCards() {
-          const grid = document.getElementById("marketSizeCountryGrid");
-          if (!grid) return;
-          grid.innerHTML = DATA.countries.map((country, index) => {
-            const top = DATA.series
-              .map((asset) => ({ ...asset, value: asset.data[index] }))
-              .sort((a, b) => b.value - a.value)
-              .slice(0, 2);
-            return `<article class="market-size-country-card">
-              <h3>${country}</h3>
-              <p><i style="background:${top[0].color}"></i>${top[0].name} <strong>${top[0].value}%</strong></p>
-              <p><i style="background:${top[1].color}"></i>${top[1].name} <strong>${top[1].value}%</strong></p>
-            </article>`;
-          }).join("");
-        }
-
-        function renderChart() {
-          const target = document.getElementById("marketSizeDistributionChart");
-          if (!target || !window.ApexCharts || chart) return;
-          chart = new ApexCharts(target, {
-            chart: { type: "bar", height: 360, stacked: true, stackType: "100%", toolbar: { show: false }, fontFamily: "inherit" },
-            series: DATA.series.map(({ name, data }) => ({ name, data })),
-            colors: DATA.series.map(({ color }) => color),
-            plotOptions: { bar: { horizontal: true, barHeight: "54%", borderRadius: 3 } },
-            dataLabels: { enabled: false },
-            xaxis: { categories: DATA.countries, max: 100, labels: { formatter: (value) => `${value}%` } },
-            yaxis: { labels: { style: { fontSize: "14px", fontWeight: 700 } } },
-            legend: { position: "bottom", fontSize: "13px", markers: { size: 10 }, itemMargin: { horizontal: 10, vertical: 4 } },
-            grid: { borderColor: "#dbe4f0", strokeDashArray: 3 },
-            tooltip: { y: { formatter: (value) => `${value}%` } },
-            fill: { opacity: 1 },
-          });
-          chart.render();
-        }
-        renderCountryCards();
-
-        function open() {
-          modal.hidden = false;
-          renderChart();
-          closeButton?.focus();
-        }
-        function close() {
-          if (modal.hidden) return;
-          modal.hidden = true;
-          trigger.focus();
-        }
-        trigger.addEventListener("click", open);
-        closeEls.forEach((el) => el.addEventListener("click", close));
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") close();
-        });
-      })();
-    </script>
-
     <script>
       (() => {
         const modal = document.getElementById("futuresSettlementModal");

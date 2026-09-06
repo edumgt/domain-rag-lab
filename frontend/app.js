@@ -19,6 +19,7 @@
     market: 'KOSPI',
     bars: [],
     meta: {},
+    beta: null,
     bucket: 5,
     timer: null,
     loading: false,
@@ -954,6 +955,18 @@ KOSDAQ|웹젠|게임`,
     const tapeEl = document.getElementById('tickTape');
     if (tapeEl) tapeEl.innerHTML = tickState.bars.length ? renderTickTape(tickState.bars) : '';
 
+    const betaEl = document.getElementById('tickBeta');
+    if (betaEl) {
+      const beta = tickState.beta;
+      if (beta?.loading) {
+        betaEl.textContent = '베타 계산 중…';
+      } else if (beta?.value != null) {
+        betaEl.innerHTML = `<b>β ${Number(beta.value).toFixed(2)}</b><span>${escHtml(beta.benchmark)} · 최근 ${beta.window}거래일</span>`;
+      } else {
+        betaEl.textContent = beta?.error || '베타 데이터 없음';
+      }
+    }
+
     const updatedEl = document.getElementById('tickUpdatedAt');
     if (updatedEl) updatedEl.textContent = tickState.lastFetchedAt ? `마지막 갱신 ${fmtTime(tickState.lastFetchedAt)}` : '';
   }
@@ -981,6 +994,29 @@ KOSDAQ|웹젠|게임`,
     }
   }
 
+  async function fetchTickBeta() {
+    const requestedTicker = tickState.ticker;
+    const requestedMarket = tickState.market;
+    tickState.beta = { loading: true };
+    renderTickDashboardFrame();
+    try {
+      const response = await fetch(`/market/beta?ticker=${encodeURIComponent(requestedTicker)}&market=${encodeURIComponent(requestedMarket)}`);
+      const payload = await response.json();
+      if (requestedTicker !== tickState.ticker || requestedMarket !== tickState.market) return;
+      tickState.beta = {
+        value: payload.beta,
+        benchmark: payload.benchmark || 'KOSPI 200',
+        window: payload.window || 0,
+        error: payload.error || null,
+      };
+    } catch (_) {
+      if (requestedTicker !== tickState.ticker || requestedMarket !== tickState.market) return;
+      tickState.beta = { value: null, error: '베타 데이터를 불러오지 못했습니다.' };
+    } finally {
+      if (requestedTicker === tickState.ticker && requestedMarket === tickState.market) renderTickDashboardFrame();
+    }
+  }
+
   function stopTickDashboard() {
     if (tickState.timer) { clearInterval(tickState.timer); tickState.timer = null; }
   }
@@ -991,9 +1027,11 @@ KOSDAQ|웹젠|게임`,
     tickState.name = company.name;
     tickState.bars = [];
     tickState.meta = {};
+    tickState.beta = null;
     tickState.error = null;
     renderTickDashboardFrame();
     fetchIntraday();
+    fetchTickBeta();
   }
 
   function renderTickSearchResults(query) {
@@ -1069,6 +1107,7 @@ KOSDAQ|웹젠|게임`,
     bindTickDashboardEvents();
     stopTickDashboard();
     fetchIntraday();
+    fetchTickBeta();
     tickState.timer = setInterval(fetchIntraday, 20000);
   }
 
@@ -1180,6 +1219,7 @@ KOSDAQ|웹젠|게임`,
               <span id="tickSymbolLabel" class="tick-symbol">${escHtml(tickState.name)} <small>${escHtml(tickState.ticker)} · ${escHtml(tickState.market)}</small></span>
               <strong id="tickCurrentPrice" class="tick-price">-</strong>
               <em id="tickCurrentChange" class="tick-change flat">불러오는 중…</em>
+              <span id="tickBeta" class="tick-beta">베타 계산 중…</span>
             </div>
             <div class="tick-bucket-group" role="group" aria-label="분봉 집계 단위 선택">${bucketButtons}</div>
           </header>
@@ -1194,7 +1234,7 @@ KOSDAQ|웹젠|게임`,
             <span id="tickUpdatedAt" class="tick-updated"></span>
           </div>
           <ul id="tickTape" class="tick-tape" aria-label="최근 1분봉 내역"></ul>
-          <p class="tick-disclaimer"><i class="fa-solid fa-circle-info"></i> Yahoo Finance 공개 API 기준 1분봉 데이터이며 실제 체결과 몇 분 차이가 있을 수 있습니다. 개별 체결(틱) 단위 실시간 데이터가 아니며, 실제 매매 판단에 사용하지 마세요.</p>
+          <p class="tick-disclaimer"><i class="fa-solid fa-circle-info"></i> Yahoo Finance 공개 API 기준 1분봉 데이터이며 실제 체결과 몇 분 차이가 있을 수 있습니다. 베타는 KOSPI 200과의 최근 60거래일 일간 수익률로 추정한 참고값이며, 미래의 민감도를 보장하지 않습니다. 실제 매매 판단에 사용하지 마세요.</p>
         </article>
 
         <div class="tick-concept-grid">

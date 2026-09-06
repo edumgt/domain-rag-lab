@@ -10,10 +10,11 @@
     <title>03일차 | 4일 금융 이론 — 채권 · 코인</title>
     <link rel="stylesheet" href="assets/site.css?v=20260905-breaktime-modal-unified" />
     <link rel="stylesheet" href="assets/app-shell.css?v=20260905-modal-large-unified" />
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
     <style>
       /* 옵션 학습 단원은 01일차로 이동했습니다. */
-      /* 01~20은 3일차 본문, 그 뒤의 이전 옵션 단원은 숨깁니다. */
-      body[data-day="3"] .lesson-list > .lesson:nth-child(n + 21) { display: none; }
+      /* 00·00.05·00.1·02.5~20은 3일차 본문, 그 뒤의 이전 옵션 단원은 숨깁니다. */
+      body[data-day="3"] .lesson-list > .lesson:nth-child(n + 25) { display: none; }
       .bond-market-size-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
       .bond-market-size-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
       .bond-market-size-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
@@ -138,7 +139,7 @@
         role="navigation"
         aria-label="학습 서비스 메뉴"
       >
-        <a href="/?view=stocks"><i class="fa-solid fa-house"></i> 홈</a
+        <a href="/?view=home"><i class="fa-solid fa-house"></i> 홈</a
         ><a href="/?view=stocks"
           ><i class="fa-solid fa-building-columns"></i> 종목보기</a
         ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
@@ -181,6 +182,80 @@
           </div>
         </header>
         <section class="lesson-list">
+          <section class="lesson">
+            <span>00</span>
+            <div class="lesson-content">
+              <h2>기본 금융상품 지도</h2>
+              <div class="lesson-body">
+                <p>예금·적금은 안정성과 목적자금 관리에, 주식은 기업 성장에 참여하는 데 쓰입니다.</p>
+                <p>채권은 정부나 기업에 돈을 빌려주고 이자와 원금을 받는 구조입니다. ETF·펀드는 여러 자산을 한 상품에 담아 분산투자를 쉽게 합니다.</p>
+                <p>상품 이름보다 “무엇에 투자하는지, 비용은 얼마인지, 어떤 위험이 있는지”를 먼저 확인하세요.</p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="marketSizeTrigger"><i class="fa-solid fa-chart-pie"></i> 4개국 자산 분포 비교 보기</button>
+                  <small>주식·부동산·채권·금·가상자산의 구성비를 비교합니다.</small>
+                </p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="기본 금융상품 지도 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
+            <span>00.05</span>
+            <div class="lesson-content">
+              <h2>행동경제학으로 보는 주식과 채권</h2>
+              <div class="lesson-body">
+                <p>전통 경제학은 주식과 채권의 차이를 주로 기대수익과 위험의 관계로 설명합니다. 행동경제학은 여기에 <b>손실을 느끼는 방식, 가격을 확인하는 빈도, 돈에 붙이는 목적</b>이 투자 판단을 어떻게 바꾸는지 살펴봅니다. 아래 내용은 모든 투자자나 모든 주식·채권에 똑같이 적용되는 규칙이 아니라, 판단에서 나타날 수 있는 심리적 경향입니다.</p>
+                <h3>손실회피: 같은 금액이라도 손실을 더 크게 느끼기</h3>
+                <p>프로스펙트 이론은 사람들이 같은 크기의 이익보다 손실에 더 민감하게 반응할 수 있다고 설명합니다. 연구모형에서 손실의 심리적 가중치를 이익의 약 2.25배로 둔 사례가 널리 알려져 있지만, 실제 크기는 개인·상황에 따라 다릅니다. 주식은 가격을 자주 확인할수록 단기 손실을 반복해서 마주하기 쉬워 불안이나 성급한 매도 판단으로 이어질 수 있습니다.</p>
+                <p>채권은 만기와 이자 지급 일정이 있어 ‘만기까지 보유’라는 기준을 제공할 수 있습니다. 그러나 발행자가 상환하지 못하는 신용위험, 만기 전 매도할 때의 금리·신용스프레드 위험, 인플레이션 위험은 남습니다. 즉 만기 원금 상환은 발행자가 약속을 지킬 때의 이야기이며, 심리적 안정감이 실제 안전을 보장하지는 않습니다.</p>
+                <h3>처분효과: 이익은 너무 빨리, 손실은 너무 오래</h3>
+                <p><b>처분효과</b>는 이익 난 자산은 빨리 팔고 손실 난 자산은 오래 보유하려는 경향입니다. 주식에서는 가격이 오르면 빨리 이익을 확정하고, 내리면 손실을 인정하기 어려워 근거 없이 보유를 이어가는 모습으로 나타날 수 있습니다. 채권도 가격이 변하고 손실을 회피하려는 심리가 작동할 수 있지만, 만기·현금흐름이 정해져 있어 판단 기준이 다르게 느껴질 수 있습니다.</p>
+                <h3>심리적 회계와 프레이밍: 돈에 다른 이름 붙이기</h3>
+                <p>사람들은 같은 돈이라도 ‘성장 자금’, ‘노후 자금’, ‘비상자금’처럼 마음속 계좌를 나누어 관리합니다. 주식은 성장·기회 자금으로, 채권은 보존·현금흐름 자금으로 인식될 수 있어 같은 손실 가능성에도 받아들이는 방식이 달라집니다. 이런 구분은 목표 설정에 도움을 줄 수 있지만, 상품 이름만 보고 위험을 판단하면 안 됩니다.</p>
+                <h3>근시안적 손실회피와 주식 프리미엄 퍼즐</h3>
+                <p>벤아치(Benartzi)와 탈러(Thaler)는 손실회피와 잦은 평가를 결합한 <b>근시안적 손실회피</b>가 주식 프리미엄 퍼즐의 한 가지 설명이 될 수 있다고 제시했습니다. 장기 목표의 투자자도 계좌를 매일·매주 확인하면 단기 손실을 더 자주 경험하고, 위험자산을 피하려는 유인이 커질 수 있다는 관점입니다. 이는 주식의 높은 기대수익을 설명하려는 하나의 가설일 뿐, 유일한 정답이나 수익 보장 논리는 아닙니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>행동경제학 관점에서 주식·채권을 바라볼 때 생길 수 있는 차이</caption>
+                    <thead><tr><th scope="col">개념</th><th scope="col">주식에서 나타날 수 있는 반응</th><th scope="col">채권에서 나타날 수 있는 반응</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">손실회피</th><td>빈번한 가격 변동이 불안·패닉 매도를 자극할 수 있습니다.</td><td>만기 상환 프레임이 심리적 안정감을 줄 수 있으나, 신용·금리 위험은 남습니다.</td></tr>
+                      <tr><th scope="row">처분효과</th><td>작은 이익은 서둘러 실현하고 손실 종목은 근거 없이 붙들 수 있습니다.</td><td>만기와 이자 일정이 기준점이 될 수 있지만, 손실회피가 사라지는 것은 아닙니다.</td></tr>
+                      <tr><th scope="row">심리적 회계</th><td>성장·기회 자금으로 분류해 변동성을 과소평가할 수 있습니다.</td><td>안정·노후 자금으로 분류해 신용위험과 인플레이션 위험을 과소평가할 수 있습니다.</td></tr>
+                      <tr><th scope="row">평가 주기</th><td>짧은 주기의 확인은 단기 손실에 과민하게 반응하게 할 수 있습니다.</td><td>현금흐름 중심으로 보기 쉬우나, 시장가격 변동을 무시해서는 안 됩니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>실천적으로는 자산별 역할과 보유 기간, 감당할 수 있는 손실 범위를 먼저 정하고, 정해진 주기에만 포트폴리오를 점검하는 방법을 생각해 볼 수 있습니다. 다만 점검 주기를 줄이는 것이 모든 사람에게 적합한 것은 아니며, 자신의 현금 필요 시점과 위험 수준에 맞춰야 합니다.</p>
+                <p class="lesson-source">참고: <a href="https://www.anderson.ucla.edu/documents/areas/fac/accounting/myopic_loss_aversion.pdf" target="_blank" rel="noopener noreferrer">Benartzi·Thaler, 「Myopic Loss Aversion and the Equity Premium Puzzle」</a>, <a href="https://business.columbia.edu/sites/default/files-efs/pubfiles/555/prospect.pdf" target="_blank" rel="noopener noreferrer">Prospect Theory and Asset Prices</a>.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="행동경제학으로 보는 주식과 채권 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
+            <span>00.1</span>
+            <div class="lesson-content">
+              <h2>신용위험: 돈을 빌려준 뒤에도 남는 위험</h2>
+              <div class="lesson-body">
+                <p><b>신용위험(Credit Risk)</b>은 돈을 빌린 사람이나 기업이 약속한 대로 원금 또는 이자를 제때 갚지 못해, 돈을 빌려준 금융회사·투자자가 손실을 볼 위험입니다. 채무불이행 위험 또는 부도 위험(Default Risk)은 신용위험의 핵심 유형입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>신용위험이 손실로 이어지는 주요 경로</caption>
+                    <thead><tr><th scope="col">유형</th><th scope="col">무슨 일이 일어나나요?</th><th scope="col">채권 투자자에게 미치는 영향</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">채무불이행·부도</th><td>발행자나 차입자가 원금 또는 이자를 약속대로 지급하지 못합니다.</td><td>회수 절차와 담보·보증에 따라 손실 규모와 회수 시점이 달라집니다.</td></tr>
+                      <tr><th scope="row">신용등급 하락</th><td>재무상태·사업환경 악화 등으로 신용평가사의 등급이 낮아질 수 있습니다.</td><td>시장이 더 높은 수익률을 요구해 보유 채권 가격이 하락할 수 있습니다. 가격 하락 폭은 만기·금리·시장 상황에 따라 다릅니다.</td></tr>
+                      <tr><th scope="row">신용스프레드 확대</th><td>국채 등 상대적으로 안전하다고 여겨지는 채권보다 추가로 요구되는 금리가 커집니다.</td><td>새로 발행되는 채권의 수익률이 높아지면서 기존 채권의 시장가격이 내려갈 수 있습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>금융회사와 투자자는 어떻게 관리할까요?</h3>
+                <p><b>사전 심사와 담보</b>로 차입자의 상환능력·재무상태를 확인하고, 필요하면 담보와 약정을 설정합니다. 또 특정 기업·산업·국가에 대출이나 채권 투자가 몰리지 않도록 <b>분산</b>하고, 보유 뒤에도 재무정보·신용등급·담보가치와 한도를 계속 점검합니다.</p>
+                <p><b>신용부도스왑(CDS, Credit Default Swap)</b>은 특정 채무자나 채권의 신용사건 위험을 이전하는 장외 신용파생상품입니다. 보호매수자는 정기적으로 프리미엄을 내고, 계약에서 정한 신용사건이 발생하면 보호매도자로부터 약정된 방식으로 보상을 받습니다. 경제적으로는 ‘부도 보험’과 비슷해 보이지만, 일반 보험과 달리 장외 파생계약이며 보상 범위·정산 방식·상대방 신용위험을 계약별로 확인해야 합니다.</p>
+                <p>신용위험 관리는 위험을 완전히 없애는 방법이 아닙니다. 담보 가격이 함께 하락하거나 여러 차입자가 동시에 어려움을 겪을 수 있고, CDS 보호매도자가 이행하지 못할 위험도 남습니다. 따라서 수익률만 보지 말고 발행자, 만기, 담보·보증, 분산 정도와 거래상대방을 함께 확인해야 합니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="신용위험 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
           <section class="lesson">
             <span>01</span>
             <div class="lesson-content">
@@ -515,6 +590,44 @@
             </button>
           </section>
           <section class="lesson">
+            <span>02.5</span>
+            <div class="lesson-content">
+              <h2>채권 발행시장과 유통시장</h2>
+              <div class="lesson-body">
+                <p>채권시장은 새 채권을 발행해 자금을 조달하는 <b>발행시장(Primary Market)</b>과, 이미 발행된 채권을 투자자들이 사고파는 <b>유통시장(Secondary Market)</b>으로 나뉩니다. 발행시장은 정부·지방자치단체·기업·금융기관이 투자자로부터 자금을 받는 출발점이고, 유통시장은 투자자가 만기 전에도 채권을 현금화하고 시장이 수익률을 발견하는 곳입니다.</p>
+                <h3>발행시장: 새 채권으로 자금을 조달하는 곳</h3>
+                <p>발행자는 채권의 만기, 표면금리, 상환 방식과 발행 규모를 정해 투자자에게 자금을 빌립니다. 직접 투자자에게 판매할 수도 있지만, 실제로는 증권사 등 인수기관을 활용하는 경우가 많습니다. 인수기관이 발행분 전부를 먼저 인수하는 <b>총액인수</b>, 모집 후 남은 물량을 인수하는 <b>잔액인수</b>, 모집 업무만 대행하는 <b>위탁모집</b>은 발행 위험을 누가 어느 범위까지 부담하는지에서 차이가 납니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>채권 발행 방식의 기본 구분</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">어떻게 발행하나요?</th><th scope="col">누가 미매각 위험을 부담하나요?</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">직접발행</th><td>발행자가 중개기관을 거치지 않거나 제한적으로 활용해 투자자에게 직접 판매합니다.</td><td>원칙적으로 발행자가 부담합니다.</td></tr>
+                      <tr><th scope="row">총액인수</th><td>증권사·인수단이 발행 물량 전부를 인수한 뒤 투자자에게 재판매합니다.</td><td>인수기관이 부담합니다.</td></tr>
+                      <tr><th scope="row">잔액인수</th><td>우선 모집한 뒤 팔리지 않고 남은 물량을 인수합니다.</td><td>인수기관이 약정한 잔액 범위에서 부담합니다.</td></tr>
+                      <tr><th scope="row">위탁모집</th><td>증권사가 모집·판매 업무를 대행합니다.</td><td>통상 발행자가 부담합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>모집 대상을 넓게 공개하는 <b>공모</b>와 특정 투자자에게 조건을 협의해 판매하는 <b>사모</b>도 구분합니다. 실제 공모·사모의 법적 판단과 공시 의무는 모집 방식·권유 대상·예외 규정 등에 따라 달라질 수 있으므로, 단순한 인원수만으로 판단하지 말고 발행 공시와 투자설명서를 확인해야 합니다.</p>
+                <h3>유통시장: 채권의 가격과 수익률이 계속 바뀌는 곳</h3>
+                <p>유통시장에서는 기존 채권을 만기 전에 다른 투자자에게 팔거나 살 수 있습니다. 이 유동성이 있어야 최초 투자자도 필요할 때 현금화할 수 있고, 새 채권을 사려는 투자자도 시장 수익률을 참고할 수 있습니다. 유통시장에서 형성된 동일 만기·신용등급 채권의 수익률은 이후 새 채권의 발행 조건에도 영향을 줍니다.</p>
+                <p>기관 간 대량 거래는 채권 종류와 조건이 다양해 장외(OTC)에서 이루어지는 경우가 많고, 거래소(KRX) 시장에서는 정해진 방식으로 장내 거래도 이뤄집니다. 장외 거래가 ‘전화나 메신저만 쓰는 비공식 거래’라는 뜻은 아니며, 금융투자협회·증권사 시스템 등 전자적 인프라와 보고 체계를 통해 호가·매매 정보가 관리되기도 합니다. 다음 단원에서 장내채권과 장외채권의 차이를 이어서 살펴봅니다.</p>
+                <p>채권은 기관시장에서는 가격 대신 <b>수익률</b>을 중심으로 호가·협의하는 관행이 널리 쓰입니다. 수익률이 오르면 같은 현금흐름을 주는 기존 채권의 가격은 대체로 내려가고, 수익률이 내리면 가격은 대체로 오릅니다. 매매 뒤 결제일은 시장과 상품에 따라 달라지므로 실제 거래에서는 결제주기와 대금·채권 인도 방식을 확인해야 합니다.</p>
+                <figure class="concept-visual trade-futures">
+                  <p class="visual-kicker">BOND MARKET FLOW</p>
+                  <div class="visual-row">
+                    <div class="visual-card"><strong>발행자</strong><span>정부·기업 등이 채권을 새로 발행해 자금을 조달합니다.</span></div>
+                    <div class="visual-card blue"><strong>발행시장</strong><span>초기 투자자·인수기관이 새 채권을 인수합니다.</span></div>
+                    <div class="visual-card"><strong>유통시장</strong><span>투자자가 매매하며 유동성과 시장 수익률이 형성됩니다.</span></div>
+                  </div>
+                  <figcaption><b>유통시장의 가격·수익률</b>은 다음 발행의 조건에 영향을 주고, 발행시장의 공급은 다시 유통시장에 새 종목을 더합니다.</figcaption>
+                </figure>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="채권 발행시장과 유통시장 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
             <span>03</span>
             <div class="lesson-content">
               <h2>장내채권과 장외채권, 어디서 사는지의 차이</h2>
@@ -673,6 +786,23 @@
                   있습니다. 다만 금리 전망만으로 매수·매도를 결정하기보다 만기,
                   듀레이션, 신용위험, 유동성, 투자 기간을 함께 확인해야 합니다.
                 </p>
+                <h3>말킬(Burton G. Malkiel)의 채권가격 5대 정리</h3>
+                <p>버턴 G. 말킬은 1962년 논문에서 수익률 변화와 채권가격의 관계를 정리했습니다. 아래 원칙은 현금흐름·신용위험 등이 같은 일반적인 고정금리 채권을 비교하는 학습용 틀입니다. 실제 가격은 신용등급 변화, 옵션부 조항, 유동성, 수익률곡선의 모양에도 영향을 받습니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>금리·만기·쿠폰과 채권가격의 관계</caption>
+                    <thead><tr><th scope="col">정리</th><th scope="col">핵심 관계</th><th scope="col">왜 그런가요?</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">1. 금리와 가격</th><td>수익률이 오르면 가격은 내려가고, 수익률이 내리면 가격은 오르는 방향으로 움직입니다.</td><td>기존의 고정 이자 현금흐름을 새 시장수익률로 할인해 현재가치를 계산하기 때문입니다.</td></tr>
+                      <tr><th scope="row">2. 만기와 민감도</th><td>다른 조건이 같다면 만기가 길수록 같은 수익률 변화에 가격 변동 폭이 커집니다.</td><td>먼 미래의 현금흐름일수록 할인율 변화의 영향이 더 크게 누적됩니다.</td></tr>
+                      <tr><th scope="row">3. 체감하는 증가</th><td>만기가 길어질수록 민감도는 커지지만, 만기를 더 늘릴 때마다 증가하는 속도는 대체로 둔화됩니다.</td><td>할인 효과는 멀어질수록 계속 커지지만 그 추가 효과는 점차 작아지는 형태를 보입니다.</td></tr>
+                      <tr><th scope="row">4. 볼록성</th><td>같은 폭의 수익률 하락과 상승을 비교하면, 가격 상승 폭이 가격 하락 폭보다 큰 경향이 있습니다.</td><td>가격-수익률 관계가 직선이 아니라 볼록한 곡선이기 때문입니다.</td></tr>
+                      <tr><th scope="row">5. 쿠폰과 민감도</th><td>같은 만기·수익률 조건에서는 표면이율이 낮을수록 가격 민감도가 커지는 경향이 있습니다.</td><td>중간 이자 현금흐름이 적어 원금 회수 시점의 비중이 커지고, 듀레이션이 길어지기 때문입니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>이 정리는 <b>듀레이션</b>과 <b>볼록성</b>을 이해하는 출발점입니다. 금리 하락 가능성을 염두에 둘 때는 장기·저쿠폰 채권이 더 크게 오를 수 있는 반면, 금리 상승 때는 더 큰 가격 하락을 겪을 수 있습니다. 이는 방향 예측을 위한 권유가 아니라, 보유 기간과 감당 가능한 가격 변동을 계약 조건과 함께 점검해야 한다는 뜻입니다.</p>
+                <p class="lesson-source">참고: <a href="https://ideas.repec.org/a/oup/qjecon/v76y1962i2p197-218..html" target="_blank" rel="noopener noreferrer">Malkiel, 「Expectations, Bond Prices, and the Term Structure of Interest Rates」(1962)</a>.</p>
                 <p class="lesson-video-cta">
                   <button type="button" class="lesson-video-link" data-bond-duration-trigger>
                     <i class="fa-solid fa-scale-balanced"></i> 금리·듀레이션 시뮬레이터 열기
@@ -1856,6 +1986,20 @@
         금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.
       </footer>
     </main>
+    <div class="glossary-modal market-size-modal" id="marketSizeModal" hidden>
+      <div class="glossary-modal__backdrop" data-market-size-close></div>
+      <section class="glossary-modal__dialog market-size-dialog" role="dialog" aria-modal="true" aria-labelledby="marketSizeTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-market-size-close>×</button>
+        <h2 id="marketSizeTitle">한국·중국·일본·미국 자산 규모 비교</h2>
+        <div class="market-size-panel market-size-distribution">
+          <p class="market-size-intro">각 나라의 자산 구성을 <b>100으로 환산한 학습용 비교 지수</b>입니다. 한 나라 안에서 어떤 자산군에 더 많이 배분되는지 살펴보세요.</p>
+          <div id="marketSizeDistributionChart" class="market-size-distribution-chart" role="img" aria-label="한국, 중국, 일본, 미국의 주식, 부동산, 채권, 금, 가상자산, 현금 및 기타 자산 분포 비교 차트"></div>
+          <div class="market-size-country-grid" id="marketSizeCountryGrid" aria-label="국가별 주요 자산군 요약"></div>
+          <p class="market-size-note"><b>읽는 법:</b> 막대 하나가 한 나라의 자산 구성 100입니다. 부동산 비중이 큰 나라는 자산 가격 변동과 유동성의 영향을 더 크게 받을 수 있고, 주식·채권 비중이 큰 나라는 금융시장 변동의 영향을 더 직접적으로 받을 수 있습니다.</p>
+          <p class="market-size-source">교육용 비교 지수입니다. 국가마다 가계·민간·시장 통계의 범위와 작성 시점이 달라 절대 규모를 합산하거나 투자 판단의 근거로 사용하면 안 됩니다. 금·가상자산은 공식 통계에서 별도 집계가 제한적인 경우가 많아 소규모 자산군으로 단순화했습니다.</p>
+        </div>
+      </section>
+    </div>
     <div class="glossary-modal bond-market-size-modal" id="bondMarketSizeModal" hidden>
       <div class="glossary-modal__backdrop" data-bond-market-size-close></div>
       <section class="glossary-modal__dialog bond-market-size-dialog" role="dialog" aria-modal="true" aria-labelledby="bondMarketSizeTitle">
@@ -2159,6 +2303,49 @@
         document.addEventListener("keydown", (event) => {
           if (event.key === "Escape") close();
         });
+      })();
+    </script>
+    <script>
+      (() => {
+        const DATA = {
+          countries: ["한국", "중국", "일본", "미국"],
+          series: [
+            { name: "주식", color: "#2563eb", data: [17, 10, 14, 33] },
+            { name: "부동산", color: "#f59e0b", data: [60, 62, 37, 28] },
+            { name: "채권", color: "#0f9f78", data: [8, 7, 14, 16] },
+            { name: "금", color: "#d8a600", data: [1, 2, 2, 2] },
+            { name: "가상자산", color: "#7c3aed", data: [2, 1, 1, 2] },
+            { name: "현금·기타", color: "#94a3b8", data: [12, 18, 32, 19] },
+          ],
+        };
+        const modal = document.getElementById("marketSizeModal");
+        const trigger = document.getElementById("marketSizeTrigger");
+        if (!modal || !trigger) return;
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const grid = document.getElementById("marketSizeCountryGrid");
+        let chart;
+        grid.innerHTML = DATA.countries.map((country, index) => {
+          const top = DATA.series.map((asset) => ({ ...asset, value: asset.data[index] })).sort((a, b) => b.value - a.value).slice(0, 2);
+          return `<article class="market-size-country-card"><h3>${country}</h3><p><i style="background:${top[0].color}"></i>${top[0].name} <strong>${top[0].value}%</strong></p><p><i style="background:${top[1].color}"></i>${top[1].name} <strong>${top[1].value}%</strong></p></article>`;
+        }).join("");
+        const renderChart = () => {
+          const target = document.getElementById("marketSizeDistributionChart");
+          if (!window.ApexCharts || chart) return;
+          chart = new ApexCharts(target, {
+            chart: { type: "bar", height: 360, stacked: true, stackType: "100%", toolbar: { show: false }, fontFamily: "inherit" },
+            series: DATA.series.map(({ name, data }) => ({ name, data })), colors: DATA.series.map(({ color }) => color),
+            plotOptions: { bar: { horizontal: true, barHeight: "54%", borderRadius: 3 } }, dataLabels: { enabled: false },
+            xaxis: { categories: DATA.countries, max: 100, labels: { formatter: (value) => `${value}%` } },
+            yaxis: { labels: { style: { fontSize: "14px", fontWeight: 700 } } },
+            legend: { position: "bottom", fontSize: "13px", markers: { size: 10 }, itemMargin: { horizontal: 10, vertical: 4 } },
+            grid: { borderColor: "#dbe4f0", strokeDashArray: 3 }, tooltip: { y: { formatter: (value) => `${value}%` } }, fill: { opacity: 1 },
+          });
+          chart.render();
+        };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        trigger.addEventListener("click", () => { modal.hidden = false; renderChart(); closeButton?.focus(); });
+        modal.querySelectorAll("[data-market-size-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
       })();
     </script>
     <script>
