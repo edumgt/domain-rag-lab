@@ -1266,10 +1266,10 @@ KOSDAQ|웹젠|게임`,
               <strong id="tickCurrentPrice" class="tick-price">-</strong>
               <em id="tickCurrentChange" class="tick-change flat">불러오는 중…</em>
               <span id="tickBeta" class="tick-beta">베타 계산 중…</span>
-              <p id="tickBetaExplain" class="tick-beta-explain"></p>
             </div>
             <div class="tick-bucket-group" role="group" aria-label="분봉 집계 단위 선택">${bucketButtons}</div>
           </header>
+          <p id="tickBetaExplain" class="tick-beta-explain"></p>
           <div class="tick-chart-stage">
             <div id="tickChartWrap" class="tick-chart-wrap"></div>
             <div id="tickChartTooltip" class="tick-chart-tooltip" role="status"></div>

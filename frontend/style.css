@@ -481,6 +481,8 @@ html, body {
 .tick-guide-close:hover { color: var(--accent); border-color: var(--accent); }
 .tick-guide-body { flex: 1; overflow-y: auto; padding: 22px 26px 36px; }
 .tick-guide-body .tick-concept-grid { grid-template-columns: 1fr; margin-top: 0; }
+.tick-guide-body .option-chain-scroll { overflow-x: visible; }
+.tick-guide-body .option-chain-table { min-width: 0; width: 100%; table-layout: fixed; }
 @media (max-width: 640px) {
   .tick-guide-panel { width: 100%; }
 }
@@ -524,7 +526,7 @@ html, body {
 .tick-beta { display: flex; align-items: baseline; gap: 7px; width: fit-content; margin-top: 10px; padding: 5px 9px; border: 1px solid #c7d7f5; border-radius: 999px; color: #334155; background: #f8fbff; font-size: 13px; line-height: 1.3; }
 .tick-beta b { color: #1d4ed8; font-size: 14px; }
 .tick-beta span { color: var(--text-muted); }
-.tick-beta-explain { max-width: 520px; margin: 8px 0 0; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text-2); font-size: 13.5px; line-height: 1.6; }
+.tick-beta-explain { margin: 14px 0 0; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text-2); font-size: 13.5px; line-height: 1.6; }
 .tick-beta-explain:empty { display: none; }
 .tick-beta-explain b { color: var(--text); }
 .tick-bucket-group { display: inline-flex; gap: 6px; padding: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; }
