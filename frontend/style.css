@@ -445,9 +445,50 @@ html, body {
 .section-intro { max-width: none; margin: -4px 0 20px; color: var(--text-2); font-size: 16px; }
 .section-intro strong { color: var(--accent); }
 
+/* ===== Home live layout (assets + chart + guide side by side) ===== */
+.home-live-layout { display: grid; grid-template-columns: minmax(260px, 320px) minmax(420px, 1fr) minmax(280px, 360px); align-items: start; gap: 24px; margin: 0 0 46px; }
+.home-live-layout .content-section { margin: 0; }
+.home-page > .home-live-layout:first-child { margin-top: 0; }
+.home-live-chart { position: sticky; top: 0; }
+@media (max-width: 1280px) {
+  .home-live-layout { grid-template-columns: minmax(260px, 320px) 1fr; }
+  .home-live-guide { grid-column: 1 / -1; }
+}
+@media (max-width: 980px) {
+  .home-live-layout { grid-template-columns: 1fr; }
+  .home-live-chart { position: static; }
+}
+
+/* ===== Tick guide trigger + offcanvas ===== */
+.tick-guide-trigger { display: flex; align-items: center; gap: 12px; width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); text-align: left; cursor: pointer; font: inherit; color: inherit; transition: .15s; }
+.tick-guide-trigger:hover { border-color: var(--accent); transform: translateY(-2px); }
+.tick-guide-trigger-icon { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 auto; border-radius: 999px; background: var(--accent-dim, #eff6ff); color: var(--accent); font-size: 17px; }
+.tick-guide-trigger-text { flex: 1; min-width: 0; }
+.tick-guide-trigger-text b { display: block; font-size: 15px; color: var(--text); }
+.tick-guide-trigger-text small { display: block; margin-top: 3px; color: var(--text-muted); font-size: 13px; line-height: 1.45; }
+.tick-guide-trigger-arrow { color: var(--text-muted); font-size: 13px; }
+
+.tick-guide-modal { position: fixed; inset: 0; z-index: 110; visibility: hidden; pointer-events: none; }
+.tick-guide-modal.open { visibility: visible; pointer-events: auto; }
+.tick-guide-backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, .48); opacity: 0; transition: opacity .22s ease; }
+.tick-guide-modal.open .tick-guide-backdrop { opacity: 1; }
+.tick-guide-panel { position: absolute; top: 0; right: 0; bottom: 0; display: flex; flex-direction: column; width: min(600px, 94vw); background: var(--surface); box-shadow: -16px 0 48px rgba(15, 23, 42, .2); transform: translateX(100%); transition: transform .28s ease; }
+.tick-guide-modal.open .tick-guide-panel { transform: translateX(0); }
+.tick-guide-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 26px 26px 18px; border-bottom: 1px solid var(--border); }
+.tick-guide-kicker { display: block; margin-bottom: 7px; color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .11em; }
+.tick-guide-header h2 { margin: 0; font-size: 23px; line-height: 1.32; }
+.tick-guide-close { display: grid; place-items: center; width: 36px; height: 36px; flex: 0 0 auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text-2); cursor: pointer; }
+.tick-guide-close:hover { color: var(--accent); border-color: var(--accent); }
+.tick-guide-body { flex: 1; overflow-y: auto; padding: 22px 26px 36px; }
+.tick-guide-body .tick-concept-grid { grid-template-columns: 1fr; margin-top: 0; }
+@media (max-width: 640px) {
+  .tick-guide-panel { width: 100%; }
+}
+
 /* ===== Home dashboard asset grid ===== */
 .dashboard-asset-grid-section { margin-bottom: 40px; }
 .dashboard-asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.home-live-assets .dashboard-asset-grid { grid-template-columns: 1fr; }
 .dashboard-asset-card { display: block; width: 100%; text-align: left; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); cursor: pointer; font: inherit; color: inherit; transition: .15s; }
 .dashboard-asset-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .dashboard-asset-head { display: flex; flex-direction: column; margin-bottom: 10px; }
@@ -483,6 +524,9 @@ html, body {
 .tick-beta { display: flex; align-items: baseline; gap: 7px; width: fit-content; margin-top: 10px; padding: 5px 9px; border: 1px solid #c7d7f5; border-radius: 999px; color: #334155; background: #f8fbff; font-size: 13px; line-height: 1.3; }
 .tick-beta b { color: #1d4ed8; font-size: 14px; }
 .tick-beta span { color: var(--text-muted); }
+.tick-beta-explain { max-width: 520px; margin: 8px 0 0; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text-2); font-size: 13.5px; line-height: 1.6; }
+.tick-beta-explain:empty { display: none; }
+.tick-beta-explain b { color: var(--text); }
 .tick-bucket-group { display: inline-flex; gap: 6px; padding: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; }
 .tick-bucket-btn { padding: 7px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--text-2); font-size: 14.5px; font-weight: 750; cursor: pointer; transition: .15s; }
 .tick-bucket-btn:hover { color: var(--text); }

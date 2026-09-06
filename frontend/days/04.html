@@ -67,10 +67,17 @@
       .fx-sim-summary strong { display: block; margin-top: 5px; color: var(--ink); font-size: 18px; }
       .fx-sim-summary strong.up { color: #b42318; }.fx-sim-summary strong.down { color: #1769e0; }
       .fx-sim-note { margin: 13px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
-      .slippage-visual { margin: 18px 0; padding: 17px; border: 1px solid #ffd0c7; border-radius: 12px; background: #fffaf8; }
+      .slippage-visual { max-width: 720px; margin: 18px auto; padding: 14px; border: 1px solid #ffd0c7; border-radius: 12px; background: #fffaf8; }
       .slippage-visual figcaption { margin-top: 10px; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
       .slippage-visual figcaption b { color: var(--ink); }
       .slippage-visual svg { display: block; width: 100%; height: auto; }
+      .inline-term-trigger { margin: 0; padding: 0; border: 0; border-bottom: 1px dashed var(--blue); background: transparent; color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
+      .inline-term-trigger:hover, .inline-term-trigger:focus-visible { color: var(--blue); outline: none; }
+      .sunk-cost-dialog { max-width: 660px; }
+      .sunk-cost-dialog p { color: #3e4c67; line-height: 1.75; }
+      .sunk-cost-compare { width: 100%; margin: 16px 0; border-collapse: collapse; font-size: 14.5px; }
+      .sunk-cost-compare th, .sunk-cost-compare td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+      .sunk-cost-compare th { color: var(--blue); background: #eef3ff; }
       .forecast-breaktime-dialog { width: min(940px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }
       .forecast-breaktime-dialog h3 { margin: 24px 0 9px; color: var(--ink); font-size: 19px; }.forecast-breaktime-dialog h3:first-of-type { margin-top: 0; }
       .forecast-breaktime-dialog p, .forecast-breaktime-dialog li { color: #405572; font-size: 14.5px; line-height: 1.7; }
@@ -87,7 +94,7 @@
     <script defer src="assets/visuals.js?v=20260905-modal-fit-viewport"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260905-history"></script>
-    <script defer src="assets/glossary-drawer.js?v=20260905-all-terms"></script>
+    <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
   </head>
   <body data-day="4">
     <header class="day-appbar">
@@ -628,6 +635,57 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
+          </section><section class="lesson"><span>12.03</span>
+            <div class="lesson-content">
+              <h2>헤지: 가격 위험에 치는 금융의 울타리</h2>
+              <div class="lesson-body">
+                <p><strong>헤지(Hedge)</strong>는 금융업 종사자 개인의 직무상 위험을 피하는 행위가 아니라, 기업·투자자가 이미 보유했거나 앞으로 필요로 하는 자산의 <strong>가격·환율·금리 변동 위험</strong>을 줄이기 위해 반대 성격의 거래를 함께 하는 위험관리 방법입니다. 울타리를 친다는 말처럼 한쪽 자산의 손실을 다른 거래의 이익으로 일부 상쇄하는 것이 목표입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>무엇이 걱정되는지에 따라 달라지는 헤지</caption>
+                    <thead><tr><th scope="col">위험 요인</th><th scope="col">노출 사례</th><th scope="col">대표적 헤지 방식</th><th scope="col">의도한 효과</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">환율 하락</th><td>수출기업이 6개월 뒤 달러를 받을 예정</td><td>선물환 매도 등</td><td>달러 가치 하락으로 원화 수입이 줄어드는 위험 완화</td></tr>
+                      <tr><th scope="row">주가 하락</th><td>주식 포트폴리오를 보유</td><td>지수선물 매도 또는 풋옵션 매수</td><td>시장 하락 시 파생상품의 이익으로 현물 손실 일부 상쇄</td></tr>
+                      <tr><th scope="row">금리 상승</th><td>변동금리로 빌린 기업</td><td>금리스왑(IRS) 등</td><td>이자비용이 급격히 늘어나는 위험 완화</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>반대로 종사자의 과실·법적 책임·내부정보 오남용 같은 <strong>직무상 위험</strong>은 내부통제, 준법감시, 교육, 배상책임보험 등으로 관리합니다. 이름은 비슷해도 시장 가격 위험을 다루는 헤지와는 구분해야 합니다.</p>
+                <h3>선물은 가격을 고정하고, 옵션은 보험료를 내고 하락을 막습니다</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">구분</th><th scope="col">선물(Futures) 헤지</th><th scope="col">옵션(Options) 헤지</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">핵심 비유</th><td>미래 가격을 미리 정하는 예약</td><td>불리한 가격만 방어하는 보험</td></tr>
+                      <tr><th scope="row">하락이 걱정될 때</th><td>농가·보유 투자자가 선물을 매도합니다.</td><td>주식 보유자가 풋옵션을 매수합니다.</td></tr>
+                      <tr><th scope="row">상승이 걱정될 때</th><td>원자재를 살 기업이 선물을 매수합니다.</td><td>원자재를 살 기업이 콜옵션을 매수합니다.</td></tr>
+                      <tr><th scope="row">대가와 기회</th><td>별도 옵션 프리미엄은 없지만, 유리한 가격 변동의 이익도 대체로 포기합니다.</td><td>프리미엄을 먼저 내지만, 가격이 유리하면 권리를 쓰지 않고 시장 가격의 이익을 누릴 수 있습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><strong>예시:</strong> 100만 원짜리 주식을 보유한 사람이 100만 원에 팔 수 있는 풋옵션을 3만 원에 샀다고 가정해 보세요. 주가가 60만 원으로 내려가면 풋옵션이 하락 손실을 방어하는 역할을 합니다. 주가가 150만 원으로 오르면 옵션은 행사하지 않고 주식의 상승 이익을 누리되, 프리미엄 3만 원은 비용으로 남습니다. 실제 방어 범위는 행사가·만기·계약 수량·기초자산의 움직임에 따라 달라집니다.</p>
+                <h3>좋은 전망이 있어도 헤지하는 이유</h3>
+                <p>장기 전망이 좋아도 경기침체·전쟁·금리 변화 같은 충격으로 가격은 먼저 크게 흔들릴 수 있습니다. 헤지는 수익률의 일부나 비용을 감수하는 대신, 큰 손실과 현금흐름 압박을 줄여 계획을 유지할 여지를 만들려는 선택입니다. 다만 전망이 맞아도 헤지 비용 때문에 수익은 줄 수 있고, 헤지 비율이 맞지 않으면 손실을 완전히 상쇄하지 못할 수 있습니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>손실 뒤 원금으로 돌아오기 위해 필요한 수익률</caption>
+                    <thead><tr><th scope="col">손실률</th><th scope="col">남은 자산 비율</th><th scope="col">원금 회복에 필요한 수익률</th></tr></thead>
+                    <tbody><tr><th scope="row">-10%</th><td>90%</td><td>+11.1%</td></tr><tr><th scope="row">-30%</th><td>70%</td><td>+42.9%</td></tr><tr><th scope="row">-50%</th><td>50%</td><td>+100.0%</td></tr><tr><th scope="row">-80%</th><td>20%</td><td>+400.0%</td></tr></tbody>
+                  </table>
+                </div>
+                <p>이 때문에 헤지는 최대낙폭(MDD)을 낮추고, 급락 때 강제 매도나 자금 부족을 피하며, 방어 포지션에서 난 이익을 재조정 재원으로 활용하는 데 도움이 될 수 있습니다. 그러나 모든 위험을 없애지는 못합니다. 현물과 헤지 수단의 가격이 다르게 움직이는 <strong>베이시스 위험</strong>, 만기·유동성·거래상대방·증거금·옵션 프리미엄의 위험도 따로 남습니다.</p>
+                <h3>같은 파생상품도 헤지와 투기는 다릅니다</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">구분</th><th scope="col">헤지</th><th scope="col">투기</th></tr></thead>
+                    <tbody><tr><th scope="row">출발점</th><td>이미 가진 주식·원자재·외화·부채의 가격 위험</td><td>가격 방향 자체로 수익을 내려는 판단</td></tr><tr><th scope="row">포지션 관계</th><td>기존 노출과 반대 또는 상쇄되는 방향</td><td>현물 노출 없이 파생상품만 단독 보유하거나 기존 노출을 더 키우는 방향</td></tr><tr><th scope="row">목표</th><td>변동성과 손실 가능성 완화</td><td>방향 예측에 따른 수익 추구</td></tr></tbody>
+                  </table>
+                </div>
+                <p>파생상품이 자동으로 안전해지는 것은 아닙니다. 계약 단위와 레버리지 때문에 작은 가격 변화도 큰 손익으로 이어질 수 있으며, 선물은 추가 증거금과 원금 초과 손실 가능성, 옵션 매도는 큰 손실 가능성을 가질 수 있습니다. 개인 투자자는 직접 거래 전 상품설명서, 증거금·만기·최대 손실, 거래 가능 요건을 확인하고 이해하지 못한 계약은 거래하지 않는 것이 원칙입니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="헤지: 가격 위험에 치는 금융의 울타리 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section><section class="lesson"><span>12.05</span>
             <div class="lesson-content">
               <h2>랜덤워크와 효율적 시장 가설: 퀀트가 먼저 확인하는 질문</h2>
@@ -1349,7 +1407,7 @@
             <div class="lesson-content">
               <h2>선택과 경쟁: 기회비용·메기 효과·피그말리온 효과</h2>
               <div class="lesson-body">
-                <p><strong>기회비용(Opportunity Cost)</strong>은 하나를 선택하면서 포기한 대안 중 가장 큰 가치를 뜻합니다. 예금·채권·주식 중 하나를 고를 때는 선택한 상품의 기대수익만이 아니라, 포기한 대안의 수익·유동성·위험을 함께 비교해야 합니다. 이미 지출한 돈이나 과거 손실은 되돌릴 수 없는 <strong>매몰비용</strong>이므로 기회비용과 구분합니다.</p>
+                <p><strong>기회비용(Opportunity Cost)</strong>은 하나를 선택하면서 포기한 대안 중 가장 큰 가치를 뜻합니다. 예금·채권·주식 중 하나를 고를 때는 선택한 상품의 기대수익만이 아니라, 포기한 대안의 수익·유동성·위험을 함께 비교해야 합니다. 이미 지출한 돈이나 과거 손실은 되돌릴 수 없는 <button type="button" class="inline-term-trigger" id="sunkCostTrigger" aria-haspopup="dialog">매몰비용</button>이므로 기회비용과 구분합니다.</p>
                 <p><strong>메기 효과(Catfish Effect)</strong>는 강한 경쟁자의 등장으로 기존 참여자가 더 효율적·혁신적으로 움직인다는 비유입니다. 새 플랫폼·기술·저가 경쟁자가 등장했을 때 기업의 비용 구조와 서비스가 개선될 수 있지만, 경쟁 심화가 모든 기업의 이익 증가를 보장하지는 않습니다. 투자 분석에서는 경쟁사가 늘어난 사실뿐 아니라 가격 경쟁, 점유율, 수익성 변화를 확인해야 합니다.</p>
                 <p><strong>피그말리온 효과(Pygmalion Effect)</strong>는 긍정적 기대와 지원이 행동·성과에 영향을 줄 수 있다는 심리학적 개념입니다. 시장에서는 투자자 기대가 자금 조달·인재 확보·주가에 영향을 주는 자기실현적 과정으로 비유되기도 합니다. 다만 기대만으로 기업 실적이 만들어지는 것은 아니므로, 매출·현금흐름·경쟁력 같은 확인 가능한 자료와 분리해서 판단해야 합니다.</p>
               </div>
@@ -2169,6 +2227,23 @@
         <p class="hmm-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 실제 HMM은 긴 시계열을 학습해 상태 수·전이확률·관측분포를 추정합니다. 여기의 확률은 투자 신호나 예측값이 아니며, 실제 전략은 표본 밖 검증·비용·손실 한도를 포함해야 합니다.</p>
       </section>
     </div>
+    <div class="glossary-modal" id="sunkCostModal" hidden>
+      <div class="glossary-modal__backdrop" data-sunk-cost-close></div>
+      <section class="glossary-modal__dialog sunk-cost-dialog" role="dialog" aria-modal="true" aria-labelledby="sunkCostTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-sunk-cost-close>×</button>
+        <p class="glossary-modal__label">ECONOMICS · 매몰비용</p>
+        <h2 id="sunkCostTitle">매몰비용: 이미 되돌릴 수 없는 과거의 비용</h2>
+        <p><b>매몰비용(Sunk Cost)</b>은 이미 지출했거나 발생해서, 지금 어떤 선택을 하더라도 되돌릴 수 없는 돈·시간·노력을 말합니다. 앞으로의 선택에서는 ‘이미 얼마나 잃었나’보다 <b>오늘부터 얻을 수 있는 편익과 새로 들어갈 비용</b>을 비교하는 것이 핵심입니다.</p>
+        <table class="sunk-cost-compare">
+          <thead><tr><th>구분</th><th>판단에 쓰는 질문</th></tr></thead>
+          <tbody>
+            <tr><td><b>매몰비용</b></td><td>이미 낸 비용·과거 손실은 되돌릴 수 있는가? → 아니라면 현재 선택의 직접 기준이 아닙니다.</td></tr>
+            <tr><td><b>기회비용</b></td><td>지금 이 선택을 계속하면 포기하는 가장 좋은 대안은 무엇인가? → 앞으로의 선택에서 비교합니다.</td></tr>
+          </tbody>
+        </table>
+        <p><b>투자 예시:</b> 100만 원에 산 주식이 60만 원이 되었을 때, 매수가 100만 원이라는 사실은 이미 발생한 손실입니다. ‘본전이 될 때까지’ 보유할지를 정하기보다, 지금 60만 원을 이 종목에 계속 둘 때의 기대수익·위험을 다른 투자안과 비교해야 합니다. 단, 앞으로 발생할 세금·수수료·현금흐름은 아직 바꿀 수 있는 비용이므로 판단에 포함합니다.</p>
+      </section>
+    </div>
 
     <script>
       document.querySelectorAll("[data-lesson-toggle]").forEach((button) => {
@@ -2183,6 +2258,25 @@
           button.title = collapsed ? "내용 펼치기" : "내용 접기";
         });
       });
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("sunkCostModal");
+        const trigger = document.getElementById("sunkCostTrigger");
+        if (!modal || !trigger) return;
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const open = () => { modal.hidden = false; closeButton?.focus(); };
+        const close = () => {
+          if (modal.hidden) return;
+          modal.hidden = true;
+          trigger.focus();
+        };
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-sunk-cost-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") close();
+        });
+      })();
     </script>
     <script>
       (() => {

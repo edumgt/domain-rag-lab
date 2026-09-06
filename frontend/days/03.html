@@ -8,7 +8,7 @@
       content="금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다."
     />
     <title>03일차 | 4일 금융 이론 — 채권 · 코인</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260905-breaktime-modal-unified" />
+    <link rel="stylesheet" href="assets/site.css?v=20260906-current-quality-bonds" />
     <link rel="stylesheet" href="assets/app-shell.css?v=20260905-modal-large-unified" />
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
     <style>
@@ -120,7 +120,7 @@
     <script defer src="assets/visuals.js"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260905-history"></script>
-    <script defer src="assets/glossary-drawer.js?v=20260905-all-terms"></script>
+    <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
   </head>
   <body data-day="3">
     <header class="day-appbar">
@@ -780,6 +780,16 @@
                   경향이 있습니다. 따라서 금리 방향에 대한 전망이 빗나갈 때 장기채는
                   단기채보다 큰 가격 손실을 겪을 수 있습니다.
                 </p>
+                <h3>채찍 비유로 보는 듀레이션의 민감도</h3>
+                <p>금리가 오르면 새로 발행되는 채권의 수익률이 높아집니다. 그러면 낮은 쿠폰을 주는 기존 채권은 새 채권과 경쟁하려고 가격이 내려가며, 그 결과 기존 채권을 사는 사람의 만기수익률이 시장 수준에 가까워집니다. 반대로 시장금리가 내려가면 기존의 높은 이자 흐름이 상대적으로 매력적이어서 가격이 오르는 방향으로 움직입니다.</p>
+                <div class="concept-visual">
+                  <p class="visual-kicker">WHIP ANALOGY · 채찍 비유</p>
+                  <div class="flow-visual">
+                    <div class="step highlight"><i class="fa-solid fa-hand"></i>금리 변동<small>손잡이를 1%p 움직이는 힘</small></div><i class="fa-solid fa-arrow-right flow-arrow"></i><div class="step"><i class="fa-solid fa-ruler-horizontal"></i>단기채·짧은 듀레이션<small>손잡이 가까이: 가격 변화가 상대적으로 작음</small></div><i class="fa-solid fa-arrow-right flow-arrow"></i><div class="step"><i class="fa-solid fa-wind"></i>장기채·긴 듀레이션<small>채찍 끝처럼: 가격 변화가 더 크게 증폭</small></div>
+                  </div>
+                  <figcaption><b>핵심:</b> 금리 변화 폭이 같아도 듀레이션이 길수록 채권 가격의 반대 방향 움직임이 커집니다.</figcaption>
+                </div>
+                <p>숫자로 빠르게 가늠할 때는 <b>가격 변화율 ≈ −수정듀레이션 × 수익률 변화</b>를 씁니다. 예를 들어 수정듀레이션이 2년인 채권은 수익률이 1%p 오를 때 가격이 약 2% 내려가고, 수정듀레이션이 20년이면 약 20% 내려가는 것으로 먼저 계산합니다. 이는 쿠폰·수익률곡선·신용위험·볼록성을 단순화한 근사치이므로 실제 가격 변동은 달라질 수 있습니다.</p>
                 <p>
                   금리 하락을 예상하면 장기채의 가격 상승 가능성을, 금리 상승을
                   예상하면 장기채의 가격 하락 위험을 검토하는 식으로 이해할 수
@@ -787,7 +797,7 @@
                   듀레이션, 신용위험, 유동성, 투자 기간을 함께 확인해야 합니다.
                 </p>
                 <h3>말킬(Burton G. Malkiel)의 채권가격 5대 정리</h3>
-                <p>버턴 G. 말킬은 1962년 논문에서 수익률 변화와 채권가격의 관계를 정리했습니다. 아래 원칙은 현금흐름·신용위험 등이 같은 일반적인 고정금리 채권을 비교하는 학습용 틀입니다. 실제 가격은 신용등급 변화, 옵션부 조항, 유동성, 수익률곡선의 모양에도 영향을 받습니다.</p>
+                <p><a href="https://faculty.princeton.edu/people/burton-gordon-malkiel" target="_blank" rel="noopener noreferrer">버턴 G. 말킬(Burton G. Malkiel)</a>은 1962년 논문 <a href="https://www.jstor.org/stable/1880816" target="_blank" rel="noopener noreferrer">「Expectations, Bond Prices, and the Term Structure of Interest Rates」</a>에서 수익률 변화와 채권가격의 관계를 정리했습니다. 아래 원칙은 현금흐름·신용위험 등이 같은 일반적인 고정금리 채권을 비교하는 학습용 틀입니다. 실제 가격은 신용등급 변화, 옵션부 조항, 유동성, 수익률곡선의 모양에도 영향을 받습니다.</p>
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
                     <caption>금리·만기·쿠폰과 채권가격의 관계</caption>
@@ -802,7 +812,7 @@
                   </table>
                 </div>
                 <p>이 정리는 <b>듀레이션</b>과 <b>볼록성</b>을 이해하는 출발점입니다. 금리 하락 가능성을 염두에 둘 때는 장기·저쿠폰 채권이 더 크게 오를 수 있는 반면, 금리 상승 때는 더 큰 가격 하락을 겪을 수 있습니다. 이는 방향 예측을 위한 권유가 아니라, 보유 기간과 감당 가능한 가격 변동을 계약 조건과 함께 점검해야 한다는 뜻입니다.</p>
-                <p class="lesson-source">참고: <a href="https://ideas.repec.org/a/oup/qjecon/v76y1962i2p197-218..html" target="_blank" rel="noopener noreferrer">Malkiel, 「Expectations, Bond Prices, and the Term Structure of Interest Rates」(1962)</a>.</p>
+                <p class="lesson-source">참고: <a href="https://faculty.princeton.edu/people/burton-gordon-malkiel" target="_blank" rel="noopener noreferrer">Princeton University의 Burton G. Malkiel 소개</a>, <a href="https://www.jstor.org/stable/1880816" target="_blank" rel="noopener noreferrer">JSTOR의 「Expectations, Bond Prices, and the Term Structure of Interest Rates」(The Quarterly Journal of Economics, 1962, pp. 197–218)</a>.</p>
                 <p class="lesson-video-cta">
                   <button type="button" class="lesson-video-link" data-bond-duration-trigger>
                     <i class="fa-solid fa-scale-balanced"></i> 금리·듀레이션 시뮬레이터 열기
@@ -1103,6 +1113,7 @@
                   매수를 권유하는 것이 아니라 앱에서 채권을 찾고 비교하는 절차를
                   익히기 위한 안내입니다.
                 </p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="currentQualityBondTrigger"><i class="fa-solid fa-building-columns"></i> 현재 우량회사채·국채 정보 읽기</button><small>2026년 9월 공개 목록을 바탕으로, 직접채권과 채권 ETF를 확인하는 기준을 안내합니다.</small></p>
               </div>
             </div>
             <button
@@ -1115,6 +1126,43 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
+          </section>
+          <section class="lesson">
+            <span>10.5</span>
+            <div class="lesson-content">
+              <h2>위험자산과 무위험자산: 자산배분의 출발점</h2>
+              <div class="lesson-body">
+                <p>포트폴리오 이론에서는 자산을 미래 수익률의 <b>불확실성</b>을 기준으로 위험자산과 무위험자산에 나누어 생각합니다. 위험자산은 높은 수익을 낼 가능성과 손실 가능성을 함께 가지며, 무위험자산은 특정 기간의 명목 수익률이 비교적 예측 가능한 기준점 역할을 합니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">구분</th><th scope="col">무위험자산(Risk-free asset)</th><th scope="col">위험자산(Risky asset)</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">이론에서의 뜻</th><td>약속된 기간에 원리금 상환이 확실하다고 가정하는 기준 자산입니다.</td><td>미래 가격·현금흐름이 달라져 실제 수익률이 불확실한 자산입니다.</td></tr>
+                      <tr><th scope="row">대표적 예</th><td>신용위험이 매우 낮은 단기 국채, 예금자보호 한도 안의 예·적금, 단기 금리 추종 상품</td><td>주식·주식형 ETF, 가상자산, 원자재, 부동산, 하이일드 채권 등</td></tr>
+                      <tr><th scope="row">포트폴리오 역할</th><td>생활자금·대기자금·변동성 완충의 기준</td><td>장기 성장과 인플레이션을 웃도는 수익을 추구하는 부분</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><b>‘무위험’은 절대 손실이 없다는 보증이 아닙니다.</b> 이론에서 말하는 무위험자산은 보통 국가의 아주 짧은 만기 채무처럼 신용위험을 거의 무시할 수 있는 자산을 뜻합니다. 예·적금에는 예금자보호 한도와 발행기관 위험이 있고, 채권 ETF·단기채 펀드는 시장가격·수수료·유동성 위험이 있으며, 현금도 인플레이션으로 구매력이 줄 수 있습니다.</p>
+                <h3>위험 프리미엄과 샤프지수</h3>
+                <p><b>위험 프리미엄(Risk Premium)</b>은 위험자산에 기대하는 수익률에서 무위험수익률을 뺀 추가 보상입니다. 예를 들어 단기 국채 수익률이 연 3.5%이고 주식의 기대수익률을 연 8.0%로 본다면, 기대 위험 프리미엄은 4.5%p입니다. 이는 예상값일 뿐 실현 수익률을 보장하지 않습니다.</p>
+                <p><b>샤프지수(Sharpe Ratio)</b>는 ‘추가로 얻은 수익을 감수한 변동성으로 나눈 값’입니다. <code>(포트폴리오 수익률 − 무위험수익률) ÷ 수익률 변동성</code>으로 표현하며, 같은 기간·같은 기준으로 비교할 때 위험 1단위당 보상을 살펴보는 데 쓰입니다. 과거 샤프지수가 높아도 미래 성과를 보장하지 않고, 급락 위험·유동성·세금·투자 기간을 대신 판단해 주지는 않습니다.</p>
+                <h3>위험도별 자산배분 비중 예시</h3>
+                <p>아래는 특정 상품을 추천하는 비중이 아니라, 위험자산과 방어 자산을 섞는 방식을 이해하기 위한 예시입니다. 실제 비중은 투자 기간, 소득·부채, 비상자금, 손실 감내 수준과 목표에 따라 달라집니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">예시 성향</th><th scope="col">위험자산</th><th scope="col">방어 자산</th><th scope="col">학습용 해석</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">성장형</th><td>주식·리츠 등 70%</td><td>단기채·예금성 자산 30%</td><td>긴 투자 기간과 큰 변동을 감수하는 경우를 가정합니다.</td></tr>
+                      <tr><th scope="row">균형형</th><td>주식 등 50%</td><td>채권·현금성 자산 50%</td><td>성장 가능성과 변동성 완충을 함께 추구하는 예시입니다.</td></tr>
+                      <tr><th scope="row">안정추구형</th><td>주식 등 20%</td><td>단기채·예금성 자산 80%</td><td>단기 목표와 손실 회피를 우선하는 경우를 가정합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>다음 단원에서는 단순히 자산 개수를 늘리는 것을 넘어, 자산들이 함께 움직이는 정도인 <b>상관관계</b>가 왜 중요한지 살펴봅니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="위험자산과 무위험자산: 자산배분의 출발점 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
             <span>11</span>
@@ -1153,6 +1201,50 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="코인의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
+            <span>13.15</span>
+            <div class="lesson-content">
+              <h2>거래소·상장사·발행사: 코인 생태계는 어떻게 연결되나요?</h2>
+              <div class="lesson-body">
+                <p>가상자산 생태계는 하나의 회사나 한 국가가 지배하는 구조가 아닙니다. 원화·달러 입출금과 주문을 맡는 <b>거래소</b>, 달러 연동 토큰을 발행하는 <b>스테이블코인 발행사</b>, 네트워크를 유지하는 <b>채굴·검증 사업자</b>, 그리고 이들의 주식·채권·지분에 자금을 대는 <b>상장사와 투자자</b>가 서로 연결됩니다. ‘코인이 탈중앙화돼 있다’는 기술적 설명과, 서비스를 운영하는 회사의 소유·통제 구조는 별도로 봐야 합니다.</p>
+                <h3>국내 원화거래소: 운영회사와 지분은 따로 확인합니다</h3>
+                <p>아래는 국내에서 널리 알려진 원화거래소의 운영회사·지배구조를 읽는 틀입니다. 비상장 회사의 지분율, 인수 협의와 감독당국 절차는 수시로 바뀌므로 ‘대주주’라는 말만으로 최종 지배관계나 이용자 자산의 안전성을 판단하면 안 됩니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">서비스</th><th scope="col">운영·지배구조를 보는 출발점</th><th scope="col">확인할 점</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">업비트</th><td>운영사는 두나무입니다. 두나무의 주주 구성과 전략적 제휴는 공시·거래에 따라 변동할 수 있습니다.</td><td>운영사, 실명계정 제휴은행, 보유 자산의 분리관리와 공시를 함께 봅니다.</td></tr>
+                      <tr><th scope="row">빗썸</th><td>빗썸코리아와 지주회사 구조, 주요 주주의 변동을 법인 공시로 확인합니다.</td><td>과거 투자회사·관계사의 지분만 보고 현재 지배관계를 단정하지 않습니다.</td></tr>
+                      <tr><th scope="row">코인원</th><td>창업자·전략적 투자자·금융·글로벌 사업자의 지분 거래가 알려져 있어, 기준일이 특히 중요합니다.</td><td>신규 투자·구주 매각 뒤의 의결권과 실제 최대주주를 최신 공시로 확인합니다.</td></tr>
+                      <tr><th scope="row">코빗</th><td>대기업 계열 주주가 참여해 왔고, 2026년에는 미래에셋컨설팅의 지분 인수 발표가 있었습니다.</td><td>인수 발표와 거래 종결은 다를 수 있으므로 최신 공시·감사보고서를 확인합니다.</td></tr>
+                      <tr><th scope="row">고팍스</th><td>글로벌 거래소와의 투자·인수 및 경영권 관련 논의가 이어져 온 사례입니다.</td><td>감독당국의 변경신고·심사 진행 상태와 실제 운영 법인을 확인합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>미국의 주요 연결 고리: 거래소, 발행사, 비트코인 보유·채굴 기업</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">구분</th><th scope="col">대표 기업·티커</th><th scope="col">코인 생태계와의 연결</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">상장 거래소</th><td>Coinbase (NASDAQ: COIN)</td><td>거래·수탁·기관 서비스 등을 제공합니다. 상장회사이므로 주요 주주와 재무정보는 SEC 공시로 확인할 수 있지만, 기관 지분은 계속 바뀝니다.</td></tr>
+                      <tr><th scope="row">스테이블코인 발행사</th><td>Circle (NYSE: CRCL) · Tether</td><td>Circle은 USDC, Tether는 USD₮를 발행합니다. Circle은 2025년 뉴욕증권거래소에 상장했고, Tether는 비상장 발행사입니다. 두 토큰 모두 준비자산·상환 조건·발행 법인을 따로 확인해야 합니다.</td></tr>
+                      <tr><th scope="row">비트코인 보유 상장사</th><td>Strategy (NASDAQ: MSTR) · Tesla (NASDAQ: TSLA) 등</td><td>보유 비트코인이 많으면 기업 주가가 비트코인 가격, 자금조달, 본업 실적의 영향을 함께 받습니다. 주식이 비트코인 자체와 같은 권리는 아닙니다.</td></tr>
+                      <tr><th scope="row">채굴 상장사</th><td>MARA Holdings (NASDAQ: MARA) · Riot Platforms (NASDAQ: RIOT) 등</td><td>채굴 장비·전력·시설을 운영합니다. 수익성은 비트코인 가격뿐 아니라 해시레이트, 채굴 난이도, 전력비, 반감기와 자금조달에 좌우됩니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>지분 연결보다 중요한 세 가지 질문</h3>
+                <ol>
+                  <li><b>누가 서비스를 운영하는가?</b> 거래소 브랜드와 실제 계약 상대방 법인, 수탁 구조, 제휴은행을 구분합니다.</li>
+                  <li><b>누가 어떤 위험을 지는가?</b> 거래소의 수수료 수익, 발행사의 준비자산·상환 의무, 채굴사의 전력·장비 비용, 상장사의 주가 위험은 서로 다릅니다.</li>
+                  <li><b>어떤 연결이 가격에 영향을 주는가?</b> 지분 투자·수탁 계약·상장·인수 발표는 기대를 바꿀 수 있지만, 토큰 가격이나 주식 수익을 보장하지는 않습니다.</li>
+                </ol>
+                <p><b>유의:</b> 대주주 지분율과 인수 진행 상황은 공시 시점마다 달라집니다. 이 표는 기업 관계를 읽는 교육용 지도이며, 특정 거래소·주식·토큰의 안전성 또는 투자 가치를 평가한 것이 아닙니다.</p>
+                <p><small>참고: <a href="https://dart.fss.or.kr/" target="_blank" rel="noopener noreferrer">DART 전자공시</a> (국내 상장·관계사 공시), <a href="https://investor.coinbase.com/financials/sec-filings/default.aspx" target="_blank" rel="noopener noreferrer">Coinbase SEC 공시</a>, <a href="https://investor.circle.com/resources/investor-faqs/default.aspx" target="_blank" rel="noopener noreferrer">Circle 투자자 FAQ</a>, <a href="https://tether.io/media/" target="_blank" rel="noopener noreferrer">Tether의 발행 법인·토큰 표기</a>, <a href="https://on.com2us.com/press/%EC%BB%B4%ED%88%AC%EC%8A%A4%ED%99%80%EB%94%A9%EC%8A%A4-%EC%BD%94%EC%9D%B8%EC%9B%90%C2%B7%ED%95%9C%ED%88%AC%C2%B7okx%EC%99%80-%EC%A0%84%EB%9E%B5%EC%A0%81-%ED%8C%8C%ED%8A%B8%EB%84%88%EC%8B%AD-%EA%B5%AC/" target="_blank" rel="noopener noreferrer">컴투스홀딩스의 코인원 지분투자 발표</a>.</small></p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="거래소·상장사·발행사: 코인 생태계는 어떻게 연결되나요? 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
             <span>13</span>
@@ -2060,6 +2152,11 @@
           <svg class="defi-equity-svg" id="defiEquityChart" viewBox="0 0 720 186" role="img" aria-label="COIN, HOOD, MSTR, GLXY의 최근 3개월 주가를 지수화한 선 그래프"></svg>
           <div class="defi-equity-legend" id="defiEquityLegend" aria-label="주가 그래프 범례"></div>
         </div>
+        <div class="defi-equity-guide" aria-label="코인 관련 상장사 주가 그래프 읽는 법">
+          <strong>그래프 읽는 법</strong>
+          <p><b>COIN</b>은 가상자산 거래소 Coinbase, <b>HOOD</b>는 Robinhood, <b>MSTR</b>은 비트코인을 재무자산으로 보유하는 Strategy, <b>GLXY</b>는 가상자산 금융회사 Galaxy Digital의 미국 상장 종목코드입니다.</p>
+          <p>선 그래프는 모두 시작일 종가를 <b>100</b>으로 맞춘 뒤의 상대 변화입니다. 예를 들어 <b>HOOD +48.1%</b>는 이 기간 주가가 시작점 100에서 약 148.1까지 올랐다는 뜻입니다. 아래 막대의 길이는 수익률 자체의 절대 눈금이 아니라, 네 종목 중 가장 높은 수익률을 100% 길이로 놓은 <b>비교용 길이</b>입니다. 배당·세금·환전 비용을 제외한 종가 기준 가격 변화이며, 투자 추천이나 미래 수익률 예측은 아닙니다.</p>
+        </div>
         <div class="defi-bars" aria-label="코인 관련 상장사의 최근 3개월 수익률 막대 그래프">
           <div class="defi-bar-row"><span>HOOD</span><div class="defi-bar-track"><div class="defi-bar" style="width: 100%"></div></div><b>+48.1%</b></div>
           <div class="defi-bar-row"><span>COIN</span><div class="defi-bar-track"><div class="defi-bar" style="width: 44%"></div></div><b>+21.2%</b></div>
@@ -2097,6 +2194,22 @@
           <p><b>구현 힌트:</b> 각 자산의 가격을 같은 시작값(예: 100)으로 맞춘 뒤, 기간별 등락률 또는 이동 변동성을 별도 선·막대로 그려 보세요. 기준금리와 동시에 움직였다고 해서 원인과 결과가 증명되는 것은 아니므로, 데이터 출처·기간·환율 기준·거래일 차이도 화면에 표시하세요.</p>
           <p><small>목표는 가격 방향을 예측하는 것이 아니라, 금리 변화 국면에서 자산별로 얼마나 다르게 흔들렸는지 관찰하는 것입니다.</small></p>
         </div>
+      </section>
+    </div>
+    <div class="glossary-modal current-quality-bond-modal" id="currentQualityBondModal" hidden>
+      <div class="glossary-modal__backdrop" data-current-quality-bond-close></div>
+      <section class="glossary-modal__dialog current-quality-bond-dialog" role="dialog" aria-modal="true" aria-labelledby="currentQualityBondTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-current-quality-bond-close>×</button>
+        <p class="glossary-modal__label">BOND SNAPSHOT · 2026-09 공개 정보</p>
+        <h2 id="currentQualityBondTitle">우량회사채·국채, 현재는 이렇게 확인합니다</h2>
+        <p class="current-quality-bond-intro">아래는 <b>2026년 9월 4일</b> 한국예탁결제원 SEIBro 공개 목록을 확인해 구성한 교육용 스냅샷입니다. 종목의 편입채권·수익률·가격·거래 가능 여부는 매일 달라지므로, 이 화면의 이름이나 과거 수익률만으로 매수 판단을 해서는 안 됩니다.</p>
+        <h3>공개 목록에서 확인되는 채권 ETF 예시</h3>
+        <div class="current-quality-bond-table-wrap"><table class="current-quality-bond-table"><thead><tr><th>구분</th><th>예시 상품명</th><th>먼저 볼 항목</th></tr></thead><tbody><tr><td>우량 회사채</td><td>ACE 우량회사채(AA-이상)액티브<br />TIGER 우량회사채액티브</td><td>신용등급 기준, 평균 만기·듀레이션, 편입 비중, 총보수</td></tr><tr><td>만기형 회사채</td><td>SOL 27-12 회사채(AA-이상)액티브<br />KODEX 28-12 회사채(AA-이상)액티브</td><td>목표 만기, 만기 뒤 운용 방식, 중도 매매 가격과 유동성</td></tr><tr><td>국채·단기금리</td><td>ACE 국고채3년 · SOL 국고채3년<br />CD금리·KOFR 추종 ETF</td><td>국채도 듀레이션에 따른 가격 변동이 있고, 합성·스왑 구조와 비용은 별도 확인</td></tr></tbody></table></div>
+        <p class="current-quality-bond-note"><b>‘AA- 이상’의 뜻:</b> 일반적으로 투자적격 등급 안에서도 상대적으로 높은 신용등급 채권을 편입한다는 의미입니다. 그러나 등급은 발행 시점 또는 평가 시점 기준이고, 펀드·ETF의 실제 편입 종목과 신용등급은 바뀔 수 있습니다. AA-가 원금·가격 변동을 없애 주는 표시는 아닙니다.</p>
+        <h3>직접채권은 MTS에서 이 다섯 가지를 확인하세요</h3>
+        <ol class="current-quality-bond-checklist"><li><b>발행자와 신용등급:</b> 기업명뿐 아니라 무보증·후순위 여부, 평가사와 등급 기준일을 봅니다.</li><li><b>만기와 수익률(YTM):</b> 표면금리보다 내가 사는 가격 기준의 세전·세후 만기수익률을 확인합니다.</li><li><b>잔존만기·듀레이션:</b> 만기가 길수록 시장금리 변화에 가격이 더 민감할 수 있습니다.</li><li><b>가능수량·매수단가:</b> 장외채권은 증권사 재고와 호가에 따라 같은 종목도 매수 조건이 달라질 수 있습니다.</li><li><b>중도매도 가능성:</b> 만기 전 매도할 때는 유동성 부족과 스프레드 때문에 기대한 가격에 팔지 못할 수 있습니다.</li></ol>
+        <p class="current-quality-bond-note"><b>수익률 조회:</b> 금융투자협회 채권정보센터는 회사채 최종호가수익률로 AA-·BBB- 등급을 공시합니다. 국고채와 비교한 차이인 <b>신용스프레드</b>가 넓어지면, 시장이 회사채 위험에 요구하는 보상이 커졌다는 신호로 읽을 수 있습니다. 다만 개별 채권의 실제 매매수익률과 기준수익률은 다를 수 있습니다.</p>
+        <p class="crypto-market-source">조회 경로: <a href="https://www.kofiabond.or.kr/" target="_blank" rel="noopener noreferrer">금융투자협회 채권정보센터</a> → 시가평가 → 채권시가평가기준수익률, <a href="https://m.seibro.or.kr/cnts/etf/selectPublishInfo.do" target="_blank" rel="noopener noreferrer">SEIBro ETF 종목발행현황</a>. 이 모달의 ETF 목록·기준일은 SEIBro 2026-09-04 공개 화면을 기준으로 했습니다.</p>
       </section>
     </div>
     <div class="glossary-modal bok-rate-modal" id="bokRateTrendModal" hidden>
@@ -2164,27 +2277,31 @@
         <p class="glossary-modal__label">SIMULATION · 교육용</p>
         <h2 id="bondDurationSimTitle">금리 변화와 채권 가격</h2>
         <div class="bond-duration-sim-intro">
-          <p>듀레이션은 채권 가격의 <strong>금리 민감도 자</strong>입니다. 금리가 1%포인트 움직일 때 채권 가격이 대략 몇 % 반대 방향으로 움직일지 가늠하게 해 줍니다.</p>
-          <p>예를 들어 듀레이션이 5라면 금리가 1%포인트 오를 때 가격은 약 5% 내리고, 금리가 1%포인트 내릴 때는 약 5% 오르는 것으로 먼저 계산합니다. 1,000만 원 채권이라면 약 950만 원 또는 1,050만 원 부근으로 보는 셈입니다. 듀레이션이 15라면 같은 금리 변화에 약 15% 움직일 수 있어 훨씬 민감합니다.</p>
-          <p><code>가격 변화율 ≈ −듀레이션 × 금리 변화(%포인트)</code>에서 <strong>≈</strong>는 ‘거의 같다’, 즉 정확한 값이 아니라 빠르게 가늠하는 <strong>근사</strong>라는 뜻입니다. 일반적으로 만기가 길고 쿠폰금리가 낮을수록 듀레이션은 커지는 경향이 있습니다.</p>
-          <p class="bond-duration-convexity"><strong>컨벡시티: 실제 가격 곡선이 휘는 효과</strong>듀레이션 계산은 가격이 직선처럼 움직인다고 가정한 간단한 계산입니다. 하지만 실제 채권 가격과 금리의 관계는 완만하게 휜 곡선입니다. <strong>컨벡시티</strong>는 그 휜 정도를 나타냅니다. 금리 변화가 작을 때는 듀레이션만으로도 충분히 가깝지만, 변화 폭이 커질수록 실제 가격은 계산값과 달라질 수 있습니다. 일반적인 양(+)의 컨벡시티 채권은 같은 폭의 금리 하락에서 얻는 가격 상승이 금리 상승 때의 가격 하락보다 조금 더 클 수 있지만, 상품 구조에 따라 다릅니다.</p>
-          <p>따라서 이 결과는 이해를 위한 첫 추정치입니다. 실제 투자 전에는 상품설명서의 실효 듀레이션과 컨벡시티, 쿠폰·만기·신용위험·유동성을 함께 확인하세요.</p>
+          <p><strong>기본값은 금리 0.50%p 인하</strong>입니다. 듀레이션은 금리가 1%p 움직일 때 가격이 대략 몇 % 반대 방향으로 움직일지를 보여 주는 민감도이며, <code>가격 변화율 ≈ −듀레이션 × 금리 변화</code>로 빠르게 가늠합니다.</p>
         </div>
-        <div class="bond-duration-sim-fields">
-          <label>현재 채권 가격 (원)<input id="bdsPrice" type="number" min="1000" step="1000" value="10000000" /></label>
-          <label>듀레이션 (년)<input id="bdsDuration" type="number" min="0.1" max="30" step="0.1" value="7" /></label>
-          <label>금리 변화 (%p)<input id="bdsRateChange" type="number" min="-5" max="5" step="0.1" value="1" /></label>
+        <div class="bond-duration-sim-layout">
+          <div class="bond-duration-sim-panel">
+            <div class="bond-duration-sim-fields">
+              <label>현재 채권 가격 (원)<input id="bdsPrice" type="number" min="1000" step="1000" value="10000000" /></label>
+              <label>듀레이션 (년)<input id="bdsDuration" type="number" min="0.1" max="30" step="0.1" value="7" /></label>
+              <label>금리 변화 (%p)<small>−는 금리 인하</small><input id="bdsRateChange" type="number" min="-5" max="5" step="0.1" value="-0.5" /></label>
+            </div>
+            <div class="bond-duration-sim-results">
+              <article><span>듀레이션 근사 변화율</span><strong id="bdsChangeRate">+3.50%</strong><small>−듀레이션 × 금리 변화</small></article>
+              <article><span>예상 가격 변화액</span><strong id="bdsChangeWon">+350,000원</strong><small>이자·세금·수수료 전</small></article>
+              <article class="highlight"><span>예상 변경 가격</span><strong id="bdsNewPrice">10,350,000원</strong><small id="bdsDirection">금리가 0.50%p 내렸을 때</small></article>
+            </div>
+            <div class="bond-duration-sim-compare">
+              <div><b>단기채 예시 · 듀레이션 2년</b><span id="bdsShortCompare">금리 −0.50%p → 약 +1.00% (+100,000원)</span></div>
+              <div><b>입력한 채권 · 듀레이션 <em id="bdsDurationCompare">7.0년</em></b><span id="bdsLongCompare">금리 −0.50%p → 약 +3.50% (+350,000원)</span></div>
+            </div>
+          </div>
+          <section class="bond-duration-chart-panel">
+            <header><strong>듀레이션과 컨벡시티</strong><small>점선은 듀레이션 근사, 실선은 양(+)의 컨벡시티를 반영한 교육용 곡선</small></header>
+            <div id="bondDurationChart" role="img" aria-label="금리 변화에 따른 듀레이션 근사선과 컨벡시티 채권 가격 곡선 비교 차트"></div>
+          </section>
         </div>
-        <div class="bond-duration-sim-results">
-          <article><span>예상 가격 변화율</span><strong id="bdsChangeRate">−7.00%</strong><small>−듀레이션 × 금리 변화</small></article>
-          <article><span>예상 가격 변화액</span><strong id="bdsChangeWon">−700,000원</strong><small>이자·세금·수수료 전 단순 근사</small></article>
-          <article class="highlight"><span>예상 변경 가격</span><strong id="bdsNewPrice">9,300,000원</strong><small id="bdsDirection">금리가 1.00%p 올랐을 때</small></article>
-        </div>
-        <div class="bond-duration-sim-compare">
-          <div><b>단기채 예시 · 듀레이션 2년</b><span id="bdsShortCompare">금리 +1.00%p → 약 −2.00% (−200,000원)</span></div>
-          <div><b>입력한 채권 · 듀레이션 <em id="bdsDurationCompare">7.0년</em></b><span id="bdsLongCompare">금리 +1.00%p → 약 −7.00% (−700,000원)</span></div>
-        </div>
-        <p class="bond-duration-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 이 시뮬레이터는 듀레이션만으로 계산한 교육용 근사값입니다. 실제 가격에는 컨벡시티와 쿠폰, 만기, 신용위험, 유동성 등이 함께 반영됩니다.</p>
+        <p class="bond-duration-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 차트의 컨벡시티 곡선은 개념을 보여 주는 계산 예시입니다. 실제 가격에는 쿠폰·만기·수익률 수준·내재옵션·신용위험·유동성이 함께 반영됩니다.</p>
       </section>
     </div>
     <script>
@@ -2389,6 +2506,25 @@
     </script>
     <script>
       (() => {
+        const modal = document.getElementById("currentQualityBondModal");
+        const trigger = document.getElementById("currentQualityBondTrigger");
+        if (!modal || !trigger) return;
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const open = () => { modal.hidden = false; closeButton?.focus(); };
+        const close = () => {
+          if (modal.hidden) return;
+          modal.hidden = true;
+          trigger.focus();
+        };
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll("[data-current-quality-bond-close]").forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") close();
+        });
+      })();
+    </script>
+    <script>
+      (() => {
         const modal = document.getElementById("bokRateTrendModal");
         const trigger = document.getElementById("bokRateTrendTrigger");
         if (!modal || !trigger) return;
@@ -2511,9 +2647,49 @@
         const durationCompare = document.getElementById("bdsDurationCompare");
         const shortCompare = document.getElementById("bdsShortCompare");
         const longCompare = document.getElementById("bdsLongCompare");
+        const chartEl = document.getElementById("bondDurationChart");
         const value = (element, minimum) => Math.max(minimum, Number(element.value) || minimum);
         const signed = (number, digits, unit) => `${number >= 0 ? "+" : "−"}${Math.abs(number).toFixed(digits)}${unit}`;
         const won = (number) => `${number >= 0 ? "+" : "−"}${Math.round(Math.abs(number)).toLocaleString("ko-KR")}원`;
+        let chart;
+
+        function renderChart(currentPrice, currentDuration, rates) {
+          if (!window.ApexCharts || !chartEl) return;
+          const range = Math.max(2, Math.ceil(Math.abs(rates) * 2) / 2);
+          const step = range / 8;
+          const ratePoints = Array.from({ length: 17 }, (_, index) => -range + index * step);
+          // 양(+)의 컨벡시티를 가진 단순 고정금리채 예시입니다. 실제 컨벡시티 값은 상품마다 다릅니다.
+          const convexity = currentDuration * (currentDuration + 1);
+          const linear = ratePoints.map((rate) => ({ x: rate, y: currentPrice * (1 - currentDuration * rate / 100) }));
+          const curved = ratePoints.map((rate) => {
+            const decimalRate = rate / 100;
+            return { x: rate, y: currentPrice * (1 - currentDuration * decimalRate + 0.5 * convexity * decimalRate ** 2) };
+          });
+          const selectedPrice = currentPrice * (1 - currentDuration * rates / 100 + 0.5 * convexity * (rates / 100) ** 2);
+          const series = [
+            { name: "듀레이션 근사선", data: linear },
+            { name: "컨벡시티 곡선 (예시)", data: curved },
+          ];
+          const options = {
+            chart: { type: "line", height: 258, toolbar: { show: false }, animations: { enabled: false }, fontFamily: "inherit" },
+            series,
+            colors: ["#64748b", "#7c3aed"],
+            stroke: { width: [2, 3], dashArray: [6, 0], curve: "smooth" },
+            markers: { size: 0 },
+            xaxis: { type: "numeric", min: -range, max: range, tickAmount: 4, title: { text: "금리 변화 (%p)", style: { fontSize: "12px" } }, labels: { formatter: number => `${Number(number).toFixed(1)}%p` } },
+            yaxis: { labels: { formatter: amount => `${Math.round(amount / 10000).toLocaleString("ko-KR")}만` } },
+            grid: { borderColor: "#e2e8f0" },
+            legend: { position: "top", horizontalAlign: "left", fontSize: "12px" },
+            tooltip: { x: { formatter: rate => `금리 ${Number(rate).toFixed(2)}%p` }, y: { formatter: amount => `${Math.round(amount).toLocaleString("ko-KR")}원` } },
+            annotations: { points: [{ x: rates, y: selectedPrice, marker: { size: 5, fillColor: "#7c3aed", strokeColor: "#fff", radius: 3 }, label: { text: "입력값", borderColor: "#7c3aed", style: { color: "#fff", background: "#7c3aed", fontSize: "11px" } } }] },
+          };
+          if (chart) {
+            chart.updateOptions(options, false, true);
+          } else {
+            chart = new ApexCharts(chartEl, options);
+            chart.render();
+          }
+        }
 
         function render() {
           const currentPrice = value(price, 1000);
@@ -2529,10 +2705,11 @@
           changeWon.textContent = won(amount);
           changeWon.style.color = changeRate.style.color;
           newPrice.textContent = `${Math.round(after).toLocaleString("ko-KR")}원`;
-          direction.textContent = `금리가 ${signed(rates, 2, "%p")} 변했을 때`;
+          direction.textContent = rates < 0 ? `금리가 ${Math.abs(rates).toFixed(2)}%p 내렸을 때` : rates > 0 ? `금리가 ${rates.toFixed(2)}%p 올랐을 때` : "금리 변화가 없을 때";
           durationCompare.textContent = `${currentDuration.toFixed(1)}년`;
           shortCompare.textContent = `금리 ${signed(rates, 2, "%p")} → 약 ${signed(shortPercent, 2, "%")} (${won(shortAmount)})`;
           longCompare.textContent = `금리 ${signed(rates, 2, "%p")} → 약 ${signed(percent, 2, "%")} (${won(amount)})`;
+          renderChart(currentPrice, currentDuration, rates);
         }
         function open(trigger) { activeTrigger = trigger; modal.hidden = false; render(); modal.querySelector(".glossary-modal__close")?.focus(); }
         function close() { if (!modal.hidden) { modal.hidden = true; activeTrigger.focus(); } }

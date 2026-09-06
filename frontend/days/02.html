@@ -20,7 +20,7 @@
     <script defer src="assets/visuals.js"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260905-history"></script>
-    <script defer src="assets/glossary-drawer.js?v=20260905-all-terms"></script>
+    <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
   </head>
   <body data-day="2">
@@ -377,6 +377,35 @@
                   현황, 차입금, 배당가능이익과 금리 민감도를, ETN은 발행사,
                   만기, 기초지수, 신용위험을 봅니다.
                 </p>
+                <h3>ETF의 투자위험등급: 1~6등급은 어떻게 읽을까요?</h3>
+                <p>금융투자협회의 표준투자권유준칙은 투자성 상품 위험도를 <strong>1등급(매우 높은 위험)부터 6등급(매우 낮은 위험)</strong>까지 구분하는 기준을 제시합니다. 다만 모든 ETF가 같은 자산군이면 같은 등급을 받는 것은 아닙니다. 운용사·판매사는 기초자산, 변동성, 파생상품 활용, 환율·신용 위험 등을 반영해 상품별 위험등급을 정하므로, 최종 등급은 투자설명서와 판매 화면에서 확인해야 합니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>ETF 위험등급을 이해하기 위한 일반적 예시 — 실제 상품의 공시 등급이 우선입니다.</caption>
+                    <thead><tr><th scope="col">등급</th><th scope="col">표준 명칭</th><th scope="col">흔히 볼 수 있는 상품 특성</th><th scope="col">확인할 위험</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">1등급</th><td>매우 높은 위험</td><td>레버리지·인버스, 단일종목 레버리지, 높은 변동성의 파생형·원자재·신흥국 상품</td><td>일일 재설정, 큰 손실, 파생상품 노출과 복리효과</td></tr>
+                      <tr><th scope="row">2등급</th><td>높은 위험</td><td>주식형·섹터형·해외주식형 ETF 등</td><td>주가 하락, 국가·산업 집중, 환율</td></tr>
+                      <tr><th scope="row">3등급</th><td>다소 높은 위험</td><td>혼합형·리츠·하이일드 채권처럼 주식·신용 위험을 함께 가질 수 있는 상품</td><td>주식 비중, 신용스프레드, 금리 민감도</td></tr>
+                      <tr><th scope="row">4등급</th><td>보통 위험</td><td>중장기 국공채·우량채 중심 상품처럼 금리 변화에 노출되는 상품</td><td>듀레이션, 금리 상승 시 가격 하락</td></tr>
+                      <tr><th scope="row">5등급</th><td>낮은 위험</td><td>단기채·단기금리형처럼 가격 변동을 낮추도록 설계한 상품</td><td>신용·유동성·금리 위험은 여전히 존재</td></tr>
+                      <tr><th scope="row">6등급</th><td>매우 낮은 위험</td><td>MMF 등 초단기 금융상품 중심 상품</td><td>원금 보장 상품인지와 편입자산의 신용·유동성 위험</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><strong>위험도를 가르는 세 가지 축</strong>은 ① 주식·채권·원자재 등 <strong>기초자산</strong>, ② 레버리지·인버스·파생상품 사용 같은 <strong>운용 방식</strong>, ③ 해외자산의 <strong>환율 노출</strong>입니다. 특히 레버리지·인버스 ETF는 보통 일간 수익률을 목표로 하므로, 횡보와 큰 변동이 반복되면 장기 누적성과가 기초지수의 단순 배수와 달라질 수 있습니다.</p>
+                <h3>위험도별 포트폴리오 비중 예시</h3>
+                <p>아래는 특정 투자자에게 맞는 정답이나 매수 권유가 아니라, <strong>위험등급과 포트폴리오 위험은 별개</strong>라는 점을 이해하기 위한 단순 예시입니다. 한 ETF의 상품 위험등급이 포트폴리오 전체의 위험등급을 결정하지는 않습니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">포트폴리오 성격</th><th scope="col">주식·주식 ETF</th><th scope="col">채권·단기채 ETF</th><th scope="col">현금성 자산</th><th scope="col">읽는 방법</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">성장형 예시</th><td>70%</td><td>20%</td><td>10%</td><td>주가 변동을 크게 감수할 수 있는 긴 투자기간의 예시</td></tr>
+                      <tr><th scope="row">균형형 예시</th><td>50%</td><td>40%</td><td>10%</td><td>성장과 방어 자산을 함께 두는 예시</td></tr>
+                      <tr><th scope="row">안정추구형 예시</th><td>20%</td><td>60%</td><td>20%</td><td>가격 변동을 낮추려는 예시이나 채권도 금리·신용 위험이 있습니다</td></tr>
+                    </tbody>
+                  </table>
+                </div>
                 <p>
                   과거 수익률은 비교의 한 자료일 뿐입니다. 내가 언제 쓸 돈인지와
                   손실이 났을 때 감당 가능한 범위를 먼저 정한 뒤 상품설명서와
@@ -1045,6 +1074,41 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
+          </section>
+          <section class="lesson">
+            <span>14.5</span>
+            <div class="lesson-content">
+              <h2>수익률 변동성·표준편차·표준오차, 쉽게 구분하기</h2>
+              <div class="lesson-body">
+                <p>세 개념은 모두 숫자의 ‘흔들림’과 관련 있지만, 보는 대상이 다릅니다. <b>표준편차</b>는 개별 수익률이 평균에서 실제로 얼마나 퍼져 있는지, <b>표준오차</b>는 표본으로 구한 평균이 얼마나 흔들릴 수 있는지, <b>수익률 변동성</b>은 투자에서 수익률의 표준편차를 위험의 한 지표로 부르는 말입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">개념</th><th scope="col">한 줄 요약</th><th scope="col">쉬운 비유</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">표준편차<br />(Standard Deviation)</th><td>각 데이터가 평균에서 실제로 얼마나 멀리 퍼져 있는가</td><td>화살이 평균 과녁점 주변에 흩어진 거리</td></tr>
+                      <tr><th scope="row">표준오차<br />(Standard Error)</th><td>내가 구한 ‘평균값’이 표본에 따라 얼마나 달라질 수 있는가</td><td>여러 번 쏜 화살의 평균점 자체가 흔들리는 범위</td></tr>
+                      <tr><th scope="row">수익률 변동성<br />(Volatility)</th><td>금융에서 수익률 표준편차를 위험 지표로 읽는 방식</td><td>놀이기구가 위아래로 널뛰는 정도</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>표준편차: 실제 수익률이 흔들리는 폭</h3>
+                <p>평균 수익률이 같아도 결과의 모양은 다를 수 있습니다. 예를 들어 A의 연간 수익률이 9%, 10%, 11%라면 평균 10% 주변에서 작은 폭으로 움직입니다. 반면 B가 -30%, +80%, -20%라면 평균은 역시 10%이지만 평균에서 아주 멀리 오르내립니다. B의 표준편차, 즉 변동성이 훨씬 큽니다.</p>
+                <p>투자에서는 일·주·월 수익률의 표준편차를 계산해 연율화한 값을 흔히 <b>변동성</b>이라고 합니다. 변동성이 크다고 반드시 나쁜 수익률이라는 뜻은 아니지만, 짧은 기간에 큰 손실과 큰 이익이 모두 생길 가능성이 크다는 뜻입니다. 앞서 본 <b>샤프지수</b>는 초과수익을 이 변동성으로 나누어 위험 1단위당 보상을 비교합니다.</p>
+                <h3>표준오차: 평균이라는 추정값의 불확실성</h3>
+                <p>표준오차는 ‘매달 수익률이 얼마나 흔들렸나’가 아니라, 일부 기간을 뽑아 계산한 <b>평균 수익률을 얼마나 믿을 수 있나</b>를 보는 값입니다. 예컨대 20년의 장기 특성을 알고 싶은데 최근 3년 수익률만으로 평균을 냈다면, 그 평균은 우연히 좋거나 나쁜 시기를 많이 담았을 수 있습니다.</p>
+                <p>독립적인 관측값이라는 단순 가정에서는 <code>표준오차 ≈ 표준편차 ÷ √관측치 수</code>로 가늠합니다. 같은 정도로 흔들리는 자료라면 관측치가 많아질수록 평균의 표준오차는 작아지는 경향이 있습니다. 다만 금융 수익률은 시기마다 변동성과 평균이 달라지고 서로 연관될 수 있으므로, 데이터 수만 많다고 미래 평균수익률을 확정할 수는 없습니다.</p>
+                <h3>내 수익률 변동성은 기간을 정해 직접 계산합니다</h3>
+                <p>맞습니다. ‘최근 1년의 월별 수익률’처럼 <b>기간과 단위</b>를 먼저 정한 뒤, 그 기간에 실제로 기록된 내 포트폴리오 수익률로 변동성을 계산합니다. 월별로 볼 때는 12개 수익률, 최근 3년 월별로 볼 때는 36개 수익률이 입력값이 됩니다.</p>
+                <ol>
+                  <li><b>기간·단위를 정합니다.</b> 예: 최근 1년의 월별 수익률, 최근 30일의 일별 수익률.</li>
+                  <li><b>같은 기준의 수익률을 모읍니다.</b> 입출금 영향을 분리하고, 가능하면 수수료·세금 반영 기준을 일관되게 둡니다.</li>
+                  <li><b>평균과 표준편차를 계산합니다.</b> 각 기간 수익률이 평균에서 얼마나 떨어져 있는지로 표준편차를 구합니다.</li>
+                  <li><b>비교 기준을 함께 적습니다.</b> 일간·월간·연간 변동성은 숫자 크기가 달라 직접 섞어 비교하지 않습니다. 연율화 여부, 기간, 벤치마크를 함께 표시합니다.</li>
+                </ol>
+                <p><b>주의:</b> 짧은 기간의 낮은 변동성이 안전을 보장하지는 않습니다. 갑작스러운 급락, 유동성 부족, 자산 집중, 환율·신용위험은 표준편차 하나에 충분히 담기지 않을 수 있으므로 최대낙폭(MDD), 상관관계, 투자 기간도 함께 확인하세요.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="수익률 변동성·표준편차·표준오차 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
           <section class="lesson">
             <span>15</span>

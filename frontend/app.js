@@ -585,6 +585,8 @@ KOSDAQ|웹젠|게임`,
   const $calendarModalMeta = document.getElementById('calendarModalMeta');
   const $calendarModalSummary = document.getElementById('calendarModalSummary');
   const $calendarModalDetail = document.getElementById('calendarModalDetail');
+  const $tickGuideModal = document.getElementById('tickGuideModal');
+  const $tickGuideBody = document.getElementById('tickGuideBody');
 
   // 좌측은 학습 메뉴, 우측은 RAG 자료와 참고 문서에만 집중합니다.
   $referencePanel.insertBefore($ragPanel, $refList);
@@ -604,6 +606,7 @@ KOSDAQ|웹젠|게임`,
   $messages.addEventListener('click', event => {
     const term = event.target.closest('[data-glossary-term]');
     if (term) openGlossary(Number(term.dataset.glossaryTerm));
+    if (event.target.closest('[data-tick-guide-open]')) openTickGuide();
   });
   $glossaryModal.addEventListener('click', event => {
     if (event.target.closest('[data-glossary-close]')) closeGlossary();
@@ -611,10 +614,14 @@ KOSDAQ|웹젠|게임`,
   $calendarModal.addEventListener('click', event => {
     if (event.target.closest('[data-calendar-close]')) closeCalendarEvent();
   });
+  $tickGuideModal?.addEventListener('click', event => {
+    if (event.target.closest('[data-tick-guide-close]')) closeTickGuide();
+  });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closePanels();
     if (event.key === 'Escape') closeGlossary();
     if (event.key === 'Escape') closeCalendarEvent();
+    if (event.key === 'Escape') closeTickGuide();
   });
 
   $questionInput.addEventListener('keydown', (e) => {
@@ -804,6 +811,23 @@ KOSDAQ|웹젠|게임`,
     document.body.classList.remove('modal-open');
   }
 
+  function openTickGuide() {
+    if ($tickGuideBody && !$tickGuideBody.dataset.filled) {
+      $tickGuideBody.innerHTML = renderTickGuideBody();
+      $tickGuideBody.dataset.filled = '1';
+    }
+    $tickGuideModal?.classList.add('open');
+    $tickGuideModal?.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    $tickGuideModal?.querySelector('.tick-guide-close')?.focus();
+  }
+
+  function closeTickGuide() {
+    $tickGuideModal?.classList.remove('open');
+    $tickGuideModal?.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
   function escapeRegex(value) {
     return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
@@ -903,6 +927,28 @@ KOSDAQ|웹젠|게임`,
     return `<svg id="tickChartSvg" viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="none" role="img" aria-label="분봉 차트">${gridSvg}${candleSvg}</svg>`;
   }
 
+  function describeBeta(value, benchmark, windowDays) {
+    const v = Number(value);
+    const abs = Math.abs(v);
+    const bench = escHtml(benchmark);
+    const direction = v < 0 ? '반대' : '같은';
+    let level;
+    if (v <= -0.3) {
+      level = `음(-)의 베타로, ${bench}가 오르면 내리고 내리면 오르는 <b>인버스(반대 방향)</b> 성격을 나타냅니다. 지수 하락에 베팅하거나 보유 자산을 헤지하려는 목적으로 쓰이는 경우가 많습니다.`;
+    } else if (abs < 0.3) {
+      level = `1보다 매우 낮아 ${bench}의 등락에 상대적으로 <b>둔감</b>한 종목입니다. 시장이 크게 움직여도 이 종목의 변동 폭은 작은 편일 수 있습니다.`;
+    } else if (abs < 0.85) {
+      level = `1보다 낮아 ${bench}보다 <b>완만하게</b> 움직이는 저베타 종목입니다. 하락장에서 낙폭이 상대적으로 작을 수 있지만, 상승장에서의 수익도 시장보다 작을 수 있습니다.`;
+    } else if (abs <= 1.15) {
+      level = `1에 가까워 ${bench}와 <b>비슷한 폭</b>으로 움직이는 편입니다.`;
+    } else if (abs <= 1.5) {
+      level = `1보다 높아 ${bench}보다 <b>크게</b> 움직이는 고베타 종목입니다. 상승장에서 수익이 클 수 있지만, 하락장에서는 손실도 시장보다 클 수 있습니다.`;
+    } else {
+      level = `1보다 매우 높아 ${bench} 대비 변동성이 <b>크게 확대</b>되는 종목입니다. 레버리지 상품이거나 시장 민감도가 매우 큰 종목일 수 있습니다.`;
+    }
+    return `${bench}가 1% 움직일 때 이 종목은 최근 ${windowDays}거래일 동안 평균적으로 약 <b>${abs.toFixed(2)}%</b> ${direction} 방향으로 움직이는 경향을 보였습니다. ${level} 과거 일간 수익률로 추정한 통계적 참고값이며, 앞으로도 같은 민감도가 유지된다는 보장은 없습니다.`;
+  }
+
   function renderTickTape(bars) {
     const recent = bars.slice(-9).reverse();
     return recent.map((b, i) => {
@@ -956,14 +1002,19 @@ KOSDAQ|웹젠|게임`,
     if (tapeEl) tapeEl.innerHTML = tickState.bars.length ? renderTickTape(tickState.bars) : '';
 
     const betaEl = document.getElementById('tickBeta');
+    const betaExplainEl = document.getElementById('tickBetaExplain');
     if (betaEl) {
       const beta = tickState.beta;
       if (beta?.loading) {
         betaEl.textContent = '베타 계산 중…';
+        if (betaExplainEl) betaExplainEl.textContent = '';
       } else if (beta?.value != null) {
-        betaEl.innerHTML = `<b>β ${Number(beta.value).toFixed(2)}</b><span>${escHtml(beta.benchmark)} · 최근 ${beta.window}거래일</span>`;
+        betaEl.title = `베타(β): ${escHtml(beta.benchmark)}가 1% 움직일 때 이 종목이 평균적으로 얼마나 민감하게 움직였는지 나타내는 지표입니다. 최근 ${beta.window}거래일 일간 수익률로 추정한 참고값입니다.`;
+        betaEl.innerHTML = `<b>베타(β) ${Number(beta.value).toFixed(2)}</b><span>${escHtml(beta.benchmark)} 대비 · 최근 ${beta.window}거래일</span>`;
+        if (betaExplainEl) betaExplainEl.innerHTML = describeBeta(beta.value, beta.benchmark, beta.window);
       } else {
         betaEl.textContent = beta?.error || '베타 데이터 없음';
+        if (betaExplainEl) betaExplainEl.textContent = '';
       }
     }
 
@@ -1123,7 +1174,7 @@ KOSDAQ|웹젠|게임`,
     return `
       <section class="content-section dashboard-asset-grid-section" aria-label="학습에 등장하는 자산 시세">
         <div class="section-heading"><span>LIVE</span><h2>이 학습에 등장하는 자산 시세</h2></div>
-        <p class="section-intro">4일 과정에서 실제로 다룬 종목·ETF의 지연 시세입니다. 카드를 누르면 아래 실시간 분봉 차트에서 바로 확인할 수 있습니다. 30초마다 자동으로 갱신됩니다.</p>
+        <p class="section-intro">4일 과정에서 실제로 다룬 종목·ETF의 지연 시세입니다. 카드를 누르면 옆의 실시간 분봉 차트에서 바로 확인할 수 있습니다. 30초마다 자동으로 갱신됩니다.</p>
         <div class="dashboard-asset-grid">${cards}</div>
         <p class="tick-disclaimer" id="dashboardAssetUpdatedAt"><i class="fa-solid fa-circle-info"></i> Yahoo Finance 공개 API 기준 지연 시세이며 실제 매매 판단에 사용하지 마세요.</p>
       </section>`;
@@ -1196,14 +1247,9 @@ KOSDAQ|웹젠|게임`,
     dashboardState.timer = setInterval(fetchAllDashboardAssets, 30000);
   }
 
-  function renderTickDashboardSection() {
+  function renderTickChartSection() {
     const buckets = [1, 5, 10, 20];
     const bucketButtons = buckets.map(n => `<button type="button" class="tick-bucket-btn ${n === tickState.bucket ? 'active' : ''}" data-tick-bucket="${n}">${n}분봉</button>`).join('');
-    const tickTable = [
-      ['2,000원 미만', '1원'], ['2,000원 ~ 5,000원 미만', '5원'], ['5,000원 ~ 20,000원 미만', '10원'],
-      ['20,000원 ~ 50,000원 미만', '50원'], ['50,000원 ~ 200,000원 미만', '100원'],
-      ['200,000원 ~ 500,000원 미만', '500원'], ['500,000원 이상', '1,000원'],
-    ].map(([range, tick]) => `<tr><td>${range}</td><td><b>${tick}</b></td></tr>`).join('');
 
     return `
       <section class="content-section tick-dashboard" aria-label="실시간 분봉 차트">
@@ -1220,6 +1266,7 @@ KOSDAQ|웹젠|게임`,
               <strong id="tickCurrentPrice" class="tick-price">-</strong>
               <em id="tickCurrentChange" class="tick-change flat">불러오는 중…</em>
               <span id="tickBeta" class="tick-beta">베타 계산 중…</span>
+              <p id="tickBetaExplain" class="tick-beta-explain"></p>
             </div>
             <div class="tick-bucket-group" role="group" aria-label="분봉 집계 단위 선택">${bucketButtons}</div>
           </header>
@@ -1236,37 +1283,61 @@ KOSDAQ|웹젠|게임`,
           <ul id="tickTape" class="tick-tape" aria-label="최근 1분봉 내역"></ul>
           <p class="tick-disclaimer"><i class="fa-solid fa-circle-info"></i> Yahoo Finance 공개 API 기준 1분봉 데이터이며 실제 체결과 몇 분 차이가 있을 수 있습니다. 베타는 KOSPI 200과의 최근 60거래일 일간 수익률로 추정한 참고값이며, 미래의 민감도를 보장하지 않습니다. 실제 매매 판단에 사용하지 마세요.</p>
         </article>
-
-        <div class="tick-concept-grid">
-          <article class="tick-concept-card">
-            <h3>틱(Tick)이란?</h3>
-            <p>틱은 <b>주가가 움직이는 최소 가격 변동 단위</b>입니다. 주가는 1원씩 연속으로 바뀌는 것이 아니라, 가격대별로 정해진 단위(1틱)로만 오르내립니다. 예를 들어 주가가 70,000원이면 70,100원, 70,200원처럼 100원 단위로 움직입니다.</p>
-          </article>
-          <article class="tick-concept-card">
-            <h3>틱 차트 (Tick Chart)</h3>
-            <p>시간 대신 <b>거래가 발생한 횟수(틱)</b>를 기준으로 봉을 그리는 차트입니다. '10틱 차트'는 거래가 10번 성사될 때마다 봉 하나가 새로 생깁니다. 위 차트는 공개 데이터의 한계로 분봉을 같은 방식으로 묶어 보여줍니다.</p>
-          </article>
-          <article class="tick-concept-card">
-            <h3>틱 떼기 (Tick Scalping)</h3>
-            <p>1~2틱 정도의 아주 미세한 가격 변동만 노리고 빠르게 매수·매도해 단기 차익을 노리는 초단타 매매 기법입니다. 체결 속도와 거래비용이 수익을 크게 좌우합니다.</p>
-          </article>
-        </div>
-
-        <div class="option-chain-scroll tick-size-table">
-          <table class="option-chain-table">
-            <caption>KRX 주식 호가 단위(틱당 가격) 예시 · 상품·시장에 따라 달라질 수 있습니다</caption>
-            <thead><tr><th>주가 범위</th><th>1틱(호가 단위) 금액</th></tr></thead>
-            <tbody>${tickTable}</tbody>
-          </table>
-        </div>
       </section>`;
+  }
+
+  function renderTickGuideBody() {
+    const tickTable = [
+      ['2,000원 미만', '1원'], ['2,000원 ~ 5,000원 미만', '5원'], ['5,000원 ~ 20,000원 미만', '10원'],
+      ['20,000원 ~ 50,000원 미만', '50원'], ['50,000원 ~ 200,000원 미만', '100원'],
+      ['200,000원 ~ 500,000원 미만', '500원'], ['500,000원 이상', '1,000원'],
+    ].map(([range, tick]) => `<tr><td>${range}</td><td><b>${tick}</b></td></tr>`).join('');
+
+    return `
+      <div class="tick-concept-grid">
+        <article class="tick-concept-card">
+          <h3>틱(Tick)이란?</h3>
+          <p>틱은 <b>주가가 움직이는 최소 가격 변동 단위</b>입니다. 주가는 1원씩 연속으로 바뀌는 것이 아니라, 가격대별로 정해진 단위(1틱)로만 오르내립니다. 예를 들어 주가가 70,000원이면 70,100원, 70,200원처럼 100원 단위로 움직입니다.</p>
+        </article>
+        <article class="tick-concept-card">
+          <h3>틱 차트 (Tick Chart)</h3>
+          <p>시간 대신 <b>거래가 발생한 횟수(틱)</b>를 기준으로 봉을 그리는 차트입니다. '10틱 차트'는 거래가 10번 성사될 때마다 봉 하나가 새로 생깁니다. 위 차트는 공개 데이터의 한계로 분봉을 같은 방식으로 묶어 보여줍니다.</p>
+        </article>
+        <article class="tick-concept-card">
+          <h3>틱 떼기 (Tick Scalping)</h3>
+          <p>1~2틱 정도의 아주 미세한 가격 변동만 노리고 빠르게 매수·매도해 단기 차익을 노리는 초단타 매매 기법입니다. 체결 속도와 거래비용이 수익을 크게 좌우합니다.</p>
+        </article>
+      </div>
+
+      <div class="option-chain-scroll tick-size-table">
+        <table class="option-chain-table">
+          <caption>KRX 주식 호가 단위(틱당 가격) 예시 · 상품·시장에 따라 달라질 수 있습니다</caption>
+          <thead><tr><th>주가 범위</th><th>1틱(호가 단위) 금액</th></tr></thead>
+          <tbody>${tickTable}</tbody>
+        </table>
+      </div>`;
+  }
+
+  function renderTickGuideTrigger() {
+    return `
+      <button type="button" class="tick-guide-trigger" data-tick-guide-open aria-haspopup="dialog">
+        <span class="tick-guide-trigger-icon"><i class="fa-solid fa-circle-question"></i></span>
+        <span class="tick-guide-trigger-text">
+          <b>틱(Tick)이란?</b>
+          <small>틱 차트 · 틱 떼기 · 호가 단위 알아보기</small>
+        </span>
+        <i class="fa-solid fa-chevron-right tick-guide-trigger-arrow"></i>
+      </button>`;
   }
 
   function renderHome() {
     $messages.innerHTML = `
       <article class="content-page home-page">
-        ${renderDashboardAssetSection()}
-        ${renderTickDashboardSection()}
+        <div class="home-live-layout">
+          <div class="home-live-assets">${renderDashboardAssetSection()}</div>
+          <div class="home-live-chart">${renderTickChartSection()}</div>
+          <div class="home-live-guide">${renderTickGuideTrigger()}</div>
+        </div>
         <p class="content-disclaimer">학습용 서비스이며 특정 투자상품의 매수·매도를 권유하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
       </article>`;
     bindViewLinks();

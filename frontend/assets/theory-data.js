@@ -180,6 +180,15 @@ window.THEORY_DAYS = [
     { terms: ['호가 스프레드', '호가 차이'], korean: '호가 스프레드', hanja: '呼價差', abbr: 'Spread', english: 'Bid-Ask Spread', summary: '살 수 있는 가장 싼 가격과 팔 수 있는 가장 비싼 가격의 차이입니다.', detail: '차이가 크면 사자마자 손해를 보고 시작하는 것처럼 느껴질 수 있습니다. 거래량이 적은 상품일수록 스프레드가 넓어질 수 있습니다.' },
     { terms: ['연환산'], korean: '연환산', hanja: '年換算', abbr: 'Annualized', english: 'Annualized', summary: '한 달·몇 년 등 서로 다른 기간의 성과를 1년 기준으로 바꾸어 비교하는 방법입니다.', detail: '기간이 짧을수록 연환산 수치는 실제보다 크게 보일 수 있습니다. 달력일 단위 수익률·이자는 보통 365일(윤년 366일), 주식 일간 수익률·변동성은 약 252거래일을 기준으로 연환산합니다. 예금·채권은 상품 약관의 ACT/365·ACT/360 등 일수 계산 기준이 우선하므로, 원래 기간과 데이터 단위를 함께 확인해야 합니다.' },
     { terms: ['무위험수익률'], korean: '무위험수익률', hanja: '無危險收益率', abbr: 'Rf', english: 'Risk-Free Rate', summary: '위험이 거의 없다고 가정한 투자에서 기대하는 기준 수익률입니다.', detail: '실제로 위험이 완전히 없는 투자는 드물지만, 성과를 비교할 때 기준점으로 사용합니다. 보통 단기 국채 수익률 등을 참고합니다.' },
+    { terms: ['집합투자'], korean: '집합투자', hanja: '集合投資', abbr: '—', english: 'Collective Investment', summary: '여러 투자자의 돈을 모아 전문 운용자가 투자하고, 그 성과를 투자자에게 귀속시키는 구조입니다.', detail: '투자자가 매일 개별 자산을 지시하지 않고, 정한 규약·설명서 범위에서 운용사가 자산을 운용합니다. 펀드가 대표적 예입니다.' },
+    { terms: ['상장지수집합투자기구'], korean: '상장지수집합투자기구', hanja: '上場指數集合投資機構', abbr: 'ETF', english: 'Exchange-Traded Fund', summary: '거래소에 상장되어 주식처럼 장중에 매매할 수 있는 집합투자기구입니다.', detail: 'ETF는 펀드의 법적 구조를 따르면서 지수 추종과 상장·설정·환매 구조를 갖습니다. 시장가격과 순자산가치(NAV)는 다를 수 있습니다.' },
+    { terms: ['지정참가회사', 'AP'], korean: '지정참가회사', hanja: '指定參加會社', abbr: 'AP', english: 'Authorized Participant', summary: 'ETF 운용사와 직접 ETF 지분을 설정·환매할 수 있는 금융회사입니다.', detail: '시장가격과 NAV의 차이가 커질 때 설정·환매와 차익거래에 참여해 괴리 축소에 기여할 수 있습니다. 일반 투자자가 직접 AP가 되는 것은 아닙니다.' },
+    { terms: ['설정·환매', '설정 환매'], korean: '설정·환매', hanja: '設定·還買', abbr: '—', english: 'Creation / Redemption', summary: 'ETF 지분을 새로 만들거나 없애는 과정입니다.', detail: '일반 투자자는 거래소에서 ETF를 매매하고, 지정참가회사(AP)는 약관에 따라 주식 바스켓 또는 현금 등으로 ETF를 설정·환매할 수 있습니다.' },
+    { terms: ['집중투자 제한', '10% 룰'], korean: '집중투자 제한', hanja: '集中投資制限', abbr: '10% Rule', english: 'Concentration Limit', summary: '일반 공모펀드가 같은 발행인의 증권에 과도하게 투자하지 않도록 두는 운용한도입니다.', detail: '지수 추종, 국채 등 법령상 예외와 상품별 특례가 있어 모든 자산에 무조건 10%가 적용된다고 이해하면 정확하지 않습니다.' },
+    { terms: ['BIS 비율', '자본적정성비율'], korean: 'BIS 비율', hanja: '自己資本比率', abbr: 'BIS', english: 'Capital Adequacy Ratio', summary: '은행 등의 규제자본을 위험가중자산으로 나눈 자본적정성 지표입니다.', detail: 'CET1·기본자본·총자본비율을 함께 보며, 값 하나만으로 금융회사의 모든 위험이나 투자 가치를 판단할 수는 없습니다.' },
+    { terms: ['보통주자본비율', 'CET1 비율'], korean: '보통주자본비율', hanja: '普通株資本比率', abbr: 'CET1', english: 'Common Equity Tier 1 Ratio', summary: '손실흡수력이 높은 보통주·이익잉여금을 위험가중자산으로 나눈 자본비율입니다.', detail: 'BIS 체계의 핵심 건전성 지표입니다. 회사별 연결 범위, 잠정치 여부와 적용 규제를 맞춰 비교해야 합니다.' },
+    { terms: ['위험가중자산', 'RWA'], korean: '위험가중자산', hanja: '危險加重資産', abbr: 'RWA', english: 'Risk-Weighted Assets', summary: '자산별 위험도를 반영해 가중치를 적용한 자산 규모입니다.', detail: 'BIS 자본비율의 분모입니다. 같은 자산 규모라도 신용·시장·운영 위험 구성에 따라 RWA와 자본비율이 달라질 수 있습니다.' },
+    { terms: ['컨벡시티', '볼록성'], korean: '컨벡시티', hanja: '凸性', abbr: '—', english: 'Convexity', summary: '채권 가격과 수익률 관계가 휘는 정도를 나타내는 지표입니다.', detail: '듀레이션은 작은 금리 변화의 직선 근사이고, 컨벡시티는 변화 폭이 커질 때 실제 가격과 근사값의 차이를 설명하는 데 도움을 줍니다.' },
   ];
 
   const MODEL_META = {
