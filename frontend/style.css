@@ -445,15 +445,11 @@ html, body {
 .section-intro { max-width: none; margin: -4px 0 20px; color: var(--text-2); font-size: 16px; }
 .section-intro strong { color: var(--accent); }
 
-/* ===== Home live layout (assets + chart + guide side by side) ===== */
-.home-live-layout { display: grid; grid-template-columns: minmax(260px, 320px) minmax(420px, 1fr) minmax(280px, 360px); align-items: start; gap: 24px; margin: 0 0 46px; }
+/* ===== Home live layout (assets + chart) ===== */
+.home-live-layout { display: grid; grid-template-columns: minmax(260px, 320px) minmax(0, 1fr); align-items: start; gap: 24px; margin: 0 0 46px; }
 .home-live-layout .content-section { margin: 0; }
 .home-page > .home-live-layout:first-child { margin-top: 0; }
 .home-live-chart { position: sticky; top: 0; }
-@media (max-width: 1280px) {
-  .home-live-layout { grid-template-columns: minmax(260px, 320px) 1fr; }
-  .home-live-guide { grid-column: 1 / -1; }
-}
 @media (max-width: 980px) {
   .home-live-layout { grid-template-columns: 1fr; }
   .home-live-chart { position: static; }
@@ -467,6 +463,8 @@ html, body {
 .tick-guide-trigger-text b { display: block; font-size: 15px; color: var(--text); }
 .tick-guide-trigger-text small { display: block; margin-top: 3px; color: var(--text-muted); font-size: 13px; line-height: 1.45; }
 .tick-guide-trigger-arrow { color: var(--text-muted); font-size: 13px; }
+.tick-guide-trigger--compact { display: grid; place-items: center; width: 36px; height: 36px; flex: 0 0 auto; padding: 0; border-radius: 999px; color: var(--accent); }
+.tick-guide-trigger--compact:hover { transform: none; background: var(--accent-dim2); }
 
 .tick-guide-modal { position: fixed; inset: 0; z-index: 110; visibility: hidden; pointer-events: none; }
 .tick-guide-modal.open { visibility: visible; pointer-events: auto; }
@@ -530,6 +528,7 @@ html, body {
 .tick-beta-explain:empty { display: none; }
 .tick-beta-explain b { color: var(--text); }
 .tick-bucket-group { display: inline-flex; gap: 6px; padding: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; }
+.tick-card-actions { display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px; }
 .tick-bucket-btn { padding: 7px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--text-2); font-size: 14.5px; font-weight: 750; cursor: pointer; transition: .15s; }
 .tick-bucket-btn:hover { color: var(--text); }
 .tick-bucket-btn.active { background: var(--accent); color: #fff; }
@@ -560,6 +559,11 @@ html, body {
 .tick-tape li.down em { color: #2563eb; }
 .tick-tape li.flat em { color: var(--text-muted); }
 .tick-disclaimer { margin: 0; color: var(--text-muted); font-size: 14.5px; line-height: 1.55; }
+@media (max-width: 560px) {
+  .tick-card-actions { width: 100%; justify-content: space-between; }
+  .tick-bucket-group { gap: 2px; }
+  .tick-bucket-btn { padding-inline: 10px; }
+}
 .tick-concept-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
 .tick-concept-card { padding: 18px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
 .tick-concept-card h3 { margin-bottom: 8px; font-size: 15px; color: var(--text); }

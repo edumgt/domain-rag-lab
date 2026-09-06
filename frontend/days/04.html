@@ -7,7 +7,7 @@
       name="description"
       content="한 종목의 성과보다 여러 자산을 함께 보고, 목표 비중을 정해 리밸런싱하는 법을 배웁니다."
     />
-    <title>04일차 | 4일 금융 이론 — 퀀트 정보</title>
+    <title>04일차 | 4일 금융 이론 — 자산배분, 퀀트</title>
     <link rel="stylesheet" href="assets/site.css?v=20260905-korean-pair-layout" />
     <link rel="stylesheet" href="assets/app-shell.css?v=20260905-modal-large-unified" />
     <style>
@@ -85,15 +85,16 @@
       .forecast-model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }.forecast-model-card { padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }.forecast-model-card b { display: block; color: var(--blue); font-size: 16px; }.forecast-model-card p { margin: 7px 0 0; }
       .forecast-breaktime-table { width: 100%; border-collapse: collapse; margin: 12px 0; background: #fff; }.forecast-breaktime-table th, .forecast-breaktime-table td { padding: 11px; border: 1px solid var(--line); color: #405572; font-size: 14.5px; line-height: 1.55; text-align: left; vertical-align: top; }.forecast-breaktime-table th { color: var(--blue); background: #eef3ff; font-weight: 800; }
       .forecast-caution { padding: 13px 15px; border-left: 4px solid #e69b00; border-radius: 8px; background: #fff8e8; color: #704d00!important; font-weight: 700; }
+      .bias-quiz-dialog { width: min(720px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }.bias-quiz-intro, .bias-quiz-disclaimer { color: #405572; font-size: 14.5px; line-height: 1.7; }.bias-quiz-progress { display: flex; justify-content: space-between; gap: 12px; margin: 18px 0 10px; color: var(--blue); font-size: 14.5px; font-weight: 800; }.bias-quiz-progress i { flex: 1; height: 7px; margin-top: 6px; border-radius: 999px; background: #dce7fb; overflow: hidden; }.bias-quiz-progress i::after { content: ""; display: block; width: var(--bias-progress, 0%); height: 100%; background: var(--blue); transition: width .2s ease; }.bias-quiz-question { margin: 20px 0 14px; color: var(--ink); font-size: 20px; font-weight: 800; line-height: 1.5; }.bias-quiz-answers { display: grid; gap: 9px; }.bias-quiz-answer { width: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: #314562; font: 650 15px/1.55 inherit; text-align: left; cursor: pointer; }.bias-quiz-answer:hover, .bias-quiz-answer:focus-visible { border-color: var(--blue); background: #eef3ff; color: var(--ink); outline: none; }.bias-quiz-result { margin-top: 18px; padding: 18px; border: 1px solid #c9d9fb; border-radius: 12px; background: #f6f9ff; }.bias-quiz-result h3 { margin: 0 0 8px; color: var(--blue); font-size: 21px; }.bias-quiz-result p { margin: 8px 0 0; color: #405572; font-size: 14.5px; line-height: 1.7; }.bias-quiz-restart { margin-top: 16px; padding: 9px 14px; border: 1px solid var(--blue); border-radius: 999px; background: #fff; color: var(--blue); font: 800 14.5px inherit; cursor: pointer; }
       @media (max-width: 640px) { .factor-sim-dialog, .fx-deposit-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .factor-sim-grid, .sharpe-symbol-grid, .fx-product-grid, .fx-sim-controls, .fx-sim-summary { grid-template-columns: 1fr; } }
     </style>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <script defer src="assets/visuals.js?v=20260905-modal-fit-viewport"></script>
+    <script defer src="assets/visuals.js?v=20260906-remove-nocode-breaktime"></script>
     <script defer src="assets/atlas.js"></script>
-    <script defer src="assets/glossary-modal.js?v=20260905-history"></script>
+    <script defer src="assets/glossary-modal.js?v=20260906-keep-scroll-position"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
   </head>
   <body data-day="4">
@@ -130,7 +131,7 @@
     <div class="day-backdrop" id="dayBackdrop"></div>
     <aside class="day-offcanvas" id="dayOffcanvas" aria-label="학습 메뉴">
       <header class="day-offcanvas-header"><div class="day-offcanvas-title-row"><h2 class="day-offcanvas-title"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h2><button class="day-offcanvas-close" type="button" id="dayMenuClose" aria-label="학습 메뉴 닫기"><i class="fa-solid fa-xmark"></i></button></div><p class="day-offcanvas-subtitle">금융상품 · 실물자산 · 생활거래 이해 · 실습</p></header>
-      <nav class="day-offcanvas-nav" aria-label="4일 이론 학습"><p class="day-offcanvas-nav-label">4일 이론 학습</p><a class="day-offcanvas-link" href="01.html"><span class="day-offcanvas-day">1일차</span> 선물과 옵션</a><a class="day-offcanvas-link" href="02.html"><span class="day-offcanvas-day">2일차</span> 펀드 · ETF</a><a class="day-offcanvas-link" href="03.html"><span class="day-offcanvas-day">3일차</span> 채권 · 코인</a><a class="day-offcanvas-link active" href="04.html"><span class="day-offcanvas-day">4일차</span> 퀀트 정보</a></nav>
+      <nav class="day-offcanvas-nav" aria-label="4일 이론 학습"><p class="day-offcanvas-nav-label">4일 이론 학습</p><a class="day-offcanvas-link" href="01.html"><span class="day-offcanvas-day">1일차</span> 선물과 옵션</a><a class="day-offcanvas-link" href="02.html"><span class="day-offcanvas-day">2일차</span> 펀드 · ETF</a><a class="day-offcanvas-link" href="03.html"><span class="day-offcanvas-day">3일차</span> 채권 · 코인</a><a class="day-offcanvas-link active" href="04.html"><span class="day-offcanvas-day">4일차</span> 자산배분, 퀀트</a></nav>
       <footer class="day-offcanvas-footer"><a href="/docs" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book-open"></i> API 문서 (Swagger)</a><a href="/health" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-heart-pulse"></i> 상태 확인</a></footer>
     </aside>
     <nav aria-label="4일 학습 목차">
@@ -143,7 +144,7 @@
         ><a class="" href="03.html"
           ><b>03</b><span>채권 · 코인</span></a
         ><a class="active" href="04.html"
-          ><b>04</b><span>퀀트 정보</span></a
+          ><b>04</b><span>자산배분, 퀀트</span></a
         >
       </div>
     </nav>
@@ -151,7 +152,7 @@
       <article>
         <header class="lesson-head">
           <div class="lesson-head-line">
-            <h1>퀀트 정보</h1>
+            <h1>자산배분, 퀀트</h1>
             <p>한 종목의 성과보다 여러 자산을 함께 보고, 목표 비중을 정해 리밸런싱하는 법을 배웁니다.</p>
           </div>
         </header>
@@ -691,16 +692,35 @@
               <h2>자산 가치평가: 지금 가격은 무엇을 반영할까요?</h2>
               <div class="lesson-body">
                 <p><b>가치평가(Valuation)</b>는 자산이 앞으로 제공할 현금흐름·사용가치·희소성에 비춰 현재 가격이 어떤 가정을 담고 있는지 추정하는 과정입니다. 자산마다 현금흐름과 거래 구조가 다르므로 하나의 공식으로 모두 평가할 수는 없습니다.</p>
+                <h3>시간의 가치: 미래의 돈은 왜 현재 가치로 바꿀까요?</h3>
+                <p><b>시간의 가치(Time Value of Money, TVM)</b>는 “지금 내 손에 있는 1원은 미래에 받을 1원보다 더 큰 가치를 가진다”는 금융학의 기본 원칙입니다. 금융시장에서 시간은 단순히 흘러가는 개념이 아니라, 이자(수익)를 낳고 위험을 축적하는 자본의 생산 수단으로 취급됩니다.</p>
+                <ul>
+                  <li><b>기회비용:</b> 지금 돈을 가지고 있으면 예금·채권·주식 등에 투자해 이자나 수익을 얻을 수 있습니다. 지금의 돈에는 미래에 돈을 굴려 벌 수 있는 수익의 기회가 포함됩니다.</li>
+                  <li><b>인플레이션:</b> 시간이 지나 물가가 오르면 미래의 돈으로 살 수 있는 실제 구매력이 줄어들 수 있습니다.</li>
+                  <li><b>불확실성 및 위험:</b> 시간이 길어질수록 채무자의 재무 악화·파산이나 경제 위기처럼 돈을 받지 못할 위험도 커질 수 있습니다.</li>
+                </ul>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>시간을 기준으로 현재와 미래의 가치를 바꾸는 두 방향</caption>
+                    <thead><tr><th scope="col">방향</th><th scope="col">뜻</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">현재 가치(PV) → 미래 가치(FV)</th><td>현재의 돈을 이자율·수익률로 불려, 일정 기간 투자 뒤의 금액을 계산합니다. 복리 효과가 반영됩니다.</td></tr>
+                      <tr><th scope="row">미래 가치(FV) → 현재 가치(PV)</th><td>미래에 들어올 현금흐름을 할인율로 낮춰, 지금 기준의 가치를 계산합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>이 원리는 채권·대출 금리, DCF 기반 기업가치, 옵션가격에 모두 쓰입니다. 대출 기간이 길수록 기회비용과 불확실성이 커져 장기 금리가 단기 금리보다 높게 형성되는 경우가 많고, DCF는 미래 현금흐름을 현재 가치로 할인해 합산합니다. 옵션도 만기까지 시간이 많이 남을수록 가격이 움직일 기회가 더 많아 일반적으로 시간가치가 높아지는 경향이 있습니다.</p>
+                <p class="lesson-video-cta"><button type="button" class="breaktime-trigger" id="presentValueBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · 미래의 105만 원은 지금 얼마일까요?</button></p>
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
                     <caption>주요 자산군별 가치평가 접근</caption>
                     <thead><tr><th scope="col">자산군</th><th scope="col">주요 방법</th><th scope="col">무엇을 살피나요?</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">주식</th><td>DCF, 배당할인모형(DDM), PER·PBR·EV/EBITDA 비교</td><td>미래 현금흐름·배당, 성장률, 수익성, 유사 기업 대비 가격</td></tr>
-                      <tr><th scope="row">채권</th><td>현금흐름 할인, 만기수익률(YTM), 신용스프레드 분석</td><td>쿠폰·원금, 시장금리, 만기, 발행자의 상환 능력과 듀레이션</td></tr>
-                      <tr><th scope="row">부동산</th><td>수익환원법, 거래사례비교법, 원가법</td><td>순임대수익과 환원이율, 인근 실거래 사례, 재조달원가</td></tr>
-                      <tr><th scope="row">파생상품</th><td>무차익거래 관계, 이항모형, 블랙-숄즈 계열 모형</td><td>기초자산 가격, 변동성, 금리, 만기, 배당·보유비용과 계약 조건</td></tr>
-                      <tr><th scope="row">원자재·가상자산</th><td>수급·비용·비교지표·네트워크 지표</td><td>생산·보관비용, 희소성, 사용 수요, 유동성·제도와 네트워크 활동</td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="equity">주식</button></th><td><button type="button" class="glossary-term" data-valuation-term="dcf">DCF</button>, <button type="button" class="glossary-term" data-valuation-term="ddm">배당할인모형(DDM)</button>, <button type="button" class="glossary-term" data-valuation-term="multiples">PER·PBR·EV/EBITDA 비교</button></td><td><button type="button" class="glossary-term" data-valuation-term="cashflow">미래 현금흐름</button>·<button type="button" class="glossary-term" data-valuation-term="dividend">배당</button>, <button type="button" class="glossary-term" data-valuation-term="growth">성장률</button>, <button type="button" class="glossary-term" data-valuation-term="profitability">수익성</button>, <button type="button" class="glossary-term" data-valuation-term="peer-price">유사 기업 대비 가격</button></td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="bond">채권</button></th><td><button type="button" class="glossary-term" data-valuation-term="discounted-cf">현금흐름 할인</button>, <button type="button" class="glossary-term" data-valuation-term="ytm">만기수익률(YTM)</button>, <button type="button" class="glossary-term" data-valuation-term="credit-spread">신용스프레드 분석</button></td><td><button type="button" class="glossary-term" data-valuation-term="coupon-principal">쿠폰·원금</button>, <button type="button" class="glossary-term" data-valuation-term="market-rate">시장금리</button>, <button type="button" class="glossary-term" data-valuation-term="maturity">만기</button>, <button type="button" class="glossary-term" data-valuation-term="creditworthiness">발행자의 상환 능력</button>과 <button type="button" class="glossary-term" data-valuation-term="duration">듀레이션</button></td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="real-estate">부동산</button></th><td><button type="button" class="glossary-term" data-valuation-term="income-approach">수익환원법</button>, <button type="button" class="glossary-term" data-valuation-term="sales-comparison">거래사례비교법</button>, <button type="button" class="glossary-term" data-valuation-term="cost-approach">원가법</button></td><td><button type="button" class="glossary-term" data-valuation-term="noi">순임대수익</button>과 <button type="button" class="glossary-term" data-valuation-term="cap-rate">환원이율</button>, <button type="button" class="glossary-term" data-valuation-term="comparable-sales">인근 실거래 사례</button>, <button type="button" class="glossary-term" data-valuation-term="replacement-cost">재조달원가</button></td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="derivative">파생상품</button></th><td><button type="button" class="glossary-term" data-valuation-term="no-arbitrage">무차익거래 관계</button>, <button type="button" class="glossary-term" data-valuation-term="binomial">이항모형</button>, <button type="button" class="glossary-term" data-valuation-term="black-scholes">블랙-숄즈 계열 모형</button></td><td><button type="button" class="glossary-term" data-valuation-term="underlying">기초자산 가격</button>, <button type="button" class="glossary-term" data-valuation-term="volatility">변동성</button>, <button type="button" class="glossary-term" data-valuation-term="interest-rate">금리</button>, <button type="button" class="glossary-term" data-valuation-term="maturity">만기</button>, <button type="button" class="glossary-term" data-valuation-term="carry">배당·보유비용</button>과 <button type="button" class="glossary-term" data-valuation-term="contract">계약 조건</button></td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="commodity-crypto">원자재·가상자산</button></th><td><button type="button" class="glossary-term" data-valuation-term="supply-demand">수급</button>·<button type="button" class="glossary-term" data-valuation-term="cost">비용</button>·<button type="button" class="glossary-term" data-valuation-term="comparative-metric">비교지표</button>·<button type="button" class="glossary-term" data-valuation-term="network-metric">네트워크 지표</button></td><td><button type="button" class="glossary-term" data-valuation-term="storage-cost">생산·보관비용</button>, <button type="button" class="glossary-term" data-valuation-term="scarcity">희소성</button>, <button type="button" class="glossary-term" data-valuation-term="use-demand">사용 수요</button>, <button type="button" class="glossary-term" data-valuation-term="liquidity-regulation">유동성·제도</button>와 <button type="button" class="glossary-term" data-valuation-term="network-activity">네트워크 활동</button></td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -717,11 +737,47 @@
                   <li><b>시장접근법:</b> 비슷한 자산이 시장에서 어떤 가격에 거래되는지 비교합니다. 비교 대상의 성장성·부채·회계 기준이 다르면 단순 비교가 왜곡될 수 있습니다.</li>
                   <li><b>원가접근법:</b> 같은 자산을 새로 만들거나 대체하는 데 드는 비용을 봅니다. 다만 브랜드·입지·네트워크 효과처럼 비용만으로 설명하기 어려운 가치는 놓칠 수 있습니다.</li>
                 </ul>
+                <h3>금융에서 말하는 모형이란?</h3>
+                <p><b>금융모형(Financial Model)</b>은 복잡하고 예측하기 어려운 경제·금융 현상을 수학·통계·컴퓨터 알고리즘으로 단순화해, 공통된 규칙으로 표현한 공식 또는 시스템입니다. 쉽게 말해 미래의 돈 흐름과 위험을 가늠하기 위한 ‘정밀한 수학적 일기예보’에 가깝습니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>금융업이 모형을 쓰는 대표 목적</caption>
+                    <thead><tr><th scope="col">목적</th><th scope="col">핵심 질문</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">자산 가치평가</th><td>이 주식·채권·부동산의 적정 가격은 얼마인가?</td></tr>
+                      <tr><th scope="row">위험 관리</th><td>시장이 크게 움직일 때 손실이 어느 정도까지 커질 수 있는가?</td></tr>
+                      <tr><th scope="row">의사결정·예측</th><td>정해진 위험 안에서 기대수익률을 높이려면 자산을 어떻게 배분할 것인가?</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>분야별 금융모형의 예</caption>
+                    <thead><tr><th scope="col">분야</th><th scope="col">대표 모형</th><th scope="col">쉽게 말하면</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">자산 배분·투자</th><td>현대 포트폴리오 이론(MPT)</td><td>위험을 낮추면서 기대수익률을 높이는 자산 조합을 찾습니다.</td></tr>
+                      <tr><th scope="row">자산 가격</th><td>자산가격결정모형(CAPM)</td><td>해당 주식의 위험 수준을 고려할 때 요구할 최소 기대수익률을 추정합니다.</td></tr>
+                      <tr><th scope="row">파생상품 평가</th><td>블랙-숄즈 모형(Black-Scholes Model)</td><td>주식 옵션처럼 특정 가격에 사고팔 수 있는 권리의 이론 가격을 계산합니다.</td></tr>
+                      <tr><th scope="row">위험 관리</th><td>위험가치(Value at Risk, VaR)</td><td>정상적인 시장 조건이라는 가정 아래, 정한 기간·신뢰수준에서 예상되는 손실 규모를 추정합니다.</td></tr>
+                      <tr><th scope="row">신용 평가</th><td>신용평가모형(Credit Scoring Model)</td><td>소득·부채·상환 이력 등을 바탕으로 대출 상환 가능성과 조건을 판단합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><b>모형은 현실 그 자체가 아닙니다.</b> 계산을 위해 ‘투자자는 합리적으로 행동한다’거나 ‘위험이 특정 분포를 따른다’는 가정을 둡니다. 과거에 없던 위기처럼 예외적인 사건이 발생하면 과거 데이터에 기반한 추정은 크게 빗나갈 수 있습니다. 따라서 모형의 숫자는 정답이 아니라, 가정·데이터·한계를 함께 확인하며 쓰는 의사결정 도구입니다.</p>
+                <h3>마코위츠의 포트폴리오 이론과 현대 포트폴리오 이론</h3>
+                <p><b>마코위츠의 포트폴리오 이론</b>과 <b>현대 포트폴리오 이론(Modern Portfolio Theory, MPT)</b>은 같은 개념입니다. 해리 마코위츠가 1952년 제시한 평균-분산 접근법을 창시자 이름으로 부르기도, 현대 포트폴리오 이론이라는 학문적 명칭으로 부르기도 합니다.</p>
+                <ul>
+                  <li><b>분산투자:</b> 여러 종목을 단순히 많이 담는 것보다 서로 함께 움직임이 낮은 자산을 섞어야 전체 변동성을 줄이는 데 도움이 됩니다.</li>
+                  <li><b>효율적 투자선(Efficient Frontier):</b> 같은 위험 수준에서 기대수익률이 가장 높은 조합, 또는 같은 기대수익률에서 위험이 가장 낮은 조합들을 나타냅니다.</li>
+                  <li><b>비체계적 위험과 체계적 위험:</b> 개별 기업의 악재 같은 비체계적 위험은 분산으로 줄일 수 있지만, 경기 침체·시장 전체 급락 같은 체계적 위험까지 없앨 수는 없습니다.</li>
+                </ul>
+                <p><small>참고: 마코위츠의 포트폴리오 선택 이론과 평균·분산·자산 간 상관관계의 의미는 <a href="https://www.nobelprize.org/prizes/economic-sciences/1990/press-release/" target="_blank" rel="noopener noreferrer">노벨상위원회의 1990년 경제학상 설명</a>에서 확인할 수 있습니다.</small></p>
                 <p><b>평가값은 정답이 아니라 가정의 결과입니다.</b> 성장률·할인율·마진·변동성처럼 작은 가정 변화도 결과를 크게 바꿀 수 있습니다. 특히 무위험수익률, 체계적 위험(베타), 신용위험과 수익률 변동성은 할인율과 요구수익률에 영향을 줍니다. 금리가 오르면 다른 조건이 같을 때 미래 현금흐름의 현재 가치는 낮아지는 경향이 있지만, 실제 가격은 기대 성장·수급·유동성도 함께 반영합니다.</p>
+                <p class="lesson-video-cta"><button type="button" class="breaktime-trigger" id="assetValueBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · 내 주변 자산의 가치를 직접 비교해 보세요</button></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="자산 가치평가 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson"><span>12.05</span>
+          </section><section class="lesson" id="randomWalkLesson"><span>12.05</span>
             <div class="lesson-content">
               <h2>랜덤워크와 효율적 시장 가설: 퀀트가 먼저 확인하는 질문</h2>
               <div class="lesson-body">
@@ -751,10 +807,11 @@
                 <h3>현실의 한계와 반론</h3>
                 <p>행동재무학은 과잉반응·과소반응·쏠림 같은 현상이 가격에 영향을 줄 수 있다고 봅니다. 모멘텀·가치 등 이상현상 연구도 이어져 왔습니다. 반대로 눈에 보이는 패턴은 위험에 대한 보상, 데이터 탐색 과정의 우연, 거래비용 때문에 실제 투자에서 사라질 수 있습니다. 워런 버핏이나 제임스 사이먼스처럼 장기 성과가 알려진 사례 역시 시장이 항상 완벽하거나 항상 비효율적이라는 단일 결론의 증거가 되지는 않습니다.</p>
                 <p><small>참고: <a href="https://www.nber.org/papers/w7699.pdf" target="_blank" rel="noopener noreferrer">유진 파마(1970), Efficient Capital Markets</a>, <a href="https://doi.org/10.1111/j.1540-6261.1991.tb04636.x" target="_blank" rel="noopener noreferrer">파마(1991), Efficient Capital Markets: II</a>, <a href="https://www.spglobal.com/spdji/en/research-insights/spiva/about-spiva/" target="_blank" rel="noopener noreferrer">S&amp;P DJI SPIVA의 액티브·지수 비교 방법론 안내</a>.</small></p>
+                <p class="lesson-video-cta"><button type="button" class="breaktime-trigger" id="beforeQuantHistoryBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · 규칙과 예측을 구분해 보세요</button></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="랜덤워크와 효율적 시장 가설 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson"><span>12.1</span>
+          </section><section class="lesson" id="quantHistoryLesson"><span>12.1</span>
             <div class="lesson-content">
               <h2>퀀트는 언제 금융에 쓰였을까요?</h2>
               <div class="lesson-body">
@@ -778,7 +835,7 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="퀀트의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson"><span>LEAN</span>
+          </section><section class="lesson" id="leanLesson"><span>LEAN</span>
             <div class="lesson-content">
               <h2>QuantConnect LEAN: 오픈소스 퀀트 엔진을 이해하고 사용하기</h2>
               <div class="lesson-body">
@@ -849,11 +906,10 @@
                 <p>설정을 하려면 서버에만 <code>LEAN_SSH_HOST</code>, <code>LEAN_SSH_USER</code>, <code>LEAN_SSH_KEY_PATH</code>, <code>LEAN_REMOTE_WORKDIR</code>를 둡니다. 개인키와 브로커 API 키는 저장소·브라우저·학습 노트에 넣지 말고 읽기 전용 비밀 파일 또는 비밀관리 도구로 전달해야 합니다. 설정이 비어 있으면 이 서비스의 백테스트 API는 실행을 안전하게 중단하도록 구성되어 있습니다.</p>
                 <p><b>학습 순서:</b> 데이터 확인 → 단순 전략 → 비용을 포함한 백테스트 → 기간을 나눈 검증 → 모의 거래 → 소액 실거래 순서가 적절합니다. LEAN의 백테스트 결과는 과거 조건에서의 시뮬레이션일 뿐이며 미래 수익이나 주문 체결을 보장하지 않습니다.</p>
                 <p><a href="https://github.com/QuantConnect/Lean" target="_blank" rel="noopener noreferrer">LEAN GitHub 저장소</a> · <a href="https://www.lean.io/" target="_blank" rel="noopener noreferrer">LEAN 공식 문서·CLI 안내</a> · <a href="https://hub.docker.com/r/quantconnect/lean" target="_blank" rel="noopener noreferrer">공식 Docker 이미지</a></p>
-                <p class="lesson-video-cta"><button type="button" class="breaktime-trigger" id="leanBacktestBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime</button></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="QuantConnect LEAN: 오픈소스 퀀트 엔진을 이해하고 사용하기 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson"><span>13</span>
+          </section><section class="lesson" id="allWeatherLesson"><span>13</span>
             <div class="lesson-content">
               <h2>올웨더 포트폴리오: 여러 경제 날씨에 대비하는 자산배분</h2>
               <div class="lesson-body">
@@ -939,7 +995,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>15</span>
+          </section><section class="lesson" id="assetAllocationTimingLesson"><span>15</span>
             <div class="lesson-content">
               <h2>자산배분과 마켓 타이밍은 다릅니다: 달러통장 사례</h2>
               <div class="lesson-body">
@@ -959,7 +1015,6 @@
                   <button type="button" class="lesson-video-link" id="fxDepositModalTrigger"><i class="fa-solid fa-building-columns"></i> 실제 외화예금 상품·환율 변동 보기</button>
                   <small>외화보통예금·외화정기예금의 차이와 환율에 따른 원화 환산액을 확인하세요.</small>
                 </p>
-                <p class="lesson-video-cta"><button type="button" class="breaktime-trigger" id="forecastBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · 미래 예측 미리 찾아보기</button></p>
                 <p>
                   “달러통장에 달러를 넣어 두었다가 환율이 오른 것 같을 때
                   은행에 가서 판다”는 방식은 외화라는 자산군을 보유한다는
@@ -981,6 +1036,7 @@
                   과정이 필요하며, 그렇지 않으면 환율을 예측하는 개별 거래와
                   다르지 않습니다.
                 </p>
+                <p class="lesson-video-cta"><button type="button" class="breaktime-trigger" id="allocationTimingBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · 내 달러 비중 규칙을 정해 보세요</button></p>
               </div>
             </div>
             <button
@@ -993,7 +1049,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>16</span>
+          </section><section class="lesson" id="riskMetricsLesson"><span>16</span>
             <div class="lesson-content">
               <h2>위험을 읽는 네 가지 숫자</h2>
               <div class="lesson-body">
@@ -1048,7 +1104,7 @@
                   위기 방어력이 항상 보장되는 것은 아닙니다.
                 </p>
                 <p>
-                  <strong>저변동성(Low Volatility)</strong>은 베타나 수익률의
+                  <strong>저변동성(Low Volatility, 로우 볼래틸러티)</strong>은 베타나 수익률의
                   표준편차가 상대적으로 낮은 주식에 주목합니다. 롤러코스터 대신
                   평탄한 길을 정속 주행하는 버스에 비유할 수 있습니다. 하락 폭을
                   줄여 복리의 훼손을 낮출 수 있지만, 상승장이 강할 때는 시장보다
@@ -1188,7 +1244,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson" data-alpha-beta-lesson><span>18</span><div class="lesson-content"><h2>알파와 베타: 초과성과와 시장 노출을 구분하기</h2><div class="lesson-body"><p>베타(beta)는 시장이 움직일 때 전략·종목이 평균적으로 얼마나 민감하게 움직였는지를 나타내는 시장 노출도입니다. KOSPI 200을 벤치마크로 했을 때 베타가 1이면 시장과 비슷한 폭, 1보다 크면 더 큰 폭으로, 음수면 반대 방향으로 움직이는 경향을 뜻합니다. 과거 자료에서 추정한 값이므로 미래에도 유지된다는 보장은 없습니다.</p><p>알파(alpha)는 같은 베타와 위험을 감수했을 때 벤치마크 또는 CAPM이 설명하는 수준을 넘어선 수익입니다. 실제 수익률에서 무위험수익률과 베타를 반영한 기대수익률을 뺀 값으로 생각할 수 있습니다. 양(+)의 알파는 같은 기간·비용·벤치마크 기준에서 초과성과가 있었다는 뜻일 뿐, 미래 수익 보장이나 운용자의 실력 증명은 아닙니다.</p><p>따라서 “알파 팩터는 새로운 알고리즘, 베타 팩터는 이미 알려진 알고리즘”이라는 구분은 표준 금융 용어가 아닙니다. 알파 신호는 알려진 공통 팩터를 통제한 뒤에도 초과수익을 기대하게 하는 예측 신호를, 베타 팩터는 시장·가치·규모·모멘텀처럼 널리 알려진 공통 수익 원천에 대한 노출을 뜻합니다. 다만 알파처럼 보이던 규칙이 공개·복제로 널리 알려지고 저비용으로 구현되면 팩터 베타 또는 대체 베타로 재분류될 수 있습니다.</p><p>알파·베타는 변동성·MDD·샤프 비율과 함께 읽어야 합니다. 특히 벤치마크, 측정 기간, 수수료·세금·거래비용이 다르면 수치를 직접 비교할 수 없습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="알파와 베타 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section><section class="lesson"><span>19</span>
+          </section><section class="lesson" id="alphaBetaLesson" data-alpha-beta-lesson><span>18</span><div class="lesson-content"><h2>알파와 베타: 초과성과와 시장 노출을 구분하기</h2><div class="lesson-body"><p>베타(beta)는 시장이 움직일 때 전략·종목이 평균적으로 얼마나 민감하게 움직였는지를 나타내는 시장 노출도입니다. KOSPI 200을 벤치마크로 했을 때 베타가 1이면 시장과 비슷한 폭, 1보다 크면 더 큰 폭으로, 음수면 반대 방향으로 움직이는 경향을 뜻합니다. 과거 자료에서 추정한 값이므로 미래에도 유지된다는 보장은 없습니다.</p><p>알파(alpha)는 같은 베타와 위험을 감수했을 때 벤치마크 또는 CAPM이 설명하는 수준을 넘어선 수익입니다. 실제 수익률에서 무위험수익률과 베타를 반영한 기대수익률을 뺀 값으로 생각할 수 있습니다. 양(+)의 알파는 같은 기간·비용·벤치마크 기준에서 초과성과가 있었다는 뜻일 뿐, 미래 수익 보장이나 운용자의 실력 증명은 아닙니다.</p><p>따라서 “알파 팩터는 새로운 알고리즘, 베타 팩터는 이미 알려진 알고리즘”이라는 구분은 표준 금융 용어가 아닙니다. 알파 신호는 알려진 공통 팩터를 통제한 뒤에도 초과수익을 기대하게 하는 예측 신호를, 베타 팩터는 시장·가치·규모·모멘텀처럼 널리 알려진 공통 수익 원천에 대한 노출을 뜻합니다. 다만 알파처럼 보이던 규칙이 공개·복제로 널리 알려지고 저비용으로 구현되면 팩터 베타 또는 대체 베타로 재분류될 수 있습니다.</p><p>알파·베타는 변동성·MDD·샤프 비율과 함께 읽어야 합니다. 특히 벤치마크, 측정 기간, 수수료·세금·거래비용이 다르면 수치를 직접 비교할 수 없습니다.</p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="알파와 베타 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section><section class="lesson"><span>19</span>
             <div class="lesson-content">
               <h2>개인이 퀀트를 이용하는 세 가지 경로: 일임·플랫폼·직접 API</h2>
               <div class="lesson-body"><p>개인도 퀀트 방식을 이용할 수 있지만, “퀀트 전용 계좌” 하나가 있는 것은 아닙니다. 첫째는 로보어드바이저나 증권사 랩처럼 등록된 사업자가 계약에 따라 운용하는 투자일임·자문 서비스입니다. 일임은 운용 판단과 주문을 맡기는 구조이고, 자문은 조언을 받은 뒤 고객이 주문을 결정하는 구조일 수 있으므로 역할·보수·위험등급·해지 조건을 확인해야 합니다.</p><p>둘째는 조건식을 조합해 데이터를 분석하고 백테스트하는 노코드·플랫폼 방식입니다. 일부 서비스는 증권사 계좌 연결과 주문 기능을 제공할 수 있지만, 지원 증권사·시장·주문 범위·연동 가능 여부는 달라질 수 있습니다.</p><p>셋째는 증권사 Open API로 직접 프로그램을 만드는 개발자형 방식입니다. 한국투자증권 KIS Developers와 키움 Open API+처럼 시세·잔고 조회와 주문 기능을 제공하는 공식 API가 예시입니다. 계좌·서비스 등록, 앱 키·인증, 호출 한도와 허용 상품을 확인하고 모의환경에서 먼저 검증하세요.</p><p>직접 자동주문에는 앱 키 유출, 중복 주문, 통신 장애, 잘못된 수량·가격, 급변동 위험이 있습니다. 데이터 조회 → 모의투자 → 매우 작은 규모의 실거래처럼 단계를 나누고, 주문 한도·중지 스위치·알림·로그·수동 점검 규칙을 갖추는 것이 중요합니다.</p></div>
@@ -1428,27 +1484,44 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>29.1</span>
+          </section><section class="lesson" id="marketPsychologyLesson"><span>29.1</span>
             <div class="lesson-content">
               <h2>시장 심리: 남을 따라가는 판단과 처음 본 숫자</h2>
               <div class="lesson-body">
                 <p><strong>레밍 효과(Lemming Effect)</strong>는 다른 사람이 한다는 이유만으로 판단을 따라가는 <strong>군집행동</strong>을 가리키는 비유입니다. 실제 레밍이 집단 자살한다는 이야기는 사실이 아니지만, 투자에서는 상승 종목을 뒤늦게 추격하거나 공포가 번질 때 함께 매도하는 현상을 설명하는 표현으로 쓰입니다. 거래량·커뮤니티 반응만으로 매수 근거가 충분한지, 내 손실 한도와 근거가 따로 있는지 확인해야 합니다.</p>
                 <p><strong>앵커링 효과(Anchoring Effect)</strong>는 처음 접한 숫자나 정보가 판단의 ‘닻’이 되는 현상입니다. 예를 들어 ‘최고가 100만 원, 지금 50만 원’이라는 표시를 보면 50만 원이 싸게 느껴질 수 있지만, 그 가격이 기업 가치나 내 투자 목표에 맞는지는 별개의 질문입니다. 퀀트 검증에서도 처음 본 백테스트 수익률 하나에 고정되지 말고, 기간·비용·벤치마크를 바꾼 결과를 함께 봐야 합니다.</p>
                 <p><strong>넛지(Nudge)</strong>는 선택을 금지하거나 강요하지 않으면서 더 나은 선택을 쉽게 하도록 환경을 설계하는 방법입니다. 자동 저축 기본설정, 위험고지의 눈에 띄는 표시가 예입니다. 투자 앱의 인기순위·강조색·기본 선택도 행동에 영향을 줄 수 있으므로, 화면의 추천과 자신의 판단 기준을 구분해 보세요.</p>
+                <h3>손실·정보가 판단을 왜곡할 때</h3>
+                <p><strong>손실회피와 프로스펙트 이론(Loss Aversion and Prospect Theory)</strong>은 사람이 절대적인 부의 수준보다 기준점에서의 이익과 손실에 민감하게 반응한다는 설명입니다. 많은 실험에서 같은 금액의 이익보다 손실을 더 크게 느끼는 경향이 관찰됐지만, ‘정확히 두 배’처럼 고정된 수치로 모든 사람에게 적용되지는 않습니다. 시장에서는 손실 종목을 지나치게 오래 보유하거나 작은 이익을 너무 빨리 실현하는 행동과 연결해 해석할 수 있습니다.</p>
+                <p><strong>가용성 휴리스틱(Availability Heuristic)</strong>은 실제 발생 확률보다 기억에 쉽게 떠오르는 뉴스·사례·이미지에 판단이 끌리는 경향입니다. 최근의 급등 종목이나 성공담이 반복 노출되면 그것이 흔한 결과처럼 느껴질 수 있습니다. 자극적인 사례 대신 장기 수익률 분포, 실패 사례, 손실 가능성과 표본 수를 함께 확인하는 습관이 필요합니다.</p>
+                <p><strong>보유 효과(Endowment Effect)</strong>는 어떤 자산을 내 것으로 가진 뒤 그 가치를 더 높게 평가하기 쉬운 경향입니다. 이미 산 주식·부동산의 악재를 과소평가하거나 희망 가격만 고집하는 모습으로 나타날 수 있습니다. ‘오늘 현금이 있다면 같은 가격에 다시 살 것인가?’라는 질문은 보유 여부와 별개로 판단하는 데 도움이 됩니다.</p>
+                <p><strong>확증 편향(Confirmation Bias)</strong>은 기존의 믿음과 선택을 뒷받침하는 정보만 찾고 반대 증거는 가볍게 보는 경향입니다. 특정 종목을 산 뒤 긍정적 뉴스·영상만 소비하면 위험 신호를 놓치기 쉽습니다. 투자 근거와 반증 조건, 매도·재검토 기준을 매수 전에 함께 적어 두면 이를 줄이는 데 도움이 됩니다.</p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" data-bias-quiz-trigger="market"><i class="fa-solid fa-compass"></i> 시장 심리 성향 점검</button><small>8개 질문으로 내 판단이 군중·기준점·손실·정보에 얼마나 민감한지 살펴보세요.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="시장 심리 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson"><span>29.2</span>
+          </section><section class="lesson" id="choiceCompetitionLesson"><span>29.2</span>
             <div class="lesson-content">
               <h2>선택과 경쟁: 기회비용·메기 효과·피그말리온 효과</h2>
               <div class="lesson-body">
                 <p><strong>기회비용(Opportunity Cost)</strong>은 하나를 선택하면서 포기한 대안 중 가장 큰 가치를 뜻합니다. 예금·채권·주식 중 하나를 고를 때는 선택한 상품의 기대수익만이 아니라, 포기한 대안의 수익·유동성·위험을 함께 비교해야 합니다. 이미 지출한 돈이나 과거 손실은 되돌릴 수 없는 <button type="button" class="inline-term-trigger" id="sunkCostTrigger" aria-haspopup="dialog">매몰비용</button>이므로 기회비용과 구분합니다.</p>
                 <p><strong>메기 효과(Catfish Effect)</strong>는 강한 경쟁자의 등장으로 기존 참여자가 더 효율적·혁신적으로 움직인다는 비유입니다. 새 플랫폼·기술·저가 경쟁자가 등장했을 때 기업의 비용 구조와 서비스가 개선될 수 있지만, 경쟁 심화가 모든 기업의 이익 증가를 보장하지는 않습니다. 투자 분석에서는 경쟁사가 늘어난 사실뿐 아니라 가격 경쟁, 점유율, 수익성 변화를 확인해야 합니다.</p>
                 <p><strong>피그말리온 효과(Pygmalion Effect)</strong>는 긍정적 기대와 지원이 행동·성과에 영향을 줄 수 있다는 심리학적 개념입니다. 시장에서는 투자자 기대가 자금 조달·인재 확보·주가에 영향을 주는 자기실현적 과정으로 비유되기도 합니다. 다만 기대만으로 기업 실적이 만들어지는 것은 아니므로, 매출·현금흐름·경쟁력 같은 확인 가능한 자료와 분리해서 판단해야 합니다.</p>
+                <h3>선택을 미루거나 소비가 이어질 때</h3>
+                <p><strong>선택의 역설(Paradox of Choice)</strong>은 선택지가 많아질수록 비교 부담과 후회 가능성이 커져 결정을 미루거나 선택 뒤 만족이 낮아질 수 있다는 설명입니다. 펀드·종목이 너무 많으면 아무것도 고르지 못할 수 있으므로, 투자 목적·기간·위험 허용 범위처럼 먼저 정한 몇 가지 기준으로 후보를 좁히는 방법이 실용적입니다.</p>
+                <p><strong>매몰비용 오류(Sunk Cost Fallacy)</strong>는 이미 되돌릴 수 없는 비용 때문에 앞으로도 손해일 선택을 계속하는 판단 오류입니다. 매몰비용 자체와 달리 이는 행동을 가리키는 말입니다. 손실 종목·사업을 계속할지 판단할 때는 과거 매수가가 아니라, 지금부터의 기대 현금흐름·위험·대안을 비교해야 합니다.</p>
+                <p><strong>디드롯 효과(Diderot Effect)</strong>는 새 소비가 그에 어울리는 추가 소비를 부르며 지출이 연쇄적으로 커지는 현상을 설명하는 비유입니다. 고가 차량 뒤에 유지비·보험·관련 소비가 늘어나는 상황처럼, 구매 가격뿐 아니라 이후의 고정비와 기회비용까지 예산에 반영해야 합니다.</p>
+                <h3>경쟁·조직에서 생기는 판단 오류</h3>
+                <p><strong>승자의 재앙(Winner’s Curse)</strong>은 공통가치 경매처럼 실제 가치가 불확실한 대상에서 가장 낙관적으로 평가한 참여자가 낙찰받아 과다지급할 수 있는 현상입니다. 기업 인수합병이나 자원 입찰에서 ‘이겼다’는 사실이 오히려 평가가 지나치게 높았다는 신호일 수 있습니다. 인수 뒤의 시너지·통합 비용·자금조달 부담까지 포함한 상한 가격을 경쟁 전에 정해야 합니다.</p>
+                <p><strong>링겔만 효과(Ringelmann Effect)와 사회적 태만(Social Loafing)</strong>은 집단이 커질수록 개인의 노력·책임이 줄어들 수 있는 현상을 말합니다. 두 용어는 관련 있지만 완전히 같은 뜻은 아닙니다. 기업에서는 주주가 많고 책임이 분산될수록 개별 감시 유인이 약해질 수 있으므로, 이사회·공시·감사·의결권 구조 같은 거버넌스 장치를 함께 살펴야 합니다.</p>
+                <p><strong>호손 효과(Hawthorne Effect)</strong>는 관찰 또는 측정되고 있다는 인식 때문에 행동이 달라질 수 있는 현상입니다. 주주 행동주의, 언론 보도, 규제기관의 조사 뒤 기업 행동이 달라지는 과정을 비유적으로 이해하는 데 쓸 수 있습니다. 다만 원래 호손 연구의 해석은 논쟁이 많으므로, 관찰만으로 경영 효율이나 주가가 반드시 좋아진다고 단정해서는 안 됩니다.</p>
+                <p><strong>스티그마 효과(Stigma Effect, 낙인 효과)</strong>는 부정적 평판이나 분류가 신뢰·기회·자금조달 조건을 계속 악화시킬 수 있는 현상입니다. 피그말리온 효과의 엄밀한 ‘반대말’이라기보다, 부정적 기대가 자기실현적으로 작동할 수 있는 관련 개념으로 보는 편이 정확합니다. 분식회계·연체 같은 이력이 남은 기업은 낙인뿐 아니라 실제 재무 상태와 개선 조치도 함께 평가해야 합니다.</p>
+                <p><small>참고: <a href="https://www.nber.org/papers/w8190.pdf" target="_blank" rel="noopener noreferrer">프로스펙트 이론과 손실회피의 해설</a>, <a href="https://www.aeaweb.org/articles?id=10.1257%2Fjep.2.1.191" target="_blank" rel="noopener noreferrer">미국경제학회의 승자의 재앙 연구</a>, <a href="https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Group_Dynamics/Latane_et_al_1979_Many_hands_make_light_the_work.pdf" target="_blank" rel="noopener noreferrer">사회적 태만 연구</a>, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3969247/" target="_blank" rel="noopener noreferrer">호손 효과 체계적 문헌검토</a>.</small></p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" data-bias-quiz-trigger="choice"><i class="fa-solid fa-scale-balanced"></i> 선택·경쟁 성향 점검</button><small>8개 질문으로 선택 피로·매몰비용·경쟁 과열·평판 민감도를 살펴보세요.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="선택과 경쟁 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson"><span>30</span>
+          </section><section class="lesson" id="blackSwanLesson"><span>30</span>
             <div class="lesson-content">
               <h2>블랙 스완: 평소 모형 밖의 큰 충격에 대비하기</h2>
               <div class="lesson-body"><p>블랙 스완(Black Swan)은 평소의 경험과 통상적인 예측 모형이 놓치기 쉬운데, 발생하면 시장과 사회에 매우 큰 영향을 주는 사건을 가리키는 비유입니다. 나심 니콜라스 탈레브가 2007년 책 《블랙 스완》에서 널리 알렸고, 오스트레일리아에서 검은 백조가 발견되어 기존 상식이 깨진 일에서 이름을 가져왔습니다.</p><p>핵심은 ① 당시의 기대 밖에 있는 예외적 사건 ② 매우 큰 파급효과 ③ 사건 뒤 “원래 알 수 있었다”는 사후 합리화입니다. 9·11 테러, 2008년 글로벌 금융위기, 2020년 코로나19 팬데믹은 큰 충격 사례로 자주 언급되지만, 엄밀히 블랙 스완인지에는 견해 차이가 있습니다.</p><p>중요한 것은 사건을 정확히 맞히는 것이 아니라 손실 한도·분산·유동성 확보·과도한 레버리지 제한·스트레스 시나리오로 견디는 힘을 만드는 것입니다. 회색 코뿔소는 눈앞의 위험을 무시하는 경우, 하얀 코끼리는 비용은 크지만 효용이 낮아 부담이 되는 자산·사업을 비유합니다.</p><p>블랙 스완은 ‘희귀한 충격’이라는 관점이고, <strong>레밍 효과</strong>는 평소에도 군중을 따라가며 위험을 키울 수 있는 행동이라는 점에서 다릅니다. 둘 다 한 사건의 방향을 예언하기보다, 한 자산·한 시나리오에 과도하게 의존하지 않는지 점검하게 해 주는 경고로 활용할 수 있습니다.</p></div>
@@ -1506,7 +1579,7 @@
                   판단하세요. 일부 기능·지원 시장은 서비스 정책에 따라 달라질 수
                   있습니다.
                 </p>
-                <p class="lesson-video-cta"><button type="button" class="breaktime-trigger" id="referenceBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · Docker 실습 도전</button></p>
+                <p class="lesson-video-cta"><button type="button" class="breaktime-trigger" id="koreanPairBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · 비교 종목 넓혀 보기</button></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="레퍼런스 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -1531,6 +1604,16 @@
                 주는 지표입니다. 변동성이 크면 단기간의 오르내림 폭도 클 수
                 있습니다. 변동성이 낮다고 손실 가능성이 없는 것은 아니며, 투자
                 기간과 감당 가능한 손실을 함께 고려해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>저변동성 <small>Low Volatility(로우 볼래틸러티) · Low Vol(로우 볼)</small></dt>
+              <dd>
+                <p>주식 팩터 투자에서 ‘저변동성(Low Volatility, 로우 볼래틸러티)’이라는 이름을 쓰는 이유는, 낮은 변동성·낮은 베타 주식이 높은 변동성·높은 베타 주식보다 위험 대비 성과가 좋았다고 보고된 경험적 결과를 가리키기 때문입니다. 전통적인 자산가격결정모형(Capital Asset Pricing Model, CAPM)은 체계적 위험인 베타가 높을수록 더 높은 기대수익률을 요구한다는 관계를 제시하지만, 실제 자료에서는 이 관계가 약하거나 반대로 관찰된 연구가 있습니다. 이를 저변동성 이상 현상(Low-Volatility Anomaly, 로우 볼래틸러티 어노멀리)이라고 부릅니다.</p>
+                <p>따라서 ‘고변동성 팩터’가 아니라 ‘저변동성 팩터’라고 부릅니다. 가치·모멘텀·퀄리티가 각 특성을 상대적으로 많이 가진 종목을 찾는 말이라면, 저변동성은 변동성이 <b>낮은</b> 종목을 고르는 전략의 방향 자체를 이름에 담은 것입니다. ‘고변동성’이라고 하면 변동성이 큰 종목을 사는 전략으로 이해될 수 있어 실제 접근과 반대가 됩니다.</p>
+                <p>가능한 설명으로는 복권 효과(Lottery Effect)가 있습니다. 큰 폭으로 오를 가능성에 끌린 투자자가 고변동성 주식에 높은 가격을 지불하거나, 기관투자자가 레버리지 제약과 벤치마크 추적 때문에 저베타 주식을 충분히 담기 어려울 수 있다는 설명입니다. 필수소비재·통신처럼 상대적으로 안정적인 업종이 관심을 덜 받는다는 해석도 있으나, 이는 모든 시장·기간에 똑같이 성립하는 법칙은 아닙니다.</p>
+                <p>저변동성은 손실이 없거나 수익률이 항상 높다는 뜻이 아닙니다. 금리 변화, 업종 쏠림, 가치·성장 스타일 변화, 강한 상승장에서의 상대적 부진, 리밸런싱 비용에 따라 결과가 달라질 수 있습니다. 또한 변동성은 위험의 한 측면일 뿐이며, 신용위험·유동성위험·큰 하락 위험까지 모두 대신하지는 못합니다. 팩터 성과는 과거 관찰 결과이므로 상품의 구성 규칙·비용·분산·투자 기간을 함께 확인해야 합니다.</p>
+                <p>참고: Baker·Bradley·Wurgler의 연구는 미국 시장에서 저변동성·저베타 포트폴리오의 장기 성과와 벤치마크 제약을 설명 후보로 제시했고, Frazzini·Pedersen의 연구는 자금조달 제약과 베타의 관계를 분석했습니다.</p>
               </dd>
             </div>
             <div class="glossary-item">
@@ -1629,6 +1712,53 @@
                 거래승수로 계산합니다. 예를 들어 승수가 250,000원이면 1.20포인트
                 변화는 300,000원의 손익입니다. 승수가 클수록 같은 지수 변동에도
                 손익 금액이 커집니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>선물환 <small>FX Forward · 先物換</small></dt>
+              <dd>
+                미래의 특정 날짜에 정한 환율로 두 통화를 바꾸기로 약속하는 장외
+                파생계약입니다. 수출입 대금처럼 앞으로 발생할 외화 거래의 환율을
+                미리 고정해 불확실성을 줄이는 데 활용할 수 있습니다. 거래 금액·통화·
+                환율·결제일과 상대방의 계약 이행 위험, 중도 해지 조건을 함께
+                확인해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>금리스왑(IRS) <small>Interest Rate Swap · 金利 Swap</small></dt>
+              <dd>
+                같은 원금 기준으로 고정금리와 변동금리의 이자 지급 방식을 서로
+                바꾸기로 하는 장외 파생계약입니다. 보통 원금 자체를 주고받기보다
+                이자 차이만 정산하며, 계약 기간·기준금리·고정금리·명목원금과
+                상대방의 계약 이행 위험을 함께 확인해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>방어 포지션 <small>Defensive Position · Hedge Position</small></dt>
+              <dd>
+                이미 보유했거나 앞으로 보유할 자산의 가격 위험을 줄이기 위해,
+                기존 노출과 반대 또는 상쇄되는 방향으로 함께 보유하는 거래
+                상태입니다. 예를 들어 주식 포트폴리오를 보유한 투자자가 시장
+                하락 위험을 일부 줄이기 위해 지수선물을 매도하거나 풋옵션을
+                매수하는 경우가 있습니다. 방어 포지션도 비용·증거금·만기·
+                현물과의 가격 차이 때문에 손실이 날 수 있으므로, 보유 자산과
+                계약 규모가 실제 위험에 맞는지 함께 점검해야 합니다.
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>베이시스 위험 <small>Basis Risk</small></dt>
+              <dd>
+                <p>현물 자산의 가격 위험을 줄이려고 선물 등 파생상품으로 헤지할 때, 현물 가격과 선물 가격의 차이인 베이시스가 예상과 다르게 움직여 생기는 위험입니다. 현물 시장과 선물 시장은 완전히 똑같이 움직이지 않으므로 100% 위험 제거가 어려울 때 발생합니다.</p>
+                <p>비를 피하려고 우산을 썼는데 바람 때문에 우산의 각도와 빗줄기 방향이 맞지 않아 옷이 젖는 상황에 비유할 수 있습니다. 예를 들어 항공사가 항공유 가격 급등을 막으려고 원유 선물을 매수했지만, 정제마진 변화로 항공유 가격과 원유 선물 가격의 상승 폭이 달라 헤지 효과가 줄어들 수 있습니다.</p>
+                <p>현물과 가격 흐름의 상관관계가 높은 헤지 수단을 고르고, 계약 만기·거래 단위·헤지 비율을 실제 노출에 맞춰 점검해 관리합니다.</p>
+              </dd>
+            </div>
+            <div class="glossary-item">
+              <dt>거래상대방 <small>Counterparty · 거래상대방 위험: Counterparty Risk</small></dt>
+              <dd>
+                <p>금융 거래나 계약에서 나 또는 내 기관의 맞은편에서 계약을 체결하는 기업·개인·금융기관을 말합니다. 거래상대방 위험은 그 상대방이 파산·부도·재정 악화 등으로 약속한 계약 내용이나 채무를 이행하지 못해 손실을 볼 위험입니다.</p>
+                <p>돈을 빌려주거나 계약을 맺은 뒤 상대방이 망해 약속한 돈을 받지 못할 위험에 비유할 수 있습니다. 장외 파생상품(OTC) 계약을 맺은 금융회사가 부도나 이익금을 지급하지 못하는 경우가 대표적이며, 2008년 리먼 브라더스 사태가 널리 알려진 사례입니다.</p>
+                <p>상대방의 신용등급·재무상태를 확인하고, 담보를 설정하거나 중앙청산소(CCP)를 이용하는 방식으로 위험을 줄일 수 있습니다.</p>
               </dd>
             </div>
             <div class="glossary-item">
@@ -1771,40 +1901,96 @@
       </footer>
     </main>
 
-    <div class="glossary-modal breaktime-modal" id="leanBacktestBreakTimeModal" hidden>
-      <div class="glossary-modal__backdrop" data-lean-backtest-breaktime-close></div>
-      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="leanBacktestBreakTimeTitle">
-        <button class="glossary-modal__close" type="button" aria-label="닫기" data-lean-backtest-breaktime-close>×</button>
-        <h2 id="leanBacktestBreakTimeTitle">BreakTime</h2>
-        <div class="breaktime-message">
-          <p>이 repo의 <b>LEAN 백테스트</b>를 해보세요.</p>
-          <p>상단 GNB의 ‘LEAN 백테스트’에서 예시 전략을 선택하고, 종목·기간·조건을 바꾼 뒤 결과를 해석해 보세요.</p>
+    <div class="glossary-modal breaktime-modal" id="presentValueBreakTimeModal" hidden>
+      <div class="glossary-modal__backdrop" data-present-value-breaktime-close></div>
+      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="presentValueBreakTimeTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-present-value-breaktime-close>×</button>
+        <p class="glossary-modal__label">BREAKTIME · 할인 계산</p>
+        <h2 id="presentValueBreakTimeTitle">미래의 105만 원은 지금 얼마일까요?</h2>
+        <p>1년 뒤 받을 105만 원을 현재 가치(Present Value, PV)로 바꿔 보세요. 계산식은 <code>현재 가치 = 미래 가치 ÷ (1 + 할인율)</code>입니다.</p>
+        <div class="lesson-table-wrap">
+          <table class="lesson-table">
+            <thead><tr><th scope="col">할인율</th><th scope="col">현재 가치</th><th scope="col">의미</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">3%</th><td>약 101만 9천 원</td><td>미래 현금흐름을 비교적 낮은 수익률·위험으로 봅니다.</td></tr>
+              <tr><th scope="row">5%</th><td>100만 원</td><td>1년 뒤 105만 원은 지금의 100만 원과 같은 가치입니다.</td></tr>
+              <tr><th scope="row">10%</th><td>약 95만 5천 원</td><td>요구수익률 또는 불확실성이 높아 더 크게 할인합니다.</td></tr>
+            </tbody>
+          </table>
         </div>
-        <a class="breaktime-repo-link" href="/?view=backtest">
-          <i class="fa-solid fa-flask"></i> LEAN 백테스트 열기
-        </a>
-        <p class="breaktime-tip">결과는 과거 데이터를 이용한 교육용 검증입니다. 수수료·슬리피지·기간을 바꿔 보며 전략의 한계를 함께 점검하세요.</p>
+        <p><b>확인할 점:</b> 할인율이 높을수록 같은 미래 금액의 현재 가치는 작아집니다. 이 차이가 DCF, 채권 가격, 투자안 평가의 핵심입니다.</p>
       </section>
     </div>
 
-    <div class="glossary-modal breaktime-modal" id="referenceBreakTimeModal" hidden>
-      <div class="glossary-modal__backdrop" data-reference-breaktime-close></div>
-      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="referenceBreakTimeTitle">
-        <button class="glossary-modal__close" type="button" aria-label="닫기" data-reference-breaktime-close>×</button>
-        <p class="glossary-modal__label">BreakTime · Docker 실습</p>
-        <h2 id="referenceBreakTimeTitle">레퍼런스 사이트를 대상으로 캡처·스크롤·OCR을 테스트해 보세요</h2>
-        <div class="breaktime-message">
-          <p><b>edumgt/docker-class</b>의 Docker 예제를 바탕으로 브라우저 자동화 흐름을 직접 실습해 보세요.</p>
-          <ol>
-            <li>대상 페이지를 열고 필요한 위치까지 스크롤합니다.</li>
-            <li>화면을 캡처해 레이아웃과 텍스트가 원하는 대로 보이는지 확인합니다.</li>
-            <li>캡처 이미지에 OCR을 적용해 제목·수치 같은 필요한 문구가 올바르게 추출되는지 비교합니다.</li>
-          </ol>
-          <p>로그인 정보나 개인정보가 있는 화면은 사용하지 말고, 공개 페이지와 테스트용 데이터로만 연습하세요.</p>
+    <div class="glossary-modal breaktime-modal" id="assetValueBreakTimeModal" hidden>
+      <div class="glossary-modal__backdrop" data-asset-value-breaktime-close></div>
+      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="assetValueBreakTimeTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-asset-value-breaktime-close>×</button>
+        <p class="glossary-modal__label">BREAKTIME · 관찰 과제</p>
+        <h2 id="assetValueBreakTimeTitle">내 주변 자산의 가치를 직접 비교해 보세요</h2>
+        <p>아파트·주식·채권 가운데 하나를 고르고, 현재 시장가격이 무엇을 반영하는지 짧게 정리해 보세요.</p>
+        <ul>
+          <li><b>주식:</b> 미래 이익·배당, 성장률, 유사 기업 대비 가격</li>
+          <li><b>채권:</b> 쿠폰, 만기, 시장금리, 발행자의 상환 능력</li>
+          <li><b>부동산:</b> 임대수익, 인근 거래가격, 재조달원가</li>
+        </ul>
+        <p>한 가지 자산을 골라 <b>“가격에 가장 크게 반영된 요소는 무엇인가?”</b>와 <b>“그 가정이 달라지면 가격은 어느 방향으로 움직일까?”</b>를 한 줄씩 적어 보세요. 평가값은 정답이 아니라 가정과 비교 기준에서 나온 추정치입니다.</p>
+      </section>
+    </div>
+
+    <div class="glossary-modal breaktime-modal" id="allocationTimingBreakTimeModal" hidden>
+      <div class="glossary-modal__backdrop" data-allocation-timing-breaktime-close></div>
+      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="allocationTimingBreakTimeTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-allocation-timing-breaktime-close>×</button>
+        <p class="glossary-modal__label">BREAKTIME · 자산배분 규칙</p>
+        <h2 id="allocationTimingBreakTimeTitle">내 달러 비중 규칙을 정해 보세요</h2>
+        <p>가상의 총자산 1,000만 원을 기준으로, 환율 전망이 아니라 자신의 목적과 위험 감수 수준을 먼저 생각해 보세요.</p>
+        <ol>
+          <li><b>목표:</b> 여행·유학 등 가까운 시일의 달러 지출인지, 장기 분산 목적의 달러 보유인지 적습니다.</li>
+          <li><b>목표 비중:</b> 달러 자산을 전체의 몇 %까지 보유할지 정합니다.</li>
+          <li><b>점검 규칙:</b> 매월·분기처럼 점검 시점을 정하거나, 목표 비중에서 일정 폭 벗어날 때만 조정한다고 정합니다.</li>
+          <li><b>비용 확인:</b> 환전 스프레드, 외화예금 금리, 세금과 필요한 현금 시점을 함께 확인합니다.</li>
+        </ol>
+        <p><b>구분해 보기:</b> “환율이 더 오를 것 같아서 오늘 달러를 산다”는 마켓 타이밍입니다. “전체 자산의 10%를 달러로 유지하고, 7~13% 범위를 벗어날 때만 조정한다”는 자산배분·리밸런싱 규칙의 예입니다.</p>
+        <p class="breaktime-tip">위 숫자는 설명을 위한 예시이며, 특정 비중이나 상품을 권유하지 않습니다.</p>
+      </section>
+    </div>
+
+    <div class="glossary-modal breaktime-modal" id="beforeQuantHistoryBreakTimeModal" hidden>
+      <div class="glossary-modal__backdrop" data-before-quant-history-breaktime-close></div>
+      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="beforeQuantHistoryBreakTimeTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-before-quant-history-breaktime-close>×</button>
+        <p class="glossary-modal__label">BREAKTIME · 핵심 구분</p>
+        <h2 id="beforeQuantHistoryBreakTimeTitle">규칙과 예측을 구분해 보세요</h2>
+        <p>앞에서 본 자산배분·가치평가·시장 효율성은 모두 “무엇을 확실히 알 수 있고, 무엇은 추정해야 하는가?”라는 질문으로 이어집니다.</p>
+        <div class="lesson-table-wrap">
+          <table class="lesson-table">
+            <thead><tr><th scope="col">상황</th><th scope="col">더 가까운 개념</th><th scope="col">스스로 물어볼 질문</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">목표 비중을 정하고 벗어날 때만 조정</th><td>자산배분·리밸런싱</td><td>목표 비중과 조정 기준을 미리 정했는가?</td></tr>
+              <tr><th scope="row">환율이 오를 것 같아 지금 매수·매도</th><td>마켓 타이밍</td><td>예측이 틀렸을 때의 기준과 비용은 무엇인가?</td></tr>
+              <tr><th scope="row">미래 이익을 할인해 적정 가격 추정</th><td>가치평가</td><td>성장률·할인율 가정이 바뀌면 결과는 얼마나 달라지는가?</td></tr>
+              <tr><th scope="row">과거 차트만으로 다음 가격 맞히기</th><td>검증이 필요한 가설</td><td>새 기간과 비용을 반영해도 신호가 남는가?</td></tr>
+            </tbody>
+          </table>
         </div>
-        <a class="breaktime-repo-link" href="https://github.com/edumgt/docker-class/tree/main/docker" target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-github"></i> Docker 클래스 레퍼런스 열기
-        </a>
+        <p><b>한 줄 정리:</b> 퀀트의 출발점은 미래를 확신하는 예언이 아니라, 가정·규칙·비용을 드러내고 반복 검증하는 태도입니다.</p>
+      </section>
+    </div>
+
+    <div class="glossary-modal bias-quiz-modal" id="biasQuizModal" hidden>
+      <div class="glossary-modal__backdrop" data-bias-quiz-close></div>
+      <section class="glossary-modal__dialog bias-quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="biasQuizTitle">
+        <button class="glossary-modal__close" type="button" aria-label="성향 점검 닫기" data-bias-quiz-close>×</button>
+        <p class="glossary-modal__label">SELF CHECK · 교육용</p>
+        <h2 id="biasQuizTitle">시장 심리 성향 점검</h2>
+        <p class="bias-quiz-intro" id="biasQuizIntro">최근의 나와 가장 가까운 답을 고르세요. 정답·오답이나 투자 성과 예측은 아니며, 판단 습관을 돌아보기 위한 짧은 점검입니다.</p>
+        <div class="bias-quiz-progress"><span id="biasQuizCount">1 / 8</span><i id="biasQuizBar" aria-hidden="true"></i></div>
+        <p class="bias-quiz-question" id="biasQuizQuestion"></p>
+        <div class="bias-quiz-answers" id="biasQuizAnswers"></div>
+        <div class="bias-quiz-result" id="biasQuizResult" hidden aria-live="polite"></div>
+        <button type="button" class="bias-quiz-restart" id="biasQuizRestart" hidden>처음부터 다시 하기</button>
+        <p class="bias-quiz-disclaimer">이 결과는 심리 검사·의학적 진단·투자 조언이 아닙니다. 실제 투자 결정은 목표, 손실 감수 범위, 상품 조건과 충분한 정보를 바탕으로 하세요.</p>
       </section>
     </div>
 
@@ -1850,7 +2036,8 @@
       <section class="glossary-modal__dialog forecast-breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="forecastBreakTimeTitle">
         <button class="glossary-modal__close" type="button" aria-label="닫기" data-forecast-breaktime-close>×</button>
         <p class="glossary-modal__label">BreakTime · 미리 찾아보기</p>
-        <h2 id="forecastBreakTimeTitle">시계열 예측(Time Series Forecasting)이란?</h2>
+        <h2 id="forecastBreakTimeTitle">ML/DL에 대해 다시 한번 알고리즘을 찾아보세요</h2>
+        <h3>시계열 예측(Time Series Forecasting)이란?</h3>
         <p>시간 순서대로 쌓인 관측값에서 다음 시점의 값을 추정하는 ML·DL 분야입니다. 환율·주가처럼 시장 가격을 예측할 때도 쓰이지만, 예측값은 확률적 추정일 뿐이며 투자 판단이나 수익을 보장하지 않습니다.</p>
         <h3>1. 통계·머신러닝(ML) 기반</h3>
         <div class="forecast-model-grid">
@@ -1864,10 +2051,28 @@
         </div>
         <h3>3. 시계열 파운데이션 모델</h3>
         <p>Chronos 같은 모델은 대규모 시계열로 미리 학습한 뒤 새 데이터에 예측을 적용하는 접근입니다. 일부 모델은 제로샷 예측을 지원하지만, 대상 데이터의 주기·분포 변화·평가 기간에 맞춰 비교 검증해야 합니다. TimeGPT 등 서비스형 모델은 이용 조건과 데이터 처리 정책도 확인해야 합니다.</p>
+        <h3>알고리즘은 누가 만들었고, Python에서는 어디서 써 볼 수 있을까요?</h3>
+        <p>‘최초 구현자’는 연구 아이디어를 처음 제안한 사람, 논문 저자, 라이브러리를 만든 개발자가 서로 다를 수 있습니다. 아래 표에서는 <b>최초 제안 또는 대표 논문 저자</b>와 <b>현재 확인 가능한 공식·대표 Python 구현</b>을 구분합니다. 링크는 코드를 읽고 재현해 보는 출발점이며, 시장 예측 성과를 보장하지 않습니다.</p>
+        <table class="forecast-breaktime-table">
+          <thead><tr><th>알고리즘</th><th>최초 제안·대표 저자</th><th>Python 구현 GitHub</th></tr></thead>
+          <tbody>
+            <tr><th>자기회귀누적이동평균(Autoregressive Integrated Moving Average, ARIMA)<br>계절형 ARIMA(Seasonal ARIMA, SARIMA)</th><td>조지 박스(George Box)와 그윔 젠킨스(Gwilym Jenkins)가 1970년 Box–Jenkins 방법론으로 체계화했습니다.</td><td><a href="https://github.com/statsmodels/statsmodels" target="_blank" rel="noopener noreferrer">statsmodels</a> — <code>ARIMA</code> 및 계절성을 포함한 <code>SARIMAX</code>를 제공합니다.</td></tr>
+            <tr><th>Prophet</th><td>Meta(당시 Facebook)의 션 J. 테일러(Sean J. Taylor)와 벤 레섬(Ben Letham)이 예측 절차와 논문을 제시했습니다.</td><td><a href="https://github.com/facebook/prophet" target="_blank" rel="noopener noreferrer">facebook/prophet</a> — 공식 Python 패키지입니다.</td></tr>
+            <tr><th>익스트림 그래디언트 부스팅(Extreme Gradient Boosting, XGBoost)</th><td>톈치 천(Tianqi Chen)이 개발을 주도했고, 천과 카를로스 게스트린(Carlos Guestrin)이 2016년 대표 논문을 발표했습니다.</td><td><a href="https://github.com/dmlc/xgboost" target="_blank" rel="noopener noreferrer">dmlc/xgboost</a> — 공식 Python API를 제공합니다.</td></tr>
+            <tr><th>순환신경망(Recurrent Neural Network, RNN)</th><td>단일 발명자로 정하기 어렵습니다. 1980~1990년대 순환 연결 신경망과 시간역전파 연구를 통해 발전했으며, 제프리 엘먼(Jeffrey Elman)의 1990년 단순 순환망이 대표적입니다.</td><td><a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">pytorch/pytorch</a> — <code>torch.nn.RNN</code>을 제공합니다.</td></tr>
+            <tr><th>장단기 메모리(Long Short-Term Memory, LSTM)</th><td>제프 호크라이터(Sepp Hochreiter)와 위르겐 슈미트후버(Jürgen Schmidhuber)가 1997년 제안했습니다.</td><td><a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">pytorch/pytorch</a> — <code>torch.nn.LSTM</code>을 제공합니다.</td></tr>
+            <tr><th>게이트 순환 유닛(Gated Recurrent Unit, GRU)</th><td>균현 조(Kyunghyun Cho) 등이 2014년 신경 기계번역 연구에서 제안했습니다.</td><td><a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">pytorch/pytorch</a> — <code>torch.nn.GRU</code>를 제공합니다.</td></tr>
+            <tr><th>트랜스포머(Transformer)</th><td>아시시 바스와니(Ashish Vaswani) 등 8명이 2017년 논문 《Attention Is All You Need》에서 제안했습니다.</td><td><a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">pytorch/pytorch</a> — <code>torch.nn.Transformer</code>를 제공합니다.</td></tr>
+            <tr><th>Informer</th><td>저우 하오이(Haoyi Zhou) 등이 2021년 장기 시계열 예측용 Transformer 변형으로 제안했습니다.</td><td><a href="https://github.com/zhouhaoyi/Informer2020" target="_blank" rel="noopener noreferrer">zhouhaoyi/Informer2020</a> — 논문 저자 측 공개 구현입니다.</td></tr>
+            <tr><th>PatchTST</th><td>위치 니에(Yuqi Nie), 남 H. 응우옌(Nam H. Nguyen) 등이 2023년 시계열 패치와 채널 독립 방식을 제안했습니다.</td><td><a href="https://github.com/yuqinie98/PatchTST" target="_blank" rel="noopener noreferrer">yuqinie98/PatchTST</a> — 논문 저자 측 공식 구현입니다.</td></tr>
+            <tr><th>Chronos</th><td>Amazon Science의 압둘 파티르 안사리(Abdul Fatir Ansari) 등이 2024년 시계열을 토큰으로 바꿔 사전학습하는 방식을 제안했습니다.</td><td><a href="https://github.com/amazon-science/chronos-forecasting" target="_blank" rel="noopener noreferrer">amazon-science/chronos-forecasting</a> — 공식 Python 패키지와 사전학습 모델을 제공합니다.</td></tr>
+            <tr><th>TimeGPT</th><td>알렉시스 가르사(Alexis Garza), 크리스티안 찰루(Cristian Challu), 리카르도 메르겐탈러-칸세코(Ricardo Mergenthaler-Canseco) 등이 TimeGPT-1을 발표했습니다.</td><td><a href="https://github.com/Nixtla/nixtla" target="_blank" rel="noopener noreferrer">Nixtla/nixtla</a> — 공식 Python SDK입니다. 모델 가중치·서버 구현 자체는 공개 소스가 아닌 API 서비스임을 유의하세요.</td></tr>
+          </tbody>
+        </table>
         <h3>기법을 고르는 질문</h3>
         <table class="forecast-breaktime-table"><thead><tr><th>구분</th><th>대표 예시</th><th>강점</th><th>먼저 확인할 점</th></tr></thead><tbody><tr><th>통계·ML</th><td>ARIMA, Prophet, XGBoost</td><td>상대적으로 해석·구축이 쉽고 작은 데이터에서도 기준선으로 유용</td><td>추세·계절성, 특징 생성, 시간 순서 검증</td></tr><tr><th>RNN 계열</th><td>LSTM, GRU</td><td>순차 패턴을 표현하는 신경망 구조</td><td>학습 데이터 양, 과적합, 예측 구간</td></tr><tr><th>Transformer·파운데이션</th><td>Informer, PatchTST, Chronos</td><td>긴 문맥·대규모 사전학습 접근을 실험 가능</td><td>계산비용, 데이터 누수, 동일 조건 벤치마크</td></tr></tbody></table>
         <p class="forecast-caution">환율 예측에서는 ‘정확도’만 보지 마세요. 기준 모형(예: 직전 환율 유지)보다 나은지, 학습에 쓰지 않은 기간에서도 유지되는지, 환전 스프레드·세금·실행 시점까지 반영한 뒤 의미가 있는지를 먼저 검증해야 합니다.</p>
-        <p><small>더 찾아보기: <a href="https://facebook.github.io/prophet/" target="_blank" rel="noopener noreferrer">Prophet 공식 문서</a> · <a href="https://ojs.aaai.org/index.php/AAAI/article/view/17325" target="_blank" rel="noopener noreferrer">Informer 논문</a> · <a href="https://arxiv.org/abs/2211.14730" target="_blank" rel="noopener noreferrer">PatchTST 논문</a> · <a href="https://www.amazon.science/code-and-datasets/chronos-learning-the-language-of-time-series" target="_blank" rel="noopener noreferrer">Amazon Chronos 소개</a></small></p>
+        <p><small>더 찾아보기: <a href="https://facebook.github.io/prophet/" target="_blank" rel="noopener noreferrer">Prophet 공식 문서</a> · <a href="https://ojs.aaai.org/index.php/AAAI/article/view/17325" target="_blank" rel="noopener noreferrer">Informer 논문</a> · <a href="https://arxiv.org/abs/2211.14730" target="_blank" rel="noopener noreferrer">PatchTST 논문</a> · <a href="https://www.amazon.science/code-and-datasets/chronos-learning-the-language-of-time-series" target="_blank" rel="noopener noreferrer">Amazon Chronos 소개</a> · <a href="https://arxiv.org/abs/2310.03589" target="_blank" rel="noopener noreferrer">TimeGPT-1 논문</a></small></p>
       </section>
     </div>
 
@@ -2281,6 +2486,84 @@
     </div>
 
     <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const abbreviations = {
+          "EV/EBITDA": "Enterprise Value to Earnings Before Interest, Taxes, Depreciation and Amortization (EV/EBITDA)",
+          "KOSPI 200": "Korea Composite Stock Price Index 200 (KOSPI 200)",
+          "ACT/365": "Actual/365 day-count convention (ACT/365)",
+          "ACT/360": "Actual/360 day-count convention (ACT/360)",
+          "ARIMA": "Autoregressive Integrated Moving Average (ARIMA)",
+          "SARIMA": "Seasonal Autoregressive Integrated Moving Average (SARIMA)",
+          "LSTM": "Long Short-Term Memory (LSTM)",
+          "GRU": "Gated Recurrent Unit (GRU)",
+          "RNN": "Recurrent Neural Network (RNN)",
+          "WACC": "Weighted Average Cost of Capital (WACC)",
+          "CAPM": "Capital Asset Pricing Model (CAPM)",
+          "ETF": "Exchange-Traded Fund (ETF)",
+          "ETN": "Exchange-Traded Note (ETN)",
+          "ROE": "Return on Equity (ROE)",
+          "SR": "Sharpe Ratio (SR)",
+          "RP": "Risk Parity (RP)",
+          "CAGR": "Compound Annual Growth Rate (CAGR)",
+          "DCF": "Discounted Cash Flow (DCF)",
+          "DDM": "Dividend Discount Model (DDM)",
+          "PER": "Price-to-Earnings Ratio (PER)",
+          "PBR": "Price-to-Book Ratio (PBR)",
+          "YTM": "Yield to Maturity (YTM)",
+          "MDD": "Maximum Drawdown (MDD)",
+          "MPT": "Modern Portfolio Theory (MPT)",
+          "HMM": "Hidden Markov Model (HMM)",
+          "EMH": "Efficient Market Hypothesis (EMH)",
+          "HFT": "High-Frequency Trading (HFT)",
+          "VWAP": "Volume-Weighted Average Price (VWAP)",
+          "TWAP": "Time-Weighted Average Price (TWAP)",
+          "NOI": "Net Operating Income (NOI)",
+          "NAV": "Net Asset Value (NAV)",
+          "IRS": "Interest Rate Swap (IRS)",
+          "OTC": "Over-the-Counter (OTC)",
+          "CCP": "Central Counterparty (CCP)",
+          "OI": "Open Interest (OI)",
+          "HTS": "Home Trading System (HTS)",
+          "MTS": "Mobile Trading System (MTS)",
+          "API": "Application Programming Interface (API)",
+          "RAG": "Retrieval-Augmented Generation (RAG)",
+          "ML": "Machine Learning (ML)",
+          "DL": "Deep Learning (DL)",
+          "AI": "Artificial Intelligence (AI)",
+          "CLI": "Command-Line Interface (CLI)",
+          "FICC": "Fixed Income, Currencies and Commodities (FICC)",
+          "LEAN": "Lean Algorithmic Trading Engine (LEAN)",
+          "LTCM": "Long-Term Capital Management (LTCM)",
+          "AQR": "Applied Quantitative Research (AQR)",
+          "KIS": "Korea Investment & Securities (KIS)",
+          "USD": "United States Dollar (USD)",
+          "TVM": "Time Value of Money (TVM)",
+          "PV": "Present Value (PV)",
+          "FV": "Future Value (FV)",
+        };
+        const keys = Object.keys(abbreviations).sort((a, b) => b.length - a.length);
+        const matcher = new RegExp(`\\b(${keys.map((key) => key.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")).join("|")})\\b`, "g");
+        const walker = document.createTreeWalker(document.querySelector("main"), NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            if (!node.nodeValue.trim() || node.parentElement?.closest("script, style, code, pre, .glossary, .glossary-modal")) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+          },
+        });
+        const textNodes = [];
+        while (walker.nextNode()) textNodes.push(walker.currentNode);
+        textNodes.forEach((node) => {
+          const text = node.nodeValue;
+          if (!matcher.test(text)) return;
+          matcher.lastIndex = 0;
+          node.nodeValue = text.replace(matcher, (abbreviation, _match, offset) => {
+            const fullName = abbreviations[abbreviation];
+            const precedingText = text.slice(Math.max(0, offset - fullName.length - 3), offset);
+            return precedingText.includes(fullName) ? abbreviation : fullName;
+          });
+        });
+      });
+    </script>
+    <script>
       document.querySelectorAll("[data-lesson-toggle]").forEach((button) => {
         button.addEventListener("click", () => {
           const section = button.closest(".lesson");
@@ -2295,6 +2578,28 @@
       });
     </script>
     <script>
+      [
+        { modalId: "presentValueBreakTimeModal", triggerId: "presentValueBreakTimeTrigger", closeSelector: "[data-present-value-breaktime-close]" },
+        { modalId: "assetValueBreakTimeModal", triggerId: "assetValueBreakTimeTrigger", closeSelector: "[data-asset-value-breaktime-close]" },
+        { modalId: "allocationTimingBreakTimeModal", triggerId: "allocationTimingBreakTimeTrigger", closeSelector: "[data-allocation-timing-breaktime-close]" },
+        { modalId: "beforeQuantHistoryBreakTimeModal", triggerId: "beforeQuantHistoryBreakTimeTrigger", closeSelector: "[data-before-quant-history-breaktime-close]" },
+      ].forEach(({ modalId, triggerId, closeSelector }) => {
+        const modal = document.getElementById(modalId);
+        const trigger = document.getElementById(triggerId);
+        if (!modal || !trigger) return;
+        const closeButton = modal.querySelector(".glossary-modal__close");
+        const open = () => { modal.hidden = false; closeButton?.focus(); };
+        const close = () => {
+          if (modal.hidden) return;
+          modal.hidden = true;
+          trigger.focus({ preventScroll: true });
+        };
+        trigger.addEventListener("click", open);
+        modal.querySelectorAll(closeSelector).forEach((element) => element.addEventListener("click", close));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      });
+    </script>
+    <script>
       (() => {
         const modal = document.getElementById("sunkCostModal");
         const trigger = document.getElementById("sunkCostTrigger");
@@ -2304,48 +2609,10 @@
         const close = () => {
           if (modal.hidden) return;
           modal.hidden = true;
-          trigger.focus();
+          trigger.focus({ preventScroll: true });
         };
         trigger.addEventListener("click", open);
         modal.querySelectorAll("[data-sunk-cost-close]").forEach((element) => element.addEventListener("click", close));
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") close();
-        });
-      })();
-    </script>
-    <script>
-      (() => {
-        const modal = document.getElementById("leanBacktestBreakTimeModal");
-        const trigger = document.getElementById("leanBacktestBreakTimeTrigger");
-        if (!modal || !trigger) return;
-        const closeButton = modal.querySelector(".glossary-modal__close");
-        const open = () => { modal.hidden = false; closeButton?.focus(); };
-        const close = () => {
-          if (modal.hidden) return;
-          modal.hidden = true;
-          trigger.focus();
-        };
-        trigger.addEventListener("click", open);
-        modal.querySelectorAll("[data-lean-backtest-breaktime-close]").forEach((element) => element.addEventListener("click", close));
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") close();
-        });
-      })();
-    </script>
-    <script>
-      (() => {
-        const modal = document.getElementById("referenceBreakTimeModal");
-        const trigger = document.getElementById("referenceBreakTimeTrigger");
-        if (!modal || !trigger) return;
-        const closeButton = modal.querySelector(".glossary-modal__close");
-        const open = () => { modal.hidden = false; closeButton?.focus(); };
-        const close = () => {
-          if (modal.hidden) return;
-          modal.hidden = true;
-          trigger.focus();
-        };
-        trigger.addEventListener("click", open);
-        modal.querySelectorAll("[data-reference-breaktime-close]").forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => {
           if (event.key === "Escape") close();
         });
@@ -2389,29 +2656,12 @@
           changeElement.className = difference > 0 ? "up" : difference < 0 ? "down" : "";
         };
         const open = () => { modal.hidden = false; draw(); closeButton?.focus(); };
-        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus({ preventScroll: true }); } };
         trigger.addEventListener("click", open);
         [amountInput, rateInput].forEach((input) => input.addEventListener("input", draw));
         modal.querySelectorAll("[data-fx-deposit-close]").forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
         draw();
-      })();
-    </script>
-    <script>
-      (() => {
-        const modal = document.getElementById("forecastBreakTimeModal");
-        const trigger = document.getElementById("forecastBreakTimeTrigger");
-        if (!modal || !trigger) return;
-        const closeButton = modal.querySelector(".glossary-modal__close");
-        const open = () => { modal.hidden = false; closeButton?.focus(); };
-        const close = () => {
-          if (modal.hidden) return;
-          modal.hidden = true;
-          trigger.focus();
-        };
-        trigger.addEventListener("click", open);
-        modal.querySelectorAll("[data-forecast-breaktime-close]").forEach((element) => element.addEventListener("click", close));
-        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
       })();
     </script>
     <script>
@@ -2474,7 +2724,7 @@
           render();
         }));
         const open = () => { modal.hidden = false; render(); modal.querySelector(".glossary-modal__close")?.focus(); };
-        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } };
+        const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus({ preventScroll: true }); } };
         trigger.addEventListener("click", open);
         modal.querySelectorAll("[data-factor-sim-close]").forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
@@ -2643,7 +2893,7 @@
         function close() {
           if (modal.hidden) return;
           modal.hidden = true;
-          trigger.focus();
+          trigger.focus({ preventScroll: true });
         }
         trigger.addEventListener("click", open);
         closeEls.forEach((el) => el.addEventListener("click", close));
@@ -2744,7 +2994,7 @@
         function close() {
           if (modal.hidden) return;
           modal.hidden = true;
-          trigger.focus();
+          trigger.focus({ preventScroll: true });
         }
         trigger.addEventListener("click", open);
         closeEls.forEach((el) => el.addEventListener("click", close));
@@ -2850,7 +3100,7 @@
         function close() {
           if (modal.hidden) return;
           modal.hidden = true;
-          trigger.focus();
+          trigger.focus({ preventScroll: true });
         }
         trigger.addEventListener("click", open);
         closeEls.forEach((el) => el.addEventListener("click", close));
@@ -2925,7 +3175,7 @@
           render();
         }));
         function open() { modal.hidden = false; render(); closeButton?.focus(); }
-        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } }
+        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus({ preventScroll: true }); } }
         trigger.addEventListener("click", open);
         closeEls.forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
@@ -2988,7 +3238,7 @@
           render();
         }));
         function open() { modal.hidden = false; render(); closeButton?.focus(); }
-        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } }
+        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus({ preventScroll: true }); } }
         trigger.addEventListener("click", open);
         closeEls.forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
@@ -3043,7 +3293,7 @@
           render();
         }));
         function open() { modal.hidden = false; render(); closeButton?.focus(); }
-        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } }
+        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus({ preventScroll: true }); } }
         trigger.addEventListener("click", open);
         closeEls.forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
@@ -3084,11 +3334,330 @@
         [returnInput, volInput].forEach((input) => input.addEventListener("input", render));
         buttons.forEach((button) => button.addEventListener("click", () => { const values = cases[button.dataset.hmmCase]; returnInput.value = values[0]; volInput.value = values[1]; buttons.forEach((item) => item.classList.toggle("active", item === button)); render(); }));
         function open() { modal.hidden = false; render(); closeButton?.focus(); }
-        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus(); } }
+        function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus({ preventScroll: true }); } }
         trigger.addEventListener("click", open);
         closeEls.forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
         render();
+      });
+    </script>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const terms = {
+          equity: ["주식", "Equity · 株式", "기업의 지분을 나타내는 자산입니다. 가치평가에서는 기업이 앞으로 만들 현금흐름과 배당, 성장 가능성, 비슷한 기업의 거래 가격을 함께 봅니다."],
+          dcf: ["DCF", "Discounted Cash Flow · 현금흐름할인법", [
+            "DCF는 기업이 미래에 만들 것으로 예상하는 현금흐름을 ‘지금 당장 내 손에 있다면 얼마의 가치가 있을까?’로 계산해 현재 가치로 바꾸고, 이를 더해 기업 가치를 추정하는 방법입니다. 핵심은 시간의 가치와 이자율(수익률)입니다.",
+            "오늘 받는 100만 원은 바로 이자를 벌 수 있고 받을 수 있다는 확실성도 더 큽니다. 예를 들어 오늘 100만 원을 연 5%로 운용하면 1년 뒤 105만 원이 됩니다. 즉 1년 뒤의 105만 원은 지금의 100만 원과 같은 가치로 볼 수 있습니다.",
+            "현금흐름은 미래에 들어올 돈이고, 할인율은 미래의 돈을 지금 가치로 바꿀 때 적용하는 비율입니다. 위 예시에서는 5%가 할인율입니다. 1년 뒤 105만 원을 5%로 할인하면 현재가치는 100만 원이 됩니다.",
+            "비행기표도 출발 직전에 사면 제값을 내지만, 6개월 뒤 출발하는 표는 기다리는 시간과 계획 변경 위험을 반영해 할인될 수 있습니다. 마찬가지로 미래 현금흐름도 시간과 위험만큼 가격을 낮춰 지금 기준의 가치로 계산합니다.",
+            "할인율을 몇 %로 정할지는 ‘이 돈을 다른 곳에 굴렸다면 벌 수 있었던 기회비용’과 미래 현금을 받지 못할 위험을 함께 반영합니다. 쉽게 말해 내가 요구하는 최소 기대수익률이 할인율의 출발점입니다.",
+            "첫째 기준선은 무위험 이자율입니다. 은행 예금이나 국채처럼 매우 안전한 곳에 돈을 뒀을 때 받을 수 있는 수익률을 참고합니다. 둘째는 위험 프리미엄입니다. 현금흐름이 불확실할수록 추가 수익을 더 요구하므로 할인율도 높아집니다. 셋째는 인플레이션입니다. 물가가 오르면 미래 돈의 구매력이 떨어져 할인율과 요구수익률에 영향을 줄 수 있습니다.",
+            "기업·투자 사업 평가에서는 주주와 채권자에게 드는 평균 자금조달비용인 Weighted Average Cost of Capital (WACC, 가중평균자본비용)를 할인율로 자주 씁니다. 주식의 자기자본비용을 추정할 때는 Capital Asset Pricing Model (CAPM, 자산가격결정모형)의 ‘무위험수익률 + 베타 × 시장위험프리미엄’을 활용하기도 합니다. 개인 재무에서는 본인의 대안 투자 기회와 위험 허용 범위를 기준으로 기회비용을 정할 수 있습니다.",
+            "할인율이 높을수록 위험 또는 요구수익률이 크다는 뜻이므로 미래 돈의 현재가치는 더 많이 줄어듭니다. 반대로 할인율이 낮을수록 현재가치는 더 크게 유지됩니다. 어떤 할인율이 정답인지는 현금흐름의 위험·기간·통화·시장 상황에 따라 달라지므로, 하나의 숫자보다 가정을 함께 점검해야 합니다.",
+            "DCF는 성장률과 할인율 가정이 조금만 달라져도 결과가 크게 달라질 수 있으므로, 하나의 숫자를 정답으로 보기보다 여러 가정을 비교해 보는 것이 중요합니다."
+          ]],
+          ddm: ["배당할인모형(DDM)", "Dividend Discount Model · 배당현재가치모형", [
+            "배당할인모형(DDM)은 주주에게 앞으로 지급될 것으로 예상되는 배당을 ‘지금 당장 내 손에 있다면 얼마의 가치가 있을까?’로 바꾼 뒤 모두 더해 주식 가치를 추정하는 방법입니다. DCF가 기업 전체의 현금흐름을 보는 방법이라면, DDM은 주주에게 실제로 돌아오는 배당에 초점을 둡니다.",
+            "오늘 받는 100만 원은 바로 이자를 벌 수 있고 받을 수 있다는 확실성도 더 큽니다. 예를 들어 지금 100만 원을 연 5%로 운용하면 1년 뒤 105만 원이 됩니다. 그래서 1년 뒤 받을 105만 원의 배당은 5% 할인율을 적용하면 지금의 100만 원과 같은 가치로 계산할 수 있습니다.",
+            "여기서 배당은 주주에게 지급될 것으로 예상하는 미래 현금이고, 할인율은 그 미래 배당을 현재 가치로 바꿀 때 적용하는 요구수익률입니다. 배당이 안정적으로 늘어날 것으로 예상되면 가치는 높아질 수 있지만, 할인율이 높아지면 같은 배당의 현재가치는 낮아집니다.",
+            "할인율에는 무위험수익률, 해당 기업의 사업·재무 위험에 대한 위험 프리미엄, 물가와 시장 상황이 반영될 수 있습니다. 주식의 자기자본비용을 추정할 때는 Capital Asset Pricing Model (CAPM)의 ‘무위험수익률 + 베타 × 시장위험프리미엄’을 참고하기도 합니다.",
+            "DDM은 은행·통신·공익사업처럼 배당 정책과 현금흐름이 비교적 안정적인 기업을 살필 때 유용할 수 있습니다. 반면 성장에 투자하느라 배당을 하지 않거나, 배당 규모가 크게 변하는 기업에는 적용이 어렵습니다. 배당 성장률과 할인율 가정이 결과에 크게 영향을 주므로 여러 시나리오를 함께 비교해야 합니다."
+          ]],
+          multiples: ["PER·PBR·EV/EBITDA 비교", "Valuation Multiples · 상대가치 평가", [
+            "PER·PBR·EV/EBITDA는 기업 하나의 절대 가격을 맞히는 공식이라기보다, 사업 구조가 비슷한 기업끼리 가격 수준을 비교하는 ‘상대가치’ 지표입니다. 같은 업종·성장률·부채 수준을 기준으로 봐야 의미가 있습니다.",
+            "PER(Price-to-Earnings Ratio, 주가수익비율)은 주가를 주당순이익으로 나눈 값입니다. 예를 들어 주가가 10,000원이고 주당순이익이 1,000원이면 PER은 10배입니다. 단순하게는 현재 이익이 그대로 이어진다고 가정할 때 투자금액의 10배를 가격으로 내고 있다는 뜻으로 이해할 수 있습니다.",
+            "PBR(Price-to-Book Ratio, 주가순자산비율)은 주가를 주당순자산으로 나눈 값입니다. 주가가 10,000원이고 주당순자산이 20,000원이면 PBR은 0.5배입니다. 다만 장부에 적힌 순자산이 실제로 얼마에 팔리는지, 브랜드·기술·부채 같은 요소가 어떤지는 별도로 살펴야 합니다.",
+            "EV/EBITDA(Enterprise Value to Earnings Before Interest, Taxes, Depreciation and Amortization)는 기업가치(EV)를 이자·세금·감가상각 전 이익(EBITDA)으로 나눈 값입니다. 예를 들어 주식가치와 순부채를 합친 기업가치가 1,000억 원이고 EBITDA가 100억 원이면 10배입니다. 현금과 부채를 함께 반영해, 자본구조가 다른 기업을 비교할 때 자주 사용합니다.",
+            "세 지표가 낮다고 반드시 싼 기업, 높다고 반드시 비싼 기업은 아닙니다. 높은 성장 기대, 일시적인 이익 감소, 자산의 질, 회계 기준, 부채 규모에 따라 적정 범위가 달라지므로 여러 지표와 사업 내용을 함께 비교해야 합니다."
+          ]],
+          cashflow: ["미래 현금흐름", "Future Cash Flow", "앞으로 사업에서 실제로 들어오고 나갈 현금을 말합니다. 회계상 이익과 현금흐름은 다를 수 있어, 가치평가에서는 투자·운전자본·부채 부담까지 고려합니다."],
+          dividend: ["배당", "Dividend", "기업이 이익이나 보유 현금의 일부를 주주에게 나누어 주는 금액입니다. 배당 규모와 지속 가능성은 이익·현금흐름·재무정책에 따라 달라지며 보장되지 않습니다."],
+          growth: ["성장률", "Growth Rate", "매출·이익·현금흐름 등이 일정 기간에 얼마나 늘어날지를 나타내는 비율입니다. 장기 성장률을 높게 가정할수록 가치가 커지지만, 경쟁·시장 규모·자본투입을 함께 검토해야 합니다."],
+          profitability: ["수익성", "Profitability", "매출이나 투자한 자본으로 이익과 현금을 얼마나 효율적으로 만드는지 보는 관점입니다. 영업이익률·ROE·현금흐름 등을 업종 특성에 맞춰 함께 확인합니다."],
+          "peer-price": ["유사 기업 대비 가격", "Comparable Company Analysis", "사업 구조·성장성·규모·부채가 비슷한 상장사의 PER·PBR·EV/EBITDA 등을 비교해 상대적인 가격 수준을 살피는 방법입니다. 단순히 배수가 낮다는 이유만으로 저평가라고 단정할 수는 없습니다."],
+          bond: ["채권", "Bond · 債券", "정부·기업 등에 돈을 빌려주고 이자와 원금을 받기로 한 증서입니다. 가치와 가격은 시장금리, 만기, 발행자의 상환 능력에 따라 달라집니다."],
+          "discounted-cf": ["현금흐름 할인", "Present Value Discounting · 현재가치 할인", [
+            "미래에 받을 돈을 ‘지금 당장 내 손에 있다면 얼마의 가치가 있을까?’로 계산해 낮추는 것입니다. 이 개념의 핵심은 시간의 가치와 이자율(수익률)입니다.",
+            "오늘 받는 100만 원은 바로 이자를 벌 수 있고 받을 수 있다는 확실성도 더 큽니다. 예를 들어 오늘 100만 원을 연 5%로 운용하면 1년 뒤 105만 원이 됩니다. 즉 1년 뒤의 105만 원은 지금의 100만 원과 같은 가치로 볼 수 있습니다.",
+            "현금흐름은 미래에 들어올 돈이고, 할인율은 미래의 돈을 지금 가치로 바꿀 때 적용하는 비율입니다. 위 예시에서는 5%가 할인율입니다. 1년 뒤 105만 원을 5%로 할인하면 현재가치는 100만 원이 됩니다.",
+            "비행기표도 출발 직전에 사면 제값을 내지만, 6개월 뒤 출발하는 표는 기다리는 시간과 계획 변경 위험을 반영해 할인될 수 있습니다. 마찬가지로 미래 현금흐름도 시간과 위험만큼 가격을 낮춰 지금 기준의 가치로 계산합니다.",
+            "채권에서는 미래 쿠폰과 만기 원금을 시장이 요구하는 수익률로 할인해 오늘의 가격을 계산합니다. 요구수익률이 오르면 같은 현금흐름의 현재 가치는 대체로 낮아집니다."
+          ]],
+          ytm: ["만기수익률(YTM)", "Yield to Maturity", "채권을 현재 가격에 사서 만기까지 보유하고 약속된 이자와 원금을 모두 받는다고 가정할 때의 연환산 수익률입니다. 중도 매도 가격, 세금, 부도 가능성은 별도로 고려해야 합니다."],
+          "credit-spread": ["신용스프레드 분석", "Credit Spread Analysis", "회사채 수익률이 비슷한 만기의 국채 수익률보다 얼마나 더 높은지 비교하는 분석입니다. 차이가 커지면 시장이 신용위험·유동성 위험을 더 크게 보는 신호일 수 있습니다."],
+          "coupon-principal": ["쿠폰·원금", "Coupon · Principal", [
+            "쿠폰은 채권이 정기적으로 지급하기로 한 이자이고, 원금은 만기에 돌려받기로 한 기본 금액입니다. 예를 들어 액면가 1,000만 원, 연 쿠폰금리 5%인 채권은 약정에 따라 매년 총 50만 원의 이자를 지급하고, 만기에 원금 1,000만 원을 상환합니다.",
+            "‘쿠폰’이라는 이름은 과거 종이 채권에서 왔습니다. 예전에는 채권 증서 가장자리에 이자 지급일별로 작은 종이표(coupon)가 붙어 있었고, 보유자가 지급일에 그 표를 떼어 은행이나 발행기관에 제출해 이자를 받았습니다. 이 관행 때문에 오늘날 전자식 채권에서도 약정 이자 지급을 쿠폰 또는 쿠폰 지급이라고 부릅니다.",
+            "쿠폰금리와 실제 투자 수익률은 다를 수 있습니다. 중고 시장에서 채권을 액면가보다 비싸게 사면 같은 쿠폰을 받아도 만기수익률은 낮아질 수 있고, 싸게 사면 높아질 수 있습니다. 이자 지급 약속과 만기 원금 상환은 발행자가 약속을 이행한다는 전제 아래 성립하므로 신용위험도 함께 확인해야 합니다.",
+            "정기 이자를 따로 지급하지 않는 채권은 무이표채(Zero-Coupon Bond)라고 합니다. 보통 액면가보다 낮은 가격에 발행·거래되고, 만기에 액면가를 받는 구조에서 가격 차이가 이자 효과를 나타냅니다."
+          ]],
+          "market-rate": ["시장금리", "Market Interest Rate", "시장에서 거래되는 자금의 요구수익률 수준입니다. 시장금리가 오르면 기존의 낮은 쿠폰 채권 가격은 대체로 내려가고, 반대면 올라갈 수 있습니다."],
+          maturity: ["만기", "Maturity", "계약이나 채권의 약속이 끝나 원금 상환·결제가 이뤄지는 시점입니다. 일반적으로 만기가 길수록 금리 변화와 불확실성에 더 오래 노출됩니다."],
+          creditworthiness: ["발행자의 상환 능력", "Creditworthiness", "채권을 발행한 정부·기업이 이자와 원금을 약속대로 갚을 재무 능력입니다. 재무상태·현금흐름·부채·신용등급 등을 함께 살핍니다."],
+          duration: ["듀레이션", "Duration", "채권 가격이 금리 변화에 얼마나 민감한지 가늠하는 지표입니다. 일반적으로 듀레이션이 길수록 금리가 움직일 때 가격 변동 폭도 커집니다."],
+          "real-estate": ["부동산", "Real Estate", "토지·건물처럼 사용·임대·개발 가치를 가진 실물자산입니다. 위치, 임대수익, 공실, 금리, 규제, 거래사례 등 다양한 요소를 함께 평가합니다."],
+          "income-approach": ["수익환원법", "Income Capitalization Approach", "부동산이 벌어들일 것으로 예상되는 순임대수익을 환원이율로 나누어 가치를 추정하는 방법입니다. 임대료·공실률·운영비와 환원이율 가정에 따라 결과가 달라집니다."],
+          "sales-comparison": ["거래사례비교법", "Sales Comparison Approach", "위치·면적·용도·상태가 비슷한 부동산의 실제 거래사례를 비교해 가치를 추정하는 방법입니다. 거래 시점과 개별 물건의 차이를 보정해야 합니다."],
+          "cost-approach": ["원가법", "Cost Approach", "같은 자산을 새로 만들거나 다시 조달하는 비용에서 노후화·기능 저하를 뺀 값으로 가치를 추정하는 방법입니다. 특수 목적 건물처럼 비교 거래가 적을 때 참고할 수 있습니다."],
+          noi: ["순임대수익", "Net Operating Income · NOI", "부동산의 임대수입에서 공실 손실과 운영비를 뺀 수익입니다. 이자·법인세·감가상각 전의 부동산 자체 운영 성과를 보는 데 주로 사용합니다."],
+          "cap-rate": ["환원이율", "Capitalization Rate", "순임대수익을 부동산 가치로 나눈 비율 또는 이를 가치로 바꾸는 데 쓰는 수익률입니다. 요구수익률·금리·위험 인식이 높아지면 환원이율도 높아져 가치는 낮아질 수 있습니다."],
+          "comparable-sales": ["인근 실거래 사례", "Comparable Sales", "평가 대상과 가까운 지역에서 실제로 성사된 유사 부동산의 거래 가격입니다. 호가가 아닌 실제 계약 가격인지, 거래 시점과 조건이 비슷한지를 확인합니다."],
+          "replacement-cost": ["재조달원가", "Replacement Cost · Reproduction Cost", [
+            "재조달원가와 시가총액은 모두 가치를 살핀다는 점에서는 비슷해 보이지만, 서로 다른 개념입니다. 재조달원가는 ‘같은 기능의 자산을 지금 새로 만들거나 취득하는 데 드는 비용’이고, 시가총액은 ‘주가 × 발행주식 수’로 계산한 주식시장의 지분가치입니다.",
+            "재조달원가는 건물·공장·기계·토지 같은 실물자산을 다시 갖추는 원가 관점이고, 시가총액은 미래 성장성·브랜드·기술·수익성·투자 심리까지 반영한 시장 관점입니다. 따라서 둘이 같을 필요는 없습니다. 기업의 부채까지 포함한 전체 시장가치는 시가총액보다 넓은 개념입니다.",
+            "토빈의 Q(Tobin’s Q)는 엄밀히 기업 자산의 시장가치를 재조달원가와 비교하는 비율입니다. 실무에서는 재조달원가를 정확히 측정하기 어려워 시가총액이나 장부가치를 활용한 근사치도 쓰지만, 시가총액만으로 토빈의 Q를 완전히 같다고 보지는 않습니다. Q가 1보다 크면 시장이 자산의 재조달원가보다 높은 가치를 매길 수 있고, 1보다 작으면 반대일 수 있습니다.",
+            "부동산에서 재조달원가는 대상 건물과 동일하거나 유사한 물리적·기능적 효용을 가진 건물을 현재 시점에 새로 짓는 데 드는 총비용입니다. 같은 모습을 그대로 복제하는 비용은 재생산원가(Reproduction Cost), 같은 효용을 현대적인 방식으로 대체하는 비용은 재조달원가(Replacement Cost)라고 구분하기도 합니다.",
+            "이 비용에는 재료비·노무비·외주비·현장경비 같은 직접공사비뿐 아니라 설계·감리·인허가, 공사 기간의 금융비용, 개발·시공의 적정 이윤 같은 간접비와 부대비용도 포함될 수 있습니다.",
+            "부동산 원가법에서는 보통 토지와 건물을 나누어 봅니다. 건물은 새로 지을 수 있어 재조달원가를 추정할 수 있지만, 토지는 일반적으로 거래사례 비교 등으로 별도 평가합니다. 새 건물의 비용에서 물리적 감가(마모·노후화), 기능적 감가(구식 설계·시설 부족), 경제적 감가(지역 쇠퇴·주변 환경 변화)를 빼고 토지 가치를 더해 현재 가치를 추정합니다.",
+            "거래사례가 적은 공장·병원·교회 같은 특수 목적 건물의 감정평가, 화재·재해 뒤 복구비를 정하는 손해보험, 유형자산의 취득·재조달 비용을 검토할 때 재조달원가가 특히 유용합니다. 다만 재조달원가가 곧 시장가격이나 보험금 지급액을 보장하는 것은 아니므로, 평가 목적과 계약 조건을 함께 확인해야 합니다."
+          ]],
+          derivative: ["파생상품", "Derivative", "주식·금리·환율·원자재 등 기초자산의 가격에서 가치가 파생되는 계약입니다. 가격뿐 아니라 변동성, 만기, 금리, 계약 조건에 따라 가치가 달라집니다."],
+          "no-arbitrage": ["무차익거래 관계", "No-Arbitrage Relationship", [
+            "같은 경제적 결과를 만드는 두 거래의 가격이 크게 다르면 위험이 거의 없는 차익 기회가 생긴다는 원리입니다. 파생상품 가격은 기초자산 가격·금리·배당·보유비용과 이 관계가 맞는지로 점검합니다.",
+            "쉽게 말해 ‘지금 사서 보관한 뒤 나중에 파는 방법’과 ‘나중에 받을 가격을 지금 계약하는 방법’의 결과가 같다면, 두 방법의 가격도 크게 다를 수 없다는 뜻입니다.",
+            "예를 들어 현재 주가가 100원이고, 1년 이자율이 5%이며 배당·거래비용은 없다고 가정해 보겠습니다. 주식을 지금 100원에 사서 1년 보유하려면 자금의 이자까지 고려한 비용은 약 105원입니다. 따라서 1년 뒤 주식을 받는 선물의 이론 가격도 약 105원 근처가 됩니다.",
+            "그런데 선물 가격이 115원이라면, 이론상으로는 100원을 빌려 주식을 사고 동시에 1년 뒤 115원에 파는 선물을 매도하는 거래를 생각할 수 있습니다. 1년 뒤 선물 계약으로 주식을 115원에 넘긴 뒤 빌린 돈과 이자 105원을 갚으면, 차이 10원이 남습니다. 이것이 현물 매수와 선물 매도를 함께 하는 현물·선물 차익거래의 단순 예시입니다.",
+            "실제 거래에는 수수료·세금·호가 차이·공매도 가능 여부·증거금·자금조달 비용·배당·결제 위험이 있어 차이가 보인다고 바로 무위험 이익이 되는 것은 아닙니다. 무차익거래 관계는 ‘반드시 돈을 번다’는 공식이 아니라, 가격 차이가 왜 생겼는지와 거래 조건을 점검하는 기준입니다."
+          ]],
+          binomial: ["이항모형", "Binomial Model", "기간마다 기초자산 가격이 상승 또는 하락 두 방향으로 움직인다고 가정해 옵션 가치를 단계적으로 계산하는 모형입니다. 옵션의 복제 포트폴리오와 무차익거래 원리를 이해하는 데 쓰입니다."],
+          "black-scholes": ["블랙-숄즈 계열 모형", "Black-Scholes Family of Models", "기초자산 가격·행사가격·변동성·금리·만기·배당 등을 입력해 유럽형 옵션의 이론 가격을 추정하는 모형입니다. 실제 시장의 변동성과 거래 조건이 가정과 다를 수 있습니다."],
+          underlying: ["기초자산 가격", "Underlying Asset Price", "선물·옵션 등 파생상품의 가치 기준이 되는 주식·지수·환율·원자재 등의 현재 가격입니다. 기초자산 가격 변화는 파생상품 가격에 직접 영향을 줍니다."],
+          volatility: ["변동성", "Volatility", "가격이나 수익률이 평균 주변에서 얼마나 크게 움직이는지를 나타내는 정도입니다. 옵션에서는 예상 변동성이 높을수록 다른 조건이 같다면 옵션 가치가 커지는 경향이 있습니다."],
+          "interest-rate": ["금리", "Interest Rate", "돈을 빌리거나 맡길 때 적용되는 이자의 비율입니다. 할인율과 보유비용에 영향을 주므로 채권·주식·파생상품 가치평가의 중요한 입력값입니다."],
+          carry: ["배당·보유비용", "Dividend · Cost of Carry", "기초자산을 보유할 때 생기는 배당 수익, 이자 비용, 보관료 같은 현금흐름입니다. 선물·옵션의 이론 가격과 현물 가격의 관계에 영향을 줍니다."],
+          contract: ["계약 조건", "Contract Terms", "거래 단위, 행사가격, 만기, 결제 방식, 증거금처럼 상품의 권리와 의무를 정한 내용입니다. 같은 이름의 상품이라도 조건에 따라 손익 구조가 달라질 수 있습니다."],
+          "commodity-crypto": ["원자재·가상자산", "Commodities · Cryptoassets", "원자재는 생산·운송·보관과 실제 사용 수요가 가격에 영향을 주고, 가상자산은 네트워크 사용·유동성·제도·토큰 구조 같은 요인을 함께 살핍니다. 일반 주식처럼 안정적인 현금흐름만으로 평가하기 어려운 경우가 많습니다."],
+          "supply-demand": ["수급", "Supply and Demand", "시장에 내놓는 물량과 사고자 하는 수요의 관계입니다. 생산 차질, 재고 변화, 이용자 증가처럼 수요·공급을 바꾸는 요인이 가격에 영향을 줄 수 있습니다."],
+          cost: ["비용", "Cost", "생산·운송·보관·채굴·거래에 드는 자원과 돈입니다. 비용은 가격의 유일한 기준은 아니지만, 공급 지속 가능성과 참여자의 손익을 판단하는 단서가 될 수 있습니다."],
+          "comparative-metric": ["비교지표", "Comparative Metric", "비슷한 자산이나 과거 구간과 가격·비용·활동량을 비교하기 위한 수치입니다. 지표 하나만으로 적정 가격을 단정하지 말고 산출 기준과 한계를 확인해야 합니다."],
+          "network-metric": ["네트워크 지표", "Network Metric", "가상자산 네트워크의 활성 주소, 거래 수, 수수료, 해시레이트처럼 사용과 보안 활동을 나타내는 지표입니다. 활동 증가가 가격 상승을 보장하지는 않습니다."],
+          "storage-cost": ["생산·보관비용", "Production · Storage Cost", "원자재를 생산하고 운송·보관하는 데 드는 비용입니다. 원유·금속처럼 실물 재고를 보관할 수 있는 자산의 선물 가격과 공급 의사에 영향을 줄 수 있습니다."],
+          scarcity: ["희소성", "Scarcity", "원하는 수량에 비해 공급이 제한된 정도입니다. 희소성만으로 가치가 정해지지는 않으며 실제 사용 수요와 유동성도 함께 필요합니다."],
+          "use-demand": ["사용 수요", "Usage Demand", "원자재의 산업·소비 용도나 가상자산 네트워크의 실제 이용처럼 자산을 쓰려는 수요입니다. 투자 수요와 구분해 살피면 가격 변동의 배경을 이해하는 데 도움이 됩니다."],
+          "liquidity-regulation": ["유동성·제도", "Liquidity · Regulation", "유동성은 원하는 때 큰 가격 손해 없이 거래할 수 있는 정도이고, 제도는 거래·보관·발행에 적용되는 법규와 시장 규칙입니다. 둘 다 거래 가능성과 가격 형성에 영향을 줍니다."],
+          "network-activity": ["네트워크 활동", "Network Activity", "가상자산 네트워크에서 실제로 발생하는 거래·이용자·수수료·검증 활동을 말합니다. 지표의 정의와 조작 가능성, 실제 경제 활동과의 연결을 함께 검토해야 합니다."],
+        };
+        const people = {
+          markowitz: ["해리 마코위츠", "Harry Markowitz · 경제학자", ["해리 마코위츠는 포트폴리오 전체의 위험을 수학적으로 다룬 경제학자입니다.", "1952년 논문 <Portfolio Selection>에서 기대수익률뿐 아니라 수익률의 분산과 자산 간 공분산을 함께 보는 평균-분산 모형, 즉 현대 포트폴리오 이론(Modern Portfolio Theory, MPT)의 토대를 제시했습니다.", "핵심은 ‘좋은 종목을 하나 고르는 일’보다 서로 다르게 움직이는 자산을 조합해 전체 위험을 관리해야 한다는 점입니다. 이 연구는 분산투자와 효율적 투자선의 출발점이 되었고, 그는 1990년 노벨 경제학상을 공동 수상했습니다."]],
+          fama: ["유진 파마", "Eugene F. Fama · 경제학자", ["유진 파마는 시카고대학교의 금융경제학자로, 자산가격 연구에 큰 영향을 준 학자입니다.", "1970년 논문에서 효율적 시장 가설(Efficient Market Hypothesis, EMH)을 체계적으로 정리했습니다. 이는 이용 가능한 정보가 가격에 빠르게 반영되므로, 공개된 과거 정보만으로 지속적으로 초과수익을 내기 어렵다는 가설입니다.", "이 가설은 인덱스 투자, 액티브 운용 성과 검증, 퀀트 백테스트의 기준 질문에 큰 영향을 주었습니다. ‘어떤 전략도 절대 불가능하다’는 뜻은 아니며, 정보 범위·거래비용·위험 조정 뒤에도 효과가 남는지를 검증하자는 출발점입니다."]],
+          malkiel: ["버턴 말키엘", "Burton G. Malkiel · 경제학자", ["버턴 말키엘은 프린스턴대학교 경제학자이며, 개인 투자자에게도 널리 읽힌 《A Random Walk Down Wall Street》의 저자입니다.", "그는 가격 예측의 어려움과 비용의 중요성을 대중적으로 설명하며, ‘눈가린 원숭이의 다트’ 비유로 알려졌습니다. 이 비유는 개별 종목 선택이 시장 평균을 꾸준히 이기기 어렵다는 문제를 강조합니다.", "중요한 메시지는 유명한 종목 추천이나 차트 패턴만으로 성과를 단정하지 말고, 분산·비용·위험을 함께 보라는 것입니다. 다트 비유 자체가 모든 능동 전략이 무의미하다는 증명은 아닙니다."]],
+          buffett: ["워런 버핏", "Warren Buffett · 투자자", ["워런 버핏은 버크셔 해서웨이를 이끈 것으로 알려진 미국의 장기 가치투자자입니다.", "그는 특정 수학 모형 하나를 발표한 학자라기보다, 기업의 수익력·경쟁우위·경영진·가격을 함께 살피는 가치투자 원칙으로 유명합니다.", "그의 장기 성과 사례는 시장 효율성 논의에서 자주 언급되지만, 한 개인의 성과만으로 시장이 항상 비효율적이라고 결론낼 수는 없습니다. 학습에서는 장기 투자, 안전마진, 투자 과정의 중요성을 생각해 보는 사례로 활용합니다."]],
+          simons: ["제임스 사이먼스", "James H. Simons · 수학자·투자자", ["제임스 사이먼스는 수학 연구자 출신으로, 1978년 르네상스 테크놀로지스를 세운 퀀트 투자자입니다.", "그는 공개된 하나의 단일 이론보다, 수학·통계·데이터·컴퓨터 과학을 결합해 반복적으로 가설을 검증하는 정량투자 조직을 만든 인물로 알려져 있습니다.", "중요한 점은 비밀 공식을 따라 하는 것이 아니라 데이터 품질, 거래비용, 위험 한도, 시장 변화까지 포함해 연구 과정을 운영했다는 데 있습니다. 공개되지 않은 내부 전략과 과거 성과는 미래 수익을 보장하지 않습니다."]],
+          bachelier: ["루이 바슐리에", "Louis Bachelier · 수학자", ["루이 바슐리에는 프랑스 수학자로, 1900년 박사논문 <Théorie de la spéculation>에서 가격 움직임과 옵션을 확률로 다룬 선구자입니다.", "그의 연구는 가격 변화를 무작위 과정으로 모델링하고 옵션 가격을 수학적으로 생각하는 초기 시도였습니다.", "오늘날의 가정과는 차이가 있지만, 금융시장을 확률·수학으로 분석하는 수리금융의 출발점 가운데 하나로 평가됩니다."]],
+          thorp: ["에드워드 소프", "Edward O. Thorp · 수학자·금융 연구자", ["에드워드 O. 소프는 확률과 통계를 블랙잭 분석과 금융시장 연구에 적용한 수학자·금융 연구자입니다.", "그는 옵션·전환사채·주식을 함께 이용해 가격 불일치와 헤지 비율을 분석하고, 시장 전체 방향의 영향을 낮추려는 시장중립 접근을 실전 운용에 적용했습니다.", "중요한 의미는 직감보다 관찰 가능한 정보, 명시적 가정, 반복 가능한 검증을 중시하는 퀀트의 태도를 보여 준다는 점입니다. 어떤 과거 기법도 현재 수익을 보장하지는 않습니다."]],
+          bemberger: ["제럴드(제리) 벰버거", "Gerald ‘Jerry’ Bamberger · 투자자", ["제럴드(제리) 벰버거는 1980년대 모건스탠리에서 통계적 차익거래와 페어 트레이딩의 초기 발전에 관여한 인물로 널리 알려져 있습니다.", "페어 트레이딩은 함께 움직여 온 두 자산의 가격 간격이 일시적으로 벌어졌을 때, 상대적으로 비싼 쪽과 싼 쪽을 함께 거래해 간격의 변화에 대응하는 접근입니다.", "이 사례는 시장의 방향을 맞히는 것만이 아니라 상대가격·헤지·거래비용을 함께 분석하는 정량투자 관점을 보여 줍니다. 두 가격이 다시 수렴한다는 보장은 없으므로 손실 한도와 구조 변화 점검이 필요합니다."]],
+          black: ["피셔 블랙", "Fischer Black · 경제학자", ["피셔 블랙은 옵션 가격결정 연구로 현대 금융경제학에 큰 영향을 준 경제학자입니다.", "그는 마이런 숄즈와 함께 1973년 블랙-숄즈 옵션가격모형 논문을 발표했습니다. 이 모형은 무차익거래와 복제 포트폴리오라는 생각을 활용해 유럽형 옵션의 이론 가격을 추정합니다.", "옵션 가격을 체계적으로 계산하고 위험을 관리하는 공통 언어를 제공했다는 점에서 중요합니다. 실제 시장에서는 변동성, 거래비용, 배당, 유동성 등 모형의 가정과 다른 요소를 함께 고려해야 합니다."]],
+          scholes: ["마이런 숄즈", "Myron S. Scholes · 경제학자", ["마이런 숄즈는 블랙-숄즈 옵션가격모형을 공동으로 만든 경제학자입니다.", "1973년 피셔 블랙과의 연구는 기초자산 가격·변동성·금리·만기 등을 이용해 유럽형 옵션 가치를 계산하는 틀을 제시했습니다.", "그 공로로 숄즈와 로버트 머튼은 1997년 노벨 경제학상을 수상했습니다. 이 모형은 금융공학 발전의 핵심이지만, 입력값과 가정이 현실에 맞는지 점검해야 합니다."]],
+          merton: ["로버트 머튼", "Robert C. Merton · 경제학자", ["로버트 머튼은 연속시간 금융과 옵션 가격결정 이론을 발전시킨 경제학자입니다.", "그는 블랙-숄즈 연구를 확장하고 정교화해 파생상품 가격결정과 위험관리의 이론적 기반을 넓혔습니다.", "숄즈와 함께 1997년 노벨 경제학상을 수상했으며, 그의 연구는 금융공학·동적 포트폴리오 선택·기업의 신용위험 분석에 큰 영향을 주었습니다."]],
+          meriwether: ["존 메리웨더", "John Meriwether · 채권 트레이더", ["존 메리웨더는 채권 상대가치 거래로 알려진 트레이더이며, 롱텀 캐피털 매니지먼트(Long-Term Capital Management, LTCM)의 공동 창립자입니다.", "LTCM은 채권과 파생상품의 가격 차이가 정상 수준으로 돌아올 것이라는 상대가치·차익거래 접근을 활용했습니다.", "1998년 시장 충격 때 큰 손실을 겪은 사례는, 평균 회귀와 유동성에 대한 가정이 극단적 환경에서 무너질 수 있고 레버리지가 위험을 키울 수 있음을 보여 주는 중요한 반면교사입니다."]],
+          dennis: ["리처드 데니스", "Richard Dennis · 트레이더", ["리처드 데니스는 선물시장 트레이더로, 추세추종 거래와 ‘터틀 트레이더’ 실험으로 널리 알려져 있습니다.", "그 실험은 명확한 진입·청산·위험관리 규칙을 가르쳐도 거래를 수행할 수 있는지를 살폈습니다.", "이 사례는 투자에서 규칙의 재현성과 자금관리가 중요하다는 점을 보여 주지만, 특정 추세추종 규칙이 어느 시장에서나 수익을 낸다는 뜻은 아닙니다."]],
+          eckhardt: ["윌리엄 에크하르트", "William Eckhardt · 트레이더·연구자", ["윌리엄 에크하르트는 리처드 데니스와 함께 터틀 트레이더 실험으로 알려진 트레이더·연구자입니다.", "그는 거래 성과에서 심리, 규칙 준수, 위험관리의 중요성을 강조하며 추세추종 방식의 체계화에 관여했습니다.", "터틀 사례는 투자 판단을 반복 가능한 규칙으로 바꾸려는 시도를 보여 주며, 그 규칙도 시장 변화·거래비용·손실 구간을 견뎌야 한다는 점을 일깨웁니다."]],
+          dalio: ["레이 달리오", "Ray Dalio · 투자자", ["레이 달리오는 브리지워터 어소시에이츠를 설립한 투자자입니다.", "그와 브리지워터는 경기 환경에 따라 자산이 다르게 반응한다는 관점에서 올웨더(All Weather)와 리스크 패리티(Risk Parity) 접근을 대중화한 사례로 자주 언급됩니다.", "중요한 의미는 수익률만이 아니라 자산별 위험 기여도와 경제 시나리오를 함께 보며 분산을 설계한다는 점입니다. 자산 간 상관관계는 고정되지 않으며 분산이 손실을 없애지는 않습니다."]],
+          asness: ["클리프 애스니스", "Cliff Asness · 투자자·연구자", ["클리프 애스니스는 AQR Capital Management의 공동 창립자로, 학계의 팩터 연구를 실제 운용에 적용한 투자자·연구자입니다.", "가치·모멘텀·품질·저변동성처럼 여러 자산에서 관찰되는 요인을 체계적으로 측정하고 포트폴리오에 반영하는 팩터투자 접근으로 알려져 있습니다.", "팩터는 과거에 관찰된 경향이지 미래 수익의 약속이 아닙니다. 긴 부진 기간, 거래비용, 혼잡 거래, 모형·데이터 선택의 영향을 함께 검토해야 합니다."]],
+          taleb: ["나심 니콜라스 탈레브", "Nassim Nicholas Taleb · 저술가·전 트레이더", ["나심 니콜라스 탈레브는 불확실성, 극단적 사건, 꼬리위험을 다룬 저술가이자 전직 옵션 트레이더입니다.", "그는 《블랙 스완》을 통해 드물지만 큰 영향을 주는 사건과, 사건 뒤 이를 설명하려는 사후 합리화의 문제를 널리 알렸습니다.", "중요한 메시지는 정확한 예측에만 의존하기보다 과도한 레버리지를 피하고 유동성·분산·스트레스 시나리오를 통해 큰 충격을 견딜 여력을 관리하자는 것입니다."]],
+          bezos: ["제프 베조스", "Jeff Bezos · 기업가", ["제프 베조스는 아마존의 창업자로 알려진 기업가입니다.", "그는 창업 전 D. E. Shaw & Co.에서 근무한 경력이 있어, 이 수업에서는 계량적 투자회사의 인재와 기술 문화가 다른 산업으로도 이어진 한 사례로 언급됩니다.", "그가 금융 이론을 발표한 인물이라는 뜻은 아닙니다. 이 맥락에서의 의미는 퀀트 회사가 수학·컴퓨팅 인력의 경력 경로 가운데 하나였다는 점입니다."]],
+        };
+
+        const personAliases = {
+          "해리 마코위츠": "markowitz", "마코위츠": "markowitz", "유진 파마": "fama", "버턴 말키엘": "malkiel",
+          "워런 버핏": "buffett", "제임스 사이먼스": "simons", "사이먼스": "simons", "루이 바슐리에": "bachelier",
+          "에드워드 O. 소프": "thorp", "에드워드 소프": "thorp", "소프": "thorp", "제리(제럴드) 벰버거": "bemberger", "벰버거": "bemberger",
+          "피셔 블랙": "black", "마이런 숄즈": "scholes", "로버트 머튼": "merton", "존 메리웨더": "meriwether",
+          "리처드 데니스": "dennis", "윌리엄 에크하르트": "eckhardt", "레이 달리오": "dalio", "클리프 애스니스": "asness",
+          "나심 니콜라스 탈레브": "taleb", "제프 베조스": "bezos",
+        };
+        const personNames = Object.keys(personAliases).sort((a, b) => b.length - a.length);
+        const personMatcher = new RegExp(`(${personNames.map((name) => name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "g");
+        const personWalker = document.createTreeWalker(document.querySelector("main"), NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            if (!node.nodeValue.trim() || node.parentElement?.closest("script, style, code, pre, a, button, .glossary, .glossary-modal")) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+          },
+        });
+        const personTextNodes = [];
+        while (personWalker.nextNode()) personTextNodes.push(personWalker.currentNode);
+        personTextNodes.forEach((node) => {
+          const text = node.nodeValue;
+          if (!personMatcher.test(text)) return;
+          personMatcher.lastIndex = 0;
+          const fragment = document.createDocumentFragment();
+          let cursor = 0;
+          text.replace(personMatcher, (name, offset) => {
+            fragment.append(text.slice(cursor, offset));
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "glossary-term";
+            button.dataset.person = personAliases[name];
+            button.textContent = name;
+            fragment.append(button);
+            cursor = offset + name.length;
+            return name;
+          });
+          fragment.append(text.slice(cursor));
+          node.replaceWith(fragment);
+        });
+        const modal = document.getElementById("glossaryModal");
+        if (!modal) return;
+        const title = document.getElementById("glossaryModalTitle");
+        const aliases = document.getElementById("glossaryModalAliases");
+        const detail = document.getElementById("glossaryModalDetail");
+        const close = modal.querySelector(".glossary-modal__close");
+        let trigger;
+        document.querySelectorAll("[data-valuation-term], [data-person]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const entry = button.dataset.person ? people[button.dataset.person] : terms[button.dataset.valuationTerm];
+            if (!entry) return;
+            trigger = button;
+            title.textContent = entry[0];
+            aliases.textContent = entry[1];
+            aliases.hidden = !entry[1];
+            const paragraphs = Array.isArray(entry[2]) ? entry[2] : [entry[2]];
+            detail.replaceChildren(...paragraphs.map((text) => Object.assign(document.createElement("p"), { textContent: text })));
+            modal.hidden = false;
+            close?.focus();
+          });
+        });
+        modal.addEventListener("click", (event) => {
+            if (event.target.closest("[data-glossary-close]")) trigger?.focus({ preventScroll: true });
+        });
+      });
+    </script>
+    <script>
+      (() => {
+        const modal = document.getElementById("biasQuizModal");
+        const title = document.getElementById("biasQuizTitle");
+        const intro = document.getElementById("biasQuizIntro");
+        const count = document.getElementById("biasQuizCount");
+        const bar = document.getElementById("biasQuizBar");
+        const question = document.getElementById("biasQuizQuestion");
+        const answers = document.getElementById("biasQuizAnswers");
+        const result = document.getElementById("biasQuizResult");
+        const restart = document.getElementById("biasQuizRestart");
+        const closeButtons = modal?.querySelectorAll("[data-bias-quiz-close]");
+        const closeButton = modal?.querySelector(".glossary-modal__close");
+        let activeQuiz;
+        let activeTrigger;
+        let index;
+        let scores;
+        const quizzes = {
+          market: {
+            title: "시장 심리 성향 점검",
+            intro: "최근의 나와 가장 가까운 답을 고르세요. 군중·기준점·손실·정보를 대하는 습관을 살펴보는 8문항입니다.",
+            profiles: {
+              crowd: ["추세 민감형", "다른 사람의 반응과 인기 신호에 빠르게 반응하는 편입니다. 매수 전 ‘내 근거 2개·반대 근거 1개’를 적고, 손실 한도와 투자 금액을 먼저 정해 보세요."],
+              anchor: ["기준점 고착형", "최고가·매수가·목표가가 판단의 기준이 되기 쉬운 편입니다. 현재 가격에서 새로 투자한다면 살지, 비교 대상과 현금흐름은 어떤지를 별도 표로 확인해 보세요."],
+              loss: ["손실 방어형", "손실의 불편함이 매도·유지 판단에 크게 작용할 수 있습니다. 매수 전에 손절·재검토 조건과 보유 이유를 정하고, 과거 매수가 대신 앞으로의 위험과 기회비용을 비교해 보세요."],
+              confirm: ["확증 필터형", "내 생각을 뒷받침하는 정보를 더 쉽게 받아들일 수 있습니다. 투자 노트에 ‘내 판단이 틀렸다는 증거’를 찾는 항목을 따로 두고, 서로 다른 관점의 자료를 함께 보세요."],
+            },
+            questions: [
+              ["커뮤니티에서 특정 종목 이야기가 갑자기 많아졌을 때 나는?", "crowd", [["바로 놓칠까 봐 매수나 검색을 시작한다", 2], ["관심은 갖지만 며칠 더 지켜본다", 1], ["내 기준과 자료부터 확인한다", 0]]],
+              ["주변 사람이 모두 같은 방향을 말하면 나는?", "crowd", [["다수가 맞을 가능성이 크다고 느낀다", 2], ["판단에 어느 정도 반영한다", 1], ["다수 의견과 내 근거를 분리한다", 0]]],
+              ["‘최고가 100만 원, 현재 50만 원’을 보면 나는?", "anchor", [["반값이니 싸다고 먼저 느낀다", 2], ["과거 가격도 참고한다", 1], ["과거 가격보다 현재 가치부터 본다", 0]]],
+              ["내 매수가보다 주가가 낮아졌을 때 나는?", "anchor", [["본전이 되는 가격을 중심으로 판단한다", 2], ["매수가와 현재 정보를 함께 본다", 1], ["오늘 처음 고른다는 기준으로 다시 판단한다", 0]]],
+              ["보유 종목이 크게 하락했을 때 나는?", "loss", [["손실을 확정하기 싫어 이유 없이 더 버틴다", 2], ["감정이 가라앉을 때까지 결정을 미룬다", 1], ["미리 정한 재검토·손실 규칙을 확인한다", 0]]],
+              ["짧은 기간 이익이 났을 때 나는?", "loss", [["이익이 사라질까 봐 곧바로 판다", 2], ["일부만 팔지 고민한다", 1], ["처음 세운 목표·비중 규칙에 따른다", 0]]],
+              ["최근 급등 성공담을 여러 번 접하면 나는?", "confirm", [["나도 비슷한 기회를 잡을 수 있다고 느낀다", 2], ["위험 사례도 생각해 본다", 1], ["성공·실패의 전체 분포와 조건을 찾는다", 0]]],
+              ["내 투자 판단과 반대되는 분석을 보면 나는?", "confirm", [["내 상황과 다르다고 넘기는 편이다", 2], ["조금 불편하지만 읽어 본다", 1], ["판단을 바꿀 증거인지 먼저 검토한다", 0]]],
+            ],
+          },
+          choice: {
+            title: "선택·경쟁 성향 점검",
+            intro: "최근의 나와 가장 가까운 답을 고르세요. 선택 피로·매몰비용·연쇄 소비·경쟁과 평판을 대하는 습관을 살펴보는 8문항입니다.",
+            profiles: {
+              choice: ["선택 피로형", "선택지가 많을수록 비교가 길어지거나 결정 뒤 후회가 커질 수 있습니다. 목적·기간·위험 등 3가지 기준을 먼저 정하고 후보 수를 제한해 보세요."],
+              sunk: ["기존 선택 유지형", "이미 쓴 돈·시간이 다음 결정을 붙잡을 수 있습니다. ‘지금 처음 시작한다면 계속할까?’와 앞으로의 비용·편익을 따로 적어 보세요."],
+              consume: ["연쇄 소비 민감형", "새 선택이 관련 소비·유지비를 연달아 부를 가능성을 점검할 필요가 있습니다. 구매 전 총소유비용과 대체 사용법을 함께 계산해 보세요."],
+              compete: ["경쟁·평판 민감형", "경쟁에서 이기는 일이나 타인의 평가가 가격 판단에 크게 작용할 수 있습니다. 상한 가격, 반대 근거, 책임 주체를 경쟁 전에 정해 두는 것이 도움이 됩니다."],
+            },
+            questions: [
+              ["비슷한 펀드·종목이 너무 많을 때 나는?", "choice", [["비교만 하다가 선택을 미루는 편이다", 2], ["추천 순위로 빠르게 좁힌다", 1], ["미리 정한 기준으로 후보를 제한한다", 0]]],
+              ["선택한 뒤 더 좋아 보이는 대안을 발견하면 나는?", "choice", [["후회가 커져 자주 바꾸고 싶어진다", 2], ["다음 기회에 바꾸려고 한다", 1], ["선택 기준이 달라졌는지부터 확인한다", 0]]],
+              ["시간과 돈을 많이 들인 프로젝트가 기대와 다를 때 나는?", "sunk", [["아까워서 더 투자하며 만회하려 한다", 2], ["조금 더 기다린 뒤 결정한다", 1], ["앞으로의 비용·편익과 대안을 비교한다", 0]]],
+              ["손실 난 자산을 계속 보유하는 이유는 대체로?", "sunk", [["팔면 지금까지의 노력이 헛되는 느낌이라서", 2], ["회복 가능성을 더 보고 싶어서", 1], ["현재의 기대수익과 위험이 여전히 맞아서", 0]]],
+              ["고가 제품을 산 뒤 관련 지출이 늘어날 때 나는?", "consume", [["어울리는 물건도 갖춰야 한다고 느낀다", 2], ["필요한 것만 조금 추가한다", 1], ["처음 정한 총예산을 넘기지 않는다", 0]]],
+              ["새 소비를 결정할 때 나는?", "consume", [["구매가만 보고 먼저 결정한다", 2], ["유지비도 대략 생각한다", 1], ["유지·보험·시간·기회비용까지 합산한다", 0]]],
+              ["경쟁 입찰이나 인기 자산을 살 때 나는?", "compete", [["남보다 이기는 것 자체가 중요해 가격을 올린다", 2], ["경쟁 분위기를 참고한다", 1], ["정한 상한 가격을 넘으면 포기한다", 0]]],
+              ["여러 사람이 책임지는 일에서 나는?", "compete", [["누군가가 확인하겠지라고 생각한다", 2], ["내 역할만 확인한다", 1], ["책임·감시·평가 기준이 분명한지 확인한다", 0]]],
+            ],
+          },
+        };
+        function renderQuestion() {
+          const quiz = quizzes[activeQuiz];
+          const current = quiz.questions[index];
+          count.textContent = `${index + 1} / ${quiz.questions.length}`;
+          bar.style.setProperty("--bias-progress", `${(index / quiz.questions.length) * 100}%`);
+          question.textContent = current[0];
+          answers.replaceChildren(...current[2].map(([label, score]) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "bias-quiz-answer";
+            button.textContent = label;
+            button.addEventListener("click", () => {
+              scores[current[1]] += score;
+              index += 1;
+              if (index < quiz.questions.length) renderQuestion(); else renderResult();
+            });
+            return button;
+          }));
+        }
+        function renderResult() {
+          const quiz = quizzes[activeQuiz];
+          const dominant = Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
+          const [type, guide] = quiz.profiles[dominant];
+          count.textContent = "완료";
+          bar.style.setProperty("--bias-progress", "100%");
+          question.hidden = true;
+          answers.hidden = true;
+          result.hidden = false;
+          result.replaceChildren(Object.assign(document.createElement("h3"), { textContent: `나의 점검 유형: ${type}` }), Object.assign(document.createElement("p"), { textContent: guide }), Object.assign(document.createElement("p"), { textContent: "한 번의 응답은 상황에 따라 달라집니다. 결과를 고정된 성격 유형으로 받아들이기보다, 중요한 결정을 앞두고 다시 확인할 체크리스트로 활용하세요." }));
+          restart.hidden = false;
+        }
+        function start(kind, trigger) {
+          activeQuiz = kind;
+          activeTrigger = trigger;
+          index = 0;
+          scores = Object.fromEntries(Object.keys(quizzes[kind].profiles).map((key) => [key, 0]));
+          title.textContent = quizzes[kind].title;
+          intro.textContent = quizzes[kind].intro;
+          question.hidden = false;
+          answers.hidden = false;
+          result.hidden = true;
+          restart.hidden = true;
+          modal.hidden = false;
+          renderQuestion();
+          closeButton?.focus({ preventScroll: true });
+        }
+        function close() {
+          if (modal.hidden) return;
+          modal.hidden = true;
+          activeTrigger?.focus({ preventScroll: true });
+        }
+        document.querySelectorAll("[data-bias-quiz-trigger]").forEach((button) => button.addEventListener("click", () => start(button.dataset.biasQuizTrigger, button)));
+        closeButtons?.forEach((button) => button.addEventListener("click", close));
+        restart?.addEventListener("click", () => start(activeQuiz, activeTrigger));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+      })();
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const allWeatherLesson = document.getElementById("allWeatherLesson");
+        const assetAllocationTimingLesson = document.getElementById("assetAllocationTimingLesson");
+        const riskMetricsLesson = document.getElementById("riskMetricsLesson");
+        const quantHistoryLesson = document.getElementById("quantHistoryLesson");
+        const alphaBetaLesson = document.getElementById("alphaBetaLesson");
+        const leanLesson = document.getElementById("leanLesson");
+        const randomWalkLesson = document.getElementById("randomWalkLesson");
+        const marketPsychologyLesson = document.getElementById("marketPsychologyLesson");
+        const choiceCompetitionLesson = document.getElementById("choiceCompetitionLesson");
+        const blackSwanLesson = document.getElementById("blackSwanLesson");
+        if (allWeatherLesson && quantHistoryLesson) quantHistoryLesson.before(allWeatherLesson);
+        if (assetAllocationTimingLesson && quantHistoryLesson) quantHistoryLesson.before(assetAllocationTimingLesson);
+        if (riskMetricsLesson && assetAllocationTimingLesson) assetAllocationTimingLesson.before(riskMetricsLesson);
+        if (randomWalkLesson && quantHistoryLesson) quantHistoryLesson.before(randomWalkLesson);
+        if (marketPsychologyLesson && randomWalkLesson) randomWalkLesson.before(marketPsychologyLesson);
+        if (choiceCompetitionLesson && randomWalkLesson) randomWalkLesson.before(choiceCompetitionLesson);
+        if (blackSwanLesson && randomWalkLesson) randomWalkLesson.before(blackSwanLesson);
+        if (alphaBetaLesson && leanLesson) leanLesson.before(alphaBetaLesson);
       });
     </script>
     <script src="assets/app-shell.js"></script>

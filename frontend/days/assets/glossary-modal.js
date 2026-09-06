@@ -52,7 +52,7 @@
   const close = () => {
     if (modal.hidden) return;
     modal.hidden = true;
-    trigger?.focus();
+    trigger?.focus({ preventScroll: true });
   };
 
   entries.forEach((entry, index) => {

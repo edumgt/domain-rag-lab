@@ -119,10 +119,10 @@
     {
       day: 4,
       icon: 'fa-chart-column',
-      title: '퀀트 정보',
+      title: '자산배분, 퀀트',
       subtitle: '한 종목의 성과보다 여러 자산을 함께 봐야 하는 이유를 배웁니다.',
       goal: '퀀트 투자의 기본 관점과 블랙 스완을 고려한 위험관리, 알파·베타의 구분, 분산투자, 상관관계, 변동성, MDD, 샤프 비율과 파생상품 위험관리의 역할을 말할 수 있어요.',
-      keywords: ['퀀트', '퀀트 계좌', '로보어드바이저', '투자일임', '백테스팅', '노코드 퀀트', '젠포트', '퀀터스', '증권사 Open API', '모의투자', '에드워드 소프', '제임스 사이먼스', '히든 마코프 모델', 'HMM', '제로섬 게임', '블랙 스완', '회색 코뿔소', '초단타', '고빈도 알고리즘 거래', '사전 등록제', '스캘핑', '데이트레이딩', '스윙 트레이딩', '허수성 주문', '스푸핑', '최선집행', '주문정보', '페어 트레이딩', 'Z-점수', '공매도', '무차입 공매도', '포지션', '포트폴리오', '헤지', '변동성 매매', '증거금', '마진콜', '알파', '베타', '벤치마크', '상관관계', '변동성', 'MDD', '샤프 비율', '위험기여도', '집중위험'],
+      keywords: ['퀀트', '퀀트 계좌', '로보어드바이저', '투자일임', '백테스팅', '노코드 퀀트', '젠포트', '퀀터스', '증권사 Open API', '모의투자', '에드워드 소프', '제임스 사이먼스', '히든 마코프 모델', 'HMM', '제로섬 게임', '블랙 스완', '회색 코뿔소', '초단타', '고빈도 알고리즘 거래', '사전 등록제', '스캘핑', '데이트레이딩', '스윙 트레이딩', '허수성 주문', '스푸핑', '최선집행', '주문정보', '페어 트레이딩', 'Z-점수', '공매도', '무차입 공매도', '포지션', '포트폴리오', '헤지', '선물환', '금리스왑(IRS)', '변동성 매매', '증거금', '마진콜', '알파', '베타', '벤치마크', '상관관계', '변동성', 'MDD', '샤프 비율', '위험기여도', '집중위험'],
       lessons: [
         ['퀀트 투자란 무엇인가요?', ['퀀트(quant)는 quantitative, 즉 “정량적인”이라는 말에서 왔습니다. 퀀트 투자는 가격·거래량·재무정보·금리처럼 측정할 수 있는 데이터를 바탕으로 가설을 세우고, 일정한 규칙으로 투자 판단과 위험관리를 돕는 접근입니다.', '중요한 점은 숫자나 코드가 미래를 맞혀 주는 마법이 아니라는 것입니다. 좋은 퀀트 분석은 어떤 데이터를 썼는지, 규칙이 과거에만 잘 맞았던 것은 아닌지, 수수료·세금·거래비용과 큰 손실 구간까지 반영했는지를 함께 점검합니다.', '따라서 퀀트는 “한 번에 크게 맞히기”보다 검증 가능한 규칙과 위험 한도를 세우는 데 가깝습니다. 이 과정에서 오늘 배울 분산, 변동성, 최대낙폭(MDD), 샤프 비율이 전략과 포트폴리오를 평가하는 공통 언어가 됩니다.']],
         ['개인이 퀀트를 이용하는 세 가지 경로: 일임·플랫폼·직접 API', ['개인도 퀀트 방식을 이용할 수 있지만, “퀀트 전용 계좌” 하나가 있는 것은 아닙니다. 첫째는 로보어드바이저나 증권사 랩처럼 등록된 사업자가 투자자 성향과 계약에 따라 포트폴리오를 운용하는 투자일임·자문 서비스입니다. 투자일임은 운용 판단과 주문을 맡기는 구조이고, 투자자문은 조언을 받은 뒤 고객이 주문을 결정하는 구조일 수 있으므로 계약서에서 역할·보수·위험등급·해지 조건을 구분해 확인해야 합니다.', '둘째는 조건식을 조합해 데이터를 분석하고 백테스트하는 노코드·플랫폼 방식입니다. 일부 서비스는 증권사 계좌 연결과 주문 기능을 제공할 수 있지만, 지원 증권사·시장·주문 범위·연동 가능 여부는 수시로 달라질 수 있습니다. 과거 백테스트 결과가 실거래 수익을 보장하지 않으며, 신호가 나온 시점과 실제 체결 가격, 수수료·세금·슬리피지·주문 실패를 포함해 다시 검토해야 합니다.', '셋째는 증권사 Open API로 직접 프로그램을 만드는 개발자형 방식입니다. 한국투자증권 KIS Developers와 키움 Open API+처럼 시세·잔고 조회와 주문 기능을 제공하는 공식 API가 예시입니다. 계좌와 서비스 사용 등록, 앱 키·인증, 호출 한도와 허용 상품을 확인한 뒤 모의환경에서 먼저 검증해야 하며, API 제공은 전략의 안전성이나 수익성을 보장하지 않습니다.', '직접 자동주문은 비밀번호·앱 키 유출, 중복 주문, 통신 장애, 잘못된 수량·가격, 장중 급변동 같은 운영 위험을 함께 가집니다. 처음에는 주문 없이 데이터를 조회하는 단계, 그다음 모의투자, 매우 작은 규모의 실거래처럼 단계를 나누고, 주문 한도·중지 스위치·알림·로그·수동 점검 규칙을 갖추는 것이 중요합니다. 초단타 매매를 하려는 개인에게 적합하다는 뜻도 아니며, 거래 규정과 증권사 최신 약관을 따라야 합니다.']],
@@ -191,6 +191,8 @@
     { terms: ['듀레이션'], korean: '듀레이션', hanja: '—', abbr: 'Dur.', english: 'Duration', summary: '채권 가격이 금리 변화에 얼마나 민감한지 가늠하는 지표입니다.', detail: '일반적으로 듀레이션이 길수록 금리 변화에 따른 가격 움직임이 커지는 경향이 있습니다. 실제 가격 변화는 금리 수준과 채권의 구조에도 영향을 받습니다.' },
     { terms: ['신용위험'], korean: '신용위험', hanja: '信用危險', abbr: 'CR', english: 'Credit Risk', summary: '돈을 빌린 주체가 이자나 원금을 약속대로 갚지 못할 위험입니다.', detail: '국채와 회사채, 기업별 채권은 상환 능력에 차이가 있을 수 있습니다. 높은 이자는 더 큰 신용위험에 대한 보상일 수 있으므로 발행자와 신용등급을 확인해야 합니다.' },
     { terms: ['파생상품'], korean: '파생상품', hanja: '派生商品', abbr: '—', english: 'Derivatives', summary: '주가·금리·환율 등 기초자산의 가격에서 가치가 파생되는 계약입니다.', detail: '선물과 옵션 등이 대표적입니다. 가격 위험을 줄이는 헤지에 쓸 수 있지만 구조가 복잡하고 손실이 커질 수 있어 계약 조건과 최대 손실을 먼저 이해해야 합니다.' },
+    { terms: ['선물환', 'FX Forward'], korean: '선물환', hanja: '先物換', abbr: 'FX Forward', english: 'Foreign Exchange Forward', summary: '미래의 특정 날짜에 정한 환율로 두 통화를 바꾸기로 약속하는 장외 파생계약입니다.', detail: '수출입 대금이나 해외 투자처럼 앞으로 발생할 외화 거래의 환율을 미리 고정해 불확실성을 줄이는 데 활용할 수 있습니다. 거래 금액·통화·환율·결제일을 당사자가 정하며, 거래소에서 표준화해 거래하는 통화선물과 달리 상대방의 계약 이행 위험과 중도 해지 조건도 확인해야 합니다.' },
+    { terms: ['금리스왑(IRS)', '금리스왑', 'IRS', 'Interest Rate Swap'], korean: '금리스왑', hanja: '金利Swap', abbr: 'IRS', english: 'Interest Rate Swap', summary: '같은 원금 기준으로 고정금리와 변동금리의 이자 지급 방식을 서로 바꾸기로 하는 장외 파생계약입니다.', detail: '예를 들어 변동금리 대출을 가진 기업이 금리 상승 위험을 줄이기 위해 상대방과 “변동금리를 주고 고정금리를 받는” 계약을 맺을 수 있습니다. 보통 원금 자체를 주고받기보다 이자 차이만 정산하며, 계약 기간·기준금리·고정금리·명목원금·상대방의 계약 이행 위험을 함께 확인해야 합니다.' },
     { terms: ['헤지'], korean: '헤지', hanja: '危險回避', abbr: 'Hedge', english: 'Hedging', summary: '예상하지 못한 가격 변동으로 생길 손실을 줄이려는 위험관리 방법입니다.', detail: '보험료를 내고 위험을 줄이는 것처럼, 헤지는 수익 가능성 일부를 포기하는 대가로 손실을 완화할 수 있습니다. 완전한 손실 방지를 뜻하지는 않습니다.' },
     { terms: ['평균분산'], korean: '평균분산', hanja: '平均分散', abbr: 'MVO', english: 'Mean-Variance Optimization', summary: '기대수익률과 변동성을 함께 고려해 자산 비중을 찾는 자산배분 방법입니다.', detail: '입력한 기대수익률과 상관관계가 조금만 달라져도 결과 비중이 크게 바뀔 수 있습니다. 따라서 하나의 정답으로 보기보다 가정을 점검하는 도구로 활용합니다.' },
     { terms: ['블랙-리터만', '블랙 리터만'], korean: '블랙-리터만 모형', hanja: '—', abbr: 'BL', english: 'Black-Litterman Model', summary: '시장 균형수익률과 투자자의 전망을 결합해 자산배분 입력값을 만드는 모형입니다.', detail: '평균분산 최적화에서 기대수익률 추정에 지나치게 민감한 문제를 완화하려는 목적이 있습니다. 전망의 신뢰도를 어떻게 설정하는지가 결과에 영향을 줍니다.' },
@@ -1267,7 +1269,10 @@ KOSDAQ|웹젠|게임`,
               <em id="tickCurrentChange" class="tick-change flat">불러오는 중…</em>
               <span id="tickBeta" class="tick-beta">베타 계산 중…</span>
             </div>
-            <div class="tick-bucket-group" role="group" aria-label="분봉 집계 단위 선택">${bucketButtons}</div>
+            <div class="tick-card-actions">
+              <div class="tick-bucket-group" role="group" aria-label="분봉 집계 단위 선택">${bucketButtons}</div>
+              ${renderTickGuideTrigger(true)}
+            </div>
           </header>
           <p id="tickBetaExplain" class="tick-beta-explain"></p>
           <div class="tick-chart-stage">
@@ -1318,7 +1323,13 @@ KOSDAQ|웹젠|게임`,
       </div>`;
   }
 
-  function renderTickGuideTrigger() {
+  function renderTickGuideTrigger(compact = false) {
+    if (compact) {
+      return `
+        <button type="button" class="tick-guide-trigger tick-guide-trigger--compact" data-tick-guide-open aria-haspopup="dialog" aria-label="틱(Tick)과 호가 단위 안내 열기" title="틱(Tick)과 호가 단위 안내">
+          <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
+        </button>`;
+    }
     return `
       <button type="button" class="tick-guide-trigger" data-tick-guide-open aria-haspopup="dialog">
         <span class="tick-guide-trigger-icon"><i class="fa-solid fa-circle-question"></i></span>
@@ -1336,7 +1347,6 @@ KOSDAQ|웹젠|게임`,
         <div class="home-live-layout">
           <div class="home-live-assets">${renderDashboardAssetSection()}</div>
           <div class="home-live-chart">${renderTickChartSection()}</div>
-          <div class="home-live-guide">${renderTickGuideTrigger()}</div>
         </div>
         <p class="content-disclaimer">학습용 서비스이며 특정 투자상품의 매수·매도를 권유하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
       </article>`;
