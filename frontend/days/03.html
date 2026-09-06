@@ -1128,6 +1128,40 @@
             </button>
           </section>
           <section class="lesson">
+            <span>10.4</span>
+            <div class="lesson-content">
+              <h2>가중평균: 중요한 항목의 영향을 더 크게 반영하는 평균</h2>
+              <div class="lesson-body">
+                <p><b>가중평균(Weighted Average)</b>은 모든 항목을 똑같이 취급하는 일반 평균과 달리, 각 항목의 규모·중요도·비중인 <b>가중치</b>를 반영해 계산한 평균입니다. 쉽게 말해 ‘많이 산 것, 비중이 큰 것, 중요한 것’이 결과에 더 큰 영향을 주도록 만든 평균입니다.</p>
+                <h3>일반 평균과 무엇이 다를까요?</h3>
+                <p>전공 수업 3학점에서 A(4.0점), 교양 수업 1학점에서 B(3.0점)를 받았다고 해보세요. 점수만 단순 평균하면 3.5점이지만, 학점을 반영한 가중평균은 <code>(4.0 × 3 + 3.0 × 1) ÷ (3 + 1) = 3.75점</code>입니다. 3학점 수업의 비중이 더 크므로 최종 평균도 A에 더 가까워집니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">구분</th><th scope="col">계산 방식</th><th scope="col">언제 적합한가</th></tr></thead>
+                    <tbody><tr><th scope="row">일반 평균</th><td>값을 모두 더해 항목 수로 나눕니다.</td><td>모든 항목의 중요도와 규모가 같을 때</td></tr><tr><th scope="row">가중평균</th><td><code>Σ(값 × 가중치) ÷ Σ가중치</code></td><td>금액·수량·시가총액·지출 비중처럼 항목별 영향이 다를 때</td></tr></tbody>
+                  </table>
+                </div>
+                <h3>투자에서는 평단가를 구할 때 씁니다</h3>
+                <p>주식·채권을 여러 번 나누어 샀다면 평균 매수단가는 가격의 단순 평균이 아니라 <b>수량 가중평균</b>입니다. 1주를 10,000원에 사고 9주를 20,000원에 샀다면, 평단가는 <code>(10,000 × 1 + 20,000 × 9) ÷ 10 = 19,000원</code>입니다. 20,000원에 더 많은 수량을 샀기 때문에 평단가는 15,000원이 아니라 20,000원 쪽에 가까워집니다.</p>
+                <p>평단가는 이미 산 가격을 요약하는 회계적 숫자일 뿐, 앞으로 보유·매도 결정을 자동으로 정해 주지는 않습니다. 추가 매수는 비중 집중과 손실 확대 위험도 함께 만들 수 있으므로 기대수익·위험·자금 계획을 따로 점검해야 합니다.</p>
+                <h3>경제지표에서는 무엇을 가중치로 둘까요?</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">지표</th><th scope="col">가중치</th><th scope="col">왜 쓰나요?</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">소비자물가지수(CPI)</th><td>가계 소비지출에서 품목이 차지하는 비중</td><td>자주 많이 쓰는 주거·식료품·에너지 등의 가격 변화가 체감물가에 더 크게 반영되도록 합니다.</td></tr>
+                      <tr><th scope="row">KOSPI·KOSDAQ 지수</th><td>유통 시가총액 등 지수 산출 규칙의 비중</td><td>규모가 큰 기업의 주가 변화가 시장 전체 가치에 미치는 영향을 더 크게 반영합니다.</td></tr>
+                      <tr><th scope="row">COFIX</th><td>은행이 조달한 자금의 규모</td><td>예·적금·은행채 등 각 조달 수단의 금리를 단순 평균하지 않고 실제 조달액 비중에 맞춰 반영합니다. 예: 2% 자금 90억 원, 4% 자금 10억 원이면 가중평균은 2.2%입니다.</td></tr>
+                      <tr><th scope="row">실질실효환율(REER)</th><td>교역 상대국별 무역 비중 등</td><td>무역 비중이 큰 국가의 환율·물가 변화가 한 나라의 대외 경쟁력에 더 크게 영향을 미치도록 반영합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><b>핵심:</b> 가중평균은 어떤 가중치를 선택하느냐에 따라 결과가 달라집니다. 따라서 지표를 볼 때는 숫자 하나만 보지 말고, ‘무엇을 얼마나 큰 비중으로 넣었는가’와 가중치의 기준 시점·변경 주기를 함께 확인해야 합니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="가중평균 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson">
             <span>10.5</span>
             <div class="lesson-content">
               <h2>위험자산과 무위험자산: 자산배분의 출발점</h2>

@@ -8,7 +8,7 @@
       content="여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다."
     />
     <title>02일차 | 4일 금융 이론 — 펀드 · ETF</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260906-bis-and-single-stock-etp" />
+    <link rel="stylesheet" href="assets/site.css?v=20260906-leverage-volume-share" />
     <link rel="stylesheet" href="assets/fund-case-market.css?v=20260905-1" />
     <link rel="stylesheet" href="assets/emerging-market-modal.css?v=20260905-1" />
     <link rel="stylesheet" href="assets/fund-manager-add-row.css?v=20260905-1" />
@@ -1512,8 +1512,9 @@
         <button class="glossary-modal__close" type="button" aria-label="닫기" data-leverage-etf-volume-close>×</button>
         <h2 id="leverageEtfVolumeTitle">레버리지 ETF 거래대금 추이 (최근 1년, 실제 데이터)</h2>
         <p class="leverage-etf-volume-intro">국내에서 거래량이 가장 많은 KOSPI200 레버리지·인버스2X ETF 2종(KODEX 레버리지, KODEX 200선물인버스2X)의 월별 시세를 <a href="https://finance.naver.com/" target="_blank" rel="noopener noreferrer">네이버 금융 공개 시세</a>에서 가져와 계산한 실제 데이터입니다. 거래대금은 월간 종가 × 거래량으로 추정한 값이며, 거래소 공식 발표치와는 차이가 있을 수 있습니다. <span id="leverageEtfVolumeUpdatedAt"></span></p>
-        <section class="fund-etf-compare-chart-wrap"><div><strong>레버리지·인버스2X ETF 월별 합산 거래대금</strong><small>단위: 조 원</small></div><div id="leverageEtfVolumeChart" role="img" aria-label="레버리지 ETF 최근 1년 월별 거래대금 실제 데이터 차트"></div></section>
-        <p class="leverage-etf-volume-note" id="leverageEtfVolumeNote">거래대금이 늘었다는 것이 상승·하락 방향을 뜻하지는 않습니다. 변동성이 커지는 구간에서는 레버리지·인버스 상품 모두 거래가 함께 늘어나는 경우가 많으므로, 방향이 아니라 시장 관심도·변동성 신호로 참고하세요.</p>
+        <section class="fund-etf-compare-chart-wrap"><div><strong>레버리지·인버스2X ETF 월별 합산 거래대금</strong><small>단위: 조 원 · 막대 라벨은 최근 12개월 합산 대비 비중</small></div><div id="leverageEtfVolumeChart" role="img" aria-label="레버리지 ETF 최근 1년 월별 거래대금과 최근 12개월 합산 대비 비중 차트"></div></section>
+        <div class="leverage-etf-volume-summary" id="leverageEtfVolumeSummary" aria-live="polite"></div>
+        <p class="leverage-etf-volume-note" id="leverageEtfVolumeNote">여기서 비중의 분모는 이 차트에 포함된 KODEX 레버리지와 KODEX 200선물인버스2X, 두 ETF의 최근 12개월 합산 거래대금입니다. 국내 전체 ETF 시장 또는 주식시장 거래대금 대비 비중은 아닙니다. 거래대금이 늘었다는 것이 상승·하락 방향을 뜻하지는 않습니다. 변동성이 커지는 구간에서는 레버리지·인버스 상품 모두 거래가 함께 늘어나는 경우가 많으므로, 방향이 아니라 시장 관심도·변동성 신호로 참고하세요.</p>
       </section>
     </div>
 
@@ -2142,6 +2143,7 @@
         const closeButton = modal.querySelector(".glossary-modal__close");
         const noteEl = document.getElementById("leverageEtfVolumeNote");
         const updatedAtEl = document.getElementById("leverageEtfVolumeUpdatedAt");
+        const summaryEl = document.getElementById("leverageEtfVolumeSummary");
         let chart;
         let data;
         const load = async () => {
@@ -2151,10 +2153,13 @@
             if (!response.ok) throw new Error("volume data unavailable");
             data = await response.json();
             const values = data.combinedTradingValue100M.map((won100M) => Math.round((won100M / 10000) * 10) / 10);
-            const options = { chart: { type: "bar", height: 300, toolbar: { show: false }, animations: { enabled: true } }, series: [{ name: "월별 합산 거래대금", data: values }], colors: ["#2563eb"], plotOptions: { bar: { borderRadius: 5, columnWidth: "55%" } }, dataLabels: { enabled: false }, xaxis: { categories: data.months, labels: { style: { fontSize: "11px" } } }, yaxis: { labels: { formatter: (value) => `${value.toLocaleString("ko-KR")}조` } }, tooltip: { y: { formatter: (value) => `${value.toLocaleString("ko-KR")}조 원` } }, grid: { borderColor: "#dbe5f5", strokeDashArray: 4 }, legend: { show: false } };
+            const total100M = data.combinedTradingValue100M.reduce((sum, value) => sum + value, 0);
+            const shares = data.combinedTradingValue100M.map((value) => total100M ? (value / total100M) * 100 : 0);
+            const options = { chart: { type: "bar", height: 320, toolbar: { show: false }, animations: { enabled: true } }, series: [{ name: "월별 합산 거래대금", data: values }], colors: ["#2563eb"], plotOptions: { bar: { borderRadius: 5, columnWidth: "55%", dataLabels: { position: "top" } } }, dataLabels: { enabled: true, formatter: (_value, { dataPointIndex }) => `${shares[dataPointIndex].toFixed(1)}%`, offsetY: -18, style: { colors: ["#173d82"], fontSize: "11px", fontWeight: 700 } }, xaxis: { categories: data.months, labels: { style: { fontSize: "11px" } } }, yaxis: { labels: { formatter: (value) => `${value.toLocaleString("ko-KR")}조` } }, tooltip: { y: { formatter: (value, { dataPointIndex }) => `${value.toLocaleString("ko-KR")}조 원 · 최근 12개월 합산의 ${shares[dataPointIndex].toFixed(1)}%` } }, grid: { borderColor: "#dbe5f5", strokeDashArray: 4 }, legend: { show: false } };
             chart = new ApexCharts(document.getElementById("leverageEtfVolumeChart"), options);
             chart.render();
             if (updatedAtEl) updatedAtEl.textContent = `(기준일: ${data.updatedAt})`;
+            if (summaryEl) summaryEl.innerHTML = `<strong>최근 12개월 합산 거래대금</strong><b>${(total100M / 10000).toLocaleString("ko-KR", { maximumFractionDigits: 1 })}조 원</b><span>각 막대의 %는 이 합계에서 해당 월이 차지한 비중입니다.</span>`;
             if (noteEl && Array.isArray(data.notes)) noteEl.textContent = `${data.notes.join(" ")} ${noteEl.textContent}`;
           } catch (error) {
             const container = document.getElementById("leverageEtfVolumeChart");
