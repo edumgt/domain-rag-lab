@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>01일차 | 4일 금융 이론 — 선물과 옵션</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260906-exchange-term-modals" />
+    <link rel="stylesheet" href="assets/site.css?v=20260906-understanding-check" />
     <link rel="stylesheet" href="assets/app-shell.css?v=20260905-modal-large-unified" />
     <link
       rel="stylesheet"
@@ -14,6 +14,7 @@
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260906-shared-glossary"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
+    <script defer src="assets/lesson-understanding.js?v=20260906"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
   </head>
   <body data-day="1">
@@ -39,6 +40,8 @@
         ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
         ><a href="/?view=simulation"
           ><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</a
+        ><a href="/?view=basis"
+          ><i class="fa-solid fa-scale-balanced"></i> 베이시스</a
         ><a href="/?view=backtest"
           ><i class="fa-solid fa-flask"></i> LEAN 백테스트</a
         ><a href="/?view=calendar"
@@ -143,7 +146,7 @@
                 <h3>변동환율 시대: 금융 파생상품의 확대</h3>
                 <p>1970년대 브레튼우즈 체제가 무너지면서 고정환율의 틀이 약해지고 통화 가치의 변동성이 커졌습니다. CME는 1972년 주요 통화의 선물을 상장했고, 이후 금리·국채 선물과 주가지수선물이 발전했습니다. 오일 쇼크와 금리 변동도 기업과 금융기관에 큰 부담을 주면서, 현물 거래만으로는 관리하기 어려운 가격 위험을 선물·옵션·스왑으로 나누려는 수요가 커졌습니다.</p>
                 <p><b>핵심 흐름:</b> 농업 경제의 수확 위험 → 상업·전쟁 경제의 무역 위험과 국가채무 → 글로벌 경제의 환율·금리·원자재 위험. 파생상품은 이 위험을 없애는 장치가 아니라, 계약 상대방과 시장 참여자 사이에 <b>배분하고 가격을 미리 정하는 장치</b>로 발전했습니다. 따라서 헤지는 위험을 줄일 수 있지만, 잘못된 규모·만기·상대방 선택은 새로운 손실과 신용위험을 만들 수 있습니다.</p>
-                <p class="lesson-source">참고: <a href="https://www.jpx.co.jp/dojima/en/index.html" target="_blank" rel="noopener noreferrer">JPX 도지마 쌀거래소 연혁</a>, <a href="https://www.bankofengland.co.uk/about/history" target="_blank" rel="noopener noreferrer">영란은행의 남해회사·국가부채 역사</a>, <a href="https://www.cmegroup.com/en/education/articles-and-reports/the-genesis-of-currency-futures.html" target="_blank" rel="noopener noreferrer">CME의 통화선물 역사</a>.</p>
+                <p class="lesson-source">참고: <a href="https://www.jpx.co.jp/dojima/en/index.html" target="_blank" rel="noopener noreferrer">JPX 도지마 쌀거래소 연혁</a>.</p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="국가의 재정과 위험으로 보는 파생상품의 발달 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -218,7 +221,6 @@
                 <p>당시 곡물 선물이 중심이던 KCBT에는 차별화된 금융상품이 필요했고, 이미 통화·금리 선물을 성공시킨 시카고 거래소들과의 경쟁도 신상품 개발을 뒷받침했습니다. 주가지수선물은 수십·수백 종목을 직접 사고파는 대신 하나의 계약으로 시장 전체에 노출되거나 포트폴리오 비중을 조정할 수 있어 거래비용과 시간을 줄이는 장점도 있었습니다.</p>
                 <p>KCBT의 시도 뒤 CME는 1982년 4월 21일 <button type="button" class="exchange-term-trigger" data-exchange-modal="sp500IndexModal" aria-haspopup="dialog">S&amp;P 500 지수선물</button>을 상장했습니다. 이후 주가지수선물은 대표적인 시장 위험 관리 수단이자, 적은 증거금으로 큰 시장 노출을 만들 수 있는 레버리지 상품으로 발전했습니다.</p>
                 <p>핵심은 처음부터 ‘수익을 크게 내는 상품’을 만들려던 것이 아니라 <strong>미래 가격과 공급의 불확실성을 미리 나누고 고정</strong>하려는 데 있었습니다. 표준화와 청산이 더해지면서 계약을 쉽게 사고팔 수 있게 됐고, 그만큼 투기와 레버리지 위험도 함께 커졌습니다.</p>
-                <p><small>참고: <a href="https://www.jpx.co.jp/dojima/en/index.html" target="_blank" rel="noopener noreferrer">JPX 도지마 쌀거래소 연혁</a>, <a href="https://ideas.repec.org/h/spr/sprchp/978-3-540-85711-2_24.html" target="_blank" rel="noopener noreferrer">Poitras, 「The Early History of Option Contracts」</a>, <a href="https://www.amsterdam.nl/stadsarchief/stukken/geld/handel-aandelen/" target="_blank" rel="noopener noreferrer">암스테르담 시 기록보관소</a>, <a href="https://www.cmegroup.com/education/courses/introduction-to-futures/midwest-grain-trade-history-of-futures-exchanges" target="_blank" rel="noopener noreferrer">CME Group의 CBOT 연혁</a>, <a href="https://ir.cboe.com/news/news-details/2013/CBOE-Releases-40th-Anniversary-Video-04-19-2013/default.aspx" target="_blank" rel="noopener noreferrer">Cboe의 상장옵션 연혁</a>, <a href="https://www.washingtonpost.com/archive/business/1982/02/25/stock-futures-popular-on-first-day-of-trading/396b9bdc-8811-4b59-b780-9c5db25c425a/" target="_blank" rel="noopener noreferrer">KCBT 밸류라인 지수선물 첫 거래 보도</a>, <a href="https://www.cmegroup.com/media-room/historical-first-trade-dates.html" target="_blank" rel="noopener noreferrer">CME S&amp;P 500 선물 첫 거래일</a>.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="선물과 옵션의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -247,6 +249,23 @@
                   채권 이자나 배당처럼 정기적으로 발생하는 수익률을 가리킬 때
                   주로 씁니다.
                 </p>
+                <h3>Interest는 금리일까요, 이자일까요?</h3>
+                <p><strong>Interest</strong>는 금융 문맥에서 기본적으로 돈을 빌리거나 맡긴 대가인 <b>이자</b>를 뜻합니다. 비율을 말할 때는 <strong>Interest Rate</strong>, 즉 <b>금리·이자율</b>이라고 합니다. 예를 들어 연 3.5%는 Interest Rate이고, 그 비율을 적용해 실제로 지급하거나 받는 돈은 Interest입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>문맥에 따라 달라지는 Interest의 의미</caption>
+                    <thead><tr><th scope="col">문맥</th><th scope="col">뜻</th><th scope="col">대표 표현</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">금융·경제</th><td>이자, 금리 또는 지분</td><td><b>Interest Rate</b>: 금리·이자율<br><b>Interest</b>: 지급하거나 받는 이자<br><b>Controlling Interest</b>: 지배지분</td></tr>
+                      <tr><th scope="row">일상·심리</th><td>관심, 흥미</td><td><b>Express Interest</b>: 관심을 표명하다</td></tr>
+                      <tr><th scope="row">법률·권리</th><td>이익, 권리, 이해관계</td><td><b>Conflict of Interest</b>: 이해충돌</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>선물가격과 Interest Rate의 연결</h3>
+                <p>선물 이론가격에서 사용하는 <b>금리(r)</b>가 바로 Interest Rate입니다. 지금 현물을 사서 만기까지 보유하려면 자금이 묶입니다. 돈을 빌려 샀다면 이자를 내야 하고, 자기 돈으로 샀더라도 그 돈을 예금 등에 넣어 받을 수 있었던 이자를 포기합니다. 이런 자금조달비용 또는 기회비용이 선물의 적정 가격에 반영됩니다.</p>
+                <p><b>단순하게 보면 ‘선물 이론가격 ≈ 현물가격 + 만기까지의 자금조달비용 − 예상 배당’</b>입니다. 금리가 높거나 만기까지 오래 남을수록 자금 비용이 커지는 방향으로, 예상 배당이 많을수록 현물 보유의 이점이 커져 선물가격을 낮추는 방향으로 작용합니다. 실제 계산은 상품의 결제 조건과 배당 시점 등에 따라 달라질 수 있습니다.</p>
+                <p class="lesson-note"><b>용어 구분:</b> <i>Interest Expense</i>는 회계에서 실제 차입으로 발생한 이자비용을 뜻합니다. 자기자금이 현물에 묶여 포기한 이자까지 모두 Interest Expense라고 부르지는 않으며, 이 경우에는 기회비용 또는 보유비용이라는 표현이 더 정확합니다.</p>
                 <h3>1억 원으로 보는 수익률 시뮬레이션</h3>
                 <p>
                   기업과 개인이 각각 투자할 수 있는 돈 1억 원을 가지고 있다고
@@ -286,16 +305,6 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>19</span>
-            <div class="lesson-content">
-              <h2>헤지는 큰 손실을 줄이는 안전장치</h2>
-              <div class="lesson-body">
-                <p>헤지(hedging)는 예상과 다르게 가격이 움직여 생길 손실을 줄이기 위한 위험관리 방법입니다. 위험을 완전히 없애거나 무조건 돈을 버는 방법이 아니라, 손익이 한쪽으로 너무 크게 흔들리지 않게 완충하는 데 목적이 있습니다.</p>
-                <p>예를 들어 배추 농부가 가을 배추값 하락이 걱정돼 미리 일정 가격에 팔기로 선물계약을 맺는다면 헤지입니다. 시장가격이 떨어져도 수입 감소 위험을 줄일 수 있지만, 배추값이 크게 올랐을 때 얻을 수 있는 이익 일부도 포기할 수 있습니다.</p>
-                <p>국내의 KOSPI 200 선물·옵션과 해외의 나스닥100·원유·금 선물 등은 이런 헤지 용도로 쓰일 수 있습니다. 다만 계약 규모가 보유 자산과 맞지 않거나 구조를 이해하지 못하면 헤지가 아니라 위험 확대가 될 수 있으므로, ‘어떤 위험을 줄이는지’와 ‘최대 손실이 얼마인지’를 먼저 확인하세요.</p>
-              </div>
-            </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="헤지는 큰 손실을 줄이는 안전장치 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section><section class="lesson"><span>03</span>
             <div class="lesson-content">
               <h2>파생상품은 “가격에서 나온 계약”입니다</h2>
@@ -624,7 +633,54 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>07</span><div class="lesson-content"><h2>주문이 만나야 선물·옵션 계약이 생깁니다</h2><div class="lesson-body"><p>선물이나 옵션은 한쪽의 주문만으로는 생기지 않습니다. 같은 계약을 사려는 주문과 팔려는 주문이 가격·수량 조건에서 만나야 체결됩니다. 예를 들어 어떤 사람은 지수가 오를 것이라 보고 선물 매수 주문을, 다른 사람은 내릴 것이라 보고 같은 선물 매도 주문을 낼 수 있습니다. 두 주문의 가격이 맞으면 계약이 하나 생기고, 오르면 매수 쪽이, 내리면 매도 쪽이 유리해집니다.</p><p>다만 항상 “한 사람은 상승, 다른 사람은 하락”이라고만 생각하면 좁습니다. 주식 보유자는 하락 위험을 줄이려고 선물을 매도할 수 있고, 기업은 원재료 가격 상승을 걱정해 선물을 매수할 수 있습니다. 즉 반대 주문은 서로 다른 전망 때문에 나오기도 하고, 이미 가진 위험을 줄이려는 헤지나 가격 차이를 이용하려는 거래 때문에 나오기도 합니다.</p><p>거래소에서는 서로의 이름을 보고 1:1로 상대를 골라 계약하지 않습니다. 투자자가 증권사 앱에 계약 종류·만기·가격·수량을 넣어 주문하면, 거래소의 주문장에 익명으로 쌓입니다. 시스템은 살 가격이 팔 가격과 만나는지 확인해 자동으로 체결합니다. 보통 더 높은 매수호가와 더 낮은 매도호가가 먼저, 같은 가격이면 먼저 들어온 주문이 먼저 처리됩니다.</p><p>예를 들어 ‘340.00에 1계약 매수’와 ‘340.00에 1계약 매도’가 주문장에 있으면 시스템이 이를 연결합니다. 매수 주문이 3계약이고 반대 주문이 여러 개라면 여러 주문과 나누어 체결될 수도 있습니다. 반대로 매수 339.95와 매도 340.00처럼 가격이 만나지 않으면 주문장에 남아 기다립니다. 체결 뒤에는 거래소·청산기관이 정해진 방식으로 결제와 증거금 관리를 맡으므로, 개인이 특정 반대편의 신원을 알아야 거래할 수 있는 구조가 아닙니다.</p><p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="orderMatchTrigger"><i class="fa-solid fa-arrow-right-arrow-left"></i> 주문 체결 시뮬레이터 해보기</button><small>내가 낸 주문이 호가창에서 어떻게 체결·대기되는지 직접 확인하세요.</small><button type="button" class="breaktime-trigger" id="orderBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime</button></p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="주문이 만나야 선물·옵션 계약이 생깁니다 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section><section class="lesson"><span>08</span>
+          </section><section class="lesson"><span>07</span><div class="lesson-content"><h2>주문이 만나야 선물·옵션 계약이 생깁니다</h2><div class="lesson-body"><p>선물이나 옵션은 한쪽의 주문만으로는 생기지 않습니다. 같은 계약을 사려는 주문과 팔려는 주문이 가격·수량 조건에서 만나야 체결됩니다. 예를 들어 어떤 사람은 지수가 오를 것이라 보고 선물 매수 주문을, 다른 사람은 내릴 것이라 보고 같은 선물 매도 주문을 낼 수 있습니다. 두 주문의 가격이 맞으면 계약이 하나 생기고, 오르면 매수 쪽이, 내리면 매도 쪽이 유리해집니다.</p><h3>주문에서 계약이 생기기까지</h3><figure class="concept-visual"><p class="visual-kicker">계약 성립 4단계</p><div class="flow-visual"><div class="step"><i class="fa-solid fa-list-check" aria-hidden="true"></i>① 계약 조건 선택<small>기초자산·만기 등을 고릅니다. 옵션이라면 콜·풋과 행사가격도 선택합니다.</small></div><span class="flow-arrow" aria-hidden="true">→</span><div class="step"><i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i>② 주문 제출·대기<small class="order-first-emphasis">매수자와 매도자 중 누가 먼저 주문해도 됩니다. 맞는 반대 주문이 없으면 주문장에 기다립니다.</small></div><span class="flow-arrow" aria-hidden="true">→</span><div class="step"><i class="fa-solid fa-code-compare" aria-hidden="true"></i>③ 조건 일치<small>같은 계약의 매수·매도 주문이 만나고 가격과 수량이 맞아야 체결됩니다.</small></div><span class="flow-arrow" aria-hidden="true">→</span><div class="step highlight"><i class="fa-solid fa-file-signature" aria-hidden="true"></i>④ 계약 성립<small>체결된 수량만큼 거래가 성립하고 한쪽은 매수 포지션, 반대쪽은 매도 포지션을 갖습니다.</small></div></div><figcaption><b>핵심:</b> 매수자가 항상 먼저 있는 것이 아닙니다. 먼저 들어온 주문은 상대 주문을 기다릴 뿐이며, 두 주문이 실제로 체결되기 전에는 거래도 계약도 생기지 않습니다.</figcaption></figure><h3>풋옵션 매수로 보면</h3><p>“풋옵션을 산다”는 말은 거래가 체결된 뒤 매수자 입장에서 설명한 표현입니다. 실제로는 <b>기초자산, 옵션 종류(풋), 행사가격과 만기가 모두 같은 계약</b>의 매도 주문이 있어야 합니다. 이때 필요한 상대는 콜옵션 매도자가 아니라 <b>같은 풋옵션의 매도자</b>입니다.</p><p>예를 들어 A가 어떤 풋옵션을 200원에 사겠다고 주문했지만 팔려는 사람이 없다면, A의 주문만 주문장에 남고 계약은 아직 없습니다. 이후 B가 같은 풋옵션을 200원에 팔겠다고 주문하면 두 주문이 체결되고 계약 1개가 생깁니다. 반대로 B의 매도 주문이 먼저 들어와 A의 매수 주문을 기다릴 수도 있습니다.</p><p>다만 항상 “한 사람은 상승, 다른 사람은 하락”이라고만 생각하면 좁습니다. 주식 보유자는 하락 위험을 줄이려고 선물을 매도할 수 있고, 기업은 원재료 가격 상승을 걱정해 선물을 매수할 수 있습니다. 즉 반대 주문은 서로 다른 전망 때문에 나오기도 하고, 이미 가진 위험을 줄이려는 헤지나 가격 차이를 이용하려는 거래 때문에 나오기도 합니다.</p><p>거래소에서는 서로의 이름을 보고 1:1로 상대를 골라 계약하지 않습니다. 투자자가 증권사 앱에 계약 종류·만기·가격·수량을 넣어 주문하면, 거래소의 주문장에 익명으로 쌓입니다. 시스템은 살 가격이 팔 가격과 만나는지 확인해 자동으로 체결합니다. 보통 더 높은 매수호가와 더 낮은 매도호가가 먼저, 같은 가격이면 먼저 들어온 주문이 먼저 처리됩니다.</p><p>예를 들어 ‘340.00에 1계약 매수’와 ‘340.00에 1계약 매도’가 주문장에 있으면 시스템이 이를 연결합니다. 매수 주문이 3계약이고 반대 주문이 여러 개라면 여러 주문과 나누어 체결될 수도 있습니다. 반대로 매수 339.95와 매도 340.00처럼 가격이 만나지 않으면 주문장에 남아 기다립니다. 체결 뒤에는 거래소·청산기관이 정해진 방식으로 결제와 증거금 관리를 맡으므로, 개인이 특정 반대편의 신원을 알아야 거래할 수 있는 구조가 아닙니다.</p><p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="orderMatchTrigger"><i class="fa-solid fa-arrow-right-arrow-left"></i> 주문 체결 시뮬레이터 해보기</button><small>내가 낸 주문이 호가창에서 어떻게 체결·대기되는지 직접 확인하세요.</small><button type="button" class="breaktime-trigger" id="orderBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime</button></p></div></div><button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="주문이 만나야 선물·옵션 계약이 생깁니다 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>
+          <section class="lesson"><span>19</span>
+            <div class="lesson-content">
+              <h2>헤지는 큰 손실을 줄이는 안전장치</h2>
+              <div class="lesson-body">
+                <p>헤지(hedging)는 예상과 다르게 가격이 움직여 생길 손실을 줄이기 위한 위험관리 방법입니다. 위험을 완전히 없애거나 무조건 돈을 버는 방법이 아니라, 손익이 한쪽으로 너무 크게 흔들리지 않게 완충하는 데 목적이 있습니다.</p>
+                <p>예를 들어 배추 농부가 가을 배추값 하락이 걱정돼 미리 일정 가격에 팔기로 선물계약을 맺는다면 헤지입니다. 시장가격이 떨어져도 수입 감소 위험을 줄일 수 있지만, 배추값이 크게 올랐을 때 얻을 수 있는 이익 일부도 포기할 수 있습니다.</p>
+                <h3>왜 선물 헤지를 그대로 ‘보험’이라고 부르지 않을까요?</h3>
+                <p>선물·선도 헤지와 보험형 보호는 위험을 줄인다는 목적은 같지만, 손익을 바꾸는 방식이 다릅니다. 선물 헤지는 불리한 가격뿐 아니라 유리한 가격의 효과도 함께 줄여 거래가격을 고정하는 ‘양방향 고정장치’에 가깝습니다. 반면 풋옵션 매수는 프리미엄을 내고 하락 손실을 제한하면서 상승 가능성은 남겨 두는 ‘안전망’에 가깝습니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>선물·선도 헤지와 보험형 옵션 보호 비교</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">선물·선도 헤지</th><th scope="col">풋옵션을 이용한 보험형 보호</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">작동 원리</th><td>가격을 정해 손실과 추가 이익을 함께 제한합니다.</td><td>최저가격을 방어하면서 상승 이익은 열어 둡니다.</td></tr>
+                      <tr><th scope="row">처음 필요한 금액</th><td>선도는 별도 선급비용이 없을 수 있고, 선물은 증거금을 맡깁니다. 수수료와 일일정산 부담은 생길 수 있습니다.</td><td>권리를 사는 대가로 프리미엄을 지급합니다.</td></tr>
+                      <tr><th scope="row">가격 상승 시</th><td>현물의 추가 이익이 선물·선도의 반대 손익으로 줄어들 수 있습니다.</td><td>옵션을 행사하지 않고 현물의 상승 이익을 누릴 수 있습니다.</td></tr>
+                      <tr><th scope="row">가격 하락 시</th><td>현물 손실을 선물·선도 이익으로 상쇄해 약정가격에 가까운 결과를 만듭니다.</td><td>풋옵션을 행사하거나 팔아 하락 손실을 줄입니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>배추 농부의 두 가지 선택</h3>
+                <div class="hedge-insurance-examples">
+                  <article>
+                    <strong>① 선물 계약으로 헤지</strong>
+                    <p>“가을에 배추 한 포기를 3,000원에 팔겠다”고 약속합니다.</p>
+                    <ul>
+                      <li><b>1,000원으로 폭락:</b> 선물의 반대 손익으로 3,000원에 가까운 판매 효과를 만들어 손실을 방어합니다.</li>
+                      <li><b>10,000원으로 폭등:</b> 현물에서 생긴 추가 이익이 선물 손실로 줄어들어 높은 가격의 혜택을 대부분 포기합니다.</li>
+                    </ul>
+                    <small>손실과 추가 이익을 함께 줄여 가격을 고정하는 방식</small>
+                  </article>
+                  <article>
+                    <strong>② 풋옵션을 사서 최저 판매가격 지키기</strong>
+                    <p>농부는 포기당 200원을 내고 “배추값이 떨어지면 3,000원에 판 것과 같은 효과를 받을 권리”를 삽니다. 자동차보험료를 먼저 내고 사고가 났을 때 보상받는 것과 비슷합니다.</p>
+                    <ul>
+                      <li><b>1,000원으로 폭락:</b> 시장에서 배추를 1,000원에 팔고, 풋옵션에서 가격 차이 2,000원을 받습니다. 처음 낸 200원을 빼면 최종 확보액은 약 2,800원입니다.</li>
+                      <li><b>10,000원으로 폭등:</b> 3,000원에 팔 권리는 쓰지 않고 시장에서 10,000원에 팝니다. 처음 낸 200원만 비용이므로 최종 확보액은 약 9,800원입니다.</li>
+                    </ul>
+                    <small>먼저 200원을 내는 대신 가격 하락은 막고, 가격 상승의 혜택은 유지하는 방식</small>
+                  </article>
+                </div>
+                <p class="lesson-note"><b>정리:</b> ‘헤지’는 위험을 줄이는 모든 전략을 가리키는 넓은 말이며, 선물·선도뿐 아니라 옵션도 헤지에 사용할 수 있습니다. 따라서 정확한 비교는 ‘헤지 대 보험’이 아니라 <b>선물·선도의 가격 고정형 헤지</b>와 <b>옵션의 보험형 헤지</b>입니다.</p>
+                <p>국내의 KOSPI 200 선물·옵션과 해외의 나스닥100·원유·금 선물 등은 이런 헤지 용도로 쓰일 수 있습니다. 다만 계약 규모가 보유 자산과 맞지 않거나 구조를 이해하지 못하면 헤지가 아니라 위험 확대가 될 수 있으므로, ‘어떤 위험을 줄이는지’와 ‘최대 손실이 얼마인지’를 먼저 확인하세요.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="헤지는 큰 손실을 줄이는 안전장치 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section><section class="lesson"><span>08</span>
             <div class="lesson-content">
               <h2>옥수수 선물: 항구·창고까지 이어지는 실물인도 예시</h2>
               <div class="lesson-body">
@@ -834,6 +890,10 @@
                   옵션은 미래에 정한 가격으로 사고팔 수 있는 권리입니다.
                   콜옵션은 살 권리이고, 풋옵션은 팔 권리입니다.
                 </p>
+                <div class="option-memory-tip" aria-label="콜옵션과 풋옵션 기억법">
+                  <p><b>콜(Call) = 살 권리</b><span>“사려고 상대를 콜(Call), 부른다!”</span></p>
+                  <p><b>풋(Put) = 팔 권리</b><span>“풋의 ‘ㅍ’은 팔다의 ‘ㅍ’과 같다!”</span></p>
+                </div>
                 <p>
                   “콜(call)”과 “풋(put)”이라는 이름은 옵션 매수자가
                   매도자에게 무엇을 요구할 수 있는지에서 왔습니다. 콜옵션은
@@ -1016,6 +1076,7 @@
                 </div>
                 <h3>롱(Long)과 숏(Short)은 무엇을 뜻할까요?</h3>
                 <p>시장에서는 보통 매수 쪽 포지션을 <b>롱(Long)</b>, 매도 쪽 포지션을 <b>숏(Short)</b>이라고 부릅니다. 이 말은 단순히 보유 기간이 길고 짧다는 뜻이 아니라, 가격이 움직일 때 어느 방향에서 이익·손실이 나는지를 나타내는 금융 용어입니다.</p>
+                <p class="lesson-note"><b>쉽게 외우기:</b> “사니까 가지고 있는 쪽이 롱(Long), 파니까 없어서 숏(Short)”이라고 기억하면 편해요.</p>
                 <p><b>롱</b>은 자산을 보유하는 상태와 연결된 표현입니다. 과거 영어권 상업에서 재고나 증권을 많이 보유한 상태를 long in stock이라고 부른 용례가 금융시장으로 이어졌습니다. 주식 현물에서는 보통 사서 보유하는 매수 포지션이 롱이고, 선물에서는 계약을 매수한 쪽이 롱입니다. 가격이 오르면 롱 포지션이 유리하고, 내리면 불리합니다.</p>
                 <p><b>숏</b>은 결제할 자산이 부족한 상태와 연결된 표현입니다. 공매도에서는 보유하지 않은 주식을 빌려 먼저 팔고 나중에 사서 갚아야 하므로, 해당 주식이 ‘short’한 상태라고 부릅니다. 주식 공매도나 선물 매도 포지션은 가격이 내리면 유리하고, 오르면 불리합니다. 다만 선물의 숏은 주식을 실제로 빌려 파는 공매도와 달리 계약을 매도해 만든 포지션입니다.</p>
                 <div class="lesson-table-wrap">
@@ -1155,6 +1216,68 @@
                   거래비용, 금리, 배당, 사고팔려는 주문의 차이 때문에 같은
                   지수를 보고 있어도 가격 차이가 생길 수 있습니다.
                 </p>
+                <h3>지수와 선물의 수치 비교</h3>
+                <p>실제 시장에서는 두 수치가 같은 단위로 똑같이 전광판에 표시됩니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <tbody>
+                      <tr><th scope="row">KOSPI 200 현물 지수</th><td>350.00 (포인트)</td></tr>
+                      <tr><th scope="row">KOSPI 200 선물 가격</th><td>352.50 (포인트)</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>이 경우 수치 자체를 직접 비교하여 “선물이 현물보다 2.50포인트 비싸다(<button type="button" class="glossary-term" data-glossary-term="콘탱고">콘탱고</button>)”라고 직관적으로 판단합니다.</p>
+                <h3>베이시스로 보는 콘탱고 vs 백워데이션</h3>
+                <p>이 차이를 숫자 하나로 정리한 것이 <button type="button" class="glossary-term" data-glossary-term="베이시스">베이시스(Basis)</button>입니다.</p>
+                <p class="lesson-formula">베이시스(Basis) = 선물 가격 − 현물 가격</p>
+                <ul>
+                  <li><b>베이시스가 양수(+)</b> — 선물 가격이 현물 가격보다 비싼 상태</li>
+                  <li><b>베이시스가 음수(−)</b> — 선물 가격이 현물 가격보다 싼 상태</li>
+                </ul>
+                <p>위 KOSPI 200 예시는 베이시스 = 352.50 − 350.00 = <b>+2.50</b>입니다. 이렇게 베이시스의 부호만으로 시장 상태를 두 가지로 나눌 수 있습니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">베이시스 부호</th><th scope="col">시장 상태</th></tr></thead>
+                    <tbody>
+                      <tr><td>베이시스 &gt; 0 (+)</td><td><button type="button" class="glossary-term" data-glossary-term="콘탱고">콘탱고 (Contango)</button></td></tr>
+                      <tr><td>베이시스 &lt; 0 (−)</td><td><button type="button" class="glossary-term" data-glossary-term="백워데이션">백워데이션 (Backwardation)</button></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>실제 수치 예시: 2026년 9월 4일</h3>
+                <p class="lesson-note"><b>날짜 구분:</b> 아래 값은 2026년 9월 4일 정규장 종가입니다. 9월물의 최종거래일은 9월 10일이므로, 여기서 ‘최종 포인트’는 그날의 <b>종가</b>를 뜻하며 만기 때 확정되는 최종결제가격은 아닙니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>2026년 9월 4일 KOSPI 200 현물·선물 종가</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">종가</th><th scope="col">비교</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">KOSPI 200 현물 지수</th><td><b>1,051.52pt</b></td><td>비교 기준</td></tr>
+                      <tr><th scope="row">KOSPI 200 선물 2026년 9월물</th><td><b>1,052.50pt</b></td><td>현물보다 0.98pt 높음</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="lesson-formula">베이시스 = 1,052.50 − 1,051.52 = +0.98pt</p>
+                <p>베이시스가 양수이므로 이날 종가만 비교하면 선물이 현물보다 조금 높은 콘탱고 상태입니다. 현물 대비 가격 차이의 비율은 약 <b>+0.09%</b>(0.98 ÷ 1,051.52 × 100)입니다. 다만 괴리율이 작다는 사실만으로 차익거래가 완벽히 작동했다거나 앞으로도 안정적으로 추종한다고 단정할 수는 없습니다.</p>
+                <h3>포인트를 돈으로 바꾸면 얼마일까요?</h3>
+                <p><b>“1,051.52 × 250,000원인가요?”</b> 현물과 같은 기준으로 비교하는 참고금액은 그렇게 계산할 수 있습니다. 하지만 실제 KOSPI 200 선물 1계약의 계약금액은 <b>거래한 선물가격 × 거래승수 250,000원</b>으로 계산합니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">계산</th><th scope="col">금액</th><th scope="col">의미</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">1,051.52 × 250,000원</th><td><b>262,880,000원</b></td><td>현물 지수를 같은 승수로 환산한 비교용 기준금액</td></tr>
+                      <tr><th scope="row">1,052.50 × 250,000원</th><td><b>263,125,000원</b></td><td>9월물 선물 1계약의 명목 계약금액</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>따라서 이날 9월물 선물 1계약은 약 <b>2억 6,312만 5,000원</b> 규모의 KOSPI 200 지수 변동에 노출되는 계약입니다. 이 금액만큼의 구성주식을 실제로 사서 보유한다는 뜻은 아니며, 가격 변화에 따른 손익을 계산하는 명목 기준입니다.</p>
+                <h3>실제 거래에 필요한 증거금</h3>
+                <p>선물은 계약금액 전액을 결제하지 않고 증거금을 맡겨 거래합니다. 2026년 8월 3일부터 적용된 것으로 확인되는 코스피200 선물 개시증거금률 <b>21%</b>를 계약금액에 단순 적용하면 다음과 같습니다.</p>
+                <p class="lesson-formula">263,125,000원 × 21% = 약 55,256,250원</p>
+                <p>즉 이 단순 계산에서는 약 <b>5,526만 원</b>입니다. 실제 주문 증거금은 전일 기준가격, 보유 포지션의 상쇄 효과, 증권사의 추가 기준과 기본예탁금 등에 따라 달라질 수 있으므로 거래 화면에서 확인해야 합니다. 증거금은 최대 손실액이 아니며, 가격이 불리하게 움직이면 추가 증거금 요구나 예치금을 넘는 손실이 발생할 수 있습니다.</p>
+                <h3>콘탱고·백워데이션, 왜 이런 이상한 이름이 붙었을까요?</h3>
+                <p>두 단어 모두 선물시장이 아니라 <b>19세기 런던증권거래소</b>의 주식 결제 관행에서 먼저 쓰였습니다. 당시 런던증권거래소는 거래를 2주 단위의 “계정일(account day)”에 한꺼번에 결제했는데, 그 결제를 다음 계정일로 미루고 싶을 때 수수료를 주고받는 관행이 있었습니다.</p>
+                <p><b>콘탱고(Contango)</b>는 매수자가 주식을 넘겨받는 결제를 다음 계정일로 미루면서 매도자에게 지불하던 수수료를 가리키는 말이었습니다. 정확한 어원은 불분명하지만 “continue(계속하다)” 또는 “contingent(조건부의)”가 변형된 증권거래소 은어라는 설이 많습니다. <b>백워데이션(Backwardation)</b>은 그 반대로, 주식을 넘겨줄 매도자가 인도를 미루면서 매수자에게 지불하던 수수료였고, “backward(뒤로 미루다)”에서 비교적 분명하게 따온 이름입니다.</p>
+                <p>이후 20세기 들어 이 용어들이 상품·지수 선물시장으로 옮겨져, 결제를 미루는 수수료가 아니라 “선물 가격이 현물보다 비싼지 싼지”를 나타내는 말로 뜻이 바뀌었습니다. 특히 경제학자 존 메이너드 케인스가 1930년대에 상품 선물시장을 설명하며 백워데이션 개념을 널리 알린 것이 계기가 됐다고 평가받습니다. 즉 지금 쓰이는 콘탱고·백워데이션은 원래 뜻(결제 연기 수수료)과는 다른, 선물 가격 구조를 가리키는 의미로 굳어진 표현입니다.</p>
                 <p>
                   하지만 만기가 되면 남아 있는 선물계약은 거래소가 정한
                   기초자산의 최종결제가격을 기준으로 손익을 정산합니다. 예를
@@ -1412,6 +1535,14 @@
               </dd>
             </div>
             <div class="glossary-item">
+              <dt>거래계좌 예수금 <small>Account Deposit · 계좌예수금</small></dt>
+              <dd>
+                <p>증권사의 주식·선물·옵션 거래계좌에 입금했거나 매매·정산 결과로 계좌에 반영된 현금성 잔액입니다. 은행 예금상품의 이름이 아니라, 증권사가 고객의 거래와 결제를 위해 계좌에 받아 보관하고 있는 돈이라는 뜻입니다.</p>
+                <p>선물·옵션 거래계좌에서는 예수금에 일일정산 이익이 더해지고 손실·수수료 등이 빠질 수 있습니다. 포지션을 유지하는 데 필요한 증거금도 이 계좌 자금을 기준으로 관리되므로, 예수금이 많아 보여도 그 전부를 새 주문이나 출금에 사용할 수 있는 것은 아닙니다.</p>
+                <p><b>예수금</b>은 계좌에 반영된 현금 잔액, <b>주문가능금액</b>은 증거금과 기존 주문 등을 고려해 새 거래에 쓸 수 있는 금액, <b>출금가능금액</b>은 결제 일정과 증거금 의무 등을 반영해 은행계좌로 실제 옮길 수 있는 금액입니다. 각각의 금액과 반영 시각은 상품·정산 상태·증권사 기준에 따라 다를 수 있습니다.</p>
+              </dd>
+            </div>
+            <div class="glossary-item">
               <dt>현물 <small>Spot / Cash Market · 現物</small></dt>
               <dd>주식·채권·원자재처럼 지금 사고팔아 소유권 또는 인도 권리가 이전되는 자산이나 거래를 말합니다. 선물·옵션처럼 미래 가격 변동에 연결된 계약과 구분할 때 씁니다.</dd>
             </div>
@@ -1466,6 +1597,8 @@
               <dd>
                 <p>거래소는 주식·채권·선물·옵션 등의 매수·매도 주문을 정해진 규칙에 따라 만나게 하고, 가격 공시·청산·감시 체계를 운영하는 시장입니다. 미국에는 CME 외에도 여러 거래소가 있으며, 주식·채권 시장과 파생상품 시장이 함께 발달해 있습니다. 대형 금융그룹이 여러 거래소를 인수·운영하는 경우도 많습니다.</p>
                 <p><b>한국거래소(KRX, Korea Exchange)</b>는 한국의 유가증권시장·코스닥시장·코넥스시장·파생상품시장 등을 운영하는 통합 거래소입니다. 주식·채권·ETF 시장뿐 아니라 KOSPI 200 선물·옵션, 개별주식선물, 국채선물, 미국달러·엔·유로·위안 선물, 금 선물 등을 운영하며, 청산 부문은 거래소 파생상품의 결제 이행을 관리합니다.</p>
+                <p><b>넥스트레이드(NXT, Nextrade)</b>는 2025년 3월 4일 문을 연 국내 최초의 대체거래소(ATS, Alternative Trading System)입니다. 법률상 명칭은 <b>다자간매매체결회사</b>이며, KRX에 상장된 주식 가운데 NXT가 거래대상으로 정한 종목의 매수·매도 주문을 별도의 시장에서 체결합니다. 오전 8시부터 오후 8시까지 프리·메인·애프터마켓을 운영하고 중간가호가·스톱지정가호가 같은 주문 방식을 제공합니다.</p>
+                <p><b>KRX와 NXT의 차이</b>는 NXT가 기업을 새로 상장시키거나 선물·옵션 시장을 운영하는 종합거래소가 아니라, 이미 KRX에 상장된 주식을 추가로 거래할 수 있게 만든 대체 거래장소라는 점입니다. 증권사는 최선집행기준에 따라 가격·수수료·체결 가능성 등을 비교해 주문을 KRX 또는 NXT로 보낼 수 있습니다. NXT에서 체결된 거래의 청산은 KRX가, 결제는 한국예탁결제원이 담당하므로 두 시장은 경쟁하면서도 시장관리·청산·결제 체계에서는 연결됩니다.</p>
                 <p><b>CME 그룹(CME Group)</b>은 CME(시카고상업거래소), CBOT(시카고상품거래소), NYMEX(뉴욕상업거래소), COMEX(뉴욕상품거래소)를 운영하는 대형 파생상품 거래소 그룹입니다. 금리·주가지수·통화·에너지·금속·농산물 등의 선물과 옵션을 거래하며, S&amp;P 500·나스닥 지수, 미국 국채·정책금리, WTI 원유, 금·은, 옥수수·대두 등이 대표적 기초자산입니다.</p>
                 <p><b>ICE(Intercontinental Exchange, 인터콘티넨탈 거래소)</b>는 브렌트유, 천연가스, 설탕·커피·코코아 등 에너지·원자재 파생상품과 다양한 금융상품 시장을 운영합니다. <b>Cboe Global Markets(시보 글로벌 마켓츠)</b>는 미국의 주요 옵션 거래소 그룹으로, 개별주식·ETF·지수 옵션과 VIX(변동성지수) 관련 선물·옵션 시장을 운영합니다.</p>
                 <p>주식 시장에서는 <b>NYSE(New York Stock Exchange, 뉴욕증권거래소)</b>가 ICE 산하의 대표 거래소이며, <b>Nasdaq(나스닥)</b>은 전자식 주식거래소 운영사이자 기술주 비중이 큰 시장으로 널리 알려져 있습니다. Cboe는 여러 주식 거래소도 운영하고, <b>IEX Exchange(아이이엑스 거래소)</b>도 미국 SEC에 등록된 별도 증권거래소입니다. 따라서 Cboe BATS와 IEX를 모두 ‘ATS’라고 부르는 것은 정확하지 않습니다.</p>
@@ -1542,11 +1675,21 @@
             </div>
             <div class="glossary-item" data-glossary-manual-only>
               <dt>콜옵션 <small>Call Option · 買受選擇權</small></dt>
-              <dd>옵션 매수자에게 만기 전 또는 만기에 정해진 행사가격으로 기초자산을 살 수 있는 권리를 주는 계약입니다. 기초자산 가격이 오를수록 콜옵션 매수자에게 유리해지는 경향이 있습니다. 매수자는 권리를 행사하지 않을 수 있지만, 매도자는 매수자가 행사하면 계약 조건을 이행해야 합니다.</dd>
+              <dd><p>옵션 매수자에게 만기 전 또는 만기에 정해진 행사가격으로 기초자산을 살 수 있는 권리를 주는 계약입니다. 기초자산 가격이 오를수록 콜옵션 매수자에게 유리해지는 경향이 있습니다. 매수자는 권리를 행사하지 않을 수 있지만, 매도자는 매수자가 행사하면 계약 조건을 이행해야 합니다.</p><p><b>기억법:</b> “사려고 상대를 콜(Call), 부른다!”라고 기억하면 콜옵션이 살 권리라는 점을 떠올리기 쉽습니다.</p></dd>
             </div>
             <div class="glossary-item" data-glossary-manual-only>
               <dt>풋옵션 <small>Put Option · 賣渡選擇權</small></dt>
-              <dd>옵션 매수자에게 만기 전 또는 만기에 정해진 행사가격으로 기초자산을 팔 수 있는 권리를 주는 계약입니다. 기초자산 가격이 내릴수록 풋옵션 매수자에게 유리해지는 경향이 있습니다. 매수자는 권리를 행사하지 않을 수 있지만, 매도자는 매수자가 행사하면 계약 조건을 이행해야 합니다.</dd>
+              <dd><p>옵션 매수자에게 만기 전 또는 만기에 정해진 행사가격으로 기초자산을 팔 수 있는 권리를 주는 계약입니다. 기초자산 가격이 내릴수록 풋옵션 매수자에게 유리해지는 경향이 있습니다. 매수자는 권리를 행사하지 않을 수 있지만, 매도자는 매수자가 행사하면 계약 조건을 이행해야 합니다.</p><p><b>기억법:</b> “풋(Put)의 ‘ㅍ’은 팔다의 ‘ㅍ’과 같다!”라고 기억하면 풋옵션이 팔 권리라는 점을 떠올리기 쉽습니다.</p></dd>
+            </div>
+            <div class="glossary-item">
+              <dt>표준 계약·청산·행사·배정 절차 <small>Standardization · Clearing · Exercise · Assignment</small></dt>
+              <dd>
+                <p><b>① 표준 계약</b> — 거래소가 기초자산·거래단위·만기일·결제 방식을 미리 정해 놓은 계약입니다. 조건이 모든 참가자에게 똑같기 때문에, 거래 상대방을 직접 찾아다니지 않아도 거래소에서 누구와도 쉽게 사고팔 수 있습니다.</p>
+                <p><b>② 청산</b> — 청산기관이 모든 매수자와 매도자 사이에 끼어들어 상대방 역할을 대신합니다(예: 미국 옵션시장의 OCC, 한국거래소의 청산 기능). 거래 상대방 중 누군가 약속을 지키지 못해도 청산기관이 대신 이행을 보증하므로, 투자자가 상대방의 신용을 직접 걱정하지 않아도 됩니다. <i>쉽게 비유하면</i>, 부동산 매매를 할 때 매도인·매수인이 직접 만나 현금과 등기서류를 주고받는 대신 법무사나 공인중개사가 중간에서 대금과 서류를 확인한 뒤 서로에게 전달해 주는 것과 비슷합니다.</p>
+                <p><b>③ 행사</b> — 옵션 매수자가 만기(또는 만기 전)에 실제로 그 권리를 사용하는 것입니다. 콜옵션 매수자가 행사하면 정해진 가격에 기초자산을 사고, 풋옵션 매수자가 행사하면 정해진 가격에 팝니다. 매수자에게 불리하면 행사하지 않고 그냥 권리를 포기할 수도 있습니다. <i>쉽게 비유하면</i>, 미리 사 둔 상품권이나 할인 쿠폰과 같습니다. 정해진 가격에 살 수 있는 “권리”만 가진 것이므로, 실제로 쓸지 말지는 내가 유리할 때만 고르면 됩니다.</p>
+                <p><b>④ 배정</b> — 매수자가 행사를 신청하면, 청산기관이 그 시점에 매도 포지션을 가진 여러 매도자 중 한 명(또는 여러 명)을 골라 “이 행사에 응하세요”라고 지정합니다. 이렇게 지정받는 것을 배정이라고 하며, 배정된 매도자는 계약대로 기초자산을 사거나 팔아야 할 의무를 집니다. <i>쉽게 비유하면</i>, 어느 매장에서 산 제품이라도 보증 수리를 신청하면 그 매장이 아니라 본사가 지정한 다른 서비스센터가 응대하기도 하는 것과 비슷합니다. 배정도 처음 계약을 맺은 특정 상대가 아니라, 청산기관이 고른 매도자가 의무를 이행합니다.</p>
+                <p>이 네 단계가 표준화되고 청산기관이 자리 잡으면서, 투자자들은 거래 상대방이 누구인지 몰라도 안심하고 옵션을 사고팔 수 있는 오늘날의 상장 옵션시장이 만들어졌습니다.</p>
+              </dd>
             </div>
             <div class="glossary-item">
               <dt>기초자산 <small>Underlying Asset · 基礎資産</small></dt>
@@ -1594,12 +1737,16 @@
               <dd>이미 보유했거나 앞으로 부담할 가격·환율·금리 변동 위험을 줄이기 위해 반대 방향의 거래를 함께 하는 방법입니다. 예를 들어 주식 포트폴리오를 보유한 투자자가 주가지수선물을 매도하면 시장 하락 때 현물 주식의 손실 일부를 선물 이익으로 상쇄할 수 있습니다. 다만 계약 규모·만기·기초자산이 맞지 않으면 손실을 완전히 막지 못하거나 오히려 위험이 커질 수 있습니다.</dd>
             </div>
             <div class="glossary-item">
+              <dt>베이시스 <small>Basis</small></dt>
+              <dd>선물 가격에서 현물 가격을 뺀 값입니다(베이시스 = 선물 가격 − 현물 가격). 베이시스가 양수(+)면 선물이 현물보다 비싼 콘탱고, 음수(−)면 선물이 현물보다 싼 백워데이션 상태입니다. 만기가 다가올수록 베이시스는 대체로 0에 가까워지는 경향이 있습니다.</dd>
+            </div>
+            <div class="glossary-item">
               <dt>콘탱고 <small>Contango</small></dt>
-              <dd>같은 기초자산에서 만기가 더 먼 선물가격이 가까운 만기 또는 현물가격보다 높은 상태를 말합니다. 주가지수선물에서는 금리·배당, 원자재선물에서는 보관·보험·자금 조달 비용 등이 반영돼 나타날 수 있습니다. 단순한 가격 오류나 상승 예측을 뜻하는 것은 아니며, 비교하는 만기와 시장 조건을 함께 봐야 합니다.</dd>
+              <dd>같은 기초자산에서 만기가 더 먼 선물가격이 가까운 만기 또는 현물가격보다 높은 상태를 말합니다(베이시스 &gt; 0). 주가지수선물에서는 금리·배당, 원자재선물에서는 보관·보험·자금 조달 비용 등이 반영돼 나타날 수 있습니다. 단순한 가격 오류나 상승 예측을 뜻하는 것은 아니며, 비교하는 만기와 시장 조건을 함께 봐야 합니다. <i>유래:</i> 원래는 선물시장이 아니라 19세기 런던증권거래소에서, 주식 결제를 다음 결제일로 미루는 매수자가 매도자에게 내던 수수료를 가리키던 말이었습니다.</dd>
             </div>
             <div class="glossary-item">
               <dt>백워데이션 <small>Backwardation</small></dt>
-              <dd>같은 기초자산에서 만기가 더 먼 선물가격이 가까운 만기 또는 현물가격보다 낮은 상태를 말합니다. 원자재가 지금 당장 필요한 수요, 재고 부족, 현물 보유의 편익 등이 반영돼 생길 수 있습니다. 항상 하락을 예측한다는 뜻은 아니며, 상품·만기·수급에 따라 정상적인 기간 구조일 수 있습니다.</dd>
+              <dd>같은 기초자산에서 만기가 더 먼 선물가격이 가까운 만기 또는 현물가격보다 낮은 상태를 말합니다(베이시스 &lt; 0). 원자재가 지금 당장 필요한 수요, 재고 부족, 현물 보유의 편익 등이 반영돼 생길 수 있습니다. 항상 하락을 예측한다는 뜻은 아니며, 상품·만기·수급에 따라 정상적인 기간 구조일 수 있습니다. <i>유래:</i> 콘탱고와 마찬가지로 19세기 런던증권거래소에서 나온 말로, 이번에는 반대로 주식 인도를 미루는 매도자가 매수자에게 내던 수수료를 가리켰습니다. “뒤로 미루다”라는 뜻의 backward에서 따온 이름입니다.</dd>
             </div>
             <div class="glossary-item">
               <dt>WTI 원유 근월물 <small>Near-month Contract · Front-month</small></dt>
@@ -1632,7 +1779,27 @@
             </div>
             <div class="glossary-item">
               <dt>스왑 <small>Swap</small></dt>
-              <dd>두 당사자가 미리 정한 기간 동안 서로 다른 현금흐름을 교환하기로 하는 계약입니다. 금리스왑은 같은 통화의 고정·변동금리 이자 흐름을, 통화스왑은 서로 다른 통화의 원금·이자 흐름을 교환하는 데 주로 쓰입니다. 보통 장외계약이므로 상대방 신용과 담보, 중도해지 조건도 함께 확인해야 합니다.</dd>
+              <dd>
+                <p>두 당사자가 미리 정한 기간 동안 서로 다른 현금흐름을 교환하기로 하는 계약입니다. 여기서 ‘현금흐름(Cash Flow)을 교환한다’는 말은 현금을 한 번 주고받고 끝나는 거래가 아니라, 미래 일정 기간 동안 정해진 규칙에 따라 주기적으로 발생하는 여러 번의 현금 지급 약속 자체를 서로 맞바꾼다는 뜻입니다.</p>
+                <p><b>단발성 현금 교환</b>은 오늘 1,000만 원을 내고 중고차를 받거나 10,000달러를 받고 거래가 끝나는 방식입니다. 반면 <b>현금흐름 교환</b>은 “앞으로 3년 동안 매 6개월마다, 나는 고정금리 4%로 계산한 이자를 지급하고 상대방에게서는 변동금리로 계산한 이자를 받겠다”처럼 여러 지급일의 계산 규칙과 지급 약속을 계약하는 방식입니다.</p>
+                <p>가장 대표적인 예가 금리스왑(Interest Rate Swap)입니다. 단순한 예로 기업 A는 100억 원의 변동금리 대출을 보유해 금리 상승이 걱정되고, 기업 B는 100억 원의 고정금리 대출을 보유해 금리 하락에 따른 혜택을 얻고 싶다고 가정할 수 있습니다. 두 기업은 원래 대출과 원금은 각자 그대로 유지한 채, 명목원금 100억 원을 기준으로 계산한 이자 현금흐름을 교환하는 스왑을 맺을 수 있습니다.</p>
+                <p>기업 A는 스왑에서 <b>고정이자를 지급하고 변동이자를 받습니다.</b> 받은 변동이자로 기존 변동금리 대출의 이자 부담을 상쇄하므로 실질적으로 고정금리 사용자에 가까워집니다. 기업 B는 반대로 <b>변동이자를 지급하고 고정이자를 받습니다.</b> 받은 고정이자로 기존 고정금리 대출의 부담을 상쇄하므로 실질적으로 변동금리 사용자에 가까워집니다. 실제 시장에서는 금융기관이 거래의 상대방이나 중개자가 되는 경우가 많습니다.</p>
+                <p>이처럼 미래에 시간 간격을 두고 반복해서 발생하는 돈의 길목, 즉 이자 지급의 ‘파이프라인’을 서로 바꾸기 때문에 흐름을 교환한다고 표현합니다. 금리스왑은 보통 원금을 실제로 맞바꾸지 않고 명목원금에 금리를 적용해 계산한 이자 차액을 정산합니다. 통화스왑은 계약에 따라 서로 다른 통화의 원금을 처음과 만기에 교환할 수도 있습니다.</p>
+                <p>현금흐름을 바꾸는 첫 번째 이유는 위험 관리입니다. 계속 변하는 금리·환율·원자재 가격 때문에 불확실한 미래 지출을 예측하기 쉬운 구조로 바꿀 수 있습니다. 두 번째 이유는 큰 원금을 새로 이동시키지 않고 이자 등 필요한 흐름만 정산해 비교적 효율적으로 원하는 재무 구조를 만들 수 있기 때문입니다.</p>
+                <p><b>한 줄 비유:</b> ‘현금 교환’이 물 한 컵을 한 번 주고받는 것이라면, ‘현금흐름 교환’은 앞으로 물이 계속 흘러올 수도관 두 개의 연결 방식을 서로 바꾸는 것입니다. 스왑은 보통 장외계약이므로 상대방 신용위험과 담보, 계약 기간, 중도해지 조건도 함께 확인해야 합니다.</p>
+                <section class="glossary-infographic" aria-label="단발성 현금 교환과 금리스왑 현금흐름 교환 비교">
+                  <p class="glossary-infographic__title">한 번의 결제와 현금흐름 교환은 무엇이 다를까요?</p>
+                  <div class="glossary-infographic__countries">
+                    <article><b>단발성 현금 교환</b><span>오늘 돈 지급 → 물건·통화 수령 → 종료</span><small>중고차 구매처럼 한 번의 지급과 수령으로 거래가 끝납니다.</small></article>
+                    <article><b>현금흐름 교환</b><span>6개월마다 지급 → 반복 → 계약 만기</span><small>여러 지급일에 적용할 금액 계산 규칙과 지급 약속을 맞바꿉니다.</small></article>
+                  </div>
+                  <div class="glossary-infographic__scale">
+                    <p><b>기업 A · 변동금리 대출</b><span><strong>고정이자 지급</strong><strong>변동이자 수령</strong><strong>실질 고정금리</strong></span></p>
+                    <p><b>기업 B · 고정금리 대출</b><span><strong>변동이자 지급</strong><strong>고정이자 수령</strong><strong>실질 변동금리</strong></span></p>
+                  </div>
+                  <small class="glossary-infographic__note">수도관 비유처럼 원래 대출은 그대로 두고, 앞으로 들어오고 나갈 이자 현금흐름의 연결 방식을 바꾸는 구조입니다.</small>
+                </section>
+              </dd>
             </div>
             <div class="glossary-item">
               <dt>브레튼우즈 체제 <small>Bretton Woods System</small></dt>
@@ -1740,6 +1907,8 @@
         <p><b>한국거래소</b>를 뜻합니다.</p>
         <p>한국의 증권·파생상품 시장을 운영하는 거래소입니다. 주식·채권·ETF·ETN·파생상품 등이 정해진 규칙과 전산시스템 안에서 거래되도록 하고, 상장·시장감시·청산·결제 관련 기능을 수행합니다.</p>
         <p>파생상품에서는 KOSPI 200 선물·옵션, 국채선물, 달러선물처럼 표준화된 계약을 거래할 수 있습니다. 거래소와 청산 체계는 매수자와 매도자가 직접 서로의 신용만 믿는 구조보다 결제 이행 위험을 낮추는 역할을 합니다.</p>
+        <p><b>한국에는 KRX 외에 넥스트레이드(NXT)도 있습니다.</b> NXT는 2025년 3월 4일 출범한 국내 최초의 대체거래소(ATS)이자 법률상 다자간매매체결회사입니다. KRX 상장주식 중 거래대상 종목을 별도의 주문장에서 오전 8시부터 오후 8시까지 거래할 수 있습니다.</p>
+        <p class="exchange-term-note">NXT는 기업의 신규 상장이나 선물·옵션 시장을 운영하는 KRX와 역할이 다릅니다. 증권사는 최선집행기준에 따라 주문을 KRX 또는 NXT로 보낼 수 있으며, NXT 체결분의 청산은 KRX, 결제는 한국예탁결제원이 담당합니다.</p>
       </section>
     </div>
     <div class="glossary-modal" id="cmeExchangeModal" hidden>
@@ -1948,6 +2117,12 @@
             <label>현물 시작가격 (포인트)<input id="basisSpotStart" type="number" min="1" step="1" value="340" /></label>
             <label>선물의 초기 차이 (포인트)<output id="basisSpreadValue">+5.0</output><input id="basisSpread" type="range" min="-15" max="15" step="0.5" value="5" /></label>
             <label>만기까지 남은 기간<output id="basisDaysValue">30일</output><input id="basisDays" type="range" min="5" max="60" step="5" value="30" /></label>
+            <aside class="basis-control-explanation" aria-live="polite">
+              <strong>수치 변경의 의미</strong>
+              <p id="basisSpotExplanation"><b>현물 340.0pt</b> — 두 가격의 출발 기준입니다. 값을 바꾸면 두 선이 함께 위아래로 이동하지만 초기 가격 차이는 그대로입니다.</p>
+              <p id="basisSpreadExplanation"><b>초기 차이 +5.0pt</b> — 선물이 현물보다 5.0포인트 높게 출발합니다. 절댓값을 키울수록 두 선의 시작 간격이 커집니다.</p>
+              <p id="basisDaysExplanation"><b>만기까지 30일</b> — 두 가격이 같아질 때까지 남은 시간입니다. 기간을 늘리면 더 긴 시간에 걸쳐, 줄이면 더 짧은 시간에 걸쳐 차이가 0으로 좁아집니다.</p>
+            </aside>
           </div>
           <div class="basis-convergence-main">
             <div class="basis-convergence-summary" aria-live="polite">
@@ -3118,6 +3293,9 @@
         const futuresResult = document.getElementById("basisFuturesResult");
         const finalSpread = document.getElementById("basisFinalSpread");
         const note = document.getElementById("basisConvergenceNote");
+        const spotExplanation = document.getElementById("basisSpotExplanation");
+        const spreadExplanation = document.getElementById("basisSpreadExplanation");
+        const daysExplanation = document.getElementById("basisDaysExplanation");
         const closeButton = modal.querySelector(".glossary-modal__close");
         let chart;
 
@@ -3143,6 +3321,11 @@
           futuresResult.textContent = `${(start + spread).toFixed(1)}pt`;
           finalSpread.textContent = "0.0pt";
           note.textContent = `시작일에는 선물이 현물보다 ${Math.abs(spread).toFixed(1)}포인트 ${spread >= 0 ? "높" : "낮"}지만, 만기일에는 같은 최종결제 기준으로 차이가 0포인트가 되는 가정입니다.`;
+          spotExplanation.innerHTML = `<b>현물 ${start.toFixed(1)}pt</b> — 두 가격의 출발 기준입니다. 값을 바꾸면 두 선이 함께 위아래로 이동하지만 초기 가격 차이는 그대로입니다.`;
+          spreadExplanation.innerHTML = spread === 0
+            ? `<b>초기 차이 0.0pt</b> — 시작부터 선물과 현물이 같은 가격에서 움직입니다.`
+            : `<b>초기 차이 ${spread > 0 ? "+" : ""}${spread.toFixed(1)}pt</b> — 선물이 현물보다 ${Math.abs(spread).toFixed(1)}포인트 ${spread > 0 ? "높게" : "낮게"} 출발합니다. 절댓값을 키울수록 두 선의 시작 간격이 커집니다.`;
+          daysExplanation.innerHTML = `<b>만기까지 ${days}일</b> — 두 가격이 같아질 때까지 남은 시간입니다. 기간을 늘리면 더 긴 시간에 걸쳐, 줄이면 더 짧은 시간에 걸쳐 차이가 0으로 좁아집니다.`;
           const options = {
             chart: { type: "line", height: 360, toolbar: { show: false }, animations: { enabled: true } },
             series: [{ name: "현물가격", data: spots }, { name: "선물가격", data: futures }],
