@@ -12,6 +12,7 @@
       detail: [...description.querySelectorAll(':scope > p')].map((paragraph) => clean(paragraph.textContent)).filter(Boolean).length
         ? [...description.querySelectorAll(':scope > p')].map((paragraph) => clean(paragraph.textContent)).filter(Boolean)
         : [clean(description.textContent)],
+      infographic: description.querySelector('.glossary-infographic')?.cloneNode(true) || null,
       item,
       manualOnly: item.hasAttribute('data-glossary-manual-only'),
     };
@@ -83,6 +84,7 @@
       element.textContent = paragraph;
       return element;
     }));
+    if (entry.infographic) detail.append(entry.infographic.cloneNode(true));
     modal.hidden = false;
     closeButton.focus();
   };
