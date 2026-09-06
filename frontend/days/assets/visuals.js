@@ -15,7 +15,17 @@
 
   if (day === 1) {
     addAfterText(target('선물은 미래 거래를'), `<figure class="concept-visual"><p class="visual-kicker">FUTURES CONTRACT FLOW</p><div class="flow-visual"><div class="step">오늘<small>가격·수량·만기 합의</small></div><b class="flow-arrow">→</b><div class="step">거래 기간<small>증거금과 일일 손익 정산</small></div><b class="flow-arrow">→</b><div class="step">만기 또는 청산<small>반대거래·현금결제·인도</small></div></div>${caption('선물의 시간 흐름', '선물은 물건 자체가 아니라 미래 거래 조건을 표준화한 계약입니다.')}</figure>`);
-    addAfterText(target('주문이 만나야 선물·옵션 계약이 생깁니다'), `<section class="lesson-inline-topic"><h3>제로섬 게임: 한쪽의 이익이 다른 쪽의 손실인 거래</h3><p>제로섬 게임(zero-sum game)은 참여자들의 이익과 손실을 모두 더하면 0이 되는 구조입니다. 예를 들어 선물 계약에서 A가 10만 원을 벌면 같은 계약의 반대편 B는 비용 전 10만 원을 잃습니다.</p><p>선물·옵션처럼 계약의 양쪽이 마주 보는 거래는 비용 전 손익이 서로 반대 방향으로 움직이는 구조입니다. 수수료·세금·매수·매도 호가 차이(스프레드)까지 더하면 참여자 전체의 합은 음수가 되며, 이를 네거티브섬이라고 합니다. 두 사람의 계약 손익 합계가 0이어도 각각 수수료 1,000원씩을 내면 최종 합계는 −2,000원입니다.</p><p>반면 모든 주식투자가 제로섬이라는 뜻은 아닙니다. 기업이 이익을 내고 배당을 지급하거나 장기적으로 가치가 성장하면 주식을 보유한 투자자 전체가 혜택을 볼 수 있습니다. 따라서 선물·옵션 같은 계약 거래의 손익 구조와 기업의 장기 가치 창출을 구분해야 합니다.</p></section>`);
+    const orderLesson = target('주문이 만나야 선물·옵션 계약이 생깁니다');
+    addAfterText(orderLesson, `<section class="lesson-inline-topic"><h3>제로섬 게임: 한쪽의 이익이 다른 쪽의 손실인 거래</h3><p>제로섬 게임(zero-sum game)은 참여자들의 이익과 손실을 모두 더하면 0이 되는 구조입니다. 예를 들어 선물 계약에서 A가 10만 원을 벌면 같은 계약의 반대편 B는 비용 전 10만 원을 잃습니다.</p><p>선물·옵션처럼 계약의 양쪽이 마주 보는 거래는 비용 전 손익이 서로 반대 방향으로 움직이는 구조입니다. 수수료·세금·매수·매도 호가 차이(스프레드)까지 더하면 참여자 전체의 합은 음수가 되며, 이를 네거티브섬이라고 합니다. 두 사람의 계약 손익 합계가 0이어도 각각 수수료 1,000원씩을 내면 최종 합계는 −2,000원입니다.</p><p>반면 모든 주식투자가 제로섬이라는 뜻은 아닙니다. 기업이 이익을 내고 배당을 지급하거나 장기적으로 가치가 성장하면 주식을 보유한 투자자 전체가 혜택을 볼 수 있습니다. 따라서 선물·옵션 같은 계약 거래의 손익 구조와 기업의 장기 가치 창출을 구분해야 합니다.</p><h3>왜 ‘베팅’처럼 보일까요?</h3><p>파생상품은 본래 환율·원자재·금리 위험을 줄이는 헤지 도구이지만, 보유한 위험 없이 가격 방향만 예측해 거래하면 미래 가격에 돈을 거는 베팅처럼 보일 수 있습니다. 그 이유는 계약의 손익 구조, 정해진 만기, 레버리지 때문입니다.</p><div class="lesson-table-wrap"><table class="lesson-table"><thead><tr><th scope="col">특성</th><th scope="col">선물·옵션에서의 의미</th><th scope="col">유의할 점</th></tr></thead><tbody><tr><th scope="row">제로섬 손익</th><td>같은 계약의 매수·매도 손익은 비용 전 서로 반대입니다.</td><td>옵션 프리미엄과 만기 손익까지 합쳐 보아야 하며, 비용을 넣으면 참여자 합계는 음수가 됩니다.</td></tr><tr><th scope="row">가격 방향·시점</th><td>선물 매수·매도, 콜·풋 선택에 따라 특정 시점의 가격 변화에 노출됩니다.</td><td>헤지 거래는 방향을 맞히기보다 이미 가진 가격 위험을 줄이는 데 목적이 있습니다.</td></tr><tr><th scope="row">레버리지</th><td>선물은 증거금으로 계약금액보다 큰 가격 변동에 노출될 수 있습니다.</td><td>필요 증거금 비율은 상품·시장·변동성에 따라 다르며, 손실은 예치금보다 커질 수 있습니다.</td></tr><tr><th scope="row">만기</th><td>선물·옵션은 정해진 만기 또는 최종거래일이 있습니다.</td><td>만기 전 청산·이월·결제 방식을 계획해야 하며, 옵션 매수권리는 만기에 가치 없이 끝날 수 있습니다.</td></tr></tbody></table></div><p>주식 현물은 기업의 장기 가치와 배당에 참여하는 구조인 반면, 파생상품은 계약 조건과 가격 변화에 따른 손익을 주고받는 구조입니다. 그렇다고 파생상품 거래가 모두 도박이라는 뜻은 아닙니다. 실제 기업과 금융기관은 비용·현금흐름의 불확실성을 줄이기 위해 사용하며, 개인도 거래 전 계약 규모·만기·증거금·최대 손실을 확인해야 합니다.</p></section>`);
+    const zeroSumTopic = orderLesson?.querySelector('.lesson-inline-topic');
+    const orderBreakTimeTrigger = document.getElementById('orderBreakTimeTrigger');
+    if (zeroSumTopic && orderBreakTimeTrigger && !orderBreakTimeTrigger.dataset.moved) {
+      const breakTimeCta = document.createElement('p');
+      breakTimeCta.className = 'lesson-video-cta';
+      breakTimeCta.append(orderBreakTimeTrigger);
+      zeroSumTopic.after(breakTimeCta);
+      orderBreakTimeTrigger.dataset.moved = 'true';
+    }
   }
 
   if (day === 2) {

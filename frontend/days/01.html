@@ -12,7 +12,7 @@
     />
     <script defer src="assets/visuals.js?v=20260905-zero-sum-moved"></script>
     <script defer src="assets/atlas.js"></script>
-    <script defer src="assets/glossary-modal.js?v=20260905-history"></script>
+    <script defer src="assets/glossary-modal.js?v=20260906-shared-glossary"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
   </head>
@@ -147,7 +147,55 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="국가의 재정과 위험으로 보는 파생상품의 발달 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson"><span>00.1</span>
+          </section>
+          <section class="lesson">
+            <span>05</span>
+            <div class="lesson-content">
+              <h2>현물과 선물: 지금 거래와 미래 계약</h2>
+              <div class="lesson-body">
+                <p>
+                  현물은 한자로 現物이며, 선물·옵션 같은 미래 계약이 아니라 지금
+                  소유권을 사고파는 자산 또는 거래를 뜻합니다. 예를 들어 주식을
+                  사면 결제 절차를 거쳐 그 회사의 지분이 전자적으로 내 계좌에
+                  들어옵니다. 종이 주권이나 물건을 손에 받아야만 현물인 것은
+                  아닙니다.
+                </p>
+                <p>
+                  영어권 금융시장에서는 현물가격·현물시장을 보통 스팟 가격(spot price)·스팟
+                  시장(spot market)이라고 부릅니다. 주식·채권처럼 파생상품이 아닌 자산을
+                  선물과 대비할 때는 현금시장(cash market)이라는 표현도 씁니다. 그래서
+                  주식 매수는 기업 지분 자체를 보유하는 현물 거래이고, 주식선물
+                  매수는 그 주가 변화에 연결된 계약을 보유하는 파생상품
+                  거래입니다.
+                </p>
+                <p>
+                  다만 원유·금·곡물처럼 실제 물건의 인도까지 강조할 때는
+                  실물자산(physical commodity·피지컬 커모디티) 또는 실물인도
+                  (physical delivery·피지컬 딜리버리)라고 합니다. spot은 “지금
+                  거래·결제하는 시장”이라는 뜻에 가깝고, physical은 “실물의
+                  보관·운송·인도”를 강조하는 말이라는 차이가 있습니다.
+                </p>
+                <p>
+                  선물은 미래 가격을 지금 약속하는 계약입니다. 실제 자산을 지금
+                  받는 대신 가격 차이를 정산하는 구조가 많습니다. 현물은 보통
+                  사려는 금액 전체가 필요하지만, 선물은 일부 증거금으로
+                  거래하므로 적은 돈으로 큰 금액에 노출될 수 있고 손익도 빠르게
+                  커질 수 있습니다.
+                </p>
+              </div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="현물과 선물: 지금 거래와 미래 계약 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section>
+          <section class="lesson"><span>00.1</span>
             <div class="lesson-content">
               <h2>선물·옵션은 언제, 왜 만들어졌을까요?</h2>
               <div class="lesson-body">
@@ -313,7 +361,7 @@
                 </div>
                 <p><strong>선도(Forward)</strong>는 미래 특정 시점에 약정 가격으로 자산을 인수·도하기로 하는 장외 맞춤 계약입니다. 조건을 유연하게 정할 수 있지만, 중도에 계약을 넘기거나 끝내기 어렵고 상대방이 약속을 지키지 못할 위험이 있습니다. 수출기업의 선물환 계약이 대표적인 예입니다.</p>
                 <p><strong>선물(Futures)</strong>은 거래소에서 표준화된 조건으로 거래하는 계약입니다. 증거금과 일일정산(mark-to-market), 청산 제도로 이행위험을 관리하며, 만기 전 반대매매로 포지션을 정리할 수 있습니다. KOSPI 200 선물과 원유 선물이 예입니다.</p>
-                <p><strong>옵션(Option)</strong>의 매수자는 프리미엄을 내고 행사가격에 살 권리(콜) 또는 팔 권리(풋)를 얻습니다. 매수자는 권리를 포기할 수 있어 손실이 낸 프리미엄으로 제한되지만, 이익의 범위는 콜·풋과 기초자산 가격에 따라 다릅니다. 매도자는 프리미엄을 받는 대신 행사에 응해야 하므로 큰 손실이 발생할 수 있습니다.</p>
+                <p><strong>옵션(Option)</strong>의 매수자는 프리미엄을 내고 행사가격에 살 권리(<button type="button" class="glossary-term" data-glossary-term="콜옵션">콜</button>) 또는 팔 권리(<button type="button" class="glossary-term" data-glossary-term="풋옵션">풋</button>)를 얻습니다. 매수자는 권리를 포기할 수 있어 손실이 낸 프리미엄으로 제한되지만, 이익의 범위는 <button type="button" class="glossary-term" data-glossary-term="콜옵션">콜</button>·<button type="button" class="glossary-term" data-glossary-term="풋옵션">풋</button>과 기초자산 가격에 따라 다릅니다. 매도자는 프리미엄을 받는 대신 행사에 응해야 하므로 큰 손실이 발생할 수 있습니다.</p>
                 <p><strong>스왑(Swap)</strong>은 두 당사자가 일정 기간 서로 다른 현금흐름을 교환하는 장외계약입니다. <button type="button" class="hedge-info-trigger" id="interestRateSwapTrigger" aria-haspopup="dialog" aria-label="금리스왑 IRS 설명 보기">금리스왑(IRS) <i class="fa-solid fa-circle-question" aria-hidden="true"></i></button>은 고정금리와 변동금리 현금흐름을 바꾸어 금리 변동 위험을 관리하고, <button type="button" class="hedge-info-trigger" id="currencySwapTrigger" aria-haspopup="dialog" aria-label="통화스왑 CRS 설명 보기">통화스왑(CRS) <i class="fa-solid fa-circle-question" aria-hidden="true"></i></button>은 서로 다른 통화의 원금·이자 현금흐름을 교환해 환율과 금리 위험을 함께 관리합니다.</p>
                 <h3>파생상품을 쓰는 세 가지 목적</h3>
                 <p><strong>헤지</strong>는 보유 자산의 가격 하락이나 환율·금리 변동 위험을 줄이려는 거래입니다. <strong>투기</strong>는 증거금을 활용해 가격 방향을 예측하고 수익을 추구하는 거래이며, 레버리지 때문에 손실도 빠르게 커질 수 있습니다. <strong>차익거래</strong>는 현물과 선물처럼 경제적으로 비슷한 대상 사이의 가격 차이를 이용해 위험을 낮춘 수익 기회를 찾는 거래입니다. 실제 거래에는 비용·세금·유동성·체결 위험이 있어 무위험 수익이 보장되지는 않습니다.</p>
@@ -455,52 +503,44 @@
             </button>
           </section>
           <section class="lesson">
-            <span>05</span>
+            <span>04.5</span>
             <div class="lesson-content">
-              <h2>현물과 선물: 지금 거래와 미래 계약</h2>
+              <h2>밭떼기에서 장외 선도계약까지: 맞춤형 위험관리</h2>
               <div class="lesson-body">
-                <p>
-                  현물은 한자로 現物이며, 선물·옵션 같은 미래 계약이 아니라 지금
-                  소유권을 사고파는 자산 또는 거래를 뜻합니다. 예를 들어 주식을
-                  사면 결제 절차를 거쳐 그 회사의 지분이 전자적으로 내 계좌에
-                  들어옵니다. 종이 주권이나 물건을 손에 받아야만 현물인 것은
-                  아닙니다.
-                </p>
-                <p>
-                  영어권 금융시장에서는 현물가격·현물시장을 보통 스팟 가격(spot price)·스팟
-                  시장(spot market)이라고 부릅니다. 주식·채권처럼 파생상품이 아닌 자산을
-                  선물과 대비할 때는 현금시장(cash market)이라는 표현도 씁니다. 그래서
-                  주식 매수는 기업 지분 자체를 보유하는 현물 거래이고, 주식선물
-                  매수는 그 주가 변화에 연결된 계약을 보유하는 파생상품
-                  거래입니다.
-                </p>
-                <p>
-                  다만 원유·금·곡물처럼 실제 물건의 인도까지 강조할 때는
-                  실물자산(physical commodity·피지컬 커모디티) 또는 실물인도
-                  (physical delivery·피지컬 딜리버리)라고 합니다. spot은 “지금
-                  거래·결제하는 시장”이라는 뜻에 가깝고, physical은 “실물의
-                  보관·운송·인도”를 강조하는 말이라는 차이가 있습니다.
-                </p>
-                <p>
-                  선물은 미래 가격을 지금 약속하는 계약입니다. 실제 자산을 지금
-                  받는 대신 가격 차이를 정산하는 구조가 많습니다. 현물은 보통
-                  사려는 금액 전체가 필요하지만, 선물은 일부 증거금으로
-                  거래하므로 적은 돈으로 큰 금액에 노출될 수 있고 손익도 빠르게
-                  커질 수 있습니다.
-                </p>
+                <p>배추 밭떼기처럼 미래의 수량·가격·인도 시점을 당사자가 직접 정하는 거래는 경제적으로 <b>선도계약(Forward Contract)</b>과 닮았습니다. 실제 산업 현장에서는 농산물뿐 아니라 환율, 원자재, 에너지, 금리의 변동 위험을 관리하기 위해 장외거래(OTC)를 활발히 활용합니다. 다만 모든 장기 공급계약이 금융 선도계약인 것은 아니며, 실물 구매·공급 계약에는 품질·운송·검수 조건이 함께 들어갑니다.</p>
+                <h3>산업 현장의 장외계약 사례</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">상황</th><th scope="col">맞춤 계약의 예</th><th scope="col">관리하려는 위험</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">항공사와 연료 공급</th><td>필요 시점·수량·가격 기준을 정한 항공유 공급계약 또는 가격 헤지 계약</td><td>유가 상승에 따른 연료비 증가</td></tr>
+                      <tr><th scope="row">수출기업과 은행</th><td>장래 받을 외화를 미리 정한 환율로 교환하는 선물환 계약</td><td>환율 하락에 따른 원화 환산 매출 감소</td></tr>
+                      <tr><th scope="row">건설사와 자재 공급업체</th><td>공사 기간에 맞춘 철강·시멘트의 수량·품질·납기·가격 조건을 정한 장기 공급계약</td><td>원자재 가격·공급 일정 변동</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>예를 들어 수출기업은 은행과 2년 뒤 받을 달러를 원화로 바꿀 환율을 미리 정할 수 있습니다. 그러면 환율 변화가 원화 수입에 미치는 영향을 줄일 수 있지만, 실제 수금 시점·금액이 달라지거나 계약을 중도해지하면 별도의 비용과 위험이 생길 수 있습니다. 따라서 위험을 ‘완전히 제거’한다기보다 계약 조건에 맞는 범위에서 줄이는 수단으로 이해하는 편이 정확합니다.</p>
+                <h3>장외 선도계약과 거래소 선물의 차이</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">구분</th><th scope="col">장외 선도계약(Forward)</th><th scope="col">거래소 선물(Futures)</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">계약 방식</th><td>두 당사자가 1:1로 조건을 협의합니다.</td><td>거래소가 정한 표준 계약을 익명 주문으로 거래합니다.</td></tr>
+                      <tr><th scope="row">수량·만기</th><td>필요한 날짜·수량·가격 기준에 맞춰 설계할 수 있습니다.</td><td>상장된 계약 단위와 결제월 가운데 선택합니다.</td></tr>
+                      <tr><th scope="row">위험 관리</th><td>상대방 신용, 담보, 중도해지 조건을 당사자가 관리합니다.</td><td>청산기관이 증거금·일일정산으로 결제불이행 위험을 줄입니다.</td></tr>
+                      <tr><th scope="row">유의점</th><td>맞춤성이 높은 대신 계약을 넘기거나 정리하기 어려울 수 있습니다.</td><td>유동성이 있을 수 있지만 원하는 조건과 정확히 일치하지 않을 수 있습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>거래소 청산은 결제불이행 위험을 줄이는 장치이지 위험을 없애거나 투자 손실을 보장하는 장치는 아닙니다. 기업은 필요한 날짜와 물량에 맞추기 위해 장외계약을 사용하기도 하고, 유동성과 표준화된 청산을 위해 거래소 선물을 사용하기도 하며, 상황에 따라 둘을 함께 활용할 수 있습니다.</p>
+                <h3>장외계약서에는 무엇을 정할까요?</h3>
+                <p>실물 공급계약과 금융 장외계약에는 보통 거래 대상·품질 규격·수량·가격 또는 가격 산식·인도 시기와 장소·결제 통화와 방식·중도해지·분쟁 처리 조건을 적습니다. 금융기관 사이의 장외 파생거래에서는 국제스왑파생상품협회(ISDA)의 마스터계약과 신용보강 부속서(CSA) 같은 표준 문서를 바탕으로 개별 거래 조건을 정하기도 합니다.</p>
+                <p>상대방 신용위험을 줄이기 위해 담보를 주고받거나, 상계·조기종료·증거금 조건을 계약서에 둘 수 있습니다. 그러나 모든 실물 공급계약에 ISDA 문서나 신용장(L/C)이 붙는 것은 아니며, 보증·보험·담보 등 어떤 장치를 쓰는지는 거래 구조와 법률·계약 조건에 따라 다릅니다. <a href="https://www.isda.org/collateral-management-sop/" target="_blank" rel="noopener noreferrer">ISDA의 장외 파생상품 담보 관리 안내</a>를 참고하세요.</p>
               </div>
             </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="현물과 선물: 지금 거래와 미래 계약 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section><section class="lesson"><span>06</span>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="밭떼기에서 장외 선도계약까지 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section>
+          <section class="lesson"><span>06</span>
             <div class="lesson-content">
               <h2>선물은 미래 거래를 미리 정하는 약속</h2>
               <div class="lesson-body">
@@ -863,7 +903,7 @@
                   두 당사자 사이의 계약은 KRX와 각 청산회원 사이의 결제 의무로 바뀝니다.
                 </p>
                 <p>
-                  이행 안정성은 증거금, 매일의 손익정산, 미결제약정 위험에 맞춘
+                  이행 안정성은 증거금, 매일의 손익정산, 위험 수준에 맞춘
                   추가 증거금, 강제청산, 공동기금 등으로 관리합니다. 어느
                   청산회원이 결제 의무를 제때 이행하기 어려운 상황이 생겨도,
                   청산기관은 정해진 절차에 따라 결제를 완료하도록 조치합니다.
@@ -972,6 +1012,21 @@
                     </tbody>
                   </table>
                 </div>
+                <h3>롱(Long)과 숏(Short)은 무엇을 뜻할까요?</h3>
+                <p>시장에서는 보통 매수 쪽 포지션을 <b>롱(Long)</b>, 매도 쪽 포지션을 <b>숏(Short)</b>이라고 부릅니다. 이 말은 단순히 보유 기간이 길고 짧다는 뜻이 아니라, 가격이 움직일 때 어느 방향에서 이익·손실이 나는지를 나타내는 금융 용어입니다.</p>
+                <p><b>롱</b>은 자산을 보유하는 상태와 연결된 표현입니다. 과거 영어권 상업에서 재고나 증권을 많이 보유한 상태를 long in stock이라고 부른 용례가 금융시장으로 이어졌습니다. 주식 현물에서는 보통 사서 보유하는 매수 포지션이 롱이고, 선물에서는 계약을 매수한 쪽이 롱입니다. 가격이 오르면 롱 포지션이 유리하고, 내리면 불리합니다.</p>
+                <p><b>숏</b>은 결제할 자산이 부족한 상태와 연결된 표현입니다. 공매도에서는 보유하지 않은 주식을 빌려 먼저 팔고 나중에 사서 갚아야 하므로, 해당 주식이 ‘short’한 상태라고 부릅니다. 주식 공매도나 선물 매도 포지션은 가격이 내리면 유리하고, 오르면 불리합니다. 다만 선물의 숏은 주식을 실제로 빌려 파는 공매도와 달리 계약을 매도해 만든 포지션입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>롱과 숏의 기본 비교</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">용어가 가리키는 상태</th><th scope="col">현대적 의미</th><th scope="col">가격 하락 시</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">롱 (Long)</th><td>자산·계약을 보유한 쪽</td><td>매수 포지션</td><td>보통 손실 방향</td></tr>
+                      <tr><th scope="row">숏 (Short)</th><td>결제할 자산이 부족하거나 빌린 상태에서 판 쪽</td><td>매도 포지션</td><td>보통 이익 방향</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>롱과 숏의 어원은 여러 역사적 용례가 겹쳐 있어 하나의 이야기로 단정하기 어렵습니다. 중요한 것은 현재의 쓰임입니다. 롱은 항상 장기투자를, 숏은 항상 단기거래를 뜻하지 않으며, 둘 다 헤지 또는 가격 방향에 대한 거래에 쓰일 수 있습니다. 주식 공매도는 빌린 주식을 되갚아야 하므로 가격 상승 때 손실이 커질 수 있고, 선물도 증거금 때문에 손익 변동이 커질 수 있습니다.</p>
                 <p>
                   따라서 “옵션을 만들어 판다”보다는 <b>상장된 옵션 종목의 매도 포지션을
                   만든다</b>고 이해하는 편이 정확합니다. 선물은 매수·매도 모두 계약 이행 의무를
@@ -1159,6 +1214,37 @@
                   있습니다. 이런 주문은 선물과 현물의 가격 차이를 다시 좁히는
                   방향으로 작용할 수 있습니다.
                 </p>
+                <h3>차익거래가 항상 즉시 작동하지는 않습니다</h3>
+                <p>현실에서는 가격 차이가 보여도 세금·수수료·매수·매도 호가 차이·시장 충격 비용을 빼고도 이익이 남아야 차익거래를 실행할 수 있습니다. 또 차익거래는 자금, 증거금, 주식 대차, 위험 한도와 운영 인프라가 필요한 전문 거래이므로 가격 차이가 있다고 언제나 무위험 거래가 가능한 것은 아닙니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>선물·현물 가격 차이가 오래 남을 수 있는 이유</caption>
+                    <thead><tr><th scope="col">제약</th><th scope="col">차익거래에 미치는 영향</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">거래 비용과 세금</th><td>수수료, 호가 차이, 슬리피지, 세금, 자금 조달 비용을 고려하면 작은 괴리로는 이익이 나지 않을 수 있습니다.</td></tr>
+                      <tr><th scope="row">공매도·대차 제약</th><td>선물이 현물보다 쌀 때 현물을 공매도하고 선물을 사는 거래가 필요할 수 있지만, 빌릴 주식이 부족하거나 대차 비용·규제가 있으면 실행이 어렵습니다.</td></tr>
+                      <tr><th scope="row">금리·배당·만기 추정</th><td>이론 선물가격에는 만기까지의 자금 조달 비용과 예상 배당 등이 반영됩니다. 이 값과 실제 결제 조건이 바뀌면 예상 수익도 달라집니다.</td></tr>
+                      <tr><th scope="row">유동성과 위험 한도</th><td>시장 불안 때는 주문량이 적고 호가 차이가 커지며, 기관의 증거금·위험 한도·현금 확보 필요가 차익거래 참여를 제한할 수 있습니다.</td></tr>
+                      <tr><th scope="row">실물 인도·보관 제약</th><td>원유처럼 실물 인도가 가능한 상품은 보관·운송 능력과 비용이 차익거래의 핵심 제약이 될 수 있습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>따라서 차익거래는 선물과 현물의 가격 차이를 <b>대체로 좁히는 힘</b>이지, 두 가격을 장중 내내 완전히 같게 만드는 장치는 아닙니다. 선물 가격이 현물보다 높은 콘탱고나 낮은 백워데이션도 금리·배당·보관비·수급과 만기 구조를 반영한 정상적인 상태일 수 있으며, 단순히 ‘괴리 오류’라고 볼 수는 없습니다.</p>
+                <h3>시장 스트레스에서는 어떤 일이 생길까요?</h3>
+                <p>급격한 변동성 확대나 유동성 부족이 발생하면 현물과 선물의 차이가 평소보다 커지고 오래 갈 수 있습니다. 2020년 4월 WTI 원유 근월물 선물은 수요 급감과 인도지점의 제한된 저장 능력, 만기 임박이 겹치며 가격이 큰 폭으로 음수가 된 극단적 사례입니다. 이 사례는 실물 인도·저장이라는 제약이 가격 차이를 이용한 거래를 제한할 수 있음을 보여 줍니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>차익거래 기능이 약해질 때 나타날 수 있는 영향</caption>
+                    <thead><tr><th scope="col">영역</th><th scope="col">나타날 수 있는 현상</th><th scope="col">해석할 때 주의할 점</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">헤지</th><td>현물과 선물의 가격 움직임 차이인 베이시스 위험이 커져, 기대한 만큼 손익이 상쇄되지 않을 수 있습니다.</td><td>헤지가 실패했다기보다 계약과 보유자산의 만기·구성·가격 기준이 완전히 같지 않아 생기는 위험입니다.</td></tr>
+                      <tr><th scope="row">가격발견</th><td>선물·현물 가격 중 어느 하나만으로 시장의 기대를 읽기 어려워지고, 가격 신호의 해석이 복잡해질 수 있습니다.</td><td>선물은 미래 현물가격의 단순 예측치가 아니라 금리·배당·수급·결제 조건도 반영합니다.</td></tr>
+                      <tr><th scope="row">ETF·ETN</th><td>선물 기반 상품은 선물곡선, 롤오버 비용, 유동성 변화로 현물 지수와 성과 차이가 커질 수 있습니다.</td><td>이는 ETF 시장가격과 NAV의 괴리, 기초지수와의 추적오차를 구분해 보아야 합니다.</td></tr>
+                      <tr><th scope="row">유동성</th><td>차익거래와 시장조성 활동이 줄면 호가 차이가 넓어지고 작은 주문에도 가격 변동이 커질 수 있습니다.</td><td>거래소의 가격제한·변동성 완화장치, 청산·증거금 조정도 함께 작동할 수 있습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>요약하면 정상적인 시장에서도 선물과 현물은 일정한 차이를 가질 수 있고, 불안·제약이 커지면 그 차이가 확대될 수 있습니다. 괴리율만 보고 단독으로 판단하기보다 만기, 거래 비용, 공매도 가능 여부, 유동성, 실물 인도 조건과 시장 상황을 함께 확인해야 합니다. 참고: <a href="https://www.eia.gov/todayinenergy/detail.php?id=43495" target="_blank" rel="noopener noreferrer">미국 EIA의 2020년 WTI 음수 선물가격 설명</a>, <a href="https://www.cftc.gov/PressRoom/PressReleases/8315-20" target="_blank" rel="noopener noreferrer">미국 CFTC의 WTI 거래 보고</a>.</p>
                 <p>
                   옵션도 현물시장 주문과 연결될 수 있습니다. 옵션을 팔아준
                   금융기관은 주가가 오르거나 내릴 때 손실 위험을 줄이기 위해
@@ -1196,7 +1282,7 @@
                 <p>콜옵션을 매수하면 만기 전 또는 만기에 정해진 가격으로 살 수 있는 권리를 얻습니다. 매수자는 불리하면 권리를 쓰지 않을 수 있지만, 매도자는 권리가 행사되면 계약을 이행해야 합니다. 그래서 체결 때 매수자는 프리미엄을 내고, 매도자는 그 프리미엄을 받습니다.</p>
                 <p>프리미엄은 <b>내재가치</b>와 <b>시간가치</b>로 나누어 생각할 수 있습니다. 내재가치는 지금 당장 권리를 행사했을 때의 이익이고, 시간가치는 만기 전 가격이 유리하게 움직일 가능성에 붙는 가치입니다. 만기가 가까워질수록 시간가치는 보통 줄며, 만기에 외가격 옵션으로 끝나면 권리는 가치 없이 소멸해 매수자가 낸 프리미엄은 돌려받지 못할 수 있습니다.</p>
                 <h3>프리미엄도 호가가 만나야 정해집니다</h3>
-                <p>옵션 프리미엄은 거래소에서 매수 주문과 매도 주문이 만나 체결됩니다. 가장 높은 매수호가와 가장 낮은 매도호가의 차이는 <b>호가 스프레드</b>입니다. 예를 들어 매수호가 500원, 매도호가 520원이라면 510원은 참고용 중간값일 뿐 자동 체결가격이 아닙니다. 유동성이 낮아 스프레드가 넓으면 매수·매도 직후 불리한 가격 차이가 생길 수 있으므로, 현재 호가·스프레드·거래량·미결제약정을 함께 확인하세요.</p>
+                <p>옵션 프리미엄은 거래소에서 매수 주문과 매도 주문이 만나 체결됩니다. 가장 높은 매수호가와 가장 낮은 매도호가의 차이는 <b>호가 스프레드</b>입니다. 예를 들어 매수호가 500원, 매도호가 520원이라면 510원은 참고용 중간값일 뿐 자동 체결가격이 아닙니다. 유동성이 낮아 스프레드가 넓으면 매수·매도 직후 불리한 가격 차이가 생길 수 있으므로, 현재 호가·스프레드·거래량을 함께 확인하세요.</p>
                 <h3>실제 거래 전: 계좌·교육·모의거래</h3>
                 <p>국내 장내 파생상품을 거래하려면 파생상품 거래가 가능한 계좌와 단계별 요건이 필요합니다. 개인은 투자성향·거래경험 확인, 사전교육, 모의거래, 기본예탁금 등을 충족해야 하며 처음에는 보통 선물(변동성지수선물 제외)과 옵션 매수부터 단계적으로 열립니다. 세부 기준과 가능 상품은 증권사 안내를 확인해야 합니다.</p>
                 <p>사전교육은 <a href="https://www.kifin.or.kr/" target="_blank" rel="noopener noreferrer">금융투자교육원(KIFIN)</a>에서 증권사가 안내한 과정으로 신청하고, 이수 뒤 수료번호를 보관합니다. 이어 <a href="https://trn.krx.co.kr/" target="_blank" rel="noopener noreferrer">KRX 파생상품 모의거래 인증시스템</a> 또는 증권사의 이수 인정용 모의거래에서 주문·체결을 연습합니다. 교육과 모의거래 뒤에는 증권사 MTS·HTS에서 이수 정보를 등록하고, 승인 상태·거래 가능 단계·계약 단위·위탁·유지증거금을 점검하세요.</p>
@@ -1214,7 +1300,7 @@
                 <p>HTS 검색창에서 ‘투자자별 매매동향’, ‘투자자별 거래동향’, ‘투자주체’, ‘수급’을 찾은 뒤 국내 파생상품 시장을 선택합니다. 표에서 외국인 열과 KOSPI 200 선물·콜옵션·풋옵션 행을 각각 확인하세요. 증권사마다 화면번호와 메뉴명은 달라도 이런 구조가 공통적입니다.</p>
                 <p>매수·매도·순매수와 조회 조건을 함께 읽어야 합니다. 당일인지 기간 누적인지, 정규장인지 야간장인지, 계약 수인지 금액인지가 다르면 숫자를 직접 비교할 수 없습니다. 표준 선물과 미니 선물도 거래승수가 달라 계약 수만 합산하면 안 됩니다.</p>
                 <p>예를 들어 외국인의 KOSPI 200 선물 당일 순매수가 +3,000계약이면 그 조회 기준에서 매수가 매도보다 3,000계약 많았다는 뜻일 뿐, 지수 상승을 확정하지는 않습니다. 현물·ETF 헤지, 차익거래, 월물 교체가 섞일 수 있기 때문입니다.</p>
-                <p>옵션은 콜·풋을 분리해 보고 거래량·순매수와 미결제약정(OI)을 구분합니다. 거래가 늘었다고 외국인이 한 방향에 베팅했다고 단정할 수 없으므로, 옵션 가격·OI 변화·기초지수 움직임을 함께 보고 장 마감 뒤 KRX 투자자별 거래실적으로 교차검증하세요.</p>
+                <p>옵션은 콜·풋을 분리해 보고 거래량과 순매수를 구분합니다. 거래가 늘었다고 외국인이 한 방향에 베팅했다고 단정할 수 없으므로, 옵션 가격과 기초지수 움직임을 함께 보고 장 마감 뒤 KRX 투자자별 거래실적으로 교차검증하세요.</p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="HTS에서 외국인 KOSPI 200 선물 옵션 수급 보기 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -1225,7 +1311,7 @@
               <h2>선물·옵션은 시장의 “기상청”일까요?</h2>
               <div class="lesson-body">
                 <p>선물·옵션 시장은 투자자들의 가격 변동 기대가 빠르게 모이는 곳이라 주식시장의 ‘기상청’에 비유되기도 합니다. 날씨 예보가 비를 확정하지 않듯, 선물·옵션 가격도 시장의 기대와 긴장도를 보여 주는 신호이지 미래 주가를 확정하는 답은 아닙니다.</p>
-                <p>옵션 가격이 높아졌다면 시장이 앞으로 큰 움직임 가능성을 더 크게 보고 있을 수 있습니다. 지수 선물 거래량, 옵션 거래량·미결제약정, 선물과 현물의 가격 차이는 매수·매도 관심을 살피는 단서가 되지만 하나만으로 방향을 단정할 수는 없습니다.</p>
+                <p>옵션 가격이 높아졌다면 시장이 앞으로 큰 움직임 가능성을 더 크게 보고 있을 수 있습니다. 지수 선물 거래량, 옵션 거래량, 선물과 현물의 가격 차이는 매수·매도 관심을 살피는 단서가 되지만 하나만으로 방향을 단정할 수는 없습니다.</p>
                 <p>퀀트 시스템도 이런 값을 예언이 아니라 관측값으로 사용합니다. 변동성 기대가 높아지면 포지션 크기를 줄이고, 가격 차이와 거래량이 평소와 크게 달라지면 수급 불균형·거래비용을 점검하는 식입니다. 데이터 기준 시점, 거래비용, 최악의 손실 시나리오를 함께 확인하세요.</p>
                 <p class="lesson-video-cta">
                   <button type="button" class="lesson-video-link" id="marketSignalTrigger">
@@ -1435,6 +1521,134 @@
                 반대거래나 현금결제로 미리 끝냅니다.
               </dd>
             </div>
+            <div class="glossary-item">
+              <dt>반대거래 <small>Offsetting Transaction · 청산거래</small></dt>
+              <dd>이미 가진 선물·옵션 포지션과 같은 상품·같은 만기의 반대 주문을 내어 포지션을 0으로 만드는 거래입니다. 선물을 샀다면 팔고, 팔았다면 사는 방식으로 만기 전에 계약을 끝낼 수 있습니다. 실제 주문과 강제 반대매매의 처리 기준은 거래소와 증권사 규정을 확인해야 합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>반대매매 <small>Offsetting Trade · 反對賣買</small></dt>
+              <dd>보유 중인 포지션과 반대 방향으로 같은 상품을 매매해 포지션을 정리하는 것을 말합니다. 선물을 매수했다면 같은 계약을 매도하고, 매도했다면 매수해 포지션을 0으로 만듭니다. 투자자가 직접 하는 반대매매는 보통 만기 전 청산 수단이고, 증거금 부족 때 증권사가 실행하는 강제 반대매매와는 누가 주문을 냈는지에 차이가 있습니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>일일정산 <small>Daily Mark-to-Market · 日日精算</small></dt>
+              <dd>선물 등 파생상품의 가격 변동에 따른 당일 손익을 거래일마다 계산해 계좌에 반영하는 절차입니다. 손실이 나면 증거금 잔액이 줄고, 기준 아래로 내려가면 추가 증거금 납부를 요구받을 수 있습니다. 다음 날 손익은 최초 거래가격이 아니라 전날의 정산가격을 기준으로 새로 계산하는 것이 일반적입니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>이행위험 <small>Performance Risk · 信用履行危險</small></dt>
+              <dd>계약 상대방이 약속한 대금 지급·자산 인도·의무 이행을 하지 못할 위험입니다. 장내 파생상품에서는 거래소와 청산기관이 증거금, 일일정산, 결제불이행 처리 등을 통해 이 위험을 줄이려 합니다. 위험을 줄이는 장치이지 없애는 것은 아니며, 장외계약에서는 상대방의 신용과 담보를 직접 확인하는 일이 특히 중요합니다.</dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>콜옵션 <small>Call Option · 買受選擇權</small></dt>
+              <dd>옵션 매수자에게 만기 전 또는 만기에 정해진 행사가격으로 기초자산을 살 수 있는 권리를 주는 계약입니다. 기초자산 가격이 오를수록 콜옵션 매수자에게 유리해지는 경향이 있습니다. 매수자는 권리를 행사하지 않을 수 있지만, 매도자는 매수자가 행사하면 계약 조건을 이행해야 합니다.</dd>
+            </div>
+            <div class="glossary-item" data-glossary-manual-only>
+              <dt>풋옵션 <small>Put Option · 賣渡選擇權</small></dt>
+              <dd>옵션 매수자에게 만기 전 또는 만기에 정해진 행사가격으로 기초자산을 팔 수 있는 권리를 주는 계약입니다. 기초자산 가격이 내릴수록 풋옵션 매수자에게 유리해지는 경향이 있습니다. 매수자는 권리를 행사하지 않을 수 있지만, 매도자는 매수자가 행사하면 계약 조건을 이행해야 합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>기초자산 <small>Underlying Asset · 基礎資産</small></dt>
+              <dd>선물·옵션 등 파생상품의 가격과 손익을 결정하는 기준 대상입니다. 개별 주식·주가지수·채권·환율·금리뿐 아니라 원유·금·농산물 같은 실물상품, 신용사건이나 지수도 기초자산 또는 계약 기준이 될 수 있습니다. 파생상품을 거래하기 전에는 무엇을 기준으로 하는 계약인지부터 확인해야 합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>내재가치 <small>Intrinsic Value · 內在價値</small></dt>
+              <dd>옵션을 지금 바로 행사했을 때 얻을 수 있는 경제적 이익입니다. 콜옵션은 기초자산 가격이 행사가격보다 높은 부분, 풋옵션은 행사가격이 기초자산 가격보다 낮은 부분이 내재가치가 됩니다. 행사해도 이익이 없으면 내재가치는 0이며, 음수가 되지는 않습니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>시간가치 <small>Time Value · 時間價値</small></dt>
+              <dd>옵션 만기 전 기초자산 가격이 유리하게 움직일 가능성에 대해 붙는 가치입니다. 보통 옵션 프리미엄에서 내재가치를 뺀 부분으로 이해할 수 있으며, 남은 기간·변동성·금리 등에 영향을 받습니다. 다른 조건이 같다면 만기가 가까워질수록 시간가치는 줄어드는 경향이 있습니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>호가 스프레드 <small>Bid-Ask Spread</small></dt>
+              <dd>시장에서 가장 높은 매수호가와 가장 낮은 매도호가 사이의 차이입니다. 예를 들어 매수호가가 500원이고 매도호가가 520원이면 스프레드는 20원입니다. 스프레드가 넓을수록 즉시 사고팔 때 거래비용과 불리한 가격 차이가 커질 수 있으며, 유동성·변동성·주문량의 영향을 받습니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>프리미엄 <small>Premium</small></dt>
+              <dd>옵션 매수자가 정해진 가격에 사고팔 수 있는 권리를 얻기 위해 옵션 매도자에게 처음 지급하는 대가입니다. 옵션 매수자의 최대 손실은 보통 낸 프리미엄으로 제한되지만, 옵션 매도자는 받은 프리미엄과 맞바꿔 행사에 응할 의무를 집니다. 프리미엄은 기초자산 가격, 행사가격, 남은 기간, 변동성 등에 따라 달라집니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>포지션 <small>Position</small></dt>
+              <dd>특정 자산이나 계약에서 현재 보유한 거래 상태를 뜻합니다. 주식 10주 보유, 선물 매수 1계약, 풋옵션 매도 1계약은 각각 하나의 포지션입니다. 반대매매를 하면 포지션이 줄거나 0이 되어 청산되며, 매수·매도 방향과 수량에 따라 가격 변동 때의 손익이 달라집니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>헤지 <small>Hedge · 위험회피</small></dt>
+              <dd>이미 보유했거나 앞으로 부담할 가격·환율·금리 변동 위험을 줄이기 위해 반대 방향의 거래를 함께 하는 방법입니다. 예를 들어 주식 포트폴리오를 보유한 투자자가 주가지수선물을 매도하면 시장 하락 때 현물 주식의 손실 일부를 선물 이익으로 상쇄할 수 있습니다. 다만 계약 규모·만기·기초자산이 맞지 않으면 손실을 완전히 막지 못하거나 오히려 위험이 커질 수 있습니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>레버리지 상품 <small>Leveraged Product</small></dt>
+              <dd>증거금·차입 등을 이용해 실제로 낸 돈보다 큰 규모의 자산 또는 가격 변동에 노출되는 상품입니다. 선물과 옵션 매도는 대표적으로 레버리지가 큰 거래이며, 작은 가격 변화도 손익을 크게 만들 수 있습니다. 수익뿐 아니라 손실도 빠르게 커질 수 있고, 증거금 부족 시 추가 납부나 강제청산이 발생할 수 있으므로 계약 규모와 최악의 손실 가능성을 먼저 확인해야 합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>신용위험(CDS) <small>Credit Default Swap · 신용부도스왑</small></dt>
+              <dd>CDS는 채권 발행자 등이 이자나 원금을 갚지 못하는 신용사건 위험에 대비하는 장외 파생계약입니다. 보호를 사는 쪽은 정기적으로 프리미엄을 내고, 보호를 파는 쪽은 계약에서 정한 신용사건이 발생하면 손실을 보전하는 지급을 할 수 있습니다. 따라서 CDS는 신용위험 자체가 아니라 그 위험을 이전하거나 가격으로 나타내는 계약이며, 거래상대방 위험과 계약 조건도 확인해야 합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>에스크로(Escrow) <small>Escrow · 조건부 예치</small></dt>
+              <dd>구매자와 판매자가 거래 조건을 이행할 때까지 제3자가 대금이나 서류 등을 보관·관리하는 결제보호 방식입니다. 예를 들어 구매자가 대금을 에스크로 사업자에게 맡기고, 상품 인도·구매확정 등 약정 조건이 충족되면 판매자에게 지급할 수 있습니다. 이는 일반 상거래의 결제보호 장치이며, 거래소 파생상품에서 계약 당사자 사이에 서는 중앙청산상대방(CCP)과는 역할과 법적 구조가 다릅니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>인도 <small>Delivery</small></dt>
+              <dd>만기에 계약 조건에 따라 기초자산이나 그 인수 권리를 매도자에서 매수자에게 넘기는 절차입니다. 상품선물은 원유·곡물 등의 실물이나 창고증권이 대상일 수 있으며, 계약 단위·인도 장소·통지 일정이 정해져 있습니다. 모든 선물이 인도되는 것은 아니고, 현금결제 상품도 많습니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>정산 <small>Settlement</small></dt>
+              <dd>계약에서 발생한 손익이나 지급 의무를 계산해 계좌와 당사자 사이에 반영하는 절차입니다. 선물은 보통 매일 가격 변동에 따른 손익을 일일 정산하고, 만기에는 상품 규칙에 따라 최종결제가격으로 현금 정산하거나 인도 절차를 진행합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>스왑 <small>Swap</small></dt>
+              <dd>두 당사자가 미리 정한 기간 동안 서로 다른 현금흐름을 교환하기로 하는 계약입니다. 금리스왑은 같은 통화의 고정·변동금리 이자 흐름을, 통화스왑은 서로 다른 통화의 원금·이자 흐름을 교환하는 데 주로 쓰입니다. 보통 장외계약이므로 상대방 신용과 담보, 중도해지 조건도 함께 확인해야 합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>브레튼우즈 체제 <small>Bretton Woods System</small></dt>
+              <dd>제2차 세계대전 뒤 각국 통화의 가치를 미국 달러에, 달러 가치를 금에 연결해 환율을 비교적 고정하려 했던 국제 통화 제도입니다. 여기서 태환(兌換)은 종이돈(지폐)을 금이나 은 같은 실물 자산으로 바꿔 주는 것을 말합니다. 미국의 금 태환 중지와 주요국의 변동환율 전환을 거치며 1970년대 초 사실상 무너졌고, 이후 환율 변동 위험을 관리하려는 통화선물·통화스왑 등의 수요가 커졌습니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>태환 <small>Convertibility · 兌換</small></dt>
+              <dd>태환(兌換)은 종이돈(지폐)을 금이나 은 같은 실물 자산으로 바꿔 주는 것입니다. 금 태환은 일정한 비율로 통화를 금으로 바꿔 주는 것을 말합니다. 미국이 1971년 달러의 금 태환을 중지했다는 것은 다른 나라의 중앙은행 등이 달러를 미국 정부에 내고 금으로 바꾸는 제도를 멈췄다는 뜻입니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>금본위제 <small>Gold Standard · 金本位制</small></dt>
+              <dd>통화의 가치를 일정량의 금에 연결하고, 정해진 조건 아래 통화를 금으로 바꿔 주는 것을 바탕으로 한 화폐 제도입니다. 금 보유량이 통화 발행과 국제결제에 중요한 기준이 되므로 환율을 비교적 안정시키는 장점이 있었지만, 경기 침체 때 통화·금융정책을 유연하게 쓰기 어렵다는 한계도 있었습니다. 오늘날 대부분의 국가는 금과 직접 연결하지 않는 법정화폐 제도를 사용합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>실물자산 <small>Real Asset · 實物資産</small></dt>
+              <dd>토지·건물·금·원유·농산물처럼 물리적인 형태가 있거나 사용·생산 과정에서 가치를 만드는 자산입니다. 주식·채권처럼 기업이나 정부에 대한 권리·청구권을 나타내는 금융자산과 구분해 부릅니다. 실물자산도 가격이 변하고 보관·운송·관리 비용이나 유동성 위험이 있을 수 있으므로, 실물이 있다는 사실만으로 가격 안정이나 수익이 보장되지는 않습니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>선도계약 <small>Forward Contract · 先渡契約</small></dt>
+              <dd>선도계약은 두 당사자가 미래의 특정 시점에 특정 자산을 미리 정한 가격과 조건으로 사고팔기로 직접 약정하는 계약입니다. 거래소 선물과 달리 수량·만기·인도 조건을 당사자에게 맞춰 정할 수 있지만, 계약을 다른 사람에게 넘기기 어렵고 상대방이 약속을 이행하지 못할 신용위험을 직접 관리해야 합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>선물환 계약 <small>FX Forward Contract · Foreign Exchange Forward</small></dt>
+              <dd>미래의 특정 날짜에 서로 다른 통화를 미리 약정한 환율로 교환하기로 하는 선도계약입니다. 예를 들어 수출기업이 앞으로 받을 달러를 원화로 바꿀 환율을 미리 정해 두면, 이후 환율이 움직여도 원화 수입의 불확실성을 줄일 수 있습니다. 거래소 선물과 달리 보통 은행·금융회사와 맺는 장외 맞춤 계약이므로 계약 금액·만기·중도해지 조건과 상대방 위험을 확인해야 합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>네덜란드 동인도회사 <small>VOC · Vereenigde Oostindische Compagnie · Dutch East India Company</small></dt>
+              <dd>VOC는 1602년 설립된 네덜란드 동인도회사를 뜻합니다. 해외 무역을 위해 자금을 모으고 지분을 거래한 초기 주식회사 사례로 자주 언급되며, 암스테르담 시장에서는 이 회사 주식을 기초로 한 초기 옵션 거래도 나타났습니다. 오늘날의 주식회사·거래소 제도와 완전히 같지는 않지만, 증권시장 발전을 이해하는 중요한 역사적 사례입니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>시카고상업거래소 <small>CME · Chicago Mercantile Exchange</small></dt>
+              <dd>미국 시카고에서 출발한 파생상품 거래소입니다. 통화·금리·주가지수·에너지·금속·농산물 등의 표준 선물과 옵션을 거래하며, 현재는 CME Group에 속해 있습니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>시카고상품거래소 <small>CBOT · Chicago Board of Trade</small></dt>
+              <dd>1848년 설립된 미국의 상품거래소로, 곡물 선도거래와 표준 선물계약 발전의 중요한 기반이 됐습니다. 현재는 CME Group이 운영하는 거래소 브랜드 가운데 하나입니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>캔자스시티상품거래소 <small>KCBT · Kansas City Board of Trade</small></dt>
+              <dd>미국 미주리주 캔자스시티에 있던 선물거래소로, 경질 적색 겨울밀 선물과 1982년 밸류라인 종합지수 선물 상장으로 알려졌습니다. 2012년 CBOT에 인수되어 별도 거래소로는 운영되지 않습니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>한국거래소 <small>KRX · Korea Exchange</small></dt>
+              <dd>한국의 증권·파생상품 시장을 운영하는 거래소입니다. 주식·채권·ETF와 KOSPI 200 선물·옵션 등 표준화된 파생상품의 거래와 청산·결제 체계를 제공합니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>시카고옵션거래소 <small>CBOE · Chicago Board Options Exchange</small></dt>
+              <dd>1973년 미국에서 표준화된 상장 옵션 거래를 시작한 거래소입니다. 현재 브랜드 표기는 Cboe이며, 주식·지수·옵션 등 다양한 시장을 운영하는 Cboe Global Markets의 뿌리입니다.</dd>
+            </div>
+            <div class="glossary-item">
+              <dt>일본거래소그룹 <small>JPX · Japan Exchange Group</small></dt>
+              <dd>도쿄증권거래소와 오사카거래소 등을 운영하는 일본의 거래소 그룹입니다. 주식·파생상품 시장을 운영하며, 오사카 도지마 쌀거래소의 역사 자료도 소개합니다.</dd>
+            </div>
           </dl>
         </section>
         <div class="pager"><span></span><a href="02.html">02 →</a></div>
@@ -1449,8 +1663,8 @@
       <section class="glossary-modal__dialog exchange-term-dialog" role="dialog" aria-modal="true" aria-labelledby="kcbtExchangeTitle">
         <button class="glossary-modal__close" type="button" aria-label="닫기" data-exchange-modal-close>×</button>
         <p class="glossary-modal__label">HISTORY · FUTURES EXCHANGE</p>
-        <h2 id="kcbtExchangeTitle">캔자스시티상품거래소(KCBT)</h2>
-        <p>미국 미주리주 캔자스시티에 있던 선물거래소입니다. 곡물, 특히 경질 적색 겨울밀 선물로 잘 알려졌으며, 1982년 밸류라인 종합지수 선물을 상장해 주가지수선물의 초기 이정표를 남겼습니다.</p>
+        <h2 id="kcbtExchangeTitle">KCBT · Kansas City Board of Trade</h2>
+        <p><b>캔자스시티상품거래소</b>를 뜻합니다. 미국 미주리주 캔자스시티에 있던 선물거래소로, 곡물, 특히 경질 적색 겨울밀 선물과 1982년 밸류라인 종합지수 선물 상장으로 잘 알려졌습니다.</p>
         <p>현재는 별도 거래소로 운영되지 않습니다. 2012년 CBOT가 KCBT를 인수했고, CBOT는 CME Group 계열 거래소이므로 KCBT의 역사와 상품은 CME Group의 거래소 체계 안에서 이어집니다.</p>
       </section>
     </div>
@@ -1459,8 +1673,8 @@
       <section class="glossary-modal__dialog exchange-term-dialog" role="dialog" aria-modal="true" aria-labelledby="sp500IndexTitle">
         <button class="glossary-modal__close" type="button" aria-label="닫기" data-exchange-modal-close>×</button>
         <p class="glossary-modal__label">INDEX · U.S. LARGE-CAP EQUITIES</p>
-        <h2 id="sp500IndexTitle">S&amp;P 500</h2>
-        <p><b>S&amp;P Dow Jones Indices</b>가 산출하는 미국 대형주 대표 지수입니다. 미국 주요 500개 기업으로 구성되며, 각 회사의 유통 시가총액 비중이 클수록 지수에 미치는 영향도 커집니다.</p>
+        <h2 id="sp500IndexTitle">S&amp;P 500 · Standard &amp; Poor's 500 Index</h2>
+        <p><b>스탠더드앤드푸어스 500 지수</b>를 뜻하며, S&amp;P Dow Jones Indices가 산출하는 미국 대형주 대표 지수입니다. 미국 주요 500개 기업으로 구성되며, 각 회사의 유통 시가총액 비중이 클수록 지수에 미치는 영향도 커집니다.</p>
         <ul><li><b>지수 자체</b>는 회사 주식이나 거래소가 아니라, 주가 흐름을 나타내는 계산 기준입니다.</li><li>ETF·인덱스펀드·선물·옵션은 이 지수를 <b>기초지수</b>로 삼아 수익률을 추종하거나 가격 변동 위험을 관리합니다.</li></ul>
         <p class="exchange-term-note">따라서 S&amp;P 500 선물 매수는 500개 주식을 직접 한 주씩 사는 것이 아니라, 지수 변화에 연동되는 표준 선물계약을 거래하는 것입니다.</p>
       </section>
@@ -1470,7 +1684,8 @@
       <section class="glossary-modal__dialog exchange-term-dialog" role="dialog" aria-modal="true" aria-labelledby="krxExchangeTitle">
         <button class="glossary-modal__close" type="button" aria-label="닫기" data-exchange-modal-close>×</button>
         <p class="glossary-modal__label">EXCHANGE · KOREA</p>
-        <h2 id="krxExchangeTitle">KRX(한국거래소)</h2>
+        <h2 id="krxExchangeTitle">KRX · Korea Exchange</h2>
+        <p><b>한국거래소</b>를 뜻합니다.</p>
         <p>한국의 증권·파생상품 시장을 운영하는 거래소입니다. 주식·채권·ETF·ETN·파생상품 등이 정해진 규칙과 전산시스템 안에서 거래되도록 하고, 상장·시장감시·청산·결제 관련 기능을 수행합니다.</p>
         <p>파생상품에서는 KOSPI 200 선물·옵션, 국채선물, 달러선물처럼 표준화된 계약을 거래할 수 있습니다. 거래소와 청산 체계는 매수자와 매도자가 직접 서로의 신용만 믿는 구조보다 결제 이행 위험을 낮추는 역할을 합니다.</p>
       </section>
@@ -1480,8 +1695,8 @@
       <section class="glossary-modal__dialog exchange-term-dialog" role="dialog" aria-modal="true" aria-labelledby="cmeExchangeTitle">
         <button class="glossary-modal__close" type="button" aria-label="닫기" data-exchange-modal-close>×</button>
         <p class="glossary-modal__label">EXCHANGE · UNITED STATES</p>
-        <h2 id="cmeExchangeTitle">CME와 CME Group</h2>
-        <p><b>CME(Chicago Mercantile Exchange)</b>는 미국 시카고에서 출발한 파생상품 거래소입니다. 통화·금리·주가지수·에너지·금속·농산물 등에 관한 표준 선물과 옵션을 거래합니다.</p>
+        <h2 id="cmeExchangeTitle">CME · Chicago Mercantile Exchange</h2>
+        <p><b>시카고상업거래소</b>를 뜻하는 미국 시카고 출발의 파생상품 거래소입니다. 통화·금리·주가지수·에너지·금속·농산물 등에 관한 표준 선물과 옵션을 거래합니다.</p>
         <p><b>CME Group</b>은 CME뿐 아니라 CBOT·NYMEX·COMEX 등의 거래소 브랜드를 운영하는 그룹입니다. 화면이나 뉴스에서 ‘CME 선물’이라고 하면 좁게는 CME 거래소, 넓게는 이 그룹의 파생상품 시장을 가리킬 수 있습니다.</p>
       </section>
     </div>
@@ -1726,6 +1941,14 @@
             <p class="market-signal-note" id="marketSignalNote"></p>
           </div>
         </div>
+        <section class="market-signal-interpretation" aria-live="polite">
+          <h3>조절한 값은 이렇게 해석합니다</h3>
+          <div class="market-signal-interpretation-grid">
+            <p><b>선물 변화율</b><span id="marketSignalFuturesInterpretation"></span></p>
+            <p><b>옵션 변동성 기대</b><span id="marketSignalVolatilityInterpretation"></span></p>
+            <p><b>주식시장 반응 민감도</b><span id="marketSignalSensitivityInterpretation"></span></p>
+          </div>
+        </section>
       </section>
     </div>
 
@@ -1810,8 +2033,9 @@
         <h2 id="interestRateSwapTitle">금리스왑(IRS)이란?</h2>
         <p class="hedge-info-lead">같은 통화로, 정해진 원금 명목금액을 기준으로 계산한 고정금리 이자와 변동금리 이자 현금흐름을 교환하는 계약입니다.</p>
         <div class="hedge-info-examples">
-          <p><b>예시</b>변동금리 대출을 받은 기업이 금리 상승이 걱정되면, 변동금리를 내고 고정금리를 받는 구조의 스왑을 이용해 실질 부담을 고정금리에 가깝게 만들 수 있습니다.</p>
+          <p><b>기업 예시</b>변동금리 대출을 받은 기업이 금리 상승이 걱정되면, 스왑에서 고정금리를 내고 변동금리를 받는 구조를 이용할 수 있습니다. 대출에서 내는 변동금리와 스왑에서 받는 변동금리가 서로 상쇄되어, 수수료·기준금리 차이 등을 제외한 실질 부담을 고정금리에 가깝게 만들 수 있습니다.</p>
           <p><b>원금은?</b>보통 원금을 실제로 주고받지 않습니다. 계약에서 정한 명목원금에 이자율을 적용해 이자 차액을 정산합니다.</p>
+          <p><b>개인의 대출금리 갈아타기와 비교</b>개인은 보통 금리스왑을 직접 맺기보다, 새 대출로 기존 대출을 상환하는 대환대출이나 상품 내 고정·변동금리 전환을 이용합니다. 이는 기존 대출계약을 새 조건의 대출로 바꾸는 것이며, 두 이자 현금흐름을 교환하는 스왑과는 구조가 다릅니다. 갈아탈 때는 새 금리뿐 아니라 중도상환수수료, 인지·설정 비용, 대출 한도·기간, 담보가치와 신용 심사 조건을 함께 비교해야 합니다.</p>
           <p><b>유의할 점</b>금리가 예상과 반대로 움직이면 헤지 비용이나 기회비용이 생길 수 있고, 장외계약이므로 상대방 신용위험과 중도해지 조건도 확인해야 합니다.</p>
         </div>
       </section>
@@ -2904,6 +3128,9 @@
         const stockMove = document.getElementById("marketSignalStockMove");
         const risk = document.getElementById("marketSignalRisk");
         const note = document.getElementById("marketSignalNote");
+        const futuresInterpretation = document.getElementById("marketSignalFuturesInterpretation");
+        const volatilityInterpretation = document.getElementById("marketSignalVolatilityInterpretation");
+        const sensitivityInterpretation = document.getElementById("marketSignalSensitivityInterpretation");
         const closeButton = modal.querySelector(".glossary-modal__close");
         const volatilityLabels = { 1: "낮음", 2: "보통", 3: "높음" };
         let chart;
@@ -2927,6 +3154,15 @@
           note.textContent = volatility === 3
             ? "옵션 변동성 기대가 높다는 것은 ‘어느 방향인지’보다 큰 폭의 움직임 가능성이 커졌다는 신호로 읽어야 합니다."
             : `선물 신호의 ${Math.round(sensitivity * 100)}%만 주가지수에 전달된다고 단순화했습니다. 현물 수급·기업 실적·환율 등 다른 요인은 반영하지 않았습니다.`;
+          futuresInterpretation.textContent = futuresChange === 0
+            ? "0.00%로 두면 이 예시에서는 선물에서 상승·하락 방향 신호가 없다고 가정합니다."
+            : `${sign(futuresChange)}로 바꾸면 이 예시의 점선과 주가지수 변화의 기본 방향이 ${futuresChange > 0 ? "상승" : "하락"} 쪽으로 바뀝니다. 실제 주가 예측값은 아닙니다.`;
+          volatilityInterpretation.textContent = volatility === 3
+            ? "‘높음’은 방향과 무관하게 장중 오르내림 폭이 커질 수 있다는 가정입니다."
+            : volatility === 1
+              ? "‘낮음’은 같은 선물 신호에서도 장중 경로의 흔들림이 작다는 가정입니다."
+              : "‘보통’은 낮음과 높음 사이의 장중 흔들림을 가정합니다.";
+          sensitivityInterpretation.textContent = `현재 ${Math.round(sensitivity * 100)}%로, 선물 변화율 ${sign(futuresChange)} 중 ${sign(stockChange)}만 주가지수에 전달된다고 계산합니다. 민감도를 높이면 두 선의 차이는 줄고, 낮추면 차이는 커집니다.`;
           const options = {
             chart: { type: "line", height: 360, toolbar: { show: false }, animations: { enabled: true } },
             series: [{ name: "선물 변화율", data: futuresPath }, { name: "주가지수 변화율", data: stockPath }],
