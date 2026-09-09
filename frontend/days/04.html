@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="assets/app-shell.css?v=20260908-modal-text105" />
     <style>
       /* 분산투자·변동성 매매 단원은 03일차로 이동했습니다. */
-      body[data-day="4"] .lesson-list > .lesson:nth-child(-n + 12) { display: none; }
+      /* 첫 고정 안내인 그리스 문자는 표시하고, 기존에 이동한 12개 단원만 숨깁니다. */
+      body[data-day="4"] .lesson-list > .lesson:not(#greekLettersLesson):nth-child(-n + 13) { display: none; }
       body[data-day="4"] .lesson-list > #riskAssetsLesson,
       body[data-day="4"] .lesson-list > #diversificationLesson { display: grid; }
       .factor-sim-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
