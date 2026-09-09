@@ -1925,6 +1925,7 @@ KOSDAQ|웹젠|게임`,
         ${renderDay1ButlerContent(lesson.day)}
         ${dayVisual}
         ${learningVisual}
+        ${lesson.day === 4 ? renderGreekLettersGuide() : ''}
         ${renderExtendedDailyGuide(lesson.day)}
         ${lesson.day === 1 ? renderLendingFunnel() : ''}
         ${lesson.day === 1 ? renderAiHubRagCase() : ''}
@@ -1947,6 +1948,10 @@ KOSDAQ|웹젠|게임`,
       resizeInput();
       $questionInput.focus();
     });
+  }
+
+  function renderGreekLettersGuide() {
+    return `<section class="theory-lesson greek-letters-guide" aria-label="금융과 수학에서 자주 사용하는 주요 그리스 문자"><span>01</span><div class="theory-lesson-content"><h2>금융과 수학에서 자주 사용하는 주요 그리스 문자</h2><div class="theory-lesson-body"><p>금융과 수학에서 자주 사용하는 주요 그리스 문자를 정리해 드립니다.</p><p>수학에서는 <b>변수, 각도, 연산자</b>의 용도로, 금융(특히 옵션 투자의 위험 지표인 '파생상품 파생지수' 및 투자론)에서는 <b>리스크 및 변동성 측정</b> 용도로 주로 쓰입니다.</p><h3>1. 금융에서 쓰이는 주요 그리스 문자 (The Greeks)</h3><p>금융(특히 파생상품 옵션 거래)에서 그리스 문자는 '기초자산의 가격이나 조건이 변할 때 옵션 가격이 얼마나 변하는가'를 나타내는 감도 지표로 사용됩니다.</p><div class="lesson-table-wrap"><table class="lesson-table"><thead><tr><th>기호</th><th>이름</th><th>금융에서의 의미</th></tr></thead><tbody><tr><td><b>β</b></td><td><b>베타 (Beta)</b></td><td>시장 전체 대비 특정 주식의 <b>민감도(변동성)</b>. (예: β=1.5이면 시장보다 1.5배 더 등락)</td></tr><tr><td><b>α</b></td><td><b>알파 (Alpha)</b></td><td>시장 수익률(벤치마크)을 초과하는 <b>펀드매니저의 순수 초과 수익률</b>.</td></tr><tr><td><b>Δ, δ</b></td><td><b>델타 (Delta)</b></td><td>기초자산 가격이 1원 변할 때 <b>옵션 가격이 변하는 양</b>.</td></tr><tr><td><b>Γ, γ</b></td><td><b>감마 (Gamma)</b></td><td>기초자산 가격이 변할 때 <b>델타(Δ)가 변하는 비율</b> (델타의 변화율).</td></tr><tr><td><b>Θ, θ</b></td><td><b>세타 (Theta)</b></td><td>시간이 1일 지나갈 때 감소하는 <b>시간 가치 감소분</b> (시간에 따른 옵션 가격 변화).</td></tr><tr><td><b>𝒱</b></td><td><b>베가 (Vega)</b></td><td>기초자산의 변동성이 1% 변할 때 <b>옵션 가격의 변화량</b>. <i>(참고: 베가는 실제 그리스 문자가 아니지만 금융권에서 그리스 문자처럼 취급함)</i></td></tr><tr><td><b>ρ</b></td><td><b>로 (Rho)</b></td><td>이자율이 1% 변할 때 <b>옵션 가격의 변화량</b>.</td></tr></tbody></table></div><h3>2. 수학에서 쓰이는 주요 그리스 문자</h3><p>수학에서는 문자의 형태(대문자/소문자)에 따라 '연산자'나 '변수'로 역할을 나누어 사용합니다.</p><div class="lesson-table-wrap"><table class="lesson-table"><thead><tr><th>기호</th><th>이름</th><th>대문자 쓰임새</th><th>소문자 쓰임새</th></tr></thead><tbody><tr><td><b>Σ, σ</b></td><td><b>시그마 (Sigma)</b></td><td><b>Σ</b>: 총합(Summation) 연산자</td><td><b>σ</b>: 표준편차(Standard Deviation), 변수</td></tr><tr><td><b>Π, π</b></td><td><b>파이 (Pi)</b></td><td><b>Π</b>: 총곱(Product) 연산자</td><td><b>π</b>: 원주율 (3.14159…)</td></tr><tr><td><b>Δ, δ</b></td><td><b>델타 (Delta)</b></td><td><b>Δ</b>: 변화량(차이), 판별식</td><td><b>δ</b>: 아주 미세한 변화량 (미분/적분)</td></tr><tr><td><b>α, β, γ</b></td><td><b>알파/베타/감마</b></td><td>잘 쓰이지 않음 (알파벳 B, C 등과 유사)</td><td><b>α, β, γ</b>: 삼각형의 각도, 이차방정식의 해</td></tr><tr><td><b>μ</b></td><td><b>뮤 (Mu)</b></td><td>잘 쓰이지 않음</td><td><b>μ</b>: 확률과 통계에서의 <b>평균(Mean)</b></td></tr><tr><td><b>λ</b></td><td><b>람다 (Lambda)</b></td><td>잘 쓰이지 않음</td><td><b>λ</b>: 선형대수학의 <b>고유값(Eigenvalue)</b>, 확률론의 발생 비율</td></tr><tr><td><b>θ</b></td><td><b>세타 (Theta)</b></td><td>잘 쓰이지 않음</td><td><b>θ</b>: 삼각함수 및 미적분에서의 <b>미지의 각도</b></td></tr><tr><td><b>ε</b></td><td><b>엡실론 (Epsilon)</b></td><td>잘 쓰이지 않음</td><td><b>ε</b>: 오차항(Error), 임의의 아주 작은 양수</td></tr></tbody></table></div><h3>💡 한눈에 보는 핵심 요약</h3><ul><li><b>금융:</b> 주식에서는 α(초과 수익)와 β(시장 민감도)가 핵심이며, 옵션 거래에서는 Δ(가격), Γ(변화율), Θ(시간), 𝒱(변동성), ρ(금리)가 핵심 지표입니다.</li><li><b>수학:</b> 대문자(Σ, Π, Δ)는 묶어서 처리하는 <b>연산자나 전체 변화</b>를 뜻하고, 소문자(σ, π, θ, μ)는 <b>특정 수치, 각도, 통계량 변수</b>로 사용됩니다.</li></ul></div></div></section>`;
   }
 
   function renderStocksView(day = 1) {
