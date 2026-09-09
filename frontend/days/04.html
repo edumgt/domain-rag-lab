@@ -14,6 +14,8 @@
       /* 분산투자·변동성 매매 단원은 03일차로 이동했습니다. */
       /* 첫 고정 안내인 그리스 문자는 표시하고, 기존에 이동한 12개 단원만 숨깁니다. */
       body[data-day="4"] .lesson-list > .lesson:not(#greekLettersLesson):nth-child(-n + 13) { display: none; }
+      /* 그리스 문자 안내 바로 다음의 가치평가 단원은 항상 표시합니다. */
+      body[data-day="4"] .lesson-list > #valuationLesson { display: grid !important; }
       body[data-day="4"] .lesson-list > #riskAssetsLesson,
       body[data-day="4"] .lesson-list > #diversificationLesson { display: grid; }
       .factor-sim-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
@@ -687,7 +689,7 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>12.04</span>
+          </section><section class="lesson" id="valuationLesson"><span>12.04</span>
             <div class="lesson-content">
               <h2>자산 가치평가: 지금 가격은 무엇을 반영할까요?</h2>
               <div class="lesson-body">
