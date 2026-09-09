@@ -14,6 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app/ ./app/
 COPY frontend/ ./frontend/
 COPY data/ ./data/
+COPY streamlit_app.py .
 
 RUN mkdir -p /app/data/uploads
 

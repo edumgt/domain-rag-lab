@@ -1,0 +1,123 @@
+name: CD — Build to ECR and Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "frontend/**"
+      - "streamlit_app.py"
+      - "requirements.txt"
+      - "Dockerfile"
+      - "docker-compose.ecr.yml"
+      - ".github/workflows/cd-ecr.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: domain-rag-ecr-deploy
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  ECR_REGISTRY: 086015456585.dkr.ecr.ap-northeast-2.amazonaws.com
+
+jobs:
+  build-and-push:
+    name: Build app image and push to ECR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build app image
+        run: docker build -t "$ECR_REGISTRY/domain-rag-lab-api:latest" .
+
+      - name: Push api image
+        run: docker push "$ECR_REGISTRY/domain-rag-lab-api:latest"
+
+      - name: Tag and push streamlit image
+        run: |
+          docker tag "$ECR_REGISTRY/domain-rag-lab-api:latest" "$ECR_REGISTRY/domain-rag-lab-streamlit:latest"
+          docker push "$ECR_REGISTRY/domain-rag-lab-streamlit:latest"
+
+  deploy:
+    name: Deploy ECR images to EC2
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Generate ECR login password
+        id: ecr-password
+        run: |
+          PASSWORD="$(aws ecr get-login-password --region "$AWS_REGION")"
+          echo "::add-mask::$PASSWORD"
+          echo "password=$PASSWORD" >> "$GITHUB_OUTPUT"
+
+      - name: Configure SSH key
+        env:
+          EC2_ECR_SSH_PRIVATE_KEY: ${{ secrets.EC2_ECR_SSH_PRIVATE_KEY }}
+          EC2_ECR_HOST: ${{ secrets.EC2_ECR_HOST }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$EC2_ECR_SSH_PRIVATE_KEY" > ~/.ssh/domain-rag-ecr-deploy.pem
+          chmod 600 ~/.ssh/domain-rag-ecr-deploy.pem
+          ssh-keyscan -H "$EC2_ECR_HOST" >> ~/.ssh/known_hosts
+
+      - name: Copy compose file to EC2
+        env:
+          EC2_ECR_HOST: ${{ secrets.EC2_ECR_HOST }}
+          EC2_ECR_USER: ${{ secrets.EC2_ECR_USER }}
+          EC2_ECR_APP_DIR: ${{ secrets.EC2_ECR_APP_DIR }}
+        run: |
+          scp -i ~/.ssh/domain-rag-ecr-deploy.pem \
+            docker-compose.ecr.yml init.sql \
+            "$EC2_ECR_USER@$EC2_ECR_HOST:$EC2_ECR_APP_DIR/"
+
+      - name: Login to ECR and deploy on EC2
+        env:
+          EC2_ECR_HOST: ${{ secrets.EC2_ECR_HOST }}
+          EC2_ECR_USER: ${{ secrets.EC2_ECR_USER }}
+          EC2_ECR_APP_DIR: ${{ secrets.EC2_ECR_APP_DIR }}
+          ECR_PASSWORD: ${{ steps.ecr-password.outputs.password }}
+        run: |
+          ssh -i ~/.ssh/domain-rag-ecr-deploy.pem "$EC2_ECR_USER@$EC2_ECR_HOST" \
+            "sudo docker login --username AWS --password-stdin $ECR_REGISTRY" <<< "$ECR_PASSWORD"
+
+          ssh -i ~/.ssh/domain-rag-ecr-deploy.pem "$EC2_ECR_USER@$EC2_ECR_HOST" <<EOF
+          set -euo pipefail
+          cd "$EC2_ECR_APP_DIR"
+          sudo docker compose -f docker-compose.yml down --remove-orphans || true
+          sudo docker compose -f docker-compose.ecr.yml pull
+          sudo docker compose -f docker-compose.ecr.yml up -d --remove-orphans
+          sudo docker compose -f docker-compose.ecr.yml ps
+          curl --fail --retry 12 --retry-delay 5 http://localhost/health
+          EOF
+
+      - name: Remove SSH key
+        if: always()
+        run: rm -f ~/.ssh/domain-rag-ecr-deploy.pem

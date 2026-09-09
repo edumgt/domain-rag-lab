@@ -1,8 +1,8 @@
-name: domain-rag-lab-local
+name: domain-rag-lab-ecr
 
 services:
   postgres:
-    image: pgvector/pgvector:pg16
+    image: 086015456585.dkr.ecr.ap-northeast-2.amazonaws.com/domain-rag-lab-postgres:latest
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-ragdb}
       POSTGRES_USER: ${POSTGRES_USER:-raguser}
@@ -20,7 +20,7 @@ services:
     restart: unless-stopped
 
   redis:
-    image: redis:7-alpine
+    image: 086015456585.dkr.ecr.ap-northeast-2.amazonaws.com/domain-rag-lab-redis:latest
     ports:
       - "6380:6379"
     volumes:
@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
 
   qdrant:
-    image: qdrant/qdrant:v1.15.1
+    image: 086015456585.dkr.ecr.ap-northeast-2.amazonaws.com/domain-rag-lab-qdrant:latest
     ports:
       - "6335:6333"
       - "6336:6334"
@@ -47,7 +47,7 @@ services:
     restart: unless-stopped
 
   api:
-    build: .
+    image: 086015456585.dkr.ecr.ap-northeast-2.amazonaws.com/domain-rag-lab-api:latest
     ports:
       - "80:8000"
     env_file:
@@ -70,11 +70,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - ./app:/app/app
-      - ./frontend:/app/frontend
       - ./data:/app/data
       - ${LEAN_SSH_KEY_HOST_PATH:-/dev/null}:${LEAN_SSH_KEY_PATH:-/run/secrets/lean.pem}:ro
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       postgres:
         condition: service_healthy
@@ -91,15 +88,13 @@ services:
     restart: unless-stopped
 
   streamlit:
-    build: .
+    image: 086015456585.dkr.ecr.ap-northeast-2.amazonaws.com/domain-rag-lab-streamlit:latest
     ports:
       - "8290:8501"
     env_file:
       - ${APP_ENV_FILE:-.env.local}
     environment:
       API_BASE_URL: http://api:8000
-    volumes:
-      - ./streamlit_app.py:/app/streamlit_app.py:ro
     depends_on:
       api:
         condition: service_healthy
