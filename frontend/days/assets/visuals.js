@@ -84,10 +84,6 @@
     if (executionBody && !document.getElementById('citadelSecuritiesLink')) {
       executionBody.insertAdjacentHTML('beforeend', `<p class="lesson-video-cta"><a id="citadelSecuritiesLink" class="lesson-video-link" href="https://citadelsecurities.com/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Citadel Securities 공식 홈페이지</a><a class="lesson-video-link" href="https://www.merrilllynch.com/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Merrill 공식 홈페이지</a><small>사례의 대상 회사 소개를 확인하는 링크이며, 과거 제재 내용은 각 규제기관의 원문으로 별도 확인하세요.</small></p>`);
     }
-    const pairBody = target('벰버거의 페어 트레이딩:')?.querySelector('.lesson-body');
-    if (pairBody && !document.getElementById('pairTradingSimTrigger')) {
-      pairBody.insertAdjacentHTML('beforeend', `<p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="pairTradingSimTrigger"><i class="fa-solid fa-code-branch"></i> 페어 트레이딩 시뮬레이터</button><small>두 가격의 간격과 Z-점수로 진입·청산 신호 및 롱·숏 손익을 살펴보세요.</small></p>`);
-    }
     if (!document.getElementById('koreanPairBreakTimeModal')) {
       document.body.insertAdjacentHTML('beforeend', `<div class="glossary-modal breaktime-modal" id="koreanPairBreakTimeModal" hidden><div class="glossary-modal__backdrop" data-korean-pair-breaktime-close></div><section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="koreanPairBreakTimeTitle"><button class="glossary-modal__close" type="button" aria-label="닫기" data-korean-pair-breaktime-close>×</button><p class="glossary-modal__label">BREAKTIME · 확장 과제</p><h2 id="koreanPairBreakTimeTitle">다른 종목 페어도 비교해 보세요</h2><p>비교하려는 두 종목의 업종·사업 구조·거래량·공매도 가능 여부와 주요 이벤트를 먼저 찾아보세요. 단지 상관관계가 높다는 이유만으로 페어가 적합한 것은 아닙니다.</p><p><b>시스템 확장 과제:</b> 종목 선택 목록에 새 페어를 추가하고, 각 페어별 가격 데이터·비교 기간·진입 Z 기준·거래비용을 바꿔 결과를 비교해 보세요.</p><p><small>당일 종가로 신호를 만들었다면 다음 거래일 체결가로 검증하고, 수수료·세금·대차료·슬리피지와 표본 밖 기간을 함께 반영해야 합니다.</small></p></section></div>`);
     }
@@ -98,10 +94,6 @@
       koreanPairBreakTimeTrigger.addEventListener('click', () => { koreanPairBreakTimeModal.hidden = false; koreanPairBreakTimeModal.querySelector('.glossary-modal__close')?.focus(); });
       koreanPairBreakTimeModal.querySelectorAll('[data-korean-pair-breaktime-close]').forEach((element) => element.addEventListener('click', closeKoreanPairBreakTime));
       koreanPairBreakTimeTrigger.dataset.ready = 'true';
-    }
-    const koreanPairBody = target('국내 3개 페어로 보는 과거 신호')?.querySelector('.lesson-body');
-    if (koreanPairBody && !document.getElementById('koreanPairSimTrigger')) {
-      koreanPairBody.insertAdjacentHTML('beforeend', `<p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="koreanPairSimTrigger"><i class="fa-solid fa-chart-line"></i> 국내 페어 신호 시뮬레이터</button><small>신호일 종가 → 다음 거래일 진입 → 청산/손절의 순서와 비용 차감 손익을 확인하세요.</small></p>`);
     }
     const spoofingBody = target('허수성 주문(스푸핑):')?.querySelector('.lesson-body');
     if (spoofingBody && !document.getElementById('spoofingOrderBookTrigger')) {
