@@ -1,0 +1,49 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AcmCertificateManagement",
+      "Effect": "Allow",
+      "Action": [
+        "acm:RequestCertificate",
+        "acm:DescribeCertificate",
+        "acm:ListCertificates",
+        "acm:GetCertificate",
+        "acm:AddTagsToCertificate",
+        "acm:ListTagsForCertificate",
+        "acm:DeleteCertificate",
+        "acm:ResendValidationEmail"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "CloudFrontDistributionManagement",
+      "Effect": "Allow",
+      "Action": [
+        "cloudfront:CreateDistribution",
+        "cloudfront:GetDistribution",
+        "cloudfront:GetDistributionConfig",
+        "cloudfront:UpdateDistribution",
+        "cloudfront:DeleteDistribution",
+        "cloudfront:ListDistributions",
+        "cloudfront:CreateInvalidation",
+        "cloudfront:GetInvalidation",
+        "cloudfront:ListInvalidations",
+        "cloudfront:TagResource",
+        "cloudfront:UntagResource",
+        "cloudfront:ListTagsForResource",
+        "cloudfront:CreateOriginAccessControl",
+        "cloudfront:GetOriginAccessControl",
+        "cloudfront:UpdateOriginAccessControl",
+        "cloudfront:ListOriginAccessControls",
+        "cloudfront:CreateCachePolicy",
+        "cloudfront:GetCachePolicy",
+        "cloudfront:ListCachePolicies",
+        "cloudfront:CreateOriginRequestPolicy",
+        "cloudfront:GetOriginRequestPolicy",
+        "cloudfront:ListOriginRequestPolicies"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
