@@ -1,6 +1,8 @@
 (function () {
   'use strict';
 
+  const API_BASE = window.API_BASE || '';
+
   const state = {
     domain: 'finance',
     sessionId: crypto.randomUUID(),
@@ -1030,7 +1032,7 @@ KOSDAQ|웹젠|게임`,
     tickState.loading = true;
     if (!tickState.bars.length) renderTickDashboardFrame();
     try {
-      const response = await fetch(`/market/intraday?ticker=${encodeURIComponent(tickState.ticker)}&market=${encodeURIComponent(tickState.market)}`);
+      const response = await fetch(`${API_BASE}/market/intraday?ticker=${encodeURIComponent(tickState.ticker)}&market=${encodeURIComponent(tickState.market)}`);
       const payload = await response.json();
       if (requestedTicker !== tickState.ticker) return; // 응답이 오는 사이 다른 종목으로 전환된 경우 무시
       tickState.bars = payload.bars || [];
@@ -1054,7 +1056,7 @@ KOSDAQ|웹젠|게임`,
     tickState.beta = { loading: true };
     renderTickDashboardFrame();
     try {
-      const response = await fetch(`/market/beta?ticker=${encodeURIComponent(requestedTicker)}&market=${encodeURIComponent(requestedMarket)}`);
+      const response = await fetch(`${API_BASE}/market/beta?ticker=${encodeURIComponent(requestedTicker)}&market=${encodeURIComponent(requestedMarket)}`);
       const payload = await response.json();
       if (requestedTicker !== tickState.ticker || requestedMarket !== tickState.market) return;
       tickState.beta = {
@@ -1214,7 +1216,7 @@ KOSDAQ|웹젠|게임`,
   async function fetchDashboardAsset(asset) {
     dashboardState.items[asset.ticker] = { ...(dashboardState.items[asset.ticker] || {}), loading: true };
     try {
-      const response = await fetch(`/market/company?ticker=${encodeURIComponent(asset.ticker)}&market=${encodeURIComponent(asset.market)}&name=${encodeURIComponent(asset.name)}`);
+      const response = await fetch(`${API_BASE}/market/company?ticker=${encodeURIComponent(asset.ticker)}&market=${encodeURIComponent(asset.market)}&name=${encodeURIComponent(asset.name)}`);
       const payload = await response.json();
       dashboardState.items[asset.ticker] = { quote: payload.quote, error: payload.quote ? null : '시세 없음', loading: false };
     } catch (error) {
@@ -1578,7 +1580,7 @@ KOSDAQ|웹젠|게임`,
       start.setDate(start.getDate() - basisState.rangeDays + 1);
       end.setDate(end.getDate() + 1);
       const fmt = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      const response = await fetch(`/market/kospi200-history?start=${fmt(start)}&end=${fmt(end)}`);
+      const response = await fetch(`${API_BASE}/market/kospi200-history?start=${fmt(start)}&end=${fmt(end)}`);
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.detail || '요청 실패');
       if (requestId !== basisState.requestId) return;
@@ -1719,7 +1721,7 @@ KOSDAQ|웹젠|게임`,
     button.disabled = true; button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> LEAN 실행 중';
     result.innerHTML = '<div class="backtest-empty"><i class="fa-solid fa-spinner fa-spin"></i><p>yfinance 데이터를 정리하고 원격 LEAN 컨테이너를 실행하고 있습니다.</p></div>';
     try {
-      const response = await fetch('/backtests/run', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
+      const response = await fetch(`${API_BASE}/backtests/run`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || '백테스트를 실행하지 못했습니다.');
       result.innerHTML = `<div class="backtest-result-head"><span>${escHtml(data.engine)} · ${escHtml(data.strategy_label || '')}</span><h2>${escHtml(data.ticker)} 결과</h2></div>${buildBacktestSummary(data)}<div class="backtest-metrics"><article><span>전략 수익률</span><strong class="${data.strategy_return_pct >= 0 ? 'up' : 'down'}">${data.strategy_return_pct >= 0 ? '+' : ''}${data.strategy_return_pct}%</strong></article><article><span>연환산 수익률</span><strong class="${data.annualized_return_pct >= 0 ? 'up' : 'down'}">${data.annualized_return_pct >= 0 ? '+' : ''}${data.annualized_return_pct}%</strong></article><article><span>연환산 변동성</span><strong>${data.annualized_volatility_pct}%</strong></article><article><span>샤프 비율</span><strong>${data.sharpe_ratio}</strong></article><article><span>최대 낙폭</span><strong class="down">${data.max_drawdown_pct}%</strong></article><article><span>시장 노출 일수</span><strong>${data.invested_days_pct}%</strong></article><article><span>규칙 변경 횟수</span><strong>${data.trade_count}회</strong></article><article><span>단순 보유 수익률</span><strong class="${data.benchmark_return_pct >= 0 ? 'up' : 'down'}">${data.benchmark_return_pct >= 0 ? '+' : ''}${data.benchmark_return_pct}%</strong></article></div>${buildInvestmentChecklist(data)}<canvas id="backtestChart" width="900" height="250" aria-label="자산 곡선"></canvas><p class="backtest-disclaimer">${escHtml(data.disclaimer)}</p><details><summary>LEAN 실행 로그 보기</summary><pre>${escHtml(data.lean_log || '결과 로그 없음')}</pre></details>`;
@@ -2326,7 +2328,7 @@ effective_date: [기준일]
     document.body.classList.add('modal-open');
     modal.querySelectorAll('[data-atlas-close]').forEach(item => item.addEventListener('click', () => { modal.remove(); document.body.classList.remove('modal-open'); }));
     try {
-      const response = await fetch(`/market/company?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}&name=${encodeURIComponent(company.name)}`);
+      const response = await fetch(`${API_BASE}/market/company?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}&name=${encodeURIComponent(company.name)}`);
       if (!response.ok) throw new Error('market snapshot unavailable');
       const snapshot = await response.json();
       if (!document.body.contains(modal)) return;
@@ -2347,7 +2349,7 @@ effective_date: [기준일]
     let bars = null;
     let opened = false;
 
-    fetch(`/market/history?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}`)
+    fetch(`${API_BASE}/market/history?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}`)
       .then(response => response.ok ? response.json() : Promise.reject(new Error('history unavailable')))
       .then(data => {
         if (!document.body.contains(modal)) return;
@@ -2616,7 +2618,7 @@ effective_date: [기준일]
     setInputDisabled(true);
 
     try {
-      const res = await fetch('/chat', {
+      const res = await fetch(`${API_BASE}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -2731,7 +2733,7 @@ effective_date: [기준일]
     form.append('domain', state.domain);
 
     try {
-      const res = await fetch('/ingest/file', { method: 'POST', body: form });
+      const res = await fetch(`${API_BASE}/ingest/file`, { method: 'POST', body: form });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         showUploadStatus('error', `오류: ${err.detail || res.statusText}`);
@@ -2757,7 +2759,7 @@ effective_date: [기준일]
     showUploadStatus('loading', '등록 중…');
 
     try {
-      const res = await fetch('/ingest/text', {
+      const res = await fetch(`${API_BASE}/ingest/text`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, Response
 from functools import lru_cache
@@ -28,6 +29,18 @@ import app.models.stock_price_history  # noqa: F401
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title=settings.app_name)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://domain-rag-086015456585-ap-northeast-2.s3-website.ap-northeast-2.amazonaws.com",
+        "https://www.edumgt.co.kr",
+        "http://www.edumgt.co.kr",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 _HISTORIC_BOND_DETAIL_URL = "https://www.emuseum.go.kr/detail?relicId=PS0100202500100758500000"
 

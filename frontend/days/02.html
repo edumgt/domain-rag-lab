@@ -17,6 +17,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
+    <script>window.API_BASE = 'http://aa.edumgt.co.kr';</script>
     <script defer src="assets/visuals.js"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260906-shared-glossary"></script>
@@ -3042,7 +3043,7 @@
           if (periodCache.has(cacheKey)) return periodCache.get(cacheKey);
           const entry = { status: "loading", pct: null, earliestStoredDate: null };
           periodCache.set(cacheKey, entry);
-          fetch(`/market/period-return?ticker=${encodeURIComponent(code)}&start=${periodRange.start}&end=${periodRange.end}`)
+          fetch(`${window.API_BASE || ''}/market/period-return?ticker=${encodeURIComponent(code)}&start=${periodRange.start}&end=${periodRange.end}`)
             .then((res) => { if (!res.ok) throw new Error("period-return failed"); return res.json(); })
             .then((data) => {
               if (data.available) {
@@ -3066,7 +3067,7 @@
           extending.add(code);
           const priorEarliest = periodCache.get(periodCacheKey(code))?.earliestStoredDate || null;
           render();
-          fetch(`/market/period-return/extend?ticker=${encodeURIComponent(code)}&start=${periodRange.start}`, { method: "POST" })
+          fetch(`${window.API_BASE || ''}/market/period-return/extend?ticker=${encodeURIComponent(code)}&start=${periodRange.start}`, { method: "POST" })
             .then((res) => { if (!res.ok) throw new Error("extend failed"); return res.json(); })
             .then((data) => {
               periodCache.delete(periodCacheKey(code));
