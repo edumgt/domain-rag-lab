@@ -248,24 +248,20 @@
     { terms: ['무위험수익률'], korean: '무위험수익률', hanja: '無危險收益率', abbr: 'Rf', english: 'Risk-Free Rate', summary: '위험이 거의 없다고 가정한 투자에서 기대하는 기준 수익률입니다.', detail: '실제로 위험이 완전히 없는 투자는 드물지만, 성과를 비교할 때 기준점으로 사용합니다. 보통 단기 국채 수익률 등을 참고합니다.' },
   ];
 
-  const CALENDAR_EVENTS = [
-    { id: 'evt-us-nfp-aug', date: '2026-08-07', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'high', title: '미국 7월 고용보고서(비농업 고용지수) 발표', summary: '미국 노동부가 7월 비농업 고용자 수, 실업률, 시간당 임금을 발표합니다.', detail: '고용지표는 미국 연준의 금리 결정에 큰 영향을 주는 자료 중 하나입니다. 고용이 예상보다 강하면 금리 인하 기대가 줄고, 예상보다 약하면 금리 인하 기대가 커지는 경향이 있어 국채금리·환율·주가지수 선물이 발표 직후 크게 움직일 수 있습니다. 숫자 하나만으로 방향을 단정하기보다 임금 상승률, 실업률 추세와 함께 확인하는 것이 좋습니다.' },
-    { id: 'evt-kr-kakao-q2', date: '2026-08-07', time: '오전 이사회 · 오후 컨퍼런스콜(예정)', category: 'earnings', market: '한국', importance: 'medium', title: '카카오 2026년 2분기 실적 발표(잠정)', summary: '카카오가 2분기 매출·영업이익 잠정 실적과 사업부문별 성과를 공개합니다.', detail: '플랫폼 기업의 실적 발표에서는 광고·커머스·콘텐츠 등 사업부문별 매출 구성과 수익성 추세를 함께 확인하는 것이 좋습니다. 잠정실적은 이후 사업보고서·분기보고서로 확정되므로, 공식 공시(전자공시시스템)에서 원문을 다시 확인하는 습관이 중요합니다.' },
-    { id: 'evt-us-cpi-aug', date: '2026-08-13', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'high', title: '미국 7월 소비자물가지수(CPI) 발표', summary: '미국 노동통계국이 7월 CPI와 근원 CPI(식료품·에너지 제외) 상승률을 발표합니다.', detail: 'CPI는 인플레이션 흐름을 보여 주는 대표 지표로, 시장이 예상한 수치와 실제 발표치의 차이(서프라이즈)가 클수록 금리·환율·주가 변동성이 커질 수 있습니다. 전월 대비(MoM)와 전년 대비(YoY) 상승률을 함께 보고, 근원 CPI가 둔화 또는 재가속되는 추세인지 확인하세요.' },
-    { id: 'evt-kr-kospi-opt-aug', date: '2026-08-13', time: '장중 · 최종거래일', category: 'expiry', market: '한국', importance: 'medium', title: '코스피200 옵션 만기일(매월 둘째 목요일)', summary: '코스피200 옵션의 최종거래일로, 미결제약정 정리와 관련 헤지 주문이 늘어날 수 있습니다.', detail: '옵션 만기일에는 옵션 매도자였던 기관·금융기관이 델타 헤지 물량을 정리하면서 장 막판 수급이 평소보다 출렁일 수 있습니다. “만기일이라 무조건 오르내린다”고 단정하기보다, 미결제약정과 프로그램 매매 동향을 함께 참고 자료로만 확인하는 것이 좋습니다.' },
-    { id: 'evt-us-ppi-aug', date: '2026-08-14', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'medium', title: '미국 7월 생산자물가지수(PPI) 발표', summary: '기업 간 거래 단계의 물가 변화를 보여 주는 PPI가 발표됩니다.', detail: 'PPI는 소비자물가(CPI)보다 한발 앞서 기업의 원가 압력을 보여 줄 수 있어 향후 CPI 흐름을 가늠하는 보조 지표로 활용됩니다. 에너지·식품처럼 변동성이 큰 항목을 제외한 근원 PPI를 함께 보면 추세를 판단하는 데 도움이 됩니다.' },
-    { id: 'evt-fomc-minutes-aug', date: '2026-08-19', time: '한국시간 새벽(서머타임 기준)', category: 'macro', market: '미국', importance: 'medium', title: 'FOMC 7월 정례회의 의사록 공개', summary: '지난 7월 연방공개시장위원회(FOMC) 회의의 세부 논의 내용이 공개됩니다.', detail: '의사록에는 위원들이 금리 결정 당시 어떤 위험 요인과 데이터를 근거로 판단했는지가 담겨 있어, 다음 회의의 방향을 가늠하는 참고 자료로 쓰입니다. 성명서만으로 알기 어려운 위원 간 견해 차이를 확인할 수 있지만, 이미 지난 회의의 기록이라는 점도 함께 감안해야 합니다.' },
-    { id: 'evt-jackson-hole', date: '2026-08-21', time: '현지시간 기준 3일간', category: 'macro', market: '미국', importance: 'high', title: '잭슨홀 경제정책 심포지엄 개막', summary: '미국 캔자스시티 연은이 주최하는 연례 경제정책 심포지엄으로, 연준 의장의 연설이 주목받습니다.', detail: '잭슨홀 심포지엄에서 연준 의장의 연설은 향후 통화정책 방향에 대한 힌트로 해석되는 경우가 많아 채권·주식·환율 시장이 민감하게 반응할 수 있습니다. 연설 하나로 다음 회의 결과가 확정되는 것은 아니므로, 이후 발표되는 경제지표와 함께 판단해야 합니다.' },
-    { id: 'evt-nvidia-q2', date: '2026-08-26', time: '한국시간 오전(장 마감 후 발표, 서머타임 기준)', category: 'earnings', market: '미국', importance: 'high', title: '엔비디아(NVIDIA) 2026 회계연도 2분기 실적 발표', summary: 'AI 반도체 수요와 데이터센터 매출 전망을 가늠할 수 있는 엔비디아의 분기 실적이 발표됩니다.', detail: '데이터센터 부문 매출 성장률, 차세대 GPU 공급 상황, 다음 분기 매출 가이던스가 특히 주목받습니다. 엔비디아 실적은 국내 반도체·서버 공급망 관련 기업들의 투자심리에도 영향을 줄 수 있어 국내 투자자도 참고하는 경우가 많습니다.' },
-    { id: 'evt-bok-rate-aug', date: '2026-08-28', time: '오전 9시 결정, 오전 통화정책방향 발표', category: 'macro', market: '한국', importance: 'high', title: '한국은행 금융통화위원회 기준금리 결정', summary: '한국은행 금통위가 기준금리 인상·인하·동결 여부를 결정하고 통화정책방향을 발표합니다.', detail: '기준금리는 예·적금 금리, 대출금리, 국고채 수익률과 채권형 상품 가격에 영향을 줄 수 있습니다. 결정 결과뿐 아니라 총재 기자간담회에서 나오는 향후 정책 방향에 대한 발언도 함께 확인하는 것이 좋습니다.' },
-    { id: 'evt-us-nfp-sep', date: '2026-09-04', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'high', title: '미국 8월 고용보고서 발표', summary: '8월 비농업 고용자 수와 실업률이 발표됩니다.', detail: '9월 FOMC 회의를 앞두고 발표되는 고용지표라 시장의 금리 전망에 미치는 영향이 특히 클 수 있습니다. 전월 수치의 수정(리비전) 여부도 함께 확인하면 고용 흐름을 더 정확히 읽을 수 있습니다.' },
-    { id: 'evt-kospi-quad-sep', date: '2026-09-10', time: '장중 · 최종거래일', category: 'expiry', market: '한국', importance: 'high', title: '코스피200 선물·옵션 동시만기일(9월물, 분기 만기)', summary: '3·6·9·12월물 코스피200 선물이 옵션과 함께 만기를 맞는 분기 동시만기일입니다.', detail: '분기 동시만기일에는 선물·옵션 미결제약정 정리 물량이 한꺼번에 몰려 월간 만기보다 변동성이 커질 수 있습니다. 특히 장 마감 동시호가 구간에서 프로그램 매매(차익·비차익) 주문이 늘어나는 경향이 있어 참고 지표로만 활용하고 과도한 의미 부여는 주의해야 합니다.' },
-    { id: 'evt-us-cpi-sep', date: '2026-09-11', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'high', title: '미국 8월 CPI 발표', summary: '9월 FOMC 직전 발표되는 마지막 주요 CPI 지표입니다.', detail: '이 지표는 FOMC의 금리 결정 직전에 나오는 만큼 시장의 민감도가 특히 높습니다. 헤드라인 CPI와 근원 CPI의 방향이 엇갈릴 경우 해석에 더 주의가 필요합니다.' },
-    { id: 'evt-fomc-sep', date: '2026-09-17', time: '한국시간 새벽(서머타임 기준)', category: 'macro', market: '미국', importance: 'high', title: 'FOMC 9월 정례회의 금리 결정 발표', summary: '연방공개시장위원회가 이틀간의 회의를 마치고 기준금리 결정과 경제전망(점도표)을 공개합니다.', detail: '금리 결정 자체뿐 아니라 위원들의 향후 금리 전망을 보여 주는 점도표(dot plot), 의장의 기자회견 발언이 시장에 큰 영향을 줄 수 있습니다. 결정 결과가 예상과 같아도 향후 전망 문구가 달라지면 시장이 반응할 수 있다는 점을 기억하세요.' },
-    { id: 'evt-triple-witching-sep', date: '2026-09-18', time: '현지시간 장 마감 동시호가', category: 'expiry', market: '미국', importance: 'high', title: "미국 증시 '네 마녀의 날'(주가지수 선물·옵션, 개별주식 선물·옵션 동시만기)", summary: '3·6·9·12월 셋째 금요일, 네 가지 파생상품 계약이 한꺼번에 만기를 맞아 거래량이 크게 늘어날 수 있습니다.', detail: '동시만기일에는 지수를 추종하는 기관의 리밸런싱 주문과 만기 청산 물량이 겹치면서 장 마감 무렵 변동성이 커지는 경향이 있습니다. 국내 코스피200 동시만기일과 마찬가지로, 특정 방향을 예단하기보다 거래량·변동성이 커질 수 있는 날로 이해하는 것이 좋습니다.' },
-    { id: 'evt-us-pce-sep', date: '2026-09-25', time: '한국시간 21:30(서머타임 기준)', category: 'macro', market: '미국', importance: 'medium', title: '미국 8월 근원 PCE 물가지수 발표', summary: '연준이 가장 중요하게 참고하는 물가지표인 근원 개인소비지출(PCE) 상승률이 발표됩니다.', detail: 'PCE는 CPI와 산출 방식이 달라 두 지표의 방향이 항상 일치하지는 않습니다. 연준이 정책 판단에서 PCE를 핵심 지표로 삼는다고 여러 차례 밝힌 만큼, CPI 발표 이후에도 PCE 결과를 다시 확인하는 습관이 필요합니다.' },
-    { id: 'evt-kr-samsung-q3-preview', date: '2026-10-08', time: '오전(예정)', category: 'earnings', market: '한국', importance: 'medium', title: '삼성전자 2026년 3분기 잠정실적 발표', summary: '삼성전자가 3분기 매출·영업이익 잠정치를 공개합니다.', detail: '잠정실적은 사업부문별 세부 수치 없이 매출·영업이익 총액만 먼저 공개되는 경우가 많습니다. 반도체(메모리·파운드리)와 디바이스 부문의 세부 실적은 이후 확정 실적 발표와 사업보고서에서 확인할 수 있습니다.' },
-  ];
+  let CALENDAR_EVENTS = [];
+  let calendarEventsLoaded = false;
+  let calendarEventsPromise = null;
+
+  function ensureCalendarEvents() {
+    if (calendarEventsLoaded) return Promise.resolve(CALENDAR_EVENTS);
+    if (!calendarEventsPromise) {
+      calendarEventsPromise = fetch(`${API_BASE}/market/calendar-events`)
+        .then(res => (res.ok ? res.json() : []))
+        .then(events => { CALENDAR_EVENTS = events; calendarEventsLoaded = true; return CALENDAR_EVENTS; })
+        .catch(() => { CALENDAR_EVENTS = []; return CALENDAR_EVENTS; });
+    }
+    return calendarEventsPromise;
+  }
 
   // 4일 × 40개: 시장 구분과 산업별로 읽는 국내 상장사 학습 아틀라스
   // 실시간 가격·투자의견이 아닌 사업 구조와 공시 확인 포인트를 위한 학습 데이터입니다.
@@ -724,7 +720,7 @@ KOSDAQ|웹젠|게임`,
     }
     if (view === 'basis') renderBasisWorkflow();
     if (view === 'backtest') renderBacktestWorkflow();
-    if (view === 'calendar') renderCalendar();
+    if (view === 'calendar') renderCalendarView();
   }
 
   function togglePanel(panel) {
@@ -1805,6 +1801,15 @@ KOSDAQ|웹젠|게임`,
       map[event.date].push(event);
     });
     return map;
+  }
+
+  function renderCalendarView() {
+    renderCalendar();
+    if (!calendarEventsLoaded) {
+      ensureCalendarEvents().then(() => {
+        if (state.activeView === 'calendar') renderCalendar();
+      });
+    }
   }
 
   function renderCalendar() {

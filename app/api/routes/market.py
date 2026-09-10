@@ -16,8 +16,14 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.models.stock_price_history import StockPriceHistory
+from app.services.market_calendar_data import CALENDAR_EVENTS
 
 router = APIRouter(prefix="/market", tags=["market"])
+
+
+@router.get("/calendar-events")
+async def calendar_events() -> list[dict[str, str]]:
+    return CALENDAR_EVENTS
 
 _cache: dict[str, tuple[datetime, dict[str, Any]]] = {}
 _ttl = timedelta(minutes=5)
