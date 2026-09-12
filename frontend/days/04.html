@@ -106,7 +106,7 @@
     />
     <script defer src="assets/visuals.js?v=20260906-remove-nocode-breaktime"></script>
     <script defer src="assets/atlas.js"></script>
-    <script defer src="assets/glossary-modal.js?v=20260908-day4"></script>
+    <script defer src="assets/glossary-modal.js?v=20260912-financial-units"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
     <script defer src="assets/lesson-understanding.js?v=20260906-all-days"></script>
   </head>
@@ -492,6 +492,7 @@
                   상품명세와 증권사 주문 화면의 계약 단위를 기준으로 판단해야
                   합니다.
                 </p>
+                <p class="lesson-note"><b>숫자 단위가 헷갈리나요?</b> <button type="button" class="glossary-term" data-glossary-term="금융 숫자 단위">bp·%p·포인트·틱 쉽게 읽기</button>에서 한 번에 확인해 보세요.</p>
                 <p class="lesson-video-cta">
                   <button
                     type="button"
@@ -1462,7 +1463,7 @@
           </section><section class="lesson"><span>22</span>
             <div class="lesson-content">
               <h2>벰버거의 페어 트레이딩: 함께 움직이던 두 가격의 간격 보기</h2>
-              <div class="lesson-body"><p>페어 트레이딩(pair trading)은 비슷한 업종·사업 구조처럼 과거에 함께 움직이는 경향이 있었던 두 자산의 가격 간격이 일시적으로 벌어졌을 때, 비싸진 쪽은 매도(숏)하고 싼 쪽은 매수해 간격이 다시 좁아지는지를 보는 통계적 차익거래 접근입니다. 1980년대 모건스탠리의 제리(제럴드) 벰버거가 개척한 방식으로 널리 알려져 있습니다.</p><p>아주 단순한 예를 들어 A와 B 주가가 모두 100원에서 출발해 비슷하게 움직였는데, 어느 날 A만 110원으로 오르고 B는 100원에 머문다고 해 보세요. 전략은 A 1주를 매도하고 B 1주를 매수한 뒤, 둘 다 105원 부근으로 돌아올 때 청산하는 것입니다. 수수료·세금·대차비용은 빼지 않은 이해용 예시입니다.</p><p>알고리즘은 보통 ① 경제적으로 비교할 만한 두 자산을 고르고 ② 과거 가격 간격이 평균으로 돌아오는 성질이 있는지 검정한 뒤 ③ 간격이 평소보다 크게 벌어졌을 때만 진입하고 ④ 간격이 정상화되거나 손실 한도를 넘으면 청산하는 규칙으로 구성됩니다. 단순 상관관계가 높다는 사실만으로 평균 회귀가 보장되지는 않으므로, 스프레드·표준편차·Z-점수와 표본 밖 데이터로 함께 점검합니다.</p><p>두 가격이 다시 만나지 않고 A가 더 오르거나 B가 더 내리면 양쪽 포지션에서 손실이 날 수 있습니다. 공매도 가능 여부와 대차비용, 거래비용, 유동성, 기업 합병·실적 같은 구조 변화도 결과를 바꿉니다. 따라서 “시장 중립”은 시장 방향 위험을 일부 줄이려는 설계일 뿐 손실이 없는 전략이라는 뜻은 아닙니다.</p></div>
+              <div class="lesson-body"><p>페어 트레이딩(pair trading)은 비슷한 업종·사업 구조처럼 과거에 함께 움직이는 경향이 있었던 두 자산의 가격 간격이 일시적으로 벌어졌을 때, 비싸진 쪽은 매도(숏)하고 싼 쪽은 매수해 간격이 다시 좁아지는지를 보는 통계적 차익거래 접근입니다. 1980년대 모건스탠리의 제리(제럴드) 벰버거가 개척한 방식으로 널리 알려져 있습니다.</p><h3>볼린저 밴드도 평균과 표준편차를 씁니다</h3><p><b>볼린저 밴드</b>는 한 종목의 가격 차트에 이동평균선과 ‘평균에서 표준편차의 1~2배 떨어진 범위’를 함께 그린 보조지표입니다. 가격이 밴드 바깥에 있다고 해서 바로 오르거나 내린다는 뜻은 아닙니다. 다만 평소보다 크게 움직였는지 눈으로 확인하는 데 활용할 수 있습니다. 페어 트레이딩은 이와 비슷한 생각을 <b>두 종목 가격의 차이</b>에 적용해 평균·표준편차·Z-점수를 보는 방식입니다.</p><p>아주 단순한 예를 들어 A와 B 주가가 모두 100원에서 출발해 비슷하게 움직였는데, 어느 날 A만 110원으로 오르고 B는 100원에 머문다고 해 보세요. 전략은 A 1주를 매도하고 B 1주를 매수한 뒤, 둘 다 105원 부근으로 돌아올 때 청산하는 것입니다. 수수료·세금·대차비용은 빼지 않은 이해용 예시입니다.</p><p>알고리즘은 보통 ① 경제적으로 비교할 만한 두 자산을 고르고 ② 과거 가격 간격이 평균으로 돌아오는 성질이 있는지 검정한 뒤 ③ 간격이 평소보다 크게 벌어졌을 때만 진입하고 ④ 간격이 정상화되거나 손실 한도를 넘으면 청산하는 규칙으로 구성됩니다. 단순 상관관계가 높다는 사실만으로 평균 회귀가 보장되지는 않으므로, 스프레드·표준편차·Z-점수와 표본 밖 데이터로 함께 점검합니다.</p><p>두 가격이 다시 만나지 않고 A가 더 오르거나 B가 더 내리면 양쪽 포지션에서 손실이 날 수 있습니다. 공매도 가능 여부와 대차비용, 거래비용, 유동성, 기업 합병·실적 같은 구조 변화도 결과를 바꿉니다. 따라서 “시장 중립”은 시장 방향 위험을 일부 줄이려는 설계일 뿐 손실이 없는 전략이라는 뜻은 아닙니다.</p></div>
             </div>
             <button
               class="lesson-toggle"
@@ -1477,7 +1478,32 @@
           </section><section class="lesson"><span>23</span>
             <div class="lesson-content">
               <h2>국내 3개 페어로 보는 과거 신호</h2>
-              <div class="lesson-body"><p>삼성전자·삼성전자우, 카카오·NAVER, 기아·현대차처럼 사업 구조가 겹치거나 지배구조로 연결된 국내 페어를 예로 들어, 최근 120거래일 가격 간격을 Z-점수로 계산했다고 가정해 보세요. <b>페어</b>는 서로 비교하는 두 종목의 한 쌍이고, <b>Z-점수</b>는 지금 두 가격의 간격이 최근 120거래일 평균에서 평소 흔들림의 몇 배만큼 떨어져 있는지를 나타내는 통계 숫자입니다. 여기서 Z는 x·y·z처럼 위치를 나타내는 좌표가 아니라, 평균에서 떨어진 정도를 표시하는 기호입니다. 쉽게 말해 Z가 0이면 평소 간격 부근, +2면 평균보다 평소 흔들림의 2배만큼 더 벌어진 쪽, −2면 반대 방향으로 평소 흔들림의 2배만큼 더 벌어진 쪽으로 읽습니다. Z가 -2 이하면 첫 종목 매수·둘째 종목 매도, +2 이상이면 반대로 진입하고, Z가 0을 통과하면 청산하는 규칙을 세울 수 있습니다.</p><p>이런 방식에서는 당일 종가를 본 뒤 같은 날 거래할 수 없으므로, 실제로는 다음 거래일 체결가를 기준으로 재현해야 신호가 의미를 가집니다. 상관계수가 0.9를 넘는 페어라도 실제 가상 신호를 검증해 보면, 기업별 이슈나 지배구조 변화로 보유 기간과 손익이 크게 달라지는 경우가 흔합니다.</p><p>이 사례는 높은 상관관계나 ±2 Z-점수가 수익을 보장하지 않음을 보여 줍니다. 실제 검토에서는 다음 거래일 체결가, 수수료·세금·대차료, 공매도 가능 여부, 손절선과 최대 보유기간을 반영하고 표본 밖 기간에서 다시 검증해야 합니다.</p></div>
+              <div class="lesson-body">
+                <p><b>페어 트레이딩</b>은 함께 움직이던 두 종목의 ‘가격 간격’이 평소보다 많이 벌어졌을 때, 나중에 다시 평소 수준으로 좁혀질지를 살펴보는 방법입니다. 삼성전자·삼성전자우, 카카오·NAVER, 기아·현대차처럼 서로 비교할 이유가 있는 두 종목을 한 쌍, 즉 <b>페어</b>로 정합니다.</p>
+                <h3>Z-점수는 “평소와 얼마나 다른가”를 나타내는 숫자입니다</h3>
+                <p>최근 120거래일 동안 두 종목의 가격 간격을 모아 ‘평소 간격’을 구했다고 생각해 보세요. <b>Z-점수</b>는 오늘의 간격이 그 평소 간격에서 얼마나 멀리 떨어졌는지를, 평소 흔들림을 기준으로 나타낸 숫자입니다. Z는 좌표가 아니라 평균에서 떨어진 정도를 표시하는 기호입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">Z-점수</th><th scope="col">쉽게 읽으면</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">0</th><td>두 종목의 가격 간격이 평소 수준과 비슷합니다.</td></tr>
+                      <tr><th scope="row">+2</th><td>‘첫 번째 종목 가격 − 두 번째 종목 가격’으로 계산한 간격이 평소보다 크게 벌어진 상태입니다.</td></tr>
+                      <tr><th scope="row">−2</th><td>반대 방향으로 간격이 평소보다 크게 벌어진 상태입니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>단순한 규칙으로 보면</h3>
+                <ol>
+                  <li><b>Z가 +2 이상:</b> 첫 종목이 평소보다 많이 비싸진 상태입니다. <b>첫 종목은 팔고, 둘째 종목은 삽니다.</b></li>
+                  <li><b>Z가 −2 이하:</b> 첫 종목이 평소보다 많이 싸진 상태입니다. <b>첫 종목은 사고, 둘째 종목은 팝니다.</b></li>
+                  <li><b>Z가 0 부근:</b> 두 종목의 가격 간격이 평소 수준으로 돌아온 상태입니다. <b>사고팔았던 두 종목을 모두 정리합니다.</b></li>
+                </ol>
+                <p>이 규칙은 “두 가격이 다시 가까워질 수 있다”는 가정일 뿐입니다. 오늘 종가를 보고 신호를 냈다면 같은 날 종가로 거래했다고 가정하면 안 됩니다. 실제 검토와 백테스트에서는 <b>다음 거래일의 체결 가능 가격</b>으로 매수·매도를 재현해야 합니다.</p>
+                <h3>높은 상관관계만으로는 부족합니다</h3>
+                <p>상관계수가 0.9를 넘어도 두 종목의 관계가 계속 유지된다는 보장은 없습니다. 기업별 실적·합병·규제·지배구조 변화가 생기면 가격 간격이 더 벌어진 채로 오래 갈 수 있습니다. 그래서 실제 검토에서는 수수료·세금·대차료, 공매도 가능 여부, 손절선과 최대 보유기간을 반영하고, 규칙을 만들 때 쓰지 않은 별도 기간에서도 다시 검증해야 합니다.</p>
+                <p class="lesson-note"><b>핵심:</b> ±2 Z-점수는 ‘평소보다 간격이 많이 벌어졌다’는 신호이지 수익 보장이 아닙니다. 간격이 다시 평소 수준으로 좁혀질지와 실제 거래비용을 별도로 확인해야 합니다.</p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="koreanPairSimTrigger"><i class="fa-solid fa-chart-line"></i> A·B 두 종목 페어 예시</button><small>평소 가격 차이보다 많이 벌어졌을 때 무엇을 사고팔지 간단히 확인해 보세요.</small></p>
+              </div>
             </div>
             <button
               class="lesson-toggle"
@@ -1538,13 +1564,13 @@
                     <caption>퀀트 이론·투자에 이름을 남긴 대표 인물 — 이론의 존재와 역사적 사실을 소개하는 것이며 투자 조언이 아닙니다.</caption>
                     <thead><tr><th scope="col">인물</th><th scope="col">시대·소속</th><th scope="col">알려진 이론·기법</th><th scope="col">비고</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">해리 마코위츠(Harry Markowitz)</th><td>1952년 논문</td><td>현대 포트폴리오이론(평균-분산모형)</td><td>자산배분 이론의 출발점, 1990년 노벨경제학상</td></tr>
-                      <tr><th scope="row">피셔 블랙·마이런 숄즈·로버트 머튼</th><td>1973년 논문</td><td>블랙-숄즈 옵션가격모형</td><td>숄즈·머튼 1997년 노벨경제학상, 파생상품 가격결정의 표준 틀</td></tr>
-                      <tr><th scope="row">존 메리웨더 등 / LTCM</th><td>1990년대</td><td>채권 상대가치·차익거래</td><td>1998년 러시아 채무불이행 여파로 대규모 손실, 14개 금융사 공동구제로 마무리 — 정교한 모형도 극단적 상황엔 무너질 수 있다는 대표 반면교사 사례</td></tr>
-                      <tr><th scope="row">리처드 데니스·윌리엄 에크하르트</th><td>1983~1984년</td><td>‘터틀 트레이더’ 실험, 채널 돌파 추세추종</td><td>매매가 가르쳐질 수 있는지를 검증한 실험으로, 전략 자체보다 위험·자금관리의 중요성을 보여준 사례</td></tr>
-                      <tr><th scope="row">레이 달리오(Ray Dalio) / 브리지워터</th><td>현재</td><td>올웨더(리스크 패리티) 전략</td><td>이 수업 앞부분의 ‘올웨더 포트폴리오’ 레슨 참고</td></tr>
-                      <tr><th scope="row">클리프 애스니스(Cliff Asness) / AQR</th><td>현재</td><td>팩터투자(가치·모멘텀 등)의 실전 구현</td><td>학계의 팩터 연구를 대규모 운용전략으로 옮긴 사례</td></tr>
-                      <tr><th scope="row">나심 니콜라스 탈레브</th><td>현재</td><td>블랙스완, 꼬리위험</td><td>이 수업 뒤쪽의 ‘블랙 스완’ 레슨 참고</td></tr>
+                      <tr><th scope="row">해리 마코위츠(Harry Markowitz)<br><a href="https://www.nobelprize.org/prizes/economic-sciences/1990/markowitz/facts/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1952년 논문</td><td>현대 포트폴리오이론(평균-분산모형)</td><td>자산배분 이론의 출발점, 1990년 노벨경제학상</td></tr>
+                      <tr><th scope="row">피셔 블랙·마이런 숄즈·로버트 머튼<br><a href="https://www.nobelprize.org/prizes/economic-sciences/1997/summary/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1973년 논문</td><td>블랙-숄즈 옵션가격모형</td><td>숄즈·머튼 1997년 노벨경제학상, 파생상품 가격결정의 표준 틀</td></tr>
+                      <tr><th scope="row">존 메리웨더 등 / LTCM<br><a href="https://www.britannica.com/money/Long-Term-Capital-Management" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1990년대</td><td>채권 상대가치·차익거래</td><td>1998년 러시아 채무불이행 여파로 대규모 손실, 14개 금융사 공동구제로 마무리 — 정교한 모형도 극단적 상황엔 무너질 수 있다는 대표 반면교사 사례</td></tr>
+                      <tr><th scope="row">리처드 데니스·윌리엄 에크하르트<br><a href="https://www.turtletrader.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1983~1984년</td><td>‘터틀 트레이더’ 실험, 채널 돌파 추세추종</td><td>매매가 가르쳐질 수 있는지를 검증한 실험으로, 전략 자체보다 위험·자금관리의 중요성을 보여준 사례</td></tr>
+                      <tr><th scope="row">레이 달리오(Ray Dalio) / 브리지워터<br><a href="https://www.bridgewater.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>현재</td><td>올웨더(리스크 패리티) 전략</td><td>이 수업 앞부분의 ‘올웨더 포트폴리오’ 레슨 참고</td></tr>
+                      <tr><th scope="row">클리프 애스니스(Cliff Asness) / AQR<br><a href="https://www.aqr.com/our-firm/leadership/cliff-asness" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>현재</td><td>팩터투자(가치·모멘텀 등)의 실전 구현</td><td>학계의 팩터 연구를 대규모 운용전략으로 옮긴 사례</td></tr>
+                      <tr><th scope="row">나심 니콜라스 탈레브<br><a href="https://fooledbyrandomness.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>현재</td><td>블랙스완, 꼬리위험</td><td>이 수업 뒤쪽의 ‘블랙 스완’ 레슨 참고</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -1554,14 +1580,14 @@
                     <caption>퀀트 투자와 관련된 대표 회사·플랫폼 — 성과 수치는 자료마다 수수료·기간 산정 방식이 달라 그대로 비교할 수 없습니다.</caption>
                     <thead><tr><th scope="col">회사·플랫폼</th><th scope="col">알려진 특징</th><th scope="col">비고</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">르네상스 테크놀로지스(메달리온 펀드)</th><td>1988~2018년 연평균 수익률이 매우 높았다고 알려짐(수수료 포함·차감 여부에 따라 자료마다 수치가 다름)</td><td>앞서 다룬 제임스 사이먼스 레슨 참고, 주로 임직원 자본으로 운용되어 외부 투자자를 상시 모집하지 않는 것으로 알려짐</td></tr>
-                      <tr><th scope="row">시타델(Citadel)·시타델 증권</th><td>헤지펀드와 마켓메이킹(유동성 공급)을 함께 운영</td><td>이 수업 뒤쪽의 ‘시타델·메릴린치 사례’ 레슨 참고</td></tr>
-                      <tr><th scope="row">투시그마(Two Sigma)</th><td>데이터과학·머신러닝 기반 시스템 운용</td><td>대형 퀀트 헤지펀드의 대표 예시</td></tr>
-                      <tr><th scope="row">디이쇼(D. E. Shaw &amp; Co.)</th><td>계량적 시스템 트레이딩의 초기 선구자</td><td>아마존 창업자 제프 베조스가 창업 전 근무했던 곳으로도 잘 알려짐</td></tr>
-                      <tr><th scope="row">월드퀀트(WorldQuant)</th><td>‘WorldQuant BRAIN’이라는 크라우드소싱 알파 발굴 플랫폼 운영</td><td>2일차에서 본 국내(서울) 퀀트 채용 사례와 연결</td></tr>
-                      <tr><th scope="row">QuantConnect / LEAN 엔진</th><td>2012년 시작된 오픈소스 알고리즘 트레이딩·백테스트 엔진(GitHub 공개)</td><td>이 앱의 ‘LEAN 백테스트’ 기능이 실제로 이 오픈소스 엔진을 원격 실행해 결과를 보여줍니다</td></tr>
-                      <tr><th scope="row">Numerai</th><td>데이터 과학자들이 암호화(익명화)된 데이터로 예측 모델을 제출해 경쟁하는 크라우드소싱형 헤지펀드</td><td>모델 제출자에게 암호화폐로 보상하는 독특한 구조로 알려짐</td></tr>
-                      <tr><th scope="row">젠포트·퀀터스</th><td>국내 노코드 퀀트 플랫폼</td><td>이 수업 앞부분의 ‘젠포트·퀀터스’ 레슨 참고</td></tr>
+                      <tr><th scope="row">르네상스 테크놀로지스(메달리온 펀드)<br><a href="https://www.rentec.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1988~2018년 연평균 수익률이 매우 높았다고 알려짐(수수료 포함·차감 여부에 따라 자료마다 수치가 다름)</td><td>앞서 다룬 제임스 사이먼스 레슨 참고, 주로 임직원 자본으로 운용되어 외부 투자자를 상시 모집하지 않는 것으로 알려짐</td></tr>
+                      <tr><th scope="row">시타델(Citadel)·시타델 증권<br><a href="https://www.citadel.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>헤지펀드와 마켓메이킹(유동성 공급)을 함께 운영</td><td>이 수업 뒤쪽의 ‘시타델·메릴린치 사례’ 레슨 참고</td></tr>
+                      <tr><th scope="row">투시그마(Two Sigma)<br><a href="https://www.twosigma.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>데이터과학·머신러닝 기반 시스템 운용</td><td>대형 퀀트 헤지펀드의 대표 예시</td></tr>
+                      <tr><th scope="row">디이쇼(D. E. Shaw &amp; Co.)<br><a href="https://www.deshaw.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>계량적 시스템 트레이딩의 초기 선구자</td><td>아마존 창업자 제프 베조스가 창업 전 근무했던 곳으로도 잘 알려짐</td></tr>
+                      <tr><th scope="row">월드퀀트(WorldQuant)<br><a href="https://www.worldquant.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>‘WorldQuant BRAIN’이라는 크라우드소싱 알파 발굴 플랫폼 운영</td><td>2일차에서 본 국내(서울) 퀀트 채용 사례와 연결</td></tr>
+                      <tr><th scope="row">QuantConnect / LEAN 엔진<br><a href="https://www.quantconnect.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>2012년 시작된 오픈소스 알고리즘 트레이딩·백테스트 엔진(GitHub 공개)</td><td>이 앱의 ‘LEAN 백테스트’ 기능이 실제로 이 오픈소스 엔진을 원격 실행해 결과를 보여줍니다</td></tr>
+                      <tr><th scope="row">Numerai<br><a href="https://numer.ai/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>데이터 과학자들이 암호화(익명화)된 데이터로 예측 모델을 제출해 경쟁하는 크라우드소싱형 헤지펀드</td><td>모델 제출자에게 암호화폐로 보상하는 독특한 구조로 알려짐</td></tr>
+                      <tr><th scope="row">젠포트·퀀터스<br><a href="https://genport.newsystock.com/" target="_blank" rel="noopener noreferrer">홈페이지</a> · <a href="https://www.quantus.kr/ko" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>국내 노코드 퀀트 플랫폼</td><td>이 수업 앞부분의 ‘젠포트·퀀터스’ 레슨 참고</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -1571,13 +1597,13 @@
                     <caption>퀀트 투자에서 널리 알려진 매매기법 — 기법의 존재를 소개하는 것이며 특정 전략의 성과를 보장하지 않습니다.</caption>
                     <thead><tr><th scope="col">기법</th><th scope="col">핵심 아이디어</th><th scope="col">관련 레슨·사례</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">페어 트레이딩(통계적 차익거래)</th><td>함께 움직이던 두 자산의 가격 괴리가 벌어지면 한쪽은 매수, 한쪽은 매도해 좁혀지길 기다리는 기법</td><td>이 수업의 ‘벰버거의 페어 트레이딩’ 레슨</td></tr>
-                      <tr><th scope="row">추세추종(모멘텀, 채널 돌파)</th><td>가격이 일정 구간을 뚫고 오르내리면 그 방향을 따라가는 규칙</td><td>터틀 트레이더 실험이 대표 사례</td></tr>
-                      <tr><th scope="row">팩터 투자</th><td>가치·모멘텀·퀄리티·저변동성 같은 공통 수익 원천(팩터)에 체계적으로 노출을 맞추는 전략</td><td>AQR 등이 대표적으로 활용, 이 수업의 ‘알파와 베타’ 레슨 참고</td></tr>
-                      <tr><th scope="row">리스크 패리티</th><td>자산별 기대수익 예측 대신 위험 기여도를 자산군마다 고르게 맞추는 자산배분 방식</td><td>브리지워터 올웨더 포트폴리오가 대표 사례</td></tr>
-                      <tr><th scope="row">시장 국면 추정</th><td>관측되지 않는 시장 상태(국면)를 확률로 추정해 전략의 강도·규모를 조절</td><td>이 수업의 ‘히든 마코프 모델(HMM)’ 레슨</td></tr>
-                      <tr><th scope="row">실행 알고리즘(VWAP·TWAP)</th><td>큰 주문을 시간·거래량에 나누어 체결시켜 시장 충격과 체결가격 변동을 줄이는 기법</td><td>기관·대형 주문 처리의 기본 도구</td></tr>
-                      <tr><th scope="row">마켓메이킹(유동성 공급)</th><td>매수·매도 호가를 동시에 제시해 그 차이(스프레드)로 수익을 얻는 대신 시장에 유동성을 공급하는 방식</td><td>이 수업의 ‘시타델·메릴린치 사례’ 레슨</td></tr>
+                      <tr><th scope="row">페어 트레이딩(통계적 차익거래)<br><a href="https://www.quantconnect.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>함께 움직이던 두 자산의 가격 괴리가 벌어지면 한쪽은 매수, 한쪽은 매도해 좁혀지길 기다리는 기법</td><td>이 수업의 ‘벰버거의 페어 트레이딩’ 레슨</td></tr>
+                      <tr><th scope="row">추세추종(모멘텀, 채널 돌파)<br><a href="https://www.turtletrader.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>가격이 일정 구간을 뚫고 오르내리면 그 방향을 따라가는 규칙</td><td>터틀 트레이더 실험이 대표 사례</td></tr>
+                      <tr><th scope="row">팩터 투자<br><a href="https://www.aqr.com/Insights/Research/White-Papers" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>가치·모멘텀·퀄리티·저변동성 같은 공통 수익 원천(팩터)에 체계적으로 노출을 맞추는 전략</td><td>AQR 등이 대표적으로 활용, 이 수업의 ‘알파와 베타’ 레슨 참고</td></tr>
+                      <tr><th scope="row">리스크 패리티<br><a href="https://www.bridgewater.com/research-and-insights/the-all-weather-strategy" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>자산별 기대수익 예측 대신 위험 기여도를 자산군마다 고르게 맞추는 자산배분 방식</td><td>브리지워터 올웨더 포트폴리오가 대표 사례</td></tr>
+                      <tr><th scope="row">시장 국면 추정<br><a href="https://hmmlearn.readthedocs.io/en/stable/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>관측되지 않는 시장 상태(국면)를 확률로 추정해 전략의 강도·규모를 조절</td><td>이 수업의 ‘히든 마코프 모델(HMM)’ 레슨</td></tr>
+                      <tr><th scope="row">실행 알고리즘(VWAP·TWAP)<br><a href="https://www.interactivebrokers.com/docs/general/order-types/algorithmic-orders/ib-algorithms/twap" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>큰 주문을 시간·거래량에 나누어 체결시켜 시장 충격과 체결가격 변동을 줄이는 기법</td><td>기관·대형 주문 처리의 기본 도구</td></tr>
+                      <tr><th scope="row">마켓메이킹(유동성 공급)<br><a href="https://www.citadelsecurities.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>매수·매도 호가를 동시에 제시해 그 차이(스프레드)로 수익을 얻는 대신 시장에 유동성을 공급하는 방식</td><td>이 수업의 ‘시타델·메릴린치 사례’ 레슨</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -2594,6 +2620,35 @@
       </section>
     </div>
 
+    <div class="glossary-modal korean-pair-sim-modal" id="koreanPairSimModal" hidden>
+      <div class="glossary-modal__backdrop" data-korean-pair-close></div>
+      <section class="glossary-modal__dialog korean-pair-sim-dialog" role="dialog" aria-modal="true" aria-labelledby="koreanPairSimTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-korean-pair-close>×</button>
+        <p class="glossary-modal__label">SIMULATION · 교육용 예시</p>
+        <h2 id="koreanPairSimTitle">A·B 두 종목 페어 예시</h2>
+        <p class="korean-pair-sim-intro">두 종목의 가격 차이가 평소보다 많이 벌어졌을 때, 비싼 쪽을 팔고 싼 쪽을 사는 규칙을 아주 단순하게 보여주는 예시입니다.</p>
+        <div class="korean-pair-sim-formula">
+          <strong>신호는 이렇게 계산합니다</strong>
+          <p>가격 차이 = A종목 가격 − B종목 가격</p>
+          <p>최근 120일의 평균 가격 차이(<b>평균</b>) = <b>10,000원</b></p>
+          <p>평소 흔들림(<b>표준편차</b>) = <b>5,000원</b></p>
+          <small>평균은 가격 차이의 가운데 수준이고, 표준편차는 그 가격 차이가 보통 어느 정도 오르내렸는지입니다. Z-점수는 오늘 가격 차이가 평균에서 표준편차의 몇 배만큼 떨어졌는지 나타냅니다.</small>
+          <div class="korean-pair-sim-explanation">
+            <p><b>평균 가격 차이 10,000원(평균)</b>: 최근 120일 동안 A−B를 계산했을 때, 가격 차이의 평균이 10,000원이었다는 뜻입니다.</p>
+            <p><b>평소 흔들림 5,000원(표준편차)</b>: 그 가격 차이가 10,000원 주변에서 보통 얼마나 움직였는지입니다. 즉 가격 차이가 항상 10,000원인 것이 아니라 5,000원, 9,000원, 14,000원처럼 오르내렸다는 뜻입니다.</p>
+            <p>예를 들면 가격 차이가 대체로 5,000원~15,000원 부근에서 움직였다면, 평균은 약 10,000원이고 평소 흔들림은 약 5,000원으로 볼 수 있습니다.</p>
+            <p><b>5,000원은 ‘평소 가격 차이’가 아니라 ‘평균 10,000원에서 벗어나는 정도’입니다.</b></p>
+          </div>
+        </div>
+        <div class="korean-pair-simple-cases">
+          <article><b>오늘 가격 차이: 21,000원</b><p>(21,000원 − 10,000원) ÷ 5,000원 = <strong>+2.2</strong></p><p>A종목이 평소보다 많이 비쌉니다.</p><em>A종목 팔기 · B종목 사기</em></article>
+          <article><b>오늘 가격 차이: −1,000원</b><p>(−1,000원 − 10,000원) ÷ 5,000원 = <strong>−2.2</strong></p><p>A종목이 평소보다 많이 쌉니다.</p><em>A종목 사기 · B종목 팔기</em></article>
+          <article><b>오늘 가격 차이: 10,000원 부근</b><p>Z-점수는 <strong>0 부근</strong></p><p>가격 차이가 평소 수준으로 돌아온 경우입니다.</p><em>두 종목 거래를 함께 끝내기</em></article>
+        </div>
+        <p class="korean-pair-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 이해를 위한 숫자 예시입니다. 실제 거래에서는 공매도 가능 여부와 비용, 다음 거래일의 실제 가격도 함께 확인해야 합니다.</p>
+      </section>
+    </div>
+
     <div class="glossary-modal hmm-sim-modal" id="hmmSimModal" hidden>
       <div class="glossary-modal__backdrop" data-hmm-sim-close></div>
       <section class="glossary-modal__dialog hmm-sim-dialog" role="dialog" aria-modal="true" aria-labelledby="hmmSimTitle">
@@ -3357,51 +3412,84 @@
         const closeEls = modal.querySelectorAll("[data-korean-pair-close]");
         const closeButton = modal.querySelector(".glossary-modal__close");
         const pairSelect = document.getElementById("koreanPairSelect");
-        const costInput = document.getElementById("koreanPairCost");
-        const buttons = modal.querySelectorAll("[data-korean-pair-case]");
+        const priceChart = document.getElementById("koreanPairPriceChart");
+        const gapChart = document.getElementById("koreanPairGapChart");
         const output = (id) => document.getElementById(id);
         const data = {
-          samsung: { label: "삼성전자 · 삼성전자우", side: "삼성전자 매도 · 삼성전자우 매수", reverseSide: "삼성전자 매수 · 삼성전자우 매도", note: "우선주와 보통주의 가격 차이는 배당 기대·유동성·수급 변화에도 영향을 받으므로 단순 평균 회귀로 단정할 수 없습니다." },
-          portal: { label: "카카오 · NAVER", side: "카카오 매도 · NAVER 매수", reverseSide: "카카오 매수 · NAVER 매도", note: "같은 인터넷 업종이어도 광고·콘텐츠·AI·규제 이슈가 다르면 두 종목의 상대 가격 관계가 구조적으로 달라질 수 있습니다." },
-          auto: { label: "기아 · 현대차", side: "기아 매도 · 현대차 매수", reverseSide: "기아 매수 · 현대차 매도", note: "지배구조 연결성만으로 두 종목의 간격이 반드시 되돌아오지는 않습니다. 실적·환율·제품 믹스 차이를 함께 살펴야 합니다." },
+          samsung: { label: "삼성전자 · 삼성전자우", first: "삼성전자", second: "삼성전자우", side: "삼성전자 팔기 · 삼성전자우 사기", reverseSide: "삼성전자 사기 · 삼성전자우 팔기", secondBase: 60000, gapBase: 10000, wave: 680, tail: 165, note: "가상 데이터입니다. 우선주와 보통주의 가격 관계는 배당 기대, 유동성, 수급 변화에도 영향을 받습니다." },
+          portal: { label: "카카오 · NAVER", first: "카카오", second: "NAVER", side: "카카오 팔기 · NAVER 사기", reverseSide: "카카오 사기 · NAVER 팔기", secondBase: 200000, gapBase: -150000, wave: 6200, tail: -1280, note: "가상 데이터입니다. 같은 인터넷 업종이어도 광고, 콘텐츠, AI, 규제 이슈가 다르면 관계가 달라질 수 있습니다." },
+          auto: { label: "기아 · 현대차", first: "기아", second: "현대차", side: "기아 팔기 · 현대차 사기", reverseSide: "기아 사기 · 현대차 팔기", secondBase: 210000, gapBase: -100000, wave: 5100, tail: 1120, note: "가상 데이터입니다. 두 회사가 연결되어 있어도 실적, 환율, 차종 구성에 따라 관계가 달라질 수 있습니다." },
         };
-        const cases = {
-          revert: { signal: 2.2, exit: -0.1, days: 12, gross: 4.8, exitLabel: "Z가 0 근처 → 청산" },
-          stop: { signal: 2.3, exit: 3.5, days: 7, gross: -3.1, exitLabel: "손절선 도달 → 청산" },
-          hold: { signal: -2.1, exit: -0.7, days: 20, gross: 1.1, exitLabel: "최대 보유기간 → 종료" },
-        };
-        let currentCase = "revert";
-        const signed = (n) => `${n >= 0 ? "+" : ""}${n.toFixed(1)}`;
+        let selectedIndex = 119;
+        let chartGeometry = null;
+        const signed = (n, digits = 2) => `${n >= 0 ? "+" : ""}${n.toFixed(digits)}`;
+        const won = (n) => `${Math.round(n).toLocaleString("ko-KR")}원`;
+        const signedWon = (n) => `${n < 0 ? "−" : "+"}${Math.abs(Math.round(n)).toLocaleString("ko-KR")}원`;
+        function buildSeries(pair) {
+          return Array.from({ length: 120 }, (_, index) => {
+            const marketMove = 2600 * Math.sin(index * 0.19) + 900 * Math.cos(index * 0.053);
+            const second = pair.secondBase + marketMove + 700 * Math.sin(index * 0.37);
+            const gap = pair.gapBase
+              + pair.wave * (Math.sin(index * 0.31) + 0.45 * Math.cos(index * 0.12))
+              + (index > 105 ? (index - 105) * pair.tail : 0);
+            return { first: second + gap, second, gap };
+          });
+        }
+        function makeFrame(values) {
+          const width = 720, height = 260, left = 68, right = 18, top = 18, bottom = 38;
+          const plotWidth = width - left - right, plotHeight = height - top - bottom;
+          let min = Math.min(...values), max = Math.max(...values);
+          const padding = (max - min) * 0.12 || 1;
+          min -= padding; max += padding;
+          const x = (index) => left + (index / 119) * plotWidth;
+          const y = (value) => top + (1 - (value - min) / (max - min)) * plotHeight;
+          const grid = [0, 0.5, 1].map((ratio) => {
+            const value = max - (max - min) * ratio;
+            const yy = top + plotHeight * ratio;
+            return `<line x1="${left}" y1="${yy}" x2="${width - right}" y2="${yy}" class="korean-pair-chart-grid"/><text x="${left - 8}" y="${yy + 4}" text-anchor="end" class="korean-pair-chart-label">${Math.round(value / 1000)}천원</text>`;
+          }).join("");
+          return { width, height, left, right, top, plotWidth, plotHeight, x, y, grid };
+        }
+        function chartBase(frame) {
+          return `${frame.grid}<line x1="${frame.left}" y1="${frame.top + frame.plotHeight}" x2="${frame.width - frame.right}" y2="${frame.top + frame.plotHeight}" class="korean-pair-chart-axis"/><line x1="${frame.x(selectedIndex)}" y1="${frame.top}" x2="${frame.x(selectedIndex)}" y2="${frame.top + frame.plotHeight}" class="korean-pair-chart-cursor"/><text x="${frame.left}" y="${frame.height - 12}" class="korean-pair-chart-label">1일</text><text x="${frame.width - frame.right}" y="${frame.height - 12}" text-anchor="end" class="korean-pair-chart-label">120일</text>`;
+        }
+        function drawCharts(series, typicalGap, swing) {
+          const selected = series[selectedIndex];
+          const priceFrame = makeFrame(series.flatMap((item) => [item.first, item.second]));
+          const firstLine = series.map((item, index) => `${priceFrame.x(index).toFixed(1)},${priceFrame.y(item.first).toFixed(1)}`).join(" ");
+          const secondLine = series.map((item, index) => `${priceFrame.x(index).toFixed(1)},${priceFrame.y(item.second).toFixed(1)}`).join(" ");
+          priceChart.innerHTML = `${chartBase(priceFrame)}<polyline points="${firstLine}" class="korean-pair-chart-first-line"/><polyline points="${secondLine}" class="korean-pair-chart-second-line"/><circle cx="${priceFrame.x(selectedIndex)}" cy="${priceFrame.y(selected.first)}" r="4.5" class="korean-pair-chart-first-point"/><circle cx="${priceFrame.x(selectedIndex)}" cy="${priceFrame.y(selected.second)}" r="4.5" class="korean-pair-chart-second-point"/><text x="${priceFrame.left + 6}" y="${priceFrame.top + 14}" class="korean-pair-chart-first-label">● 첫 종목</text><text x="${priceFrame.left + 80}" y="${priceFrame.top + 14}" class="korean-pair-chart-second-label">● 둘째 종목</text>`;
+          const gapFrame = makeFrame([...series.map((item) => item.gap), typicalGap - 2 * swing, typicalGap + 2 * swing]);
+          const gapLine = series.map((item, index) => `${gapFrame.x(index).toFixed(1)},${gapFrame.y(item.gap).toFixed(1)}`).join(" ");
+          const averageY = gapFrame.y(typicalGap), upperY = gapFrame.y(typicalGap + 2 * swing), lowerY = gapFrame.y(typicalGap - 2 * swing);
+          gapChart.innerHTML = `${chartBase(gapFrame)}<line x1="${gapFrame.left}" y1="${averageY}" x2="${gapFrame.width - gapFrame.right}" y2="${averageY}" class="korean-pair-chart-average"/><line x1="${gapFrame.left}" y1="${upperY}" x2="${gapFrame.width - gapFrame.right}" y2="${upperY}" class="korean-pair-chart-band"/><line x1="${gapFrame.left}" y1="${lowerY}" x2="${gapFrame.width - gapFrame.right}" y2="${lowerY}" class="korean-pair-chart-band"/><polyline points="${gapLine}" class="korean-pair-chart-line"/><circle cx="${gapFrame.x(selectedIndex)}" cy="${gapFrame.y(selected.gap)}" r="5.5" class="korean-pair-chart-point"/><text x="${gapFrame.width - gapFrame.right}" y="${averageY - 5}" text-anchor="end" class="korean-pair-chart-average-label">평균</text><text x="${gapFrame.width - gapFrame.right}" y="${upperY - 5}" text-anchor="end" class="korean-pair-chart-band-label">평균 + 2배</text><text x="${gapFrame.width - gapFrame.right}" y="${lowerY - 5}" text-anchor="end" class="korean-pair-chart-band-label">평균 − 2배</text>`;
+          chartGeometry = { left: gapFrame.left, plotWidth: gapFrame.plotWidth, count: series.length };
+        }
         function render() {
           const pair = data[pairSelect.value];
-          const scenario = cases[currentCase];
-          const costs = Math.max(0, Number(costInput.value) || 0) / 100;
-          const net = scenario.gross - costs;
-          output("koreanPairSignal").textContent = `Z = ${signed(scenario.signal)}`;
-          output("koreanPairEntry").textContent = scenario.signal >= 2 ? pair.side : pair.reverseSide;
-          output("koreanPairExit").textContent = scenario.exitLabel;
-          output("koreanPairZ").textContent = `${signed(scenario.signal)} → ${signed(scenario.exit)}`;
-          output("koreanPairDays").textContent = `${scenario.days} 거래일`;
-          output("koreanPairGross").textContent = `${signed(scenario.gross)}%`;
-          const netEl = output("koreanPairNet");
-          netEl.textContent = `${signed(net)}%`;
-          output("koreanPairGross").className = scenario.gross >= 0 ? "gain" : "loss";
-          netEl.className = net >= 0 ? "gain" : "loss";
-          output("koreanPairNote").textContent = `${pair.label} 예시: ${pair.note} 이 시나리오의 왕복 비용은 ${costInput.value}bp(${costs.toFixed(2)}%p)로 단순 반영했습니다.`;
+          const series = buildSeries(pair);
+          const today = series[selectedIndex];
+          const typicalGap = series.reduce((sum, item) => sum + item.gap, 0) / series.length;
+          const swing = Math.sqrt(series.reduce((sum, item) => sum + (item.gap - typicalGap) ** 2, 0) / series.length) || 1;
+          const z = (today.gap - typicalGap) / swing;
+          const gapDifference = today.gap - typicalGap;
+          const rule = z >= 2 ? pair.side : z <= -2 ? pair.reverseSide : "아직 거래하지 않고 지켜보기";
+          output("koreanPairFormulaExample").textContent = `선택한 ${selectedIndex + 1}일째: 오늘 간격 ${signedWon(today.gap)}, 평소 간격 ${signedWon(typicalGap)}, 평소 흔들림 ${won(swing)} → [${signedWon(today.gap)} − (${signedWon(typicalGap)})] = ${signedWon(gapDifference)} → ${signedWon(gapDifference)} ÷ ${won(swing)} = ${signed(z)}`;
+          output("koreanPairSignal").textContent = `${selectedIndex + 1}일째`;
+          output("koreanPairSignalDetail").textContent = `${pair.first} ${won(today.first)} − ${pair.second} ${won(today.second)} = ${won(today.gap)}`;
+          output("koreanPairEntry").textContent = `Z ${signed(z)}`;
+          const resultEl = output("koreanPairResult");
+          resultEl.textContent = rule;
+          resultEl.className = z >= 2 || z <= -2 ? "gain" : "";
+          output("koreanPairResultDetail").textContent = z >= 2 || z <= -2 ? "Z가 0에 가까워지면 두 거래를 함께 끝내는 규칙입니다." : "Z가 +2 또는 −2에 가까워질 때까지 기다리는 규칙입니다.";
+          output("koreanPairNote").textContent = `${pair.label} 예시입니다. ${pair.note}`;
+          drawCharts(series, typicalGap, swing);
         }
-        pairSelect.addEventListener("change", render);
-        costInput.addEventListener("input", render);
-        buttons.forEach((button) => button.addEventListener("click", () => {
-          currentCase = button.dataset.koreanPairCase;
-          buttons.forEach((item) => item.classList.toggle("active", item === button));
-          render();
-        }));
-        function open() { modal.hidden = false; render(); closeButton?.focus(); }
+        function open() { modal.hidden = false; closeButton?.focus(); }
         function close() { if (!modal.hidden) { modal.hidden = true; trigger.focus({ preventScroll: true }); } }
         trigger.addEventListener("click", open);
         closeEls.forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
-        render();
       });
     </script>
     <script>
