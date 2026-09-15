@@ -192,7 +192,7 @@
   const GLOSSARY = [
     { terms: ['분산투자'], korean: '분산투자', hanja: '分散投資', abbr: '—', english: 'Diversification', summary: '서로 다른 자산에 나누어 투자해 한 곳의 손실이 전체에 미치는 영향을 줄이려는 방법입니다.', detail: '종목 수를 많이 늘리는 것만으로 충분하지는 않습니다. 산업·국가·자산 종류가 서로 비슷하면 함께 움직일 수 있으므로, 자산 간 움직임도 함께 살펴야 합니다.' },
     { terms: ['상관관계'], korean: '상관관계', hanja: '相關關係', abbr: 'ρ (rho)', english: 'Correlation', summary: '두 자산이 같은 방향으로 움직이는 정도를 나타내는 수치입니다.', detail: '1에 가까우면 함께 움직이는 경향이 크고, -1에 가까우면 반대 방향으로 움직이는 경향이 있습니다. 낮은 상관관계는 분산투자 효과를 기대하게 하지만, 미래에도 항상 같지는 않습니다.' },
-    { terms: ['변동성'], korean: '변동성', hanja: '變動性', abbr: 'σ (sigma)', english: 'Volatility', summary: '가격이나 수익률이 평균 주변에서 얼마나 크게 오르내렸는지 보여 주는 지표입니다.', detail: '변동성이 크면 단기간의 오르내림 폭도 클 수 있습니다. 변동성이 낮다고 손실 가능성이 없는 것은 아니며, 투자 기간과 감당 가능한 손실을 함께 고려해야 합니다.' },
+    { terms: ['변동성'], korean: '변동성', hanja: '變動性', abbr: 'σ (sigma)', english: 'Volatility (볼래틸러티)', summary: '가격이나 수익률이 평균 주변에서 얼마나 크게 오르내렸는지 보여 주는 지표입니다.', detail: '변동성이 크면 단기간의 오르내림 폭도 클 수 있습니다. 변동성이 낮다고 손실 가능성이 없는 것은 아니며, 투자 기간과 감당 가능한 손실을 함께 고려해야 합니다.' },
     { terms: ['블랙 스완', 'Black Swan'], korean: '블랙 스완', hanja: '黑天鵝', abbr: '—', english: 'Black Swan', summary: '통상적인 예측 모형 밖에서 발생해 큰 충격을 주는 예외적 사건을 비유하는 말입니다.', detail: '나심 니콜라스 탈레브가 널리 알린 개념입니다. 핵심은 사건을 맞히는 것보다 분산·유동성·손실 한도·레버리지 관리로 극단적 상황에도 버틸 여력을 만드는 데 있습니다.' },
     { terms: ['회색 코뿔소', 'Gray Rhino'], korean: '회색 코뿔소', hanja: '灰色犀牛', abbr: '—', english: 'Gray Rhino', summary: '위험이 눈앞에 보이는데도 무시하다 큰 피해로 이어지는 상황을 비유하는 말입니다.', detail: '블랙 스완과 달리 이미 알려진 위험이라는 점이 강조됩니다. 예를 들어 부채 급증, 취약한 유동성처럼 관찰 가능한 위험 신호를 점검하고 대응 계획을 세우는 데 쓰입니다.' },
     { terms: ['최대낙폭', 'MDD'], korean: '최대낙폭', hanja: '最大落幅', abbr: 'MDD', english: 'Maximum Drawdown', summary: '특정 기간의 최고점에서 가장 크게 하락한 폭입니다.', detail: '예를 들어 100에서 70까지 내려갔다면 최대낙폭은 -30%입니다. 평균 수익률만으로 보이지 않는 실제 손실 구간을 보여 주므로, 투자자가 버틸 수 있는 위험을 판단할 때 유용합니다.' },
@@ -204,7 +204,7 @@
     { terms: ['리밸런싱'], korean: '리밸런싱', hanja: '資産再配分', abbr: 'RB', english: 'Rebalancing', summary: '변한 자산 비중을 처음 정한 목표 비중에 맞추어 조정하는 일입니다.', detail: '많이 오른 자산의 비중이 커지면 포트폴리오 위험도 달라질 수 있습니다. 일정 주기 또는 허용 범위를 정해 점검하되 거래비용과 세금도 고려해야 합니다.' },
     { terms: ['수익률'], korean: '수익률', hanja: '收益率', abbr: 'R', english: 'Rate of Return', summary: '투자한 금액 대비 얼마가 늘거나 줄었는지를 비율로 나타낸 값입니다.', detail: '높은 과거 수익률이 미래 수익을 보장하지는 않습니다. 수익률은 변동성, 최대낙폭, 비용과 함께 해석하는 것이 좋습니다.' },
     { terms: ['위험'], korean: '위험', hanja: '危險', abbr: 'Risk', english: 'Investment Risk', summary: '예상과 다른 결과가 나와 손실을 볼 수 있는 가능성과 그 크기입니다.', detail: '투자에서 위험은 단순히 나쁜 일이 아니라 결과가 흔들릴 수 있다는 뜻입니다. 가격 변동, 신용, 유동성 등 여러 종류의 위험을 나누어 살펴야 합니다.' },
-    { terms: ['유동성'], korean: '유동성', hanja: '流動性', abbr: '—', english: 'Liquidity', summary: '필요한 때 큰 가격 손해 없이 현금으로 바꾸기 쉬운 정도입니다.', detail: '거래량이 적거나 매수·매도 호가 차이가 큰 상품은 원하는 가격에 거래하기 어려울 수 있습니다. 가까운 시일에 쓸 돈일수록 유동성이 중요합니다.' },
+    { terms: ['유동성'], korean: '유동성', hanja: '流動性', abbr: '—', english: 'Liquidity (리퀴디티)', summary: '필요한 때 큰 가격 손해 없이 현금으로 바꾸기 쉬운 정도입니다.', detail: '거래량이 적거나 매수·매도 호가 차이가 큰 상품은 원하는 가격에 거래하기 어려울 수 있습니다. 가까운 시일에 쓸 돈일수록 유동성이 중요합니다.' },
     { terms: ['포트폴리오'], korean: '포트폴리오', hanja: '資産構成', abbr: 'PF', english: 'Portfolio', summary: '한 사람이 보유한 여러 투자자산의 전체 구성입니다.', detail: '한 종목의 성과보다 자산 전체가 어떻게 함께 움직이는지가 중요합니다. 목표와 위험 허용 범위에 맞춰 주식·채권·현금성 자산 등을 조합합니다.' },
     { terms: ['채권'], korean: '채권', hanja: '債券', abbr: 'Bond', english: 'Bond', summary: '정부나 기업에 돈을 빌려주고 이자와 원금을 받기로 한 증서입니다.', detail: '금리 변화, 발행자의 상환 능력, 만기에 따라 가격과 위험이 달라집니다. 중간에 팔면 손익이 생길 수 있으므로 원금이 항상 보장되는 것은 아닙니다.' },
     { terms: ['금리'], korean: '금리', hanja: '金利', abbr: 'IR', english: 'Interest Rate', summary: '돈을 빌리거나 맡길 때 붙는 이자의 비율입니다.', detail: '시장금리가 오르면 기존 채권의 가격은 내려갈 수 있고, 반대로 금리가 내려가면 기존 채권 가격이 오를 수 있습니다. 다만 만기와 신용위험에 따라 영향은 다릅니다.' },
@@ -252,11 +252,30 @@
   let calendarEventsLoaded = false;
   let calendarEventsPromise = null;
 
+  // Calendar data is served by this repo's backend (GET /market/calendar-events).
+  // Same-origin is tried first so the page uses whichever domain-rag-lab API serves it;
+  // the remote API_BASE is only a fallback for static hosting (e.g. S3) where "/" is not the API.
+  const CALENDAR_EVENTS_PATH = '/market/calendar-events';
+
+  function fetchCalendarEventsFrom(base) {
+    return fetch(`${base}${CALENDAR_EVENTS_PATH}`, { headers: { Accept: 'application/json' } })
+      .then(res => {
+        if (!res.ok) throw new Error(`calendar-events ${res.status}`);
+        return res.json();
+      })
+      .then(events => {
+        if (!Array.isArray(events)) throw new Error('calendar-events: unexpected payload');
+        return events;
+      });
+  }
+
   function ensureCalendarEvents() {
     if (calendarEventsLoaded) return Promise.resolve(CALENDAR_EVENTS);
     if (!calendarEventsPromise) {
-      calendarEventsPromise = fetch(`${API_BASE}/market/calendar-events`)
-        .then(res => (res.ok ? res.json() : []))
+      const bases = [''];
+      if (API_BASE && API_BASE !== window.location.origin) bases.push(API_BASE);
+      calendarEventsPromise = bases
+        .reduce((chain, base) => chain.catch(() => fetchCalendarEventsFrom(base)), Promise.reject())
         .then(events => { CALENDAR_EVENTS = events; calendarEventsLoaded = true; return CALENDAR_EVENTS; })
         .catch(() => { CALENDAR_EVENTS = []; return CALENDAR_EVENTS; });
     }

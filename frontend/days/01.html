@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>01일차 | 4일 금융 이론 — 선물과 옵션</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260906-understanding-check" />
+    <link rel="stylesheet" href="assets/site.css?v=20260915-futures-settlement-compact" />
     <link rel="stylesheet" href="assets/app-shell.css?v=20260908-modal-text105" />
     <link
       rel="stylesheet"
@@ -12,7 +12,7 @@
     />
     <script defer src="assets/visuals.js?v=20260905-zero-sum-moved"></script>
     <script defer src="assets/atlas.js"></script>
-    <script defer src="assets/glossary-modal.js?v=20260912-financial-units"></script>
+    <script defer src="assets/glossary-modal.js?v=20260915-term-readings"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
     <script defer src="assets/lesson-understanding.js?v=20260906-all-days"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
@@ -90,13 +90,13 @@
                       <li><strong>위험자산:</strong> 시장 상황, 기업 실적 등에 따라 원금 손실(발행사 부도, 가격 폭락 등) 가능성이 존재합니다.</li>
                     </ul>
                   </li>
-                  <li><strong>가격 변동성 (Volatility)</strong>
+                  <li><strong>가격 변동성 (Volatility, 볼래틸러티)</strong>
                     <ul>
                       <li><strong>안전자산:</strong> 가격 오르내림의 폭이 작고 예측 가능성이 높습니다.</li>
                       <li><strong>위험자산:</strong> 경기 상황이나 뉴스에 따라 가격 폭등·폭락이 빈번하게 발생합니다.</li>
                     </ul>
                   </li>
-                  <li><strong>환금성 및 유동성 (Liquidity)</strong>
+                  <li><strong>환금성 및 유동성 (Liquidity, 리퀴디티)</strong>
                     <ul>
                       <li><strong>안전자산:</strong> 위기 상황에서도 언제든지 현금으로 교환하기 쉽고 거래 상대방을 찾기 용이합니다.</li>
                       <li><strong>위험자산:</strong> 시장이 급락할 때 거래가 끊기거나(매수자가 사라짐) 큰 손실을 보고 팔아야 할 수 있습니다.</li>
@@ -1319,6 +1319,36 @@
                   거래비용, 금리, 배당, 사고팔려는 주문의 차이 때문에 같은
                   지수를 보고 있어도 가격 차이가 생길 수 있습니다.
                 </p>
+                <h3>쉽게 말하면: 가까워지는 세 가지 이유</h3>
+                <p class="lesson-note"><b>한 줄 요약:</b> 선물은 “나중에 이 지수 값으로 정산하기로 한 약속”입니다. 그 ‘나중’이 바로 오늘(만기일)이 되면 약속 가격이 오늘 지수 값과 달라야 할 이유가 사라지므로, 두 가격은 만기일에 거의 같아집니다.</p>
+                <ol class="lesson-reasons">
+                  <li>
+                    <b>이유 1 · 만기일에는 선물이 곧 현물 지수 값으로 정산됩니다.</b>
+                    KOSPI 200 선물은 만기일(최종거래일)에 현물 KOSPI 200 지수 값을 기준으로 정한 최종결제가격으로 현금 정산합니다. 만기일의 선물 손익은 결국 “그날 현물 지수가 얼마인가”로 결정되므로, 만기일 선물가격은 현물 지수와 사실상 같은 숫자가 됩니다. 비유하면, 추석에 받기로 한 사과를 미리 예약할 때는 예약 가격과 시장 가격이 다를 수 있지만, 배송일이 바로 오늘이면 오늘 시장 가격과 다르게 팔릴 이유가 없는 것과 같습니다.
+                  </li>
+                  <li>
+                    <b>이유 2 · 차이가 남아 있으면 그 차이만큼 돈을 벌 수 있어 곧바로 주문이 몰립니다.</b>
+                    만기일에 현물이 350.00인데 선물이 352.50이라면, 선물을 352.50에 팔고 현물(지수를 따라가는 주식 묶음이나 ETF)을 350.00에 사 두면 정산 때 2.50포인트 차이가 거의 위험 없는 이익이 됩니다. 이런 차익거래 주문이 몰리면 선물은 팔려서 내려가고 현물은 사져서 올라가므로 차이가 빠르게 줄어듭니다. 반대로 선물이 더 싸면 선물을 사고 현물을 팔아 같은 효과가 납니다.
+                  </li>
+                  <li>
+                    <b>이유 3 · 만기 전에 차이가 나던 원인(보유비용)이 시간이 갈수록 0으로 줄어듭니다.</b>
+                    선물이 현물보다 비싼 주된 이유는, 현물을 지금 사서 만기까지 들고 있을 때 드는 이자(자금 비용)에서 그 사이에 받는 배당을 뺀 <b>보유비용</b> 때문입니다. 남은 기간이 90일이면 90일치 비용이 붙지만, 남은 기간이 하루면 하루치, 만기일이면 0이 됩니다. 그래서 만기가 다가올수록 베이시스는 자연스럽게 0을 향해 줄어듭니다.
+                  </li>
+                </ol>
+                <p class="lesson-formula">만기 전 베이시스 ≈ 현물 지수 × (금리 − 배당수익률) × 남은 기간 ÷ 1년 → 남은 기간이 0이면 베이시스도 0</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>교육용 가정: 만기가 다가올수록 베이시스가 줄어드는 모습 (현물 350.00, 연 금리 3%, 배당수익률 1% 가정)</caption>
+                    <thead><tr><th scope="col">만기까지 남은 기간</th><th scope="col">보유비용에 따른 이론 베이시스</th><th scope="col">이론 선물가격</th></tr></thead>
+                    <tbody>
+                      <tr><td>90일</td><td>350.00 × 2% × 90 ÷ 365 ≈ <b>+1.73pt</b></td><td>약 351.73</td></tr>
+                      <tr><td>30일</td><td>350.00 × 2% × 30 ÷ 365 ≈ <b>+0.58pt</b></td><td>약 350.58</td></tr>
+                      <tr><td>1일</td><td>350.00 × 2% × 1 ÷ 365 ≈ <b>+0.02pt</b></td><td>약 350.02</td></tr>
+                      <tr><td><b>만기일 (0일)</b></td><td><b>0.00pt</b></td><td><b>350.00 = 현물 지수</b></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="lesson-note">실제 시장에서는 여기에 거래비용, 주문 수급, 기대심리가 더해져 장중에는 작은 차이가 계속 생길 수 있습니다. 하지만 위 세 가지 이유 때문에 만기일이 되면 그 차이가 거의 사라집니다. 아래에서는 이 차이를 숫자로 읽는 방법(베이시스)과 실제 사례를 살펴봅니다.</p>
                 <h3>지수와 선물의 수치 비교</h3>
                 <p>실제 시장에서는 두 수치가 같은 단위로 똑같이 전광판에 표시됩니다.</p>
                 <div class="lesson-table-wrap">
@@ -1396,6 +1426,7 @@
                   합니다. 다만 장중 가격이 매 순간 완전히 같다는 뜻은 아니며,
                   작은 차이는 계속 생길 수 있습니다.
                 </p>
+                <p class="lesson-note"><b>정리:</b> ① 만기일에는 선물이 현물 지수 값으로 정산되고, ② 차이가 남으면 차익거래 주문이 그 차이를 메우며, ③ 만기 전 차이의 원인이던 보유비용이 남은 기간과 함께 0으로 줄어들기 때문에, 선물가격과 현물가격은 만기일에 가까워집니다.</p>
                 <p class="lesson-video-cta">
                   <button type="button" class="lesson-video-link" id="basisConvergenceTrigger">
                     <i class="fa-solid fa-chart-line"></i> 만기 수렴 시뮬레이터 해보기
@@ -1651,7 +1682,7 @@
               </dd>
             </div>
             <div class="glossary-item">
-              <dt>유동성 <small>Liquidity · 流動性</small></dt>
+              <dt>유동성 <small>Liquidity(리퀴디티) · 流動性</small></dt>
               <dd>
                 필요한 때 큰 가격 손해 없이 현금으로 바꾸기 쉬운 정도입니다.
                 거래량이 적거나 매수·매도 호가 차이가 큰 상품은 원하는 가격에
@@ -2304,12 +2335,12 @@
         <div class="margin-flow-controls">
           <label>초기 증거금 <input id="marginFlowInitial" type="number" min="0" step="100000" value="10000000"><small>거래 시작 때 계좌에 둔 돈</small></label>
           <label>유지증거금 기준 <input id="marginFlowMaintenance" type="number" min="0" step="100000" value="7000000"><small>이 아래로 내려가면 추가 납부 요구</small></label>
-          <label>당일 평가손실 <input id="marginFlowDailyLoss" type="number" min="0" step="100000" value="7000000"><small>일일정산으로 먼저 반영된 손실</small></label>
+          <label class="margin-flow-loss-field">당일 평가손실 <input id="marginFlowDailyLoss" type="number" min="0" step="100000" value="7000000"><small>일일정산으로 먼저 반영된 손실</small><strong class="margin-flow-loss-callout" id="marginFlowLossCallout" aria-live="polite"></strong></label>
           <label>추가 입금액 <input id="marginFlowAdded" type="number" min="0" step="100000" value="0"><small>요구받은 뒤 실제로 낸 돈</small></label>
           <label>청산 시 추가 손실 <input id="marginFlowLiquidationLoss" type="number" min="0" step="100000" value="5000000"><small>미납으로 청산될 때의 가정</small></label>
         </div>
         <ol class="margin-flow-steps" id="marginFlowSteps">
-          <li><span>1</span><div><b>손실 발생</b><strong id="marginFlowAfterLoss">—</strong><small id="marginFlowLossNote"></small></div></li>
+          <li><span>1</span><div><b>손실 발생</b><strong id="marginFlowAfterLoss">—</strong><strong class="margin-flow-loss-amount" id="marginFlowLossAmount"></strong><small id="marginFlowLossNote"></small></div></li>
           <li><span>2</span><div><b>추가 입금 요구</b><strong id="marginFlowCall">—</strong><small id="marginFlowCallNote"></small></div></li>
           <li><span>3</span><div><b>미입금 시 강제청산</b><strong id="marginFlowLiquidation">—</strong><small id="marginFlowLiquidationNote"></small></div></li>
           <li><span>4</span><div><b>남은 부족금 정산</b><strong id="marginFlowShortfall">—</strong><small id="marginFlowShortfallNote"></small></div></li>
@@ -2515,28 +2546,32 @@
             </select>
           </label>
           <label class="futures-settlement-field">계약 가격 <input id="futuresSettlementEntry" type="number" inputmode="decimal" value="3000"><small id="futuresSettlementEntryValue"></small></label>
-          <label class="futures-settlement-field">만기 가격 <input id="futuresSettlementFinal" type="number" inputmode="decimal" value="5000"><small id="futuresSettlementFinalValue"></small></label>
+          <label class="futures-settlement-field">계약종료일 시장의 가격 <input id="futuresSettlementFinal" type="number" inputmode="decimal" value="5000"><small id="futuresSettlementFinalValue"></small></label>
           <label class="futures-settlement-field"><span id="futuresSettlementQtyLabel">수량 (포기)</span> <input id="futuresSettlementQty" type="number" min="1" step="1" value="1000"></label>
         </div>
-        <section class="futures-point-explainer" id="futuresPointExplainer" hidden>
-          <strong>왜 KOSPI 200 선물은 ‘원’이 아니라 ‘포인트’일까요?</strong>
+        <details class="futures-point-explainer" id="futuresPointExplainer" hidden>
+          <summary>왜 KOSPI 200 선물은 ‘원’이 아니라 ‘포인트’일까요?</summary>
           <p>KOSPI 200은 주식 한 종목의 가격이 아니라 200개 종목의 움직임을 하나의 <b>지수</b>로 나타낸 숫자이므로 포인트로 표시합니다. 거래소는 이 포인트를 실제 계약금액으로 바꾸기 위해 <b>거래승수</b>를 정합니다.</p>
           <p>이 예시의 KOSPI 200 선물은 <b>1포인트 = 250,000원</b>입니다. 따라서 340포인트는 주식 340원이라는 뜻이 아니라, <b>340 × 250,000원 = 85,000,000원</b>의 1계약 규모를 뜻합니다. 0.05포인트가 움직이면 손익은 12,500원 움직입니다.</p>
-        </section>
+        </details>
         <div class="futures-settlement-direction" id="futuresSettlementDirection"></div>
-        <div class="futures-settlement-sides">
-          <article class="futures-settlement-side buyer">
-            <p>매수자 · 롱 포지션</p><strong id="futuresSettlementBuyer">—</strong><small id="futuresSettlementBuyerNote"></small>
-          </article>
-          <article class="futures-settlement-side seller">
-            <p>매도자 · 숏 포지션</p><strong id="futuresSettlementSeller">—</strong><small id="futuresSettlementSellerNote"></small>
-          </article>
+        <div class="futures-settlement-outcome">
+          <div class="futures-settlement-sides">
+            <article class="futures-settlement-side seller">
+              <p>매도자 · 숏 포지션</p><strong id="futuresSettlementSeller">—</strong><small id="futuresSettlementSellerNote"></small>
+            </article>
+            <article class="futures-settlement-side buyer">
+              <p>매수자 · 롱 포지션</p><strong id="futuresSettlementBuyer">—</strong><small id="futuresSettlementBuyerNote"></small>
+            </article>
+          </div>
+          <div class="futures-settlement-aside">
+            <section class="futures-settlement-expiry">
+              <strong>계약종료일(만기일)에는 어떻게 되나요?</strong>
+              <p id="futuresSettlementExpiry"></p>
+            </section>
+            <p class="futures-settlement-formula" id="futuresSettlementFormula"></p>
+          </div>
         </div>
-        <section class="futures-settlement-expiry">
-          <strong>만기일에는 어떻게 되나요?</strong>
-          <p id="futuresSettlementExpiry"></p>
-        </section>
-        <p class="futures-settlement-formula" id="futuresSettlementFormula"></p>
       </section>
     </div>
 
@@ -2973,6 +3008,8 @@
         const liquidationLoss = document.getElementById("marginFlowLiquidationLoss");
         const afterLossEl = document.getElementById("marginFlowAfterLoss");
         const lossNote = document.getElementById("marginFlowLossNote");
+        const lossCallout = document.getElementById("marginFlowLossCallout");
+        const lossAmount = document.getElementById("marginFlowLossAmount");
         const callEl = document.getElementById("marginFlowCall");
         const callNote = document.getElementById("marginFlowCallNote");
         const liquidationEl = document.getElementById("marginFlowLiquidation");
@@ -3001,6 +3038,11 @@
 
           afterLossEl.textContent = afterLoss >= 0 ? `잔액 ${won(afterLoss)}` : `잔액 −${won(afterLoss)}`;
           lossNote.textContent = `초기 ${won(opening)} − 당일 손실 ${won(loss)}`;
+          const lossText = loss > 0 ? `손실 −${won(loss)}` : "손실 없음 (0원)";
+          lossCallout.textContent = lossText;
+          lossCallout.classList.toggle("is-loss", loss > 0);
+          lossAmount.textContent = loss > 0 ? `당일 평가손실 −${won(loss)}` : "당일 평가손실 없음";
+          lossAmount.classList.toggle("is-loss", loss > 0);
           callEl.textContent = marginCall ? `${won(marginCall)} 추가 납부 요구` : "추가 납부 요구 없음";
           callNote.textContent = marginCall ? `유지기준 ${won(maintenanceRequirement)} 아래로 내려가 초기 증거금 수준을 가정해 보충합니다.` : `잔액이 유지증거금 ${won(maintenanceRequirement)} 이상입니다.`;
           liquidationEl.textContent = forced ? "미입금 → 강제청산" : "추가 입금 완료 → 보유 지속";
@@ -3239,12 +3281,25 @@
           seller.textContent = signed(-pnl);
           buyer.className = pnl >= 0 ? "gain" : "loss";
           seller.className = pnl <= 0 ? "gain" : "loss";
-          buyerNote.textContent = pnl >= 0 ? "가격 상승으로 매수자 이익" : "가격 하락으로 매수자 손실";
-          sellerNote.textContent = pnl <= 0 ? "가격 상승으로 매도자 손실" : "가격 하락으로 매도자 이익";
+          const unitWord = cabbage ? "포기" : "계약";
+          const priceOf = value => cabbage ? `${fmt(value)}원` : `${fmt(value)}포인트`;
+          const perUnitDiff = cabbage ? `${fmt(Math.abs(change))}원` : `${fmt(Math.abs(change))}포인트(${fmt(Math.abs(change) * multiplier)}원)`;
+          const goods = cabbage ? "배추" : "KOSPI 200 지수";
+          const total = fmt(Math.abs(pnl));
+          if (pnl === 0) {
+            buyerNote.textContent = "계약종료일 시장의 가격이 계약 가격과 같아 이익도 손해도 없습니다.";
+            sellerNote.textContent = "계약종료일 시장의 가격이 계약 가격과 같아 이익도 손해도 없습니다.";
+          } else if (pnl > 0) {
+            buyerNote.textContent = `가격 상승 → 매수자 이익. 시장에서 ${priceOf(maturityPrice)} 하는 ${goods}를 약속한 ${priceOf(entryPrice)}에 받으므로, ${unitWord}당 ${perUnitDiff}씩 총 ${total}원을 싸게 사는 셈입니다.`;
+            sellerNote.textContent = `가격 상승 → 매도자 손실. 계약종료일에 시장에서는 ${priceOf(maturityPrice)}에 팔 수 있는데도 약속한 ${priceOf(entryPrice)}에 넘겨야 합니다. 다른 사람에게 오른 가격에 팔 기회를 놓쳐 ${unitWord}당 ${perUnitDiff}씩 총 ${total}원을 못 받는 셈입니다.`;
+          } else {
+            buyerNote.textContent = `가격 하락 → 매수자 손실. 계약종료일에 시장에서는 ${priceOf(maturityPrice)}에 살 수 있는데도 약속한 ${priceOf(entryPrice)}에 사야 합니다. 다른 사람에게서 싸게 살 기회를 놓쳐 ${unitWord}당 ${perUnitDiff}씩 총 ${total}원을 더 내는 셈입니다.`;
+            sellerNote.textContent = `가격 하락 → 매도자 이익. 시장에 내다 팔면 ${priceOf(maturityPrice)}밖에 못 받을 ${goods}를 싼 가격에 팔지 않고 약속한 ${priceOf(entryPrice)}에 팔 수 있으므로, ${unitWord}당 ${perUnitDiff}씩 총 ${total}원을 더 받는 셈입니다.`;
+          }
           direction.textContent = cabbage
-            ? (change === 0 ? "만기 가격이 계약 가격과 같아 손익은 0원입니다." : `만기 가격이 계약 가격보다 ${fmt(Math.abs(change))}원/포기 ${change > 0 ? "올랐습니다" : "내렸습니다"}.`)
+            ? (change === 0 ? "계약종료일 시장의 가격이 계약 가격과 같아 손익은 0원입니다." : `계약종료일 시장의 가격이 계약 가격보다 ${fmt(Math.abs(change))}원/포기 ${change > 0 ? "올랐습니다" : "내렸습니다"}.`)
             : `가격 차이: ${fmt(Math.abs(change))}포인트 = ${fmt(Math.abs(change) * multiplier)}원/계약 · 계약 가격 기준 1계약 금액: ${fmt(entryPrice * multiplier)}원`;
-          formula.textContent = cabbage ? `손익 = (만기 배추 가격 − 계약 가격) × ${fmt(units)}포기` : `손익 = (만기 선물 가격 − 계약 가격) 포인트 × 250,000원 × ${fmt(units)}계약`;
+          formula.textContent = cabbage ? `손익 = (계약종료일 시장의 배추 가격 − 계약 가격) × ${fmt(units)}포기` : `손익 = (계약종료일 시장의 선물 가격 − 계약 가격) 포인트 × 250,000원 × ${fmt(units)}계약`;
           expiry.textContent = cabbage
             ? `실물인도 가정: 매수자는 약속한 포기당 ${fmt(Number(entry.value) || 0)}원으로 배추 ${fmt(units)}포기를 받고, 매도자는 이를 인도합니다. 시장가격과의 차이 ${signed(pnl)}이 매수자의 경제적 손익이며 매도자는 정확히 반대입니다.`
             : `현금결제 가정: 실물 주식을 주고받지 않고, 계약 가격과 최종결제가격의 차이 ${signed(pnl)}을 매수자에게 정산합니다. 매도자는 같은 금액을 반대로 정산합니다.`;
@@ -3277,12 +3332,8 @@
         </button>
         <p class="glossary-modal__label">SIMULATION · 교육용</p>
         <h2 id="orderMatchTitle">주문 체결 시뮬레이터</h2>
-        <p class="order-match-intro" id="orderMatchIntro">
-          KOSPI 200 선물을 예로 든 가상 호가창입니다. 매수·매도, 가격,
-          수량을 정해 주문을 넣어 보세요. 더 높은 매수호가와 더 낮은
-          매도호가가 먼저 만나고, 가격이 맞지 않으면 주문은 체결되지 않고
-          호가창에 남아 기다립니다.
-        </p>
+        <div class="order-match-layout">
+          <div class="order-match-col order-match-col--book">
         <label class="order-match-product-field">
           <span>거래 대상</span>
           <select id="orderMatchProduct">
@@ -3302,6 +3353,14 @@
             <div class="order-match-rows" id="orderMatchBidRows"></div>
           </div>
         </div>
+          </div>
+          <div class="order-match-col order-match-col--trade">
+        <p class="order-match-intro" id="orderMatchIntro">
+          KOSPI 200 선물을 예로 든 가상 호가창입니다. 매수·매도, 가격,
+          수량을 정해 주문을 넣어 보세요. 더 높은 매수호가와 더 낮은
+          매도호가가 먼저 만나고, 가격이 맞지 않으면 주문은 체결되지 않고
+          호가창에 남아 기다립니다.
+        </p>
 
         <form class="order-match-form" id="orderMatchForm">
           <div class="order-match-people" role="group" aria-label="주문 주체 선택">
@@ -3340,6 +3399,8 @@
           <i class="fa-solid fa-circle-info"></i> 실제 시세·호가가 아니라
           가격·시간 우선 체결 규칙을 이해하기 위한 가상 시뮬레이션입니다.
         </p>
+          </div>
+        </div>
       </section>
     </div>
 
