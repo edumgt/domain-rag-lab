@@ -38,6 +38,18 @@ class Settings(BaseSettings):
     long_term_memory_threshold: float = 0.4
     long_term_memory_top_k: int = 3
 
+    # QuantConnect LEAN 실행기 선택.
+    #   auto   : SSH 설정이 있으면 remote, 없으면 로컬 Docker 소켓이 보일 때 local
+    #   local  : API 컨테이너에 마운트된 /var/run/docker.sock으로 같은 호스트의 Docker에서 LEAN 실행
+    #   remote : SSH로 원격 서버의 Docker에서 LEAN 실행
+    #   off    : 백테스트 비활성화
+    lean_runner: str = "auto"
+    # local 러너: API 컨테이너 안에서 보이는 작업 폴더와, 같은 폴더의 호스트 절대 경로.
+    # docker run -v 는 호스트 데몬이 해석하므로 호스트 경로가 반드시 필요하다.
+    lean_local_workdir: str = "/app/data/lean-workflows"
+    lean_local_workdir_host: str = ""
+    lean_docker_socket: str = "/var/run/docker.sock"
+
     # 원격 QuantConnect LEAN 실행기. 키 파일·호스트는 배포 환경에서만 설정한다.
     lean_ssh_host: str = ""
     lean_ssh_user: str = "ubuntu"

@@ -62,17 +62,25 @@ services:
       REDIS_PORT: 6379
       QDRANT_HOST: qdrant
       QDRANT_PORT: 6333
+      # LEAN 러너: 기본 local — 같은 PC의 Docker에서 quantconnect/lean 컨테이너를 실행합니다.
+      LEAN_RUNNER: ${LEAN_RUNNER:-local}
+      LEAN_LOCAL_WORKDIR: /app/data/lean-workflows
+      # ./data/lean-workflows 의 호스트 절대 경로. LEAN 컨테이너의 -v 마운트는 호스트 데몬이 해석합니다.
+      LEAN_LOCAL_WORKDIR_HOST: ${LEAN_LOCAL_WORKDIR_HOST:-${PWD}/data/lean-workflows}
       LEAN_SSH_HOST: ${LEAN_SSH_HOST:-}
       LEAN_SSH_USER: ${LEAN_SSH_USER:-ubuntu}
       LEAN_SSH_KEY_PATH: ${LEAN_SSH_KEY_PATH:-}
       LEAN_REMOTE_WORKDIR: ${LEAN_REMOTE_WORKDIR:-/home/ubuntu/lean-workflows}
       LEAN_DOCKER_IMAGE: ${LEAN_DOCKER_IMAGE:-quantconnect/lean:latest}
+      LEAN_TIMEOUT_SECONDS: ${LEAN_TIMEOUT_SECONDS:-300}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
       - ./app:/app/app
       - ./frontend:/app/frontend
       - ./data:/app/data
+      # 로컬 LEAN 러너가 호스트 Docker로 컨테이너를 띄우기 위한 소켓
+      - /var/run/docker.sock:/var/run/docker.sock
       - ${LEAN_SSH_KEY_HOST_PATH:-/dev/null}:${LEAN_SSH_KEY_PATH:-/run/secrets/lean.pem}:ro
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:

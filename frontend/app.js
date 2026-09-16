@@ -252,30 +252,49 @@
   let calendarEventsLoaded = false;
   let calendarEventsPromise = null;
 
-  // Calendar data is served by this repo's backend (GET /market/calendar-events).
+  // Market data (calendar events, intraday bars, ...) is served by this repo's backend.
   // Same-origin is tried first so the page uses whichever domain-rag-lab API serves it;
   // the remote API_BASE is only a fallback for static hosting (e.g. S3) where "/" is not the API.
-  const CALENDAR_EVENTS_PATH = '/market/calendar-events';
+  function localBackendBases() {
+    const bases = [''];
+    if (API_BASE && API_BASE !== window.location.origin) bases.push(API_BASE);
+    return bases;
+  }
 
-  function fetchCalendarEventsFrom(base) {
-    return fetch(`${base}${CALENDAR_EVENTS_PATH}`, { headers: { Accept: 'application/json' } })
-      .then(res => {
-        if (!res.ok) throw new Error(`calendar-events ${res.status}`);
+  // Fetch JSON from this repo's backend. `init` is passed to fetch (method, headers, body).
+  // On a non-OK response the thrown Error carries `status` and the backend `detail` message.
+  // The next base is tried only when the current one is unreachable or does not serve the API
+  // (network error, 403/404/405), so a real backend error is not masked by the remote fallback.
+  function fetchLocalBackendJson(path, isValidPayload, init) {
+    const attempt = base => fetch(`${base}${path}`, { ...(init || {}), headers: { Accept: 'application/json', ...((init && init.headers) || {}) } })
+      .then(async res => {
+        if (!res.ok) {
+          const detail = await res.json().then(body => body && body.detail).catch(() => null);
+          const error = new Error(typeof detail === 'string' && detail ? detail : `${path} ${res.status}`);
+          error.status = res.status;
+          error.detail = typeof detail === 'string' && detail ? detail : null;
+          error.statusText = res.statusText;
+          throw error;
+        }
         return res.json();
       })
-      .then(events => {
-        if (!Array.isArray(events)) throw new Error('calendar-events: unexpected payload');
-        return events;
+      .then(payload => {
+        if (isValidPayload && !isValidPayload(payload)) throw new Error(`${path}: unexpected payload`);
+        return payload;
       });
+    const canFallBack = error => error == null || error.status == null || [403, 404, 405].includes(error.status);
+    return localBackendBases().reduce(
+      (chain, base) => chain.catch(error => (canFallBack(error) ? attempt(base) : Promise.reject(error))),
+      Promise.reject(),
+    );
   }
+
+  const CALENDAR_EVENTS_PATH = '/market/calendar-events';
 
   function ensureCalendarEvents() {
     if (calendarEventsLoaded) return Promise.resolve(CALENDAR_EVENTS);
     if (!calendarEventsPromise) {
-      const bases = [''];
-      if (API_BASE && API_BASE !== window.location.origin) bases.push(API_BASE);
-      calendarEventsPromise = bases
-        .reduce((chain, base) => chain.catch(() => fetchCalendarEventsFrom(base)), Promise.reject())
+      calendarEventsPromise = fetchLocalBackendJson(CALENDAR_EVENTS_PATH, Array.isArray)
         .then(events => { CALENDAR_EVENTS = events; calendarEventsLoaded = true; return CALENDAR_EVENTS; })
         .catch(() => { CALENDAR_EVENTS = []; return CALENDAR_EVENTS; });
     }
@@ -1060,13 +1079,21 @@ KOSDAQ|웹젠|게임`,
     if (updatedEl) updatedEl.textContent = tickState.lastFetchedAt ? `마지막 갱신 ${fmtTime(tickState.lastFetchedAt)}` : '';
   }
 
+  // 분봉 데이터는 이 repo의 백엔드(GET /market/intraday)에서 가져옵니다.
+  // 같은 origin을 먼저 시도하고, 정적 호스팅(S3 등)에서만 원격 API_BASE로 폴백합니다.
+  const INTRADAY_PATH = '/market/intraday';
+
+  function isIntradayPayload(payload) {
+    return !!payload && typeof payload === 'object' && Array.isArray(payload.bars);
+  }
+
   async function fetchIntraday() {
     const requestedTicker = tickState.ticker;
     tickState.loading = true;
     if (!tickState.bars.length) renderTickDashboardFrame();
     try {
-      const response = await fetch(`${API_BASE}/market/intraday?ticker=${encodeURIComponent(tickState.ticker)}&market=${encodeURIComponent(tickState.market)}`);
-      const payload = await response.json();
+      const query = `?ticker=${encodeURIComponent(tickState.ticker)}&market=${encodeURIComponent(tickState.market)}`;
+      const payload = await fetchLocalBackendJson(`${INTRADAY_PATH}${query}`, isIntradayPayload);
       if (requestedTicker !== tickState.ticker) return; // 응답이 오는 사이 다른 종목으로 전환된 경우 무시
       tickState.bars = payload.bars || [];
       tickState.meta = payload.meta || {};
@@ -1089,8 +1116,7 @@ KOSDAQ|웹젠|게임`,
     tickState.beta = { loading: true };
     renderTickDashboardFrame();
     try {
-      const response = await fetch(`${API_BASE}/market/beta?ticker=${encodeURIComponent(requestedTicker)}&market=${encodeURIComponent(requestedMarket)}`);
-      const payload = await response.json();
+      const payload = await fetchLocalBackendJson(`/market/beta?ticker=${encodeURIComponent(requestedTicker)}&market=${encodeURIComponent(requestedMarket)}`);
       if (requestedTicker !== tickState.ticker || requestedMarket !== tickState.market) return;
       tickState.beta = {
         value: payload.beta,
@@ -1249,8 +1275,7 @@ KOSDAQ|웹젠|게임`,
   async function fetchDashboardAsset(asset) {
     dashboardState.items[asset.ticker] = { ...(dashboardState.items[asset.ticker] || {}), loading: true };
     try {
-      const response = await fetch(`${API_BASE}/market/company?ticker=${encodeURIComponent(asset.ticker)}&market=${encodeURIComponent(asset.market)}&name=${encodeURIComponent(asset.name)}`);
-      const payload = await response.json();
+      const payload = await fetchLocalBackendJson(`/market/company?ticker=${encodeURIComponent(asset.ticker)}&market=${encodeURIComponent(asset.market)}&name=${encodeURIComponent(asset.name)}`);
       dashboardState.items[asset.ticker] = { quote: payload.quote, error: payload.quote ? null : '시세 없음', loading: false };
     } catch (error) {
       dashboardState.items[asset.ticker] = { quote: null, error: '시세를 불러오지 못했습니다.', loading: false };
@@ -1600,6 +1625,14 @@ KOSDAQ|웹젠|게임`,
     renderBasisOutput();
   }
 
+  // KOSPI 200 현물 일봉은 이 repo의 백엔드(GET /market/kospi200-history)에서 가져옵니다.
+  // 같은 origin을 먼저 시도하고, 정적 호스팅(S3 등)에서만 원격 API_BASE로 폴백합니다.
+  const KOSPI200_HISTORY_PATH = '/market/kospi200-history';
+
+  function isKospi200HistoryPayload(payload) {
+    return !!payload && typeof payload === 'object' && Array.isArray(payload.bars);
+  }
+
   async function fetchBasisHistory() {
     const requestId = ++basisState.requestId;
     basisState.loading = true;
@@ -1613,9 +1646,7 @@ KOSDAQ|웹젠|게임`,
       start.setDate(start.getDate() - basisState.rangeDays + 1);
       end.setDate(end.getDate() + 1);
       const fmt = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      const response = await fetch(`${API_BASE}/market/kospi200-history?start=${fmt(start)}&end=${fmt(end)}`);
-      const payload = await response.json();
-      if (!response.ok) throw new Error(payload.detail || '요청 실패');
+      const payload = await fetchLocalBackendJson(`${KOSPI200_HISTORY_PATH}?start=${fmt(start)}&end=${fmt(end)}`, isKospi200HistoryPayload);
       if (requestId !== basisState.requestId) return;
       basisState.bars = payload.bars || [];
       basisState.source = payload.source || null;
@@ -1627,8 +1658,9 @@ KOSDAQ|웹젠|게임`,
       basisState.bars = [];
       basisState.source = null;
       basisState.latestDate = null;
-      basisState.error = error instanceof Error && error.message !== '요청 실패'
-        ? `KOSPI 200 지수 데이터를 불러오지 못했습니다. (${error.message})`
+      const detail = error && error.detail ? error.detail : '';
+      basisState.error = detail
+        ? `KOSPI 200 지수 데이터를 불러오지 못했습니다. (${detail})`
         : 'KOSPI 200 지수 데이터를 불러오지 못했습니다.';
     }
     if (requestId !== basisState.requestId) return;
@@ -1754,9 +1786,8 @@ KOSDAQ|웹젠|게임`,
     button.disabled = true; button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> LEAN 실행 중';
     result.innerHTML = '<div class="backtest-empty"><i class="fa-solid fa-spinner fa-spin"></i><p>yfinance 데이터를 정리하고 원격 LEAN 컨테이너를 실행하고 있습니다.</p></div>';
     try {
-      const response = await fetch(`${API_BASE}/backtests/run`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.detail || '백테스트를 실행하지 못했습니다.');
+      const data = await fetchLocalBackendJson('/backtests/run', null, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .catch(error => { throw new Error(error && error.detail ? error.detail : '백테스트를 실행하지 못했습니다.'); });
       result.innerHTML = `<div class="backtest-result-head"><span>${escHtml(data.engine)} · ${escHtml(data.strategy_label || '')}</span><h2>${escHtml(data.ticker)} 결과</h2></div>${buildBacktestSummary(data)}<div class="backtest-metrics"><article><span>전략 수익률</span><strong class="${data.strategy_return_pct >= 0 ? 'up' : 'down'}">${data.strategy_return_pct >= 0 ? '+' : ''}${data.strategy_return_pct}%</strong></article><article><span>연환산 수익률</span><strong class="${data.annualized_return_pct >= 0 ? 'up' : 'down'}">${data.annualized_return_pct >= 0 ? '+' : ''}${data.annualized_return_pct}%</strong></article><article><span>연환산 변동성</span><strong>${data.annualized_volatility_pct}%</strong></article><article><span>샤프 비율</span><strong>${data.sharpe_ratio}</strong></article><article><span>최대 낙폭</span><strong class="down">${data.max_drawdown_pct}%</strong></article><article><span>시장 노출 일수</span><strong>${data.invested_days_pct}%</strong></article><article><span>규칙 변경 횟수</span><strong>${data.trade_count}회</strong></article><article><span>단순 보유 수익률</span><strong class="${data.benchmark_return_pct >= 0 ? 'up' : 'down'}">${data.benchmark_return_pct >= 0 ? '+' : ''}${data.benchmark_return_pct}%</strong></article></div>${buildInvestmentChecklist(data)}<canvas id="backtestChart" width="900" height="250" aria-label="자산 곡선"></canvas><p class="backtest-disclaimer">${escHtml(data.disclaimer)}</p><details><summary>LEAN 실행 로그 보기</summary><pre>${escHtml(data.lean_log || '결과 로그 없음')}</pre></details>`;
       drawBacktestChart(data.points);
     } catch (error) { result.innerHTML = `<div class="backtest-error"><i class="fa-solid fa-triangle-exclamation"></i>${escHtml(error.message)}</div>`; }
@@ -2370,9 +2401,7 @@ effective_date: [기준일]
     document.body.classList.add('modal-open');
     modal.querySelectorAll('[data-atlas-close]').forEach(item => item.addEventListener('click', () => { modal.remove(); document.body.classList.remove('modal-open'); }));
     try {
-      const response = await fetch(`${API_BASE}/market/company?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}&name=${encodeURIComponent(company.name)}`);
-      if (!response.ok) throw new Error('market snapshot unavailable');
-      const snapshot = await response.json();
+      const snapshot = await fetchLocalBackendJson(`/market/company?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}&name=${encodeURIComponent(company.name)}`);
       if (!document.body.contains(modal)) return;
       renderAtlasSnapshot(modal, snapshot);
     } catch (_) {
@@ -2391,8 +2420,7 @@ effective_date: [기준일]
     let bars = null;
     let opened = false;
 
-    fetch(`${API_BASE}/market/history?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}`)
-      .then(response => response.ok ? response.json() : Promise.reject(new Error('history unavailable')))
+    fetchLocalBackendJson(`/market/history?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}`)
       .then(data => {
         if (!document.body.contains(modal)) return;
         if (data.available && data.bars?.length) {
@@ -2660,26 +2688,26 @@ effective_date: [기준일]
     setInputDisabled(true);
 
     try {
-      const res = await fetch(`${API_BASE}/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question,
-          domain: state.domain,
-          top_k: state.topK,
-          session_id: state.sessionId,
-        }),
-      });
-
-      removeTyping(typingId);
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        appendMessage('bot', `⚠️ 오류: ${err.detail || res.statusText}`);
+      let data;
+      try {
+        data = await fetchLocalBackendJson('/chat', null, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question,
+            domain: state.domain,
+            top_k: state.topK,
+            session_id: state.sessionId,
+          }),
+        });
+      } catch (error) {
+        if (error && error.status == null) throw error; // 네트워크 오류는 바깥 catch에서 처리
+        removeTyping(typingId);
+        appendMessage('bot', `⚠️ 오류: ${error.detail || error.statusText || error.message}`);
         return;
       }
 
-      const data = await res.json();
+      removeTyping(typingId);
       appendMessage('bot', data.answer, data.references || []);
       updateRefPanel(data.references || []);
     } catch (err) {
@@ -2775,16 +2803,11 @@ effective_date: [기준일]
     form.append('domain', state.domain);
 
     try {
-      const res = await fetch(`${API_BASE}/ingest/file`, { method: 'POST', body: form });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        showUploadStatus('error', `오류: ${err.detail || res.statusText}`);
-        return;
-      }
-      const data = await res.json();
+      const data = await fetchLocalBackendJson('/ingest/file', null, { method: 'POST', body: form });
       showUploadStatus('success', `"${escHtml(data.title)}" 등록 완료 (${data.chunks}개 청크)`);
     } catch (err) {
-      showUploadStatus('error', `네트워크 오류: ${err.message}`);
+      if (err && err.status != null) showUploadStatus('error', `오류: ${err.detail || err.statusText}`);
+      else showUploadStatus('error', `네트워크 오류: ${err.message}`);
     }
   }
 
@@ -2801,7 +2824,7 @@ effective_date: [기준일]
     showUploadStatus('loading', '등록 중…');
 
     try {
-      const res = await fetch(`${API_BASE}/ingest/text`, {
+      const data = await fetchLocalBackendJson('/ingest/text', null, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -2811,19 +2834,12 @@ effective_date: [기준일]
           domain: state.domain,
         }),
       });
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        showUploadStatus('error', `오류: ${err.detail || res.statusText}`);
-        return;
-      }
-
-      const data = await res.json();
       showUploadStatus('success', `"${escHtml(data.title || data.document_id)}" 등록 완료 (${data.chunks}개 청크)`);
       $textTitle.value = '';
       $textContent.value = '';
     } catch (err) {
-      showUploadStatus('error', `네트워크 오류: ${err.message}`);
+      if (err && err.status != null) showUploadStatus('error', `오류: ${err.detail || err.statusText}`);
+      else showUploadStatus('error', `네트워크 오류: ${err.message}`);
     } finally {
       $ingestTextBtn.disabled = false;
     }

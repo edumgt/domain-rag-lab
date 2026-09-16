@@ -122,7 +122,9 @@ cp .env.local.example .env.local
 docker compose --env-file .env.local -f docker-compose.yml up --build -d
 ```
 
-오케스트레이터를 쓰려면 LLM 서버와 모델이 Function/Tool Calling을 지원해야 합니다. 로컬에서 LEAN을 쓰지 않을 경우 `LEAN_SSH_HOST`와 키 경로는 비워 두면 백테스트 API가 안전하게 비활성화됩니다.
+오케스트레이터를 쓰려면 LLM 서버와 모델이 Function/Tool Calling을 지원해야 합니다.
+
+LEAN 백테스트는 기본값(`LEAN_RUNNER=local`)으로 같은 PC의 Docker에서 `quantconnect/lean` 컨테이너를 직접 실행합니다. `docker-compose.yml`이 `/var/run/docker.sock`을 API 컨테이너에 마운트하고, 작업 파일은 `./data/lean-workflows`에 잠시 생성된 뒤 삭제됩니다. 첫 실행 전 `docker pull quantconnect/lean:latest`로 이미지를 미리 받아 두면 첫 백테스트가 타임아웃되지 않습니다. 백테스트를 끄려면 `LEAN_RUNNER=off`, 원격 서버를 쓰려면 `LEAN_RUNNER=remote`와 SSH 설정을 지정합니다.
 
 | 서비스 | 주소 |
 |---|---|
@@ -264,7 +266,16 @@ done
 
 ### QuantConnect LEAN 백테스트 워크플로우
 
-상단의 **LEAN 백테스트** 메뉴는 종목·백테스트 기간·비교 기간을 입력받아 yfinance 일봉을 정리하고, 환경변수로 지정한 원격 서버의 `quantconnect/lean:latest` 컨테이너를 호출합니다. 내 PC에서는 `.env.local`, AWS에서는 `.env.prod`에 `LEAN_SSH_HOST`, `LEAN_SSH_USER`, `LEAN_SSH_KEY_HOST_PATH`, `LEAN_SSH_KEY_PATH`을 설정하세요. PEM 키는 저장소에 추가하지 않고 호스트의 절대 경로를 읽기 전용으로 마운트합니다.
+상단의 **LEAN 백테스트** 메뉴는 종목·백테스트 기간·비교 기간을 입력받아 yfinance 일봉을 정리하고, `quantconnect/lean:latest` 컨테이너를 호출합니다. 실행 위치는 `LEAN_RUNNER`로 정합니다.
+
+| `LEAN_RUNNER` | 동작 | 필요한 설정 |
+|---|---|---|
+| `local` (로컬 기본값) | API 컨테이너가 마운트된 `/var/run/docker.sock`으로 같은 호스트의 Docker에서 LEAN 컨테이너를 실행 | `LEAN_LOCAL_WORKDIR_HOST`(`./data/lean-workflows`의 호스트 절대 경로, compose가 `PWD` 기준으로 자동 지정) |
+| `remote` | SSH로 원격 서버에 파일을 올리고 그 서버의 Docker에서 실행 | `LEAN_SSH_HOST`, `LEAN_SSH_USER`, `LEAN_SSH_KEY_HOST_PATH`, `LEAN_SSH_KEY_PATH` |
+| `auto` | SSH 설정이 있으면 `remote`, 없고 Docker 소켓이 보이면 `local` | 위 조합 중 하나 |
+| `off` | 백테스트 API 비활성화 | 없음 |
+
+AWS에서는 `.env.prod`에 원격 설정을 두고 `LEAN_RUNNER=remote`를 사용합니다. PEM 키는 저장소에 추가하지 않고 호스트의 절대 경로를 읽기 전용으로 마운트합니다.
 
 결과는 교육용 매수·보유 예시입니다. 데이터 품질, 배당, 세금, 수수료, 슬리피지와 실제 체결은 별도 검토가 필요합니다.
 

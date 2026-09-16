@@ -1,7 +1,8 @@
-"""yfinance data staging and remote QuantConnect LEAN execution."""
+"""yfinance data staging and QuantConnect LEAN execution (local Docker or remote SSH)."""
 
 from __future__ import annotations
 
+import shutil
 import subprocess
 import tempfile
 import uuid
@@ -56,8 +57,7 @@ class LeanBacktestService:
     ) -> dict:
         if start_date >= end_date or compare_start_date >= compare_end_date:
             raise LeanBacktestError("시작일은 종료일보다 앞서야 합니다.")
-        if not settings.lean_ssh_host or not settings.lean_ssh_key_path:
-            raise LeanBacktestError("원격 LEAN 실행 설정(LEAN_SSH_HOST, LEAN_SSH_KEY_PATH)이 없습니다.")
+        runner = self._resolve_runner()
 
         buffer_days = self._lookback_buffer(strategy, long_window, breakout_window)
         fetch_start = min(start_date, compare_start_date) - timedelta(days=buffer_days)
@@ -72,28 +72,11 @@ class LeanBacktestService:
             close = close.iloc[:, 0]
 
         work_id = f"workflow-{uuid.uuid4().hex[:12]}"
-        with tempfile.TemporaryDirectory(prefix="lean-backtest-") as tmp:
-            local = Path(tmp)
-            (local / "data").mkdir()
-            self._write_prices(local / "data" / "prices.csv", close)
-            (local / "main.py").write_text(
-                self._algorithm_source(strategy, start_date, end_date, initial_cash, short_window, long_window, dca_interval_days, breakout_window),
-                encoding="utf-8",
-            )
-            remote = f"{settings.lean_remote_workdir}/{work_id}"
-            self._ssh(f"mkdir -p {remote}/data {remote}/results")
-            shared_data = self._ensure_shared_reference_data()
-            self._ssh(f"cp -r {shared_data}/. {remote}/data/")
-            self._scp(local / "main.py", f"{remote}/main.py")
-            self._scp(local / "data" / "prices.csv", f"{remote}/data/prices.csv")
-            command = (
-                f"docker run --rm -v {remote}:/workspace {settings.lean_docker_image} "
-                "--environment backtesting --algorithm-language Python "
-                f"--algorithm-type-name {self._algorithm_class_name(strategy)} "
-                "--algorithm-location /workspace/main.py --data-folder /workspace/data "
-                "--results-destination-folder /workspace/results --backtest-name workflow"
-            )
-            lean_log = self._ssh(command, timeout=settings.lean_timeout_seconds, check=False)
+        algorithm_source = self._algorithm_source(strategy, start_date, end_date, initial_cash, short_window, long_window, dca_interval_days, breakout_window)
+        if runner == "local":
+            lean_log = self._run_local(work_id, strategy, algorithm_source, close)
+        else:
+            lean_log = self._run_remote(work_id, strategy, algorithm_source, close)
 
         series = close.loc[(close.index.date >= start_date) & (close.index.date <= end_date)]
         comparison = close.loc[(close.index.date >= compare_start_date) & (close.index.date <= compare_end_date)]
@@ -260,6 +243,111 @@ class LeanBacktestService:
     @staticmethod
     def _return(series) -> float:
         return (float(series.iloc[-1]) / float(series.iloc[0]) - 1) * 100
+
+    # ── runner selection / execution ────────────────────────────────
+
+    @staticmethod
+    def _resolve_runner() -> str:
+        mode = (settings.lean_runner or "auto").strip().lower()
+        has_ssh = bool(settings.lean_ssh_host and settings.lean_ssh_key_path)
+        has_socket = Path(settings.lean_docker_socket).exists()
+        if mode == "off":
+            raise LeanBacktestError("백테스트 기능이 비활성화되어 있습니다(LEAN_RUNNER=off).")
+        if mode == "remote":
+            if not has_ssh:
+                raise LeanBacktestError("원격 LEAN 실행 설정(LEAN_SSH_HOST, LEAN_SSH_KEY_PATH)이 없습니다.")
+            return "remote"
+        if mode == "local":
+            if not has_socket:
+                raise LeanBacktestError(f"로컬 Docker 소켓({settings.lean_docker_socket})이 API 컨테이너에 마운트되어 있지 않습니다.")
+            if not settings.lean_local_workdir_host:
+                raise LeanBacktestError("LEAN_LOCAL_WORKDIR_HOST(작업 폴더의 호스트 절대 경로)가 설정되지 않았습니다.")
+            return "local"
+        if mode != "auto":
+            raise LeanBacktestError(f"알 수 없는 LEAN_RUNNER 값입니다: {settings.lean_runner}")
+        if has_ssh:
+            return "remote"
+        if has_socket and settings.lean_local_workdir_host:
+            return "local"
+        raise LeanBacktestError(
+            "LEAN 실행 설정이 없습니다. 로컬 Docker를 쓰려면 LEAN_RUNNER=local과 LEAN_LOCAL_WORKDIR_HOST를 설정하고 "
+            "/var/run/docker.sock을 API 컨테이너에 마운트하세요. 원격 서버를 쓰려면 LEAN_SSH_HOST, LEAN_SSH_KEY_PATH를 설정하세요."
+        )
+
+    def _lean_arguments(self, strategy: str) -> list[str]:
+        return [
+            "--environment", "backtesting",
+            "--algorithm-language", "Python",
+            "--algorithm-type-name", self._algorithm_class_name(strategy),
+            "--algorithm-location", "/workspace/main.py",
+            "--data-folder", "/workspace/data",
+            "--results-destination-folder", "/workspace/results",
+            "--backtest-name", "workflow",
+        ]
+
+    def _run_local(self, work_id: str, strategy: str, algorithm_source: str, close) -> str:
+        """Run LEAN on the same host through the mounted Docker socket.
+
+        Files are written to `lean_local_workdir` (a bind mount inside the API container) and the
+        LEAN container mounts the same folder via its host path `lean_local_workdir_host`."""
+        base = Path(settings.lean_local_workdir)
+        workdir = base / work_id
+        (workdir / "data").mkdir(parents=True)
+        (workdir / "results").mkdir()
+        shared = self._ensure_local_reference_data(base)
+        shutil.copytree(shared, workdir / "data", dirs_exist_ok=True)
+        self._write_prices(workdir / "data" / "prices.csv", close)
+        (workdir / "main.py").write_text(algorithm_source, encoding="utf-8")
+        host_workdir = f"{settings.lean_local_workdir_host.rstrip('/')}/{work_id}"
+        args = [
+            "docker", "run", "--rm", "--name", f"lean-{work_id}",
+            "-v", f"{host_workdir}:/workspace",
+            settings.lean_docker_image,
+            *self._lean_arguments(strategy),
+        ]
+        try:
+            result = subprocess.run(args, text=True, capture_output=True, timeout=settings.lean_timeout_seconds)
+        except FileNotFoundError as exc:
+            raise LeanBacktestError("API 컨테이너에 docker CLI가 없습니다. 이미지를 다시 빌드해 주세요.") from exc
+        except subprocess.TimeoutExpired as exc:
+            subprocess.run(["docker", "rm", "-f", f"lean-{work_id}"], capture_output=True)
+            raise LeanBacktestError(f"LEAN 실행이 {settings.lean_timeout_seconds}초 안에 끝나지 않았습니다.") from exc
+        finally:
+            shutil.rmtree(workdir, ignore_errors=True)
+        log = (result.stdout + "\n" + result.stderr).strip()
+        if result.returncode and "Algorithm Id" not in log and "Engine.Run" not in log:
+            # docker itself failed (image missing, socket permission, bad mount) rather than the algorithm
+            raise LeanBacktestError((result.stderr.strip() or "로컬 Docker에서 LEAN 컨테이너를 실행하지 못했습니다.")[-1500:])
+        return log
+
+    def _ensure_local_reference_data(self, base: Path) -> Path:
+        shared = base / "_shared-lean-data"
+        marker = shared / "symbol-properties" / "symbol-properties-database.csv"
+        if marker.exists():
+            return shared
+        for relative in _REFERENCE_DATA_FILES:
+            local_path = _REFERENCE_DATA_DIR / relative
+            if not local_path.exists():
+                raise LeanBacktestError(f"LEAN 참조 데이터 파일이 없습니다: {relative}")
+            target = shared / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(local_path, target)
+        return shared
+
+    def _run_remote(self, work_id: str, strategy: str, algorithm_source: str, close) -> str:
+        with tempfile.TemporaryDirectory(prefix="lean-backtest-") as tmp:
+            local = Path(tmp)
+            (local / "data").mkdir()
+            self._write_prices(local / "data" / "prices.csv", close)
+            (local / "main.py").write_text(algorithm_source, encoding="utf-8")
+            remote = f"{settings.lean_remote_workdir}/{work_id}"
+            self._ssh(f"mkdir -p {remote}/data {remote}/results")
+            shared_data = self._ensure_shared_reference_data()
+            self._ssh(f"cp -r {shared_data}/. {remote}/data/")
+            self._scp(local / "main.py", f"{remote}/main.py")
+            self._scp(local / "data" / "prices.csv", f"{remote}/data/prices.csv")
+            command = f"docker run --rm -v {remote}:/workspace {settings.lean_docker_image} " + " ".join(self._lean_arguments(strategy))
+            return self._ssh(command, timeout=settings.lean_timeout_seconds, check=False)
 
     @staticmethod
     def _write_prices(path: Path, close) -> None:

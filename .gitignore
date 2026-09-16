@@ -20,3 +20,5 @@ node_modules/
 
 
 DATA-ROOT/
+# LEAN local runner scratch folders
+data/lean-workflows/
