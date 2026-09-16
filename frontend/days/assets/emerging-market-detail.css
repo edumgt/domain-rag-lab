@@ -1,0 +1,119 @@
+.emerging-market-class-card ul {
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.emerging-market-class-card li {
+  padding: 10px 11px;
+  border: 1px solid #e4e9f4;
+  border-radius: 9px;
+  background: #fff;
+}
+.emerging-market-class-card li b,
+.emerging-market-class-card li span { display: block; }
+.emerging-market-class-card li b {
+  margin-bottom: 4px;
+  color: #244b95;
+  font-size: 14.5px;
+}
+.emerging-market-class-card li span {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.emerging-market-korea {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid #bcd0f7;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #f4f8ff, #fff);
+}
+.emerging-market-korea h3 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 18px;
+}
+.emerging-market-korea-now {
+  margin: 0 0 12px;
+  color: #3e4c67;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.emerging-market-korea ol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: korea-meaning;
+}
+.emerging-market-korea li {
+  position: relative;
+  padding: 12px 12px 12px 42px;
+  border: 1px solid #dce6f7;
+  border-radius: 10px;
+  background: #fff;
+  counter-increment: korea-meaning;
+}
+.emerging-market-korea li::before {
+  content: counter(korea-meaning);
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #315ff4;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+.emerging-market-korea li b,
+.emerging-market-korea li span { display: block; }
+.emerging-market-korea li b { color: #244b95; font-size: 14px; }
+.emerging-market-korea li span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.emerging-market-korea-check {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 11px 13px;
+  border-radius: 9px;
+  background: #fff4df;
+  color: #65451a;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+  .emerging-market-korea ol,
+  .emerging-market-korea-check { grid-template-columns: 1fr; }
+}
+.emerging-market-name-guide {
+  margin: 0 0 14px;
+  padding: 13px 15px;
+  border: 1px solid #d8e5f7;
+  border-radius: 12px;
+  background: #f5f9ff;
+  color: #253958;
+}
+
+.emerging-market-name-guide > b {
+  display: block;
+  margin-bottom: 5px;
+  color: #12366a;
+}
+
+.emerging-market-name-guide p {
+  margin: 0 !important;
+  line-height: 1.65;
+}

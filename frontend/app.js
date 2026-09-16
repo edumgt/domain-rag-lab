@@ -229,7 +229,7 @@
     { terms: ['선물'], korean: '선물', hanja: '先物', abbr: 'Futures', english: 'Futures Contract', summary: '미래의 특정 시점에 정한 가격으로 자산을 사고팔기로 하는 계약입니다.', detail: '가격 변동 위험을 관리하는 데 쓸 수 있지만 증거금과 일일 정산 때문에 손익이 빠르게 변할 수 있습니다.' },
     { terms: ['ETN'], korean: '상장지수증권', hanja: '上場指數證券', abbr: 'ETN', english: 'Exchange-Traded Note', summary: '증권사가 특정 지수의 수익률을 따르도록 만든, 거래소에서 사고파는 증권입니다.', detail: 'ETF처럼 보이지만 펀드가 아니라 증권사의 약속에 기반합니다. 따라서 지수 움직임뿐 아니라 발행 증권사가 약속을 지킬 수 있는지도 살펴야 합니다.' },
     { terms: ['리츠'], korean: '부동산투자회사', hanja: '不動産投資會社', abbr: 'REITs', english: 'Real Estate Investment Trusts', summary: '여러 사람이 돈을 모아 건물·물류센터 같은 부동산에 투자하고 임대수익 등을 나누는 상품입니다.', detail: '직접 건물을 사지 않아도 부동산 투자에 참여하는 방식입니다. 임대료, 공실, 빚의 규모와 금리 변화가 수익에 영향을 줍니다.' },
-    { terms: ['기준가격', '기준가'], korean: '기준가격', hanja: '基準價格', abbr: 'NAV', english: 'Net Asset Value', summary: '펀드가 가진 자산의 가치를 계산해 정한 1좌당 가격입니다.', detail: '일반 펀드는 보통 이 가격을 기준으로 가입하거나 환매합니다. 거래소에서 실시간으로 사고파는 ETF의 시장가격과는 다를 수 있습니다.' },
+    { terms: ['기준가격', '기준가'], korean: '기준가격', hanja: '基準價格', abbr: 'NAV', english: 'Net Asset Value', summary: '내가 가진 펀드 지분이 오늘 얼마인지 계산할 때 쓰는 공식 가격입니다.', detail: '펀드를 여러 사람이 함께 가진 하나의 큰 돈 바구니라고 생각해 보세요. 바구니 안의 주식·채권 값을 모두 더하고 아직 내야 할 비용을 뺀 뒤, 투자자들이 가진 지분 수로 나누면 기준가격이 됩니다. 예를 들어 비용을 뺀 펀드 재산이 1억 원이고 이를 1만 개의 같은 지분으로 나눴다면, 한 지분의 계산상 가치는 1만 원입니다. 일반 펀드에 돈을 넣거나 다시 찾을 때는 이 공식 가격을 기준으로 지분 수와 받을 금액을 계산합니다. ETF는 거래소에서 사람들이 직접 사고팔기 때문에 실제 거래가격이 이 계산값보다 조금 비싸거나 쌀 수 있습니다.' },
     { terms: ['NAV', '순자산가치'], korean: '순자산가치', hanja: '純資産價値', abbr: 'NAV', english: 'Net Asset Value', summary: '펀드가 보유한 자산에서 부채를 뺀 실제 가치입니다.', detail: '여기서 부채는 보통 큰 차입금보다 운용보수·결제 대금 등 아직 지급하지 않은 비용과 미지급금을 뜻합니다. ETF 1주에 담긴 자산의 값이라고 생각할 수 있으며, 시장에서 거래되는 ETF 가격이 NAV와 다르면 괴리율이 생깁니다.' },
     { terms: ['환매'], korean: '환매', hanja: '還買', abbr: '—', english: 'Redemption', summary: '펀드에 넣은 돈을 되돌려 받기 위해 보유분을 팔아 현금화하는 일입니다.', detail: '주식처럼 즉시 팔리는 방식이 아니라 정해진 기준가격과 처리 시간이 적용될 수 있습니다. 상품에 따라 수수료나 환매 제한도 확인해야 합니다.' },
     { terms: ['증거금'], korean: '증거금', hanja: '證據金', abbr: 'Margin', english: 'Margin', summary: '선물·옵션 거래를 시작할 때 계약 이행을 보장하려고 맡기는 돈입니다.', detail: '계약 금액 전부가 아니라 일부만 내므로 적은 돈으로 큰 계약을 움직일 수 있습니다. 그만큼 가격이 조금만 움직여도 손익이 크게 달라질 수 있습니다.' },
@@ -1815,7 +1815,7 @@ KOSDAQ|웹젠|게임`,
   function drawBacktestChart(points) { const canvas = document.getElementById('backtestChart'); if (!canvas || !points?.length) return; const ctx = canvas.getContext('2d'); const values = points.map(p => p.value), min = Math.min(...values), max = Math.max(...values), pad = 24, w = canvas.width - pad * 2, h = canvas.height - pad * 2; ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.strokeStyle = '#dbeafe'; ctx.beginPath(); ctx.moveTo(pad, canvas.height - pad); ctx.lineTo(canvas.width - pad, canvas.height - pad); ctx.stroke(); ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 3; ctx.beginPath(); points.forEach((p, i) => { const x = pad + w * i / Math.max(1, points.length - 1), y = pad + (max - p.value) / Math.max(1, max - min) * h; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); }
 
   function calendarCategoryLabel(category) {
-    return { macro: '경제지표', earnings: '실적발표', expiry: '선물·옵션 만기' }[category] || category;
+    return { macro: '경제지표', earnings: '실적발표', expiry: '선물·옵션 만기', holiday: '휴장·거래시간', policy: '제도·지수·정치' }[category] || category;
   }
 
   function calendarImportanceLabel(level) {
@@ -1909,7 +1909,7 @@ KOSDAQ|웹젠|게임`,
                 <button type="button" class="calendar-nav-btn" data-calendar-nav="1" aria-label="다음 달"><i class="fa-solid fa-chevron-right"></i></button>
                 <button type="button" class="calendar-today-btn" data-calendar-today>오늘</button>
               </div>
-              <div class="calendar-legend"><span class="cal-cat-macro">경제지표</span><span class="cal-cat-earnings">실적발표</span><span class="cal-cat-expiry">선물·옵션 만기</span></div>
+              <div class="calendar-legend"><span class="cal-cat-macro">경제지표</span><span class="cal-cat-earnings">실적발표</span><span class="cal-cat-expiry">선물·옵션 만기</span><span class="cal-cat-holiday">휴장·거래시간</span><span class="cal-cat-policy">제도·지수·정치</span></div>
             </div>
             <div class="calendar-weekdays"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
             <div class="calendar-grid">${cellsHtml}</div>

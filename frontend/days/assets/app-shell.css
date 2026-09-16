@@ -504,3 +504,47 @@ body > nav {
     max-height: none;
   }
 }
+
+/* Keep the NAV/iNAV simulator controls and chart visible in one desktop frame. */
+.inav-sim-modal .inav-sim-dialog {
+  padding: 24px 30px;
+  overflow: hidden;
+}
+.inav-sim-dialog h2 { margin-bottom: 8px; }
+.inav-sim-dialog .inav-sim-intro {
+  margin: 2px 0 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.inav-sim-dialog .inav-sim-stats { margin-bottom: 10px; }
+.inav-sim-dialog .inav-sim-stat { padding: 8px 10px; }
+.inav-sim-dialog .inav-sim-stat span { margin-bottom: 3px; font-size: 13.5px; }
+.inav-sim-dialog .inav-sim-control { margin-bottom: 8px; }
+.inav-sim-dialog .inav-sim-control-head { margin-bottom: 4px; }
+.inav-sim-dialog .inav-sim-scenarios { margin-bottom: 10px; }
+.inav-sim-dialog .inav-sim-chart-stage { padding: 4px 0; }
+.inav-sim-dialog .inav-sim-svg {
+  width: 100%;
+  height: 150px;
+}
+.inav-sim-dialog .inav-sim-legend {
+  margin: 7px 0 4px;
+  font-size: 13.5px;
+}
+.inav-sim-dialog .inav-sim-disclaimer {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+@media (max-height: 760px) and (min-width: 761px) {
+  .inav-sim-modal .inav-sim-dialog { padding: 18px 28px; }
+  .inav-sim-dialog .inav-sim-svg { height: 120px; }
+}
+
+@media (max-width: 760px) {
+  .inav-sim-modal .inav-sim-dialog {
+    padding: 22px 18px;
+    overflow: auto;
+  }
+  .inav-sim-dialog .inav-sim-svg { height: 160px; }
+}

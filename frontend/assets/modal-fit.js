@@ -10,7 +10,7 @@
     futuresSettlementModal: "← 거래 대상을 먼저 선택해 보세요",
     orderMatchModal: "← 거래 대상을 먼저 선택해 보세요",
     inavSimModal: "← 시장가격 슬라이더를 먼저 움직여 보세요",
-    gapTrackingSimModal: "← 현재 NAV와 시장가격을 먼저 입력해 보세요",
+    gapTrackingSimModal: "← ① 기간 시작 목표지수부터 순서대로 입력해 보세요",
     fundManagerSimModal: "← 투자 원금을 먼저 입력해 보세요",
     lifeCycleSavingsModal: "← 생애주기 목표를 먼저 선택해 보세요",
     fundEtfCompareModal: "← 시작 금액을 먼저 입력해 보세요",

@@ -23,7 +23,7 @@ router = APIRouter(prefix="/market", tags=["market"])
 
 @router.get("/calendar-events")
 async def calendar_events() -> list[dict[str, str]]:
-    return CALENDAR_EVENTS
+    return sorted(CALENDAR_EVENTS, key=lambda event: (event["date"], event["id"]))
 
 _cache: dict[str, tuple[datetime, dict[str, Any]]] = {}
 _ttl = timedelta(minutes=5)
@@ -99,6 +99,85 @@ _kospi_history_ttl = timedelta(days=30)
 
 _rate_market_history_cache: dict[str, tuple[datetime, dict[str, Any]]] = {}
 _rate_market_history_ttl = timedelta(hours=6)
+
+_CENTRAL_BANK_BENCHMARKS = {
+    "fed": {"symbol": "%5EGSPC", "name": "S&P 500", "timezone": "America/New_York"},
+    "ecb": {"symbol": "%5ESTOXX50E", "name": "EURO STOXX 50", "timezone": "Europe/Frankfurt"},
+    "boj": {"symbol": "%5EN225", "name": "Nikkei 225", "timezone": "Asia/Tokyo"},
+    "bok": {"symbol": "%5EKS11", "name": "KOSPI", "timezone": "Asia/Seoul"},
+}
+
+
+@router.get("/central-bank-event-history")
+async def central_bank_event_history(
+    bank: str = Query(pattern=r"^(fed|ecb|boj|bok)$"),
+    meeting_date: date = Query(description="정책금리 결정일(YYYY-MM-DD)"),
+    window: int = Query(default=5, ge=3, le=10),
+) -> dict[str, Any]:
+    """Return a local equity benchmark around a historical rate decision.
+
+    The browser calculates before/after returns and realized volatility from
+    these unadjusted daily closes. Extra calendar days are requested so that a
+    10-session window still works around weekends and market holidays.
+    """
+    if meeting_date > date.today():
+        raise HTTPException(status_code=400, detail="과거 회의일만 조회할 수 있습니다.")
+
+    benchmark = _CENTRAL_BANK_BENCHMARKS[bank]
+    calendar_padding = window * 2 + 5
+    start = meeting_date - timedelta(days=calendar_padding)
+    end = meeting_date + timedelta(days=calendar_padding + 1)
+    cache_key = f"central-bank:{bank}:{meeting_date.isoformat()}:{window}"
+    now = datetime.now(timezone.utc)
+    cached = _rate_market_history_cache.get(cache_key)
+    if cached and now - cached[0] < _rate_market_history_ttl:
+        return cached[1]
+
+    period1 = int(datetime.combine(start, datetime.min.time(), tzinfo=timezone.utc).timestamp())
+    period2 = int(datetime.combine(end, datetime.min.time(), tzinfo=timezone.utc).timestamp())
+    chart_url = (
+        "https://query2.finance.yahoo.com/v8/finance/chart/"
+        f"{benchmark['symbol']}?period1={period1}&period2={period2}&interval=1d"
+    )
+    try:
+        async with httpx.AsyncClient(timeout=12.0, follow_redirects=True) as client:
+            response = await client.get(
+                chart_url,
+                headers={"User-Agent": "FinanceRagLab/1.0 (educational use)"},
+            )
+            response.raise_for_status()
+        result = response.json()["chart"]["result"][0]
+        timestamps = result.get("timestamp") or []
+        closes = result["indicators"]["quote"][0].get("close") or []
+        bars = [
+            {
+                "date": datetime.fromtimestamp(timestamp, tz=timezone.utc).date().isoformat(),
+                "close": round(float(close), 4),
+            }
+            for timestamp, close in zip(timestamps, closes)
+            if close is not None and isfinite(float(close))
+        ]
+    except (httpx.HTTPError, KeyError, IndexError, TypeError, ValueError) as exc:
+        raise HTTPException(status_code=502, detail="회의 전후 주가지수 시세를 불러오지 못했습니다.") from exc
+
+    if len(bars) < window * 2 + 1:
+        raise HTTPException(status_code=502, detail="변동성 계산에 필요한 거래일 시세가 부족합니다.")
+
+    payload = {
+        "bank": bank,
+        "meeting_date": meeting_date.isoformat(),
+        "window": window,
+        "benchmark": {
+            "symbol": benchmark["symbol"].replace("%5E", "^"),
+            "name": benchmark["name"],
+            "timezone": benchmark["timezone"],
+            "bars": bars,
+        },
+        "source": "Yahoo Finance",
+        "updated_at": now.isoformat(),
+    }
+    _rate_market_history_cache[cache_key] = (now, payload)
+    return payload
 
 
 @router.get("/rate-market-history")

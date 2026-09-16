@@ -620,6 +620,8 @@ html, body {
 .cal-cat-macro { color: #1d4ed8; background: #dbeafe; }
 .cal-cat-earnings { color: #15803d; background: #dcfce7; }
 .cal-cat-expiry { color: #b45309; background: #fef3c7; }
+.cal-cat-holiday { color: #6b7280; background: #e5e7eb; }
+.cal-cat-policy { color: #7e22ce; background: #f3e8ff; }
 .calendar-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); border-bottom: 1px solid var(--border); background: var(--surface2); }
 .calendar-weekdays span { padding: 9px 0; text-align: center; color: var(--text-muted); font-size: 14.5px; font-weight: 800; }
 .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
