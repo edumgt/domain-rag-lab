@@ -208,7 +208,7 @@
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="기본 금융상품 지도 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
-          <section class="lesson">
+          <section class="lesson" id="behavioralStocksBondsLesson">
             <span>00.05</span>
             <div class="lesson-content">
               <h2>행동경제학으로 보는 주식과 채권</h2>
@@ -432,7 +432,7 @@
               <span aria-hidden="true">⌃</span>
             </button>
           </section>
-          <section class="lesson">
+          <section class="lesson" id="riskFreeBankBondRateLesson">
             <span>01.05</span>
             <div class="lesson-content">
               <h2>무위험수익률·은행 금리·채권: 금리의 기준과 위험</h2>
@@ -3658,6 +3658,8 @@
         const bondTax = document.getElementById("bondTaxLesson");
         const brokerAppBondBuying = document.getElementById("brokerAppBondBuyingLesson");
         const coinHistory = document.getElementById("coinHistoryLesson");
+        const behavioralStocksBonds = document.getElementById("behavioralStocksBondsLesson");
+        const riskFreeBankBondRate = document.getElementById("riskFreeBankBondRateLesson");
         if (basicProducts && bondPromise) basicProducts.insertAdjacentElement("afterend", bondPromise);
         if (coinHistory && bondSavingsExample) coinHistory.insertAdjacentElement("beforebegin", bondSavingsExample);
         if (bondSavingsExample && bondRate) bondSavingsExample.insertAdjacentElement("beforebegin", bondRate);
@@ -3668,6 +3670,8 @@
         if (coinHistory && usLongTreasuryEtf) coinHistory.insertAdjacentElement("beforebegin", usLongTreasuryEtf);
         if (coinHistory && bondTax) coinHistory.insertAdjacentElement("beforebegin", bondTax);
         if (coinHistory && brokerAppBondBuying) coinHistory.insertAdjacentElement("beforebegin", brokerAppBondBuying);
+        if (coinHistory && behavioralStocksBonds) coinHistory.insertAdjacentElement("beforebegin", behavioralStocksBonds);
+        if (coinHistory && riskFreeBankBondRate) coinHistory.insertAdjacentElement("beforebegin", riskFreeBankBondRate);
       })();
     </script>
     <script src="assets/duration-use-case-simulators.js?v=20260917"></script>
