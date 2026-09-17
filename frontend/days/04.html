@@ -15,6 +15,9 @@
       /* 첫 고정 안내인 그리스 문자는 표시하고, 기존에 이동한 12개 단원만 숨깁니다. */
       body[data-day="4"] .lesson-list > .lesson:not(#greekLettersLesson):nth-child(-n + 13) { display: none; }
       /* 그리스 문자 안내 바로 다음의 가치평가 단원은 항상 표시합니다. */
+      body[data-day="4"] .lesson-list > #cashCowFlowLesson,
+      body[data-day="4"] .lesson-list > #creditRiskLesson,
+      body[data-day="4"] .lesson-list > #growthPotentialLesson,
       body[data-day="4"] .lesson-list > #valuationLesson { display: grid !important; }
       body[data-day="4"] .lesson-list > #riskAssetsLesson,
       body[data-day="4"] .lesson-list > #diversificationLesson { display: grid; }
@@ -124,8 +127,22 @@
       .present-value-sim output { color: var(--blue); }
       .present-value-sim-result { margin: 0 0 16px; padding: 13px 15px; border-radius: 10px; background: #eaf1ff; color: #1c3e7a; line-height: 1.6; }
       .present-value-sim-result strong { display: block; color: var(--blue); font-size: 21px; }
+      .bok-rate-modal .bok-rate-dialog { display: grid; grid-template-rows: auto auto auto minmax(310px, 1fr) auto auto auto; gap: 8px; width: 95vw !important; height: 95vh !important; padding: 24px 30px !important; overflow: hidden !important; }
+      .bok-rate-dialog h2 { margin: 0 48px 0 0; font-size: clamp(21px, 2vw, 27px); line-height: 1.25; }
+      .bok-rate-intro { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+      .bok-rate-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0; }
+      .bok-rate-summary article { padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcff; text-align: center; }
+      .bok-rate-summary span { display: block; color: var(--muted); font-size: 12px; font-weight: 800; }
+      .bok-rate-summary strong { display: block; margin: 2px 0; color: var(--ink); font-size: 18px; line-height: 1.2; }
+      .bok-rate-summary small { font-size: 11px; }
+      .bok-rate-chart { min-height: 0; padding: 8px; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: #fbfcff; }
+      .bok-rate-chart__canvas { width: 100%; height: 100%; min-height: 310px; }
+      .bok-rate-events { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin: 0; }
+      .bok-rate-events span { padding: 6px 9px; border-left: 3px solid var(--blue); border-radius: 7px; background: #f4f7ff; color: #395171; font-size: 12px; line-height: 1.35; }
+      .bok-rate-note { margin: 0; padding: 8px 10px; border-left: 4px solid #f0a10a; border-radius: 8px; background: #fff9e8; color: #705316; font-size: 12px; line-height: 1.4; }
+      .bok-rate-source { font-size: 11px; line-height: 1.3; }
       .bias-quiz-dialog { width: min(720px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }.bias-quiz-intro, .bias-quiz-disclaimer { color: #405572; font-size: 15.225px; line-height: 1.7; }.bias-quiz-progress { display: flex; justify-content: space-between; gap: 12px; margin: 18px 0 10px; color: var(--blue); font-size: 15.225px; font-weight: 800; }.bias-quiz-progress i { flex: 1; height: 7px; margin-top: 6px; border-radius: 999px; background: #dce7fb; overflow: hidden; }.bias-quiz-progress i::after { content: ""; display: block; width: var(--bias-progress, 0%); height: 100%; background: var(--blue); transition: width .2s ease; }.bias-quiz-question { margin: 20px 0 14px; color: var(--ink); font-size: 21px; font-weight: 800; line-height: 1.5; }.bias-quiz-answers { display: grid; gap: 9px; }.bias-quiz-answer { width: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: #314562; font: 650 15.75px/1.55 inherit; text-align: left; cursor: pointer; }.bias-quiz-answer:hover, .bias-quiz-answer:focus-visible { border-color: var(--blue); background: #eef3ff; color: var(--ink); outline: none; }.bias-quiz-result { margin-top: 18px; padding: 18px; border: 1px solid #c9d9fb; border-radius: 12px; background: #f6f9ff; }.bias-quiz-result h3 { margin: 0 0 8px; color: var(--blue); font-size: 22.05px; }.bias-quiz-result p { margin: 8px 0 0; color: #405572; font-size: 15.225px; line-height: 1.7; }.bias-quiz-restart { margin-top: 16px; padding: 9px 14px; border: 1px solid var(--blue); border-radius: 999px; background: #fff; color: var(--blue); font: 800 15.225px inherit; cursor: pointer; }
-      @media (max-width: 640px) { .factor-sim-dialog, .fx-deposit-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .factor-sim-grid, .sharpe-symbol-grid, .sharpe-calc-grid, .sharpe-calc-grid.four, .bollinger-sim-stats, .fx-product-grid, .fx-sim-controls, .fx-sim-summary, .present-value-sim { grid-template-columns: 1fr; } .bollinger-sim-control { grid-template-columns: 1fr; gap: 7px; }.bollinger-sim-control output { text-align: left; } #sharpeFourPointExplanation .sharpe-explanation { padding: 16px; } .sharpe-calc-equation { font-size: 17px; } .sharpe-calc-equation.result { font-size: 21px; } }
+      @media (max-width: 640px) { .factor-sim-dialog, .fx-deposit-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .factor-sim-grid, .sharpe-symbol-grid, .sharpe-calc-grid, .sharpe-calc-grid.four, .bollinger-sim-stats, .fx-product-grid, .fx-sim-controls, .fx-sim-summary, .present-value-sim { grid-template-columns: 1fr; } .bollinger-sim-control { grid-template-columns: 1fr; gap: 7px; }.bollinger-sim-control output { text-align: left; } #sharpeFourPointExplanation .sharpe-explanation { padding: 16px; } .sharpe-calc-equation { font-size: 17px; } .sharpe-calc-equation.result { font-size: 21px; } .bok-rate-modal .bok-rate-dialog { grid-template-rows: auto auto auto minmax(260px, 1fr) auto auto auto; width: 95vw !important; height: 95vh !important; padding: 18px 16px !important; } .bok-rate-chart__canvas { min-height: 260px; } .bok-rate-events { grid-template-columns: repeat(2, 1fr); } .bok-rate-source { display: none; } }
     </style>
     <link
       rel="stylesheet"
@@ -136,6 +153,7 @@
     <script defer src="assets/glossary-modal.js?v=20260915-term-readings"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
     <script defer src="assets/lesson-understanding.js?v=20260906-all-days"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
   </head>
   <body data-day="4">
     <header class="day-appbar">
@@ -198,7 +216,78 @@
             <p>한 종목의 성과보다 여러 자산을 함께 보고, 목표 비중을 정해 리밸런싱하는 법을 배웁니다.</p>
           </div>
         </header>
-        <section class="lesson-list"><section class="lesson" id="greekLettersLesson"><span>00</span>
+        <section class="lesson-list"><section class="lesson" id="cashCowFlowLesson">
+            <span>00</span>
+            <div class="lesson-content">
+              <h2>Cash Cow와 Cash Flow: 돈을 버는 원천과 돈의 흐름</h2>
+              <div class="lesson-body">
+                <p><b>Cash Cow(캐시 카우)</b>와 <b>Cash Flow(현금흐름)</b>는 모두 현금과 관련 있지만 서로 다른 개념입니다. Cash Cow는 꾸준한 현금 창출이 기대되는 사업·제품·자산 같은 <b>원천</b>이고, Cash Flow는 일정 기간 실제 현금이 들어오고 나간 <b>흐름</b>입니다.</p>
+                <h3>두 개념의 핵심 차이</h3>
+                <ul>
+                  <li><b>Cash Cow · 캐시 카우 · 수익창출원:</b> 비교적 성숙한 시장에서 높은 점유율을 바탕으로 안정적인 현금을 만들어 내는 사업·제품을 가리키는 경영 용어입니다. 젖소에서 지속적으로 우유를 얻는 비유에서 왔으며, BCG 매트릭스에서는 일반적으로 저성장 시장의 높은 점유율 사업을 뜻합니다.</li>
+                  <li><b>Cash Flow · 현금흐름:</b> 기업이나 개인의 계좌에 현금이 유입·유출되는 상태와 그 변화를 뜻합니다. 현금 유입이 유출보다 크면 순현금흐름이 양수, 반대면 음수입니다. 이는 회계상 순이익과 같지 않을 수 있습니다.</li>
+                </ul>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>Cash Cow와 Cash Flow 비교</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">Cash Cow</th><th scope="col">Cash Flow</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">개념</th><td>현금을 꾸준히 창출하는 핵심 사업·제품·자산</td><td>현금이 들어오고 나가는 흐름과 순변화</td></tr>
+                      <tr><th scope="row">비유</th><td>우유를 꾸준히 만들어 내는 젖소</td><td>나온 우유의 양과 쓰인 양</td></tr>
+                      <tr><th scope="row">확인 목적</th><td>사업 포트폴리오의 안정적 자금 원천 파악</td><td>지급 능력과 유동성, 자금 조달 필요성 점검</td></tr>
+                      <tr><th scope="row">기업 예시</th><td>반복 구매가 많고 이미 자리 잡은 주력 제품·서비스</td><td>“이번 분기 영업활동 현금흐름이 양수였다”</td></tr>
+                      <tr><th scope="row">개인 예시</th><td>꾸준한 임대료나 사업소득을 만드는 자산·일</td><td>월급·임대료 유입과 대출상환·생활비 유출의 차이</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>기업이 안정적인 Cash Cow를 보유하면 영업에서 양(+)의 현금흐름을 만들기 쉬워지고, 이를 신규 사업·설비·부채 상환 등에 쓸 수 있습니다. 그러나 높은 매출이나 회계상 이익이 곧바로 넉넉한 현금흐름을 뜻하지는 않습니다. 매출채권(영업 활동에서 발생한 외상 대금)의 회수가 늦거나 재고·설비 투자와 대출 상환이 크면 현금이 부족할 수 있습니다.</p>
+                <h3>함께 알아둘 Cash 관련 용어</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">용어</th><th scope="col">뜻</th><th scope="col">읽을 때 유의할 점</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">Cash Burn · 캐시 번</th><td>수익·조달보다 지출이 커 현금이 줄어드는 속도입니다.</td><td>적자 기업의 월별 순현금 유출 규모를 볼 때 쓰지만, 일회성 투자 여부도 함께 봅니다.</td></tr>
+                      <tr><th scope="row">Cash Runway · 캐시 런웨이</th><td>현재 현금과 예상 순현금 유출 속도로 계산한 예상 생존 기간입니다.</td><td>매출·비용·자금조달 전망이 바뀌면 기간도 크게 달라집니다.</td></tr>
+                      <tr><th scope="row">Cash Drain · 캐시 드레인</th><td>지속적으로 현금을 소진하는 사업·자산·비용 요인을 비유적으로 부르는 말입니다.</td><td>공식 회계 항목은 아니며, 일시적 투자와 구조적 적자를 구분해야 합니다.</td></tr>
+                      <tr><th scope="row">Cash Rich · 캐시 리치</th><td>현금 및 현금성 자산을 많이 보유한 상태를 뜻합니다.</td><td>현금이 많아도 부채·필요 운전자금·향후 투자계획을 함께 살펴야 합니다.</td></tr>
+                      <tr><th scope="row">Cash is King · 현금이 왕</th><td>불확실성이 큰 시기에 유동성과 지급 능력의 중요성을 강조하는 관용 표현입니다.</td><td>현금 보유가 모든 상황에서 다른 자산보다 낫다는 투자 규칙은 아닙니다.</td></tr>
+                      <tr><th scope="row">Cash Flow Statement · 현금흐름표</th><td>영업·투자·재무활동별 현금 유입과 유출을 보여 주는 재무제표입니다.</td><td>손익계산서·재무상태표와 함께 읽어야 기업의 현금 사정을 더 잘 파악할 수 있습니다.</td></tr>
+                      <tr><th scope="row">Petty Cash · 소액 현금</th><td>소모품비·교통비 등 소액 지출을 위해 관리하는 소액 자금입니다.</td><td>회사 내부 통제와 증빙 관리가 필요합니다.</td></tr>
+                      <tr><th scope="row">Cash Equivalents(캐시 이퀴벌런츠) · 현금성 자산</th><td>짧은 기간 안에 현금으로 전환할 수 있고 가치 변동 위험이 낮은 단기 투자자산입니다.</td><td>회계기준에서는 통상 취득일 기준 만기 3개월 이내 등의 요건을 보며, 모든 MMF·CD가 자동으로 해당하는 것은 아닙니다.</td></tr>
+                      <tr><th scope="row">Cash Back · 캐시백</th><td>결제금액 일부를 돌려주는 할인·보상 혜택입니다.</td><td>적립·지급 시점, 한도, 전월 실적 같은 조건을 확인합니다.</td></tr>
+                      <tr><th scope="row">Cash Advance · 현금서비스</th><td>신용카드 한도 안에서 현금을 빌리는 단기카드대출을 뜻합니다.</td><td>이자율·수수료와 신용도 영향을 확인해야 합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><b>Cash and Carry</b>는 외상 대신 즉시 결제하고 물건을 직접 가져가는 유통 방식을, <b>Cash Grab</b>은 품질보다 돈벌이만 노린다는 비판적 표현을 뜻합니다. <b>Cold Hard Cash</b>는 카드·수표가 아닌 눈앞의 현금을 강조하는 관용 표현입니다. 이들은 공식 재무제표 항목이 아니라 맥락에 따라 쓰이는 비즈니스·일상 표현입니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="Cash Cow와 Cash Flow 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section><section class="lesson" id="creditRiskLesson">
+            <span>00.04</span>
+            <div class="lesson-content">
+              <h2>신용위험: 돈을 빌려준 뒤에도 남는 위험</h2>
+              <div class="lesson-body">
+                <p><b>신용위험(Credit Risk)</b>은 돈을 빌린 사람이나 기업이 약속한 대로 원금 또는 이자를 제때 갚지 못해, 돈을 빌려준 금융회사·투자자가 손실을 볼 위험입니다. 채무불이행 위험 또는 부도 위험(Default Risk)은 신용위험의 핵심 유형입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>신용위험이 손실로 이어지는 주요 경로</caption>
+                    <thead><tr><th scope="col">유형</th><th scope="col">무슨 일이 일어나나요?</th><th scope="col">채권 투자자에게 미치는 영향</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">채무불이행·부도</th><td>발행자나 차입자가 원금 또는 이자를 약속대로 지급하지 못합니다.</td><td>회수 절차와 담보·보증에 따라 손실 규모와 회수 시점이 달라집니다.</td></tr>
+                      <tr><th scope="row">신용등급 하락</th><td>재무상태·사업환경 악화 등으로 신용평가사의 등급이 낮아질 수 있습니다.</td><td>시장이 더 높은 수익률을 요구해 보유 채권 가격이 하락할 수 있습니다. 가격 하락 폭은 만기·금리·시장 상황에 따라 다릅니다.</td></tr>
+                      <tr><th scope="row">신용스프레드 확대</th><td>국채 등 상대적으로 안전하다고 여겨지는 채권보다 추가로 요구되는 금리가 커집니다.</td><td>새로 발행되는 채권의 수익률이 높아지면서 기존 채권의 시장가격이 내려갈 수 있습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3>금융회사와 투자자는 어떻게 관리할까요?</h3>
+                <p><b>사전 심사와 담보</b>로 차입자의 상환능력·재무상태를 확인하고, 필요하면 담보와 약정을 설정합니다. 또 특정 기업·산업·국가에 대출이나 채권 투자가 몰리지 않도록 <b>분산</b>하고, 보유 뒤에도 재무정보·신용등급·담보가치와 한도를 계속 점검합니다.</p>
+                <p><b>신용부도스왑(CDS, Credit Default Swap)</b>은 특정 채무자나 채권의 신용사건 위험을 이전하는 장외 신용파생상품입니다. 보호매수자는 정기적으로 프리미엄을 내고, 계약에서 정한 신용사건이 발생하면 보호매도자로부터 약정된 방식으로 보상을 받습니다. 경제적으로는 ‘부도 보험’과 비슷해 보이지만, 일반 보험과 달리 장외 파생계약이며 보상 범위·정산 방식·상대방 신용위험을 계약별로 확인해야 합니다.</p>
+                <p>신용위험 관리는 위험을 완전히 없애는 방법이 아닙니다. 담보 가격이 함께 하락하거나 여러 차입자가 동시에 어려움을 겪을 수 있고, CDS 보호매도자가 이행하지 못할 위험도 남습니다. 따라서 수익률만 보지 말고 발행자, 만기, 담보·보증, 분산 정도와 거래상대방을 함께 확인해야 합니다.</p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="신용위험 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section><section class="lesson" id="greekLettersLesson"><span>00.05</span>
             <div class="lesson-content">
               <h2>금융과 수학에서 자주 사용하는 주요 그리스 문자</h2>
               <div class="lesson-body">
@@ -717,6 +806,20 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
+          </section><section class="lesson" id="growthPotentialLesson">
+            <span>00.1</span>
+            <div class="lesson-content">
+              <h2>금리와 성장잠재력: 할인율이 기업 가치에 미치는 영향</h2>
+              <div class="lesson-body">
+                <p>주식 가격은 흔히 그 기업이 앞으로 벌어들일 미래 이익을 오늘의 가치로 환산한 값으로 설명됩니다. 이때 미래의 돈을 오늘 가치로 바꾸는 데 쓰는 비율을 할인율이라고 하며, 할인율은 시장금리의 영향을 크게 받습니다. 금리가 오르면 할인율도 함께 오르는 경향이 있고, 같은 미래 이익이라도 오늘 가치로 환산한 금액은 작아집니다.</p>
+                <p>이 효과는 기업마다 다르게 나타납니다. 지금 당장 이익을 많이 내는 기업은 가까운 미래의 현금흐름 비중이 커서 할인율 변화의 영향을 상대적으로 덜 받습니다. 반면 지금은 이익이 적거나 없어도 몇 년 뒤 큰 성장을 기대하는 기업, 즉 성장잠재력에 기대는 비중이 큰 기업은 먼 미래의 현금흐름 비중이 커서 할인율이 조금만 올라도 현재가치가 크게 줄어들 수 있습니다.</p>
+                <p>그래서 “금리가 오르면 성장주가 더 크게 흔들린다”는 말이 자주 나옵니다. 예를 들어 아직 이익 규모가 크지 않은 기술·바이오 기업은 금리 상승기에 주가가 크게 조정받는 경우가 있고, 반대로 금리가 내려갈 때는 같은 이유로 더 크게 오르는 경우도 있습니다. 다만 이는 하나의 경향일 뿐이며, 실제 주가는 기업 실적, 산업 전망, 시장 심리 등 다른 요인과 함께 움직입니다.</p>
+                <p>이 개념은 앞서 본 채권의 듀레이션과 닮았습니다. 만기가 길어 먼 미래의 현금흐름 비중이 큰 채권일수록 금리 변화에 가격이 더 민감했듯이, 주식도 이익 실현 시점이 멀고 성장잠재력에 기대는 비중이 클수록 금리 변화에 더 민감하다고 이해할 수 있습니다. “성장주는 듀레이션이 긴 자산과 비슷하게 움직인다”는 비유가 여기서 나옵니다.</p>
+                <p>투자 판단에서는 “금리가 오르니 성장주를 무조건 피한다”보다, 내가 담은 자산이 가까운 미래의 이익 중심인지 먼 미래의 성장잠재력 중심인지 구분해 보는 것이 먼저입니다. 기업 재무제표나 상품설명서에서 현재 이익 규모와 성장률 전망을 함께 확인하면, 금리 변화에 따라 내 포트폴리오가 왜 흔들리는지 이해하는 데 도움이 됩니다.</p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="bokRateTrendTrigger"><i class="fa-solid fa-chart-line"></i> 한국은행 최근 2년 기준금리 추이</button><button type="button" class="breaktime-trigger" id="rateMarketBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · 시장 변동성 차트 확장</button><small>기준금리의 변경일과 인상·인하 흐름을 차트로 확인하세요.</small></p>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="금리와 성장잠재력: 할인율이 기업 가치에 미치는 영향 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section><section class="lesson" id="valuationLesson"><span>12.04</span>
             <div class="lesson-content">
               <h2>자산 가치평가: 지금 가격은 무엇을 반영할까요?</h2>
@@ -2152,6 +2255,35 @@
       </footer>
     </main>
 
+    <div class="glossary-modal bok-rate-modal" id="bokRateTrendModal" hidden>
+      <div class="glossary-modal__backdrop" data-bok-rate-close></div>
+      <section class="glossary-modal__dialog bok-rate-dialog" role="dialog" aria-modal="true" aria-labelledby="bokRateTrendTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-bok-rate-close>×</button>
+        <p class="glossary-modal__label">RATE · STOCK VOLATILITY · BOND PRICE</p>
+        <h2 id="bokRateTrendTitle">최근 2년: 기준금리·KOSPI 변동성·채권 가격 한눈에 보기</h2>
+        <p class="bok-rate-intro">기준금리는 실제 변경일 기준, KOSPI는 최근 20거래일 수익률로 계산한 연율화 실현변동성, 채권은 KOSEF 국고채10년 ETF의 종가를 시작일 100으로 맞춘 가격지수입니다. 서로 단위가 달라 각 축을 따로 읽습니다.</p>
+        <div class="bok-rate-summary">
+          <article><span>시작 금리</span><strong>3.50%</strong><small>2024.09.05</small></article>
+          <article><span>기간 중 최저</span><strong>2.50%</strong><small>2025.05.29 ~ 2026.07.15</small></article>
+          <article><span>최근 기준금리</span><strong>3.00%</strong><small>2026.08.27부터</small></article>
+        </div>
+        <div class="bok-rate-chart" role="img" aria-label="최근 2년의 한국은행 기준금리, KOSPI 20거래일 실현변동성, KOSEF 국고채10년 ETF 가격지수를 비교하는 차트"><div class="bok-rate-chart__canvas" id="rateMarketOverviewChart"></div></div>
+        <div class="bok-rate-events"><span><b>인하 구간</b><br />2024.10 ~ 2025.05: 3.50% → 2.50%</span><span><b>유지 구간</b><br />2025.05 ~ 2026.07: 2.50%</span><span><b>인상 구간</b><br />2026.07 ~ 2026.08: 2.50% → 3.00%</span><span><b>변경 단위</b><br />모두 0.25%p(25bp) 단위</span></div>
+        <p class="bok-rate-note"><b>읽는 법:</b> 변동성은 KOSPI가 어느 방향으로 갔는지가 아니라 최근에 얼마나 크게 흔들렸는지를 뜻합니다. 채권 가격지수는 대표 ETF 한 종목의 과거 가격일 뿐 전체 채권시장과 같지 않으며, 기준금리가 움직였다고 주식·채권이 즉시 또는 같은 폭으로 움직인다는 뜻도 아닙니다.</p>
+        <p class="bok-rate-intro bok-rate-source"><small>출처: <a href="https://www.bok.or.kr/portal/singl/baseRate/list.do?menuNo=200643" target="_blank" rel="noopener noreferrer">한국은행 기준금리 추이</a>, Yahoo Finance (KOSPI ^KS11·KOSEF 국고채10년 148070.KS 일별 종가). 시세는 차트를 열 때 조회합니다.</small></p>
+      </section>
+    </div>
+    <div class="glossary-modal breaktime-modal" id="rateMarketBreakTimeModal" hidden>
+      <div class="glossary-modal__backdrop" data-rate-market-breaktime-close></div>
+      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="rateMarketBreakTimeTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-rate-market-breaktime-close>×</button>
+        <p class="glossary-modal__label">BREAKTIME · 시장 변동성</p>
+        <h2 id="rateMarketBreakTimeTitle">시장 변동성 차트를 확장해 보세요</h2>
+        <p><b>확장 과제:</b> 기준금리 변동 차트에 주식·채권·원/달러 환율·금·가상자산처럼 서로 다른 시장의 변동성을 함께 표시해 보세요. 금리 변경일 전후뿐 아니라 일정한 월·주간 단위로 수익률과 변동성을 비교해야 합니다.</p>
+        <p><b>구현 힌트:</b> 각 자산의 가격을 같은 시작값(예: 100)으로 맞춘 뒤, 기간별 등락률 또는 이동 변동성을 별도 선·막대로 그려 보세요. 기준금리와 동시에 움직였다고 해서 원인과 결과가 증명되는 것은 아니므로, 데이터 출처·기간·환율 기준·거래일 차이도 화면에 표시하세요.</p>
+        <p><small>목표는 가격 방향을 예측하는 것이 아니라, 금리 변화 국면에서 자산별로 얼마나 다르게 흔들렸는지 관찰하는 것입니다.</small></p>
+      </section>
+    </div>
     <div class="glossary-modal breaktime-modal" id="presentValueBreakTimeModal" hidden>
       <div class="glossary-modal__backdrop" data-present-value-breaktime-close></div>
       <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="presentValueBreakTimeTitle">
@@ -2848,6 +2980,7 @@
     </script>
     <script>
       [
+        { modalId: "rateMarketBreakTimeModal", triggerId: "rateMarketBreakTimeTrigger", closeSelector: "[data-rate-market-breaktime-close]" },
         { modalId: "presentValueBreakTimeModal", triggerId: "presentValueBreakTimeTrigger", closeSelector: "[data-present-value-breaktime-close]" },
         { modalId: "assetValueBreakTimeModal", triggerId: "assetValueBreakTimeTrigger", closeSelector: "[data-asset-value-breaktime-close]" },
         { modalId: "allocationTimingBreakTimeModal", triggerId: "allocationTimingBreakTimeTrigger", closeSelector: "[data-allocation-timing-breaktime-close]" },
@@ -3985,6 +4118,7 @@
         render();
       })();
     </script>
+    <script src="assets/growth-potential-rate.js?v=20260917"></script>
     <script src="assets/app-shell.js"></script>
     <script src="../assets/modal-fit.js?v=20260905-simulator-specific-hints"></script>
     <script src="../assets/click-logger.js?v=20260905"></script>
