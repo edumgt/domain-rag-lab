@@ -79,6 +79,8 @@ services:
       - ./app:/app/app
       - ./frontend:/app/frontend
       - ./data:/app/data
+      # DATA-ROOT 라벨링 코퍼스는 인덱싱만 하므로 읽기 전용으로 제공한다.
+      - ./DATA-ROOT:/app/data/DATA-ROOT:ro
       # 로컬 LEAN 러너가 호스트 Docker로 컨테이너를 띄우기 위한 소켓
       - /var/run/docker.sock:/var/run/docker.sock
       - ${LEAN_SSH_KEY_HOST_PATH:-/dev/null}:${LEAN_SSH_KEY_PATH:-/run/secrets/lean.pem}:ro

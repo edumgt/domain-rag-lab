@@ -20,5 +20,8 @@ node_modules/
 
 
 DATA-ROOT/
+data/processed/
 # LEAN local runner scratch folders
 data/lean-workflows/
+
+*.key

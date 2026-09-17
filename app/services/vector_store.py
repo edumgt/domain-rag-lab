@@ -44,7 +44,9 @@ class VectorStore:
         points = []
 
         for chunk, vector in zip(chunks, vectors):
-            point_id = str(uuid.uuid4())
+            # Stable IDs make a repeated ingestion an upsert instead of adding
+            # duplicate vectors for the same RAG chunk.
+            point_id = str(uuid.uuid5(uuid.NAMESPACE_URL, chunk["chunk_id"]))
             payload = {
                 "chunk_id": chunk["chunk_id"],
                 "document_id": chunk["document_id"],
@@ -53,6 +55,8 @@ class VectorStore:
                 "chunk_index": chunk["chunk_index"],
                 "domain": chunk.get("domain", "general"),
             }
+            if chunk.get("metadata"):
+                payload["metadata"] = chunk["metadata"]
             points.append(PointStruct(id=point_id, vector=vector, payload=payload))
 
         self.client.upsert(collection_name=self.collection_name, points=points)
