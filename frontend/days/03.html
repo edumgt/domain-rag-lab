@@ -10,6 +10,7 @@
     <title>03일차 | 4일 금융 이론 — 채권 · 코인</title>
     <link rel="stylesheet" href="assets/site.css?v=20260906-understanding-check" />
     <link rel="stylesheet" href="assets/app-shell.css?v=20260908-modal-text105" />
+    <link rel="stylesheet" href="assets/duration-use-case-simulators.css?v=20260917" />
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
     <style>
       /* 옵션 학습 단원은 01일차로 이동했습니다. */
@@ -125,7 +126,7 @@
     />
     <script defer src="assets/visuals.js"></script>
     <script defer src="assets/atlas.js"></script>
-    <script defer src="assets/glossary-modal.js?v=20260915-term-readings"></script>
+    <script defer src="assets/glossary-modal.js?v=20260917-debt-security"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
     <script defer src="assets/lesson-understanding.js?v=20260906-all-days"></script>
   </head>
@@ -262,10 +263,47 @@
               <div class="lesson-body">
                 <p>전통 경제학은 주식과 채권의 차이를 주로 기대수익과 위험의 관계로 설명합니다. 행동경제학은 여기에 <b>손실을 느끼는 방식, 가격을 확인하는 빈도, 돈에 붙이는 목적</b>이 투자 판단을 어떻게 바꾸는지 살펴봅니다. 아래 내용은 모든 투자자나 모든 주식·채권에 똑같이 적용되는 규칙이 아니라, 판단에서 나타날 수 있는 심리적 경향입니다.</p>
                 <h3>손실회피: 같은 금액이라도 손실을 더 크게 느끼기</h3>
-                <p><b>프로스펙트 이론(Prospect Theory)</b>은 심리학자 대니얼 카너먼(Daniel Kahneman)과 아모스 트버스키(Amos Tversky)가 1979년에 제시한 의사결정 이론입니다. 사람들이 같은 크기의 이익보다 손실에 더 민감하게 반응할 수 있다고 설명하며, 기대효용이론만으로는 설명하기 어려운 실제 선택의 경향을 살펴보는 행동경제학의 대표 이론입니다. 연구모형에서 손실의 심리적 가중치를 이익의 약 2.25배로 둔 사례가 널리 알려져 있습니다. 이는 예를 들어 같은 10만 원이라도 얻었을 때의 만족보다 잃었을 때의 불편함을 약 2.25배 크게 느낄 수 있다고 <b>가정해 선택을 설명하는 대표 파라미터</b>입니다. 모든 사람이 실제로 2.25배를 느낀다는 뜻도, 투자 손실이 그만큼 커진다는 뜻도 아니며, 실제 반응은 금액·자산 규모·경험·재정 상황과 개인에 따라 달라집니다. 주식은 가격을 자주 확인할수록 단기 손실을 반복해서 마주하기 쉬워 불안이나 성급한 매도 판단으로 이어질 수 있습니다.</p>
-                <p>채권은 만기와 이자 지급 일정이 있어 ‘만기까지 보유’라는 기준을 제공할 수 있습니다. 그러나 발행자가 상환하지 못하는 신용위험, 만기 전 매도할 때의 금리·신용스프레드 위험, 인플레이션 위험은 남습니다. 즉 만기 원금 상환은 발행자가 약속을 지킬 때의 이야기이며, 심리적 안정감이 실제 안전을 보장하지는 않습니다.</p>
+                <p><b>프로스펙트 이론(Prospect Theory)</b>은 심리학자 대니얼 카너먼(Daniel Kahneman)과 아모스 트버스키(Amos Tversky)가 제시한 의사결정 이론입니다. 사람들이 같은 크기의 이익보다 손실에 더 민감하게 반응할 수 있다고 설명하며, 기대효용이론만으로는 설명하기 어려운 실제 선택의 경향을 살펴보는 행동경제학의 대표 이론입니다.</p>
+                <p>트버스키와 카너먼은 <a href="https://doi.org/10.1007/BF00122574" target="_blank" rel="noopener noreferrer">1992년 후속 실험 연구</a>에서 참가자들이 이익과 손실이 포함된 선택지 중 무엇을 고르는지 분석했습니다. 그 결과를 계산식으로 설명했을 때, 손실에 주는 무게가 같은 금액의 이익보다 <b>약 2.25배</b> 큰 것으로 나타났습니다. 2.25는 참가자마다 계산한 손실회피 정도를 크기순으로 세웠을 때 가운데에 위치한 값입니다.</p>
+                <div class="lesson-note">
+                  <p><b>2.25배는 어떻게 구했을까요?</b></p>
+                  <ol>
+                    <li>의사결정이론을 특별히 배우지 않은 버클리·스탠퍼드 대학원생 25명이 며칠 간격으로 세 차례의 컴퓨터 실험에 참여했습니다.</li>
+                    <li>참가자는 ‘25% 확률로 150달러, 75% 확률로 50달러를 받는 선택’ 같은 확률 선택과 여러 개의 확실한 금액 중 어느 쪽이 더 좋은지 반복해서 골랐습니다.</li>
+                    <li>연구진은 확률 선택과 확실한 돈의 선호가 바뀌는 지점을 좁혀, 그 사람이 확률 선택과 비슷하게 느끼는 <b>확실한 금액</b>을 계산했습니다. 이 과정을 이익 문제와 손실 문제에 모두 적용했습니다.</li>
+                    <li>연구진은 각 참가자의 여러 선택 결과에 가장 잘 맞는 계산식을 찾아, 그 사람이 같은 금액의 이익과 손실을 얼마나 다르게 평가했는지 추정했습니다. 그런 다음 25명의 결과를 작은 값부터 큰 값까지 차례로 세웠습니다. 그중 <b>가운데인 13번째 값이 2.25</b>였습니다. 이것이 중앙값입니다.</li>
+                  </ol>
+                  <div class="loss-aversion-result">
+                    <strong>핵심 결과: 25명의 손실회피 결과 중 가운데 값은 2.25였습니다.</strong>
+                    <p>감정을 직접 “몇 배인가요?”라고 물은 것이 아닙니다. 연구진은 참가자의 선택이 어느 금액에서 바뀌는지 관찰한 뒤, 손실을 얼마나 크게 평가했는지 거꾸로 계산했습니다.</p>
+                    <p>50% 확률의 손실과 50% 확률의 이익을 함께 제시했을 때도, 손실을 받아들이려면 기대하는 이익이 손실의 약 두 배는 되어야 하는 경향이 나타났습니다.</p>
+                  </div>
+                </div>
                 <h3>처분효과: 이익은 너무 빨리, 손실은 너무 오래</h3>
-                <p><b>처분효과</b>는 이익 난 자산은 빨리 팔고 손실 난 자산은 오래 보유하려는 경향입니다. 주식에서는 가격이 오르면 빨리 이익을 확정하고, 내리면 손실을 인정하기 어려워 근거 없이 보유를 이어가는 모습으로 나타날 수 있습니다. 채권도 가격이 변하고 손실을 회피하려는 심리가 작동할 수 있지만, 만기·현금흐름이 정해져 있어 판단 기준이 다르게 느껴질 수 있습니다.</p>
+                <p>처분효과(Disposition Effect)는 인간의 ‘손실 회피 심리(Loss Aversion)’에 기반한 행동경제학적 특성이기 때문에 주식뿐만 아니라 <b>채권 시장에서도 동일하게 작동</b>합니다.</p>
+                <p><b>채권 특유의 구조(만기, 정기적 이자, 원금 상환 의무)</b> 때문에 주식과는 행동 양상과 투자자의 합리화 논리가 다르게 나타납니다.</p>
+                <h4>주식과 채권에서 처분효과가 다르게 나타나는 이유</h4>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">구분</th><th scope="col">주식에서의 처분효과</th><th scope="col">채권에서의 처분효과</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">심리적 합리화 논리</th><td>“언젠가 다시 오르겠지” (막연한 기대)</td><td><b>“만기까지 들고 가면 원금 나오니까 손실 아니다”</b></td></tr>
+                      <tr><th scope="row">이익 확정 욕구</th><td>상승 시 빠르게 매도 (조기 이익 실현)</td><td>금리 하락(가격 상승) 시 매도 후 이익 확정</td></tr>
+                      <tr><th scope="row">손실 보유의 명분</th><td>근거 없는 존버(Hold)</td><td><b>만기(Maturity)라는 명확한 방어막</b></td></tr>
+                      <tr><th scope="row">현금흐름</th><td>배당 미확정, 변동성 큼</td><td><b>중간에 정기적 이자(쿠폰)가 계속 들어옴</b></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h4>채권 투자자가 처분효과에 빠질 때 발생하는 실질적 손실</h4>
+                <p>채권 투자자는 “어차피 만기 상환받으면 원금은 건지니 비자발적 장기 투자를 해도 손해가 아니다”라고 스스로를 설득하곤 합니다. 하지만 이 과정에서 다음과 같은 <b>비가시적 손실</b>이 발생합니다.</p>
+                <ol>
+                  <li><b>기회비용(Opportunity Cost) 발생</b><br />금리가 올라 채권 가격이 폭락했을 때 손실을 확정 짓지 않고 계속 방치하면, 그 자금은 훨씬 높은 금리(수익률)를 제공하는 새로운 우량 채권이나 다른 자산에 투자될 기회를 잃게 됩니다.</li>
+                  <li><b>재투자 리스크 및 실질 가치 하락</b><br />인플레이션이 높은 상황에서 손실 난 채권을 만기까지 고수하면, 만기에 원금을 받더라도 <b>인플레이션으로 인해 원금의 실질 구매력은 대폭 하락</b>합니다.</li>
+                  <li><b>신용 리스크(부도 위험) 무시</b><br />국채가 아닌 회사채의 경우, 가격 폭락이 금리 상승 때문이 아니라 <b>발행 기업의 신용도 악화</b> 때문일 수 있습니다. 이때 처분효과에 사로잡혀 매도하지 못하면 향후 기업 파산 시 원금 자체를 회수하지 못하는 치명적 손실로 이어집니다.</li>
+                </ol>
+                <h4>요약</h4>
+                <p>채권에서도 처분효과는 강력하게 작동하지만, “만기 보유 시 원금 보장”이라는 채권 고유의 특징이 <b>손실을 인정하지 않으려는 심리를 더욱 정당화하고 강화하는 무기</b>로 사용되는 경향이 있습니다.</p>
+                <p>따라서 채권 투자 시에도 가격이 하락했을 때 단지 만기까지 기다릴 것인지, 아니면 손절매 후 더 수익률이 높은 자산으로 교체(Tax-loss harvesting 또는 리밸런싱)할 것인지 냉정하게 기회비용을 계산해야 합니다.</p>
                 <h3>심리적 회계와 프레이밍: 돈에 다른 이름 붙이기</h3>
                 <p><b>프레이밍(framing)</b>은 같은 사실이라도 어떤 표현·비교 기준·이름으로 제시하느냐에 따라 사람들이 다르게 받아들이고 선택할 수 있는 현상입니다. 예를 들어 ‘연 4% 이자’라는 표현과 ‘가격 하락 가능성이 있는 채권’이라는 표현은 같은 상품의 서로 다른 측면을 강조합니다. 사람들은 같은 돈이라도 ‘성장 자금’, ‘노후 자금’, ‘비상자금’처럼 마음속 계좌를 나누어 관리합니다. 주식은 성장·기회 자금으로, 채권은 보존·현금흐름 자금으로 인식될 수 있어 같은 손실 가능성에도 받아들이는 방식이 달라집니다. 이런 구분은 목표 설정에 도움을 줄 수 있지만, 상품 이름만 보고 위험을 판단하면 안 됩니다.</p>
                 <h3>근시안적 손실회피와 주식 프리미엄 퍼즐</h3>
@@ -287,7 +325,7 @@
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="행동경제학으로 보는 주식과 채권 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
-          <section class="lesson">
+          <section class="lesson" id="bondHistoryLesson">
             <span>00.07</span>
             <div class="lesson-content">
               <h2>채권은 언제, 왜 만들어졌을까요?</h2>
@@ -316,28 +354,6 @@
             <div class="lesson-content">
               <h2>채권은 돈을 빌려준 약속장</h2>
               <div class="lesson-body">
-                <section class="bond-price-keywords" id="bondPriceKeywordsLesson" aria-labelledby="bondPriceKeywordsHeading">
-                  <h3 id="bondPriceKeywordsHeading">채권 가격을 읽는 네 가지 키워드: 선형 · 비선형 · 듀레이션 · 컨벡시티</h3>
-                  <p><b>선형</b>은 원인이 1만큼 변할 때 결과도 일정한 비율로 변하는 관계입니다. 그래프가 곧은 직선이라 변화 폭을 빠르게 가늠하기 좋습니다. 반대로 <b>비선형</b>은 상황에 따라 반응 속도가 달라지는 관계로, 그래프가 휘어집니다. 옵션의 손익 구조나 채권 가격과 금리의 관계가 대표적인 예입니다.</p>
-                  <figure class="lesson-figure concept-graph-figure">
-                    <img src="assets/linear-nonlinear-duration-convexity.svg" alt="선형과 비선형, 듀레이션과 컨벡시티를 비교한 네 개의 개념 그래프" />
-                    <figcaption>듀레이션은 금리와 채권 가격 관계를 직선으로 간단히 본 것이고, 컨벡시티는 실제 곡선이 그 직선에서 얼마나 휘는지 보여 줍니다.</figcaption>
-                  </figure>
-                  <p><b>듀레이션</b>은 금리가 조금 변할 때 채권 가격이 얼마나 민감하게 움직이는지 알려 주는 숫자입니다. 예를 들어 수정듀레이션이 5라면, 다른 조건이 같을 때 시장금리가 <b>1%p 오르면</b> 채권 가격은 대략 <b>5% 내려가는</b> 방향으로 생각할 수 있습니다. 듀레이션이 길수록 금리 변화에 더 크게 흔들립니다.</p>
-                  <p><b>컨벡시티</b>는 이 관계가 직선이 아니라 실제로는 휘어 있다는 점을 나타냅니다. 일반적인 양(+)의 컨벡시티 채권은 금리가 내려갈 때 가격 상승폭이 듀레이션 직선 근사보다 커지고, 금리가 오를 때 가격 하락폭은 그 근사보다 작아질 수 있습니다. 따라서 듀레이션은 ‘빠른 1차 추정’, 컨벡시티는 ‘그 추정을 더 실제에 가깝게 만드는 보정’으로 기억하면 쉽습니다.</p>
-                  <div class="lesson-table-wrap">
-                    <table class="lesson-table">
-                      <caption>한 줄로 기억하기</caption>
-                      <thead><tr><th scope="col">개념</th><th scope="col">쉽게 말하면</th><th scope="col">채권에서 보는 점</th></tr></thead>
-                      <tbody>
-                        <tr><th scope="row">선형</th><td>같은 입력 변화에 같은 속도로 반응하는 직선</td><td>작은 금리 변화에서의 단순 추정</td></tr>
-                        <tr><th scope="row">비선형</th><td>입력 위치에 따라 반응 속도가 달라지는 곡선</td><td>금리와 가격의 실제 관계</td></tr>
-                        <tr><th scope="row">듀레이션</th><td>금리 변화에 대한 가격의 ‘기울기’</td><td>금리 위험의 크기를 빠르게 비교</td></tr>
-                        <tr><th scope="row">컨벡시티</th><td>그 기울기 자체가 바뀌는 ‘휘어짐’</td><td>큰 금리 변화에서 듀레이션 추정을 보정</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </section>
                 <h3>‘채권’과 ‘채무’의 한자부터 구분하기</h3>
                 <p>
                   채권(債權)과 채무(債務)는 모두 ‘빚 채(債)’를 씁니다.
@@ -356,7 +372,7 @@
                   <b>채권(債權)</b>은 남에게 돈을 받을 권리이고,
                   <b>채권(債券)</b>은 정부나 기업이 돈을 빌리기 위해 발행하는
                   유가증권(有價證券)입니다. 이 단원에서 주로 다루는 것은 국채·회사채처럼
-                  두 번째 뜻의 <b>채권(債券)</b>입니다.
+                  두 번째 뜻의 <b>채권(債券)</b>이며, 더 큰 분류에서는 <button type="button" class="glossary-term" data-glossary-term="채무증권" aria-haspopup="dialog">채무증권</button>에 속합니다.
                 </p>
                 <h3>약속을 지키지 못하면: 채무불이행</h3>
                 <p>
@@ -978,11 +994,35 @@
                 </div>
                 <p><b>왜 ‘쿠폰’이라고 부를까요?</b> 과거에는 종이 채권 증서에 이자 지급일마다 떼어 내 제출할 수 있는 작은 표(쿠폰)가 붙어 있었습니다. 투자자가 이 표를 떼어 내면 약정 이자를 받을 수 있었기 때문에, 오늘날 전자등록 채권에서도 정기 이자 지급액 또는 그 이자율을 관행적으로 ‘쿠폰’ 또는 ‘쿠폰금리’라고 부릅니다.</p>
                 <p>이 정리는 <b>듀레이션</b>과 <b>볼록성</b>을 이해하는 출발점입니다. 금리 하락 가능성을 염두에 둘 때는 장기·저쿠폰 채권이 더 크게 오를 수 있는 반면, 금리 상승 때는 더 큰 가격 하락을 겪을 수 있습니다. 이는 방향 예측을 위한 권유가 아니라, 보유 기간과 감당 가능한 가격 변동을 계약 조건과 함께 점검해야 한다는 뜻입니다.</p>
+                <section class="bond-price-keywords" id="bondPriceKeywordsLesson" aria-labelledby="bondPriceKeywordsHeading">
+                  <h3 id="bondPriceKeywordsHeading">채권 가격을 읽는 네 가지 키워드: 선형 · 비선형 · 듀레이션 · 컨벡시티</h3>
+                  <p><b>선형</b>은 원인이 1만큼 변할 때 결과도 일정한 비율로 변하는 관계입니다. 그래프가 곧은 직선이라 변화 폭을 빠르게 가늠하기 좋습니다. 반대로 <b>비선형</b>은 상황에 따라 반응 속도가 달라지는 관계로, 그래프가 휘어집니다. 옵션의 손익 구조나 채권 가격과 금리의 관계가 대표적인 예입니다.</p>
+                  <figure class="lesson-figure concept-graph-figure">
+                    <img src="assets/linear-nonlinear-duration-convexity.svg" alt="컨벡시티가 0인 직선과 아래로 볼록한 양의 컨벡시티·위로 볼록한 음의 컨벡시티 구간이 있는 비선형 곡선, 듀레이션과 채권 컨벡시티를 비교한 네 개의 개념 그래프" />
+                    <figcaption>직선의 컨벡시티는 0입니다. 곡선은 변곡점을 기준으로 양(+)의 컨벡시티 구간과 음(−)의 컨벡시티 구간으로 나뉠 수 있으며, 채권에서는 듀레이션 직선과 실제 가격 곡선의 차이를 컨벡시티로 보정합니다.</figcaption>
+                  </figure>
+                  <p><b>듀레이션</b>은 금리가 조금 변할 때 채권 가격이 얼마나 민감하게 움직이는지 알려 주는 숫자입니다. 예를 들어 수정듀레이션이 5라면, 다른 조건이 같을 때 시장금리가 <b>1%p 오르면</b> 채권 가격은 대략 <b>5% 내려가는</b> 방향으로 생각할 수 있습니다. 듀레이션이 길수록 금리 변화에 더 크게 흔들립니다.</p>
+                  <p><b>컨벡시티</b>는 이 관계가 직선이 아니라 실제로는 휘어 있다는 점을 나타냅니다. 일반적인 양(+)의 컨벡시티 채권은 금리가 내려갈 때 가격 상승폭이 듀레이션 직선 근사보다 커지고, 금리가 오를 때 가격 하락폭은 그 근사보다 작아질 수 있습니다. 따라서 듀레이션은 ‘빠른 1차 추정’, 컨벡시티는 ‘그 추정을 더 실제에 가깝게 만드는 보정’으로 기억하면 쉽습니다.</p>
+                  <div class="lesson-table-wrap">
+                    <table class="lesson-table">
+                      <caption>한 줄로 기억하기</caption>
+                      <thead><tr><th scope="col">개념</th><th scope="col">쉽게 말하면</th><th scope="col">채권에서 보는 점</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">선형</th><td>같은 입력 변화에 같은 속도로 반응하는 직선</td><td>작은 금리 변화에서의 단순 추정</td></tr>
+                        <tr><th scope="row">비선형</th><td>입력 위치에 따라 반응 속도가 달라지는 곡선</td><td>금리와 가격의 실제 관계</td></tr>
+                        <tr><th scope="row">듀레이션</th><td>금리 변화에 대한 가격의 ‘기울기’</td><td>금리 위험의 크기를 빠르게 비교</td></tr>
+                        <tr><th scope="row">컨벡시티</th><td>그 기울기 자체가 바뀌는 ‘휘어짐’</td><td>큰 금리 변화에서 듀레이션 추정을 보정</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
                 <p class="lesson-video-cta">
                   <button type="button" class="lesson-video-link" data-bond-duration-trigger>
                     <i class="fa-solid fa-scale-balanced"></i> 금리·듀레이션 시뮬레이터 열기
                   </button>
-                  <small>금리 변화와 듀레이션을 바꾸어 단기채·장기채의 예상 가격 변화를 비교해 보세요.</small>
+                  <button type="button" class="lesson-video-link" data-mbs-duration-trigger><i class="fa-solid fa-house"></i> 주택담보대출 조기상환</button>
+                  <button type="button" class="lesson-video-link" data-liability-duration-trigger hidden><i class="fa-solid fa-shield-heart"></i> 연금·보험 부채</button>
+                  <small>금리 변화에 따른 채권과 조기상환 가능한 주택담보대출의 민감도를 각각 비교해 보세요.</small>
                 </p>
               </div>
             </div>
@@ -2190,13 +2230,39 @@
               <dd>
                 사람들이 항상 완전한 정보와 계산에 따라 행동한다는 가정에서 한 걸음 더 나아가, <b>심리·감정·인지적 편향·사회적 영향</b>이 경제적 선택에 미치는 영향을 연구하는 분야입니다.
                 <br /><br />손실회피, 기준점, 프레이밍, 심리적 회계, 현재편향 등이 대표 주제입니다. 이는 사람들이 언제나 비합리적이라는 뜻이 아니라, 실제 선택을 이해하고 금융상품의 위험·보상·표현 방식을 더 현실적으로 살펴보는 관점입니다.
+                <template class="glossary-rich-detail">
+                  <p>행동경제학은 사람이 언제나 모든 정보를 완벽하게 계산한다고 보기보다, <strong>심리·감정·습관·주변 상황이 선택에 어떤 영향을 주는지</strong> 연구하는 분야입니다.</p>
+                  <h3>대표 주제를 쉽게 알아보기</h3>
+                  <ul>
+                    <li><strong>손실회피</strong>: 같은 10만 원이라도 얻었을 때의 기쁨보다 잃었을 때의 불편함을 더 크게 느끼는 경향입니다. 손실이 두려워 필요한 결정을 지나치게 미루거나, 손실 난 투자를 근거 없이 계속 보유할 수 있습니다.</li>
+                    <li><strong>기준점</strong>: 현재 결과를 절대적인 금액이 아니라 내가 마음속에 정한 출발점과 비교하는 것입니다. 예를 들어 10만 원에 산 주식은 현재 가격 9만 원을 ‘1만 원 손실’로 느끼게 만드는 기준점이 될 수 있습니다.</li>
+                    <li><strong>프레이밍</strong>: 내용이 같아도 표현하는 방식에 따라 선택이 달라지는 현상입니다. ‘성공 확률 90%’와 ‘실패 확률 10%’는 같은 정보지만 받아들이는 느낌은 다를 수 있습니다.</li>
+                    <li><strong>심리적 회계</strong>: 실제로는 같은 돈인데도 ‘생활비’, ‘보너스’, ‘노후자금’처럼 마음속에서 별도 계좌로 나누어 다르게 쓰는 경향입니다. 보너스는 쉽게 쓰면서 같은 금액의 월급은 아끼는 행동이 예입니다.</li>
+                    <li><strong>현재편향</strong>: 미래의 더 큰 이익보다 지금 당장 얻는 작은 만족을 지나치게 우선하는 경향입니다. 노후저축이 중요하다는 것을 알면서도 오늘의 소비를 선택하고 저축을 계속 미루는 경우가 대표적입니다.</li>
+                  </ul>
+                  <p><strong>핵심:</strong> 이런 경향이 있다고 해서 사람이 항상 비합리적이라는 뜻은 아닙니다. 실제 선택이 왜 계산과 다르게 나타나는지 이해하고, 금융상품의 문구·위험·보상을 더 꼼꼼히 살펴보기 위한 관점입니다.</p>
+                </template>
               </dd>
             </div>
             <div class="glossary-item">
               <dt>주식 프리미엄 퍼즐 <small>Equity Premium Puzzle</small></dt>
               <dd>
-                장기간의 역사적 자료에서 주식 수익률이 국채 등 상대적으로 안전한 자산의 수익률보다 크게 높았던 현상을, 전통적인 투자자 선택 모형만으로는 충분히 설명하기 어렵다는 문제를 말합니다. 여기서 <b>주식 프리미엄</b>은 주식의 기대수익률에서 무위험수익률을 뺀 추가 보상을 뜻합니다.
-                <br /><br />손실회피와 근시안적 손실회피, 드문 재난 위험, 거래비용·유동성 제약 등은 이 차이를 설명하려는 여러 가설입니다. ‘퍼즐’은 과거의 평균적인 현상을 설명하는 연구 주제이며, 앞으로 주식 수익률이 반드시 높다는 예측이나 보장은 아닙니다.
+                쉽게 말해, 과거에 주식이 안전자산보다 더 준 수익이 일반적인 위험 보상만으로 설명하기에는 너무 컸던 이유를 묻는 연구 주제입니다.
+                <template class="glossary-rich-detail">
+                  <p><strong>한마디로:</strong> “주식이 위험해서 수익을 더 주는 것은 알겠는데, 과거의 추가 수익은 왜 이렇게 컸을까?”라는 질문입니다.</p>
+                  <h3>주식 프리미엄이란?</h3>
+                  <p>주식 수익률에서 국채처럼 상대적으로 안전한 자산의 수익률을 뺀 차이입니다. 예를 들어 주식 수익률이 8%, 안전자산 수익률이 3%였다면 주식 프리미엄은 <strong>5%포인트</strong>입니다. 위험을 감수한 대가로 받은 추가 보상이라고 생각하면 쉽습니다.</p>
+                  <h3>그런데 왜 ‘퍼즐’일까요?</h3>
+                  <p>주식의 수익률이 더 높은 것 자체는 이상하지 않습니다. 주식은 가격 변동과 손실 위험이 더 크기 때문입니다. 문제는 장기간의 과거 자료에서 나타난 수익률 차이가 일반적인 계산으로 예상한 위험 보상보다 상당히 컸다는 점입니다. 연구자들은 “사람들이 주식 위험을 얼마나 싫어해야 이런 큰 차이가 생길까?”를 설명하기 어려워 이를 퍼즐이라고 불렀습니다.</p>
+                  <h3>쉽게 보는 주요 설명</h3>
+                  <ul>
+                    <li><strong>손실회피</strong>: 사람은 같은 금액의 이익보다 손실을 더 크게 느껴, 위험한 주식을 보유하려면 더 큰 보상을 요구할 수 있습니다.</li>
+                    <li><strong>근시안적 손실회피</strong>: 장기투자자도 가격을 자주 확인하면 단기 손실을 계속 마주하게 되어 주식을 더 위험하게 느낄 수 있습니다.</li>
+                    <li><strong>드문 재난 위험</strong>: 경제공황이나 전쟁처럼 자주 일어나지는 않지만 피해가 매우 큰 사건의 가능성이 주식 보상에 포함됐다는 설명입니다.</li>
+                    <li><strong>거래비용·유동성 제약</strong>: 주식을 사고팔기 어렵거나 비용이 들고, 필요한 순간에 현금화하기 어려운 불편에 대한 보상이라는 설명입니다.</li>
+                  </ul>
+                  <p><strong>주의:</strong> ‘퍼즐’은 과거의 평균적인 결과를 설명하려는 연구 문제입니다. 앞으로도 주식이 채권보다 반드시 높은 수익을 낸다는 뜻은 아닙니다.</p>
+                </template>
               </dd>
             </div>
             <div class="glossary-item">
@@ -2874,6 +2940,93 @@
         <p class="corr-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 상관관계는 시장 국면·측정 기간·통화·상품 구조에 따라 달라지며, 위 계산은 수수료·세금·레버리지·선물 롤오버·부동산 직접투자 위험을 반영하지 않습니다. ‘추천’은 매수 추천이 아니라 분산 관점에서 추가 검토를 권한다는 뜻입니다.</p>
       </section>
     </div>
+    <div class="glossary-modal duration-case-modal" id="mbsDurationSimModal" hidden>
+      <div class="glossary-modal__backdrop" data-mbs-duration-close></div>
+      <section class="glossary-modal__dialog duration-case-dialog" role="dialog" aria-modal="true" aria-labelledby="mbsDurationSimTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-mbs-duration-close>×</button>
+        <p class="glossary-modal__label">MORTGAGE · NEGATIVE CONVEXITY · 교육용</p>
+        <h2 id="mbsDurationSimTitle">주택담보대출의 조기상환 효과</h2>
+        <p class="duration-case-intro">금리가 내려가면 대출받은 사람은 더 낮은 금리로 갈아타거나 대출을 일찍 갚을 수 있습니다. 은행은 높은 이자를 오래 받을 기회를 잃어 대출채권의 가치 상승폭이 듀레이션 추정보다 작아질 수 있습니다.</p>
+        <div class="duration-case-layout">
+          <div class="duration-case-controls">
+            <div class="duration-case-fields">
+              <label>현재 대출채권 가치 (원)<small>입력 범위: 1,000~10억 원</small><input id="mbsSimPrice" type="number" min="1000" max="1000000000" step="1000" value="10000000" /></label>
+              <label>기준 듀레이션 (년)<small>입력 범위: 0.1~30년</small><input id="mbsSimDuration" type="number" min="0.1" max="30" step="0.1" value="4.5" /></label>
+              <label>금리 하락 시 조기상환 반응 정도<small>입력 범위: 0~3 · 실제 확률이 아닌 교육용 강도</small><input id="mbsSimPrepay" type="number" min="0" max="3" step="0.1" value="1.5" /></label>
+              <label>금리 변화폭 (%p)<small>입력 범위: −10~+10%p · 시간 변화가 아님</small><input id="mbsSimRateChange" type="number" min="-10" max="10" step="0.1" value="-1" /></label>
+            </div>
+            <div class="duration-case-results">
+              <article><span>듀레이션 반영 가치</span><strong id="mbsSimLinearPrice">10,450,000원</strong><small id="mbsSimLinearChange">가치 변화 +4.50%</small></article>
+              <article class="negative"><span>조기상환·음의 컨벡시티 반영 가치</span><strong id="mbsSimCurvedPrice">10,431,438원</strong><small id="mbsSimCurvedChange">가치 변화 +4.31%</small></article>
+              <article><span>컨벡시티 보정액</span><strong id="mbsSimCorrection">−18,563원</strong><small>듀레이션 가격과의 차이</small></article>
+              <article><span>교육용 컨벡시티</span><strong id="mbsSimConvexity">−37.13</strong><small>조기상환 반응 정도로 계산</small></article>
+            </div>
+            <div class="duration-case-reading">
+              <strong>결과를 이렇게 읽으세요</strong>
+              <p>이 가치는 대출받은 사람이 매달 내는 상환액이나 남은 대출원금이 아니라, <b>은행이 앞으로 받을 원금과 이자를 현재 시점의 가치로 계산한 금액</b>입니다.</p>
+              <ol class="duration-case-directions">
+                <li><b>금리 하락:</b> 조기상환이 늘어 가치 상승폭이 듀레이션 예상보다 작아질 수 있습니다.</li>
+                <li><b>금리 상승:</b> 조기상환이 줄고 대출 기간이 길어져 가치 하락폭이 듀레이션 예상보다 커질 수 있습니다.</li>
+              </ol>
+              <ul>
+                <li><b>듀레이션 반영 가치</b>: 조기상환 없이 약속한 이자를 계속 받는다고 본 직선 추정입니다.</li>
+                <li><b>조기상환·음의 컨벡시티 반영 가치</b>: 금리가 내려가 대출받은 사람이 일찍 갚을 가능성까지 넣은 추정값입니다.</li>
+                <li><b>컨벡시티 보정액</b>: 조기상환 때문에 듀레이션 추정에서 줄어든 가치입니다. 대출받은 사람이 그 금액만큼 실제로 절약한다는 뜻은 아닙니다.</li>
+              </ul>
+            </div>
+          </div>
+          <section class="duration-case-chart-panel">
+            <header><strong>듀레이션 직선과 대출채권 가치 곡선</strong><small>가로축은 시간이 아니라 금리 변화폭(%p)입니다.</small></header>
+            <div id="mbsDurationChart" role="img" aria-label="시간축이 아닌 금리 변화폭에 따른 듀레이션 가격과 조기상환을 반영한 주택담보대출 채권 가치 비교 차트"></div>
+          </section>
+        </div>
+        <p class="duration-case-note"><i class="fa-solid fa-circle-info"></i> 조기상환 반응 정도와 컨벡시티 산식은 원리를 보여 주기 위한 교육용 가정이며 실제 조기상환 확률이 아닙니다. 실제 대출채권 가치는 대출금리, 대출받은 사람의 상환 행동, 보증, 연체, 수수료와 시장 변동성에 따라 달라집니다.</p>
+      </section>
+    </div>
+    <div class="glossary-modal duration-case-modal" id="liabilityDurationSimModal" hidden>
+      <div class="glossary-modal__backdrop" data-liability-duration-close></div>
+      <section class="glossary-modal__dialog duration-case-dialog" role="dialog" aria-modal="true" aria-labelledby="liabilityDurationSimTitle">
+        <button class="glossary-modal__close" type="button" aria-label="닫기" data-liability-duration-close>×</button>
+        <p class="glossary-modal__label">PENSION · INSURANCE LIABILITY · 교육용</p>
+        <h2 id="liabilityDurationSimTitle">연금·보험 부채의 현재가치</h2>
+        <p class="duration-case-intro">미래 지급액이 멀리 이어질수록 할인율 변화에 현재가치가 민감해집니다. 매년 같은 금액을 지급한다고 단순화해 듀레이션 직선, 컨벡시티 보정, 현금흐름 재계산을 비교합니다.</p>
+        <div class="duration-case-layout">
+          <div class="duration-case-controls">
+            <div class="duration-case-fields">
+              <label>매년 지급액 (원)<small>입력 범위: 1,000~10억 원</small><input id="liabilitySimPayment" type="number" min="1000" max="1000000000" step="1000" value="12000000" /></label>
+              <label>지급 기간 (년)<small>입력 범위: 1~80년</small><input id="liabilitySimYears" type="number" min="1" max="80" step="1" value="20" /></label>
+              <label>현재 할인율 (고정)<small>교육용 기준: 3%</small><input id="liabilitySimRate" type="number" value="3" readonly aria-readonly="true" /></label>
+              <label>할인율 변화폭 (%p)<small>입력 범위: −10~+10%p · 시간 변화가 아님</small><input id="liabilitySimRateChange" type="number" min="-10" max="10" step="0.1" value="1" /></label>
+            </div>
+            <div class="duration-case-results">
+              <article><span>현재 부채가치</span><strong id="liabilitySimCurrentPv">178,529,698원</strong><small>현재 할인율 기준</small></article>
+              <article><span>수정 듀레이션</span><strong id="liabilitySimDuration">9.25년</strong><small>할인율 1%p 변화 민감도</small></article>
+              <article><span>듀레이션 반영 가치</span><strong id="liabilitySimLinearPv">162,023,741원</strong><small>직선 근사</small></article>
+              <article class="positive"><span>컨벡시티 반영 가치</span><strong id="liabilitySimConvexPv">163,141,830원</strong><small id="liabilitySimExactPv">현금흐름 재계산 163,083,916원 · 컨벡시티 125.26</small></article>
+            </div>
+            <div class="duration-case-reading positive-reading">
+              <strong>결과를 이렇게 읽으세요</strong>
+              <p><b>연금·보험 부채가치</b>는 가입자가 지금 내는 보험료가 아니라, <b>연금기관이나 보험회사가 앞으로 지급해야 할 돈</b>을 오늘 가치로 계산한 금액입니다.</p>
+              <ol class="duration-case-directions">
+                <li><b>할인율 하락:</b> 미래 지급액을 적게 할인하므로 오늘 준비해야 할 부채가치는 커집니다.</li>
+                <li><b>할인율 상승:</b> 미래 지급액을 더 많이 할인하므로 오늘의 부채가치는 작아집니다.</li>
+              </ol>
+              <ul>
+                <li><b>현재 부채가치</b>: 입력한 할인율로 미래 지급액을 모두 오늘 가치로 바꾼 금액입니다.</li>
+                <li><b>수정 듀레이션</b>: 단순한 지급기간이 아니라, 지급 시점을 반영해 할인율 변화에 부채가치가 얼마나 민감한지를 나타냅니다.</li>
+                <li><b>듀레이션 반영 가치</b>: 금리 효과를 직선으로 빠르게 추정한 값입니다.</li>
+                <li><b>컨벡시티 반영 가치</b>: 직선의 오차를 곡선으로 보정한 값이며, 현금흐름 재계산값과 비교할 수 있습니다.</li>
+              </ul>
+            </div>
+          </div>
+          <section class="duration-case-chart-panel">
+            <header><strong>장기 지급 부채의 금리 민감도</strong><small>가로축은 시간이 아니라 할인율 변화폭(%p)입니다.</small></header>
+            <div id="liabilityDurationChart" role="img" aria-label="시간축이 아닌 할인율 변화폭에 따른 연금 보험 부채의 듀레이션 근사와 컨벡시티 보정 및 현금흐름 재계산 비교 차트"></div>
+          </section>
+        </div>
+        <p class="duration-case-note"><i class="fa-solid fa-circle-info"></i> 지급액이 매년 일정하고 중도 해지·사망률·사업비·물가연동이 없다고 단순화한 예시입니다. 실제 연금·보험 부채 평가는 계약 조건과 계리 가정을 사용합니다.</p>
+      </section>
+    </div>
     <div class="glossary-modal bond-duration-sim-modal" id="bondDurationSimModal" hidden>
       <div class="glossary-modal__backdrop" data-bond-duration-close></div>
       <section class="glossary-modal__dialog bond-duration-sim-dialog" role="dialog" aria-modal="true" aria-labelledby="bondDurationSimTitle">
@@ -2886,14 +3039,15 @@
         <div class="bond-duration-sim-layout">
           <div class="bond-duration-sim-panel">
             <div class="bond-duration-sim-fields">
-              <label>현재 채권 가격 (원)<input id="bdsPrice" type="number" min="1000" step="1000" value="10000000" /></label>
-              <label>듀레이션 (년)<input id="bdsDuration" type="number" min="0.1" max="30" step="0.1" value="7" /></label>
-              <label>금리 변화 (%p)<small>−는 금리 인하</small><input id="bdsRateChange" type="number" min="-5" max="5" step="0.1" value="-0.5" /></label>
+              <label>현재 채권 가격 (원)<small>입력 범위: 1,000~10억 원</small><input id="bdsPrice" type="number" min="1000" max="1000000000" step="1000" value="10000000" /></label>
+              <label>듀레이션 (년)<small>입력 범위: 0.1~30년</small><input id="bdsDuration" type="number" min="0.1" max="30" step="0.1" value="7" /></label>
+              <label>금리 변화 (%p)<small>입력 범위: −10~+10%p · 큰 변화일수록 근사 오차 확대</small><input id="bdsRateChange" type="number" min="-10" max="10" step="0.1" value="-0.5" /></label>
             </div>
             <div class="bond-duration-sim-results">
               <article><span>듀레이션 근사 변화율</span><strong id="bdsChangeRate">+3.50%</strong><small>−듀레이션 × 금리 변화 · 작은 금리 변동을 가정한 1차 추정</small></article>
               <article><span>예상 가격 변화액</span><strong id="bdsChangeWon">+350,000원</strong><small>이자·세금·수수료 전</small></article>
-              <article class="highlight"><span>예상 변경 가격</span><strong id="bdsNewPrice">10,350,000원</strong><small id="bdsDirection">금리가 0.50%p 내렸을 때</small></article>
+              <article class="highlight"><span>듀레이션 반영 가격</span><strong id="bdsNewPrice">10,350,000원</strong><small id="bdsDirection">금리가 0.50%p 내렸을 때</small></article>
+              <article class="convexity-highlight"><span>컨벡시티 반영 가격</span><strong id="bdsConvexityPrice">10,357,000원</strong><small id="bdsConvexityCorrection">듀레이션 가격보다 +7,000원</small></article>
             </div>
             <div class="bond-duration-sim-compare">
               <div><b>단기채 예시 · 듀레이션 2년</b><span id="bdsShortCompare">금리 −0.50%p → 약 +1.00% (+100,000원)</span></div>
@@ -2901,7 +3055,7 @@
             </div>
           </div>
           <section class="bond-duration-chart-panel">
-            <header><strong>듀레이션과 컨벡시티</strong><small>회색 점선은 듀레이션 근사, 보라색 실선은 양(+)의 컨벡시티를 반영한 교육용 곡선</small></header>
+            <header><strong>듀레이션과 컨벡시티</strong><small>회색 점선은 듀레이션 근사, 보라색 실선은 양(+)의 컨벡시티를 반영한 교육용 곡선 · 가로축은 시간이 아니라 금리 변화폭(%p)</small></header>
             <p class="bond-duration-convexity">
               <strong>쉽게 말하면</strong>
               듀레이션은 금리가 움직일 때 채권 가격이 반대 방향으로 얼마나
@@ -2909,7 +3063,7 @@
               7이면 금리 1%p 상승 시 가격이 약 7% 하락한다고 먼저 계산하며,
               반드시 7년 동안 보유해야 한다는 뜻은 아닙니다. <b>컨벡시티(Convexity)</b>는 금리가 변할 때 채권 가격의 민감도 자체가 얼마나 달라지는지, 즉 <b>가격-수익률 곡선이 얼마나 휘어져 있는지</b>를 나타내는 지표입니다. 듀레이션이 직선으로 계산한 1차 근사라면, 컨벡시티는 실제 가격 움직임이 직선이 아니라 휘어진다는 점을 보정하는 ‘곡선 보정값’입니다. 일반적인 양(+)의 컨벡시티 채권은 금리가 같은 폭으로 오르내릴 때 금리 하락에 따른 가격 상승 폭이 금리 상승에 따른 가격 하락 폭보다 조금 더 큰 경향이 있습니다. 다만 컨벡시티가 크다고 위험이 사라지는 것은 아니며, 조기상환권이 붙은 채권처럼 금리 변화에 따라 음(-)의 컨벡시티가 나타날 수도 있습니다.
             </p>
-            <div id="bondDurationChart" role="img" aria-label="금리 변화에 따른 듀레이션 근사선과 컨벡시티 채권 가격 곡선 비교 차트"></div>
+            <div id="bondDurationChart" role="img" aria-label="시간축이 아닌 금리 변화폭을 가로축으로 사용하여 듀레이션 근사선과 컨벡시티 반영 채권 가격 곡선을 비교한 차트"></div>
           </section>
         </div>
         <p class="bond-duration-sim-disclaimer"><i class="fa-solid fa-circle-info"></i> 차트의 컨벡시티 곡선은 개념을 보여 주는 계산 예시입니다. 실제 가격에는 쿠폰·만기·수익률 수준·내재옵션·신용위험·유동성이 함께 반영됩니다.</p>
@@ -3317,12 +3471,18 @@
         const changeRate = document.getElementById("bdsChangeRate");
         const changeWon = document.getElementById("bdsChangeWon");
         const newPrice = document.getElementById("bdsNewPrice");
+        const convexityPrice = document.getElementById("bdsConvexityPrice");
+        const convexityCorrection = document.getElementById("bdsConvexityCorrection");
         const direction = document.getElementById("bdsDirection");
         const durationCompare = document.getElementById("bdsDurationCompare");
         const shortCompare = document.getElementById("bdsShortCompare");
         const longCompare = document.getElementById("bdsLongCompare");
         const chartEl = document.getElementById("bondDurationChart");
-        const value = (element, minimum) => Math.max(minimum, Number(element.value) || minimum);
+        const boundedValue = (element, minimum, maximum, fallback) => {
+          const parsed = Number(element.value);
+          const value = Number.isFinite(parsed) && element.value !== "" ? parsed : fallback;
+          return Math.min(maximum, Math.max(minimum, value));
+        };
         const signed = (number, digits, unit) => `${number >= 0 ? "+" : "−"}${Math.abs(number).toFixed(digits)}${unit}`;
         const won = (number) => `${number >= 0 ? "+" : "−"}${Math.round(Math.abs(number)).toLocaleString("ko-KR")}원`;
         let chart;
@@ -3350,12 +3510,12 @@
             colors: ["#64748b", "#7c3aed"],
             stroke: { width: [2, 3], dashArray: [6, 0], curve: "smooth" },
             markers: { size: 0 },
-            xaxis: { type: "numeric", min: -range, max: range, tickAmount: 4, title: { text: "금리 변화 (%p)", style: { fontSize: "12px" } }, labels: { formatter: number => `${Number(number).toFixed(1)}%p` } },
-            yaxis: { labels: { formatter: amount => `${Math.round(amount / 10000).toLocaleString("ko-KR")}만` } },
+            xaxis: { type: "numeric", min: -range, max: range, tickAmount: 4, title: { text: "금리 변화폭 (%p) · 시간축 아님", style: { fontSize: "12px" } }, labels: { formatter: number => `${Number(number).toFixed(1)}%p` } },
+            yaxis: { title: { text: "듀레이션·컨벡시티 반영 가격 (원)", style: { fontSize: "12px" } }, labels: { formatter: amount => `${Math.round(amount / 10000).toLocaleString("ko-KR")}만` } },
             grid: { borderColor: "#e2e8f0" },
             legend: { position: "top", horizontalAlign: "left", fontSize: "12px" },
             tooltip: { x: { formatter: rate => `금리 ${Number(rate).toFixed(2)}%p` }, y: { formatter: amount => `${Math.round(amount).toLocaleString("ko-KR")}원` } },
-            annotations: { points: [{ x: rates, y: selectedPrice, marker: { size: 5, fillColor: "#7c3aed", strokeColor: "#fff", radius: 3 }, label: { text: "입력값", borderColor: "#7c3aed", style: { color: "#fff", background: "#7c3aed", fontSize: "11px" } } }] },
+            annotations: { points: [{ x: rates, y: selectedPrice, marker: { size: 5, fillColor: "#7c3aed", strokeColor: "#fff", radius: 3 }, label: { text: "컨벡시티 반영 가격", borderColor: "#7c3aed", style: { color: "#fff", background: "#7c3aed", fontSize: "11px" } } }] },
           };
           if (chart) {
             chart.updateOptions(options, false, true);
@@ -3366,12 +3526,15 @@
         }
 
         function render() {
-          const currentPrice = value(price, 1000);
-          const currentDuration = value(duration, 0.1);
-          const rates = Math.max(-5, Math.min(5, Number(rateChange.value) || 0));
+          const currentPrice = boundedValue(price, 1000, 1000000000, 10000000);
+          const currentDuration = boundedValue(duration, 0.1, 30, 7);
+          const rates = boundedValue(rateChange, -10, 10, -0.5);
           const percent = -currentDuration * rates;
           const amount = currentPrice * percent / 100;
           const after = currentPrice + amount;
+          const convexity = currentDuration * (currentDuration + 1);
+          const convexityAfter = currentPrice * (1 - currentDuration * rates / 100 + 0.5 * convexity * (rates / 100) ** 2);
+          const correctionAmount = convexityAfter - after;
           const shortPercent = -2 * rates;
           const shortAmount = currentPrice * shortPercent / 100;
           changeRate.textContent = signed(percent, 2, "%");
@@ -3379,6 +3542,8 @@
           changeWon.textContent = won(amount);
           changeWon.style.color = changeRate.style.color;
           newPrice.textContent = `${Math.round(after).toLocaleString("ko-KR")}원`;
+          convexityPrice.textContent = `${Math.round(convexityAfter).toLocaleString("ko-KR")}원`;
+          convexityCorrection.textContent = `듀레이션 가격보다 ${won(correctionAmount)}`;
           direction.textContent = rates < 0 ? `금리가 ${Math.abs(rates).toFixed(2)}%p 내렸을 때` : rates > 0 ? `금리가 ${rates.toFixed(2)}%p 올랐을 때` : "금리 변화가 없을 때";
           durationCompare.textContent = `${currentDuration.toFixed(1)}년`;
           shortCompare.textContent = `금리 ${signed(rates, 2, "%p")} → 약 ${signed(shortPercent, 2, "%")} (${won(shortAmount)})`;
@@ -3387,7 +3552,19 @@
         }
         function open(trigger) { activeTrigger = trigger; modal.hidden = false; render(); modal.querySelector(".glossary-modal__close")?.focus(); }
         function close() { if (!modal.hidden) { modal.hidden = true; activeTrigger.focus(); } }
-        [price, duration, rateChange].forEach((input) => input.addEventListener("input", render));
+        [
+          { input: price, minimum: 1000, maximum: 1000000000, fallback: 10000000 },
+          { input: duration, minimum: 0.1, maximum: 30, fallback: 7 },
+          { input: rateChange, minimum: -10, maximum: 10, fallback: -0.5 },
+        ].forEach(({ input, minimum, maximum, fallback }) => {
+          input.addEventListener("input", render);
+          const normalize = () => {
+            input.value = String(boundedValue(input, minimum, maximum, fallback));
+            render();
+          };
+          input.addEventListener("change", normalize);
+          input.addEventListener("blur", normalize);
+        });
         triggers.forEach((trigger) => trigger.addEventListener("click", () => open(trigger)));
         modal.querySelectorAll("[data-bond-duration-close]").forEach((element) => element.addEventListener("click", close));
         document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
@@ -3398,6 +3575,7 @@
         const basicProducts = document.getElementById("basicFinancialProductsLesson");
         const bondPromise = document.getElementById("bondPromiseLesson");
         const cashCowFlow = document.getElementById("cashCowFlowLesson");
+        const bondHistory = document.getElementById("bondHistoryLesson");
         const bondSavingsExample = document.getElementById("bondSavingsExampleLesson");
         const bondRate = document.getElementById("bondRateLesson");
         const bondTypes = document.getElementById("bondTypesLesson");
@@ -3405,9 +3583,11 @@
         if (basicProducts && bondPromise) basicProducts.insertAdjacentElement("afterend", bondPromise);
         if (cashCowFlow && bondSavingsExample) cashCowFlow.insertAdjacentElement("beforebegin", bondSavingsExample);
         if (bondSavingsExample && bondRate) bondSavingsExample.insertAdjacentElement("beforebegin", bondRate);
+        if (bondSavingsExample && bondHistory) bondSavingsExample.insertAdjacentElement("beforebegin", bondHistory);
         if (bondTypes && growthPotential) bondTypes.insertAdjacentElement("beforebegin", growthPotential);
       })();
     </script>
+    <script src="assets/duration-use-case-simulators.js?v=20260917"></script>
     <script src="assets/app-shell.js"></script>
     <script src="../assets/modal-fit.js?v=20260905-simulator-specific-hints"></script>
     <script src="../assets/click-logger.js?v=20260905"></script>

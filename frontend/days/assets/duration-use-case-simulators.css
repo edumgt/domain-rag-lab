@@ -1,0 +1,235 @@
+.lesson-video-link[hidden] { display: none !important; }
+
+.duration-case-modal .duration-case-dialog {
+  width: min(1140px, calc(100vw - 48px));
+  max-height: calc(100vh - 32px);
+  padding: 25px 30px;
+  overflow: auto;
+}
+
+.duration-case-dialog h2 {
+  margin: 3px 42px 7px 0;
+  color: var(--ink);
+  font-size: 27px;
+  line-height: 1.35;
+}
+
+.duration-case-intro {
+  margin: 0 0 15px;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.duration-case-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(400px, 1.05fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.duration-case-controls {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.duration-case-fields,
+.duration-case-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.duration-case-fields {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbfcff;
+}
+
+.duration-case-fields label {
+  display: grid;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.duration-case-fields label small {
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.duration-case-fields input {
+  min-width: 0;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+}
+
+.duration-case-fields input[readonly] {
+  background: #edf1f7;
+  color: #4f5d73;
+  cursor: not-allowed;
+}
+
+.duration-case-fields input:invalid,
+.bond-duration-sim-fields input:invalid {
+  border-color: #dc4c64;
+  background: #fff5f6;
+  outline: 2px solid #dc4c6422;
+}
+
+.duration-case-results article {
+  min-width: 0;
+  padding: 12px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  text-align: center;
+}
+
+.duration-case-results article.negative {
+  border-color: #f0c2d5;
+  background: #fff5f8;
+}
+
+.duration-case-results article.positive {
+  border-color: #d8ccff;
+  background: #f6f3ff;
+}
+
+.duration-case-results span,
+.duration-case-results small,
+.duration-case-results strong {
+  display: block;
+}
+
+.duration-case-results span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.duration-case-results strong {
+  margin: 5px 0;
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.duration-case-results article.negative strong { color: #b33c70; }
+.duration-case-results article.positive strong { color: #6d45d6; }
+
+.duration-case-reading {
+  padding: 12px 14px;
+  border-left: 4px solid #d05a8c;
+  border-radius: 9px;
+  background: #fff7fa;
+  color: #3e4c67;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.duration-case-reading > strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #9f315f;
+  font-size: 14px;
+}
+
+.duration-case-reading p { margin: 0 0 7px; }
+.duration-case-reading ul,
+.duration-case-reading ol { margin: 0; padding-left: 18px; }
+.duration-case-reading ol { margin-bottom: 8px; }
+.duration-case-reading li + li { margin-top: 4px; }
+
+.duration-case-reading.positive-reading {
+  border-left-color: #7c3aed;
+  background: #f8f5ff;
+}
+
+.duration-case-reading.positive-reading > strong { color: #6941c6; }
+
+.duration-case-results small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.duration-case-chart-panel {
+  min-width: 0;
+  min-height: 350px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbfcff;
+}
+
+.duration-case-chart-panel header {
+  display: grid;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.duration-case-chart-panel header strong {
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.duration-case-chart-panel header small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.duration-case-chart-panel > div {
+  height: 300px;
+}
+
+.duration-case-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+/* 세 가지 듀레이션·컨벡시티 시뮬레이터의 보조 설명 가독성 */
+.duration-case-fields label small,
+.duration-case-results small,
+.duration-case-chart-panel header small,
+.bond-duration-sim-fields label small,
+.bond-duration-sim-results small,
+.bond-duration-chart-panel header small {
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.duration-case-reading,
+.duration-case-note,
+.bond-duration-sim-disclaimer {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@media (max-width: 820px) {
+  .duration-case-modal .duration-case-dialog {
+    width: calc(100vw - 24px);
+    max-height: calc(100vh - 24px);
+    padding: 24px 20px;
+  }
+
+  .duration-case-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .duration-case-fields,
+  .duration-case-results {
+    grid-template-columns: 1fr;
+  }
+}
