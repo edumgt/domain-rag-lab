@@ -188,9 +188,47 @@
       .bollinger-sim-control { display: grid; grid-template-columns: 150px 1fr 62px; gap: 12px; align-items: center; padding: 12px; border-radius: 10px; background: #fff; }
       .bollinger-sim-control label { color: #203f7a; font-size: 15.95px; font-weight: 800; }.bollinger-sim-control input { width: 100%; accent-color: #7c3aed; }.bollinger-sim-control output { color: var(--ink); font-size: 19px; font-weight: 850; text-align: right; }
       .bollinger-sim-chart { display: block; width: 100%; height: 230px; margin-top: 13px; overflow: visible; border: 1px solid #dce5f8; border-radius: 10px; background: #fff; }
-      .bollinger-sim-chart .grid { stroke: #e3eaf7; stroke-width: 1; }.bollinger-sim-chart .axis { fill: #64748b; font-size: 13.2px; }.bollinger-sim-chart .band-area { fill: #8b5cf6; fill-opacity: .13; stroke: none; }.bollinger-sim-chart .upper, .bollinger-sim-chart .lower { fill: none; stroke: #8b5cf6; stroke-width: 2; stroke-dasharray: 5 4; }.bollinger-sim-chart .mean { fill: none; stroke: #2563eb; stroke-width: 2.5; }.bollinger-sim-chart .price { fill: none; stroke: #eb7b24; stroke-width: 3; }.bollinger-sim-chart .last-dot { fill: #eb7b24; stroke: #fff; stroke-width: 2; }.bollinger-sim-chart .line-label { font-size: 12.65px; font-weight: 900; }.bollinger-sim-chart .band-label { fill: #6d3fd1; }.bollinger-sim-chart .mean-label { fill: #1d4ed8; }.bollinger-sim-chart .price-label { fill: #c65300; }
+      .bollinger-sim-chart .grid { stroke: #e3eaf7; stroke-width: 1; }.bollinger-sim-chart .axis { fill: #64748b; font-size: 13.2px; }.bollinger-sim-chart .band-area { fill: #8b5cf6; fill-opacity: .13; stroke: none; }.bollinger-sim-chart .upper, .bollinger-sim-chart .lower { fill: none; stroke: #8b5cf6; stroke-width: 2; stroke-dasharray: 5 4; }.bollinger-sim-chart .mean { fill: none; stroke: #2563eb; stroke-width: 2.5; }.bollinger-sim-chart .price { fill: none; stroke: #eb7b24; stroke-width: 3; }.bollinger-sim-chart .last-dot { fill: #eb7b24; stroke: #fff; stroke-width: 2; }.bollinger-sim-chart .line-label { font-size: 12.65px; font-weight: 900; }.bollinger-sim-chart .band-label { fill: #6d3fd1; }.bollinger-sim-chart .mean-label { fill: #1d4ed8; }.bollinger-sim-chart .price-label { fill: #c65300; }.bollinger-sim-chart .breach-guide { stroke: #ef4444; stroke-width: 1.5; stroke-dasharray: 4 4; opacity: .7; }.bollinger-sim-chart .breach-axis { fill: #c2410c; font-weight: 900; }
       .bollinger-sim-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 13px; }.bollinger-sim-stats article { padding: 10px; border: 1px solid #dce5f8; border-radius: 9px; background: #fff; }.bollinger-sim-stats span { display: block; color: var(--muted); font-size: 13.2px; font-weight: 800; }.bollinger-sim-stats strong { display: block; margin-top: 4px; color: var(--ink); font-size: 18px; }
       .bollinger-sim-status { margin: 12px 0 0!important; padding: 10px 12px; border-left: 4px solid #7c3aed; border-radius: 8px; background: #f1edff; color: #4c357c!important; font-weight: 750; }
+      .bollinger-real { margin-top: 18px; padding-top: 18px; border-top: 1px solid #cddafb; }
+      .bollinger-real h4 { margin-bottom: 7px; }
+      .bollinger-real-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin: 12px 0; }
+      .bollinger-real-controls label { display: grid; gap: 5px; color: #405572; font-size: 14.85px; font-weight: 800; }
+      .bollinger-real-controls select { width: 100%; padding: 9px 10px; border: 1px solid #b9c9e8; border-radius: 8px; background: #fff; color: #173d72; font: inherit; }
+      .bollinger-real-chart-shell { position: relative; overflow: hidden; border: 1px solid #dce5f8; border-radius: 10px; background: #fff; }
+      .bollinger-real-chart { display: block; width: 100%; height: 320px; }
+      .bollinger-real-chart .grid { stroke: #e3eaf7; stroke-width: 1; }.bollinger-real-chart .axis { fill: #64748b; font-size: 13px; }.bollinger-real-chart .band-area { fill: #8b5cf6; fill-opacity: .13; }.bollinger-real-chart .band-edge { fill: none; stroke: #8b5cf6; stroke-width: 2; stroke-dasharray: 6 4; }.bollinger-real-chart .middle { fill: none; stroke: #2563eb; stroke-width: 2.2; }.bollinger-real-chart .close { fill: none; stroke: #eb7b24; stroke-width: 2.6; }.bollinger-real-chart .focus-line { stroke: #64748b; stroke-width: 1; stroke-dasharray: 4 4; }.bollinger-real-chart .focus-dot { fill: #eb7b24; stroke: #fff; stroke-width: 2; }
+      .bollinger-real-tooltip { position: absolute; z-index: 2; min-width: 170px; padding: 9px 11px; border: 1px solid #b9c9e8; border-radius: 8px; background: rgba(255,255,255,.96); box-shadow: 0 8px 24px rgba(31,50,88,.14); color: #334155; font-size: 13.75px; line-height: 1.55; pointer-events: none; transform: translate(10px,-50%); }
+      .bollinger-real-tooltip b, .bollinger-real-tooltip span { display: block; }.bollinger-real-tooltip b { color: #173d72; }.bollinger-real-tooltip span { white-space: nowrap; }
+      .bollinger-real-status { min-height: 24px; margin: 9px 0 0!important; color: #52647f!important; font-size: 14.85px!important; }
+      .bollinger-date-help { margin: 0 0 9px!important; padding: 10px 12px; border-left: 4px solid #2563eb; border-radius: 8px; background: #f8fbff; color: #405572!important; font-size: 14.85px!important; line-height: 1.6!important; }
+      .bollinger-multiplier-help { margin: 0 0 12px!important; padding: 10px 12px; border-radius: 8px; background: #eef5ff; color: #294c7a!important; }
+      .emh-swot-compare { margin: 18px 0 24px; overflow: hidden; border: 1px solid #cbd9f4; border-radius: 14px; background: #fff; box-shadow: 0 10px 28px rgba(37, 99, 235, .08); }
+      .emh-swot-compare > header { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; padding: 13px 16px; background: linear-gradient(110deg, #173d82, #315ff4); color: #fff; }
+      .emh-swot-compare > header span { font-size: 12.65px; font-weight: 900; letter-spacing: .1em; opacity: .82; }
+      .emh-swot-compare > header strong { font-size: 15.95px; }
+      .emh-swot-compare > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 14px; }
+      .emh-swot-compare article { position: relative; padding: 17px; border: 1px solid #d9e4f8; border-radius: 11px; }
+      .emh-swot-compare .emh-card { background: linear-gradient(145deg, #f6f9ff, #eaf1ff); }
+      .emh-swot-compare .swot-card { border-color: #cae9df; background: linear-gradient(145deg, #f7fffb, #e9f8f2); }
+      .emh-swot-compare .compare-badge { display: inline-flex; min-width: 52px; justify-content: center; padding: 4px 9px; border-radius: 999px; background: #315ff4; color: #fff; font-size: 12.65px; font-weight: 900; letter-spacing: .06em; }
+      .emh-swot-compare .swot-card .compare-badge { background: #16866a; }
+      .emh-swot-compare h4 { margin: 10px 0 5px; color: #173d72; font-size: 17.6px; }
+      .emh-swot-compare .swot-card h4 { color: #11634f; }
+      .emh-swot-compare article > p { margin: 0 0 11px!important; color: #52647f!important; font-size: 14.85px!important; line-height: 1.55!important; }
+      .emh-swot-compare ul { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+      .emh-swot-compare li { position: relative; padding-left: 18px; color: #263c60; font-size: 14.85px; font-weight: 750; line-height: 1.5; }
+      .emh-swot-compare li::before { position: absolute; top: .58em; left: 2px; width: 7px; height: 7px; border-radius: 50%; background: #315ff4; content: ""; }
+      .emh-swot-compare .swot-card li::before { background: #16866a; }
+      .bollinger-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 12px 0; }
+      .bollinger-compare-grid article { padding: 12px; border: 1px solid #dce5f8; border-radius: 9px; background: #fff; color: #405572; font-size: 14.85px; line-height: 1.55; }
+      .bollinger-compare-grid b { display: block; margin-bottom: 4px; color: #173d72; }
+      .bollinger-pair-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 12px 0; }
+      .bollinger-pair-controls .bollinger-sim-control { grid-template-columns: 110px 1fr 58px; }
+      .bollinger-pair-chart { display: block; width: 100%; height: 300px; border: 1px solid #dce5f8; border-radius: 10px; background: #fff; }
+      .bollinger-pair-chart .grid { stroke: #e3eaf7; stroke-width: 1; }.bollinger-pair-chart .divider { stroke: #b9c9e8; stroke-width: 1.5; }.bollinger-pair-chart .axis { fill: #64748b; font-size: 12.8px; }.bollinger-pair-chart .a-line { fill: none; stroke: #eb7b24; stroke-width: 2.6; }.bollinger-pair-chart .b-line { fill: none; stroke: #10a36c; stroke-width: 2.6; }.bollinger-pair-chart .gap-line { fill: none; stroke: #334155; stroke-width: 2.7; }.bollinger-pair-chart .band-area { fill: #8b5cf6; fill-opacity: .13; }.bollinger-pair-chart .band-edge { fill: none; stroke: #8b5cf6; stroke-width: 2; stroke-dasharray: 5 4; }
+      .bollinger-pair-key .a-key { background: #eb7b24; }.bollinger-pair-key .b-key { background: #10a36c; }.bollinger-pair-key .gap-key { background: #334155; }
       .sharpe-vol-steps { margin: 12px 0; padding-left: 20px; color: #405572; font-size: 15.95px; line-height: 1.7; }
       .fx-deposit-dialog { width: min(900px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }
       .fx-deposit-intro { margin: 4px 0 16px; color: var(--muted); font-size: 15.95px; line-height: 1.7; }
@@ -331,6 +369,7 @@
       .seventh-learning-assessment-dialog a { color: #315ff4; text-decoration-thickness: 2px; text-underline-offset: 3px; }
       @keyframes seventhAssessmentAurora { 0% { background-position: 0% 15%; } 50% { background-position: 55% 45%; } 100% { background-position: 100% 85%; } }
       .bias-quiz-dialog { width: min(720px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }.bias-quiz-intro, .bias-quiz-disclaimer { color: #405572; font-size: 16.748px; line-height: 1.7; }.bias-quiz-progress { display: flex; justify-content: space-between; gap: 12px; margin: 18px 0 10px; color: var(--blue); font-size: 16.748px; font-weight: 800; }.bias-quiz-progress i { flex: 1; height: 7px; margin-top: 6px; border-radius: 999px; background: #dce7fb; overflow: hidden; }.bias-quiz-progress i::after { content: ""; display: block; width: var(--bias-progress, 0%); height: 100%; background: var(--blue); transition: width .2s ease; }.bias-quiz-question { margin: 20px 0 14px; color: var(--ink); font-size: 21px; font-weight: 800; line-height: 1.5; }.bias-quiz-answers { display: grid; gap: 9px; }.bias-quiz-answer { width: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: #314562; font: 650 15.75px/1.55 inherit; text-align: left; cursor: pointer; }.bias-quiz-answer:hover, .bias-quiz-answer:focus-visible { border-color: var(--blue); background: #eef3ff; color: var(--ink); outline: none; }.bias-quiz-result { margin-top: 18px; padding: 18px; border: 1px solid #c9d9fb; border-radius: 12px; background: #f6f9ff; }.bias-quiz-result h3 { margin: 0 0 8px; color: var(--blue); font-size: 22.05px; }.bias-quiz-result p { margin: 8px 0 0; color: #405572; font-size: 16.748px; line-height: 1.7; }.bias-quiz-restart { margin-top: 16px; padding: 9px 14px; border: 1px solid var(--blue); border-radius: 999px; background: #fff; color: var(--blue); font: 800 15.225px inherit; cursor: pointer; }
+      .bias-quiz-advisor-title { display: block; margin: 0 52px 10px 0; padding: 9px 13px; border-left: 5px solid #315ff4; border-radius: 8px; background: #eaf1ff; color: #173d82; font-size: 18px; font-weight: 900; line-height: 1.45; }
       .bias-quiz-dialog { width: min(820px, calc(100vw - 40px)); }
       .bias-quiz-intro, .bias-quiz-disclaimer { font-size: 17px; }
       .bias-quiz-progress { font-size: 16.5px; }
@@ -339,6 +378,7 @@
       .bias-quiz-result h3 { font-size: 24px; }
       .bias-quiz-result p, .bias-quiz-restart { font-size: 17px; }
       @media (max-width: 640px) { .factor-sim-dialog, .fx-deposit-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .factor-sim-grid, .sharpe-symbol-grid, .sharpe-calc-grid, .sharpe-calc-grid.four, .bollinger-sim-stats, .fx-product-grid, .fx-sim-controls, .fx-sim-summary, .fx-analysis-grid, .fx-sim-breakdown, .present-value-sim { grid-template-columns: 1fr; } .bollinger-sim-control { grid-template-columns: 1fr; gap: 7px; }.bollinger-sim-control output { text-align: left; } #sharpeFourPointExplanation .sharpe-explanation { padding: 16px; } .sharpe-calc-equation { font-size: 17px; } .sharpe-calc-equation.result { font-size: 21px; } .bok-rate-modal .bok-rate-dialog { gap: 11px; width: calc(100vw - 16px) !important; max-height: calc(100vh - 16px); padding: 20px 14px 16px !important; border-radius: 15px; } .bok-rate-dialog h2 { font-size: 27px; } .bok-rate-summary { grid-template-columns: 1fr; gap: 7px; } .bok-rate-summary article { padding: 9px 12px; } .bok-rate-summary strong { font-size: 22px; } .bok-rate-controls { align-items: stretch; flex-direction: column; } .bok-rate-view-toggle { width: 100%; } .bok-rate-view-toggle button { min-width: 0; font-size: 15.4px; } .bok-rate-shock-control { grid-template-columns: auto 1fr 78px; gap: 7px; } .bok-rate-chart, .bok-rate-dialog.is-scenario .bok-rate-chart { height: 410px; min-height: 410px; padding: 8px 4px 2px; } .bok-rate-events, .bok-rate-scenario-guide { grid-template-columns: 1fr; } .bok-rate-source { display: none; } }
+      @media (max-width: 640px) { .bollinger-real-controls, .bollinger-compare-grid, .bollinger-pair-controls, .emh-swot-compare > div { grid-template-columns: 1fr; gap: 7px; } .bollinger-real-chart { height: 280px; } .bollinger-pair-controls .bollinger-sim-control { grid-template-columns: 1fr; } }
       @media (max-width: 640px) { .glossary-modal .seventh-learning-assessment-dialog { width: calc(100vw - 12px) !important; height: calc(100vh - 12px) !important; max-height: calc(100vh - 12px) !important; padding: 42px 18px 24px; border-radius: 20px; } .seventh-learning-assessment-dialog > h2 { margin-bottom: 18px; font-size: 38px; } .seventh-learning-assessment-dialog > p { padding: 16px; font-size: 16.5px; line-height: 1.65; } }
       @media (prefers-reduced-motion: reduce) { .glossary-modal .seventh-learning-assessment-dialog { animation: none; } }
     </style>
@@ -506,7 +546,7 @@
                 <section class="technology-stack-summary" aria-labelledby="indicatorTechnologyStackTitle">
                   <h3 id="indicatorTechnologyStackTitle">기술스택</h3>
                   <p>로보 어드바이저와 투자 인디케이터 프로젝트에 사용되는 기술을 역할별로 통합한 구성입니다.</p>
-                  <div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보완·보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>
+                  <div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>
                   <div class="technology-stack-table-wrap">
                     <table>
                       <thead><tr><th scope="col">종류</th><th scope="col">기능</th><th scope="col">용도</th><th scope="col">요소기술</th></tr></thead>
@@ -567,6 +607,7 @@
                       <li>팀별 예상 사업비와 실제 발생 비용은 <b>이스트소프트 보조강사</b> 및 <b>위탁교육 학원장</b>과 보전 방안을 협의합니다.</li>
                       <li>매일 <b>오전 9:00~9:15</b>에 팀별 추천 인원이 진행사항을 보고하고, 팀별 스크럼 회의를 진행합니다.</li>
                       <li>매일 퇴근 전 <b>오후 5:30~5:50</b>에 팀별 추천 인원이 진행사항, 리스크 및 명일 계획을 보고합니다.</li>
+                      <li><b>9월 30일까지</b> 팀을 구성하는데, 잔여 인력은 <b>10월 1일</b> 인원수 모자른 팀에 자동 배치됩니다.</li>
                     </ol>
                   </aside>
                   <div id="day4ProjectSchedule"></div>
@@ -1180,33 +1221,136 @@
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="자산 가치평가 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section><section class="lesson" id="randomWalkLesson"><span>12.05</span>
             <div class="lesson-content">
-              <h2>랜덤워크와 효율적 시장 가설: 퀀트가 먼저 확인하는 질문</h2>
+              <h2>랜덤워크와 효율적 시장 가설: 가격에는 정보가 어떻게 반영될까?</h2>
               <div class="lesson-body">
                 <h3>랜덤워크(Random Walk, 임의보행)란?</h3>
-                <p>랜덤워크는 다음 변화가 확률적으로 일어나며, <strong>단순한 모형에서는</strong> 각 단계의 변화가 이전 변화와 독립이라고 가정하는 수학·통계 개념입니다. 술에 취한 사람이 다음 발걸음을 어느 방향으로 내디딜지 알 수 없다는 비유가 자주 쓰입니다. 금융에서는 가격 자체보다 <strong>가격 변화율(수익률)</strong>을 이런 확률 과정으로 단순화해 살펴봅니다.</p>
+                <p>랜덤워크는 다음 변화가 확률적으로 일어나며, <strong>가장 단순한 모형에서는 각 단계의 변화가 이전 변화와 독립</strong>이라고 가정하는 수학·통계 개념입니다. 금융에서는 가격 자체보다 가격의 변화율인 <strong>수익률</strong>을 확률 과정으로 단순화해 살펴봅니다.</p>
                 <ul>
-                  <li><b>독립성 가정:</b> 가장 단순한 랜덤워크에서는 과거의 오르내림이 다음 변화의 방향을 알려 주지 않습니다. 다만 이것은 모형의 가정이며, 실제 시장의 모든 구간에 그대로 성립한다는 뜻은 아닙니다.</li>
-                  <li><b>예측의 한계:</b> 과거 가격만으로 다음 수익률을 꾸준히 맞혀 초과수익을 얻기 어렵다는 가설을 검토하게 합니다. “어떤 정보도 절대 쓸모없다”는 뜻은 아닙니다.</li>
-                  <li><b>확률분포:</b> 정규분포는 계산을 쉽게 하는 흔한 가정이지만 랜덤워크의 필수 조건은 아닙니다. 실제 수익률에는 큰 변동이 정규분포 가정보다 더 자주 나타날 수 있습니다.</li>
+                  <li><b>과거와 다음 변화:</b> 과거에 올랐다는 사실만으로 다음에도 오르거나 반드시 내린다고 예측할 수 없다고 봅니다.</li>
+                  <li><b>확률적 변화:</b> 다음 가격이 아무 원인 없이 움직인다는 뜻이 아니라, 새 정보가 언제 어떤 내용으로 나타날지 미리 알기 어렵다는 뜻에 가깝습니다.</li>
+                  <li><b>분포에 대한 오해:</b> 랜덤워크가 반드시 정규분포를 뜻하지는 않습니다. 실제 수익률에는 정규분포 가정보다 큰 변화가 더 자주 나타날 수 있습니다.</li>
                 </ul>
-                <h3>주식시장에서는 왜 중요할까요?</h3>
-                <p><button type="button" class="glossary-term" data-person="fama">유진 파마</button>의 <strong>효율적 시장 가설(EMH)</strong>은 좋은 뉴스나 나쁜 뉴스가 알려지면 많은 투자자가 바로 주문을 내기 때문에 주가도 빠르게 바뀐다는 생각입니다. 예를 들어 오전 9시에 좋은 실적이 발표되면 내가 뉴스를 읽고 매수 버튼을 누르기 전에 이미 가격이 크게 올라 있을 수 있습니다. 그래서 어제까지의 뉴스와 차트만 보고 내일 주가를 계속 맞히기는 어렵다고 설명합니다.</p>
-                <p><strong>랜덤워크</strong>는 지금까지 주가가 움직인 모양만 보고 다음 방향을 맞히기 어렵다는 뜻입니다. <strong>마팅게일</strong>은 현재 알려진 정보만으로 어느 한쪽이 계속 유리하다고 보기 어렵다는 생각입니다. 세 용어의 자세한 뜻은 다르지만, 공통적으로 <b>이미 알려진 정보에는 누구나 쉽게 얻을 수 있는 확실한 정답이 들어 있지 않다</b>고 설명합니다. 따라서 투자 규칙은 과거에 한두 번 맞았는지가 아니라, 다른 기간에도 반복되는지와 수수료를 빼고도 이익이 남는지를 확인해야 합니다.</p>
+
+                <h3>효율적 시장 가설(EMH)의 핵심</h3>
+                <p><button type="button" class="glossary-term" data-person="fama">유진 파마</button>가 체계화한 <strong>효율적 시장 가설(Efficient Market Hypothesis)</strong>은 이용 가능한 정보가 경쟁적인 거래를 거쳐 가격에 빠르게 반영된다고 보는 가설입니다. 새로운 실적이나 정책 발표처럼 예상하지 못한 정보가 나오면 투자자들의 주문과 함께 가격도 조정되므로, 이미 알려진 정보만으로 위험을 고려한 초과수익을 계속 얻기는 어렵다고 설명합니다.</p>
+                <p>여기서 <strong>“효율적”</strong>이라는 말은 시장이 항상 옳거나 가격이 기업의 정확한 가치와 언제나 같다는 뜻이 아닙니다. 현재 이용 가능한 정보 아래에서 뚜렷한 이익 기회가 발견되면 여러 참여자가 거래하고, 그 과정에서 기회가 빠르게 줄어든다는 의미입니다.</p>
+
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
-                    <caption>EMH의 정보 범위에 따른 세 가지 검토 방식</caption>
-                    <thead><tr><th scope="col">형태</th><th scope="col">가격에 반영됐다고 보는 정보</th><th scope="col">학습상 핵심 질문</th></tr></thead>
+                    <caption>랜덤워크와 효율적 시장 가설은 같은 말이 아닙니다</caption>
+                    <thead><tr><th scope="col">개념</th><th scope="col">핵심 질문</th><th scope="col">의미</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">약형 효율성<br>(Weak form)</th><td>과거 가격·수익률·거래량</td><td>차트와 과거 시계열만으로 비용 차감 뒤 지속적인 초과수익을 낼 수 있는가?</td></tr>
-                      <tr><th scope="row">준강형 효율성<br>(Semi-strong form)</th><td>과거 정보와 공개된 공시·뉴스·재무정보</td><td>공개 정보가 나온 뒤 가격에 반영되는 속도와 거래비용을 고려해도 기회가 남는가?</td></tr>
-                      <tr><th scope="row">강형 효율성<br>(Strong form)</th><td>공개·비공개 정보를 포함한 모든 정보</td><td>현실의 내부정보 접근과 법·제도 문제 때문에 매우 강한 가정입니다. 내부자거래는 불법이며 이 형태가 현실에 완벽히 성립한다고 보기는 어렵습니다.</td></tr>
+                      <tr><th scope="row">랜덤워크</th><td>연속된 가격 변화에 예측 가능한 규칙이 있는가?</td><td>가장 단순한 형태에서는 과거 가격 변화만으로 다음 방향을 예측하기 어렵다고 봅니다.</td></tr>
+                      <tr><th scope="row">효율적 시장 가설</th><td>어떤 범위의 정보가 가격에 얼마나 빠르게 반영되는가?</td><td>정보를 이용한 초과수익 가능성을 정보의 범위와 비용, 위험을 포함해 설명합니다.</td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="martingale">마팅게일</button></th><td>현재 정보 아래에서 다음 가격의 조건부 기대값은 무엇인가?</td><td>현재 정보만으로 한쪽 방향의 기대수익을 체계적으로 높이기 어렵다는 확률적 표현입니다.</td></tr>
                     </tbody>
                   </table>
                 </div>
-                <h3>퀀트에게 주는 실전 질문</h3>
-                <p>경제학자 <button type="button" class="glossary-term" data-person="malkiel">버턴 말키엘(Burton Malkiel)</button>의 비유는 여러 언론사와 교육기관이 실제 비교 행사로 만들어 보았습니다. 다만 재미를 위한 대결과 엄격하게 설계된 학술 실험은 구분해야 하며, 한 번의 결과만으로 전문가·무작위 선택·인덱스 투자 중 어느 하나가 항상 우수하다고 결론낼 수는 없습니다.</p>
 
-                <h4>1. 월스트리트저널(WSJ)의 ‘다트 대결’ — 1988~2002년</h4>
+                <h3>정보 범위에 따른 세 가지 형태</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>효율적 시장 가설의 세 가지 형태</caption>
+                    <thead><tr><th scope="col">형태</th><th scope="col">가격에 반영됐다고 보는 정보</th><th scope="col">가설이 뜻하는 바</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">약형 효율성<br>(Weak form)</th><td>과거 가격·수익률·거래량</td><td>과거 시세만 분석해 위험과 비용을 넘는 초과수익을 지속적으로 얻기 어렵다고 봅니다.</td></tr>
+                      <tr><th scope="row">준강형 효율성<br>(Semi-strong form)</th><td>공시·뉴스·재무정보를 포함한 모든 공개 정보</td><td>공개된 정보는 빠르게 가격에 반영되므로 발표 뒤 이를 이용해 지속적인 초과수익을 얻기 어렵다고 봅니다.</td></tr>
+                      <tr><th scope="row">강형 효율성<br>(Strong form)</th><td>공개·비공개 정보를 포함한 모든 정보</td><td>누구도 정보 우위로 초과수익을 얻을 수 없다는 매우 강한 주장입니다. 현실의 정보 격차와 내부자거래 사례 때문에 일반적으로 성립하기 어려운 형태로 봅니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <section class="lesson-inline-topic" aria-labelledby="emhSwotComparisonTitle">
+                  <h3 id="emhSwotComparisonTitle">효율적 시장 가설(EMH)의 세 가지 형태와 SWOT 분석</h3>
+                  <p>효율적 시장 가설(EMH, Efficient Market Hypothesis)의 세 가지 형태와 <strong>SWOT 분석</strong>은 금융·경영학에서 다루는 개념이지만, <strong>분석의 목적·대상·방법론</strong>에서 근본적인 차이가 있습니다.</p>
+
+                  <h3>1. 효율적 시장 가설(EMH)의 세 가지 형태</h3>
+                  <p>유진 파마(Eugene Fama) 교수가 제안한 효율적 시장 가설은 "주가에 시장의 정보가 얼마나 신속하고 정확하게 반영되어 있는가?"를 설명하는 재무경제학 이론입니다. 정보의 범위에 따라 3가지 형태로 나뉩니다.</p>
+                  <div class="lesson-table-wrap">
+                    <table class="lesson-table">
+                      <thead><tr><th scope="col">형태</th><th scope="col">반영되는 정보의 범위</th><th scope="col">초과 수익(알파) 창출 가능 여부</th><th scope="col">핵심 시사점</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row"><strong>약형 (Weak Form)</strong></th><td><strong>과거의 모든 거래 정보</strong><br><br>(주가 추세, 거래량 등)</td><td>• 차트 분석(기술적 분석) <strong>불가</strong><br><br>• 기업 재무제표 분석(기본적 분석) <strong>가능</strong></td><td>과거 차트 패턴만 보고 매매해서는 시장 평균을 지속적으로 이길 수 없음</td></tr>
+                        <tr><th scope="row"><strong>준강형 (Semi-Strong Form)</strong></th><td><strong>과거 정보 + 공시된 모든 정보</strong><br><br>(재무제표, 뉴스, 실적 발표 등)</td><td>• 기술적 분석 <strong>불가</strong><br><br>• 기본적 분석 <strong>불가</strong><br><br>• 미공개 내부 정보 이용 시 <strong>가능</strong></td><td>뉴스가 발표된 즉시 주가에 반영되므로, 재무제표를 분석해 저평가 주식을 찾는 노력이 무의미함</td></tr>
+                        <tr><th scope="row"><strong>강형 (Strong Form)</strong></th><td><strong>모든 정보</strong><br><br>(과거 정보 + 공공 정보 + 미공개 내부 정보)</td><td>• 모든 형태의 분석 및 정보 이용 <strong>불가</strong></td><td>내부자조차도 시장 평균을 넘어서는 초과 수익을 얻을 수 없는 완전무결한 시장</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <blockquote><strong>현실 시장의 위치:</strong> 대부분의 현대 선진국 주식 시장은 <strong>약형~준강형 효율성</strong> 사이에 위치한 것으로 평가받습니다.</blockquote>
+
+                  <h3>2. SWOT 분석이란?</h3>
+                  <p>SWOT 분석은 기업이나 프로젝트의 <strong>내부 환경과 외부 환경을 분석하여 전략을 수립</strong>하는 경영학 프레임워크입니다.</p>
+                  <ul>
+                    <li><strong>S (Strengths / 강점):</strong> 내부적 우수성 (예: 뛰어난 기술력, 강력한 브랜드)</li>
+                    <li><strong>W (Weaknesses / 약점):</strong> 내부적 한계 (예: 높은 부채 비율, 노후화된 설비)</li>
+                    <li><strong>O (Opportunities / 기회):</strong> 외부적 유리한 환경 (예: 신시장 개척, 규제 완화)</li>
+                    <li><strong>T (Threats / 위협):</strong> 외부적 불리한 환경 (예: 원자재 가격 상승, 경쟁사 등장)</li>
+                  </ul>
+
+                  <h3>3. EMH 세 형태 vs SWOT 분석의 주요 차이점</h3>
+                  <p>두 개념은 시장과 기업을 바라보는 완전히 다른 도구입니다.</p>
+                  <section class="emh-swot-compare" aria-label="효율적 시장 가설과 SWOT 분석 비교">
+                    <header><span>FRAMEWORK COMPARISON</span><strong>시장 전체를 보는 이론과 개별 기업을 보는 도구</strong></header>
+                    <div>
+                      <article class="emh-card">
+                        <span class="compare-badge">EMH</span>
+                        <h4>효율적 시장 가설</h4>
+                        <p>시장의 정보가 가격에 반영되는 과정을 봅니다.</p>
+                        <ul>
+                          <li>시장 전체의 정보 효율성</li>
+                          <li>가격 형성 메커니즘 분석</li>
+                          <li>객관적 시장 데이터·통계 활용</li>
+                        </ul>
+                      </article>
+                      <article class="swot-card">
+                        <span class="compare-badge">SWOT</span>
+                        <h4>SWOT 분석</h4>
+                        <p>기업의 내부 역량과 외부 환경을 함께 봅니다.</p>
+                        <ul>
+                          <li>개별 기업의 내·외부 환경</li>
+                          <li>전략 수립 및 의사결정</li>
+                          <li>주관적·정성적 판단 포함</li>
+                        </ul>
+                      </article>
+                    </div>
+                  </section>
+
+                  <h4>1) 분석 목적의 차이</h4>
+                  <ul>
+                    <li><strong>EMH:</strong> 투자자가 기술적/기본적 분석을 통해 <strong>시장 수익률을 초과하는 이익을 낼 수 있는가</strong>를 검증합니다.</li>
+                    <li><strong>SWOT:</strong> 개별 기업이 <strong>어떤 전략(SO, ST, WO, WT)을 세워 생존하고 성장할 것인가</strong>를 구상합니다.</li>
+                  </ul>
+
+                  <h4>2) 분석 대상 및 범위의 차이</h4>
+                  <ul>
+                    <li><strong>EMH:</strong> 자본시장(주식·채권 시장 등) <strong>전체의 가격 결정 메커니즘</strong>을 대상으로 합니다.</li>
+                    <li><strong>SWOT:</strong> 특정 <strong>개별 기업, 조직, 프로젝트, 또는 개인</strong>을 대상으로 합니다.</li>
+                  </ul>
+
+                  <h4>3) 정보 처리 관점의 차이</h4>
+                  <ul>
+                    <li><strong>EMH:</strong> 정보가 시장 주가에 "얼마나 이미 반영되어 있는가?"를 따집니다. (준강형 효율적 시장이라면 SWOT 분석으로 알아낸 정보도 이미 주가에 반영되어 있다고 봅니다.)</li>
+                    <li><strong>SWOT:</strong> 기회와 위협 등 <strong>외부 정보를 수집하여 내부 역량과 결합</strong>하는 도구로 활용합니다.</li>
+                  </ul>
+
+                  <h3>요약</h3>
+                  <ul>
+                    <li>효율적 시장 가설(EMH)은 시장 가격이 정보를 반영하는 정밀도를 기준으로 <strong>약형·준강형·강형</strong>으로 나누어 "시장을 이기는 투자 전략이 가능한가"를 따지는 <strong>금융/재무 이론</strong>입니다.</li>
+                    <li><strong>SWOT 분석</strong>은 개별 기업의 강점·약점·기회·위협을 조합해 올바른 사업 방향을 정하는 <strong>경영 전략 도구</strong>입니다.</li>
+                    <li>따라서 준강형 이상의 효율적 시장에서는 기업의 SWOT 분석 결과조차 이미 주가에 즉시 반영되므로, SWOT 분석만으로 초과 주식 수익을 얻기는 어렵다는 연결고리가 형성됩니다.</li>
+                  </ul>
+                </section>
+
+                <h3>가설은 어떻게 검증할까요?</h3>
+                <p>시장 효율성을 검증하려면 단순히 수익이 났는지만 볼 수 없습니다. 먼저 시장 위험을 감수하면 기대할 수 있는 <strong>정상 수익률</strong>을 정하고, 실제 수익률에서 이를 뺀 <strong>초과수익</strong>이 우연이나 거래비용으로 설명되지 않는지 확인해야 합니다.</p>
+                <ul>
+                  <li><b>수익률 예측 검정:</b> 과거 가격·거래량·재무지표가 미래 수익률을 반복해서 예측하는지 살펴봅니다.</li>
+                  <li><b>사건연구(Event Study):</b> 실적 발표나 합병 공시 전후에 가격이 언제, 얼마나 조정되는지 측정합니다.</li>
+                  <li><b>전문가 성과 비교:</b> 펀드나 투자자의 성과가 위험·수수료·세금을 고려한 뒤에도 기준지수를 지속적으로 웃도는지 봅니다.</li>
+                </ul>
+                <h3>무작위 종목 선택 비유가 뜻하는 것</h3>
+                <p>경제학자 <button type="button" class="glossary-term" data-person="malkiel">버턴 말키엘(Burton Malkiel)</button>은 눈을 가린 원숭이가 다트로 고른 종목도 전문가의 선택과 경쟁할 수 있다는 비유로 예측의 어려움을 설명했습니다. 이 비유는 전문가가 항상 틀리거나 무작위 선택이 언제나 우수하다는 주장이 아닙니다. 짧은 한 번의 대결은 표본이 작고 위험·분산·비용 조건도 다르므로 가설의 증거가 될 수 없습니다.</p>
+                <h4>월스트리트저널(WSJ)의 ‘다트 대결’ — 1988~2002년</h4>
                 <p>말키엘은 1973년 저서 《월가의 랜덤워크》에서 “눈을 가린 원숭이가 신문 주식면에 다트를 던져도 전문가가 고른 포트폴리오만큼 잘할 수 있다”는 비유를 제시했습니다. 이를 계기로 WSJ는 1988년부터 14년 동안 다트로 고른 종목, 전문가 추천 종목, 다우존스 산업평균지수를 비교했습니다.</p>
                 <ul>
                   <li><b>방식:</b> 실제 원숭이는 사용하지 않았습니다. WSJ 직원이 벽에 붙인 종목표에 다트를 던졌으며, 안전 문제로 눈도 가리지 않았습니다. 각 대결은 나중에 6개월 단위로 운영됐습니다.</li>
@@ -1214,20 +1358,18 @@
                   <li><b>다른 해석:</b> 후속 연구에서는 전문가 추천 종목의 위험이 더 컸고, 기사 공개 직후 매수세가 몰리는 ‘공개 효과’도 확인됐습니다. 위험과 장기 보유 방식을 반영하면 단순 평균 수익률과 다른 결과가 나왔습니다.</li>
                   <li><b>말키엘의 지적:</b> 종목이 네 개뿐이고 기간이 짧으며 공개 효과가 있으므로, 이 대결만으로 효율적 시장 가설을 검증할 수 없다고 설명했습니다.</li>
                 </ul>
-
-                <h4>2. 실제 동물을 이용한 사례</h4>
+                <h4>실제 동물을 이용한 사례</h4>
                 <ul>
                   <li><b>침팬지 ‘레이븐’ — 1999년 미국:</b> 레이븐은 133개 인터넷 관련 종목 중 10개를 다트로 골랐고, ‘MonkeyDex’라는 이름의 포트폴리오는 닷컴 호황기에 213% 상승했다고 보도됐습니다. 다만 인터넷주만을 후보로 삼은 홍보성 행사였으므로 전체 시장에서 무작위 선택의 우수성을 증명한 통제 실험은 아닙니다.</li>
                   <li><b>고양이 ‘올랜도’ — 2012년 영국:</b> Observer의 가상 투자 대결에서 올랜도는 장난감 쥐를 종목표에 던져 다섯 종목을 골랐습니다. 가상 투자금 5,000파운드는 5,542.60파운드로 늘어 약 10.9%의 수익률을 기록했고, 전문가팀의 5,176.60파운드(약 3.5%)보다 높았습니다. 학생팀은 세 팀 중 마지막이었습니다.</li>
                 </ul>
                 <p><b>확인이 필요한 국내 사례:</b> ‘2011년 LIG투자증권의 붉은털원숭이 루키와 전문가가 대결했다’는 이야기는 여러 2차 글에서 반복되지만, 대결 방식과 최종 수익률을 확인할 수 있는 신뢰도 높은 원문을 찾지 못했습니다. 원문이 확인되기 전에는 검증된 실험 결과로 단정하지 않습니다.</p>
-
                 <h4>이 사례에서 배울 점</h4>
                 <ol>
-                  <li><b>공개 정보만으로 계속 이기기는 어렵습니다.</b> 알려진 정보는 많은 투자자가 동시에 보기 때문에 가격에 빠르게 반영될 수 있습니다.</li>
-                  <li><b>비용과 비교 기준이 중요합니다.</b> 수익률만 보지 말고 위험, 매매수수료, 세금, 종목 수, 측정 기간을 같은 조건으로 비교해야 합니다.</li>
-                  <li><b>무작위 대결이 인덱스의 우위를 직접 증명하지는 않습니다.</b> 다만 소수 종목을 맞히려는 전략과 달리, 넓게 분산하고 비용을 낮추는 인덱스 투자의 장점을 생각하게 하는 사례입니다.</li>
-                  <li><b>퀀트는 우연을 다시 검사합니다.</b> 한 기간의 좋은 결과가 다른 기간·시장에서도 반복되는지, 비용을 빼고도 남는지를 확인합니다.</li>
+                  <li><b>정보 범위를 먼저 구분합니다.</b> 과거 시세, 공개 정보, 비공개 정보 중 무엇이 가격에 반영됐다는 주장인지 확인합니다.</li>
+                  <li><b>위험과 비용을 같은 기준으로 비교합니다.</b> 높은 수익이 더 큰 위험의 보상인지, 비용 차감 뒤에도 남는지 살펴봅니다.</li>
+                  <li><b>반복 가능한 증거를 요구합니다.</b> 특정 기간·시장에만 나타난 결과인지 다른 표본에서도 이어지는지 확인합니다.</li>
+                  <li><b>효율성은 정도의 문제로 봅니다.</b> 시장·시기·자산에 따라 정보가 반영되는 속도와 거래 제약은 달라질 수 있습니다.</li>
                 </ol>
               </div>
             </div>
@@ -1465,42 +1607,121 @@
                 </p>
                 <h3>252 연환산 수익률: 투자 속도를 1년 기준으로 보기</h3>
                 <p>
-                  252 연환산 수익률은 짧은 기간의 수익을 주식시장 약 1년치인
-                  252거래일 기준으로 바꿔 보는 <strong>투자 속도계</strong>입니다.
-                  시급을 연봉으로 환산하듯, 실제로 1년 동안 그 수익을 얻었다는
-                  뜻이 아니라 같은 속도가 이어진다고 가정했을 때의 비교 수치입니다.
+                  252 연환산 수익률은 며칠 또는 몇 달 동안의 수익률을 주식시장
+                  약 1년치인 252거래일 기준으로 바꿔 표시한 숫자입니다. 실제로
+                  1년 동안 얻은 수익이 아니라, <strong>서로 다른 길이의 투자 기간을
+                  1년이라는 같은 기준에서 비교하기 위한 값</strong>입니다.
+                </p>
+                <h4>왜 1년 기준으로 바꿀까요?</h4>
+                <p>
+                  투자 기간이 다르면 수익률 숫자만으로 어느 쪽의 수익이 더 빠르게
+                  발생했는지 비교하기 어렵기 때문입니다. 예를 들어 A는 3개월 동안
+                  +4%, B는 6개월 동안 +7%의 수익을 냈다고 가정해 보겠습니다.
+                  결과만 보면 7%인 B가 높지만, B는 A보다 두 배 긴 기간 동안
+                  투자한 결과입니다.
+                </p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>투자 기간이 다른 두 결과를 1년 기준으로 비교하기</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">실제 결과</th><th scope="col">단순 연환산</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">A</th><td>약 3개월(63거래일) 동안 +4%</td><td>4% × (252 ÷ 63) = <b>약 +16%</b></td></tr>
+                      <tr><th scope="row">B</th><td>약 6개월(126거래일) 동안 +7%</td><td>7% × (252 ÷ 126) = <b>약 +14%</b></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>
+                  실제 수익률은 B가 더 높지만, 기간을 같은 1년 기준으로 바꾸면
+                  A의 수익이 더 빠른 속도로 발생했다는 것을 알 수 있습니다. 다만
+                  <strong>A가 실제로 1년 뒤 16%를 벌 것이라는 예측은 아닙니다.</strong>
+                  기간이 다른 과거 결과를 같은 기준에서 비교한 값일 뿐입니다.
                 </p>
                 <p>
                   1년은 365일이지만 주식시장은 주말·공휴일에 쉬므로, 시장 성과는
                   보통 약 252거래일을 1년으로 봅니다. 단순 연환산은
                   <strong>보유기간 수익률 × (252 ÷ 보유 거래일)</strong>로 계산합니다.
                   괄호 속 <strong>252 ÷ 보유 거래일</strong>은 “지금까지의 투자 기간이
-                  1년 안에 몇 번 들어가는가”를 뜻합니다. 그 횟수만큼 같은 수익률이
-                  반복된다고 단순하게 가정하는 계산입니다.
+                  1년 안에 몇 번 들어가는가”를 뜻합니다.
+                </p>
+                <h4>16의 법칙(Rule of 16): 연 변동성을 하루 기준으로 바꾸기</h4>
+                <p>
+                  16의 법칙은 단순히 외워 만든 관습이 아니라, 변동성을 기간에 따라
+                  바꾸는 <strong>통계학의 제곱근 법칙(√T)</strong>에서 나온 간이
+                  계산법입니다. 주식시장의 1년을 약 252거래일로 보면
+                  <code>√252 ≈ 15.87</code>이고, 256거래일로 단순화하면
+                  <code>√256 = 16</code>입니다. 그래서 실무에서는 약 16을 사용해
+                  연환산 변동성과 일간 변동성을 빠르게 오갑니다.
+                </p>
+                <p class="lesson-note">
+                  <b>간이 공식:</b> 일간 변동성(%) ≈ 연환산 변동성(%) ÷ 16<br />
+                  <b>반대 계산:</b> 연환산 변동성(%) ≈ 일간 변동성(%) × 16
                 </p>
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
-                    <caption>단순 연환산, 숫자를 한 단계씩 계산해 보기</caption>
-                    <thead><tr><th scope="col">상황</th><th scope="col">① 1년치로 몇 배?</th><th scope="col">② 수익률에 곱하기</th><th scope="col">단순 연환산 결과</th></tr></thead>
+                    <caption>16의 법칙으로 연 변동성을 하루 기준으로 바꾸는 예</caption>
+                    <thead><tr><th scope="col">연환산 변동성</th><th scope="col">계산</th><th scope="col">추정 일간 변동성</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">하루(1거래일) 동안 +1%</th><td>252 ÷ 1 = <b>252배</b></td><td>+1% × 252</td><td><b>약 +252%</b></td></tr>
-                      <tr><th scope="row">126거래일 동안 +10%</th><td>252 ÷ 126 = <b>2배</b></td><td>+10% × 2</td><td><b>약 +20%</b></td></tr>
+                      <tr><th scope="row">16%</th><td>16% ÷ 16</td><td><b>약 1%</b></td></tr>
+                      <tr><th scope="row">24%</th><td>24% ÷ 16</td><td><b>약 1.5%</b></td></tr>
+                      <tr><th scope="row">32%</th><td>32% ÷ 16</td><td><b>약 2%</b></td></tr>
                     </tbody>
                   </table>
                 </div>
                 <p>
-                  예를 들어 126거래일은 주식시장 1년(252거래일)의 절반쯤입니다.
-                  그래서 그 반년 동안 +10%였다면, <strong>“같은 속도가 나머지 절반에도
-                  이어진다”</strong>고 가정하여 +10%를 두 번 더한 약 +20%로 보는 것입니다.
-                  반대로 하루 수익률은 1년치로 252번을 곱하므로 숫자가 매우 크게
-                  보일 수 있습니다.
+                  예를 들어 연환산 변동성이 16%라면 하루 변동성은 약 1%로
+                  추정합니다. VIX처럼 연율로 표시되는 변동성 지표도 하루 수준의
+                  움직임으로 대략 바꿔 볼 때 같은 방식의 암산을 활용할 수 있습니다.
+                  다만 VIX는 과거의 실제 변동성이 아니라 옵션 가격에서 계산한
+                  <strong>향후 약 30일의 기대 변동성을 연율로 표시한 지표</strong>라는
+                  차이가 있습니다.
+                </p>
+                <h4>실제 시장도 대부분 16의 법칙과 비슷할까요?</h4>
+                <p>
+                  <strong>연 변동성이 일간 변동성 × √252로 계산된 값이라면</strong>
+                  이를 다시 √252로 나누는 것은 같은 계산을 거꾸로 하는 것이므로
+                  거의 정확히 맞습니다. 그러나 이 값으로 내일의 실제 등락 폭을
+                  예측하는 것은 별개의 문제입니다. 제곱근 환산은 일별 수익률의
+                  관계가 약하고 변동성 수준이 비교적 안정적이라는 가정에 기대기
+                  때문입니다.
+                </p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>16의 법칙이 잘 맞는 경우와 차이가 커지는 경우</caption>
+                    <thead><tr><th scope="col">시장 상황</th><th scope="col">해석</th><th scope="col">주의할 점</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">조용한 평소 시장</th><td>하루에 어느 정도 흔들릴지 대략 비교하는 참고값으로 쓸 수 있습니다.</td><td>계산값과 매일 똑같이 움직이는 것은 아닙니다.</td></tr>
+                      <tr><th scope="row">큰 뉴스가 나온 날</th><td>실적 발표나 정책 변화가 있으면 계산값보다 훨씬 크게 움직일 수 있습니다.</td><td>어제 종가와 오늘 시가가 크게 벌어지는 경우도 있습니다.</td></tr>
+                      <tr><th scope="row">위기·급락장</th><td>큰 폭의 상승과 하락이 며칠 동안 연속해서 나타날 수 있습니다.</td><td>16의 법칙만 믿으면 실제 위험을 작게 볼 수 있습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>
+                  쉽게 말해 16의 법칙은 <strong>변동성의 표시 단위를 바꾸는
+                  계산</strong>입니다. 기온을 섭씨에서 화씨로 바꾼다고 실제 날씨가
+                  달라지지 않듯, 연 변동성 16%를 하루 변동성 약 1%로 바꿔도
+                  같은 위험을 다른 기간 기준으로 표현한 것뿐입니다.
                 </p>
                 <p>
-                  여기서 ‘단순’은 수익이 다음 날 다시 수익을 낳는 <strong>복리 효과를
-                  넣지 않는다</strong>는 뜻입니다. 복리 연환산은
-                  <code>(1 + 보유기간 수익률)^(252 ÷ 보유 거래일) − 1</code>처럼 별도로
-                  계산하며, 특히 짧은 기간의 수익률에서는 단순 연환산과 차이가 매우
-                  커질 수 있습니다.
+                  하루 변동성이 약 1%라는 말은 <strong>내일 반드시 1% 오르거나
+                  내린다는 뜻이 아닙니다.</strong> 평소 하루 가격이 어느 정도
+                  흔들리는지를 나타낸 참고값입니다. 조용한 날에는 거의 움직이지
+                  않을 수 있고, 큰 뉴스가 나온 날에는 1%보다 훨씬 크게 움직일 수
+                  있습니다.
+                </p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>수익률과 변동성은 서로 다른 숫자입니다</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">묻는 내용</th><th scope="col">1년 기준으로 바꿀 때</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">수익률</th><td>얼마나 벌거나 잃었나요?</td><td>단순 연환산에서는 투자 기간이 1년에 몇 번 들어가는지 계산합니다.</td></tr>
+                      <tr><th scope="row">변동성</th><td>가격이 얼마나 크게 흔들렸나요?</td><td>하루 변동성에 약 16을 곱해 연 변동성으로 표시합니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="lesson-note">
+                  <b>이것만 기억하세요:</b> 하루 변동성 약 1% ↔ 연환산 변동성 약 16%.
+                  이는 기간 표시를 바꾼 값이며, 하루 수익률이나 미래 가격을 예측한
+                  숫자가 아닙니다.
                 </p>
                 <p>
                   다만 100m를 10초에 뛰었다고 한 시간 내내 같은 속도로 달릴 수
@@ -1509,6 +1730,20 @@
                   비교하는 참고값으로만 보고, 원래 보유기간·거래 횟수·수수료와
                   세금·변동성·MDD를 함께 확인하세요.
                 </p>
+                <section id="sharpeFourPointExplanation" aria-labelledby="sharpeFormulaTitle">
+                  <h3 id="sharpeFormulaTitle">샤프 비율 계산식</h3>
+                  <p>샤프 비율은 투자 수익률만 보는 것이 아니라, 안전한 이자보다 얼마나 더 벌었는지를 가격의 흔들림으로 나누어 보는 값입니다.</p>
+                  <p class="sharpe-calc-equation result">샤프 비율 = (포트폴리오 수익률 − 무위험수익률) ÷ 변동성</p>
+                  <p>바로 위 그래프의 네 값으로 계산해 보겠습니다. 시작 100에서 마감 115가 되었으므로 수익률은 15%이고, 세 구간 수익률의 표본 표준편차인 변동성은 약 31.5%입니다. 그래프에는 무위험수익률이 제시되지 않았으므로 이 계산에서만 같은 기간의 무위험수익률을 0%로 가정합니다.</p>
+                  <div class="sharpe-calc-grid four">
+                    <article><span>포트폴리오 수익률</span><strong>15%</strong><small>(115 − 100) ÷ 100</small></article>
+                    <article><span>무위험수익률</span><strong>0%</strong><small>그래프에 값이 없어 0%로 가정</small></article>
+                    <article><span>변동성</span><strong>31.5%</strong><small>위에서 계산한 세 구간 수익률의 표본 표준편차</small></article>
+                    <article><span>샤프 비율</span><strong>약 0.48</strong><small>(15% − 0%) ÷ 31.5%</small></article>
+                  </div>
+                  <p class="sharpe-explanation"><b>읽는 법:</b> 이 투자는 31.5%만큼 흔들리면서 15%의 수익을 내 샤프 비율이 약 0.48입니다. 같은 기간에 다른 투자가 똑같이 31.5%만큼 흔들렸지만 수익률은 10%였다면 샤프 비율은 약 0.32입니다. 이 경우 0.48인 첫 번째 투자가 같은 흔들림으로 더 높은 수익을 냈다고 비교할 수 있습니다. 실제 계산에서는 수익률·무위험수익률·변동성의 기간을 반드시 같게 맞춰야 합니다.</p>
+                  <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="sharpeSimTrigger"><i class="fa-solid fa-calculator"></i> 샤프 비율 비교 계산기</button><small>두 포트폴리오의 수익률·변동성과 무위험수익률을 바꿔 직접 비교해 보세요.</small></p>
+                </section>
               </div>
             </div>
             <button
@@ -1517,6 +1752,21 @@
               data-lesson-toggle
               aria-expanded="true"
               aria-label="위험을 읽는 네 가지 숫자 내용 접기"
+              title="내용 접기"
+            >
+              <span aria-hidden="true">⌃</span>
+            </button>
+          </section><section class="lesson" id="blackSwanLesson"><span>28</span>
+            <div class="lesson-content">
+              <h2>블랙 스완: 평소 모형 밖의 큰 충격에 대비하기</h2>
+              <div class="lesson-body"><p><strong>블랙 스완(Black Swan)</strong>은 평소의 경험과 통상적인 예측 모형이 놓치기 쉬운데, 발생하면 시장과 사회에 매우 큰 영향을 주는 사건을 가리키는 비유입니다. 나심 니콜라스 탈레브가 2007년 책 《블랙 스완》에서 널리 알렸고, 오스트레일리아에서 검은 백조가 발견되어 기존 상식이 깨진 일에서 이름을 가져왔습니다.</p><p>핵심은 <strong>① 기대 밖의 예외적 사건 ② 매우 큰 파급효과 ③ 사건 뒤의 사후 합리화</strong>입니다. 9·11 테러, 2008년 글로벌 금융위기, 2020년 코로나19 팬데믹은 큰 충격 사례로 자주 언급되지만, 엄밀히 블랙 스완인지에는 견해 차이가 있습니다.</p><p><strong>중요한 것은 사건을 정확히 맞히는 것이 아니라 견디는 힘을 만드는 것입니다.</strong> 손실 한도·분산·유동성 확보·과도한 레버리지 제한·스트레스 시나리오를 활용합니다. 회색 코뿔소는 눈앞의 위험을 무시하는 경우, 하얀 코끼리는 비용은 크지만 효용이 낮아 부담이 되는 자산·사업을 비유합니다.</p><p>블랙 스완은 ‘희귀한 충격’이라는 관점이고, <strong>레밍 효과</strong>는 평소에도 군중을 따라가며 위험을 키울 수 있는 행동이라는 점에서 다릅니다. 둘 다 한 사건의 방향을 예언하기보다, <strong>한 자산·한 시나리오에 과도하게 의존하지 않는지</strong> 점검하게 해 주는 경고로 활용할 수 있습니다.</p></div>
+            </div>
+            <button
+              class="lesson-toggle"
+              type="button"
+              data-lesson-toggle
+              aria-expanded="true"
+              aria-label="블랙 스완: 평소 모형 밖의 큰 충격에 대비하기 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -1552,20 +1802,6 @@
                   이용해 경기와 물가가 달라져도 특정 자산에만 지나치게 의존하지
                   않도록 구성한 방식입니다.
                 </p>
-                <h3>개인용 예시와 실제 운용의 차이</h3>
-                <p>
-                  개인용 올웨더는 보통 100만 원을 투자한다고 가정해
-                  <strong>주식 30만 원, 장기국채 40만 원, 중기국채 15만 원,
-                  금 7만 5천 원, 원자재 7만 5천 원</strong>으로 나누는 쉬운
-                  예시입니다. 여러 자산에 돈을 나누는 원리를 배우기 위한
-                  비율이며, 전문 투자회사인 브리지워터가 실제로 운용하는
-                  상품과 똑같지는 않습니다.
-                </p>
-                <ul>
-                  <li><strong>개인용 예시:</strong> 정해진 비율대로 일반적인 주식·채권·금 상품을 사고, 보통 빌린 돈을 사용하지 않습니다.</li>
-                  <li><strong>실제 기관 운용:</strong> 시장이 변하면 자산별 위험을 다시 계산해 투자 비율을 바꿉니다.</li>
-                  <li><strong>사용하는 상품:</strong> 여러 나라의 채권과 원자재 선물 등 개인이 직접 다루기 어려운 상품도 포함할 수 있습니다.</li>
-                </ul>
                 <h3>그대로 따라 해도 될까요?</h3>
                 <p>
                   위 비율은 설명을 위한 예시이므로 숫자를 그대로 따라야 하는
@@ -1607,10 +1843,6 @@
                   여부·한도는 상품과 은행에 따라 다르므로 가입 전 확인이
                   필요합니다.
                 </p>
-                <p class="lesson-video-cta">
-                  <button type="button" class="lesson-video-link" id="fxDepositModalTrigger"><i class="fa-solid fa-building-columns"></i> 실제 외화예금 상품·환율 변동 보기</button>
-                  <small>외화예금의 차이를 살펴보고, 환율·달러 자산 수익률(외화예금 이자 등)·환전비용을 바꿔 최종 손익을 분석하세요.</small>
-                </p>
                 <h3>환율은 달러 자산의 원화 수익률을 어떻게 바꿀까요?</h3>
                 <p>
                   한국 투자자에게 달러 자산의 성과는 <strong>달러 자체의 수익률과
@@ -1645,6 +1877,10 @@
                   목표 비중과 점검 주기를 먼저 정하고 그 규칙에 따라 사고파는
                   과정이 필요하며, 그렇지 않으면 환율을 예측하는 개별 거래와
                   다르지 않습니다.
+                </p>
+                <p class="lesson-video-cta">
+                  <button type="button" class="lesson-video-link" id="fxDepositModalTrigger"><i class="fa-solid fa-building-columns"></i> 실제 외화예금 상품·환율 변동 보기</button>
+                  <small>외화예금의 차이를 살펴보고, 환율·달러 자산 수익률(외화예금 이자 등)·환전비용을 바꿔 최종 손익을 분석하세요.</small>
                 </p>
               </div>
             </div>
@@ -1681,42 +1917,93 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>21</span>
-            <div class="lesson-content">
-              <h2>에드워드 소프 교수: 확률과 검증을 시장에 적용한 선구자</h2>
-              <div class="lesson-body"><p>에드워드 O. 소프(Edward O. Thorp) 교수는 수학과 확률을 활용해 블랙잭을 분석한 뒤, 그 방법을 금융시장 연구로 확장한 수학자·금융 연구자입니다. 그는 카드 게임과 시장 모두에서 직감보다 관찰 가능한 정보, 확률, 반복 가능한 규칙을 중시했습니다.</p><p>소프 교수는 옵션 가격과 시장의 가격 차이를 분석하는 방식 등 초기 정량투자의 발전에 영향을 주었습니다. 그의 사례는 과거의 성공 공식을 그대로 따라 하자는 뜻이 아니라, 투자 아이디어도 데이터와 가정으로 검증하고 위험을 제한해야 한다는 태도를 보여 줍니다.</p><p>과거 성과나 유명 인물의 방법은 미래 수익을 보장하지 않습니다. 특히 실제 시장에서는 거래비용, 유동성 부족, 모델의 오류와 예상 밖 사건이 생길 수 있으므로, 전략을 적용하기 전에는 작은 가정부터 검증하고 손실 한도를 정해야 합니다.</p></div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="에드워드 소프 교수: 확률과 검증을 시장에 적용한 선구자 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
           </section><section class="lesson"><span>22</span>
             <div class="lesson-content">
               <h2>벰버거의 페어 트레이딩: 함께 움직이던 두 가격의 간격 보기</h2>
               <div class="lesson-body"><p><strong>페어 트레이딩(pair trading)</strong>은 비슷한 업종·사업 구조처럼 과거에 함께 움직이는 경향이 있었던 두 자산의 가격 간격이 일시적으로 벌어졌을 때, <strong>비싸진 쪽은 매도(숏)하고 싼 쪽은 매수</strong>해 간격이 다시 좁아지는지를 보는 통계적 차익거래 접근입니다. 1980년대 모건스탠리의 제리(제럴드) 벰버거가 개척한 방식으로 널리 알려져 있습니다.</p><h3>볼린저 밴드와 페어 트레이딩의 공통점</h3><p><b>볼린저 밴드</b>는 한 종목의 가격이 평소 움직이던 범위를 차트에 표시합니다. 예를 들어 최근 가격이 주로 9,500원에서 10,500원 사이였다가 오늘 10,800원이 되었다면, “평소보다 많이 올랐다”는 사실을 쉽게 알아볼 수 있습니다. 그렇다고 내일 반드시 떨어진다는 뜻은 아닙니다. <b>페어 트레이딩</b>은 한 종목의 가격 대신 두 종목 사이의 간격을 봅니다. 평소 두 주식의 가격 차이가 2,000원 정도였는데 갑자기 5,000원으로 벌어졌다면, 그 간격이 다시 줄어드는지를 살펴보는 방식입니다.</p>
+                <h3>20일 설정과 5일 설정은 무엇이 다를까요?</h3>
+                <p>볼린저 밴드의 표준 기본값은 <strong>20기간 이동평균과 표준편차 승수 2.0</strong>입니다. 일봉에서는 약 한 달의 거래일인 20일 종가 평균이 중간선이 됩니다. 5일 설정은 최근 한 주의 가격에 더 빠르게 반응하는 초단기 예시이지만, 밴드 모양과 이탈도 더 자주 바뀔 수 있습니다.</p>
+                <h4>‘20기간·승수 2.0’을 쉽게 풀면</h4>
+                <ul>
+                  <li><b>20기간:</b> 최근 가격 20개를 사용한다는 뜻입니다. 일봉 차트에서는 최근 20거래일, 1시간봉에서는 최근 20시간봉입니다.</li>
+                  <li><b>20기간 이동평균:</b> 최근 가격 20개의 평균입니다. 새 가격이 들어오면 가장 오래된 가격을 빼고 다시 평균을 내므로 선이 계속 이동합니다. 이 선이 볼린저 밴드의 가운데 선입니다.</li>
+                  <li><b>표준편차 승수 2.0:</b> 가격이 평균에서 평소 얼마나 떨어져 움직였는지를 나타내는 표준편차에 2를 곱해 밴드의 폭을 정한다는 뜻입니다. <b>2%라는 뜻은 아닙니다.</b></li>
+                </ul>
+                <p class="lesson-note"><b>숫자 예시:</b> 최근 20개 가격의 평균이 100이고 표준편차가 3이라면, 중간선은 100입니다. 상단 밴드는 <code>100 + (3 × 2.0) = 106</code>, 하단 밴드는 <code>100 − (3 × 2.0) = 94</code>가 됩니다. 즉, 평균 100을 중심으로 위아래에 6만큼 떨어진 띠를 그리는 것입니다.</p>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <caption>20일 설정과 5일 설정 비교</caption>
+                    <thead><tr><th scope="col">구분</th><th scope="col">20일 설정(표준)</th><th scope="col">5일 설정(초단기)</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">주요 용도</th><td>단기~중기 흐름을 비교하는 기본 기준</td><td>최근 며칠의 빠른 변화를 관찰하는 예시</td></tr>
+                      <tr><th scope="row">장점</th><td>짧은 잡음에 덜 민감하고 흐름이 비교적 안정적</td><td>가격 변화가 평균과 밴드에 빠르게 반영됨</td></tr>
+                      <tr><th scope="row">주의점</th><td>갑작스러운 변화에 반응이 늦을 수 있음</td><td>밴드 접촉·이탈이 잦고 결과가 쉽게 뒤바뀔 수 있음</td></tr>
+                      <tr><th scope="row">승수 예시</th><td>2.0</td><td>1.5~1.9도 비교 가능하며 정해진 정답은 없음</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="lesson-note"><b>5일 설정 주의:</b> 기간을 줄이면 밴드가 최근 가격에 민감해집니다. 승수를 낮추면 밴드가 좁아지므로 이탈 자체는 더 자주 발생할 수 있으며, 가짜 신호를 자동으로 줄여 주지는 않습니다. 20일 밴드·거래량·추세 등을 함께 확인해야 합니다. 존 볼린저의 공식 안내는 20기간·2.0을 기본값으로 제시하고, 기간을 10으로 줄이는 예에서는 1.9처럼 승수도 낮추는 원칙을 설명합니다. <a href="https://www.bollingerbands.com/bollinger-band-rules" target="_blank" rel="noopener noreferrer">존 볼린저 공식 사용 지침</a></p>
                 <section class="bollinger-sim" id="bollingerSimulator" aria-labelledby="bollingerSimulatorTitle">
-                  <h4 id="bollingerSimulatorTitle">아주 쉬운 볼린저 밴드 시뮬레이터</h4>
-                  <p class="bollinger-sim-why"><b>그래프에서 ‘밴드’는 어디일까요?</b> 위쪽의 보라색 점선인 <b>상단 밴드</b>부터 아래쪽의 보라색 점선인 <b>하단 밴드</b>까지, 연한 보라색으로 칠해진 면 전체가 밴드입니다. 두 점선은 띠의 위·아래 테두리이고 파란색 선은 띠의 한가운데를 지나는 최근 5일 평균선입니다. 주황색 선은 실제 가격이며 밴드의 테두리가 아닙니다. 같은 날짜에서 위·아래 점선의 세로 간격이 좁으면 직전 가격들이 비슷했다는 뜻이고, 간격이 넓으면 가격이 크게 흔들렸다는 뜻입니다. 그래프 왼쪽 초반에 밴드가 없는 것은 직전 5개 가격이 아직 모이지 않아 계산할 수 없기 때문입니다.</p>
+                  <h4 id="bollingerSimulatorTitle">한 종목을 보는 볼린저 밴드 시뮬레이터</h4>
+                  <p class="bollinger-sim-why"><b>그래프에서 ‘밴드’는 어디일까요?</b> 위쪽의 보라색 점선인 <b>상단 밴드</b>부터 아래쪽의 보라색 점선인 <b>하단 밴드</b>까지, 연한 보라색으로 칠해진 면 전체가 밴드입니다. 두 점선은 띠의 위·아래 테두리이고 파란색 선은 띠의 한가운데를 지나는 선택 기간의 이동평균선입니다. 주황색 선은 실제 가격이며 밴드의 테두리가 아닙니다. 같은 날짜에서 위·아래 점선의 세로 간격이 좁으면 직전 가격들이 비슷했다는 뜻이고, 간격이 넓으면 가격이 크게 흔들렸다는 뜻입니다.</p>
                   <ol class="bollinger-sim-guide" aria-label="볼린저 밴드 시뮬레이터 사용법">
-                    <li><b>버튼을 먼저 눌러 보세요.</b> ‘평균 근처’, ‘상단 밖’, ‘하단 밖’ 중 하나를 고르면 대표 상황을 바로 볼 수 있습니다.</li>
-                    <li><b>마지막 가격 막대를 움직여 보세요.</b> 주황색 가격선의 마지막 점이 움직입니다. 오늘 가격을 직전 5개 가격으로 만든 밴드와 비교해, 밴드 안인지 밖인지 확인할 수 있습니다.</li>
-                    <li><b>네 요소를 비교하세요.</b> 주황색은 실제 가격, 파란색은 직전 5일 평균, 위·아래 보라색 점선은 밴드의 경계, 두 점선 사이의 연보라색 면은 밴드 영역입니다. 아래 결과 문장이 오늘 가격의 위치를 알려 줍니다.</li>
+                    <li><b>버튼을 먼저 눌러 보세요.</b> 낮은 가격·평균 근처·높은 가격을 고르면 설정에 따라 밴드 안팎이 어떻게 달라지는지 바로 볼 수 있습니다.</li>
+                    <li><b>마지막 가격 막대를 움직여 보세요.</b> 주황색 가격선의 마지막 점이 움직입니다. 오늘 가격을 선택한 기간의 과거 가격으로 만든 밴드와 비교해, 밴드 안인지 밖인지 확인할 수 있습니다.</li>
+                    <li><b>네 요소를 비교하세요.</b> 주황색은 실제 가격, 파란색은 이동평균, 위·아래 보라색 점선은 밴드의 경계, 두 점선 사이의 연보라색 면은 밴드 영역입니다. 아래 결과 문장이 오늘 가격의 위치를 알려 줍니다.</li>
                   </ol>
                   <p class="bollinger-sim-caution"><b>읽는 법:</b> 밴드 안이면 최근 범위 안, 위쪽 밖이면 평소보다 많이 오른 상태, 아래쪽 밖이면 평소보다 많이 내린 상태입니다. 밴드 밖에 있다는 이유만으로 바로 사고팔아야 한다는 뜻은 아닙니다.</p>
-                  <div class="bollinger-sim-presets" aria-label="마지막 가격 빠른 선택"><button type="button" data-bollinger-price="94">하단 밖 · 94</button><button type="button" data-bollinger-price="100">평균 근처 · 100</button><button type="button" data-bollinger-price="106">상단 근처 · 106</button><button type="button" data-bollinger-price="112">상단 밖 · 112</button></div>
+                  <div class="bollinger-real-controls">
+                    <label for="bollingerSimWindow">이동평균 계산 기간<select id="bollingerSimWindow"><option value="5">5일 · 초단기</option><option value="20" selected>20일 · 표준</option></select></label>
+                    <label for="bollingerSimMultiplier">표준편차 승수<select id="bollingerSimMultiplier"><option value="1.5">1.5</option><option value="1.8">1.8</option><option value="1.9">1.9</option><option value="2" selected>2.0 · 표준</option></select></label>
+                  </div>
+                  <div class="bollinger-sim-presets" aria-label="마지막 가격 빠른 선택"><button type="button" data-bollinger-price="94">낮은 가격 · 94</button><button type="button" data-bollinger-price="100">평균 근처 · 100</button><button type="button" data-bollinger-price="102">평균 위 · 102</button><button type="button" data-bollinger-price="112">높은 가격 · 112</button></div>
                   <div class="bollinger-sim-control"><label for="bollingerLastPrice">마지막 가격을 바꿔 보기</label><input id="bollingerLastPrice" type="range" min="90" max="115" step="1" value="101" /><output id="bollingerLastPriceOutput" for="bollingerLastPrice">101</output></div>
-                  <div class="bollinger-sim-line-key" aria-label="볼린저 밴드 차트 선 설명"><span><i class="price-key"></i>주황 실선 · 실제 가격</span><span><i class="mean-key"></i>파랑 실선 · 직전 5일 평균</span><span><i class="edge-key"></i>보라 점선 · 상단/하단 경계</span><span><i class="area-key"></i>연보라 면 · 밴드 전체</span></div>
-                  <svg class="bollinger-sim-chart" id="bollingerSimChart" viewBox="0 0 720 230" role="img" aria-label="마지막 가격을 직전 5개 가격의 이동평균선과 볼린저 밴드에 비교하는 교육용 차트"></svg>
+                  <div class="bollinger-sim-line-key" aria-label="볼린저 밴드 차트 선 설명"><span><i class="price-key"></i>주황 실선 · 실제 가격</span><span><i class="mean-key"></i>파랑 실선 · 이동평균</span><span><i class="edge-key"></i>보라 점선 · 상단/하단 경계</span><span><i class="area-key"></i>연보라 면 · 밴드 전체</span></div>
+                  <svg class="bollinger-sim-chart" id="bollingerSimChart" viewBox="0 0 720 230" role="img" aria-label="마지막 가격을 선택 기간의 이동평균선과 볼린저 밴드에 비교하는 교육용 차트"></svg>
                   <div class="bollinger-sim-stats">
-                    <article><span>마지막 가격</span><strong id="bollingerPrice">101</strong></article><article><span>최근 5일 평균</span><strong id="bollingerMean">—</strong></article><article><span>상단 밴드</span><strong id="bollingerUpper">—</strong></article><article><span>하단 밴드</span><strong id="bollingerLower">—</strong></article>
+                    <article><span>마지막 가격</span><strong id="bollingerPrice">101</strong></article><article><span id="bollingerMeanLabel">20일 평균</span><strong id="bollingerMean">—</strong></article><article><span>상단 밴드</span><strong id="bollingerUpper">—</strong></article><article><span>하단 밴드</span><strong id="bollingerLower">—</strong></article>
                   </div>
                   <p class="bollinger-sim-status" id="bollingerStatus" aria-live="polite">계산 중</p>
+                  <div class="bollinger-real" id="bollingerRealSimulator" aria-labelledby="bollingerRealTitle">
+                    <h4 id="bollingerRealTitle">실제 KOSPI 200 차트에 볼린저 밴드 적용하기</h4>
+                    <p>실제 일별 종가에 이동평균과 상단·하단 밴드를 겹쳐 봅니다. 기간과 표준편차 배수를 바꾸면 밴드의 시작점과 폭이 어떻게 달라지는지 확인할 수 있습니다.</p>
+                    <div class="bollinger-real-controls">
+                      <label for="bollingerRealRange">차트 조회 범위(달력일)<select id="bollingerRealRange"><option value="90">최근 3개월</option><option value="180" selected>최근 6개월</option></select></label>
+                      <label for="bollingerRealWindow">이동평균 계산 기간(거래일)<select id="bollingerRealWindow"><option value="5">5일 · 초단기</option><option value="10">10일</option><option value="20" selected>20일 · 표준</option><option value="30">30일</option></select></label>
+                      <label for="bollingerRealMultiplier">표준편차 승수<select id="bollingerRealMultiplier"><option value="1">±1.0σ</option><option value="1.5">±1.5σ</option><option value="1.8">±1.8σ</option><option value="1.9">±1.9σ</option><option value="2" selected>±2.0σ · 표준</option><option value="3">±3.0σ</option></select></label>
+                    </div>
+                    <p class="bollinger-date-help"><b>두 기간은 역할이 다릅니다.</b> ‘최근 6개월’은 화면에 보여 줄 차트 범위이고, ‘20일’은 차트의 각 날짜에서 평균을 계산할 거래일 수입니다. 차트 시작일 이전의 종가도 계산에만 사용하므로 이동평균과 밴드는 차트 첫 표시일부터 날짜에 맞춰 나타납니다.</p>
+                    <p class="bollinger-multiplier-help" id="bollingerMultiplierHelp"><b>표준편차 배수는 밴드의 폭입니다.</b> 이동평균을 도로의 중앙선, 표준편차 1개를 차선 한 칸이라고 생각해 보세요. ±2σ는 중앙선에서 위·아래로 두 칸 떨어진 곳에 경계를 긋는다는 뜻입니다.</p>
+                    <div class="bollinger-sim-line-key" aria-label="실제 볼린저 밴드 차트 선 설명"><span><i class="price-key"></i>주황 실선 · 종가</span><span><i class="mean-key"></i>파랑 실선 · 이동평균</span><span><i class="edge-key"></i>보라 점선 · 상단/하단 밴드</span><span><i class="area-key"></i>연보라 면 · 밴드 영역</span></div>
+                    <div class="bollinger-real-chart-shell">
+                      <svg class="bollinger-real-chart" id="bollingerRealChart" viewBox="0 0 900 320" preserveAspectRatio="none" role="img" aria-label="실제 KOSPI 200 일별 종가와 볼린저 밴드 차트"></svg>
+                      <div class="bollinger-real-tooltip" id="bollingerRealTooltip" role="status" hidden></div>
+                    </div>
+                    <div class="bollinger-sim-stats">
+                      <article><span>최근 종가</span><strong id="bollingerRealClose">—</strong></article><article><span>이동평균</span><strong id="bollingerRealMiddle">—</strong></article><article><span>상단 밴드</span><strong id="bollingerRealUpper">—</strong></article><article><span>하단 밴드</span><strong id="bollingerRealLower">—</strong></article>
+                    </div>
+                    <p class="bollinger-real-status" id="bollingerRealStatus" aria-live="polite">실제 데이터를 불러오는 중입니다.</p>
+                    <p class="bollinger-sim-caution"><b>주의:</b> 일별 종가 기반의 교육용 차트이며 실시간 시세가 아닙니다. 밴드 밖으로 나갔다는 사실만으로 반전이나 매매 시점을 단정할 수 없습니다.</p>
+                  </div>
+                  <div class="bollinger-real" id="bollingerPairSimulator" aria-labelledby="bollingerPairTitle">
+                    <h4 id="bollingerPairTitle">한 종목 밴드와 두 종목 간격은 무엇이 다를까요?</h4>
+                    <p>위의 한 종목 차트는 가격이 <b>자기 과거 평균</b>에서 얼마나 벗어났는지 봅니다. 페어 트레이딩은 A와 B 두 종목을 고른 뒤, 두 가격을 그대로 합치는 것이 아니라 <b>A 가격 − B 가격처럼 둘 사이의 간격</b>을 하나의 선으로 만들어 그 간격이 평소 범위에서 벗어났는지 봅니다.</p>
+                    <div class="bollinger-compare-grid">
+                      <article><b>한 종목 볼린저 밴드</b>한 종목 가격 ↔ 그 종목의 이동평균을 비교합니다. “A가 자기 평소 가격보다 많이 움직였나?”를 묻습니다.</article>
+                      <article><b>두 종목 페어 트레이딩</b>A와 B의 가격 간격 ↔ 평소 간격을 비교합니다. “두 종목 사이가 평소보다 많이 벌어졌나?”를 묻습니다.</article>
+                    </div>
+                    <div class="bollinger-pair-controls">
+                      <div class="bollinger-sim-control"><label for="bollingerPairAPrice">A 마지막 가격</label><input id="bollingerPairAPrice" type="range" min="92" max="115" step="1" value="108" /><output id="bollingerPairAOutput" for="bollingerPairAPrice">108</output></div>
+                      <div class="bollinger-sim-control"><label for="bollingerPairBPrice">B 마지막 가격</label><input id="bollingerPairBPrice" type="range" min="92" max="115" step="1" value="100" /><output id="bollingerPairBOutput" for="bollingerPairBPrice">100</output></div>
+                    </div>
+                    <div class="bollinger-sim-line-key bollinger-pair-key" aria-label="두 종목 간격 차트 선 설명"><span><i class="a-key"></i>주황 · A 가격</span><span><i class="b-key"></i>초록 · B 가격</span><span><i class="gap-key"></i>검정 · A−B 간격</span><span><i class="edge-key"></i>보라 점선 · 간격 밴드</span></div>
+                    <svg class="bollinger-pair-chart" id="bollingerPairChart" viewBox="0 0 720 300" role="img" aria-label="A와 B 두 종목의 가격선과 두 가격 간격의 볼린저 밴드 비교 차트"></svg>
+                    <div class="bollinger-sim-stats">
+                      <article><span>A 마지막 가격</span><strong id="bollingerPairAStat">108</strong></article><article><span>B 마지막 가격</span><strong id="bollingerPairBStat">100</strong></article><article><span>현재 A−B 간격</span><strong id="bollingerPairGap">8</strong></article><article><span>평소 5일 간격</span><strong id="bollingerPairMean">—</strong></article>
+                    </div>
+                    <p class="bollinger-sim-status" id="bollingerPairStatus" aria-live="polite">계산 중</p>
+                    <p class="bollinger-sim-caution"><b>학습용 단순화:</b> 여기서는 차이를 쉽게 보여 주려고 A−B를 사용합니다. 실제 페어 트레이딩에서는 두 종목의 가격 수준과 변동성이 다르므로 수익률로 정규화하거나 헤지 비율을 적용한 스프레드를 검증합니다.</p>
+                  </div>
                 </section>
                 <p><b>숫자로 보면 간단합니다.</b> 평소 비슷하게 움직이던 A와 B가 모두 100원이었는데 A만 110원으로 올랐다고 가정합니다. A는 110원에 빌려서 팔고, 상대적으로 싼 B는 100원에 삽니다. 나중에 둘 다 105원이 되면 A는 5원, B도 5원의 이익이 생겨 합계 10원이 됩니다. 실제로는 여기서 수수료와 주식을 빌리는 비용 등을 빼야 합니다.</p><p><b>진행 순서는 네 단계입니다.</b> ① 같은 업종처럼 평소 함께 움직이는 두 종목을 고릅니다. ② 두 가격이 평소보다 크게 벌어졌는지 봅니다. ③ 비싸 보이는 종목은 팔고 싼 종목은 삽니다. ④ 가격 차이가 다시 줄면 두 거래를 모두 끝냅니다. 예상과 달리 차이가 계속 커지면 미리 정한 손실 금액에서 거래를 중단합니다.</p><p><b>두 가격이 반드시 다시 만나는 것은 아닙니다.</b> A가 110원에서 130원으로 더 오르고 B가 100원에서 90원으로 내리면, A에서 20원과 B에서 10원을 잃어 합계 30원의 손실이 생깁니다. 기업 실적이나 산업 환경이 달라지면 과거에 함께 움직이던 관계가 깨질 수 있습니다. 따라서 이 방법은 시장 전체의 상승·하락 영향을 줄이려는 방법일 뿐, 손실이 없는 투자는 아닙니다.</p></div>
             </div>
@@ -1756,7 +2043,7 @@
             </button>
           </section><section class="lesson" id="quantFurtherReadingLesson"><span>33</span>
             <div class="lesson-content">
-              <h2>더 알아보기: 퀀트 역사를 만든 인물·회사·매매기법</h2>
+              <h2>퀀트 역사를 만든 인물·회사·매매기법</h2>
               <div class="lesson-body">
                 <p>
                   앞서 본 에드워드 소프·벰버거·제임스 사이먼스 외에도 퀀트
@@ -1824,7 +2111,7 @@
               type="button"
               data-lesson-toggle
               aria-expanded="true"
-              aria-label="더 알아보기: 퀀트 역사를 만든 인물·회사·매매기법 내용 접기"
+              aria-label="퀀트 역사를 만든 인물·회사·매매기법 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -1920,21 +2207,6 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="선택과 경쟁 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson" id="blackSwanLesson"><span>28</span>
-            <div class="lesson-content">
-              <h2>블랙 스완: 평소 모형 밖의 큰 충격에 대비하기</h2>
-              <div class="lesson-body"><p><strong>블랙 스완(Black Swan)</strong>은 평소의 경험과 통상적인 예측 모형이 놓치기 쉬운데, 발생하면 시장과 사회에 매우 큰 영향을 주는 사건을 가리키는 비유입니다. 나심 니콜라스 탈레브가 2007년 책 《블랙 스완》에서 널리 알렸고, 오스트레일리아에서 검은 백조가 발견되어 기존 상식이 깨진 일에서 이름을 가져왔습니다.</p><p>핵심은 <strong>① 기대 밖의 예외적 사건 ② 매우 큰 파급효과 ③ 사건 뒤의 사후 합리화</strong>입니다. 9·11 테러, 2008년 글로벌 금융위기, 2020년 코로나19 팬데믹은 큰 충격 사례로 자주 언급되지만, 엄밀히 블랙 스완인지에는 견해 차이가 있습니다.</p><p><strong>중요한 것은 사건을 정확히 맞히는 것이 아니라 견디는 힘을 만드는 것입니다.</strong> 손실 한도·분산·유동성 확보·과도한 레버리지 제한·스트레스 시나리오를 활용합니다. 회색 코뿔소는 눈앞의 위험을 무시하는 경우, 하얀 코끼리는 비용은 크지만 효용이 낮아 부담이 되는 자산·사업을 비유합니다.</p><p>블랙 스완은 ‘희귀한 충격’이라는 관점이고, <strong>레밍 효과</strong>는 평소에도 군중을 따라가며 위험을 키울 수 있는 행동이라는 점에서 다릅니다. 둘 다 한 사건의 방향을 예언하기보다, <strong>한 자산·한 시나리오에 과도하게 의존하지 않는지</strong> 점검하게 해 주는 경고로 활용할 수 있습니다.</p></div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="블랙 스완: 평소 모형 밖의 큰 충격에 대비하기 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
           </section>
         </section>
         <section class="glossary">
@@ -1943,8 +2215,14 @@
             <div class="glossary-item">
               <dt>샤프지수 <small>Sharpe Ratio</small></dt>
               <dd>
-                투자에서 얻은 수익 중 무위험수익률을 넘는 부분을 수익률의 변동성으로 나눈 <b>위험조정 성과 지표</b>입니다. 보통 <code>(포트폴리오 수익률 − 무위험수익률) ÷ 수익률 변동성</code>으로 계산합니다.
-                <br /><br />같은 기간·통화·무위험수익률 기준으로 비교한다면 샤프지수가 높을수록 감수한 변동성 1단위당 얻은 초과수익이 컸다고 해석할 수 있습니다. 다만 과거 수익률과 변동성으로 계산한 값이므로 미래 성과를 보장하지 않으며, 큰 한 번의 손실·유동성 위험·수수료·세금·투자 기간을 모두 대신 판단해 주지는 않습니다.
+                번 수익과 그 과정에서 가격이 얼마나 흔들렸는지를 함께 보는
+                점수입니다. 투자 수익률에서 안전하게 얻을 수 있었던 이자를 뺀 뒤
+                변동성으로 나눕니다.
+                <br /><br /><b>계산식:</b> <code>(포트폴리오 수익률 − 무위험수익률) ÷ 변동성</code>
+                <br /><br />예를 들어 수익률 8%, 안전한 이자 3%, 변동성 10%라면
+                <code>(8% − 3%) ÷ 10% = 0.5</code>입니다. 같은 기간과 기준에서는
+                값이 높을수록 덜 흔들리면서 더 나은 성과를 냈다고 볼 수 있지만,
+                미래 수익을 보장하지는 않습니다.
               </dd>
             </div>
             <div class="glossary-item">
@@ -1989,13 +2267,24 @@
                 샤프 비율 <small>Sharpe Ratio · 危險調整收益率 · SR</small>
               </dt>
               <dd>
-                감수한 변동성(위험) 대비 초과수익을 비교하는 위험조정 성과
-                지표입니다. (포트폴리오 수익률 − 무위험수익률) ÷ 변동성으로
-                계산하며, 같은 정상에 오르더라도 완만한 길로 오른 등반이 더
-                “효율적인” 등반이듯, 값이 높을수록 같은 위험으로 더 나은
-                성과를 냈다는 뜻입니다. 다만 과거 자료와 계산 기간에 따라
-                달라지고, 급격한 폭락 같은 손실의 모양이나 미래 성과를 모두
-                설명하지는 못합니다.
+                샤프 비율은 <b>얼마나 벌었는지와 그 과정에서 가격이 얼마나 크게
+                흔들렸는지를 함께 보는 점수</b>입니다. 수익률이 같다면 덜 흔들린
+                투자의 점수가 더 높습니다.
+                <br /><br />
+                먼저 투자 수익률에서 예금·단기 국채처럼 비교적 안전하게 얻을 수
+                있었던 수익률을 뺍니다. 이렇게 추가로 번 수익을 가격의 흔들림
+                정도로 나누어 계산합니다.
+                <br /><br />
+                <b>계산식:</b> <code>샤프 비율 = (포트폴리오 수익률 − 무위험수익률) ÷ 변동성</code>
+                <br /><br />
+                예를 들어 투자 수익률이 8%, 안전한 이자가 3%, 변동성이 10%라면
+                <code>(8% − 3%) ÷ 10% = 0.5</code>입니다. 같은 조건에서 변동성이
+                20%였다면 샤프 비율은 0.25이므로, 첫 번째 투자가 수익을 내는 동안
+                덜 흔들렸다고 볼 수 있습니다.
+                <br /><br />
+                값이 높을수록 과거에는 흔들림에 비해 성과가 좋았다는 뜻입니다.
+                미래 수익을 보장하는 점수는 아니며, 같은 기간과 같은 기준으로
+                계산한 투자끼리 비교해야 합니다.
               </dd>
             </div>
             <div class="glossary-item">
@@ -2334,9 +2623,9 @@
 
     <div class="glossary-modal bias-quiz-modal" id="biasQuizModal" hidden>
       <div class="glossary-modal__backdrop" data-bias-quiz-close></div>
-      <section class="glossary-modal__dialog bias-quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="biasQuizTitle">
+      <section class="glossary-modal__dialog bias-quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="biasQuizAdvisorTitle biasQuizTitle">
         <button class="glossary-modal__close" type="button" aria-label="성향 점검 닫기" data-bias-quiz-close>×</button>
-        <p class="glossary-modal__label">SELF CHECK · 교육용</p>
+        <p class="bias-quiz-advisor-title" id="biasQuizAdvisorTitle">어드바이저를 위한 개인별 성향 분석</p>
         <h2 id="biasQuizTitle">시장 심리 성향 점검</h2>
         <p class="bias-quiz-intro" id="biasQuizIntro">최근의 나와 가장 가까운 답을 고르세요. 정답·오답이나 투자 성과 예측은 아니며, 판단 습관을 돌아보기 위한 짧은 점검입니다.</p>
         <div class="bias-quiz-progress"><span id="biasQuizCount">1 / 8</span><i id="biasQuizBar" aria-hidden="true"></i></div>
@@ -3726,6 +4015,30 @@
     <script>
       window.addEventListener("DOMContentLoaded", () => {
         const terms = {
+          martingale: ["마팅게일(Martingale)", "배팅 전략 · 확률 과정 · 금융 가격 모형 · 마구·패션 용어", [
+            "마팅게일(Martingale)은 사람 이름이 아니라 프랑스의 특정 도시 이름 및 마구(馬具)에서 유래한 단어입니다.",
+            "이 단어는 쓰이는 분야에 따라 의미가 조금씩 다릅니다.",
+            "1. 카지노 및 금융: '마팅게일 배팅법' (가장 흔한 용례)",
+            "18세기 프랑스에서 유행한 도박 전략에서 유래했습니다.",
+            "• 기본 개념: 잃을 때마다 배팅 금액을 2배로 늘리는 방식입니다. (예: 1만 원 손실 → 2만 원 배팅 → 또 손실 시 4만 원 배팅)",
+            "• 어원: 프랑스 남부의 도시 '마르티그(Martigues)' 사람들을 가리키는 말에서 나왔습니다. 당시 다른 지역 사람들이 마르티그 사람들을 \"둔하고 무모하게 내기를 하는 사람들\"이라고 놀리며 부르던 멸칭에서 유래했다는 설이 가장 유력합니다.",
+            "2. 확률론 및 수학: '마팅게일 과정'",
+            "수학에서는 \"이전의 모든 정보를 알아도, 다음 단계의 기대값은 현재 값과 같다\"는 공정한 게임(Fair Game)을 모델링한 확률 과정을 뜻합니다.",
+            "• 예를 들어 동전 던지기 게임에서 내 자산의 변화 과정을 수학적으로 나타낸 것입니다.",
+            "• 도박의 마팅게일 전략을 수학적으로 분석하고 증명하는 과정에서 확률론의 정식 용어로 자리 잡았습니다.",
+            "3. 금융에서는 왜 사용할까요?",
+            "금융에서는 현재까지 알려진 정보를 모두 사용해도 다음 가격의 기대값을 더 높게 예측할 수 있는지를 표현할 때 마팅게일 개념을 사용합니다. 이를 수식으로 쓰면 E[다음 값 | 현재까지의 정보] = 현재 값입니다. 여기서 기대값은 다음 가격이 반드시 현재 가격과 같다는 뜻이 아니라, 가능한 상승과 하락을 확률로 가중해 평균낸 값이 현재 값과 같다는 뜻입니다.",
+            "• 공정한 가격의 기준: 이미 알려진 정보만으로 확실한 이익을 계속 만들 수 없다면, 현재 가격은 그 정보 아래에서 공정한 출발점으로 볼 수 있습니다. 이 관점은 효율적 시장 가설과 연결되지만, 두 개념이 완전히 같은 뜻은 아닙니다.",
+            "• 파생상품 가격 계산: 옵션과 같은 파생상품에서는 차익거래가 없다는 조건 아래 미래 지급액의 기대값을 현재 가치로 할인해 이론 가격을 구합니다. 이때 위험중립확률이라는 계산용 확률 아래에서 이자율로 할인한 자산 가격이 마팅게일이 되도록 모형을 세웁니다.",
+            "• 투자전략 점검: 과거 가격이나 현재 정보만 이용한 규칙이 정말 예측력을 갖는지, 아니면 우연한 결과인지 검토하는 기준으로 활용합니다. 다만 실제 주식은 위험을 감수한 보상인 위험 프리미엄이 있을 수 있으므로, 현실의 주가 자체가 언제나 마팅게일이라고 단정하지는 않습니다.",
+            "예를 들어 현재 100원인 자산이 다음 시점에 같은 확률로 110원 또는 90원이 된다고 가정하면 기대값은 (110원 × 50%) + (90원 × 50%) = 100원입니다. 어느 가격이 실제로 나타날지는 모르지만 현재 정보 아래의 평균 예상값은 100원이므로 단순한 마팅게일 예시가 됩니다.",
+            "도박의 '마팅게일 배팅법'과 금융수학의 '마팅게일 과정'은 구분해야 합니다. 잃을 때마다 투자금을 두 배로 늘리는 전략은 기대수익을 높이는 원리가 아닙니다. 1만 원부터 시작해 여섯 번 연속 잃으면 다음 배팅금은 64만 원이고, 이미 잃은 금액도 63만 원에 이릅니다. 자금 한도·거래 한도·비용 때문에 긴 연패 한 번으로 큰 손실이나 파산이 발생할 수 있습니다.",
+            "4. 마구(馬具) 및 패션",
+            "원래 말의 머리가 위로 들리지 않도록 목과 고삐를 연결해 주는 가죽 끈을 '마팅게일'이라고 불렀습니다.",
+            "• 여기서 파생되어 코트나 재킷의 등 뒤쪽에 달린 장식용 가죽/천 띠(Martingale Back)를 가리키기도 합니다.",
+            "요약",
+            "마팅게일은 특정 인물의 이름이 아니며, 프랑스 도시 이름과 무모한 도박꾼을 비유하던 말에서 시작해 현재는 배팅 전략, 수학의 확률 이론, 금융의 가격평가, 의류 장식 등을 뜻하는 단어로 쓰이고 있습니다."
+          ]],
           mpt: ["현대 포트폴리오 이론(MPT)", "Modern Portfolio Theory · 평균-분산 모형", ["창시자는 경제학자 해리 마코위츠(Harry Markowitz)입니다. 그는 1952년 논문에서 여러 자산을 함께 담았을 때의 기대수익률과 위험을 함께 보자는 틀을 제시했습니다.", "쉽게 말해 ‘가장 좋아 보이는 종목 하나’를 고르는 대신, 서로 다르게 움직이는 자산을 섞어 전체 포트폴리오의 흔들림을 관리하는 방법입니다. 같은 수익을 기대한다면 덜 흔들리는 조합을, 같은 위험을 감수한다면 더 높은 수익을 기대하는 조합을 찾습니다."], [["마코위츠의 1952년 Portfolio Selection 논문", "https://onlinelibrary.wiley.com/doi/10.1111/j.1540-6261.1952.tb01525.x"]]],
           capm: ["자산가격결정모형(CAPM)", "Capital Asset Pricing Model", ["CAPM은 윌리엄 샤프(William Sharpe), 존 린트너(John Lintner), 얀 모신(Jan Mossin)이 1960년대에 각각 발전시킨 모형입니다.", "이 모형은 시장과 함께 움직이는 정도인 베타를 이용해, 위험을 감수하는 투자자가 어느 정도의 수익률을 기대할지를 가늠합니다. 베타는 시장이 10% 오르거나 내릴 때 해당 주식이 평균적으로 얼마나 크게 따라 움직였는지를 보여 주는 숫자입니다. 베타가 1이면 시장과 비슷한 폭, 1.5이면 시장이 10% 움직일 때 약 15% 움직이는 경향으로 이해할 수 있습니다. 예를 들어 시장보다 더 크게 흔들리는 주식이라면 투자자는 더 높은 기대수익률을 요구할 수 있다고 보는 방식입니다.", "실제 주가를 정확히 맞히는 공식은 아닙니다. 기업 규모·가치·유동성·환율 등 다양한 요인이 수익률에 영향을 줄 수 있으므로, 요구수익률을 생각하는 기본 틀로 활용합니다."]],
           "black-scholes-model": ["블랙-숄즈 모형", "Black-Scholes Model · Black-Scholes-Merton", ["피셔 블랙(Fischer Black)과 마이런 숄즈(Myron Scholes)가 1973년에 제시했고, 로버트 머튼(Robert Merton)이 이론을 발전시킨 옵션 가격 모형입니다.", "주가, 정해진 매매 가격(행사가격), 만기까지 남은 시간, 예상 변동성, 금리 등을 넣어 유럽형 옵션의 이론 가격을 계산합니다. 쉽게 말해 ‘앞으로 주가가 얼마나 움직일 수 있는지’와 ‘남은 시간’을 바탕으로 옵션 권리의 값을 가늠하는 계산기입니다.", "실제 시장에서는 거래비용, 배당, 급격한 가격 변동 등 모형과 다른 조건이 있으므로, 계산값은 참고 기준이지 실제 거래가격의 보장은 아닙니다."]],
@@ -3837,7 +4150,7 @@
           buffett: ["워런 버핏", "Warren Buffett · 투자자", ["워런 버핏은 버크셔 해서웨이를 이끈 것으로 알려진 미국의 장기 가치투자자입니다.", "그는 특정 수학 모형 하나를 발표한 학자라기보다, 기업의 수익력·경쟁우위·경영진·가격을 함께 살피는 가치투자 원칙으로 유명합니다.", "그의 장기 성과 사례는 시장 효율성 논의에서 자주 언급되지만, 한 개인의 성과만으로 시장이 항상 비효율적이라고 결론낼 수는 없습니다. 학습에서는 장기 투자, 안전마진, 투자 과정의 중요성을 생각해 보는 사례로 활용합니다."]],
           simons: ["제임스 사이먼스", "James H. Simons · 수학자·투자자", ["제임스 사이먼스는 수학 연구자 출신으로, 1978년 르네상스 테크놀로지스를 세운 퀀트 투자자입니다.", "그는 공개된 하나의 단일 이론보다, 수학·통계·데이터·컴퓨터 과학을 결합해 반복적으로 가설을 검증하는 정량투자 조직을 만든 인물로 알려져 있습니다.", "중요한 점은 비밀 공식을 따라 하는 것이 아니라 데이터 품질, 거래비용, 위험 한도, 시장 변화까지 포함해 연구 과정을 운영했다는 데 있습니다. 공개되지 않은 내부 전략과 과거 성과는 미래 수익을 보장하지 않습니다."]],
           bachelier: ["루이 바슐리에", "Louis Bachelier · 수학자", ["루이 바슐리에는 프랑스 수학자로, 1900년 박사논문 <Théorie de la spéculation>에서 가격 움직임과 옵션을 확률로 다룬 선구자입니다.", "그의 연구는 가격 변화를 무작위 과정으로 모델링하고 옵션 가격을 수학적으로 생각하는 초기 시도였습니다.", "오늘날의 가정과는 차이가 있지만, 금융시장을 확률·수학으로 분석하는 수리금융의 출발점 가운데 하나로 평가됩니다."]],
-          thorp: ["에드워드 소프", "Edward O. Thorp · 수학자·금융 연구자", ["에드워드 O. 소프는 확률과 통계를 블랙잭 분석과 금융시장 연구에 적용한 수학자·금융 연구자입니다.", "그는 옵션·전환사채·주식을 함께 이용해 가격 불일치와 헤지 비율을 분석하고, 시장 전체 방향의 영향을 낮추려는 시장중립 접근을 실전 운용에 적용했습니다.", "중요한 의미는 직감보다 관찰 가능한 정보, 명시적 가정, 반복 가능한 검증을 중시하는 퀀트의 태도를 보여 준다는 점입니다. 어떤 과거 기법도 현재 수익을 보장하지는 않습니다."]],
+          thorp: ["에드워드 소프", "Edward O. Thorp · 수학자·금융 연구자", ["에드워드 O. 소프는 수학과 확률을 활용해 블랙잭을 분석한 뒤, 그 방법을 금융시장 연구로 확장한 수학자·금융 연구자입니다. 그는 카드 게임과 시장 모두에서 직감보다 관찰 가능한 정보, 확률, 반복 가능한 규칙을 중시했습니다.", "그는 옵션·전환사채·주식을 함께 이용해 가격 불일치와 헤지 비율을 분석하고, 시장 전체 방향의 영향을 낮추려는 시장중립 접근을 실전 운용에 적용했습니다. 이러한 연구와 운용은 초기 정량투자의 발전에 영향을 주었습니다.", "소프의 사례는 과거의 성공 공식을 그대로 따라 하자는 뜻이 아니라, 투자 아이디어도 데이터와 명시적인 가정으로 반복 검증하고 위험을 제한해야 한다는 태도를 보여 줍니다.", "과거 성과나 유명 인물의 방법은 미래 수익을 보장하지 않습니다. 실제 시장에서는 거래비용, 유동성 부족, 모형의 오류와 예상 밖 사건이 생길 수 있으므로 작은 가정부터 검증하고 손실 한도를 정해야 합니다."]],
           bemberger: ["제럴드(제리) 벰버거", "Gerald ‘Jerry’ Bamberger · 투자자", ["제럴드(제리) 벰버거는 1980년대 모건스탠리에서 통계적 차익거래와 페어 트레이딩의 초기 발전에 관여한 인물로 널리 알려져 있습니다.", "페어 트레이딩은 함께 움직여 온 두 자산의 가격 간격이 일시적으로 벌어졌을 때, 상대적으로 비싼 쪽과 싼 쪽을 함께 거래해 간격의 변화에 대응하는 접근입니다.", "이 사례는 시장의 방향을 맞히는 것만이 아니라 상대가격·헤지·거래비용을 함께 분석하는 정량투자 관점을 보여 줍니다. 두 가격이 다시 수렴한다는 보장은 없으므로 손실 한도와 구조 변화 점검이 필요합니다."]],
           black: ["피셔 블랙", "Fischer Black · 경제학자", ["피셔 블랙은 옵션 가격결정 연구로 현대 금융경제학에 큰 영향을 준 경제학자입니다.", "그는 마이런 숄즈와 함께 1973년 블랙-숄즈 옵션가격모형 논문을 발표했습니다. 이 모형은 무차익거래와 복제 포트폴리오라는 생각을 활용해 유럽형 옵션의 이론 가격을 추정합니다.", "옵션 가격을 체계적으로 계산하고 위험을 관리하는 공통 언어를 제공했다는 점에서 중요합니다. 실제 시장에서는 변동성, 거래비용, 배당, 유동성 등 모형의 가정과 다른 요소를 함께 고려해야 합니다."]],
           scholes: ["마이런 숄즈", "Myron S. Scholes · 경제학자", ["마이런 숄즈는 블랙-숄즈 옵션가격모형을 공동으로 만든 경제학자입니다.", "1973년 피셔 블랙과의 연구는 기초자산 가격·변동성·금리·만기 등을 이용해 유럽형 옵션 가치를 계산하는 틀을 제시했습니다.", "그 공로로 숄즈와 로버트 머튼은 1997년 노벨 경제학상을 수상했습니다. 이 모형은 금융공학 발전의 핵심이지만, 입력값과 가정이 현실에 맞는지 점검해야 합니다."]],
@@ -4056,13 +4369,19 @@
         const growthPotentialLesson = document.getElementById("growthPotentialLesson");
         if (assetAllocationTimingLesson && growthPotentialLesson) growthPotentialLesson.before(assetAllocationTimingLesson);
       };
+      const relocateRiskLessonsBeforeAllWeather = () => {
+        const riskMetricsLesson = document.getElementById("riskMetricsLesson");
+        const blackSwanLesson = document.getElementById("blackSwanLesson");
+        const allWeatherLesson = document.getElementById("allWeatherLesson");
+        if (riskMetricsLesson && allWeatherLesson) allWeatherLesson.before(riskMetricsLesson);
+        if (blackSwanLesson && allWeatherLesson) allWeatherLesson.before(blackSwanLesson);
+      };
       document.addEventListener("DOMContentLoaded", () => {
         const allWeatherLesson = document.getElementById("allWeatherLesson");
         const quantHistoryLesson = document.getElementById("quantHistoryLesson");
         const randomWalkLesson = document.getElementById("randomWalkLesson");
         const marketPsychologyLesson = document.getElementById("marketPsychologyLesson");
         const choiceCompetitionLesson = document.getElementById("choiceCompetitionLesson");
-        const blackSwanLesson = document.getElementById("blackSwanLesson");
         const riskAssetsLesson = document.getElementById("riskAssetsLesson");
         relocateNoCodeQuantPlatformLesson();
         relocateLeanLessonToBottom();
@@ -4071,39 +4390,45 @@
         if (randomWalkLesson && quantHistoryLesson) quantHistoryLesson.before(randomWalkLesson);
         if (marketPsychologyLesson && randomWalkLesson) randomWalkLesson.before(marketPsychologyLesson);
         if (choiceCompetitionLesson && randomWalkLesson) randomWalkLesson.before(choiceCompetitionLesson);
-        if (blackSwanLesson && randomWalkLesson) randomWalkLesson.before(blackSwanLesson);
         if (riskAssetsLesson && allWeatherLesson) allWeatherLesson.before(riskAssetsLesson);
+        relocateRiskLessonsBeforeAllWeather();
       });
       // 외부 스크립트까지 모두 초기화된 뒤에도 최종 단원 순서를 다시 보장합니다.
       window.addEventListener("load", () => {
         relocateNoCodeQuantPlatformLesson();
         relocateLeanLessonToBottom();
         relocateAssetAllocationTimingLesson();
+        relocateRiskLessonsBeforeAllWeather();
       }, { once: true });
     </script>
     <script>
       (() => {
         const slider = document.getElementById("bollingerLastPrice");
+        const windowSelect = document.getElementById("bollingerSimWindow");
+        const multiplierSelect = document.getElementById("bollingerSimMultiplier");
         const output = document.getElementById("bollingerLastPriceOutput");
         const chart = document.getElementById("bollingerSimChart");
         const priceEl = document.getElementById("bollingerPrice");
+        const meanLabel = document.getElementById("bollingerMeanLabel");
         const meanEl = document.getElementById("bollingerMean");
         const upperEl = document.getElementById("bollingerUpper");
         const lowerEl = document.getElementById("bollingerLower");
         const status = document.getElementById("bollingerStatus");
-        if (!slider || !output || !chart || !priceEl || !meanEl || !upperEl || !lowerEl || !status) return;
-        const fixedPrices = [100, 101, 99, 100, 102, 101, 100, 101, 99];
+        if (!slider || !windowSelect || !multiplierSelect || !output || !chart || !priceEl || !meanLabel || !meanEl || !upperEl || !lowerEl || !status) return;
+        const fixedPrices = [97, 98, 99, 98, 100, 101, 100, 102, 101, 99, 100, 101, 103, 102, 101, 100, 99, 101, 102, 100, 101, 99, 100, 102, 101, 100, 101, 99, 100];
         const average = (numbers) => numbers.reduce((sum, number) => sum + number, 0) / numbers.length;
         const path = (points) => points.filter((point) => point.y !== null).map((point, index) => `${index ? "L" : "M"}${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
         const render = () => {
           const lastPrice = Number(slider.value);
+          const period = Number(windowSelect.value);
+          const multiplier = Number(multiplierSelect.value);
           const prices = [...fixedPrices, lastPrice];
           const bands = prices.map((_, index) => {
-            if (index < 5) return null;
-            const window = prices.slice(index - 5, index);
+            if (index < period - 1) return null;
+            const window = prices.slice(index - period + 1, index + 1);
             const mean = average(window);
             const deviation = Math.sqrt(average(window.map((price) => (price - mean) ** 2)));
-            return { mean, upper: mean + deviation * 2, lower: mean - deviation * 2 };
+            return { mean, upper: mean + deviation * multiplier, lower: mean - deviation * multiplier };
           });
           const latest = bands.at(-1);
           const allValues = prices.concat(bands.filter(Boolean).flatMap((band) => [band.upper, band.lower]));
@@ -4116,24 +4441,266 @@
           const upperPoints = points("upper").filter((point) => point.y !== null);
           const lowerPoints = points("lower").filter((point) => point.y !== null);
           const bandArea = [...upperPoints, ...[...lowerPoints].reverse()].map((point) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
-          const grid = [min, (min + max) / 2, max].map((value) => `<line class="grid" x1="${left}" y1="${y(value)}" x2="${720 - right}" y2="${y(value)}"/><text class="axis" x="6" y="${y(value) + 4}">${value.toFixed(0)}</text>`).join("");
+          const gridValues = Array.from({ length: 6 }, (_, index) => min + (max - min) * index / 5);
+          const grid = gridValues.map((value) => `<line class="grid" x1="${left}" y1="${y(value)}" x2="${720 - right}" y2="${y(value)}"/><text class="axis" x="6" y="${y(value) + 4}">${value.toFixed(Number.isInteger(value) ? 0 : 1)}</text>`).join("");
           const labelX = 720 - right + 9;
-          chart.innerHTML = `${grid}<polygon class="band-area" points="${bandArea}"/><path class="upper" d="${path(points("upper"))}"/><path class="lower" d="${path(points("lower"))}"/><path class="mean" d="${path(points("mean"))}"/><path class="price" d="${path(points("price"))}"/><circle class="last-dot" cx="${x(prices.length - 1)}" cy="${y(lastPrice)}" r="5"/><text class="line-label band-label" x="${labelX}" y="${y(latest.upper) + 4}">상단 밴드</text><text class="line-label mean-label" x="${labelX}" y="${y(latest.mean) + 4}">5일 평균</text><text class="line-label band-label" x="${labelX}" y="${y(latest.lower) + 4}">하단 밴드</text><text class="line-label price-label" x="${x(prices.length - 1) - 47}" y="${Math.max(15, y(lastPrice) - 9)}">가격선</text><text class="axis" x="${left}" y="${222}">9일 전</text><text class="axis" x="${720 - right - 28}" y="${222}">오늘</text>`;
+          const upperBreak = lastPrice > latest.upper;
+          const lowerBreak = lastPrice < latest.lower;
+          const breakDirection = upperBreak ? "상단 밖" : lowerBreak ? "하단 밖" : "밴드 안";
+          const priceLabelY = upperBreak ? Math.min(218, y(lastPrice) + 18) : Math.max(15, y(lastPrice) - 10);
+          const breakGuide = upperBreak || lowerBreak ? `<line class="breach-guide" x1="${left}" y1="${y(lastPrice)}" x2="${x(prices.length - 1)}" y2="${y(lastPrice)}"/><text class="axis breach-axis" x="6" y="${y(lastPrice) + 4}">${lastPrice.toFixed(1)}</text>` : "";
+          chart.innerHTML = `${grid}${breakGuide}<polygon class="band-area" points="${bandArea}"/><path class="upper" d="${path(points("upper"))}"/><path class="lower" d="${path(points("lower"))}"/><path class="mean" d="${path(points("mean"))}"/><path class="price" d="${path(points("price"))}"/><circle class="last-dot" cx="${x(prices.length - 1)}" cy="${y(lastPrice)}" r="5"/><text class="line-label band-label" x="${labelX}" y="${y(latest.upper) + 4}">상단 ${latest.upper.toFixed(1)}</text><text class="line-label mean-label" x="${labelX}" y="${y(latest.mean) + 4}">${period}일 평균 ${latest.mean.toFixed(1)}</text><text class="line-label band-label" x="${labelX}" y="${y(latest.lower) + 4}">하단 ${latest.lower.toFixed(1)}</text><text class="line-label price-label" text-anchor="end" x="${x(prices.length - 1) - 10}" y="${priceLabelY}">현재 ${lastPrice.toFixed(1)} · ${breakDirection}</text><text class="axis" x="${left}" y="${222}">${fixedPrices.length}일 전</text><text class="axis" x="${720 - right - 28}" y="${222}">오늘</text>`;
+          chart.setAttribute("aria-label", `가격 범위 ${min}부터 ${max}. 현재 가격 ${lastPrice.toFixed(1)}, 상단 밴드 ${latest.upper.toFixed(1)}, 평균 ${latest.mean.toFixed(1)}, 하단 밴드 ${latest.lower.toFixed(1)}. 현재 가격은 ${breakDirection}입니다.`);
           output.value = lastPrice;
           output.textContent = lastPrice;
           priceEl.textContent = lastPrice.toFixed(0);
+          meanLabel.textContent = `${period}일 평균`;
           meanEl.textContent = latest.mean.toFixed(1);
           upperEl.textContent = latest.upper.toFixed(1);
           lowerEl.textContent = latest.lower.toFixed(1);
           status.textContent = lastPrice > latest.upper
-            ? `현재 가격 ${lastPrice}는 상단 밴드 ${latest.upper.toFixed(1)}보다 높습니다. 최근 5일 움직임보다 크게 오른 상태라는 뜻일 뿐, 바로 하락한다는 신호는 아닙니다.`
+            ? `현재 가격 ${lastPrice}는 ${period}일·${multiplier.toFixed(1)}배 상단 밴드 ${latest.upper.toFixed(1)}보다 높습니다. 최근 움직임보다 크게 오른 상태라는 뜻일 뿐, 바로 하락한다는 신호는 아닙니다.`
             : lastPrice < latest.lower
-              ? `현재 가격 ${lastPrice}는 하단 밴드 ${latest.lower.toFixed(1)}보다 낮습니다. 최근 5일 움직임보다 크게 내린 상태라는 뜻일 뿐, 바로 상승한다는 신호는 아닙니다.`
-              : `현재 가격 ${lastPrice}는 상단 ${latest.upper.toFixed(1)}과 하단 ${latest.lower.toFixed(1)} 사이에 있습니다. 밴드 안에 있다는 사실만으로 매수·매도 판단을 내리지는 않습니다.`;
+              ? `현재 가격 ${lastPrice}는 ${period}일·${multiplier.toFixed(1)}배 하단 밴드 ${latest.lower.toFixed(1)}보다 낮습니다. 최근 움직임보다 크게 내린 상태라는 뜻일 뿐, 바로 상승한다는 신호는 아닙니다.`
+              : `현재 가격 ${lastPrice}는 ${period}일·${multiplier.toFixed(1)}배 밴드의 상단 ${latest.upper.toFixed(1)}과 하단 ${latest.lower.toFixed(1)} 사이에 있습니다. 밴드 안에 있다는 사실만으로 매수·매도 판단을 내리지는 않습니다.`;
         };
         slider.addEventListener("input", render);
+        windowSelect.addEventListener("change", render);
+        multiplierSelect.addEventListener("change", render);
         document.querySelectorAll("[data-bollinger-price]").forEach((button) => button.addEventListener("click", () => { slider.value = button.dataset.bollingerPrice; render(); }));
         render();
+      })();
+    </script>
+    <script>
+      (() => {
+        const aSlider = document.getElementById("bollingerPairAPrice");
+        const bSlider = document.getElementById("bollingerPairBPrice");
+        const aOutput = document.getElementById("bollingerPairAOutput");
+        const bOutput = document.getElementById("bollingerPairBOutput");
+        const chart = document.getElementById("bollingerPairChart");
+        const aStat = document.getElementById("bollingerPairAStat");
+        const bStat = document.getElementById("bollingerPairBStat");
+        const gapStat = document.getElementById("bollingerPairGap");
+        const meanStat = document.getElementById("bollingerPairMean");
+        const status = document.getElementById("bollingerPairStatus");
+        if (!aSlider || !bSlider || !aOutput || !bOutput || !chart || !aStat || !bStat || !gapStat || !meanStat || !status) return;
+
+        const fixedA = [100, 101, 99, 100, 102, 101, 100, 101, 99];
+        const fixedB = [100, 100, 99, 100, 101, 100, 100, 101, 100];
+        const average = (values) => values.reduce((sum, value) => sum + value, 0) / values.length;
+        const path = (points) => points.filter(Boolean).map((point, index) => `${index ? "L" : "M"}${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
+
+        const render = () => {
+          const aPrices = [...fixedA, Number(aSlider.value)];
+          const bPrices = [...fixedB, Number(bSlider.value)];
+          const gaps = aPrices.map((price, index) => price - bPrices[index]);
+          const bands = gaps.map((_, index) => {
+            if (index < 5) return null;
+            const recentGaps = gaps.slice(index - 5, index);
+            const mean = average(recentGaps);
+            const deviation = Math.sqrt(average(recentGaps.map((gap) => (gap - mean) ** 2)));
+            return { mean, upper: mean + deviation * 2, lower: mean - deviation * 2 };
+          });
+          const latest = bands.at(-1);
+          const left = 48, right = 18, plotWidth = 720 - left - right;
+          const x = (index) => left + index / (gaps.length - 1) * plotWidth;
+
+          const allPrices = [...aPrices, ...bPrices];
+          let priceMin = Math.min(...allPrices) - 1, priceMax = Math.max(...allPrices) + 1;
+          const priceY = (value) => 18 + (priceMax - value) / (priceMax - priceMin) * 102;
+          const gapValues = gaps.concat(bands.filter(Boolean).flatMap((band) => [band.upper, band.lower]));
+          let gapMin = Math.min(...gapValues) - 1, gapMax = Math.max(...gapValues) + 1;
+          const gapY = (value) => 170 + (gapMax - value) / (gapMax - gapMin) * 102;
+          const aPoints = aPrices.map((value, index) => ({ x: x(index), y: priceY(value) }));
+          const bPoints = bPrices.map((value, index) => ({ x: x(index), y: priceY(value) }));
+          const gapPoints = gaps.map((value, index) => ({ x: x(index), y: gapY(value) }));
+          const bandPoints = (key) => bands.map((band, index) => band ? { x: x(index), y: gapY(band[key]) } : null);
+          const upperPoints = bandPoints("upper").filter(Boolean);
+          const lowerPoints = bandPoints("lower").filter(Boolean);
+          const area = [...upperPoints, ...[...lowerPoints].reverse()].map((point) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
+          const priceGrid = [priceMin, (priceMin + priceMax) / 2, priceMax].map((value) => `<line class="grid" x1="${left}" y1="${priceY(value)}" x2="${720 - right}" y2="${priceY(value)}"/><text class="axis" x="6" y="${priceY(value) + 4}">${value.toFixed(0)}</text>`).join("");
+          const gapGrid = [gapMin, (gapMin + gapMax) / 2, gapMax].map((value) => `<line class="grid" x1="${left}" y1="${gapY(value)}" x2="${720 - right}" y2="${gapY(value)}"/><text class="axis" x="6" y="${gapY(value) + 4}">${value.toFixed(1)}</text>`).join("");
+          chart.innerHTML = `${priceGrid}<text class="axis" x="${left}" y="14">위: A와 B의 가격선</text><path class="a-line" d="${path(aPoints)}"/><path class="b-line" d="${path(bPoints)}"/><line class="divider" x1="0" y1="145" x2="720" y2="145"/>${gapGrid}<text class="axis" x="${left}" y="164">아래: A−B 간격과 평소 밴드</text><polygon class="band-area" points="${area}"/><path class="band-edge" d="${path(bandPoints("upper"))}"/><path class="band-edge" d="${path(bandPoints("lower"))}"/><path class="gap-line" d="${path(gapPoints)}"/><text class="axis" x="${left}" y="294">9일 전</text><text class="axis" x="${720 - right - 24}" y="294">오늘</text>`;
+
+          const currentGap = gaps.at(-1);
+          aOutput.value = aSlider.value;
+          aOutput.textContent = aSlider.value;
+          bOutput.value = bSlider.value;
+          bOutput.textContent = bSlider.value;
+          aStat.textContent = aSlider.value;
+          bStat.textContent = bSlider.value;
+          gapStat.textContent = currentGap.toFixed(1);
+          meanStat.textContent = latest.mean.toFixed(1);
+          status.textContent = currentGap > latest.upper
+            ? `A−B 간격 ${currentGap.toFixed(1)}은 상단 밴드 ${latest.upper.toFixed(1)}보다 큽니다. A가 B보다 상대적으로 많이 오른 상태이지만, 간격이 반드시 줄어드는 것은 아닙니다.`
+            : currentGap < latest.lower
+              ? `A−B 간격 ${currentGap.toFixed(1)}은 하단 밴드 ${latest.lower.toFixed(1)}보다 작습니다. B가 A보다 상대적으로 많이 오른 상태이지만, 간격이 반드시 되돌아오는 것은 아닙니다.`
+              : `A−B 간격 ${currentGap.toFixed(1)}은 평소 밴드 ${latest.lower.toFixed(1)}~${latest.upper.toFixed(1)} 안에 있습니다.`;
+        };
+        aSlider.addEventListener("input", render);
+        bSlider.addEventListener("input", render);
+        render();
+      })();
+    </script>
+    <script>
+      (() => {
+        const chart = document.getElementById("bollingerRealChart");
+        const shell = chart?.closest(".bollinger-real-chart-shell");
+        const tooltip = document.getElementById("bollingerRealTooltip");
+        const rangeSelect = document.getElementById("bollingerRealRange");
+        const windowSelect = document.getElementById("bollingerRealWindow");
+        const multiplierSelect = document.getElementById("bollingerRealMultiplier");
+        const multiplierHelp = document.getElementById("bollingerMultiplierHelp");
+        const status = document.getElementById("bollingerRealStatus");
+        const closeEl = document.getElementById("bollingerRealClose");
+        const middleEl = document.getElementById("bollingerRealMiddle");
+        const upperEl = document.getElementById("bollingerRealUpper");
+        const lowerEl = document.getElementById("bollingerRealLower");
+        if (!chart || !shell || !tooltip || !rangeSelect || !windowSelect || !multiplierSelect || !multiplierHelp || !status || !closeEl || !middleEl || !upperEl || !lowerEl) return;
+
+        const WIDTH = 900, HEIGHT = 320, LEFT = 64, RIGHT = 20, TOP = 18, BOTTOM = 38;
+        const number = new Intl.NumberFormat("ko-KR", { maximumFractionDigits: 2 });
+        const dateLabel = new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", month: "2-digit", day: "2-digit" });
+        const fullDateLabel = new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" });
+        let bars = [];
+        let sourceBars = [];
+        let displayStartDate = null;
+        let geometry = null;
+        let sourceLabel = "공개 시장 데이터";
+        let sourceWarning = "";
+
+        const isoDate = (date) => {
+          const pad = (value) => String(value).padStart(2, "0");
+          return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+        };
+        const average = (values) => values.reduce((sum, value) => sum + value, 0) / values.length;
+        const linePath = (points) => points.filter(Boolean).map((point, index) => `${index ? "L" : "M"}${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
+
+        const render = () => {
+          const period = Number(windowSelect.value);
+          const multiplier = Number(multiplierSelect.value);
+          const multiplierMeaning = {
+            1: "±1σ는 중앙선에서 한 칸 떨어진 좁은 밴드입니다. 가격이 밴드 밖으로 비교적 자주 나갑니다.",
+            1.5: "±1.5σ는 기본값보다 좁아 가격 변화에 민감하게 반응합니다.",
+            1.8: "±1.8σ는 2.0보다 조금 좁은 밴드로, 짧은 기간 설정과 비교해 볼 수 있습니다.",
+            1.9: "±1.9σ는 기본값보다 조금 좁은 밴드입니다. 기간을 줄였을 때 비교용으로 사용할 수 있습니다.",
+            2: "±2σ는 중앙선에서 두 칸 떨어진 기본 설정입니다. 최근의 보통 흔들림과 큰 이탈을 구분하는 데 자주 사용합니다.",
+            3: "±3σ는 중앙선에서 세 칸 떨어진 넓은 밴드입니다. 가격이 밴드 밖으로 나가는 경우가 상대적으로 드뭅니다.",
+          };
+          multiplierHelp.innerHTML = `<b>표준편차 배수는 밴드의 폭입니다.</b> ${multiplierMeaning[multiplier]}`;
+          if (sourceBars.length < period) {
+            chart.innerHTML = `<text class="axis" x="${WIDTH / 2}" y="${HEIGHT / 2}" text-anchor="middle">볼린저 밴드를 계산할 데이터가 부족합니다.</text>`;
+            status.textContent = `${period}일 밴드를 계산하려면 최소 ${period}개의 종가가 필요합니다.`;
+            geometry = null;
+            return;
+          }
+
+          const sourceBands = sourceBars.map((bar, index) => {
+            if (index < period - 1) return null;
+            const closes = sourceBars.slice(index - period + 1, index + 1).map((item) => item.close);
+            const middle = average(closes);
+            const deviation = Math.sqrt(average(closes.map((value) => (value - middle) ** 2)));
+            return { middle, upper: middle + deviation * multiplier, lower: middle - deviation * multiplier };
+          });
+          const matchedVisibleIndex = sourceBars.findIndex((bar) => !displayStartDate || bar.date >= displayStartDate);
+          const firstVisibleIndex = matchedVisibleIndex === -1 ? sourceBars.length : matchedVisibleIndex;
+          bars = sourceBars.slice(firstVisibleIndex);
+          const bands = sourceBands.slice(firstVisibleIndex);
+          if (!bars.length || !bands.at(-1)) {
+            chart.innerHTML = `<text class="axis" x="${WIDTH / 2}" y="${HEIGHT / 2}" text-anchor="middle">선택한 기간의 데이터가 없습니다.</text>`;
+            status.textContent = "선택한 조회 범위에 표시할 거래일 데이터가 없습니다.";
+            geometry = null;
+            return;
+          }
+          const values = bars.flatMap((bar, index) => bands[index] ? [bar.close, bands[index].upper, bands[index].lower] : [bar.close]);
+          let min = Math.min(...values), max = Math.max(...values);
+          const padding = Math.max((max - min) * 0.08, 1);
+          min -= padding;
+          max += padding;
+          const plotWidth = WIDTH - LEFT - RIGHT;
+          const plotHeight = HEIGHT - TOP - BOTTOM;
+          const x = (index) => LEFT + index / Math.max(1, bars.length - 1) * plotWidth;
+          const y = (value) => TOP + (max - value) / (max - min) * plotHeight;
+          const closePoints = bars.map((bar, index) => ({ x: x(index), y: y(bar.close) }));
+          const bandPoints = (key) => bands.map((band, index) => band ? { x: x(index), y: y(band[key]) } : null);
+          const upperPoints = bandPoints("upper").filter(Boolean);
+          const lowerPoints = bandPoints("lower").filter(Boolean);
+          const area = [...upperPoints, ...[...lowerPoints].reverse()].map((point) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
+
+          let grid = "";
+          for (let index = 0; index <= 4; index += 1) {
+            const value = min + (max - min) * index / 4;
+            const gridY = y(value);
+            grid += `<line class="grid" x1="${LEFT}" y1="${gridY.toFixed(1)}" x2="${WIDTH - RIGHT}" y2="${gridY.toFixed(1)}"/><text class="axis" x="${LEFT - 8}" y="${(gridY + 4).toFixed(1)}" text-anchor="end">${number.format(value)}</text>`;
+          }
+          let dates = "";
+          for (let index = 0; index < 5; index += 1) {
+            const barIndex = Math.round(index / 4 * (bars.length - 1));
+            dates += `<text class="axis" x="${x(barIndex).toFixed(1)}" y="${HEIGHT - 10}" text-anchor="middle">${dateLabel.format(bars[barIndex].date)}</text>`;
+          }
+          chart.innerHTML = `${grid}<polygon class="band-area" points="${area}"/><path class="band-edge" d="${linePath(bandPoints("upper"))}"/><path class="band-edge" d="${linePath(bandPoints("lower"))}"/><path class="middle" d="${linePath(bandPoints("middle"))}"/><path class="close" d="${linePath(closePoints)}"/>${dates}`;
+
+          const latestBar = bars.at(-1);
+          const latestBand = bands.at(-1);
+          closeEl.textContent = number.format(latestBar.close);
+          middleEl.textContent = number.format(latestBand.middle);
+          upperEl.textContent = number.format(latestBand.upper);
+          lowerEl.textContent = number.format(latestBand.lower);
+          const location = latestBar.close > latestBand.upper ? "상단 밴드 위" : latestBar.close < latestBand.lower ? "하단 밴드 아래" : "밴드 안";
+          status.textContent = `차트 ${fullDateLabel.format(bars[0].date)}~${fullDateLabel.format(latestBar.date)} · ${bars.length}거래일. ${latestBar.date ? fullDateLabel.format(latestBar.date) : "최근"} 종가는 ${location}에 있습니다. ${period}거래일 이동평균 · ±${multiplier}σ · 데이터: ${sourceLabel}.${sourceWarning}`;
+          geometry = { bands, x, y };
+        };
+
+        const load = async () => {
+          status.textContent = "실제 KOSPI 200 데이터를 불러오는 중입니다.";
+          chart.setAttribute("aria-busy", "true");
+          tooltip.hidden = true;
+          const end = new Date();
+          end.setDate(end.getDate() + 1);
+          displayStartDate = new Date(end);
+          displayStartDate.setDate(displayStartDate.getDate() - Number(rangeSelect.value));
+          displayStartDate.setHours(0, 0, 0, 0);
+          const calculationStart = new Date(displayStartDate);
+          calculationStart.setDate(calculationStart.getDate() - 75);
+          try {
+            const response = await fetch(`/market/kospi200-history?start=${isoDate(calculationStart)}&end=${isoDate(end)}`, { headers: { Accept: "application/json" } });
+            if (!response.ok) throw new Error("history request failed");
+            const payload = await response.json();
+            sourceLabel = payload.source || "공개 시장 데이터";
+            sourceWarning = Array.isArray(payload.warnings) && payload.warnings.length ? ` ${payload.warnings.join(" ")}` : "";
+            sourceBars = (payload.bars || []).map((bar) => ({ date: new Date(Number(bar.time)), close: Number(bar.close) })).filter((bar) => Number.isFinite(bar.close) && !Number.isNaN(bar.date.getTime())).sort((a, b) => a.date - b.date);
+            if (!sourceBars.length) throw new Error("empty history");
+            render();
+          } catch {
+            bars = [];
+            sourceBars = [];
+            geometry = null;
+            chart.innerHTML = `<text class="axis" x="${WIDTH / 2}" y="${HEIGHT / 2}" text-anchor="middle">실제 데이터를 불러오지 못했습니다.</text>`;
+            status.textContent = "KOSPI 200 일별 데이터를 불러오지 못했습니다. 잠시 뒤 다시 시도해 주세요.";
+            [closeEl, middleEl, upperEl, lowerEl].forEach((element) => { element.textContent = "—"; });
+          } finally {
+            chart.removeAttribute("aria-busy");
+          }
+        };
+
+        chart.addEventListener("pointermove", (event) => {
+          if (!geometry || !bars.length) return;
+          const rect = chart.getBoundingClientRect();
+          const viewX = (event.clientX - rect.left) / rect.width * WIDTH;
+          const index = Math.max(0, Math.min(bars.length - 1, Math.round((viewX - LEFT) / (WIDTH - LEFT - RIGHT) * (bars.length - 1))));
+          const bar = bars[index];
+          const band = geometry.bands[index];
+          tooltip.innerHTML = `<b>${fullDateLabel.format(bar.date)}</b><span>종가 ${number.format(bar.close)}</span>${band ? `<span>평균 ${number.format(band.middle)}</span><span>상단 ${number.format(band.upper)} · 하단 ${number.format(band.lower)}</span>` : `<span>밴드 계산 전 구간</span>`}`;
+          tooltip.hidden = false;
+          const shellRect = shell.getBoundingClientRect();
+          tooltip.style.left = `${Math.min(shell.clientWidth - 190, Math.max(0, event.clientX - shellRect.left))}px`;
+          tooltip.style.top = `${Math.min(shell.clientHeight - 45, Math.max(45, event.clientY - shellRect.top))}px`;
+        });
+        chart.addEventListener("pointerleave", () => { tooltip.hidden = true; });
+        rangeSelect.addEventListener("change", load);
+        windowSelect.addEventListener("change", render);
+        multiplierSelect.addEventListener("change", render);
+        load();
       })();
     </script>
     <script src="../assets/day4-project-schedule.js?v=20260919-100-120-hours"></script>

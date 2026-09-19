@@ -299,8 +299,8 @@ async def kospi200_history(
     available from a free, unauthenticated feed, so the basis tool combines
     this real spot series with a user-adjustable theoretical futures estimate.
     """
-    if start >= end or (end - start).days > 180:
-        raise HTTPException(status_code=400, detail="조회 기간은 최대 180일이며 시작일은 종료일보다 앞서야 합니다.")
+    if start >= end or (end - start).days > 270:
+        raise HTTPException(status_code=400, detail="조회 기간은 최대 270일이며 시작일은 종료일보다 앞서야 합니다.")
 
     cache_key = f"{start.isoformat()}:{end.isoformat()}"
     now = datetime.now(timezone.utc)
