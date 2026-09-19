@@ -267,7 +267,7 @@
     const walker = document.createTreeWalker(document.querySelector('#app'), NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
         if (!node.parentElement?.closest('.lesson-body, .goal, .check')) return NodeFilter.FILTER_REJECT;
-        if (node.parentElement.closest('a, button, script, style')) return NodeFilter.FILTER_REJECT;
+        if (node.parentElement.closest('a, button, .no-glossary-link, script, style')) return NodeFilter.FILTER_REJECT;
         return NodeFilter.FILTER_ACCEPT;
       },
     });

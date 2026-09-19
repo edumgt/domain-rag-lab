@@ -4,13 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>01일차 | 4일 금융 이론 — 선물과 옵션</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260915-futures-settlement-compact" />
-    <link rel="stylesheet" href="assets/app-shell.css?v=20260908-modal-text105" />
+    <link rel="stylesheet" href="assets/site.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="../hangul-scale.css?v=20260919-1" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <script defer src="assets/visuals.js?v=20260905-zero-sum-moved"></script>
+    <script defer src="assets/visuals.js?v=20260919-small-text110"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260915-term-readings"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
@@ -2630,9 +2631,9 @@
             chart: { type: "bar", height: 390, toolbar: { show: false }, fontFamily: "inherit" },
             series: [{ name: "공식 금 보유량", data: holdings.map(([, value]) => value) }],
             colors: ["#d8a600"], plotOptions: { bar: { horizontal: true, barHeight: "58%", borderRadius: 3 } },
-            dataLabels: { enabled: true, formatter: (value) => `${value.toLocaleString("ko-KR", { maximumFractionDigits: 0 })}t`, style: { fontSize: "12px", fontWeight: 700 } },
+            dataLabels: { enabled: true, formatter: (value) => `${value.toLocaleString("ko-KR", { maximumFractionDigits: 0 })}t`, style: { fontSize: "13.2px", fontWeight: 700 } },
             xaxis: { categories: holdings.map(([country]) => country), labels: { formatter: (value) => `${Number(value).toLocaleString("ko-KR")}t` } },
-            yaxis: { labels: { style: { fontSize: "14px", fontWeight: 700 } } },
+            yaxis: { labels: { style: { fontSize: "15.4px", fontWeight: 700 } } },
             grid: { borderColor: "#dbe4f0", strokeDashArray: 3 }, tooltip: { y: { formatter: (value) => `${value.toLocaleString("ko-KR", { maximumFractionDigits: 1 })}톤` } },
           });
           chart.render();
@@ -2656,9 +2657,9 @@
           series: [{ name: "규모", data: data.map(([, value]) => value) }],
           colors: [color],
           plotOptions: { bar: { horizontal: true, barHeight: "58%", borderRadius: 3 } },
-          dataLabels: { enabled: true, formatter: formatTrillion, style: { fontSize: "12px", fontWeight: 700 } },
+          dataLabels: { enabled: true, formatter: formatTrillion, style: { fontSize: "13.2px", fontWeight: 700 } },
           xaxis: { categories: data.map(([label]) => label), labels: { formatter: (value) => `${Number(value).toLocaleString("ko-KR")}조` } },
-          yaxis: { labels: { style: { fontSize: "13px", fontWeight: 700 } } },
+          yaxis: { labels: { style: { fontSize: "14.3px", fontWeight: 700 } } },
           grid: { borderColor: "#dbe4f0", strokeDashArray: 3 },
           tooltip: { y: { formatter: formatTrillion } },
         });
@@ -2877,8 +2878,8 @@
             dataLabels: { enabled: false },
             markers: { size: 4, strokeWidth: 3, hover: { size: 6 } },
             grid: { borderColor: "#dbe3ef", strokeDashArray: 4, padding: { left: 12, right: 18 } },
-            xaxis: { categories, tickPlacement: "on", labels: { style: { colors: "#63708a", fontSize: "12px" } } },
-            yaxis: { labels: { formatter: shortMoney, style: { colors: "#63708a", fontSize: "12px" } } },
+            xaxis: { categories, tickPlacement: "on", labels: { style: { colors: "#63708a", fontSize: "13.2px" } } },
+            yaxis: { labels: { formatter: shortMoney, style: { colors: "#63708a", fontSize: "13.2px" } } },
             tooltip: { y: { formatter: value => `${fmt(value)}원` } },
             theme: { mode: "light" },
           };
@@ -2919,8 +2920,8 @@
             fill: { type: "gradient", gradient: { opacityFrom: 0.34, opacityTo: 0.04 } },
             dataLabels: { enabled: false }, markers: { size: 0 },
             grid: { borderColor: "#dbe3ef", strokeDashArray: 4 },
-            xaxis: { categories: balances.map((_, month) => `${month}개월`), labels: { style: { colors: "#63708a", fontSize: "11px" } } },
-            yaxis: { labels: { formatter: shortMoney, style: { colors: "#63708a", fontSize: "11px" } } },
+            xaxis: { categories: balances.map((_, month) => `${month}개월`), labels: { style: { colors: "#63708a", fontSize: "12.1px" } } },
+            yaxis: { labels: { formatter: shortMoney, style: { colors: "#63708a", fontSize: "12.1px" } } },
             tooltip: { y: { formatter: value => `${fmt(value)}원` } },
           };
           if (!liquidityChart) { liquidityChart = new window.ApexCharts(liquidityChartElement, options); liquidityChart.render(); }
@@ -2961,8 +2962,8 @@
             dataLabels: { enabled: false }, markers: { size: 3, strokeWidth: 2 },
             grid: { borderColor: "#dbe3ef", strokeDashArray: 4 },
             annotations: { xaxis: [{ x: "7개월", borderColor: "#eda100", label: { text: "금리 조정", style: { color: "#fff", background: "#eda100" } } }] },
-            xaxis: { categories: monthlyInterest.map((_, month) => `${month + 1}개월`), labels: { style: { colors: "#63708a", fontSize: "11px" } } },
-            yaxis: { labels: { formatter: value => `${Math.round(value / 10000)}만`, style: { colors: "#63708a", fontSize: "11px" } } },
+            xaxis: { categories: monthlyInterest.map((_, month) => `${month + 1}개월`), labels: { style: { colors: "#63708a", fontSize: "12.1px" } } },
+            yaxis: { labels: { formatter: value => `${Math.round(value / 10000)}만`, style: { colors: "#63708a", fontSize: "12.1px" } } },
             tooltip: { y: { formatter: value => `${fmt(value)}원` } },
           };
           if (!rateRiskChart) { rateRiskChart = new window.ApexCharts(rateRiskChartElement, options); rateRiskChart.render(); }

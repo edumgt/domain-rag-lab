@@ -82,12 +82,12 @@
         colors: ["#64748b", "#d05a8c"],
         stroke: { width: [2, 3], dashArray: [6, 0], curve: "smooth" },
         markers: { size: 0 },
-        xaxis: { type: "numeric", min: -range, max: range, tickAmount: 4, title: { text: "금리 변화폭 (%p) · 시간축 아님", style: { fontSize: "12px" } }, labels: { formatter: (value) => `${Number(value).toFixed(1)}%p` } },
-        yaxis: { title: { text: "대출채권 반영 가치 (원)", style: { fontSize: "12px" } }, labels: { formatter: (value) => `${Math.round(value / 10000).toLocaleString("ko-KR")}만` } },
+        xaxis: { type: "numeric", min: -range, max: range, tickAmount: 4, title: { text: "금리 변화폭 (%p) · 시간축 아님", style: { fontSize: "13.2px" } }, labels: { formatter: (value) => `${Number(value).toFixed(1)}%p` } },
+        yaxis: { title: { text: "대출채권 반영 가치 (원)", style: { fontSize: "13.2px" } }, labels: { formatter: (value) => `${Math.round(value / 10000).toLocaleString("ko-KR")}만` } },
         grid: { borderColor: "#e2e8f0" },
-        legend: { position: "top", horizontalAlign: "left", fontSize: "12px" },
+        legend: { position: "top", horizontalAlign: "left", fontSize: "13.2px" },
         tooltip: { x: { formatter: (value) => `금리 ${Number(value).toFixed(2)}%p` }, y: { formatter: money } },
-        annotations: { points: [{ x: selectedChange, y: selectedPrice, marker: { size: 5, fillColor: "#d05a8c", strokeColor: "#fff" }, label: { text: "음의 컨벡시티 반영", borderColor: "#d05a8c", style: { color: "#fff", background: "#d05a8c", fontSize: "11px" } } }] },
+        annotations: { points: [{ x: selectedChange, y: selectedPrice, marker: { size: 5, fillColor: "#d05a8c", strokeColor: "#fff" }, label: { text: "음의 컨벡시티 반영", borderColor: "#d05a8c", style: { color: "#fff", background: "#d05a8c", fontSize: "12.1px" } } }] },
       };
       if (chart) chart.updateOptions(options, false, true);
       else { chart = new ApexCharts(chartElement, options); chart.render(); }
@@ -173,12 +173,12 @@
         colors: ["#64748b", "#7c3aed", "#0b9b72"],
         stroke: { width: [2, 3, 2], dashArray: [6, 0, 3], curve: "smooth" },
         markers: { size: 0 },
-        xaxis: { type: "numeric", min: -range, max: range, tickAmount: 4, title: { text: "할인율 변화폭 (%p) · 시간축 아님", style: { fontSize: "12px" } }, labels: { formatter: (value) => `${Number(value).toFixed(1)}%p` } },
-        yaxis: { title: { text: "부채 현재가치 (원)", style: { fontSize: "12px" } }, labels: { formatter: (value) => `${Math.round(value / 10000).toLocaleString("ko-KR")}만` } },
+        xaxis: { type: "numeric", min: -range, max: range, tickAmount: 4, title: { text: "할인율 변화폭 (%p) · 시간축 아님", style: { fontSize: "13.2px" } }, labels: { formatter: (value) => `${Number(value).toFixed(1)}%p` } },
+        yaxis: { title: { text: "부채 현재가치 (원)", style: { fontSize: "13.2px" } }, labels: { formatter: (value) => `${Math.round(value / 10000).toLocaleString("ko-KR")}만` } },
         grid: { borderColor: "#e2e8f0" },
-        legend: { position: "top", horizontalAlign: "left", fontSize: "12px" },
+        legend: { position: "top", horizontalAlign: "left", fontSize: "13.2px" },
         tooltip: { x: { formatter: (value) => `할인율 ${Number(value).toFixed(2)}%p 변화` }, y: { formatter: money } },
-        annotations: { points: [{ x: selectedChange, y: selectedPrice, marker: { size: 5, fillColor: "#7c3aed", strokeColor: "#fff" }, label: { text: "컨벡시티 반영 가치", borderColor: "#7c3aed", style: { color: "#fff", background: "#7c3aed", fontSize: "11px" } } }] },
+        annotations: { points: [{ x: selectedChange, y: selectedPrice, marker: { size: 5, fillColor: "#7c3aed", strokeColor: "#fff" }, label: { text: "컨벡시티 반영 가치", borderColor: "#7c3aed", style: { color: "#fff", background: "#7c3aed", fontSize: "12.1px" } } }] },
       };
       if (chart) chart.updateOptions(options, false, true);
       else { chart = new ApexCharts(chartElement, options); chart.render(); }

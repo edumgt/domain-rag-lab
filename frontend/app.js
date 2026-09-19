@@ -147,12 +147,10 @@
         ['퀀트 투자란 무엇인가요?', ['퀀트(quant)는 quantitative, 즉 “정량적인”이라는 말에서 왔습니다. 퀀트 투자는 가격·거래량·재무정보·금리처럼 측정할 수 있는 데이터를 바탕으로 가설을 세우고, 일정한 규칙으로 투자 판단과 위험관리를 돕는 접근입니다.', '중요한 점은 숫자나 코드가 미래를 맞혀 주는 마법이 아니라는 것입니다. 좋은 퀀트 분석은 어떤 데이터를 썼는지, 규칙이 과거에만 잘 맞았던 것은 아닌지, 수수료·세금·거래비용과 큰 손실 구간까지 반영했는지를 함께 점검합니다.', '따라서 퀀트는 “한 번에 크게 맞히기”보다 검증 가능한 규칙과 위험 한도를 세우는 데 가깝습니다. 이 과정에서 오늘 배울 분산, 변동성, 최대낙폭(MDD), 샤프 비율이 전략과 포트폴리오를 평가하는 공통 언어가 됩니다.']],
         ['젠포트·퀀터스 같은 노코드 퀀트 플랫폼: 전략을 만들고 검증하는 흐름', ['젠포트(뉴지스탁)와 퀀터스는 코드를 직접 작성하지 않고 조건·팩터·비중을 화면에서 조합해 전략을 만들고 백테스트할 수 있는 국내 퀀트 플랫폼의 예입니다. 두 서비스 모두 전략을 실전 계좌 운용에 연결하는 기능을 안내하지만, 이용 가능한 자산·증권사·거래소·주문 방식과 비용은 상품·계좌·시점에 따라 달라질 수 있으므로 가입 전 공식 안내와 약관을 확인해야 합니다.', '젠포트는 뉴지스탁이 운영하는 노코드 퀀트 플랫폼으로 genport.newsystock.com에서 이용합니다. 뉴지스탁 회원가입 후 로그인하면 화면 상단 멤버십 영역에서 가입이 끝나고, 신규 가입 시 백테스트 20회 무료 혜택이 제공됩니다. 로그인 후에는 MY뉴지 메뉴에서 내 포트를 관리합니다. 전략 유형은 단기·중기 매매를 다루는 트레이딩, 중장기 포트폴리오를 구성하는 자산배분, 테마·업종·지수를 조합하는 다이렉트 인덱싱 세 가지로 나뉘며, 종목발굴 메뉴에서 조건을 조합해 종목을 고르고 백테스트 메뉴에서 누적수익률·CAGR·MDD 같은 성과지표를 확인합니다. 완성한 전략은 포트 관리·포트 랭킹에서 계속 추적하고, 아카데미 강의로 사용법을 익힐 수 있습니다.', '퀀터스는 quantus.kr 웹사이트와 iOS·Android 앱으로 이용합니다. 가입은 앱 설치 또는 웹 접속, 회원가입, 증권사·거래소 계좌 연동, 투자 전략 선택 순서로 진행되며 카드 등록 없이 무료로 시작할 수 있습니다. 메뉴는 크게 둘로 나뉘는데, 타이탄은 이미 검증된 전략을 클릭 한 번으로 연동 계좌에 적용해 매매 신호·리밸런싱을 자동 안내받는 기능이고, 파운드리는 100개 이상의 투자 팩터에 직접 가중치를 설정해 포트폴리오를 백테스트하는 고급 기능입니다(백테스트는 유료 이용권이 필요합니다). 국내·미국뿐 아니라 홍콩·일본 주식과 코인 전략도 지원합니다. 두 서비스 모두 자산은 본인 명의의 증권사·거래소 계좌에 그대로 보관되고 플랫폼은 신호·주문 실행만 돕는 구조이므로, 가입 전 계좌 연동 범위와 수수료·이용권 정책을 공식 화면에서 다시 확인하세요.', '시작은 간단한 한 문장 규칙입니다. 예를 들어 “재무 지표가 일정 기준을 충족하는 종목 중 최근 3개월 성과가 좋은 20종목을 고르고, 매월 한 번 같은 규칙으로 다시 구성한다”처럼 매수 조건, 종목 수, 비중, 교체 주기를 함께 정합니다. 그다음 백테스트에서 CAGR(연평균성장률)만 보지 말고 MDD(최대낙폭), 거래 횟수, 보유기간, 회전율과 비용 차감 뒤 성과를 함께 확인합니다.', '실전 연결 전에는 ① 과거 구간과 다른 표본 밖 기간에서도 결과가 유지되는지 ② 시가총액·거래량이 낮은 종목에서 실제 체결이 가능한지 ③ 수수료·세금·슬리피지와 리밸런싱 비용을 넣었는지 ④ 자동주문이 아닌 알림·수동 주문 방식도 가능한지 확인합니다. 퀀터스는 안내상 백테스트에 수수료·슬리피지를 기본 반영하고, 연결 계좌에서는 전략에 따른 자동 리밸런싱을 제공한다고 설명합니다. 실제 적용 조건은 계좌 연결 화면에서 다시 확인해야 합니다.', '조건을 계속 늘려 과거 수익률만 높이는 과적합은 가장 흔한 함정입니다. MDD가 작아 보이는 이유가 데이터 선택이나 거래 불가능한 가격 가정 때문은 아닌지도 점검하세요. 자동 주문을 켜더라도 주문 결과와 오류 알림을 확인하고, 예상 밖 손실·시장 급변동 때 중단할 기준을 미리 정해야 합니다. 플랫폼은 도구이지 수익을 보장하는 전략이 아닙니다.']],
         ['에드워드 소프 교수: 확률과 검증을 시장에 적용한 선구자', ['에드워드 O. 소프(Edward O. Thorp) 교수는 수학과 확률을 활용해 블랙잭을 분석한 뒤, 그 방법을 금융시장 연구로 확장한 수학자·금융 연구자입니다. 그는 카드 게임과 시장 모두에서 직감보다 관찰 가능한 정보, 확률, 반복 가능한 규칙을 중시했습니다.', '소프 교수는 옵션 가격과 시장의 가격 차이를 분석하는 방식 등 초기 정량투자의 발전에 영향을 주었습니다. 그의 사례는 과거의 성공 공식을 그대로 따라 하자는 뜻이 아니라, 투자 아이디어도 데이터와 가정으로 검증하고 위험을 제한해야 한다는 태도를 보여 줍니다.', '과거 성과나 유명 인물의 방법은 미래 수익을 보장하지 않습니다. 특히 실제 시장에서는 거래비용, 유동성 부족, 모델의 오류와 예상 밖 사건이 생길 수 있으므로, 전략을 적용하기 전에는 작은 가정부터 검증하고 손실 한도를 정해야 합니다.']],
-        ['히든 마코프 모델(HMM): 보이지 않는 시장 국면을 추정하는 방법', ['히든 마코프 모델(Hidden Markov Model, HMM)은 우리가 직접 볼 수 없는 “상태”가 있고, 가격 수익률·변동성·거래량 같은 관측값이 그 상태에 따라 달라진다고 가정하는 확률 모형입니다. 제임스 사이먼스와 르네상스 테크놀로지스의 실제 전체 운용 모델은 공개되어 있지 않으므로, HMM을 그의 비공개 전략이라고 단정할 수는 없습니다. 여기서는 사이먼스 사례와 연결해 배우는 대표적인 퀀트 도구로만 다룹니다.', '쉬운 예로 시장에 “잔잔한 국면”과 “불안한 국면” 두 가지가 있다고 생각해 보세요. 두 국면의 이름표는 화면에 보이지 않지만, 잔잔한 날에는 작은 등락과 낮은 변동성이, 불안한 날에는 큰 등락과 높은 변동성이 자주 관측됩니다. HMM은 최근 며칠의 수익률·변동성을 보고 오늘이 어느 국면일 가능성이 더 큰지 확률로 추정합니다.', '예를 들어 모형이 “잔잔한 국면일 확률 75%”라고 추정하면 페어 트레이딩 신호를 평소 규칙으로 검토하고, “불안한 국면일 확률 80%”이면 같은 Z-점수 신호라도 거래 규모를 줄이거나 새 진입을 멈추는 안전 규칙을 둘 수 있습니다. 이것은 방향을 예언하는 기계가 아니라, 서로 다른 시장 환경에서 위험 한도를 다르게 적용해 보는 방법입니다.', 'HMM도 상태 수를 몇 개로 정할지, 어떤 데이터를 넣을지에 따라 결과가 달라지고 과거에만 맞는 과적합이 생길 수 있습니다. 따라서 국면 이름을 보고 매수·매도하지 말고, 표본 밖 검증·거래비용·급격한 체제 변화 시나리오를 포함해 평가해야 합니다.']],
-        ['시타델·메릴린치 사례로 보는 초단타와 주문 처리의 공정성', ['시타델 증권과 메릴린치는 하나의 공동 사건으로 제재받은 것이 아니라, 미국 SEC가 각각 다른 주문 처리 문제를 지적한 별도 사례입니다. 이 사례는 초단타나 알고리즘의 “속도” 자체가 문제라기보다, 고객 주문정보를 보호하고 실제 체결 경로·가격을 투명하게 알려야 한다는 원칙을 보여 줍니다.', '메릴린치 사례를 쉬운 말로 바꾸면, 고객이 “내 큰 주문은 외부의 특정 거래회사로 보내지 말아 달라”고 요청했는데, 실제로는 외부 회사로 보냈으면서 고객에게는 마치 내부에서 처리한 것처럼 알려 준 경우입니다. 큰 주문의 방향이 새어 나가면 다른 거래자가 먼저 움직일 수 있다는 정보 유출 우려가 있으므로, 고객은 주문이 어디에서 체결되는지를 알고 선택할 권리가 있습니다.', '시타델 증권 사례에서는 고객 주문을 받은 뒤 최선 가격을 제공하거나 찾겠다고 설명했지만, SEC는 일부 알고리즘이 그 설명과 다르게 작동해 일부 주문에서 더 나은 가격을 확인·제공하지 못했다고 판단했습니다. 예를 들어 화면상 10,000원에 살 수 있다고 안내받았는데 실제로는 더 낮은 9,990원 호가를 확인하지 않아 10,000원에 체결됐다면, 10원 차이도 주문이 많아지면 중요한 비용이 될 수 있습니다.', '두 사례의 핵심 점검 질문은 ① 내 주문이 실제 어디로 가는가 ② 주문 경로에 이해상충이나 정보 유출 위험은 없는가 ③ 약속한 최선집행 기준과 실제 체결가격이 일치하는가입니다. SEC는 메릴린치의 체결 경로 허위 안내에 4,200만 달러, 시타델 증권의 가격 설명 문제에 2,200만 달러의 제재금을 부과했습니다. 이는 특정 회사나 초단타 전체를 단정하는 내용이 아니라, 자동화된 주문 시스템도 투명성·기록·감독이 필요하다는 교육 사례입니다.']],
-        ['한국의 고빈도 알고리즘 거래 규제: 등록·위험관리·시장감시', ['한국에서 고빈도 알고리즘 거래(HFT) 자체가 전면 금지된 것은 아닙니다. 다만 2023년 1월 25일 거래자 등록·위험관리 제도가 시행됐고, 3개월 유예 뒤 2023년 4월 25일부터 등록이 의무화됐습니다. 고빈도 알고리즘 거래를 하려는 투자자는 한국거래소에 사전 등록해야 하며, 거래소는 등록 거래자별 식별코드(ID)를 부여해 거래를 모니터링합니다.', '등록만 하면 무엇이든 허용되는 것은 아닙니다. 전산설비의 안정성과 적정성, 거래 전문성, 내부통제 관리체계가 필요하며, 주문을 받는 증권사도 주문사고 예방을 위해 해당 거래자의 주문 시스템을 사전에 점검하는 위험관리 의무를 집니다. 거래소는 고빈도 알고리즘 거래에 특화한 시장감시 기준과 이상거래 적출·분석 체계를 운영합니다.', '실제 제재 사례로 금융위원회 증권선물위원회는 2023년 1월 해외 소재 A 증권사의 고빈도 알고리즘을 이용한 시장질서 교란행위에 118억 8천만 원의 과징금을 의결했습니다. 공식 발표는 회사를 익명으로 표기합니다. 반복적 고가·물량소진 매수나 호가공백 메우기처럼 시장의 수급을 오인하게 하는 주문은 속도가 빠르다는 이유가 아니라 그 목적·반복성·시장 영향 때문에 문제가 됩니다.', '알고리즘 매매는 호가를 제시해 유동성과 가격발견에 도움을 줄 수도 있지만, 전용 시스템·주문 처리 속도만으로 공정성이 보장되지는 않습니다. 투자자는 호가 잔량만 보고 따라가기보다 체결량·공시·뉴스를 함께 보고, 시장 참여자는 주문 한도·오류 차단·기록 보관 같은 통제로 불공정거래 위험을 줄여야 합니다. 주문 취소 수수료나 최소 호가 유지시간 같은 추가 규제는 해외 사례를 참고한 정책 논의 대상이지만, 현행 국내 의무로 단정하지 않습니다.']],
-        ['허수성 주문(스푸핑): 호가창 착시를 이용한 시세조종', ['허수성 주문은 실제로 체결할 의사 없이 많은 주문을 냈다가 체결될 것 같아지면 취소해, 다른 투자자가 수요·공급을 잘못 판단하도록 유도하는 행위입니다. 해외에서는 스푸핑(spoofing)이라고도 부릅니다. 정상적인 주문 취소는 가격 판단이나 위험관리 때문에 발생할 수 있지만, 처음부터 시장을 속일 목적이었다면 전혀 다른 문제입니다.', '개념을 위한 예로, 누군가 대량 매수세가 있는 것처럼 보이게 주문을 쌓아 다른 사람이 “수요가 강하다”고 오인하도록 만든 뒤, 그 반응으로 가격이 움직이면 자신이 미리 가진 물량을 반대 방향으로 거래하고 남은 주문을 취소하는 상황을 생각할 수 있습니다. 핵심은 특정 주문 하나가 아니라 반복된 주문·취소, 실제 체결 의사, 반대편 거래와 시장을 오인하게 한 목적을 함께 본다는 점입니다.', '이런 행위는 호가창의 정보 가치를 떨어뜨리고, 일반 투자자의 판단과 공정한 가격 형성을 방해합니다. 한국거래소는 체결 가능성이 낮은 가격의 대량 주문을 반복해 다른 사람의 거래를 유인하는 행위를 허수성 주문을 이용한 불공정거래의 대표 사례로 안내합니다. 시세조종은 자본시장법상 금지되며 제재·형사처벌 대상이 될 수 있습니다.', '자동화·초단타 시스템이 주문을 빠르게 수정하거나 취소한다는 사실만으로 허수성 주문이 되는 것은 아닙니다. 다만 알고리즘을 운용하는 경우에도 실제 거래 의도, 주문·취소 기록, 위험관리 규칙과 시장 영향에 대한 내부 통제가 필요합니다. 호가창의 큰 잔량 하나만 보고 매수·매도하지 말고 체결량, 지속 시간, 공시·뉴스와 함께 확인하세요.']],
-        ['스캘핑·데이트레이딩·스윙: 보유 기간으로 보는 단기 매매', ['스캘핑(scalping)은 가격의 아주 작은 움직임을 노리고 수초~수분처럼 짧게 보유하며 여러 번 거래하는 방식입니다. 데이트레이딩(day trading)은 당일 안에 진입과 청산을 끝내 밤새 포지션을 넘기지 않으려는 방식이고, 스윙 트레이딩(swing trading)은 보통 며칠~수주 동안 단기 파동이나 추세를 관찰하는 방식입니다.', '스캘핑은 거래량이 충분하고 호가 차이가 좁은 종목에서 체결을 빠르게 관리해야 한다는 특징이 있습니다. 하지만 스캘핑은 개인이 수동으로 할 수도 있고, 초단타 매매(HFT)는 기관이 알고리즘·전용 시스템으로 실행할 수도 있으므로 두 말은 같은 뜻이 아닙니다. HFT가 더 짧은 시간 단위와 자동화를 사용한다고 해서 모든 스캘핑이 HFT인 것은 아닙니다.', '짧게 보유한다고 위험이 없어지는 것은 아닙니다. 급격한 뉴스·변동성·체결 지연·호가 공백은 수초 안에도 발생할 수 있고, 잦은 매매는 수수료·세금·호가 차이·슬리피지를 누적시킵니다. 예를 들어 한 번에 0.1%의 작은 가격 차이를 기대해도 왕복 비용이 그보다 크면 전략은 손실이 됩니다.', '따라서 단기 매매를 분석할 때는 “몇 번 맞혔는가”보다 거래 한 번당 평균 이익과 평균 손실, 체결비용을 뺀 손익, 최대 연속 손실, 주문이 실제로 체결된 비율을 함께 봐야 합니다. 세금과 수수료 조건은 계좌·상품·시점에 따라 달라질 수 있으므로 실제 거래 전 증권사와 관계 기관의 최신 안내를 확인하세요.']],
-        ['벰버거의 페어 트레이딩: 함께 움직이던 두 가격의 간격 보기', ['페어 트레이딩(pair trading)은 비슷한 업종·사업 구조처럼 과거에 함께 움직이는 경향이 있었던 두 자산의 가격 간격이 일시적으로 벌어졌을 때, 비싸진 쪽은 매도(숏)하고 싼 쪽은 매수해 간격이 다시 좁아지는지를 보는 통계적 차익거래 접근입니다. 1980년대 모건스탠리의 제리(제럴드) 벰버거가 개척한 방식으로 널리 알려져 있습니다.', '아주 단순한 예를 들어 A와 B 주가가 모두 100원에서 출발해 비슷하게 움직였는데, 어느 날 A만 110원으로 오르고 B는 100원에 머문다고 해 보세요. 전략은 A 1주를 매도하고 B 1주를 매수한 뒤, 둘 다 105원 부근으로 돌아올 때 청산하는 것입니다. 이 경우 A 매도에서는 5원, B 매수에서는 5원의 이익이 생겨 합계 10원입니다. 수수료·세금·대차비용은 빼지 않은 이해용 예시입니다.', '알고리즘은 보통 ① 경제적으로 비교할 만한 두 자산을 고르고 ② 과거 가격 간격이 평균으로 돌아오는 성질이 있는지 검정한 뒤 ③ 간격이 평소보다 크게 벌어졌을 때만 진입하고 ④ 간격이 정상화되거나 손실 한도를 넘으면 청산하는 규칙으로 구성됩니다. 단순 상관관계가 높다는 사실만으로 평균 회귀가 보장되지는 않으므로, 스프레드·표준편차·Z-점수와 표본 밖 데이터로 함께 점검합니다.', '두 가격이 다시 만나지 않고 A가 더 오르거나 B가 더 내리면 양쪽 포지션에서 손실이 날 수 있습니다. 공매도 가능 여부와 대차비용, 거래비용, 유동성, 기업 합병·실적 같은 구조 변화도 결과를 바꿉니다. 따라서 “시장 중립”은 시장 방향 위험을 일부 줄이려는 설계일 뿐 손실이 없는 전략이라는 뜻은 아닙니다.']],
+        ['시장 분위기 알아보기: 잔잔한지 불안한지 추정하는 HMM', ['한마디로 HMM은 최근 가격 움직임을 보고 현재 시장 분위기를 짐작하는 계산법입니다. 화면에 “오늘은 불안한 시장”이라는 이름표가 붙지는 않지만, 가격이 얼마나 크게 오르내렸는지를 보면 어느 정도 추정할 수 있습니다.', '날씨를 짐작하는 것과 비슷합니다. 밖을 직접 보지 못해도 우산을 든 사람이 많고 바닥이 젖어 있으면 비가 왔다고 짐작할 수 있습니다. HMM도 최근 가격이 조금씩 움직이면 “잔잔한 시장”, 큰 폭으로 자주 움직이면 “불안한 시장”일 가능성이 높다고 계산합니다.', '사용 순서는 간단합니다. ① 최근 며칠의 가격 움직임을 봅니다. ② 작은 움직임이 많으면 잔잔함, 큰 움직임이 많으면 불안함으로 나눕니다. ③ “잔잔함 25%, 불안함 75%”처럼 어느 쪽에 가까운지 확률로 표시합니다.', '불안함이 80%로 높게 나오면 새 투자를 잠시 미루거나 투자금액을 줄이는 안전 규칙에 활용할 수 있습니다. 다만 HMM은 내일 주가가 오를지 내릴지를 맞히는 기계가 아니라, 현재 시장이 얼마나 불안해 보이는지 판단하도록 돕는 도구입니다.']],
+        ['초단타 주문은 어떻게 공정하게 관리할까: 해외 사례와 한국 규제', ['초단타 거래는 컴퓨터가 매우 짧은 시간에 주문을 내고 고치거나 취소하는 방식입니다. 빠르다는 이유만으로 불법인 것은 아닙니다. 고객에게 약속한 가격과 주문 경로를 지켰는지, 다른 투자자를 속이는 주문을 냈는지가 핵심입니다.', '예를 들어 내가 주식을 10,000원에 사려고 할 때 9,990원에 팔겠다는 주문이 있다면 더 싼 가격을 먼저 확인하는 것이 유리합니다. 이를 놓치면 한 주당 10원이지만 1만 주에서는 10만 원의 차이가 납니다. 메릴린치와 시타델 증권 사례는 각각 주문 경로 안내와 더 나은 가격 확인 문제가 쟁점이 된 별개의 사건입니다.', '한국에서는 거래소 기준에 해당하는 고속 알고리즘 거래자를 사전에 등록하고 식별코드로 주문을 확인합니다. 증권사와 거래자는 잘못된 대량 주문이나 시스템 오류를 막도록 전산설비와 내부통제를 점검하고, 거래소는 짧은 시간에 반복되는 주문·취소와 가격 영향을 분석합니다.', '한 줄로 정리하면 빠른 주문 자체가 문제가 아니라 고객과의 약속을 어기거나 시장을 속이는 방식으로 사용했는지가 핵심입니다. 자동 주문도 누가, 어디로, 어떤 가격에 보냈는지 기록하고 감독할 수 있어야 합니다.']],
+        ['단기 매매와 허수성 주문: 빠른 거래와 시세조종의 차이', ['짧게 사고파는 것 자체는 허수성 주문이 아닙니다. 실제로 주식을 사고팔 생각이 있는지, 아니면 체결할 생각 없이 큰 주문을 보여 줘 다른 사람을 속이려는지가 가장 중요한 차이입니다. 스캘핑은 수초~수분, 데이트레이딩은 하루 안, 스윙 트레이딩은 며칠~수주 동안 보유하는 방식입니다.', '예를 들어 10,000원에 실제로 100주를 산 뒤 10,010원에 파는 것은 스캘핑일 수 있습니다. 실제 거래가 체결되고 가격 차이로 손익이 생기기 때문입니다. 다만 수수료와 호가 차이 같은 비용이 주당 10원보다 크면 오히려 손실이 날 수 있습니다.', '반면 실제로 살 생각 없이 10만 주의 큰 매수 주문을 보여 주고, 다른 사람이 따라 사서 가격이 오르면 주문을 취소한 뒤 자신이 가진 주식을 파는 행동은 시장을 속이려는 허수성 주문으로 의심받을 수 있습니다.', '가격 변화나 입력 실수 때문에 정상적으로 주문을 취소할 수도 있습니다. 따라서 큰 주문 하나만 보고 판단하지 않고 실제 체결 의사, 반복된 주문과 취소, 반대편 거래와 시장에 미친 영향을 함께 봅니다. 거래가 빠르다는 사실만으로 단기 매매와 허수성 주문이 같아지는 것은 아닙니다.']],
+        ['벰버거의 페어 트레이딩: 함께 움직이던 두 가격의 간격 보기', ['페어 트레이딩은 평소 비슷하게 움직이던 두 종목의 가격 차이가 갑자기 커졌을 때, 비싸 보이는 종목은 팔고 싼 종목은 사는 방법입니다. 두 가격의 차이가 다시 줄어들면 두 거래를 함께 끝냅니다.', '숫자로 보면 간단합니다. A와 B가 모두 100원이었는데 A만 110원으로 올랐다고 가정합니다. A는 110원에 빌려서 팔고 B는 100원에 삽니다. 나중에 둘 다 105원이 되면 A에서 5원, B에서도 5원의 이익이 생겨 합계 10원이 됩니다. 실제로는 수수료와 주식을 빌리는 비용 등을 빼야 합니다.', '진행 순서는 ① 평소 함께 움직이는 두 종목 고르기 ② 가격 차이가 크게 벌어졌는지 보기 ③ 비싼 쪽은 팔고 싼 쪽은 사기 ④ 가격 차이가 줄면 두 거래를 모두 끝내기입니다. 차이가 계속 커지면 미리 정한 손실 금액에서 거래를 중단합니다.', '두 가격이 반드시 다시 만나는 것은 아닙니다. A가 130원으로 더 오르고 B가 90원으로 내리면 A에서 20원, B에서 10원을 잃어 합계 30원의 손실이 생깁니다. 기업 실적이나 산업 환경이 달라지면 과거의 관계도 깨질 수 있으므로, 이 방법도 손실이 없는 투자는 아닙니다.']],
         ['제로섬 게임: 한쪽의 이익이 다른 쪽의 손실인 거래', ['제로섬 게임(zero-sum game)은 참여자들의 이익과 손실을 모두 더하면 0이 되는 구조입니다. 예를 들어 A가 B에게서 선물 계약을 매수하고 결제 결과 A가 10만 원을 벌면, 같은 계약의 반대편인 B는 비용 전 10만 원을 잃습니다. 한쪽의 이익이 다른 쪽의 손실과 정확히 짝을 이룹니다.', '공매도도 쉽게 볼 수 있습니다. A가 10,000원에 빌려 판 주식을 7,000원에 사서 갚아 3,000원을 벌었다면, 그 가격 변화에서 반대 방향으로 주식을 보유한 사람은 같은 수량 기준 3,000원의 가격 하락을 겪습니다. 페어 트레이딩의 롱·숏 조합 역시 다른 시장 참여자와의 거래를 통해 상대 가격 차이에 대한 손익이 생기므로 비용 전에는 제로섬에 가까운 구조입니다.', '하지만 수수료, 세금, 스프레드, 대차료처럼 시장에 내는 비용까지 더하면 참여자 전체의 합은 음수가 됩니다. 이를 네거티브섬이라고 합니다. 예를 들어 두 참여자의 매매 손익 합계가 0이어도 각각 수수료 1,000원씩을 냈다면 둘을 합친 최종 손익은 -2,000원입니다.', '모든 주식투자가 제로섬이라는 뜻은 아닙니다. 기업이 이익을 내고 배당을 지급하거나 장기적으로 가치가 성장하면 주식을 보유한 투자자 전체가 혜택을 볼 수 있습니다. 따라서 선물·옵션·단기 상대매매의 손익 구조와 기업의 장기 가치 창출을 구분해 이해하는 것이 중요합니다.']],
         ['블랙 스완: 평소 모형 밖의 큰 충격에 대비하기', ['블랙 스완(Black Swan)은 평소의 경험과 통상적인 예측 모형이 놓치기 쉬운데, 발생하면 시장과 사회에 매우 큰 영향을 주는 사건을 가리키는 비유입니다. 나심 니콜라스 탈레브(Nassim Nicholas Taleb)가 2007년 책 《블랙 스완》에서 널리 알렸습니다. 유럽인이 “백조는 모두 하얗다”고 여겼지만 오스트레일리아에서 검은 백조가 발견된 일에서 이름을 가져왔습니다.', '탈레브가 말한 핵심은 ① 당시의 기대 밖에 있는 예외적 사건 ② 매우 큰 파급효과 ③ 사건 뒤에는 사람들이 “원래 알 수 있었다”고 이야기를 만들어 설명하는 사후 합리화입니다. 따라서 블랙 스완은 수학적으로 절대 예측할 수 없는 사건만을 뜻하지는 않습니다. 무엇을 당시 정보로 예상할 수 있었는지에 따라 분류에는 논쟁이 있을 수 있습니다.', '예를 들어 9·11 테러, 2008년 글로벌 금융위기, 2020년 코로나19 팬데믹은 금융시장의 큰 충격 사례로 자주 언급됩니다. 다만 어떤 사건이 엄밀히 블랙 스완인지에는 견해 차이가 있습니다. 중요한 학습점은 특정 사건의 이름을 맞히는 것이 아니라, 과거 평균과 정상 분포만 믿을 때 큰 손실 위험을 과소평가할 수 있다는 점입니다.', '위험관리는 블랙 스완을 정확히 맞히려 하기보다, 손실 한도·분산·유동성 확보·과도한 레버리지 제한·스트레스 시나리오로 견디는 힘을 만드는 데 초점을 둡니다. 회색 코뿔소(Gray Rhino)는 부채 급증처럼 위험이 눈앞에 보이는데도 무시하는 경우를, 하얀 코끼리(White Elephant)는 비용은 많이 들지만 효용이 낮아 부담이 되는 자산·사업을 비유합니다.']],
         ['알파와 베타를 포함해 위험을 읽는 여섯 가지 숫자', ['베타(beta)는 시장이 1% 움직일 때 전략·종목이 평균적으로 얼마나 민감하게 움직였는지를 나타내는 시장 노출도입니다. 벤치마크를 KOSPI 200으로 정했을 때 베타가 1이면 시장과 비슷한 폭, 1보다 크면 더 큰 폭으로, 음수면 반대 방향으로 움직이는 경향을 뜻합니다. 과거 회귀분석에서 나온 값이므로 미래에도 유지된다는 보장은 없습니다.', '알파(alpha)는 같은 베타와 위험을 감수했을 때 벤치마크 또는 자본자산가격결정모형(CAPM)이 설명하는 수준을 넘어선 수익을 뜻합니다. 간단히 실제 수익률에서 무위험수익률과 베타를 반영한 기대수익률을 뺀 값으로 생각할 수 있습니다. 양(+)의 알파는 기간·비용·벤치마크를 맞춘 뒤에도 초과성과가 있었음을 뜻할 뿐, 미래 수익 보장이나 운용자의 실력 증명은 아닙니다.', '따라서 “알파 팩터는 새로운 알고리즘, 베타 팩터는 이미 알려진 알고리즘”이라는 구분은 표준 금융 용어가 아닙니다. 퀀트에서 알파 신호는 벤치마크와 알려진 공통 팩터 노출을 통제한 뒤에도 남는 초과수익을 기대하게 하는 예측 신호를 가리킬 수 있고, 베타 팩터는 시장·가치·규모·모멘텀처럼 널리 알려진 공통 수익 원천에 대한 노출을 뜻합니다. 다만 처음에는 알파처럼 보이던 규칙이 연구·공개·복제로 널리 알려지고 저비용으로 구현되면, 시간이 지나 ‘팩터 베타’ 또는 ‘대체 베타’로 재분류되는 경우는 있습니다. 이것은 새로움 자체가 정의가 아니라, 수익을 설명하는 모형과 복제 가능성이 달라졌다는 뜻입니다.', '변동성은 수익률이 평소에 얼마나 크게 흔들렸는지, MDD(최대낙폭)는 최고점에서 가장 크게 떨어진 폭을 보여 줍니다. 샤프 비율은 감수한 변동성에 비해 수익이 어느 정도였는지 비교합니다. 알파·베타·변동성·MDD·샤프 비율은 서로 대체하는 점수가 아니라, 같은 기간·같은 비용·같은 벤치마크에서 함께 해석해야 합니다.']],
@@ -170,7 +168,7 @@
       keywords: ['자산배분', 'Risk Parity', '리스크 패리티', '올웨더 포트폴리오', 'All Weather', '리밸런싱', '헤지', '현물시장', '선물', '옵션', '목표수익률', '위험허용도', '투자기간', 'LEAN'],
       lessons: [
         ['자산배분은 비중을 정하는 일', ['자산배분은 주식, 채권, 현금성 자산 등 어디에 얼마씩 나눌지 정하는 과정입니다.', '넓은 시장을 추종하는 자산의 비중을 정하는 일은 포트폴리오의 베타, 즉 시장 노출을 관리하는 출발점입니다. 그 뒤 특정 종목·팩터·매매 규칙으로 벤치마크를 이기려는 판단은 알파를 기대하는 선택이지만, 추가 비용·오차·집중위험도 함께 확인해야 합니다.', '정답 비중은 사람마다 다릅니다. 투자 기간이 길고 가격 변동을 견딜 수 있는지, 언제 돈을 써야 하는지가 기준이 됩니다. 평균분산, 블랙-리터만, Risk Parity 같은 모델은 생각을 돕는 도구이지 미래를 정확히 맞히는 기계는 아닙니다.']],
-        ['올웨더 포트폴리오: 여러 경제 날씨에 대비하는 자산배분', ['올웨더 포트폴리오(All Weather Portfolio)는 레이 달리오와 브리지워터의 리스크 패리티 사고방식에서 널리 알려진 자산배분 접근입니다. 다음 시장을 맞히기보다 성장률 상승·하락, 물가 상승·하락처럼 서로 다른 경제 환경에서도 한 자산의 충격이 전체를 좌우하지 않게 설계하자는 생각입니다.', '쉽게 말해 주식, 경기 둔화 때 방어 역할을 기대하는 명목채권, 물가 상승에 대비하는 물가연동채·원자재·금처럼 서로 다른 위험 요인을 가진 자산을 함께 검토합니다. 다른 자산이 항상 반대로 움직인다고 보장할 수는 없지만, 한쪽에만 몰아두는 위험을 줄이려는 것입니다.', '인터넷의 개인용 올웨더 비중은 하나의 예시일 뿐 실제 브리지워터 운용과 같지 않습니다. 투자 기간, 현금 필요 시점, 세금·거래비용, 환율 위험, 상품의 만기 구조에 따라 적합한 비중은 달라집니다. 주식·채권이 함께 하락할 수도 있으므로 목표 비중과 점검 주기를 정한 뒤 리밸런싱하는 교육용 틀로 이해하세요.']],
+        ['올웨더 포트폴리오: 여러 경제 날씨에 대비하는 자산배분', ['올웨더 포트폴리오(All Weather Portfolio)는 레이 달리오와 브리지워터의 리스크 패리티 사고방식에서 널리 알려진 자산배분 접근입니다. 다음 시장을 맞히기보다 성장률 상승·하락, 물가 상승·하락처럼 서로 다른 경제 환경에서도 한 자산의 충격이 전체를 좌우하지 않게 설계하자는 생각입니다.', '인터넷의 개인용 올웨더 비중은 하나의 예시일 뿐 실제 브리지워터 운용과 같지 않습니다. 투자 기간, 현금 필요 시점, 세금·거래비용, 환율 위험, 상품의 만기 구조에 따라 적합한 비중은 달라집니다. 주식·채권이 함께 하락할 수도 있으므로 목표 비중과 점검 주기를 정한 뒤 리밸런싱하는 교육용 틀로 이해하세요.']],
         ['선물·옵션은 현물시장에 어떻게 연결될까요?', ['현물 주식시장과 선물·옵션 시장은 서로 다른 상품을 거래하지만, 같은 기업·지수의 가격 변화를 보고 있습니다. 그래서 금리 발표나 기업 실적처럼 새로운 정보가 나오면 현물과 선물 모두에서 거의 동시에 주문이 나올 수 있습니다. 선물이 먼저 움직였다고 해서 항상 선물이 현물을 일방적으로 움직였다는 뜻은 아닙니다.', '선물이 먼저 움직이고 현물 주식이 뒤따라가는 듯 보일 때도 있습니다. 지수 선물은 지수 전체 방향에 대한 판단을 빠르게 표현할 수 있어, 큰 매수·매도 주문이 먼저 나올 수 있습니다. 이후 선물 가격 차이를 줄이려는 차익거래나 헤지 주문이 지수 구성 주식·ETF의 매수·매도로 이어지면 현물 가격도 같은 방향으로 움직일 수 있습니다.', '선물 가격과 현물 가격 차이가 지나치게 커지면 차익거래가 연결 고리가 될 수 있습니다. 예를 들어 KOSPI 200 선물이 지수에 비해 지나치게 비싸다면, 전문 투자자는 비싼 선물을 팔고 지수 구성 주식 또는 관련 ETF를 사는 거래를 검토할 수 있습니다. 이런 주문은 선물과 현물의 가격 차이를 다시 좁히는 방향으로 작용할 수 있습니다.', '옵션도 현물시장 주문과 연결될 수 있습니다. 옵션을 팔아준 금융기관은 주가가 오르거나 내릴 때 손실 위험을 줄이기 위해 관련 주식이나 선물을 사고팔며 헤지를 조정할 수 있습니다. 특히 옵션 만기일이나 행사가격 근처에서는 이런 조정 주문이 평소보다 늘어 단기 변동성을 키울 수 있습니다.', '다만 “선물·옵션 만기일이니 주가가 반드시 오른다 또는 내린다”처럼 단정하면 안 됩니다. 현물시장에는 기업 실적, 경제지표, 환율, 외국인 수급, 뉴스 등 많은 요인이 함께 작용합니다. 파생상품 흐름은 시장을 읽는 여러 정보 중 하나로만 보고, 거래량·시장 상황과 함께 확인하는 것이 좋습니다.']],
         ['선물·옵션은 시장의 “기상청”일까요?', ['선물·옵션 시장은 투자자들이 앞으로의 가격 변동을 어떻게 생각하는지 빠르게 모이는 곳이라서 가끔 주식시장의 “기상청”에 비유됩니다. 날씨 예보가 비가 올 가능성을 알려 주지만 비를 확정하지는 않듯이, 선물·옵션 가격도 시장의 기대와 긴장도를 보여 주는 신호이지 미래 주가를 확정하는 답은 아닙니다.', '옵션 가격이 높아졌다는 것은 많은 참여자가 앞으로 가격이 크게 움직일 가능성을 더 크게 보고 있을 수 있다는 뜻입니다. 이를 변동성 기대라고 생각할 수 있습니다. 지수 선물의 거래량, 옵션의 거래량과 미결제약정처럼 아직 끝나지 않은 계약 수, 선물과 현물의 가격 차이도 시장에 매수·매도 관심이 어느 쪽에 몰리는지 살피는 단서가 됩니다.', '퀀트 시스템은 이런 숫자를 “예언”으로 쓰기보다 계산에 넣는 관측값으로 씁니다. 예를 들어 변동성 기대가 높아지면 포지션 크기를 줄이고, 선물·현물 가격 차이와 거래량이 평소와 크게 달라지면 수급 불균형이나 거래비용 변화를 점검할 수 있습니다. 시장 심리도 하나의 숫자로 단정하지 않고 가격·거래량·변동성·뉴스 같은 여러 자료를 함께 봅니다.', '이런 정보는 안전장치로도 쓸 수 있습니다. 시장의 긴장도가 높아 보일 때 “더 크게 베팅한다”가 아니라 계약 수량, 손실 한도, 헤지 필요성을 다시 점검하는 신호로 사용하는 것입니다. 지표 하나만 보고 매수·매도하면 잘못 해석할 수 있으므로, 데이터의 기준 시점·거래비용·최악의 손실 시나리오를 함께 확인해야 합니다.']],
         ['옵션 만기일과 실제 파생상품 보기', ['옵션 만기일에는 계약이 끝나므로, 옵션을 가진 사람과 옵션을 팔아준 금융기관이 포지션을 정리하거나 위험을 줄이기 위한 헤지를 조정할 수 있습니다. 이 과정에서 관련 주식이나 선물의 주문이 늘어나면 지수에 단기 영향이 생길 수 있지만, 만기만으로 가격 방향을 단정할 수는 없습니다.', '한국거래소(KRX)에는 KOSPI 200·미니 KOSPI 200·KOSDAQ 150 선물과 옵션, 미국달러선물, 국채선물, 금선물 등이 있습니다. 상품마다 거래승수·만기·결제 방식·증거금이 다르므로, 실제 주문 전에는 거래소 상품명세와 증권사 주문 화면을 함께 확인해야 합니다.']],
@@ -785,7 +783,7 @@ KOSDAQ|웹젠|게임`,
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode(textNode) {
         const parent = textNode.parentElement;
-        if (!textNode.nodeValue.trim() || parent?.closest('.glossary-term, .glossary-modal, button, textarea, script, style')) return NodeFilter.FILTER_REJECT;
+        if (!textNode.nodeValue.trim() || parent?.closest('.glossary-term, .glossary-modal, .no-glossary-link, button, textarea, script, style')) return NodeFilter.FILTER_REJECT;
         return NodeFilter.FILTER_ACCEPT;
       },
     });
@@ -972,7 +970,7 @@ KOSDAQ|웹젠|게임`,
       const price = minP + ((maxP - minP) * g) / gridCount;
       const gy = y(price);
       gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR + 6}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/>`;
-      gridSvg += `<text x="${width - padR + 10}" y="${(gy + 3).toFixed(1)}" font-size="14.5" fill="var(--text-muted)">${fmtWon(Math.round(price))}</text>`;
+      gridSvg += `<text x="${width - padR + 10}" y="${(gy + 3).toFixed(1)}" font-size="15.95" fill="var(--text-muted)">${fmtWon(Math.round(price))}</text>`;
     }
 
     tickChartGeom = { padL, plotW, slot, visible, width, height };
@@ -1501,7 +1499,7 @@ KOSDAQ|웹젠|게임`,
       const v = minV + (span * g) / gridCount;
       const gy = y(v);
       gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/>`;
-      gridSvg += `<text x="2" y="${(gy + 4).toFixed(1)}" font-size="11" fill="var(--text-muted)">${v.toFixed(1)}</text>`;
+      gridSvg += `<text x="2" y="${(gy + 4).toFixed(1)}" font-size="12.1" fill="var(--text-muted)">${v.toFixed(1)}</text>`;
     }
     const latestIndex = series.length - 1;
     const actualMarker = hasActual ? `
@@ -1991,13 +1989,12 @@ KOSDAQ|웹젠|게임`,
           <div class="theory-title-side"><section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section><section class="lesson-dashboard" aria-label="오늘의 학습 대시보드"><div><span>READ</span><strong>${lesson.lessons.length}</strong><small>개념 카드</small></div><div><span>KEYWORDS</span><strong>${lesson.keywords.length}</strong><small>핵심 용어</small></div><div><span>CHECK</span><strong><i class="fa-solid fa-pen"></i></strong><small>마무리 질문</small></div></section></div>
         </div>
         <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄 용어를 누르면 상세 용어 설명이 열립니다.</p>
-        ${lesson.day === 4 ? addDay4AwsOperationsStacks(expandDay4IndicatorProject(renderDay4Projects()))
+        ${lesson.day === 4 ? expandDay4IndicatorProject(renderDay4Projects())
           .replace('<li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 관심 종목·투자 아이디어·의사결정 기록과 사후 성과 재검토 일지 관리<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Vanilla JS</span></li>', '')
-          .replace('<span class="implementation-detail">기술스택 및 구현방안: RDBMS · VectorDB · FastAPI</span>', '')
-          .replace('<strong>목표 기능의 세부 기능 5:</strong> 포트폴리오 및 투자 이력과 관련 지식 연결', '<strong>목표 기능의 세부 기능 4:</strong> 포트폴리오 및 투자 이력과 관련 지식 연결')
-          .replace('<strong>목표 기능의 세부 기능 6:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행', '<strong>목표 기능의 세부 기능 5:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행')
-          .replace('<strong>목표 기능의 세부 기능 7:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명', '<strong>목표 기능의 세부 기능 6:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명')
-          .replace('<span class="implementation-detail">기술스택 및 구현방안: ApexCharts · AG Grid · Vanilla JS</span>', '')
+          .replace('<li class="has-implementation-detail"><strong>목표 기능의 세부 기능 5:</strong> 포트폴리오 및 투자 이력과 관련 지식 연결<span class="implementation-detail">기술스택 및 구현방안: RDBMS · VectorDB · FastAPI</span></li>', '')
+          .replace('<strong>목표 기능의 세부 기능 6:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행', '<strong>목표 기능의 세부 기능 4:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행')
+          .replace('<strong>목표 기능의 세부 기능 7:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명', '<strong>목표 기능의 세부 기능 5:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명')
+          .replace('<li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 캔들 차트 위에 기술적 지표·탐지 패턴·투자 신호를 겹쳐 보여주는 인터랙티브 차트 구현<span class="implementation-detail">기술스택 및 구현방안: ApexCharts · AG Grid · Vanilla JS</span></li>', '')
           .replace('<li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 벤치마크 대비 초과성과와 종목·자산·전략별 수익·위험 기여도 분석<span class="implementation-detail">기술스택 및 구현방안: RDBMS · AG Grid · ApexCharts</span></li>', '')
           .replace('<strong>목표 기능의 세부 기능 3:</strong> 퀀트 신호를 매수·매도·보유 의견으로 변환', '<strong>목표 기능의 세부 기능 2:</strong> 퀀트 신호를 매수·매도·보유 의견으로 변환')
           .replace('<strong>목표 기능의 세부 기능 4:</strong> 모의 주문 체결 및 포트폴리오 운용', '<strong>목표 기능의 세부 기능 3:</strong> 모의 주문 체결 및 포트폴리오 운용')
@@ -2041,13 +2038,58 @@ KOSDAQ|웹젠|게임`,
   }
 
 
-  function addDay4AwsOperationsStacks(projectsHtml) {
-    const operationsStack = '<div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보완·보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>';
-    const projectMarkers = [
-      '<p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 투자성향진단 · 시각적 포트폴리오 · 시뮬레이션 · 목표 수익률 모의 · 리밸런싱</p>',
-      '<p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 전략 설정 · 지표 차트 · 백테스트 · 성과 대시보드 · 자동매매 모니터링</p>'
+  function renderDay4TechnologyStackSummary() {
+    const rows = [
+      ['금융 데이터 수집·처리', '가격·거래량·재무·뉴스와 OHLCV 수집, 정제, 정규화', '지표 계산과 전략 검증에 사용할 시계열·비정형 데이터 구축', 'python-crawling-lab · 시장 데이터 처리 플랫폼 · 피처 엔지니어링 파이프라인'],
+      ['데이터·지식 저장', '계산 결과, 전략 버전, 포트폴리오 이력과 문서 임베딩 저장', '재현 가능한 분석, 투자 이력 조회, 관련 지식 검색', 'RDBMS · VectorDB · Redis'],
+      ['인디케이터·퀀트 엔진', '<span class="no-glossary-link">MA·RSI·MACD·볼린저 밴드와 커스텀 지표 계산</span>', '매수·매도·관망 신호 및 신뢰도 산출', 'QuantConnect LEAN · LEAN CLI · TA-Lib · lumina-invest'],
+      ['AI·패턴 분석·XAI', '차트 패턴 학습·추론과 추천 근거 설명', '캔들·돌파·골든크로스 탐지 및 모델 해석', 'Amazon SageMaker AI Training Jobs · 실시간 추론 엔드포인트 · Processing Jobs (SHAP)'],
+      ['RAG·생성형 AI', '금융 지식 검색과 출처 기반 질의응답', '용어·시장 자료 탐색 및 투자 추천 이유 보강', 'domain-rag-lab · investment-analysis · Amazon Bedrock · Ollama + GPU · VectorDB'],
+      ['전략·포트폴리오', '매매·포지션 규칙, 자산배분, 리밸런싱과 위험 한도 관리', '전략 실행 기준과 포트폴리오 운용 자동화', 'QuantConnect LEAN · 포트폴리오 규칙 엔진 · 전략 최적화 플랫폼 · Redis'],
+      ['백테스트·성과 검증', '수수료·슬리피지를 반영한 교차 검증과 성과 측정', '수익률·MDD·샤프 비율·승률 및 전략 차이 분석', 'TradingView Strategy Tester · QuantConnect LEAN · stock-coin-trade · 포트폴리오 성과 분석 플랫폼 · 자동화 검증 플랫폼'],
+      ['차트·UI/UX', '지표·패턴·신호 시각화와 데이터 그리드 제공', '전략 설정, 성과 대시보드, 자동매매 모니터링', 'TradingView · Pine Script · ApexCharts · AG Grid · Vanilla JS'],
+      ['백엔드·API', '지표 계산, 전략, 저장소와 외부 서비스를 API로 연결', '웹 화면·분석 엔진·주문 시스템 간 통신', 'FastAPI · Amazon API Gateway (API GW) · TradingView Webhook'],
+      ['증권사·주문 연동', '계좌·시세·주문 조회와 모의 주문 체결', '신호를 주문으로 변환하고 중복 주문·손실 한도·비상 정지 적용', '증권사 Open API · KB증권 Open API · 한국투자증권 Open Trading API · Alpaca'],
+      ['워크플로·품질 자동화', '정기 배치, 실행 일정, 단위 테스트와 지속적 검증', '데이터 갱신과 전략 실행·검증의 반복 자동화', 'Apache Airflow · Amazon EventBridge Scheduler · AWS Batch · GitHub Actions · 자동화 테스트 플랫폼'],
+      ['배포·컴퓨팅', '애플리케이션과 모델의 서버·컨테이너·서버리스 배포', '개발 환경 재현, API 제공, 학습·추론 운영', 'Amazon EC2 · Docker · docker-class · Amazon ECR · AWS Lambda · Ollama + GPU'],
+      ['소스·버전 관리', '코드, 지표 산식과 전략 버전 추적', '협업, 변경 이력 관리와 결과 재현', 'GitHub · GitHub Actions · domain-rag-lab · investment-analysis · python-crawling-lab · lumina-invest · stock-coin-trade'],
+      ['백업·복구', '데이터·객체 버전 백업과 장기 보관', '장애·오삭제 시 데이터와 서비스 복원', 'AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier'],
+      ['보안', '비밀정보·암호화 키 관리와 웹 공격 차단', 'API 키·증권계좌 연동 정보 및 서비스 보호', 'AWS Secrets Manager · AWS KMS · AWS WAF'],
+      ['관제·알림', '로그·지표·감사 추적과 장애 알림', '전략 실행, 주문, 인프라 상태 모니터링', 'Amazon CloudWatch · AWS CloudTrail · Amazon SNS'],
+      ['데이터·시스템 이관', '데이터베이스·파일·서버 마이그레이션', '기존 투자 데이터와 실행 환경의 AWS 이전', 'AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)']
     ];
-    return projectMarkers.reduce((html, marker) => html.replace(marker, `${marker}${operationsStack}`), projectsHtml);
+    const body = rows.map(([type, feature, purpose, technologies]) => `<tr><th scope="row">${type}</th><td>${feature}</td><td>${purpose}</td><td>${technologies}</td></tr>`).join('');
+    const operationsStack = '<div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보완·보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>';
+    return `<section class="technology-stack-summary" aria-labelledby="indicator-app-technology-stack-title"><h3 id="indicator-app-technology-stack-title">기술스택</h3><p>로보 어드바이저와 투자 인디케이터 프로젝트에 사용되는 기술을 역할별로 통합한 구성입니다.</p>${operationsStack}<div class="technology-stack-table-wrap"><table><thead><tr><th scope="col">종류</th><th scope="col">기능</th><th scope="col">용도</th><th scope="col">요소기술</th></tr></thead><tbody>${body}</tbody></table></div><p class="technology-stack-interview-note"><strong>요즘 IT 직원 채용 시 인터뷰의 첫 번째 질문은 “코딩을 잘합니까?”, “무엇을 할 줄 압니까?”가 아니라 “프로젝트에서 본인의 애티튜드는 어떠했나요?”, “어떤 솔루션을 사용해 보셨나요?”입니다.</strong></p>${renderDay4ProjectStaffing()}${renderDay4ProjectDeliverables()}${renderDay4ProjectCautions()}${renderDay4ProjectSchedule()}</section>`;
+  }
+
+  function renderDay4ProjectSchedule() {
+    return window.Day4ProjectSchedule?.render() || '';
+  }
+
+  function renderDay4ProjectStaffing() {
+    return `<div class="project-staffing-note" aria-label="개발 인력 산정 및 AI 기반 수행안"><strong>개발 인력 산정 및 AI 기반 수행안</strong><article><b>일반 개발 방식 · 총 36MM</b><span>위 솔루션을 구현하려면 6개월 동안 월평균 6명의 개발 인력이 필요합니다. 즉, 6명 × 6개월 = 36MM(Man-Month) 기준입니다.</span></article><article><b>AI 기반 개발 방식 · 총 4MM</b><span>AI 코딩·문서화·테스트·자동화 도구를 적극 활용하면 동일한 구현 범위를 4명의 인력이 1개월 안에 수행할 수 있다는 의미입니다. 즉, 4명 × 1개월 = 4MM 기준입니다.</span></article></div>`;
+  }
+
+  function renderDay4ProjectCautions() {
+    return '<aside class="project-progress-cautions" aria-label="프로젝트 진행 중 유의사항"><h3>프로젝트 진행 중 유의사항</h3><ol><li>각 <b>R&amp;R</b>은 한 사람이 독점하지 않고, <b>주담당·보조담당 2인 이상</b>으로 역할을 배분합니다.</li><li>팀원이 취업 등의 사유로 이탈하면 남은 팀원이 해당 역할과 업무를 대체합니다.</li><li>팀원 이탈이 많은 팀은 프로젝트 진행 중 타 팀과 협의하여 팀을 <b>Merge(통합)</b>합니다.</li><li>팀별 예상 사업비와 실제 발생 비용은 <b>이스트소프트 보조강사</b> 및 <b>위탁교육 학원장</b>과 보전 방안을 협의합니다.</li><li>매일 <b>오전 9:00~9:15</b>에 팀별 추천 인원이 진행사항을 보고하고, 팀별 스크럼 회의를 진행합니다.</li><li>매일 퇴근 전 <b>오후 5:30~5:50</b>에 팀별 추천 인원이 진행사항, 리스크 및 명일 계획을 보고합니다.</li></ol></aside>';
+  }
+
+  function renderDay4ProjectDeliverables() {
+    const rows = [
+      ['착수·과업 정의', '과업지시서 · 프로젝트 헌장 · 범위기술서 · 착수보고서 · 이해관계자 목록', '목표, 범위, 수행 조직, 일정, 예산, 인수 기준과 책임 범위 확정', 'Confluence · Markdown'],
+      ['요구사항 관리', '요구사항정의서 · 사용자 스토리 · 유스케이스 · 요구사항 추적표(RTM) · 인수 기준', '기능·비기능 요구사항을 식별하고 구현·시험 결과까지 추적', 'JIRA · Confluence · Markdown · Google Sheets'],
+      ['일정·업무 관리', 'WBS · 마일스톤 · 간트차트 · 스프린트 계획 · 백로그 · 주간보고서', '작업을 세분화하고 담당자, 선후행 관계, 일정과 진척률 관리', 'JIRA 칸반보드 · JIRA Scrum Board · Roadmap · Excel'],
+      ['화면·서비스 설계', '정보구조(IA) · 화면흐름도 · 와이어프레임 · UI 명세서 · 프로토타입', '전략 설정, 차트, 백테스트, 성과 대시보드의 사용자 흐름 정의', 'Figma · FigJam · draw.io · Mermaid'],
+      ['데이터 설계', 'ERD · 테이블 명세서 · 데이터 사전 · 코드 정의서 · 데이터 흐름도 · 보존정책', '시장 데이터, 지표, 전략, 주문, 포트폴리오 데이터의 구조와 관계 정의', 'ERDCloud · dbdiagram.io · DBeaver · draw.io · Mermaid'],
+      ['시스템 설계', '시스템 아키텍처 · 애플리케이션 구성도 · 인프라·네트워크 구성도 · 배포 구성도 · ADR', '프런트엔드, API, 분석 엔진, 저장소, AWS와 외부 연동 구조 확정', 'draw.io · Mermaid · Lucidchart · AWS Architecture Icons · Confluence'],
+      ['인터페이스 설계', 'API 명세서 · 인터페이스 정의서 · 데이터 매핑서 · Webhook·증권사 연동 명세', '서비스 간 요청·응답, 인증, 오류 코드와 데이터 교환 규칙 정의', 'OpenAPI/Swagger · Postman · FastAPI Docs'],
+      ['개발·형상 관리', '소스코드 · 브랜치 전략 · 코딩 표준 · 변경이력 · 코드 리뷰 기록 · 기술 의사결정 기록', '기능 구현, 버전 추적, 변경 통제와 협업 품질 확보', 'GitHub · GitHub Issues · Pull Requests · GitHub Projects'],
+      ['시험·성과 검증', '테스트 계획서 · 테스트 케이스 · 단위·통합·인수시험 결과서 · 백테스트 보고서 · 결함대장', '기능 정확성, 성능, 보안, 전략 성과와 재현 가능성 검증', 'pytest · GitHub Actions · Postman · QuantConnect LEAN · TradingView Strategy Tester · JIRA'],
+      ['배포·운영·인수', 'CI/CD 명세 · 배포계획서 · 운영 매뉴얼 · 장애 대응 절차서 · 백업·복구 계획 · 릴리스 노트 · 완료보고서', '안전한 배포, 모니터링, 장애 복구, 운영 이관과 최종 검수 지원', 'GitHub Actions · Docker · AWS Management Console · Amazon CloudWatch · JIRA Service Management']
+    ];
+    const body = rows.map(([type, deliverables, purpose, tools]) => `<tr><th scope="row">${type}</th><td>${deliverables}</td><td>${purpose}</td><td>${tools}</td></tr>`).join('');
+    return `<section class="project-deliverables" aria-labelledby="indicator-app-project-deliverables-title"><h4 id="indicator-app-project-deliverables-title">프로젝트 산출물 및 진행 도구</h4><p>해당 솔루션을 계획하고 개발·검증·배포·운영하기 위해 단계별로 작성하고 관리할 문서와 협업 도구입니다.</p><div class="project-deliverables-table-wrap"><table><thead><tr><th scope="col">구분</th><th scope="col">주요 산출물</th><th scope="col">목적</th><th scope="col">프로젝트 진행 도구</th></tr></thead><tbody>${body}</tbody></table></div></section>`;
   }
 
   function expandDay4IndicatorProject(projectsHtml) {
@@ -2099,10 +2141,15 @@ KOSDAQ|웹젠|게임`,
       const detailsHtml = goal.details.map(([feature, stack], index) => `<li class="has-implementation-detail"><strong>목표 기능의 세부 기능 ${index + 1}:</strong> ${feature}<span class="implementation-detail">기술스택 및 구현방안: ${stack}</span></li>`).join('');
       return html.replace(`<li><strong>목표 기능:</strong> ${goal.title}</li>`, `<li><strong>목표 기능:</strong> ${goal.displayTitle || goal.title}<ol>${detailsHtml}</ol></li>`);
     }, projectsHtml);
-    return expandedHtml.replace(
+    const uiUxSummary = '<p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 전략 설정 · 지표 차트 · 백테스트 · 성과 대시보드 · 자동매매 모니터링</p>';
+    const indicatorHtml = expandedHtml.replace(
       '<h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2><div class="theory-lesson-body"><ul>',
-      '<h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2><div class="theory-lesson-body"><p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 전략 설정 · 지표 차트 · 백테스트 · 성과 대시보드 · 자동매매 모니터링</p><ul>'
+      `<h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2><div class="theory-lesson-body">${uiUxSummary}<ul>`
     );
+    const indicatorProjectEnd = indicatorHtml.lastIndexOf('</ul></div></div></section>');
+    if (indicatorProjectEnd === -1) return indicatorHtml;
+    const afterGoalList = indicatorProjectEnd + '</ul>'.length;
+    return `${indicatorHtml.slice(0, afterGoalList)}${renderDay4TechnologyStackSummary()}${indicatorHtml.slice(afterGoalList)}`;
   }
 
   function renderDay4Projects() {
@@ -2316,7 +2363,7 @@ effective_date: [기준일]
       1: { title: '선택 기준을 한눈에', note: '수익률·위험·유동성은 함께 최대로 만들기 어렵습니다. 목적과 사용 시점을 먼저 정하세요.', body: `<div class="visual-triad"><article class="accent"><i class="fa-solid fa-arrow-trend-up"></i><b>수익률</b><span>얼마나 늘어날 가능성이 있나</span></article><article><i class="fa-solid fa-triangle-exclamation"></i><b>위험</b><span>예상과 다르게 줄어들 수 있나</span></article><article><i class="fa-solid fa-money-bill-transfer"></i><b>유동성</b><span>필요할 때 현금화할 수 있나</span></article></div>` },
       2: { title: 'ETF 가격의 두 층', note: '편입 자산의 가치(NAV)와 거래소에서 형성되는 시장가격은 다를 수 있습니다.', body: `<div class="visual-flow"><article>편입 자산 가치<small>주식·채권 등의 실제 값</small></article><i class="fa-solid fa-arrow-right"></i><article class="accent">NAV<small>순자산가치</small></article><i class="fa-solid fa-arrow-right-left"></i><article>시장가격<small>호가와 수요로 장중 변동</small></article></div>` },
       3: { title: '금리와 채권의 기본 관계', note: '다른 조건이 같다면 시장금리 상승은 기존 채권 가격 하락 압력으로 이어질 수 있습니다.', body: `<div class="visual-triad"><article class="accent"><i class="fa-solid fa-percent"></i><b>시장금리 ↑</b><span>새로 발행되는 채권 이자가 높아짐</span></article><article><i class="fa-solid fa-arrow-trend-down"></i><b>기존 채권 가격 ↓</b><span>낮은 쿠폰의 매력을 조정</span></article><article><i class="fa-solid fa-ruler-horizontal"></i><b>듀레이션</b><span>만기가 길수록 민감도가 커질 수 있음</span></article></div>` },
-      4: { title: '그래프로 읽는 위험', note: '수익률이 같아도 하락 폭과 흔들림은 다를 수 있습니다.', body: `<div class="visual-risk-chart"><svg viewBox="0 0 580 170" role="img" aria-label="수익률과 최대낙폭을 보여주는 예시 그래프"><path d="M15 135 H565 M15 92 H565 M15 49 H565" stroke="#dbe5f5" stroke-dasharray="5 6"/><polyline points="15,130 82,103 140,117 214,44 285,66 350,142 417,107 493,29 565,59" fill="none" stroke="#2563eb" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><line x1="214" y1="44" x2="350" y2="142" stroke="#f97316" stroke-width="3" stroke-dasharray="8 6"/><text x="265" y="102" fill="#c2410c" font-size="15" font-weight="700">MDD</text></svg><div><span><i class="blue"></i>수익률 경로</span><span><i class="orange"></i>고점 대비 최대 하락</span><span><i class="green"></i>변동성은 전체 흔들림</span></div></div>` },
+      4: { title: '그래프로 읽는 위험', note: '수익률이 같아도 하락 폭과 흔들림은 다를 수 있습니다.', body: `<div class="visual-risk-chart"><svg viewBox="0 0 580 170" role="img" aria-label="수익률과 최대낙폭을 보여주는 예시 그래프"><path d="M15 135 H565 M15 92 H565 M15 49 H565" stroke="#dbe5f5" stroke-dasharray="5 6"/><polyline points="15,130 82,103 140,117 214,44 285,66 350,142 417,107 493,29 565,59" fill="none" stroke="#2563eb" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><line x1="214" y1="44" x2="350" y2="142" stroke="#f97316" stroke-width="3" stroke-dasharray="8 6"/><text x="265" y="102" fill="#c2410c" font-size="16.5" font-weight="700">MDD</text></svg><div><span><i class="blue"></i>수익률 경로</span><span><i class="orange"></i>고점 대비 최대 하락</span><span><i class="green"></i>변동성은 전체 흔들림</span></div></div>` },
       5: { title: '목표 비중은 사전 약속', note: '색깔과 비중은 예시이며, 실제 비중은 목표·기간·손실 허용 범위에 따라 달라집니다.', body: `<div class="visual-allocation"><div class="allocation-ring"><b>목표<br>비중</b></div><div><span><i></i>성장 자산 · 장기 목표</span><span><i></i>완충 자산 · 변동성 조절</span><span><i></i>대체 자산 · 다른 위험 요인</span><span><i></i>유동성 · 가까운 지출</span></div></div>` },
     }[day];
     return visual ? `<section class="learning-visual" aria-label="${visual.title} 인포그래픽"><header><span>VISUAL SUMMARY</span><h2>${visual.title}</h2></header>${visual.body}<p>${visual.note}</p></section>` : '';
@@ -2633,7 +2680,7 @@ effective_date: [기준일]
     for (let g = 0; g <= gridCount; g++) {
       const price = minP + ((maxP - minP) * g) / gridCount;
       const gy = y(price);
-      gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR + 6}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/><text x="${width - padR + 10}" y="${(gy + 3).toFixed(1)}" font-size="14.5" fill="var(--text-muted)">${fmtWon(Math.round(price))}</text>`;
+      gridSvg += `<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${width - padR + 6}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-width="1"/><text x="${width - padR + 10}" y="${(gy + 3).toFixed(1)}" font-size="15.95" fill="var(--text-muted)">${fmtWon(Math.round(price))}</text>`;
     }
 
     const labelCount = Math.min(6, visible.length);
@@ -2641,7 +2688,7 @@ effective_date: [기준일]
     for (let i = 0; i < labelCount; i++) {
       const idx = Math.round((i / Math.max(1, labelCount - 1)) * (visible.length - 1));
       const cx = padL + slot * idx + slot / 2;
-      axisSvg += `<text x="${cx.toFixed(1)}" y="${height - 8}" font-size="14.5" fill="var(--text-muted)" text-anchor="middle">${visible[idx].date.slice(2)}</text>`;
+      axisSvg += `<text x="${cx.toFixed(1)}" y="${height - 8}" font-size="15.95" fill="var(--text-muted)" text-anchor="middle">${visible[idx].date.slice(2)}</text>`;
     }
 
     atlasHistoryGeom = { padL, plotW, slot, visible, width, height };
@@ -3011,7 +3058,7 @@ effective_date: [기준일]
       series: [{ name: '교육용 가정 수익률', data: [scenario.stock * 100, scenario.bond * 100, scenario.alt * 100] }],
       colors: ['#2563eb', '#16a34a', '#f59e0b'],
       plotOptions: { bar: { horizontal: false, distributed: true, borderRadius: 5, columnWidth: '42%' } },
-      dataLabels: { enabled: true, formatter: value => `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`, style: { fontSize: '12px', fontWeight: 800 } },
+      dataLabels: { enabled: true, formatter: value => `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`, style: { fontSize: '13.2px', fontWeight: 800 } },
       xaxis: { categories: ['주식 / ETF', '채권', '대체 · 현금'], labels: { show: false }, axisTicks: { show: false } },
       yaxis: { labels: { formatter: value => `${value}%`, style: { colors: '#64748b' } } },
       grid: { borderColor: '#dbe5f5', strokeDashArray: 4 },

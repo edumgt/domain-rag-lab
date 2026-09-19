@@ -8,20 +8,21 @@
       content="여러 자산을 담는 상품과 부동산·지수 연계 상품의 구조를 비교합니다."
     />
     <title>02일차 | 4일 금융 이론 — 펀드 · ETF</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260916-gts-timeline" />
-    <link rel="stylesheet" href="assets/fund-case-market.css?v=20260905-1" />
-    <link rel="stylesheet" href="assets/emerging-market-modal.css?v=20260905-1" />
-    <link rel="stylesheet" href="assets/emerging-market-detail.css?v=20260916-1" />
+    <link rel="stylesheet" href="assets/site.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="assets/fund-case-market.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="assets/emerging-market-modal.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="assets/emerging-market-detail.css?v=20260919-small-text110" />
     <link rel="stylesheet" href="assets/fund-manager-add-row.css?v=20260905-1" />
-    <link rel="stylesheet" href="assets/etf-role-detail.css?v=20260914-1" />
-    <link rel="stylesheet" href="assets/central-bank-volatility.css?v=20260916-1" />
-    <link rel="stylesheet" href="assets/app-shell.css?v=20260916-inav-compact" />
+    <link rel="stylesheet" href="assets/etf-role-detail.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="assets/central-bank-volatility.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="../hangul-scale.css?v=20260919-1" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <script>window.API_BASE = '';</script> <!-- 빈 값 = 페이지를 서빙하는 이 서버(로컬 API)로 호출 -->
-    <script defer src="assets/visuals.js"></script>
+    <script defer src="assets/visuals.js?v=20260919-small-text110"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260915-term-readings"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
@@ -2950,7 +2951,7 @@
             const values = data.combinedTradingValue100M.map((won100M) => Math.round((won100M / 10000) * 10) / 10);
             const total100M = data.combinedTradingValue100M.reduce((sum, value) => sum + value, 0);
             const shares = data.combinedTradingValue100M.map((value) => total100M ? (value / total100M) * 100 : 0);
-            const options = { chart: { type: "bar", height: 320, toolbar: { show: false }, animations: { enabled: true } }, series: [{ name: "월별 합산 거래대금", data: values }], colors: ["#2563eb"], plotOptions: { bar: { borderRadius: 5, columnWidth: "55%", dataLabels: { position: "top" } } }, dataLabels: { enabled: true, formatter: (_value, { dataPointIndex }) => `${shares[dataPointIndex].toFixed(1)}%`, offsetY: -18, style: { colors: ["#173d82"], fontSize: "11px", fontWeight: 700 } }, xaxis: { categories: data.months, labels: { style: { fontSize: "11px" } } }, yaxis: { labels: { formatter: (value) => `${value.toLocaleString("ko-KR")}조` } }, tooltip: { y: { formatter: (value, { dataPointIndex }) => `${value.toLocaleString("ko-KR")}조 원 · 최근 12개월 합산의 ${shares[dataPointIndex].toFixed(1)}%` } }, grid: { borderColor: "#dbe5f5", strokeDashArray: 4 }, legend: { show: false } };
+            const options = { chart: { type: "bar", height: 320, toolbar: { show: false }, animations: { enabled: true } }, series: [{ name: "월별 합산 거래대금", data: values }], colors: ["#2563eb"], plotOptions: { bar: { borderRadius: 5, columnWidth: "55%", dataLabels: { position: "top" } } }, dataLabels: { enabled: true, formatter: (_value, { dataPointIndex }) => `${shares[dataPointIndex].toFixed(1)}%`, offsetY: -18, style: { colors: ["#173d82"], fontSize: "12.1px", fontWeight: 700 } }, xaxis: { categories: data.months, labels: { style: { fontSize: "12.1px" } } }, yaxis: { labels: { formatter: (value) => `${value.toLocaleString("ko-KR")}조` } }, tooltip: { y: { formatter: (value, { dataPointIndex }) => `${value.toLocaleString("ko-KR")}조 원 · 최근 12개월 합산의 ${shares[dataPointIndex].toFixed(1)}%` } }, grid: { borderColor: "#dbe5f5", strokeDashArray: 4 }, legend: { show: false } };
             chart = new ApexCharts(document.getElementById("leverageEtfVolumeChart"), options);
             chart.render();
             if (updatedAtEl) updatedAtEl.textContent = `(기준일: ${data.updatedAt})`;
@@ -3322,7 +3323,7 @@
           updateCard("hedgeConcentratedFinal", "hedgeConcentratedPnl", concentrated);
           updateCard("hedgeDiversifiedFinal", "hedgeDiversifiedPnl", diversified);
           updateCard("hedgeHedgedFinal", "hedgeHedgedPnl", hedged);
-          const options = { chart: { type: "bar", height: 290, toolbar: { show: false }, animations: { enabled: true } }, series: [{ name: "예상 잔액", data: [Math.round(concentrated), Math.round(diversified), Math.round(hedged)] }], colors: ["#ef4444", "#2563eb", "#059669"], plotOptions: { bar: { distributed: true, horizontal: true, borderRadius: 5, barHeight: "55%" } }, dataLabels: { enabled: true, formatter: won, style: { fontSize: "11px" } }, xaxis: { categories: ["주식 집중", "분산투자", "분산 + 풋 헤지"], labels: { formatter: (value) => `${(value / 100000000).toFixed(1)}억` } }, yaxis: { labels: { style: { fontWeight: 700 } } }, grid: { borderColor: "#dbe5f5", strokeDashArray: 4 }, tooltip: { y: { formatter: won } }, legend: { show: false } };
+          const options = { chart: { type: "bar", height: 290, toolbar: { show: false }, animations: { enabled: true } }, series: [{ name: "예상 잔액", data: [Math.round(concentrated), Math.round(diversified), Math.round(hedged)] }], colors: ["#ef4444", "#2563eb", "#059669"], plotOptions: { bar: { distributed: true, horizontal: true, borderRadius: 5, barHeight: "55%" } }, dataLabels: { enabled: true, formatter: won, style: { fontSize: "12.1px" } }, xaxis: { categories: ["주식 집중", "분산투자", "분산 + 풋 헤지"], labels: { formatter: (value) => `${(value / 100000000).toFixed(1)}억` } }, yaxis: { labels: { style: { fontWeight: 700 } } }, grid: { borderColor: "#dbe5f5", strokeDashArray: 4 }, tooltip: { y: { formatter: won } }, legend: { show: false } };
           if (chart) chart.updateOptions(options, true, true); else { chart = new ApexCharts(document.getElementById("hedgeDiversificationChart"), options); chart.render(); }
           const difference = hedged - concentrated;
           document.getElementById("hedgeDiversificationNote").textContent = `${market < 0 ? `이 가정에서 분산 + 풋 헤지는 주식 집중보다 ${won(Math.abs(difference))} ${difference >= 0 ? "더 크게" : "더 작게"} 남습니다.` : `시장이 오르면 풋옵션 프리미엄 ${won(optionPremium)}이 비용이 되어 상승 이익 일부를 줄일 수 있습니다.`} 분산은 손실을 없애지 않으며, 풋 헤지도 가격·만기·보호 비중에 따라 결과가 달라집니다.`;
@@ -3689,9 +3690,9 @@
           series: [{ name: suffix, data }],
           colors: [color],
           plotOptions: { bar: { horizontal: true, borderRadius: 5, barHeight: "57%" } },
-          dataLabels: { enabled: true, formatter: (value) => `${value.toLocaleString("ko-KR")}${suffix}`, style: { fontSize: "12px", fontWeight: 800 } },
+          dataLabels: { enabled: true, formatter: (value) => `${value.toLocaleString("ko-KR")}${suffix}`, style: { fontSize: "13.2px", fontWeight: 800 } },
           xaxis: { categories, labels: { formatter: (value) => `${Number(value).toLocaleString("ko-KR")}${suffix}` } },
-          yaxis: { labels: { style: { fontSize: "13px", fontWeight: 700 } } },
+          yaxis: { labels: { style: { fontSize: "14.3px", fontWeight: 700 } } },
           grid: { borderColor: "#dbe5f5", strokeDashArray: 4 },
           tooltip: { y: { formatter: (value) => `${Number(value).toLocaleString("ko-KR")} ${suffix}` } },
           legend: { show: false },
@@ -4292,9 +4293,9 @@
           chart = new ApexCharts(document.getElementById("bisCapitalChart"), {
             chart: { type: "bar", height: 300, toolbar: { show: false }, fontFamily: "inherit" },
             series: [{ name: "CET1 비율", data: [13.74, 13.43, 13.21, 12.52, 12.14] }],
-            xaxis: { categories: ["KB금융", "신한금융", "하나금융", "JB금융", "BNK금융"], labels: { style: { fontSize: "13px" } } },
+            xaxis: { categories: ["KB금융", "신한금융", "하나금융", "JB금융", "BNK금융"], labels: { style: { fontSize: "14.3px" } } },
             yaxis: { min: 0, max: 16, tickAmount: 4, labels: { formatter: value => `${value.toFixed(0)}%` } },
-            dataLabels: { enabled: true, formatter: value => `${value.toFixed(2)}%`, offsetY: -4, style: { fontSize: "12px", colors: ["#1e3a8a"] } },
+            dataLabels: { enabled: true, formatter: value => `${value.toFixed(2)}%`, offsetY: -4, style: { fontSize: "13.2px", colors: ["#1e3a8a"] } },
             plotOptions: { bar: { borderRadius: 5, columnWidth: "54%" } },
             colors: ["#2563eb"],
             grid: { borderColor: "#e2e8f0" },
@@ -4311,6 +4312,6 @@
     </script>
     <script src="../assets/modal-fit.js?v=20260916-gts-timeline"></script>
     <script src="../assets/click-logger.js?v=20260905"></script>
-    <script src="assets/central-bank-volatility.js?v=20260916-2-local-api"></script>
+    <script src="assets/central-bank-volatility.js?v=20260919-small-text110"></script>
   </body>
 </html>

@@ -110,12 +110,12 @@
       stroke: { width: 3, curve: "smooth" },
       fill: { type: "gradient", gradient: { shadeIntensity: .2, opacityFrom: .32, opacityTo: .03, stops: [0, 95] } },
       markers: { size: 3, strokeWidth: 2, discrete: [{ seriesIndex: 0, dataPointIndex: windowSize, fillColor: "#0f9f79", strokeColor: "#fff", size: 7 }] },
-      xaxis: { categories: labels, labels: { style: { colors: "#77859a", fontSize: "11px" }, hideOverlappingLabels: true }, axisBorder: { color: "#dfe7f2" }, axisTicks: { show: false } },
+      xaxis: { categories: labels, labels: { style: { colors: "#77859a", fontSize: "12.1px" }, hideOverlappingLabels: true }, axisBorder: { color: "#dfe7f2" }, axisTicks: { show: false } },
       yaxis: { labels: { formatter: (value) => value.toFixed(1), style: { colors: "#77859a" } } },
       dataLabels: { enabled: false },
       grid: { borderColor: "#e5ebf3", strokeDashArray: 4, padding: { left: 4, right: 10 } },
       tooltip: { custom: ({ series, seriesIndex, dataPointIndex }) => `<div style="padding:9px 11px"><b>${labels[dataPointIndex]}</b><br>${sample[dataPointIndex].date}<br>기준값 ${series[seriesIndex][dataPointIndex].toFixed(2)}</div>` },
-      annotations: { xaxis: [{ x: "회의일", borderColor: "#0f9f79", strokeDashArray: 4, label: { text: "금리 결정", borderColor: "#0f9f79", style: { background: "#0f9f79", color: "#fff", fontSize: "10px" } } }] },
+      annotations: { xaxis: [{ x: "회의일", borderColor: "#0f9f79", strokeDashArray: 4, label: { text: "금리 결정", borderColor: "#0f9f79", style: { background: "#0f9f79", color: "#fff", fontSize: "11px" } } }] },
       legend: { show: false },
     };
     if (chart) chart.updateOptions(options, true, true);

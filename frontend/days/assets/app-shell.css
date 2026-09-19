@@ -71,7 +71,7 @@ body {
   color: #36506f;
   border: 1px solid transparent;
   border-radius: 5px;
-  font-size: 14.5px;
+  font-size: 15.95px;
   font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
@@ -87,7 +87,7 @@ body {
   background: #eaf2ff;
   border: 1px solid #8eb8f7;
   border-radius: 4px;
-  font-size: 14.5px;
+  font-size: 15.95px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -113,16 +113,16 @@ body {
 .glossary-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 50; display: flex; flex-direction: column; width: min(430px, 92vw); padding: 25px 22px; overflow: auto; background: #fff; box-shadow: -12px 0 32px #142c552b; transform: translateX(105%); transition: transform .2s ease; }
 .glossary-drawer.is-open { transform: translateX(0); }
 .glossary-drawer header { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; padding-bottom: 16px; border-bottom: 1px solid var(--app-line); }
-.glossary-drawer header p { margin: 0 0 4px; color: var(--app-blue); font-size: 14.5px; font-weight: 800; letter-spacing: .09em; }
+.glossary-drawer header p { margin: 0 0 4px; color: var(--app-blue); font-size: 15.95px; font-weight: 800; letter-spacing: .09em; }
 .glossary-drawer h2 { margin: 0; color: var(--app-ink); font-size: 25px; }
 .glossary-drawer header button { display: grid; width: 35px; height: 35px; place-items: center; border: 1px solid #d7e2f0; border-radius: 50%; color: #214d7d; background: #fff; font: 700 24px/1 inherit; cursor: pointer; }
-.glossary-drawer-intro { margin: 15px 0; color: #5d7191; font-size: 14.5px; }
+.glossary-drawer-intro { margin: 15px 0; color: #5d7191; font-size: 15.95px; }
 .glossary-drawer-list { display: grid; gap: 8px; }
 .glossary-drawer-item { border: 1px solid #d8e5f7; border-radius: 9px; background: #fbfdff; }
-.glossary-drawer-item summary { padding: 12px 14px; color: #173e70; font-size: 15px; font-weight: 800; cursor: pointer; }
+.glossary-drawer-item summary { padding: 12px 14px; color: #173e70; font-size: 16.5px; font-weight: 800; cursor: pointer; }
 .glossary-drawer-item[open] summary { border-bottom: 1px solid #d8e5f7; background: #eff6ff; }
-.glossary-drawer-item small { display: block; margin: 12px 14px 0; color: #5d7191; font-size: 14.5px; }
-.glossary-drawer-item p { margin: 10px 14px 14px; color: #284b77; font-size: 14.5px; line-height: 1.65; }
+.glossary-drawer-item small { display: block; margin: 12px 14px 0; color: #5d7191; font-size: 15.95px; }
+.glossary-drawer-item p { margin: 10px 14px 14px; color: #284b77; font-size: 15.95px; line-height: 1.65; }
 .day-offcanvas {
   position: fixed;
   top: 0;
@@ -176,7 +176,7 @@ body {
 .day-offcanvas .day-offcanvas-subtitle {
   margin: 15px 0 0;
   color: #36506f;
-  font-size: 14.5px;
+  font-size: 15.95px;
   line-height: 1.5;
 }
 .day-offcanvas-nav {
@@ -193,7 +193,7 @@ body {
 .day-offcanvas-nav-label {
   margin: 0 0 11px;
   color: #36506f;
-  font-size: 14.5px;
+  font-size: 15.95px;
   font-weight: 800;
 }
 .day-offcanvas .day-offcanvas-link {
@@ -207,7 +207,7 @@ body {
   border: 1px solid #d8e5f7;
   border-radius: 6px;
   background: #fff;
-  font-size: 14.5px;
+  font-size: 15.95px;
   font-weight: 700;
 }
 .day-offcanvas .day-offcanvas-link:hover { border-color: #91b9f4; background: #eff6ff; }
@@ -220,7 +220,7 @@ body {
   color: var(--app-blue);
   border-radius: 5px;
   background: #e7f0ff;
-  font-size: 14.5px;
+  font-size: 15.95px;
   font-weight: 800;
 }
 .day-offcanvas .day-offcanvas-link.active { border-color: #b8d1f6; background: #f8fbff; }
@@ -235,7 +235,7 @@ body {
 }
 .day-offcanvas-footer a {
   color: #36506f;
-  font-size: 14.5px;
+  font-size: 15.95px;
   font-weight: 700;
   text-decoration: none;
 }
@@ -288,7 +288,7 @@ body > nav {
 .lesson-head-line p {
   margin: 0;
   color: #5d7191;
-  font-size: 15px;
+  font-size: 16.5px;
 }
 .lesson-head-line p::before {
   content: "· ";
@@ -380,7 +380,7 @@ body > nav {
 .glossary-modal__label {
   margin: 0 42px 6px 0;
   color: var(--app-blue);
-  font-size: 15.225px;
+  font-size: 16.748px;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
@@ -434,7 +434,7 @@ body > nav {
   }
   .day-brand-nav a {
     padding: 7px 6px;
-    font-size: 14.5px;
+    font-size: 15.95px;
   }
   .day-panel-toggle span {
     display: none;
@@ -477,7 +477,7 @@ body > nav {
   border: 0;
   background: #080d1a;
   color: #cbd5e1;
-  font-size: 14.5px;
+  font-size: 15.95px;
   line-height: 1.5;
   text-align: center;
 }
@@ -513,12 +513,12 @@ body > nav {
 .inav-sim-dialog h2 { margin-bottom: 8px; }
 .inav-sim-dialog .inav-sim-intro {
   margin: 2px 0 10px;
-  font-size: 14px;
+  font-size: 15.4px;
   line-height: 1.5;
 }
 .inav-sim-dialog .inav-sim-stats { margin-bottom: 10px; }
 .inav-sim-dialog .inav-sim-stat { padding: 8px 10px; }
-.inav-sim-dialog .inav-sim-stat span { margin-bottom: 3px; font-size: 13.5px; }
+.inav-sim-dialog .inav-sim-stat span { margin-bottom: 3px; font-size: 14.85px; }
 .inav-sim-dialog .inav-sim-control { margin-bottom: 8px; }
 .inav-sim-dialog .inav-sim-control-head { margin-bottom: 4px; }
 .inav-sim-dialog .inav-sim-scenarios { margin-bottom: 10px; }
@@ -529,10 +529,10 @@ body > nav {
 }
 .inav-sim-dialog .inav-sim-legend {
   margin: 7px 0 4px;
-  font-size: 13.5px;
+  font-size: 14.85px;
 }
 .inav-sim-dialog .inav-sim-disclaimer {
-  font-size: 13px;
+  font-size: 14.3px;
   line-height: 1.4;
 }
 

@@ -15,11 +15,11 @@
 .emerging-market-class-card li b {
   margin-bottom: 4px;
   color: #244b95;
-  font-size: 14.5px;
+  font-size: 15.95px;
 }
 .emerging-market-class-card li span {
   color: var(--muted);
-  font-size: 13.5px;
+  font-size: 14.85px;
   line-height: 1.55;
 }
 .emerging-market-korea {
@@ -37,7 +37,7 @@
 .emerging-market-korea-now {
   margin: 0 0 12px;
   color: #3e4c67;
-  font-size: 14px;
+  font-size: 15.4px;
   line-height: 1.65;
 }
 .emerging-market-korea ol {
@@ -69,16 +69,16 @@
   border-radius: 50%;
   background: #315ff4;
   color: #fff;
-  font-size: 12px;
+  font-size: 13.2px;
   font-weight: 800;
 }
 .emerging-market-korea li b,
 .emerging-market-korea li span { display: block; }
-.emerging-market-korea li b { color: #244b95; font-size: 14px; }
+.emerging-market-korea li b { color: #244b95; font-size: 15.4px; }
 .emerging-market-korea li span {
   margin-top: 4px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14.3px;
   line-height: 1.55;
 }
 .emerging-market-korea-check {
@@ -90,7 +90,7 @@
   border-radius: 9px;
   background: #fff4df;
   color: #65451a;
-  font-size: 13px;
+  font-size: 14.3px;
   line-height: 1.55;
 }
 

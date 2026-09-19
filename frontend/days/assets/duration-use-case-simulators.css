@@ -17,7 +17,7 @@
 .duration-case-intro {
   margin: 0 0 15px;
   color: var(--muted);
-  font-size: 14.5px;
+  font-size: 15.95px;
   line-height: 1.6;
 }
 
@@ -52,12 +52,12 @@
   display: grid;
   gap: 4px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14.3px;
   font-weight: 800;
 }
 
 .duration-case-fields label small {
-  font-size: 11.5px;
+  font-size: 12.65px;
   font-weight: 600;
   line-height: 1.35;
 }
@@ -70,7 +70,7 @@
   background: #fff;
   color: var(--ink);
   font: inherit;
-  font-size: 14px;
+  font-size: 15.4px;
 }
 
 .duration-case-fields input[readonly] {
@@ -113,7 +113,7 @@
 
 .duration-case-results span {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13.2px;
   font-weight: 800;
 }
 
@@ -133,7 +133,7 @@
   border-radius: 9px;
   background: #fff7fa;
   color: #3e4c67;
-  font-size: 12.5px;
+  font-size: 13.75px;
   line-height: 1.55;
 }
 
@@ -141,7 +141,7 @@
   display: block;
   margin-bottom: 5px;
   color: #9f315f;
-  font-size: 14px;
+  font-size: 15.4px;
 }
 
 .duration-case-reading p { margin: 0 0 7px; }
@@ -159,7 +159,7 @@
 
 .duration-case-results small {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13.2px;
   line-height: 1.35;
 }
 
@@ -180,12 +180,12 @@
 
 .duration-case-chart-panel header strong {
   color: var(--ink);
-  font-size: 15px;
+  font-size: 16.5px;
 }
 
 .duration-case-chart-panel header small {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13.2px;
 }
 
 .duration-case-chart-panel > div {
@@ -195,7 +195,7 @@
 .duration-case-note {
   margin: 12px 0 0;
   color: var(--muted);
-  font-size: 12.5px;
+  font-size: 13.75px;
   line-height: 1.55;
 }
 
@@ -206,14 +206,14 @@
 .bond-duration-sim-fields label small,
 .bond-duration-sim-results small,
 .bond-duration-chart-panel header small {
-  font-size: 13.5px;
+  font-size: 14.85px;
   line-height: 1.5;
 }
 
 .duration-case-reading,
 .duration-case-note,
 .bond-duration-sim-disclaimer {
-  font-size: 14px;
+  font-size: 15.4px;
   line-height: 1.6;
 }
 

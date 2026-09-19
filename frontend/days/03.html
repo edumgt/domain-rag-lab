@@ -8,9 +8,10 @@
       content="금리·환율·원자재 가격 변화와 위험을 관리하는 도구를 함께 살펴봅니다."
     />
     <title>03일차 | 4일 금융 이론 — 채권 · 코인</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260906-understanding-check" />
-    <link rel="stylesheet" href="assets/app-shell.css?v=20260908-modal-text105" />
-    <link rel="stylesheet" href="assets/duration-use-case-simulators.css?v=20260917" />
+    <link rel="stylesheet" href="assets/site.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="../hangul-scale.css?v=20260919-1" />
+    <link rel="stylesheet" href="assets/duration-use-case-simulators.css?v=20260919-small-text110" />
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
     <style>
       /* 옵션 학습 단원은 01일차로 이동했습니다. */
@@ -18,113 +19,113 @@
       body[data-day="3"] .lesson-list > .moved-option-lesson,
       body[data-day="3"] .lesson-list > .moved-option-lesson ~ .lesson { display: none; }
       .bond-market-size-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
-      .bond-market-size-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
+      .bond-market-size-intro { margin: 4px 0 18px; color: var(--muted); font-size: 15.95px; line-height: 1.7; }
       .bond-market-size-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
       .bond-market-size-summary article { padding: 13px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; text-align: center; }
-      .bond-market-size-summary span { display: block; color: var(--muted); font-size: 14.5px; font-weight: 800; }
+      .bond-market-size-summary span { display: block; color: var(--muted); font-size: 15.95px; font-weight: 800; }
       .bond-market-size-summary strong { display: block; margin-top: 6px; color: var(--ink); font-size: 20px; }
       .bond-market-size-chart { display: grid; gap: 10px; }
       .bond-market-size-row { display: grid; grid-template-columns: 104px minmax(90px, 1fr) 100px; gap: 10px; align-items: center; }
-      .bond-market-size-country { color: var(--ink); font-size: 14.5px; font-weight: 800; }
+      .bond-market-size-country { color: var(--ink); font-size: 15.95px; font-weight: 800; }
       .bond-market-size-track { height: 25px; overflow: hidden; border-radius: 5px; background: #edf1f7; }
-      .bond-market-size-bar { display: flex; align-items: center; min-width: 2px; height: 100%; padding-left: 8px; border-radius: inherit; background: linear-gradient(90deg, #2563eb, #5b8ff9); color: #fff; font-size: 14.5px; font-weight: 800; white-space: nowrap; }
-      .bond-market-size-value { color: var(--ink); font-size: 14.5px; font-weight: 800; text-align: right; white-space: nowrap; }
-      .bond-market-size-note { margin: 18px 0 0; padding: 12px 14px; border-left: 4px solid var(--blue); border-radius: 8px; background: #f5f8ff; color: #395171; font-size: 14.5px; line-height: 1.65; }
-      .bond-market-size-source { margin: 12px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+      .bond-market-size-bar { display: flex; align-items: center; min-width: 2px; height: 100%; padding-left: 8px; border-radius: inherit; background: linear-gradient(90deg, #2563eb, #5b8ff9); color: #fff; font-size: 15.95px; font-weight: 800; white-space: nowrap; }
+      .bond-market-size-value { color: var(--ink); font-size: 15.95px; font-weight: 800; text-align: right; white-space: nowrap; }
+      .bond-market-size-note { margin: 18px 0 0; padding: 12px 14px; border-left: 4px solid var(--blue); border-radius: 8px; background: #f5f8ff; color: #395171; font-size: 15.95px; line-height: 1.65; }
+      .bond-market-size-source { margin: 12px 0 0; color: var(--muted); font-size: 15.95px; line-height: 1.6; }
       .bond-market-size-source a { color: var(--blue); font-weight: 800; }
       .crypto-market-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
-      .crypto-market-intro, .crypto-market-source { margin: 4px 0 18px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
+      .crypto-market-intro, .crypto-market-source { margin: 4px 0 18px; color: var(--muted); font-size: 15.95px; line-height: 1.7; }
       .crypto-market-scale { display: grid; gap: 11px; margin: 16px 0 20px; }
       .crypto-market-row { display: grid; grid-template-columns: 96px minmax(90px, 1fr) 126px; gap: 10px; align-items: center; }
-      .crypto-market-name, .crypto-market-value { color: var(--ink); font-size: 14.5px; font-weight: 800; }
+      .crypto-market-name, .crypto-market-value { color: var(--ink); font-size: 15.95px; font-weight: 800; }
       .crypto-market-value { text-align: right; white-space: nowrap; }
       .crypto-market-track { height: 26px; overflow: hidden; border-radius: 6px; background: #edf1f7; }
-      .crypto-market-bar { display: flex; align-items: center; min-width: 4px; height: 100%; padding-left: 8px; border-radius: inherit; color: #fff; font-size: 14.5px; font-weight: 800; white-space: nowrap; }
+      .crypto-market-bar { display: flex; align-items: center; min-width: 4px; height: 100%; padding-left: 8px; border-radius: inherit; color: #fff; font-size: 15.95px; font-weight: 800; white-space: nowrap; }
       .crypto-market-bar.bonds { background: linear-gradient(90deg, #2563eb, #5b8ff9); }
       .crypto-market-bar.stocks { background: linear-gradient(90deg, #147957, #36b37e); }
       .crypto-market-bar.crypto { background: linear-gradient(90deg, #8b5cf6, #b794f4); }
       .crypto-market-insights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0; }
       .crypto-market-insights article { padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }
-      .crypto-market-insights span { display: block; color: var(--muted); font-size: 14.5px; font-weight: 800; }
+      .crypto-market-insights span { display: block; color: var(--muted); font-size: 15.95px; font-weight: 800; }
       .crypto-market-insights strong { display: block; margin-top: 5px; color: var(--ink); font-size: 19px; }
-      .crypto-market-insights p { margin: 5px 0 0; color: #4c5d7a; font-size: 14.5px; line-height: 1.55; }
-      .crypto-market-note { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid #8b5cf6; border-radius: 8px; background: #f7f3ff; color: #4a3f70; font-size: 14.5px; line-height: 1.65; }
-      .crypto-market-source { margin-top: 12px; margin-bottom: 0; font-size: 14.5px; }
+      .crypto-market-insights p { margin: 5px 0 0; color: #4c5d7a; font-size: 15.95px; line-height: 1.55; }
+      .crypto-market-note { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid #8b5cf6; border-radius: 8px; background: #f7f3ff; color: #4a3f70; font-size: 15.95px; line-height: 1.65; }
+      .crypto-market-source { margin-top: 12px; margin-bottom: 0; font-size: 15.95px; }
       .crypto-market-source a { color: var(--blue); font-weight: 800; }
       .defi-insight-dialog { width: min(900px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
-      .defi-insight-intro { margin: 4px 0 18px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
+      .defi-insight-intro { margin: 4px 0 18px; color: var(--muted); font-size: 15.95px; line-height: 1.7; }
       .defi-flow { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr; align-items: center; margin: 16px 0; }
       .defi-flow article { min-height: 104px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }
-      .defi-flow strong { display: block; color: var(--ink); font-size: 14.5px; }
-      .defi-flow span { display: block; margin-top: 5px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+      .defi-flow strong { display: block; color: var(--ink); font-size: 15.95px; }
+      .defi-flow span { display: block; margin-top: 5px; color: var(--muted); font-size: 15.95px; line-height: 1.55; }
       .defi-flow i { color: #8b5cf6; text-align: center; font-size: 18px; }
       .defi-equity-chart { padding: 16px; border: 1px solid var(--line); border-radius: 11px; background: #fbfcff; }
       .defi-chart-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 8px; }
-      .defi-chart-head h3 { margin: 0; color: var(--ink); font-size: 15px; }
-      .defi-chart-head span { color: var(--muted); font-size: 14.5px; }
+      .defi-chart-head h3 { margin: 0; color: var(--ink); font-size: 16.5px; }
+      .defi-chart-head span { color: var(--muted); font-size: 15.95px; }
       .defi-equity-svg { display: block; width: 100%; height: 186px; overflow: visible; }
       .defi-equity-svg .grid { stroke: #dfe5f1; stroke-width: 1; }
-      .defi-equity-svg .axis { fill: #63708a; font-size: 14.5px; }
+      .defi-equity-svg .axis { fill: #63708a; font-size: 15.95px; }
       .defi-equity-svg polyline { fill: none; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
       .defi-equity-legend { display: flex; flex-wrap: wrap; gap: 8px 13px; margin-top: 8px; }
-      .defi-equity-legend span { color: #455572; font-size: 14.5px; font-weight: 800; }
+      .defi-equity-legend span { color: #455572; font-size: 15.95px; font-weight: 800; }
       .defi-equity-legend i { display: inline-block; width: 9px; height: 9px; margin-right: 4px; border-radius: 50%; }
       .defi-bars { display: grid; gap: 9px; margin: 18px 0; }
-      .defi-bar-row { display: grid; grid-template-columns: 52px minmax(90px, 1fr) 65px; gap: 10px; align-items: center; font-size: 14.5px; font-weight: 800; }
+      .defi-bar-row { display: grid; grid-template-columns: 52px minmax(90px, 1fr) 65px; gap: 10px; align-items: center; font-size: 15.95px; font-weight: 800; }
       .defi-bar-track { height: 19px; overflow: hidden; border-radius: 99px; background: #edf1f7; }
       .defi-bar { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #8b5cf6, #b794f4); }
       .defi-bar-row b { color: #16794b; text-align: right; }
-      .defi-insight-note { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid #8b5cf6; border-radius: 8px; background: #f7f3ff; color: #4a3f70; font-size: 14.5px; line-height: 1.65; }
+      .defi-insight-note { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid #8b5cf6; border-radius: 8px; background: #f7f3ff; color: #4a3f70; font-size: 15.95px; line-height: 1.65; }
       .quant-crypto-pipeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 16px 0; }
       .quant-crypto-pipeline article { position: relative; min-height: 114px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }
       .quant-crypto-pipeline article:not(:last-child)::after { position: absolute; right: -7px; top: 48px; z-index: 1; color: #8b5cf6; content: "›"; font-size: 20px; font-weight: 800; }
-      .quant-crypto-pipeline b { display: block; color: var(--ink); font-size: 14.5px; }
-      .quant-crypto-pipeline span { display: block; margin-top: 5px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+      .quant-crypto-pipeline b { display: block; color: var(--ink); font-size: 15.95px; }
+      .quant-crypto-pipeline span { display: block; margin-top: 5px; color: var(--muted); font-size: 15.95px; line-height: 1.55; }
       .bond-coupon-figure { max-width: 760px; margin: 18px auto; padding: 10px; border: 1px solid var(--line); border-radius: 14px; background: #fbfcff; }
       .bond-coupon-figure img { display: block; width: 100%; height: auto; border-radius: 10px; }
-      .bond-coupon-figure figcaption { padding: 9px 5px 1px; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
-      .bok-rate-modal .bok-rate-dialog { display: grid; grid-template-rows: auto auto auto minmax(310px, 1fr) auto auto auto; gap: 8px; width: 95vw !important; height: 95vh !important; padding: 24px 30px !important; overflow: hidden !important; }
+      .bond-coupon-figure figcaption { padding: 9px 5px 1px; color: var(--muted); font-size: 15.95px; line-height: 1.6; }
+      .bok-rate-modal .bok-rate-dialog { display: grid; grid-template-rows: auto auto auto minmax(310px, 1fr) auto auto auto; gap: 8px; width: 96vw !important; height: 96vh !important; max-width: none !important; max-height: none !important; padding: 24px 30px !important; overflow: hidden !important; }
       .bok-rate-dialog h2 { margin: 0 48px 0 0; font-size: clamp(21px, 2vw, 27px); line-height: 1.25; }
-      .bok-rate-intro { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+      .bok-rate-intro { margin: 0; color: var(--muted); font-size: 14.3px; line-height: 1.45; }
       .bok-rate-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0; }
       .bok-rate-summary article { padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcff; text-align: center; }
-      .bok-rate-summary span { display: block; color: var(--muted); font-size: 12px; font-weight: 800; }
+      .bok-rate-summary span { display: block; color: var(--muted); font-size: 13.2px; font-weight: 800; }
       .bok-rate-summary strong { display: block; margin: 2px 0; color: var(--ink); font-size: 18px; line-height: 1.2; }
-      .bok-rate-summary small { font-size: 11px; }
+      .bok-rate-summary small { font-size: 12.1px; }
       .bok-rate-chart { min-height: 0; padding: 8px; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: #fbfcff; }
       .bok-rate-chart__canvas { width: 100%; height: 100%; min-height: 310px; }
       .bok-rate-chart svg { display: block; width: 100%; height: 100%; min-width: 0; }
       .bok-rate-chart .grid { stroke: #dbe4f2; stroke-width: 1; }
-      .bok-rate-chart .axis, .bok-rate-chart .date { fill: #63708a; font-family: Arial, sans-serif; font-size: 13px; }
+      .bok-rate-chart .axis, .bok-rate-chart .date { fill: #63708a; font-family: Arial, sans-serif; font-size: 14.3px; }
       .bok-rate-chart .rate-line { fill: none; stroke: #2563eb; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
       .bok-rate-chart .rate-dot { fill: #2563eb; stroke: #fff; stroke-width: 3; }
-      .bok-rate-chart .rate-label { fill: #123b72; font-family: Arial, sans-serif; font-size: 14px; font-weight: 800; }
+      .bok-rate-chart .rate-label { fill: #123b72; font-family: Arial, sans-serif; font-size: 15.4px; font-weight: 800; }
       .bok-rate-events { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin: 0; }
-      .bok-rate-events span { padding: 6px 9px; border-left: 3px solid var(--blue); border-radius: 7px; background: #f4f7ff; color: #395171; font-size: 12px; line-height: 1.35; }
-      .bok-rate-note { margin: 0; padding: 8px 10px; border-left: 4px solid #f0a10a; border-radius: 8px; background: #fff9e8; color: #705316; font-size: 12px; line-height: 1.4; }
-      .bok-rate-source { font-size: 11px; line-height: 1.3; }
-      @media (max-width: 760px) { .bok-rate-modal .bok-rate-dialog { grid-template-rows: auto auto auto minmax(260px, 1fr) auto auto auto; width: 95vw !important; height: 95vh !important; padding: 18px 16px !important; } .bok-rate-chart__canvas { min-height: 260px; } .bok-rate-summary { gap: 5px; } .bok-rate-summary article { padding: 6px 4px; } .bok-rate-summary span { font-size: 10px; } .bok-rate-summary strong { font-size: 15px; } .bok-rate-summary small { font-size: 9px; } .bok-rate-events { grid-template-columns: repeat(2, 1fr); gap: 5px; } .bok-rate-note { font-size: 10px; } .bok-rate-source { display: none; } }
-      @media (max-height: 680px) { .bok-rate-modal .bok-rate-dialog { gap: 5px; padding-top: 18px !important; padding-bottom: 18px !important; } .bok-rate-intro { font-size: 11px; } .bok-rate-note { padding-top: 5px; padding-bottom: 5px; } .bok-rate-source { display: none; } }
+      .bok-rate-events span { padding: 6px 9px; border-left: 3px solid var(--blue); border-radius: 7px; background: #f4f7ff; color: #395171; font-size: 13.2px; line-height: 1.35; }
+      .bok-rate-note { margin: 0; padding: 8px 10px; border-left: 4px solid #f0a10a; border-radius: 8px; background: #fff9e8; color: #705316; font-size: 13.2px; line-height: 1.4; }
+      .bok-rate-source { font-size: 12.1px; line-height: 1.3; }
+      @media (max-width: 760px) { .bok-rate-modal .bok-rate-dialog { grid-template-rows: auto auto auto minmax(260px, 1fr) auto auto auto; width: 95vw !important; height: 95vh !important; padding: 18px 16px !important; } .bok-rate-chart__canvas { min-height: 260px; } .bok-rate-summary { gap: 5px; } .bok-rate-summary article { padding: 6px 4px; } .bok-rate-summary span { font-size: 11px; } .bok-rate-summary strong { font-size: 16.5px; } .bok-rate-summary small { font-size: 9.9px; } .bok-rate-events { grid-template-columns: repeat(2, 1fr); gap: 5px; } .bok-rate-note { font-size: 11px; } .bok-rate-source { display: none; } }
+      @media (max-height: 680px) { .bok-rate-modal .bok-rate-dialog { gap: 5px; padding-top: 18px !important; padding-bottom: 18px !important; } .bok-rate-intro { font-size: 12.1px; } .bok-rate-note { padding-top: 5px; padding-bottom: 5px; } .bok-rate-source { display: none; } }
       .correlation-sim-modal .correlation-sim-dialog { width: min(1040px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
       .corr-sim-picker { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin: 16px 0 12px; }
       .corr-sim-picker label { display: grid; grid-template-columns: auto 1fr; gap: 2px 7px; align-items: center; min-height: 68px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); cursor: pointer; }
       .corr-sim-picker label:has(input:checked) { border-color: var(--blue); background: #eef3ff; box-shadow: 0 0 0 1px #bfd0ff; }
       .corr-sim-picker input { width: 16px; height: 16px; margin: 0; accent-color: var(--blue); }
-      .corr-sim-picker b { font-size: 14.5px; }
-      .corr-sim-picker small { grid-column: 2; color: var(--muted); font-size: 14.5px; }
+      .corr-sim-picker b { font-size: 15.95px; }
+      .corr-sim-picker small { grid-column: 2; color: var(--muted); font-size: 15.95px; }
       .corr-sim-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-      .corr-sim-pairs { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 14px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+      .corr-sim-pairs { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 14px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; color: var(--muted); font-size: 15.95px; line-height: 1.5; }
       .corr-sim-pairs b { flex: 0 0 100%; color: var(--ink); }
       .corr-sim-pairs span { padding: 3px 7px; border-radius: 99px; background: #eef2f8; white-space: nowrap; }
       .corr-sim-pairs strong { color: var(--blue); }
       @media (max-width: 860px) { .corr-sim-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-      @media (max-width: 600px) { .bond-market-size-dialog, .crypto-market-dialog, .defi-insight-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .bond-market-size-summary, .crypto-market-insights { grid-template-columns: 1fr; } .bond-market-size-row { grid-template-columns: 76px minmax(50px, 1fr) 76px; gap: 7px; } .crypto-market-row { grid-template-columns: 68px minmax(44px, 1fr) 86px; gap: 7px; } .bond-market-size-country, .bond-market-size-value, .crypto-market-name, .crypto-market-value { font-size: 14.5px; } .bond-market-size-bar, .crypto-market-bar { padding-left: 5px; font-size: 14.5px; } .defi-flow { grid-template-columns: 1fr; gap: 8px; } .defi-flow i { transform: rotate(90deg); } .defi-chart-head { display: block; } .defi-equity-svg { height: 155px; } .quant-crypto-pipeline { grid-template-columns: 1fr; gap: 13px; } .quant-crypto-pipeline article:not(:last-child)::after { top: auto; right: 50%; bottom: -17px; transform: rotate(90deg); } }
+      @media (max-width: 600px) { .bond-market-size-dialog, .crypto-market-dialog, .defi-insight-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .bond-market-size-summary, .crypto-market-insights { grid-template-columns: 1fr; } .bond-market-size-row { grid-template-columns: 76px minmax(50px, 1fr) 76px; gap: 7px; } .crypto-market-row { grid-template-columns: 68px minmax(44px, 1fr) 86px; gap: 7px; } .bond-market-size-country, .bond-market-size-value, .crypto-market-name, .crypto-market-value { font-size: 15.95px; } .bond-market-size-bar, .crypto-market-bar { padding-left: 5px; font-size: 15.95px; } .defi-flow { grid-template-columns: 1fr; gap: 8px; } .defi-flow i { transform: rotate(90deg); } .defi-chart-head { display: block; } .defi-equity-svg { height: 155px; } .quant-crypto-pipeline { grid-template-columns: 1fr; gap: 13px; } .quant-crypto-pipeline article:not(:last-child)::after { top: auto; right: 50%; bottom: -17px; transform: rotate(90deg); } }
     </style>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <script defer src="assets/visuals.js"></script>
+    <script defer src="assets/visuals.js?v=20260919-small-text110"></script>
     <script defer src="assets/atlas.js"></script>
     <script defer src="assets/glossary-modal.js?v=20260917-debt-security"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
@@ -3299,8 +3300,8 @@
             series: DATA.series.map(({ name, data }) => ({ name, data })), colors: DATA.series.map(({ color }) => color),
             plotOptions: { bar: { horizontal: true, barHeight: "54%", borderRadius: 3 } }, dataLabels: { enabled: false },
             xaxis: { categories: DATA.countries, max: 100, labels: { formatter: (value) => `${value}%` } },
-            yaxis: { labels: { style: { fontSize: "14px", fontWeight: 700 } } },
-            legend: { position: "bottom", fontSize: "13px", markers: { size: 10 }, itemMargin: { horizontal: 10, vertical: 4 } },
+            yaxis: { labels: { style: { fontSize: "15.4px", fontWeight: 700 } } },
+            legend: { position: "bottom", fontSize: "14.3px", markers: { size: 10 }, itemMargin: { horizontal: 10, vertical: 4 } },
             grid: { borderColor: "#dbe4f0", strokeDashArray: 3 }, tooltip: { y: { formatter: (value) => `${value}%` } }, fill: { opacity: 1 },
           });
           chart.render();
@@ -3418,7 +3419,7 @@
               { seriesName: "국고채10년 ETF 가격지수", opposite: true, offsetX: 50, title: { text: "가격지수" }, labels: { formatter: (value) => value.toFixed(0) } },
             ],
             tooltip: { shared: true, x: { format: "yyyy.MM.dd" }, y: { formatter: (value, { seriesIndex }) => value == null ? "—" : seriesIndex < 2 ? `${value.toFixed(2)}%` : value.toFixed(2) } },
-            legend: { position: "top", horizontalAlign: "left", fontSize: "12px" },
+            legend: { position: "top", horizontalAlign: "left", fontSize: "13.2px" },
             grid: { borderColor: "#dbe4f2", padding: { right: 58 } },
             noData: { text: "차트 데이터를 불러오는 중입니다." },
           };
@@ -3591,12 +3592,12 @@
             colors: ["#64748b", "#7c3aed"],
             stroke: { width: [2, 3], dashArray: [6, 0], curve: "smooth" },
             markers: { size: 0 },
-            xaxis: { type: "numeric", min: -range, max: range, tickAmount: 4, title: { text: "금리 변화폭 (%p) · 시간축 아님", style: { fontSize: "12px" } }, labels: { formatter: number => `${Number(number).toFixed(1)}%p` } },
-            yaxis: { title: { text: "듀레이션·컨벡시티 반영 가격 (원)", style: { fontSize: "12px" } }, labels: { formatter: amount => `${Math.round(amount / 10000).toLocaleString("ko-KR")}만` } },
+            xaxis: { type: "numeric", min: -range, max: range, tickAmount: 4, title: { text: "금리 변화폭 (%p) · 시간축 아님", style: { fontSize: "13.2px" } }, labels: { formatter: number => `${Number(number).toFixed(1)}%p` } },
+            yaxis: { title: { text: "듀레이션·컨벡시티 반영 가격 (원)", style: { fontSize: "13.2px" } }, labels: { formatter: amount => `${Math.round(amount / 10000).toLocaleString("ko-KR")}만` } },
             grid: { borderColor: "#e2e8f0" },
-            legend: { position: "top", horizontalAlign: "left", fontSize: "12px" },
+            legend: { position: "top", horizontalAlign: "left", fontSize: "13.2px" },
             tooltip: { x: { formatter: rate => `금리 ${Number(rate).toFixed(2)}%p` }, y: { formatter: amount => `${Math.round(amount).toLocaleString("ko-KR")}원` } },
-            annotations: { points: [{ x: rates, y: selectedPrice, marker: { size: 5, fillColor: "#7c3aed", strokeColor: "#fff", radius: 3 }, label: { text: "컨벡시티 반영 가격", borderColor: "#7c3aed", style: { color: "#fff", background: "#7c3aed", fontSize: "11px" } } }] },
+            annotations: { points: [{ x: rates, y: selectedPrice, marker: { size: 5, fillColor: "#7c3aed", strokeColor: "#fff", radius: 3 }, label: { text: "컨벡시티 반영 가격", borderColor: "#7c3aed", style: { color: "#fff", background: "#7c3aed", fontSize: "12.1px" } } }] },
           };
           if (chart) {
             chart.updateOptions(options, false, true);
@@ -3681,7 +3682,7 @@
         if (coinHistory && riskFreeBankBondRate) coinHistory.insertAdjacentElement("beforebegin", riskFreeBankBondRate);
       })();
     </script>
-    <script src="assets/duration-use-case-simulators.js?v=20260917"></script>
+    <script src="assets/duration-use-case-simulators.js?v=20260919-small-text110"></script>
     <script src="assets/app-shell.js"></script>
     <script src="../assets/modal-fit.js?v=20260905-simulator-specific-hints"></script>
     <script src="../assets/click-logger.js?v=20260905"></script>

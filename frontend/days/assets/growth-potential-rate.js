@@ -9,6 +9,7 @@
   const historyEvents = document.getElementById("rateHistoryEvents");
   const historyNote = document.getElementById("rateHistoryNote");
   const scenarioNote = document.getElementById("rateScenarioNote");
+  const scenarioGuide = document.getElementById("rateScenarioGuide");
   if (!modal || !trigger || !chartEl || !shockControl || !shockInput || !shockOutput) return;
 
   let chart;
@@ -62,7 +63,7 @@
   const renderHistory = () => {
     if (!historyData) return;
     replaceChart({
-      chart: { type: "line", height: "100%", toolbar: { show: true, tools: { download: true, selection: false, zoom: true, zoomin: true, zoomout: true, pan: true, reset: true } }, animations: { enabled: false }, fontFamily: "inherit" },
+      chart: { type: "line", height: "100%", toolbar: { show: true, tools: { download: true, selection: false, zoom: true, zoomin: true, zoomout: true, pan: true, reset: true } }, animations: { enabled: false }, fontFamily: "inherit", foreColor: "#294568" },
       series: [
         { name: "한국은행 기준금리", data: baseRateSeries(historyData.kospi.bars) },
         { name: "KOSPI 20일 실현변동성", data: realizedVolatility(historyData.kospi.bars) },
@@ -71,14 +72,14 @@
       colors: ["#2563eb", "#ef7d32", "#16805a"],
       stroke: { width: [3, 2.5, 2.5], curve: "straight" },
       markers: { size: 0, hover: { size: 4 } },
-      xaxis: { type: "datetime", labels: { datetimeUTC: false, format: "yy.MM" } },
+      xaxis: { type: "datetime", labels: { datetimeUTC: false, format: "yy.MM", style: { fontSize: "14.3px", fontWeight: 650, colors: "#385273" } } },
       yaxis: [
-        { seriesName: "한국은행 기준금리", min: 2.25, max: 3.75, tickAmount: 3, title: { text: "기준금리 (%)" }, labels: { formatter: (value) => `${value.toFixed(2)}%` } },
-        { seriesName: "KOSPI 20일 실현변동성", opposite: true, title: { text: "변동성 (%)" }, labels: { formatter: (value) => `${value.toFixed(0)}%` } },
-        { seriesName: "국고채10년 ETF 가격지수", opposite: true, offsetX: 50, title: { text: "가격지수" }, labels: { formatter: (value) => value.toFixed(0) } },
+        { seriesName: "한국은행 기준금리", min: 2.25, max: 3.75, tickAmount: 3, title: { text: "기준금리 (%)", style: { fontSize: "15.4px", fontWeight: 800, color: "#183969" } }, labels: { formatter: (value) => `${value.toFixed(2)}%`, style: { fontSize: "14.3px", fontWeight: 650 } } },
+        { seriesName: "KOSPI 20일 실현변동성", opposite: true, title: { text: "변동성 (%)", style: { fontSize: "15.4px", fontWeight: 800, color: "#183969" } }, labels: { formatter: (value) => `${value.toFixed(0)}%`, style: { fontSize: "14.3px", fontWeight: 650 } } },
+        { seriesName: "국고채10년 ETF 가격지수", opposite: true, offsetX: 50, title: { text: "가격지수", style: { fontSize: "15.4px", fontWeight: 800, color: "#183969" } }, labels: { formatter: (value) => value.toFixed(0), style: { fontSize: "14.3px", fontWeight: 650 } } },
       ],
       tooltip: { shared: true, x: { format: "yyyy.MM.dd" }, y: { formatter: (value, { seriesIndex }) => value == null ? "—" : seriesIndex < 2 ? `${value.toFixed(2)}%` : value.toFixed(2) } },
-      legend: { position: "top", horizontalAlign: "left", fontSize: "12px" },
+      legend: { position: "top", horizontalAlign: "left", fontSize: "15.4px", fontWeight: 700, labels: { colors: "#203d68" } },
       grid: { borderColor: "#dbe4f2", padding: { right: 58 } },
       noData: { text: "차트 데이터를 불러오는 중입니다." },
     });
@@ -94,25 +95,25 @@
     const largestMove = Math.max(...data.map(({ y }) => Math.abs(y)));
     const axisBound = Math.max(5, Math.ceil((largestMove + 1) / 5) * 5);
     replaceChart({
-      chart: { type: "bar", height: "100%", toolbar: { show: false }, animations: { enabled: false }, fontFamily: "inherit", foreColor: "#526783", parentHeightOffset: 0 },
+      chart: { type: "bar", height: "100%", toolbar: { show: false }, animations: { enabled: false }, fontFamily: "inherit", foreColor: "#294568", parentHeightOffset: 0 },
       series: [{ name: "가정 가치 변화", data }],
       plotOptions: { bar: { horizontal: true, distributed: true, borderRadius: 5, barHeight: "58%", dataLabels: { position: "center" } } },
       dataLabels: {
         enabled: true,
         formatter: (value) => `${value > 0 ? "+" : ""}${value.toFixed(1)}%`,
-        style: { fontSize: "12px", fontWeight: 800, colors: ["#17345f"] },
-        background: { enabled: true, foreColor: "#17345f", borderRadius: 4, padding: 4, opacity: 0.94, borderWidth: 1, borderColor: "#d8e2f0" },
+        style: { fontSize: "16.5px", fontWeight: 900, colors: ["#ffffff"] },
+        background: { enabled: true, foreColor: "#08285c", borderRadius: 5, padding: 6, opacity: 1, borderWidth: 1, borderColor: "#7893b8" },
       },
       xaxis: {
         min: -axisBound,
         max: axisBound,
         tickAmount: 4,
-        title: { text: "금리 충격만 반영한 교육용 가치 변화 가정 (%)", style: { color: "#344c70", fontSize: "12px", fontWeight: 700 } },
-        labels: { formatter: (value) => `${value.toFixed(0)}%`, style: { fontSize: "11px" } },
+        title: { text: "금리 충격만 반영한 교육용 가치 변화 가정 (%)", style: { color: "#203d68", fontSize: "15.4px", fontWeight: 800 } },
+        labels: { formatter: (value) => `${value.toFixed(0)}%`, style: { fontSize: "14.3px", fontWeight: 700, colors: "#385273" } },
         axisBorder: { color: "#cdd9e9" },
         axisTicks: { color: "#cdd9e9" },
       },
-      yaxis: { labels: { minWidth: 100, maxWidth: 150, style: { colors: "#203d68", fontSize: "13px", fontWeight: 700 } } },
+      yaxis: { labels: { minWidth: 120, maxWidth: 180, style: { colors: "#102f5d", fontSize: "16.5px", fontWeight: 850 } } },
       annotations: { xaxis: [{ x: 0, borderColor: "#64748b", strokeDashArray: 0 }] },
       tooltip: { y: { formatter: (value) => `${value > 0 ? "+" : ""}${value.toFixed(2)}% (가정)` } },
       legend: { show: false },
@@ -140,11 +141,13 @@
   };
   const setView = (view) => {
     activeView = view;
+    modal.querySelector(".bok-rate-dialog")?.classList.toggle("is-scenario", view === "scenario");
     viewButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.rateView === view)));
     shockControl.hidden = view !== "scenario";
     if (historyEvents) historyEvents.hidden = view !== "history";
     if (historyNote) historyNote.hidden = view !== "history";
     if (scenarioNote) scenarioNote.hidden = view !== "scenario";
+    if (scenarioGuide) scenarioGuide.hidden = view !== "scenario";
     if (view === "scenario") renderScenario();
     else loadHistory();
   };

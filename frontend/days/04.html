@@ -8,8 +8,9 @@
       content="한 종목의 성과보다 여러 자산을 함께 보고, 목표 비중을 정해 리밸런싱하는 법을 배웁니다."
     />
     <title>04일차 | 4일 금융 이론 — 자산배분, 퀀트</title>
-    <link rel="stylesheet" href="assets/site.css?v=20260908-day4" />
-    <link rel="stylesheet" href="assets/app-shell.css?v=20260908-modal-text105" />
+    <link rel="stylesheet" href="assets/site.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="assets/app-shell.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="../hangul-scale.css?v=20260919-1" />
     <style>
       /* 분산투자·변동성 매매 단원은 03일차로 이동했습니다. */
       /* 기존에 이동한 앞부분 12개 단원을 숨깁니다. */
@@ -19,24 +20,113 @@
       #roboAdvisorProjectLesson .lesson-body > ul > li > strong:first-child,
       #indicatorProjectLesson .lesson-body > ul > li > strong:first-child { color: #16835d; font-size: 18px; font-weight: 850; }
       #roboAdvisorProjectLesson .lesson-body > ul > li > ol > li:not(.has-implementation-detail)::after,
-      #indicatorProjectLesson .lesson-body > ul > li > ol > li:not(.has-implementation-detail)::after { display: block; margin-top: 3px; color: #8b5e3c; font-size: 14.5px; font-weight: 800; content: "기술스택 및 구현방안"; }
-      .implementation-detail { display: block; margin-top: 3px; color: #8b5e3c; font-size: 14.5px; font-weight: 800; }
+      #indicatorProjectLesson .lesson-body > ul > li > ol > li:not(.has-implementation-detail)::after { display: block; margin-top: 3px; color: #8b5e3c; font-size: 15.95px; font-weight: 800; content: "기술스택 및 구현방안"; }
+      .implementation-detail { display: block; margin-top: 3px; color: #8b5e3c; font-size: 15.95px; font-weight: 800; }
       .implementation-detail a { color: inherit; text-decoration: underline; }
       .lesson-body p > strong, .lesson-body p > b, .lesson-body li > strong, .lesson-body li > b { color: #173d72; font-weight: 850; }
+      .quant-workflow-lines { display: grid; gap: 8px; margin: 12px 0 16px; }
+      .quant-workflow-lines p { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; align-items: start; margin: 0; padding: 11px 14px; border-left: 4px solid #315ff4; border-radius: 8px; background: #f5f8ff; color: #405572; line-height: 1.65; }
+      .quant-workflow-lines strong { color: #173d72; font-size: 17.05px; font-weight: 900; }
+      @media (max-width: 620px) { .quant-workflow-lines p { grid-template-columns: 1fr; gap: 3px; } }
       .aws-operations-stack { margin: 8px 0 14px; padding: 10px 12px; border: 1px solid #dcc9b7; border-radius: 10px; background: #fffaf5; }
       .aws-operations-stack > span { display: block; margin-top: 3px; }
+      .technology-stack-summary { margin: 14px 0 20px; }
+      .technology-stack-summary h3 { margin: 0 0 8px; color: #173d72; font-size: 19px; }
+      .technology-stack-summary p { margin: 0 0 10px; color: #52647e; font-size: 15.95px; line-height: 1.65; }
+      .technology-stack-table-wrap { overflow-x: auto; border: 1px solid #cfd9e8; border-radius: 10px; }
+      .technology-stack-summary table { width: 100%; min-width: 880px; border-collapse: collapse; background: #fff; }
+      .technology-stack-summary th, .technology-stack-summary td { padding: 10px 12px; border-top: 1px solid #e1e7f0; border-left: 1px solid #e1e7f0; text-align: left; vertical-align: top; font-size: 15.4px; line-height: 1.55; }
+      .technology-stack-summary th:first-child, .technology-stack-summary td:first-child { border-left: 0; }
+      .technology-stack-summary thead th { border-top: 0; color: #173d72; background: #eef4ff; font-weight: 850; }
+      .technology-stack-summary tbody th { width: 15%; color: #16835d; background: #f8fbff; }
+      .technology-stack-summary .technology-stack-interview-note { margin: 20px 0 0; padding: 22px 24px; border: 2px solid #f6c453; border-left: 8px solid #f59e0b; border-radius: 14px; background: linear-gradient(135deg, #102a5d 0%, #214c9c 58%, #315ff4 100%); color: #fff; font-size: clamp(20px, 2vw, 26px); font-weight: 900; line-height: 1.55; letter-spacing: -.02em; box-shadow: 0 12px 30px rgba(16, 42, 93, .24); }
+      .technology-stack-summary .technology-stack-interview-note::before { display: block; margin-bottom: 7px; color: #ffd875; font-size: 13.2px; font-weight: 900; letter-spacing: .14em; content: "INTERVIEW POINT"; }
+      .technology-stack-summary .technology-stack-interview-note strong { color: #fff; font: inherit; }
+      .project-staffing-note { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+      .project-staffing-note > strong { grid-column: 1 / -1; color: #173d72; font-size: 19.4px; line-height: 1.45; }
+      .project-staffing-note article { padding: 13px 15px; border: 1px solid #cfd9e8; border-radius: 10px; background: #fbfcff; }
+      .project-staffing-note article:last-child { border-color: #9bd6b8; background: #f0fbf5; }
+      .project-staffing-note b, .project-staffing-note span { display: block; }
+      .project-staffing-note b { color: #173d72; font-size: 17px; line-height: 1.5; }
+      .project-staffing-note span { margin-top: 4px; color: #405572; font-size: 17px; line-height: 1.6; }
+      .project-staffing-note article:last-child b { color: #0c5f38; }
+      .project-deliverables { margin-top: 20px; }
+      .project-deliverables h4 { margin: 0 0 7px; color: #173d72; font-size: 18px; }
+      .project-deliverables > p { margin: 0 0 10px; color: #52647e; font-size: 15.95px; line-height: 1.65; }
+      .project-deliverables-table-wrap { overflow-x: auto; border: 1px solid #cfd9e8; border-radius: 10px; }
+      .project-deliverables table { width: 100%; min-width: 900px; border-collapse: collapse; background: #fff; }
+      .project-deliverables th, .project-deliverables td { padding: 10px 12px; border-top: 1px solid #e1e7f0; border-left: 1px solid #e1e7f0; text-align: left; vertical-align: top; font-size: 15.4px; line-height: 1.55; }
+      .project-deliverables th:first-child, .project-deliverables td:first-child { border-left: 0; }
+      .project-deliverables thead th { border-top: 0; color: #173d72; background: #eef4ff; font-weight: 850; }
+      .project-deliverables tbody th { width: 15%; color: #7a4b12; background: #fffaf5; }
+      .project-progress-cautions { margin: 24px 0 18px; padding: 22px; border: 1px solid #b8ccf5; border-radius: 16px; background: linear-gradient(135deg, #eef4ff 0%, #f5f8ff 55%, #edf7ff 100%); box-shadow: 0 12px 28px rgba(35, 76, 145, .12); }
+      .project-progress-cautions::before { display: block; margin-bottom: 5px; color: #315ff4; font-size: 13.75px; font-weight: 900; letter-spacing: .12em; content: "PROJECT OPERATING GUIDE"; }
+      .project-progress-cautions h3 { margin: 0 0 15px; color: #123b72; font-size: 22px; line-height: 1.4; }
+      .project-progress-cautions ol { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; counter-reset: project-caution; color: #304867; font-size: 17px; line-height: 1.65; }
+      .project-progress-cautions li { position: relative; min-height: 48px; padding: 10px 14px 10px 52px; border: 1px solid #d6e2f7; border-radius: 10px; background: rgba(255, 255, 255, .9); counter-increment: project-caution; }
+      .project-progress-cautions li::before { position: absolute; top: 10px; left: 12px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #315ff4; color: #fff; font-size: 15.4px; font-weight: 900; content: counter(project-caution); }
+      .project-progress-cautions b { color: #174ea6; }
+      .project-schedule { margin-top: 24px; }
+      .project-schedule h4 { margin: 0 0 7px; color: #173d72; font-size: 19.8px; }
+      .project-schedule > p { margin: 0 0 12px; color: #52647e; font-size: 17.6px; line-height: 1.65; }
+      .project-schedule-role-guide { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-bottom: 12px; }
+      .project-schedule-role-guide span { padding: 8px 10px; border-radius: 8px; background: #eef4ff; color: #173d72; font-size: 15.18px; font-weight: 800; }
+      .project-schedule-sheet { margin-top: 18px; border: 1px solid #cfd9e8; border-radius: 10px; background: #fff; }
+      .project-schedule-sheet-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 14px; align-items: center; padding: 13px 14px; border-radius: 10px 10px 0 0; background: #f5f8ff; color: #173d72; }
+      .project-schedule-sheet-head span { font-size: 17.6px; font-weight: 900; }
+      .project-schedule-sheet-head b { font-size: 16.39px; text-align: right; }
+      .project-schedule-sheet-head small { grid-column: 2; color: #52647e; font-size: 15.18px; text-align: right; }
+      .project-schedule-buffer-note { margin: 0; padding: 10px 14px; border-top: 1px solid #cfd9e8; background: #fffaf0; color: #6f4d17; font-size: 15.18px; line-height: 1.55; }
+      .project-schedule-buffer-note b { margin-right: 5px; color: #9a5b00; }
+      .project-schedule-table-wrap { border-top: 1px solid #cfd9e8; }
+      .project-schedule table { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; background: #fff; }
+      .project-schedule th, .project-schedule td { padding: 10px; border-right: 1px solid #e1e7f0; border-bottom: 1px solid #e1e7f0; text-align: left; vertical-align: top; font-size: 15.73px; line-height: 1.45; }
+      .project-schedule thead th { color: #173d72; background: #eaf1ff; font-weight: 850; }
+      .project-schedule thead th:first-child { width: 11%; }
+      .project-schedule thead th:nth-child(2) { width: 13%; }
+      .project-schedule tbody th { color: #173d72; background: #f8fbff; text-align: center; }
+      .project-schedule tbody th b, .project-schedule tbody th small, .project-schedule td b, .project-schedule td small { display: block; }
+      .project-schedule tbody th b { font-size: 16.5px; }
+      .project-schedule tbody th small { margin-top: 3px; color: #6b7d98; font-size: 13.31px; font-weight: 700; }
+      .project-schedule td b { color: #243b63; font-size: 15.18px; }
+      .project-schedule td small { margin-top: 5px; color: #64748b; font-size: 13.97px; }
+      .project-schedule td { word-break: keep-all; overflow-wrap: anywhere; }
+      .project-schedule td:nth-child(2) { background: #fbfcff; }
+      .schedule-project-tag { display: inline-block; margin-bottom: 5px; padding: 2px 7px; border-radius: 999px; background: #e5e7eb; color: #475569; font-size: 12.76px; font-weight: 900; }
+      .schedule-project-tag.robo { background: #e6f7ef; color: #087653; }
+      .schedule-project-tag.indicator { background: #eef3ff; color: #2455c7; }
+      .schedule-project-tag.integration { background: #f4edff; color: #6841c7; }
+      @media (max-width: 720px) { .project-staffing-note { grid-template-columns: 1fr; } }
+      @media (max-width: 720px) {
+        .project-schedule-role-guide { grid-template-columns: 1fr 1fr; }
+        .project-schedule-sheet-head { grid-template-columns: 1fr; }
+        .project-schedule-sheet-head b, .project-schedule-sheet-head small { grid-column: 1; text-align: left; }
+        .project-schedule table, .project-schedule thead, .project-schedule tbody, .project-schedule tr, .project-schedule th, .project-schedule td { display: block; width: 100%; }
+        .project-schedule thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        .project-schedule tbody tr { padding: 10px; border-bottom: 1px solid #cfd9e8; }
+        .project-schedule tbody tr:last-child { border-bottom: 0; }
+        .project-schedule tbody th, .project-schedule td { box-sizing: border-box; border: 0; }
+        .project-schedule tbody th { padding: 7px 10px; border-radius: 7px; text-align: left; }
+        .project-schedule tbody th b, .project-schedule tbody th small { display: inline; margin: 0 0 0 7px; }
+        .project-schedule td { padding: 9px 10px; border-bottom: 1px solid #e1e7f0; }
+        .project-schedule td:last-child { border-bottom: 0; }
+        .project-schedule td:nth-child(n + 3)::before { display: block; margin-bottom: 4px; color: #315ff4; font-size: 12.1px; font-weight: 900; }
+        .project-schedule td:nth-child(3)::before { content: "1번 · 금융 Product Owner"; }
+        .project-schedule td:nth-child(4)::before { content: "2번 · PM/아키텍처"; }
+        .project-schedule td:nth-child(5)::before { content: "3번 · 데이터·퀀트/SA"; }
+        .project-schedule td:nth-child(6)::before { content: "4번 · 풀스택 개발"; }
+      }
       /* 가치평가 관련 단원은 항상 표시합니다. */
       body[data-day="4"] .lesson-list > #cashCowFlowLesson,
       body[data-day="4"] .lesson-list > #growthPotentialLesson,
       body[data-day="4"] .lesson-list > #valuationLesson { display: grid !important; }
       body[data-day="4"] .lesson-list > #riskAssetsLesson { display: grid; }
-      /* 레퍼런스와 실습 엔진 단원은 지정된 순서로 학습 목록의 아래에 둡니다. */
+      /* 통합 플랫폼 단원과 실습 엔진 단원은 학습 목록의 아래에 둡니다. */
       body[data-day="4"] .lesson-list { display: flex; flex-direction: column; }
       body[data-day="4"] .lesson-list > #noCodeQuantPlatformLesson { order: 9998; }
-      body[data-day="4"] .lesson-list > #referenceLesson { order: 9999; }
       body[data-day="4"] .lesson-list > #leanLesson { order: 10000; }
       .factor-sim-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
-      .factor-sim-intro { margin: 4px 0 18px; color: #243b63; font-size: 15px; font-weight: 650; line-height: 1.7; }
+      .factor-sim-intro { margin: 4px 0 18px; color: #243b63; font-size: 16.5px; font-weight: 650; line-height: 1.7; }
       .factor-sim-presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
       .factor-sim-presets button { border: 1px solid #bfd0ff; border-radius: 999px; background: #fff; color: var(--blue); padding: 7px 11px; font: 800 14.5px/1 inherit; cursor: pointer; }
       .factor-sim-presets button.active, .factor-sim-presets button:hover { background: var(--blue); color: #fff; }
@@ -44,136 +134,187 @@
       .factor-sim-controls, .factor-sim-output { padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #fbfcff; }
       .factor-sim-control { margin-bottom: 14px; }
       .factor-sim-control:last-child { margin-bottom: 0; }
-      .factor-sim-control-head { display: flex; justify-content: space-between; gap: 12px; color: #102a5d; font-size: 15px; font-weight: 850; }
-      .factor-sim-control small { display: block; margin-top: 3px; color: #38527c; font-size: 14.5px; font-weight: 750; }
+      .factor-sim-control-head { display: flex; justify-content: space-between; gap: 12px; color: #102a5d; font-size: 16.5px; font-weight: 850; }
+      .factor-sim-control small { display: block; margin-top: 3px; color: #38527c; font-size: 15.95px; font-weight: 750; }
       .factor-sim-control input { width: 100%; accent-color: var(--blue); }
       .factor-sim-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; margin-bottom: 14px; }
       .factor-sim-summary article { padding: 12px; border-radius: 9px; background: #fff; border: 1px solid var(--line); }
-      .factor-sim-summary span { display: block; color: #38527c; font-size: 14.5px; font-weight: 850; }
+      .factor-sim-summary span { display: block; color: #38527c; font-size: 15.95px; font-weight: 850; }
       .factor-sim-summary strong { display: block; margin-top: 4px; color: var(--ink); font-size: 18px; }
       .factor-sim-weights { display: grid; gap: 8px; }
-      .factor-sim-weight { display: grid; grid-template-columns: 62px minmax(70px, 1fr) 48px; gap: 8px; align-items: center; color: #102a5d; font-size: 15px; font-weight: 850; }
+      .factor-sim-weight { display: grid; grid-template-columns: 62px minmax(70px, 1fr) 48px; gap: 8px; align-items: center; color: #102a5d; font-size: 16.5px; font-weight: 850; }
       .factor-sim-weight-track { height: 12px; overflow: hidden; border-radius: 99px; background: #e8edf6; }
       .factor-sim-weight-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #315ff4, #6e91ff); }
-      .factor-sim-note { margin: 15px 0 0; padding: 12px 14px; border-left: 4px solid var(--blue); border-radius: 8px; background: #f4f7ff; color: #173d82; font-size: 14.5px; font-weight: 650; line-height: 1.65; }
-      .factor-quality-guide { margin: 12px 0 0; padding: 12px 14px; border: 1px solid #9bd6b8; border-radius: 9px; background: #f0fbf5; color: #15533a; font-size: 14.5px; font-weight: 650; line-height: 1.65; }
-      .factor-quality-guide b { color: #0c5f38; font-size: 15px; }
+      .factor-sim-note { margin: 15px 0 0; padding: 12px 14px; border-left: 4px solid var(--blue); border-radius: 8px; background: #f4f7ff; color: #173d82; font-size: 15.95px; font-weight: 650; line-height: 1.65; }
+      .factor-quality-guide { margin: 12px 0 0; padding: 12px 14px; border: 1px solid #9bd6b8; border-radius: 9px; background: #f0fbf5; color: #15533a; font-size: 15.95px; font-weight: 650; line-height: 1.65; }
+      .factor-quality-guide b { color: #0c5f38; font-size: 16.5px; }
       .sharpe-formula { display: inline-flex; flex-direction: column; vertical-align: middle; margin: 0 5px; color: var(--ink); font-family: Georgia, serif; font-size: 18px; line-height: 1.15; text-align: center; }
       .sharpe-formula span:first-child { padding: 0 5px 3px; border-bottom: 1px solid currentColor; }
       .sharpe-formula span:last-child { padding-top: 3px; }
       .sharpe-symbol-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 14px 0; }
       .sharpe-symbol-grid article { padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcff; }
       .sharpe-symbol-grid code { color: var(--blue); font: 800 17px/1.2 Georgia, serif; }
-      .sharpe-symbol-grid strong { display: block; margin-top: 6px; color: var(--ink); font-size: 14.5px; }
-      .sharpe-symbol-grid p { margin: 4px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
-      .sharpe-explanation { margin: 14px 0; padding: 13px 15px; border-left: 4px solid #315ff4; border-radius: 8px; background: #f4f7ff; color: #405572; font-size: 14.5px; line-height: 1.7; }
-      #sharpeFourPointExplanation .sharpe-explanation { padding: 20px; border-left-width: 5px; font-size: 16px; line-height: 1.75; }
+      .sharpe-symbol-grid strong { display: block; margin-top: 6px; color: var(--ink); font-size: 15.95px; }
+      .sharpe-symbol-grid p { margin: 4px 0 0; color: var(--muted); font-size: 15.95px; line-height: 1.55; }
+      .sharpe-explanation { margin: 14px 0; padding: 13px 15px; border-left: 4px solid #315ff4; border-radius: 8px; background: #f4f7ff; color: #405572; font-size: 15.95px; line-height: 1.7; }
+      #sharpeFourPointExplanation .sharpe-explanation { padding: 20px; border-left-width: 5px; font-size: 17.6px; line-height: 1.75; }
       .sharpe-calc-title { display: block; margin-bottom: 13px; color: var(--ink); font-size: 21px; line-height: 1.35; }
       .sharpe-calc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
       .sharpe-calc-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .sharpe-calc-grid article { padding: 13px 11px; border: 1px solid #cddafb; border-radius: 10px; background: #fff; }
-      .sharpe-calc-grid span { display: block; color: var(--muted); font-size: 13px; font-weight: 800; }
+      .sharpe-calc-grid span { display: block; color: var(--muted); font-size: 14.3px; font-weight: 800; }
       .sharpe-calc-grid strong { display: block; margin-top: 5px; color: #164eaf; font-size: 22px; line-height: 1.25; letter-spacing: -.02em; }
-      .sharpe-calc-grid small { display: block; margin-top: 6px; color: #526783; font-size: 13px; line-height: 1.45; }
+      .sharpe-calc-grid small { display: block; margin-top: 6px; color: #526783; font-size: 14.3px; line-height: 1.45; }
       .sharpe-calc-equation { display: block; margin: 12px 0; padding: 13px 15px; border-radius: 9px; background: #e5edff; color: #123b72; font-size: 19px; font-weight: 800; line-height: 1.55; letter-spacing: -.01em; }
       .sharpe-calc-equation.result { border: 2px solid #315ff4; background: #fff; color: #123b72; font-size: 24px; text-align: center; }
-      .sharpe-calc-help { margin: 9px 0 0; color: #405572; font-size: 14.5px; line-height: 1.65; }
+      .sharpe-calc-help { margin: 9px 0 0; color: #405572; font-size: 15.95px; line-height: 1.65; }
       .bollinger-sim { margin: 18px 0; padding: 18px; border: 1px solid #cddafb; border-radius: 14px; background: linear-gradient(135deg, #f7faff, #f5f0ff); }
       .bollinger-sim h4 { margin: 0; color: var(--ink); font-size: 19px; }
-      .bollinger-sim > p { margin: 6px 0 14px; color: #405572; font-size: 14.5px; line-height: 1.6; }
+      .bollinger-sim > p { margin: 6px 0 14px; color: #405572; font-size: 15.95px; line-height: 1.6; }
+      .bollinger-sim-why { padding: 11px 13px; border-left: 4px solid #7c3aed; border-radius: 8px; background: #f1edff; }
+      .bollinger-sim-why b { color: #5130a7; }
+      .bollinger-sim-guide { display: grid; gap: 7px; margin: 10px 0 14px; padding: 0; list-style: none; counter-reset: bollinger-step; }
+      .bollinger-sim-guide li { position: relative; min-height: 34px; padding: 9px 12px 9px 48px; border: 1px solid #dce5f8; border-radius: 9px; background: #fff; color: #405572; font-size: 15.4px; line-height: 1.55; counter-increment: bollinger-step; }
+      .bollinger-sim-guide li::before { position: absolute; top: 9px; left: 11px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #315ff4; color: #fff; font-size: 14.3px; font-weight: 900; content: counter(bollinger-step); }
+      .bollinger-sim-guide b { color: #173d72; }
+      .bollinger-sim-caution { padding: 10px 12px; border-radius: 8px; background: #fff8e8; color: #704d00!important; }
+      .bollinger-sim-line-key { display: flex; flex-wrap: wrap; gap: 7px 15px; margin: 11px 0 0; padding: 9px 11px; border: 1px solid #dce5f8; border-radius: 9px; background: #fff; }
+      .bollinger-sim-line-key span { display: inline-flex; align-items: center; gap: 7px; color: #405572; font-size: 14.85px; font-weight: 800; }
+      .bollinger-sim-line-key i { display: inline-block; width: 24px; height: 4px; border-radius: 999px; }
+      .bollinger-sim-line-key .price-key { background: #eb7b24; }.bollinger-sim-line-key .mean-key { background: #2563eb; }.bollinger-sim-line-key .edge-key { height: 0; border-top: 3px dashed #8b5cf6; border-radius: 0; }.bollinger-sim-line-key .area-key { height: 12px; border: 1px solid #c4b5fd; background: #ede9fe; }
       .bollinger-sim-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 13px; }
       .bollinger-sim-presets button { padding: 7px 11px; border: 1px solid #aebff2; border-radius: 999px; background: #fff; color: #214c9c; font: 800 14px/1 inherit; cursor: pointer; }
       .bollinger-sim-presets button:hover, .bollinger-sim-presets button:focus-visible { border-color: #315ff4; background: #eaf1ff; outline: none; }
       .bollinger-sim-control { display: grid; grid-template-columns: 150px 1fr 62px; gap: 12px; align-items: center; padding: 12px; border-radius: 10px; background: #fff; }
-      .bollinger-sim-control label { color: #203f7a; font-size: 14.5px; font-weight: 800; }.bollinger-sim-control input { width: 100%; accent-color: #7c3aed; }.bollinger-sim-control output { color: var(--ink); font-size: 19px; font-weight: 850; text-align: right; }
+      .bollinger-sim-control label { color: #203f7a; font-size: 15.95px; font-weight: 800; }.bollinger-sim-control input { width: 100%; accent-color: #7c3aed; }.bollinger-sim-control output { color: var(--ink); font-size: 19px; font-weight: 850; text-align: right; }
       .bollinger-sim-chart { display: block; width: 100%; height: 230px; margin-top: 13px; overflow: visible; border: 1px solid #dce5f8; border-radius: 10px; background: #fff; }
-      .bollinger-sim-chart .grid { stroke: #e3eaf7; stroke-width: 1; }.bollinger-sim-chart .axis { fill: #64748b; font-size: 12px; }.bollinger-sim-chart .upper, .bollinger-sim-chart .lower { fill: none; stroke: #a78bfa; stroke-width: 2; stroke-dasharray: 5 4; }.bollinger-sim-chart .mean { fill: none; stroke: #2563eb; stroke-width: 2.5; }.bollinger-sim-chart .price { fill: none; stroke: #eb7b24; stroke-width: 3; }.bollinger-sim-chart .last-dot { fill: #eb7b24; stroke: #fff; stroke-width: 2; }
-      .bollinger-sim-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 13px; }.bollinger-sim-stats article { padding: 10px; border: 1px solid #dce5f8; border-radius: 9px; background: #fff; }.bollinger-sim-stats span { display: block; color: var(--muted); font-size: 12px; font-weight: 800; }.bollinger-sim-stats strong { display: block; margin-top: 4px; color: var(--ink); font-size: 18px; }
+      .bollinger-sim-chart .grid { stroke: #e3eaf7; stroke-width: 1; }.bollinger-sim-chart .axis { fill: #64748b; font-size: 13.2px; }.bollinger-sim-chart .band-area { fill: #8b5cf6; fill-opacity: .13; stroke: none; }.bollinger-sim-chart .upper, .bollinger-sim-chart .lower { fill: none; stroke: #8b5cf6; stroke-width: 2; stroke-dasharray: 5 4; }.bollinger-sim-chart .mean { fill: none; stroke: #2563eb; stroke-width: 2.5; }.bollinger-sim-chart .price { fill: none; stroke: #eb7b24; stroke-width: 3; }.bollinger-sim-chart .last-dot { fill: #eb7b24; stroke: #fff; stroke-width: 2; }.bollinger-sim-chart .line-label { font-size: 12.65px; font-weight: 900; }.bollinger-sim-chart .band-label { fill: #6d3fd1; }.bollinger-sim-chart .mean-label { fill: #1d4ed8; }.bollinger-sim-chart .price-label { fill: #c65300; }
+      .bollinger-sim-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 13px; }.bollinger-sim-stats article { padding: 10px; border: 1px solid #dce5f8; border-radius: 9px; background: #fff; }.bollinger-sim-stats span { display: block; color: var(--muted); font-size: 13.2px; font-weight: 800; }.bollinger-sim-stats strong { display: block; margin-top: 4px; color: var(--ink); font-size: 18px; }
       .bollinger-sim-status { margin: 12px 0 0!important; padding: 10px 12px; border-left: 4px solid #7c3aed; border-radius: 8px; background: #f1edff; color: #4c357c!important; font-weight: 750; }
-      .sharpe-vol-steps { margin: 12px 0; padding-left: 20px; color: #405572; font-size: 14.5px; line-height: 1.7; }
+      .sharpe-vol-steps { margin: 12px 0; padding-left: 20px; color: #405572; font-size: 15.95px; line-height: 1.7; }
       .fx-deposit-dialog { width: min(900px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }
-      .fx-deposit-intro { margin: 4px 0 16px; color: var(--muted); font-size: 14.5px; line-height: 1.7; }
+      .fx-deposit-intro { margin: 4px 0 16px; color: var(--muted); font-size: 15.95px; line-height: 1.7; }
       .fx-product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
       .fx-product-card { padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #fbfcff; }
       .fx-product-card h3 { margin: 0 0 8px; color: var(--ink); font-size: 17px; }
-      .fx-product-card p { margin: 0; color: #405572; font-size: 14.5px; line-height: 1.65; }
-      .fx-product-card a { display: inline-block; margin-top: 10px; color: var(--blue); font-size: 14.5px; font-weight: 800; }
+      .fx-product-card p { margin: 0; color: #405572; font-size: 15.95px; line-height: 1.65; }
+      .fx-product-card a { display: inline-block; margin-top: 10px; color: var(--blue); font-size: 15.95px; font-weight: 800; }
       .fx-sim-panel { margin-top: 16px; padding: 17px; border: 1px solid #b9d6ff; border-radius: 12px; background: #f5f9ff; }
       .fx-sim-panel h3 { margin: 0 0 5px; color: var(--ink); font-size: 18px; }
-      .fx-sim-panel > p { margin: 0 0 14px; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+      .fx-sim-panel > p { margin: 0 0 14px; color: var(--muted); font-size: 15.95px; line-height: 1.6; }
       .fx-sim-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-      .fx-sim-controls label { display: grid; grid-template-columns: 1fr auto; gap: 6px; color: #405572; font-size: 14.5px; font-weight: 800; }
+      .fx-sim-controls label { display: grid; grid-template-columns: 1fr auto; gap: 6px; color: #405572; font-size: 15.95px; font-weight: 800; }
       .fx-sim-controls input { grid-column: 1 / -1; width: 100%; accent-color: var(--blue); }
-      .fx-sim-controls output { color: var(--ink); font-size: 15px; }
+      .fx-sim-controls output { color: var(--ink); font-size: 16.5px; }
       .fx-rate-chart { width: 100%; height: 210px; margin-top: 15px; border: 1px solid #d7e5f8; border-radius: 10px; background: #fff; }
       .fx-sim-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
       .fx-sim-summary article { padding: 12px; border: 1px solid #d7e5f8; border-radius: 9px; background: #fff; }
-      .fx-sim-summary span { display: block; color: var(--muted); font-size: 14.5px; font-weight: 700; }
+      .fx-sim-summary span { display: block; color: var(--muted); font-size: 15.95px; font-weight: 700; }
       .fx-sim-summary strong { display: block; margin-top: 5px; color: var(--ink); font-size: 18px; }
       .fx-sim-summary strong.up { color: #b42318; }.fx-sim-summary strong.down { color: #1769e0; }
-      .fx-sim-note { margin: 13px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+      .fx-sim-note { margin: 13px 0 0; color: var(--muted); font-size: 15.95px; line-height: 1.6; }
       .fx-analysis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0; }
       .fx-analysis-grid article { padding: 14px; border: 1px solid #d6e2f5; border-radius: 10px; background: #f8faff; }
-      .fx-analysis-grid strong { display: block; margin-bottom: 5px; color: #174b9a; font-size: 15px; }
-      .fx-analysis-grid p { margin: 0; color: #405572; font-size: 14px; line-height: 1.6; }
-      .fx-return-formula { margin: 14px 0; padding: 13px 15px; border-left: 4px solid var(--blue); border-radius: 8px; background: #eef4ff; color: #234a83; font-size: 14.5px; line-height: 1.65; }
-      .fx-return-formula code { color: #123b72; font-weight: 800; }
+      .fx-analysis-grid strong { display: block; margin-bottom: 5px; color: #174b9a; font-size: 16.5px; }
+      .fx-analysis-grid p { margin: 0; color: #405572; font-size: 15.4px; line-height: 1.6; }
       .fx-sim-controls--full { grid-template-columns: repeat(3, 1fr); }
       .fx-sim-breakdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
-      .fx-sim-breakdown article { padding: 10px; border-radius: 8px; background: #eef4ff; color: #405572; font-size: 13px; }
+      .fx-sim-breakdown article { padding: 10px; border-radius: 8px; background: #eef4ff; color: #405572; font-size: 14.3px; }
       .fx-sim-breakdown span, .fx-sim-breakdown strong { display: block; }
-      .fx-sim-breakdown strong { margin-top: 4px; color: #173d82; font-size: 15px; }
+      .fx-sim-breakdown strong { margin-top: 4px; color: #173d82; font-size: 16.5px; }
+      @media (min-width: 761px) {
+        .glossary-modal .fx-deposit-dialog { display: grid; grid-template-columns: minmax(260px, .52fr) minmax(0, 1.7fr); grid-template-rows: auto auto minmax(0, 1fr); align-items: stretch; column-gap: 12px; width: 96vw !important; height: 96vh !important; max-width: none !important; max-height: none !important; padding: 16px 18px !important; overflow: hidden !important; }
+        .fx-deposit-dialog > .glossary-modal__label,
+        .fx-deposit-dialog > h2,
+        .fx-deposit-dialog > .fx-deposit-intro { grid-column: 1 / -1; }
+        .fx-deposit-dialog > h2 { margin: 0 48px 3px 0; font-size: 23px; line-height: 1.2; }
+        .fx-deposit-intro { margin: 0 48px 8px 0; font-size: 13.2px; line-height: 1.4; }
+        .fx-deposit-dialog > .fx-product-grid { grid-column: 1; grid-row: 3; grid-template-columns: 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); align-content: stretch; gap: 8px; min-height: 0; }
+        .fx-deposit-dialog .fx-product-card { display: flex; flex-direction: column; min-height: 0; padding: 12px; }
+        .fx-deposit-dialog .fx-product-card h3 { margin-bottom: 5px; font-size: 16.5px; }
+        .fx-deposit-dialog .fx-product-card p { font-size: 13.75px; line-height: 1.48; }
+        .fx-deposit-dialog .fx-product-card a { margin-top: auto; padding-top: 7px; font-size: 13.75px; }
+        .fx-deposit-dialog > .fx-sim-panel { display: grid; grid-column: 2; grid-row: 3; grid-template-columns: minmax(245px, .8fr) minmax(0, 1.4fr); grid-template-rows: auto auto minmax(185px, 1fr) auto auto auto; align-content: stretch; gap: 7px 10px; min-height: 0; margin: 0; padding: 11px 12px; overflow: hidden; }
+        .fx-deposit-dialog article { width: auto; max-width: none; margin: 0; }
+        .fx-deposit-dialog .fx-sim-panel > h3,
+        .fx-deposit-dialog .fx-sim-panel > p,
+        .fx-deposit-dialog .fx-sim-breakdown,
+        .fx-deposit-dialog .fx-sim-note { grid-column: 1 / -1; }
+        .fx-deposit-dialog .fx-sim-panel > h3 { margin: 0; font-size: 17.6px; line-height: 1.25; }
+        .fx-deposit-dialog .fx-sim-panel > p { margin: 0; font-size: 13.2px; line-height: 1.4; }
+        .fx-deposit-dialog .fx-sim-controls--full { grid-column: 1; grid-row: 3; grid-template-columns: 1fr; gap: 5px; align-content: space-between; }
+        .fx-deposit-dialog .fx-sim-controls label { gap: 2px 6px; font-size: 12.65px; line-height: 1.2; }
+        .fx-deposit-dialog .fx-sim-controls output { font-size: 12.65px; }
+        .fx-deposit-dialog .fx-sim-controls input { height: 15px; margin: 0; }
+        .fx-deposit-dialog .fx-rate-chart { grid-column: 2; grid-row: 3; height: 100%; min-height: 185px; max-height: none; margin: 0; }
+        .fx-deposit-dialog .fx-sim-summary { grid-column: 1 / -1; grid-row: 4; align-items: stretch; gap: 7px; margin: 0; }
+        .fx-deposit-dialog .fx-sim-summary article { align-self: stretch; justify-self: stretch; min-width: 0; min-height: 62px; padding: 9px 11px; }
+        .fx-deposit-dialog .fx-sim-summary article:nth-child(2) { border-color: #b9d6ff; background: #f7fbff; }
+        .fx-deposit-dialog .fx-sim-summary article:nth-child(3) { border-color: #f3cf9c; background: #fffaf2; }
+        .fx-deposit-dialog .fx-sim-summary span { font-size: 13.2px; }
+        .fx-deposit-dialog .fx-sim-summary strong { margin-top: 3px; font-size: 16.5px; line-height: 1.25; overflow-wrap: anywhere; }
+        .fx-deposit-dialog .fx-sim-breakdown { grid-row: 5; align-items: stretch; gap: 6px; margin: 0; }
+        .fx-deposit-dialog .fx-sim-breakdown article { align-self: stretch; justify-self: stretch; min-width: 0; min-height: 50px; padding: 8px 10px; font-size: 12.65px; }
+        .fx-deposit-dialog .fx-sim-breakdown strong { margin-top: 2px; font-size: 14.3px; }
+        .fx-deposit-dialog .fx-sim-note { grid-row: 6; margin: 0; font-size: 12.1px; line-height: 1.4; }
+      }
       .slippage-visual { max-width: 720px; margin: 18px auto; padding: 14px; border: 1px solid #ffd0c7; border-radius: 12px; background: #fffaf8; }
-      .slippage-visual figcaption { margin-top: 10px; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+      .slippage-visual figcaption { margin-top: 10px; color: var(--muted); font-size: 15.95px; line-height: 1.6; }
       .slippage-visual figcaption b { color: var(--ink); }
       .slippage-visual svg { display: block; width: 100%; height: auto; }
       .inline-term-trigger { margin: 0; padding: 0; border: 0; border-bottom: 1px dashed var(--blue); background: transparent; color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
       .inline-term-trigger:hover, .inline-term-trigger:focus-visible { color: var(--blue); outline: none; }
       .sunk-cost-dialog { max-width: 660px; }
       .sunk-cost-dialog p { color: #3e4c67; line-height: 1.75; }
-      .sunk-cost-compare { width: 100%; margin: 16px 0; border-collapse: collapse; font-size: 14.5px; }
+      .sunk-cost-compare { width: 100%; margin: 16px 0; border-collapse: collapse; font-size: 15.95px; }
       .sunk-cost-compare th, .sunk-cost-compare td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
       .sunk-cost-compare th { color: var(--blue); background: #eef3ff; }
       .forecast-breaktime-dialog { width: min(940px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }
       .forecast-breaktime-dialog h3 { margin: 24px 0 9px; color: var(--ink); font-size: 19px; }.forecast-breaktime-dialog h3:first-of-type { margin-top: 0; }
-      .forecast-breaktime-dialog p, .forecast-breaktime-dialog li { color: #405572; font-size: 14.5px; line-height: 1.7; }
+      .forecast-breaktime-dialog p, .forecast-breaktime-dialog li { color: #405572; font-size: 15.95px; line-height: 1.7; }
       .forecast-breaktime-dialog ul { margin: 8px 0; padding-left: 22px; }.forecast-breaktime-dialog li { margin-bottom: 6px; }
-      .forecast-model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }.forecast-model-card { padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }.forecast-model-card b { display: block; color: var(--blue); font-size: 16px; }.forecast-model-card p { margin: 7px 0 0; }
-      .forecast-breaktime-table { width: 100%; border-collapse: collapse; margin: 12px 0; background: #fff; }.forecast-breaktime-table th, .forecast-breaktime-table td { padding: 11px; border: 1px solid var(--line); color: #405572; font-size: 14.5px; line-height: 1.55; text-align: left; vertical-align: top; }.forecast-breaktime-table th { color: var(--blue); background: #eef3ff; font-weight: 800; }
+      .forecast-model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }.forecast-model-card { padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }.forecast-model-card b { display: block; color: var(--blue); font-size: 17.6px; }.forecast-model-card p { margin: 7px 0 0; }
+      .forecast-breaktime-table { width: 100%; border-collapse: collapse; margin: 12px 0; background: #fff; }.forecast-breaktime-table th, .forecast-breaktime-table td { padding: 11px; border: 1px solid var(--line); color: #405572; font-size: 15.95px; line-height: 1.55; text-align: left; vertical-align: top; }.forecast-breaktime-table th { color: var(--blue); background: #eef3ff; font-weight: 800; }
       .forecast-caution { padding: 13px 15px; border-left: 4px solid #e69b00; border-radius: 8px; background: #fff8e8; color: #704d00!important; font-weight: 700; }
       .present-value-sim { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0 12px; padding: 14px; border: 1px solid #c9d9fb; border-radius: 12px; background: #f6f9ff; }
-      .present-value-sim label { display: grid; grid-template-columns: 1fr auto; gap: 6px; color: #284a87; font-size: 14px; font-weight: 800; }
+      .present-value-sim label { display: grid; grid-template-columns: 1fr auto; gap: 6px; color: #284a87; font-size: 15.4px; font-weight: 800; }
       .present-value-sim input { grid-column: 1 / -1; width: 100%; box-sizing: border-box; accent-color: var(--blue); }
       .present-value-sim input[type="number"] { padding: 9px; border: 1px solid #b9cce9; border-radius: 8px; background: #fff; color: var(--ink); font: 700 15px inherit; }
       .present-value-sim output { color: var(--blue); }
       .present-value-sim-result { margin: 0 0 16px; padding: 13px 15px; border-radius: 10px; background: #eaf1ff; color: #1c3e7a; line-height: 1.6; }
       .present-value-sim-result strong { display: block; color: var(--blue); font-size: 21px; }
-      .bok-rate-modal .bok-rate-dialog { display: flex; flex-direction: column; gap: 14px; width: min(1320px, calc(100vw - 40px)) !important; height: auto !important; max-height: calc(100vh - 40px); padding: 28px 30px 22px !important; overflow-x: hidden !important; overflow-y: auto !important; border: 1px solid #dbe5f4; border-radius: 20px; background: #fff; box-shadow: 0 24px 70px rgba(22, 48, 90, .2); }
+      .bok-rate-modal .bok-rate-dialog { display: flex; flex-direction: column; gap: 14px; width: 96vw !important; height: 96vh !important; max-width: none !important; max-height: none !important; padding: 28px 30px 22px !important; overflow-x: hidden !important; overflow-y: auto !important; border: 1px solid #dbe5f4; border-radius: 20px; background: #fff; box-shadow: 0 24px 70px rgba(22, 48, 90, .2); }
       .bok-rate-dialog [hidden] { display: none !important; }
-      .bok-rate-dialog h2 { margin: -4px 48px 0 0; color: #102d5d; font-size: clamp(23px, 2vw, 30px); line-height: 1.2; letter-spacing: -.02em; }
-      .bok-rate-dialog > .glossary-modal__label { margin-bottom: -8px; color: #315ff4; font-size: 11px; font-weight: 900; letter-spacing: .13em; }
-      .bok-rate-intro { margin: 0; color: #5b6f8d; font-size: 13px; line-height: 1.55; }
+      .bok-rate-dialog h2 { margin: -4px 48px 0 0; color: #08285c; font-size: clamp(30px, 2.35vw, 38px); font-weight: 900; line-height: 1.2; letter-spacing: -.025em; }
+      .bok-rate-dialog > .glossary-modal__label { margin-bottom: -8px; color: #164ed3; font-size: 14.3px; font-weight: 900; letter-spacing: .13em; }
+      .bok-rate-intro { margin: 0; color: #2b456b; font-size: 17.6px; font-weight: 650; line-height: 1.65; }
       .bok-rate-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: 100%; margin: 0; }
-      .bok-rate-summary article { width: auto !important; min-width: 0; justify-self: stretch !important; padding: 13px 16px; border: 1px solid #dce6f4; border-radius: 12px; background: linear-gradient(145deg, #f9fbff, #f1f6ff); text-align: left; box-shadow: 0 3px 12px rgba(45, 81, 135, .05); }
-      .bok-rate-summary span { display: block; color: #60728e; font-size: 12px; font-weight: 800; }
-      .bok-rate-summary strong { display: block; margin: 4px 0 3px; color: #102d5d; font-size: 22px; line-height: 1.15; }
-      .bok-rate-summary small { color: #71819a; font-size: 11px; }
+      .bok-rate-summary article { width: auto !important; min-width: 0; justify-self: stretch !important; padding: 14px 17px; border: 1px solid #bfd0ea; border-radius: 12px; background: linear-gradient(145deg, #fbfdff, #edf4ff); text-align: left; box-shadow: 0 3px 12px rgba(45, 81, 135, .07); }
+      .bok-rate-summary span { display: block; color: #334f76; font-size: 15.4px; font-weight: 850; }
+      .bok-rate-summary strong { display: block; margin: 4px 0 3px; color: #08285c; font-size: 27px; line-height: 1.15; }
+      .bok-rate-summary small { color: #4c6282; font-size: 14.3px; font-weight: 650; }
       .bok-rate-controls { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; justify-content: space-between; padding: 9px 10px; border: 1px solid #dce6f4; border-radius: 12px; background: #f6f9fe; }
       .bok-rate-view-toggle { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 3px; border: 1px solid #d4dfef; border-radius: 9px; background: #eaf0f9; }
-      .bok-rate-view-toggle button { min-width: 128px; padding: 8px 12px; border: 0; border-radius: 7px; background: transparent; color: #61728d; font: 800 12px/1.2 inherit; cursor: pointer; }
+      .bok-rate-view-toggle button { min-width: 154px; padding: 10px 14px; border: 0; border-radius: 7px; background: transparent; color: #3c5578; font: 850 15px/1.2 inherit; cursor: pointer; }
       .bok-rate-view-toggle button[aria-pressed="true"] { background: #fff; color: #2458df; box-shadow: 0 2px 7px rgba(31, 52, 89, .14); }
-      .bok-rate-shock-control { display: grid; grid-template-columns: auto minmax(220px, 360px) 72px; gap: 12px; align-items: center; color: #213b64; font-size: 12px; font-weight: 800; }
+      .bok-rate-shock-control { display: grid; grid-template-columns: auto minmax(220px, 360px) 84px; gap: 12px; align-items: center; color: #17365f; font-size: 16.5px; font-weight: 900; }
       .bok-rate-shock-control input { width: 100%; accent-color: #315ff4; cursor: pointer; }
-      .bok-rate-shock-control output { padding: 5px 7px; border-radius: 7px; background: #e8efff; color: #2458df; font-size: 13px; text-align: center; }
-      .bok-rate-chart { flex: 0 0 auto; height: clamp(350px, 45vh, 500px); min-height: 350px; padding: 14px 14px 6px; overflow: hidden; border: 1px solid #dce6f4; border-radius: 14px; background: linear-gradient(180deg, #fbfdff 0%, #f6f9fe 100%); box-shadow: inset 0 1px 0 #fff; }
+      .bok-rate-shock-control output { padding: 7px 9px; border-radius: 7px; background: #dfe9ff; color: #0d47d5; font-size: 17.6px; font-weight: 900; text-align: center; }
+      .bok-rate-chart { flex: 0 0 auto; height: clamp(350px, 42vh, 470px); min-height: 350px; padding: 14px 14px 6px; overflow: hidden; border: 1px solid #c8d7eb; border-radius: 14px; background: linear-gradient(180deg, #fff 0%, #f5f9ff 100%); box-shadow: inset 0 1px 0 #fff; }
+      .bok-rate-dialog.is-scenario { gap: 10px; }
+      .bok-rate-dialog.is-scenario .bok-rate-chart { height: clamp(290px, 31vh, 340px); min-height: 290px; }
       .bok-rate-chart__canvas { width: 100%; height: 100%; min-height: 0; }
       .bok-rate-events { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; margin: 0; }
-      .bok-rate-events span { min-height: 0 !important; padding: 10px 12px; border: 1px solid #dce6f4; border-left: 4px solid #315ff4; border-radius: 9px; background: #f6f9ff; color: #455d7e; font-size: 12px; line-height: 1.45; }
+      .bok-rate-events span { min-height: 0 !important; padding: 11px 13px; border: 1px solid #cedced; border-left: 4px solid #315ff4; border-radius: 9px; background: #f4f8ff; color: #2c476d; font-size: 15.4px; font-weight: 650; line-height: 1.5; }
       .bok-rate-events b { color: #183969; }
-      .bok-rate-note { margin: 0; padding: 10px 13px; border: 1px solid #f1dfb0; border-left: 4px solid #e59b08; border-radius: 9px; background: #fff9e9; color: #705316; font-size: 12px; line-height: 1.5; }
-      .bok-rate-source { padding-top: 2px; border-top: 1px solid #edf1f7; font-size: 11px; line-height: 1.4; }
+      .bok-rate-note { margin: 0; padding: 12px 15px; border: 1px solid #e7c874; border-left: 5px solid #d78b00; border-radius: 9px; background: #fff8e2; color: #593f08; font-size: 15.4px; font-weight: 650; line-height: 1.6; }
+      .bok-rate-scenario-guide { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0; }
+      .bok-rate-scenario-guide article { padding: 12px 14px; border: 1px solid #c9d9ee; border-radius: 10px; background: #f4f8ff; color: #294568; font-size: 15.4px; font-weight: 650; line-height: 1.5; }
+      .bok-rate-scenario-guide b { display: block; margin-bottom: 3px; color: #0b3a82; font-size: 16.5px; font-weight: 900; }
+      .bok-rate-source { padding-top: 4px; border-top: 1px solid #d9e2ef; color: #405879; font-size: 14.3px; line-height: 1.5; }
+      .bok-rate-source small { font-size: inherit; }
       .seventh-learning-assessment-modal .glossary-modal__backdrop { background: rgba(13, 22, 48, .52); backdrop-filter: blur(8px); }
-      .glossary-modal .seventh-learning-assessment-dialog { isolation: isolate; display: flex; flex-direction: column; justify-content: flex-start; box-sizing: border-box; width: 94vw !important; height: 90vh !important; min-height: 0 !important; max-width: none !important; max-height: 90vh !important; padding: 54px 6vw 46px; overflow-x: hidden !important; overflow-y: auto !important; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: #8ba5df transparent; border: 2px solid #aabde8; border-radius: 28px; background-color: #f7f9ff; background-image: radial-gradient(circle at 12% 20%, rgba(81, 145, 255, .3) 0 10%, transparent 34%), radial-gradient(circle at 88% 18%, rgba(142, 91, 255, .25) 0 11%, transparent 35%), radial-gradient(circle at 78% 82%, rgba(31, 203, 190, .23) 0 10%, transparent 34%), radial-gradient(circle at 22% 86%, rgba(245, 113, 184, .18) 0 9%, transparent 32%), linear-gradient(135deg, #f8fbff 0%, #f5f2ff 50%, #effcff 100%); background-size: 145% 145%; background-position: 0% 0%; box-shadow: 0 28px 80px rgba(19, 38, 95, .3), inset 0 0 0 1px rgba(255, 255, 255, .75); animation: seventhAssessmentAurora 14s ease-in-out infinite alternate; }
+      .glossary-modal .seventh-learning-assessment-dialog { isolation: isolate; display: flex; flex-direction: column; justify-content: flex-start; box-sizing: border-box; width: 96vw !important; height: 96vh !important; min-height: 0 !important; max-width: none !important; max-height: none !important; padding: 54px 6vw 46px; overflow-x: hidden !important; overflow-y: auto !important; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: #8ba5df transparent; border: 2px solid #aabde8; border-radius: 28px; background-color: #f7f9ff; background-image: radial-gradient(circle at 12% 20%, rgba(81, 145, 255, .3) 0 10%, transparent 34%), radial-gradient(circle at 88% 18%, rgba(142, 91, 255, .25) 0 11%, transparent 35%), radial-gradient(circle at 78% 82%, rgba(31, 203, 190, .23) 0 10%, transparent 34%), radial-gradient(circle at 22% 86%, rgba(245, 113, 184, .18) 0 9%, transparent 32%), linear-gradient(135deg, #f8fbff 0%, #f5f2ff 50%, #effcff 100%); background-size: 145% 145%; background-position: 0% 0%; box-shadow: 0 28px 80px rgba(19, 38, 95, .3), inset 0 0 0 1px rgba(255, 255, 255, .75); animation: seventhAssessmentAurora 14s ease-in-out infinite alternate; }
       .glossary-modal .seventh-learning-assessment-dialog::-webkit-scrollbar { width: 10px; }
       .glossary-modal .seventh-learning-assessment-dialog::-webkit-scrollbar-track { background: rgba(255, 255, 255, .42); border-radius: 999px; }
       .glossary-modal .seventh-learning-assessment-dialog::-webkit-scrollbar-thumb { border: 2px solid transparent; border-radius: 999px; background: #8ba5df; background-clip: padding-box; }
@@ -183,14 +324,21 @@
       .seventh-learning-assessment-dialog > h2,
       .seventh-learning-assessment-dialog > p { position: relative; z-index: 2; width: min(1120px, 100%); margin-right: auto; margin-left: auto; box-sizing: border-box; }
       .seventh-learning-assessment-dialog > .glossary-modal__close { z-index: 3; border-color: rgba(88, 112, 190, .28); background: rgba(255, 255, 255, .72); backdrop-filter: blur(10px); }
-      .seventh-learning-assessment-dialog > .glossary-modal__label { margin: 0 auto 8px; color: #315ff4; font-size: 13px; font-weight: 900; letter-spacing: .12em; }
+      .seventh-learning-assessment-dialog > .glossary-modal__label { margin: 0 auto 8px; color: #315ff4; font-size: 14.3px; font-weight: 900; letter-spacing: .12em; }
       .seventh-learning-assessment-dialog > h2 { margin-top: 0; margin-bottom: 30px; background: linear-gradient(100deg, #174bc5 0%, #7357e8 48%, #087f91 100%); color: transparent; font-size: clamp(42px, 5vw, 64px); font-weight: 900; line-height: 1.12; letter-spacing: -.04em; -webkit-background-clip: text; background-clip: text; }
       .seventh-learning-assessment-dialog > p { margin: 14px auto 0; padding: 20px 22px; border: 1px solid rgba(175, 193, 231, .75); border-radius: 16px; background: rgba(255, 255, 255, .72); box-shadow: 0 10px 26px rgba(43, 69, 126, .09); color: #253c63; font-size: clamp(17px, 1.55vw, 20px); font-weight: 650; line-height: 1.75; backdrop-filter: blur(14px); }
       .seventh-learning-assessment-dialog > p > b:first-child { color: #133b91; font-size: 1.04em; }
       .seventh-learning-assessment-dialog a { color: #315ff4; text-decoration-thickness: 2px; text-underline-offset: 3px; }
       @keyframes seventhAssessmentAurora { 0% { background-position: 0% 15%; } 50% { background-position: 55% 45%; } 100% { background-position: 100% 85%; } }
-      .bias-quiz-dialog { width: min(720px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }.bias-quiz-intro, .bias-quiz-disclaimer { color: #405572; font-size: 15.225px; line-height: 1.7; }.bias-quiz-progress { display: flex; justify-content: space-between; gap: 12px; margin: 18px 0 10px; color: var(--blue); font-size: 15.225px; font-weight: 800; }.bias-quiz-progress i { flex: 1; height: 7px; margin-top: 6px; border-radius: 999px; background: #dce7fb; overflow: hidden; }.bias-quiz-progress i::after { content: ""; display: block; width: var(--bias-progress, 0%); height: 100%; background: var(--blue); transition: width .2s ease; }.bias-quiz-question { margin: 20px 0 14px; color: var(--ink); font-size: 21px; font-weight: 800; line-height: 1.5; }.bias-quiz-answers { display: grid; gap: 9px; }.bias-quiz-answer { width: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: #314562; font: 650 15.75px/1.55 inherit; text-align: left; cursor: pointer; }.bias-quiz-answer:hover, .bias-quiz-answer:focus-visible { border-color: var(--blue); background: #eef3ff; color: var(--ink); outline: none; }.bias-quiz-result { margin-top: 18px; padding: 18px; border: 1px solid #c9d9fb; border-radius: 12px; background: #f6f9ff; }.bias-quiz-result h3 { margin: 0 0 8px; color: var(--blue); font-size: 22.05px; }.bias-quiz-result p { margin: 8px 0 0; color: #405572; font-size: 15.225px; line-height: 1.7; }.bias-quiz-restart { margin-top: 16px; padding: 9px 14px; border: 1px solid var(--blue); border-radius: 999px; background: #fff; color: var(--blue); font: 800 15.225px inherit; cursor: pointer; }
-      @media (max-width: 640px) { .factor-sim-dialog, .fx-deposit-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .factor-sim-grid, .sharpe-symbol-grid, .sharpe-calc-grid, .sharpe-calc-grid.four, .bollinger-sim-stats, .fx-product-grid, .fx-sim-controls, .fx-sim-summary, .fx-analysis-grid, .fx-sim-breakdown, .present-value-sim { grid-template-columns: 1fr; } .bollinger-sim-control { grid-template-columns: 1fr; gap: 7px; }.bollinger-sim-control output { text-align: left; } #sharpeFourPointExplanation .sharpe-explanation { padding: 16px; } .sharpe-calc-equation { font-size: 17px; } .sharpe-calc-equation.result { font-size: 21px; } .bok-rate-modal .bok-rate-dialog { gap: 11px; width: calc(100vw - 16px) !important; max-height: calc(100vh - 16px); padding: 20px 14px 16px !important; border-radius: 15px; } .bok-rate-summary { grid-template-columns: 1fr; gap: 7px; } .bok-rate-summary article { padding: 9px 12px; } .bok-rate-summary strong { font-size: 18px; } .bok-rate-controls { align-items: stretch; flex-direction: column; } .bok-rate-view-toggle { width: 100%; } .bok-rate-view-toggle button { min-width: 0; } .bok-rate-shock-control { grid-template-columns: auto 1fr 64px; gap: 7px; } .bok-rate-chart { height: 390px; min-height: 390px; padding: 8px 4px 2px; } .bok-rate-events { grid-template-columns: 1fr; } .bok-rate-source { display: none; } }
+      .bias-quiz-dialog { width: min(720px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }.bias-quiz-intro, .bias-quiz-disclaimer { color: #405572; font-size: 16.748px; line-height: 1.7; }.bias-quiz-progress { display: flex; justify-content: space-between; gap: 12px; margin: 18px 0 10px; color: var(--blue); font-size: 16.748px; font-weight: 800; }.bias-quiz-progress i { flex: 1; height: 7px; margin-top: 6px; border-radius: 999px; background: #dce7fb; overflow: hidden; }.bias-quiz-progress i::after { content: ""; display: block; width: var(--bias-progress, 0%); height: 100%; background: var(--blue); transition: width .2s ease; }.bias-quiz-question { margin: 20px 0 14px; color: var(--ink); font-size: 21px; font-weight: 800; line-height: 1.5; }.bias-quiz-answers { display: grid; gap: 9px; }.bias-quiz-answer { width: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: #314562; font: 650 15.75px/1.55 inherit; text-align: left; cursor: pointer; }.bias-quiz-answer:hover, .bias-quiz-answer:focus-visible { border-color: var(--blue); background: #eef3ff; color: var(--ink); outline: none; }.bias-quiz-result { margin-top: 18px; padding: 18px; border: 1px solid #c9d9fb; border-radius: 12px; background: #f6f9ff; }.bias-quiz-result h3 { margin: 0 0 8px; color: var(--blue); font-size: 22.05px; }.bias-quiz-result p { margin: 8px 0 0; color: #405572; font-size: 16.748px; line-height: 1.7; }.bias-quiz-restart { margin-top: 16px; padding: 9px 14px; border: 1px solid var(--blue); border-radius: 999px; background: #fff; color: var(--blue); font: 800 15.225px inherit; cursor: pointer; }
+      .bias-quiz-dialog { width: min(820px, calc(100vw - 40px)); }
+      .bias-quiz-intro, .bias-quiz-disclaimer { font-size: 17px; }
+      .bias-quiz-progress { font-size: 16.5px; }
+      .bias-quiz-question { font-size: 25px; line-height: 1.55; }
+      .bias-quiz-answer { padding: 15px 17px; font-size: 18.5px; line-height: 1.6; }
+      .bias-quiz-result h3 { font-size: 24px; }
+      .bias-quiz-result p, .bias-quiz-restart { font-size: 17px; }
+      @media (max-width: 640px) { .factor-sim-dialog, .fx-deposit-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .factor-sim-grid, .sharpe-symbol-grid, .sharpe-calc-grid, .sharpe-calc-grid.four, .bollinger-sim-stats, .fx-product-grid, .fx-sim-controls, .fx-sim-summary, .fx-analysis-grid, .fx-sim-breakdown, .present-value-sim { grid-template-columns: 1fr; } .bollinger-sim-control { grid-template-columns: 1fr; gap: 7px; }.bollinger-sim-control output { text-align: left; } #sharpeFourPointExplanation .sharpe-explanation { padding: 16px; } .sharpe-calc-equation { font-size: 17px; } .sharpe-calc-equation.result { font-size: 21px; } .bok-rate-modal .bok-rate-dialog { gap: 11px; width: calc(100vw - 16px) !important; max-height: calc(100vh - 16px); padding: 20px 14px 16px !important; border-radius: 15px; } .bok-rate-dialog h2 { font-size: 27px; } .bok-rate-summary { grid-template-columns: 1fr; gap: 7px; } .bok-rate-summary article { padding: 9px 12px; } .bok-rate-summary strong { font-size: 22px; } .bok-rate-controls { align-items: stretch; flex-direction: column; } .bok-rate-view-toggle { width: 100%; } .bok-rate-view-toggle button { min-width: 0; font-size: 15.4px; } .bok-rate-shock-control { grid-template-columns: auto 1fr 78px; gap: 7px; } .bok-rate-chart, .bok-rate-dialog.is-scenario .bok-rate-chart { height: 410px; min-height: 410px; padding: 8px 4px 2px; } .bok-rate-events, .bok-rate-scenario-guide { grid-template-columns: 1fr; } .bok-rate-source { display: none; } }
       @media (max-width: 640px) { .glossary-modal .seventh-learning-assessment-dialog { width: calc(100vw - 12px) !important; height: calc(100vh - 12px) !important; max-height: calc(100vh - 12px) !important; padding: 42px 18px 24px; border-radius: 20px; } .seventh-learning-assessment-dialog > h2 { margin-bottom: 18px; font-size: 38px; } .seventh-learning-assessment-dialog > p { padding: 16px; font-size: 16.5px; line-height: 1.65; } }
       @media (prefers-reduced-motion: reduce) { .glossary-modal .seventh-learning-assessment-dialog { animation: none; } }
     </style>
@@ -198,9 +346,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <script defer src="assets/visuals.js?v=20260906-remove-nocode-breaktime"></script>
+    <script defer src="assets/visuals.js?v=20260919-small-text110"></script>
+    <script defer src="assets/black-swan-events.js?v=20260919-small-text110b"></script>
     <script defer src="assets/atlas.js"></script>
-    <script defer src="assets/glossary-modal.js?v=20260915-term-readings"></script>
+    <script defer src="assets/glossary-modal.js?v=20260919-no-indicator-links"></script>
     <script defer src="assets/glossary-drawer.js?v=20260906-system-terms"></script>
     <script defer src="assets/lesson-understanding.js?v=20260906-all-days"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
@@ -272,7 +421,6 @@
               <h2>나만의 로보 어드바이저 개발 및 성과 검증 프로젝트</h2>
               <div class="lesson-body">
                 <p style="color: var(--blue); font-weight: 800;"><strong>UI/UX 필요 요소:</strong> 투자성향진단 · 시각적 포트폴리오 · 시뮬레이션 · 목표 수익률 모의 · 리밸런싱</p>
-                <div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보완·보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>
                 <ul>
                   <li>
                     <strong>목표 기능:</strong> AI 기반의 자동화 로보 어드바이저 모델 개발
@@ -280,9 +428,8 @@
                       <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 주식·금융·경제 기본 용어사전과 연관 개념 탐색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/domain-rag-lab" target="_blank" rel="noopener noreferrer">domain-rag-lab</a>와 <a href="https://github.com/edumgt/investment-analysis" target="_blank" rel="noopener noreferrer">investment-analysis</a>의 통합 및 AWS EC2 서버 배포</span></li>
                       <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 가격·거래량·재무·뉴스 등 투자 자료 수집·분류·전처리·검색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/python-crawling-lab" target="_blank" rel="noopener noreferrer">python-crawling-lab</a> 등을 활용한 크롤링 및 적재</span></li>
                       <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 근거 문서와 출처를 포함한 Retrieval-Augmented Generation (RAG) 질의응답<span class="implementation-detail">기술스택 및 구현방안: Amazon Bedrock 또는 Ollama + GPU · VectorDB · FastAPI</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 포트폴리오 및 투자 이력과 관련 지식 연결</li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 5:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행<span class="implementation-detail">기술스택 및 구현방안: RDBMS · Amazon EventBridge Scheduler · AWS Batch</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 6:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Processing Jobs (SHAP) · AG Grid · ApexCharts</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행<span class="implementation-detail">기술스택 및 구현방안: RDBMS · Amazon EventBridge Scheduler · AWS Batch</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 5:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Processing Jobs (SHAP) · AG Grid · ApexCharts</span></li>
                     </ol>
                   </li>
                   <li>
@@ -291,7 +438,6 @@
                       <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> OHLCV 데이터로 이동평균·RSI·MACD·볼린저 밴드·거래량 지표 계산<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/docker-class" target="_blank" rel="noopener noreferrer">docker-class</a> · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a> · FastAPI</span></li>
                       <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 캔들 패턴·지지선·저항선·돌파·골든크로스 등 차트 패턴 탐지<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Training Jobs · ECR + Lambda + API GW · EC2</span></li>
                       <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 분봉·일봉·주봉의 기술적 지표를 종합해 매수·매도·관망 신호와 신뢰도 산출<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI 실시간 추론 엔드포인트 · RDBMS · FastAPI</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 캔들 차트 위에 기술적 지표·탐지 패턴·투자 신호를 겹쳐 보여주는 인터랙티브 차트 구현</li>
                     </ol>
                   </li>
                   <li>
@@ -320,7 +466,6 @@
               <h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2>
               <div class="lesson-body">
                 <p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 전략 설정 · 지표 차트 · 백테스트 · 성과 대시보드 · 자동매매 모니터링</p>
-                <div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보완·보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>
                 <ul>
                   <li><strong>목표 기능:</strong> 기본적인 인디케이터(MA, RSI 등)로 전략 설계
                     <ol>
@@ -358,6 +503,74 @@
                     </ol>
                   </li>
                 </ul>
+                <section class="technology-stack-summary" aria-labelledby="indicatorTechnologyStackTitle">
+                  <h3 id="indicatorTechnologyStackTitle">기술스택</h3>
+                  <p>로보 어드바이저와 투자 인디케이터 프로젝트에 사용되는 기술을 역할별로 통합한 구성입니다.</p>
+                  <div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보완·보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>
+                  <div class="technology-stack-table-wrap">
+                    <table>
+                      <thead><tr><th scope="col">종류</th><th scope="col">기능</th><th scope="col">용도</th><th scope="col">요소기술</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">금융 데이터 수집·처리</th><td>가격·거래량·재무·뉴스와 OHLCV 수집, 정제, 정규화</td><td>지표 계산과 전략 검증에 사용할 시계열·비정형 데이터 구축</td><td>python-crawling-lab · 시장 데이터 처리 플랫폼 · 피처 엔지니어링 파이프라인</td></tr>
+                        <tr><th scope="row">데이터·지식 저장</th><td>계산 결과, 전략 버전, 포트폴리오 이력과 문서 임베딩 저장</td><td>재현 가능한 분석, 투자 이력 조회, 관련 지식 검색</td><td>RDBMS · VectorDB · Redis</td></tr>
+                        <tr><th scope="row">인디케이터·퀀트 엔진</th><td><span class="no-glossary-link">MA·RSI·MACD·볼린저 밴드와 커스텀 지표 계산</span></td><td>매수·매도·관망 신호 및 신뢰도 산출</td><td>QuantConnect LEAN · LEAN CLI · TA-Lib · lumina-invest</td></tr>
+                        <tr><th scope="row">AI·패턴 분석·XAI</th><td>차트 패턴 학습·추론과 추천 근거 설명</td><td>캔들·돌파·골든크로스 탐지 및 모델 해석</td><td>Amazon SageMaker AI Training Jobs · 실시간 추론 엔드포인트 · Processing Jobs (SHAP)</td></tr>
+                        <tr><th scope="row">RAG·생성형 AI</th><td>금융 지식 검색과 출처 기반 질의응답</td><td>용어·시장 자료 탐색 및 투자 추천 이유 보강</td><td>domain-rag-lab · investment-analysis · Amazon Bedrock · Ollama + GPU · VectorDB</td></tr>
+                        <tr><th scope="row">전략·포트폴리오</th><td>매매·포지션 규칙, 자산배분, 리밸런싱과 위험 한도 관리</td><td>전략 실행 기준과 포트폴리오 운용 자동화</td><td>QuantConnect LEAN · 포트폴리오 규칙 엔진 · 전략 최적화 플랫폼 · Redis</td></tr>
+                        <tr><th scope="row">백테스트·성과 검증</th><td>수수료·슬리피지를 반영한 교차 검증과 성과 측정</td><td>수익률·MDD·샤프 비율·승률 및 전략 차이 분석</td><td>TradingView Strategy Tester · QuantConnect LEAN · stock-coin-trade · 포트폴리오 성과 분석 플랫폼 · 자동화 검증 플랫폼</td></tr>
+                        <tr><th scope="row">차트·UI/UX</th><td>지표·패턴·신호 시각화와 데이터 그리드 제공</td><td>전략 설정, 성과 대시보드, 자동매매 모니터링</td><td>TradingView · Pine Script · ApexCharts · AG Grid · Vanilla JS</td></tr>
+                        <tr><th scope="row">백엔드·API</th><td>지표 계산, 전략, 저장소와 외부 서비스를 API로 연결</td><td>웹 화면·분석 엔진·주문 시스템 간 통신</td><td>FastAPI · Amazon API Gateway (API GW) · TradingView Webhook</td></tr>
+                        <tr><th scope="row">증권사·주문 연동</th><td>계좌·시세·주문 조회와 모의 주문 체결</td><td>신호를 주문으로 변환하고 중복 주문·손실 한도·비상 정지 적용</td><td>증권사 Open API · KB증권 Open API · 한국투자증권 Open Trading API · Alpaca</td></tr>
+                        <tr><th scope="row">워크플로·품질 자동화</th><td>정기 배치, 실행 일정, 단위 테스트와 지속적 검증</td><td>데이터 갱신과 전략 실행·검증의 반복 자동화</td><td>Apache Airflow · Amazon EventBridge Scheduler · AWS Batch · GitHub Actions · 자동화 테스트 플랫폼</td></tr>
+                        <tr><th scope="row">배포·컴퓨팅</th><td>애플리케이션과 모델의 서버·컨테이너·서버리스 배포</td><td>개발 환경 재현, API 제공, 학습·추론 운영</td><td>Amazon EC2 · Docker · docker-class · Amazon ECR · AWS Lambda · Ollama + GPU</td></tr>
+                        <tr><th scope="row">소스·버전 관리</th><td>코드, 지표 산식과 전략 버전 추적</td><td>협업, 변경 이력 관리와 결과 재현</td><td>GitHub · GitHub Actions · domain-rag-lab · investment-analysis · python-crawling-lab · lumina-invest · stock-coin-trade</td></tr>
+                        <tr><th scope="row">백업·복구</th><td>데이터·객체 버전 백업과 장기 보관</td><td>장애·오삭제 시 데이터와 서비스 복원</td><td>AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</td></tr>
+                        <tr><th scope="row">보안</th><td>비밀정보·암호화 키 관리와 웹 공격 차단</td><td>API 키·증권계좌 연동 정보 및 서비스 보호</td><td>AWS Secrets Manager · AWS KMS · AWS WAF</td></tr>
+                        <tr><th scope="row">관제·알림</th><td>로그·지표·감사 추적과 장애 알림</td><td>전략 실행, 주문, 인프라 상태 모니터링</td><td>Amazon CloudWatch · AWS CloudTrail · Amazon SNS</td></tr>
+                        <tr><th scope="row">데이터·시스템 이관</th><td>데이터베이스·파일·서버 마이그레이션</td><td>기존 투자 데이터와 실행 환경의 AWS 이전</td><td>AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="technology-stack-interview-note"><strong>요즘 IT 직원 채용 시 인터뷰의 첫 번째 질문은 “코딩을 잘합니까?”, “무엇을 할 줄 압니까?”가 아니라 “프로젝트에서 본인의 애티튜드는 어떠했나요?”, “어떤 솔루션을 사용해 보셨나요?”입니다.</strong></p>
+                  <div class="project-staffing-note" aria-label="개발 인력 산정 및 AI 기반 수행안">
+                    <strong>개발 인력 산정 및 AI 기반 수행안</strong>
+                    <article><b>일반 개발 방식 · 총 36MM</b><span>위 솔루션을 구현하려면 6개월 동안 월평균 6명의 개발 인력이 필요합니다. 즉, 6명 × 6개월 = 36MM(Man-Month) 기준입니다.</span></article>
+                    <article><b>AI 기반 개발 방식 · 총 4MM</b><span>AI 코딩·문서화·테스트·자동화 도구를 적극 활용하면 동일한 구현 범위를 4명의 인력이 1개월 안에 수행할 수 있다는 의미입니다. 즉, 4명 × 1개월 = 4MM 기준입니다.</span></article>
+                  </div>
+                  <section class="project-deliverables" aria-labelledby="indicatorProjectDeliverablesTitle">
+                    <h4 id="indicatorProjectDeliverablesTitle">프로젝트 산출물 및 진행 도구</h4>
+                    <p>해당 솔루션을 계획하고 개발·검증·배포·운영하기 위해 단계별로 작성하고 관리할 문서와 협업 도구입니다.</p>
+                    <div class="project-deliverables-table-wrap">
+                      <table>
+                        <thead><tr><th scope="col">구분</th><th scope="col">주요 산출물</th><th scope="col">목적</th><th scope="col">프로젝트 진행 도구</th></tr></thead>
+                        <tbody>
+                          <tr><th scope="row">착수·과업 정의</th><td>과업지시서 · 프로젝트 헌장 · 범위기술서 · 착수보고서 · 이해관계자 목록</td><td>목표, 범위, 수행 조직, 일정, 예산, 인수 기준과 책임 범위 확정</td><td>Confluence · Markdown</td></tr>
+                          <tr><th scope="row">요구사항 관리</th><td>요구사항정의서 · 사용자 스토리 · 유스케이스 · 요구사항 추적표(RTM) · 인수 기준</td><td>기능·비기능 요구사항을 식별하고 구현·시험 결과까지 추적</td><td>JIRA · Confluence · Markdown · Google Sheets</td></tr>
+                          <tr><th scope="row">일정·업무 관리</th><td>WBS · 마일스톤 · 간트차트 · 스프린트 계획 · 백로그 · 주간보고서</td><td>작업을 세분화하고 담당자, 선후행 관계, 일정과 진척률 관리</td><td>JIRA 칸반보드 · JIRA Scrum Board · Roadmap · Excel</td></tr>
+                          <tr><th scope="row">화면·서비스 설계</th><td>정보구조(IA) · 화면흐름도 · 와이어프레임 · UI 명세서 · 프로토타입</td><td>전략 설정, 차트, 백테스트, 성과 대시보드의 사용자 흐름 정의</td><td>Figma · FigJam · draw.io · Mermaid</td></tr>
+                          <tr><th scope="row">데이터 설계</th><td>ERD · 테이블 명세서 · 데이터 사전 · 코드 정의서 · 데이터 흐름도 · 보존정책</td><td>시장 데이터, 지표, 전략, 주문, 포트폴리오 데이터의 구조와 관계 정의</td><td>ERDCloud · dbdiagram.io · DBeaver · draw.io · Mermaid</td></tr>
+                          <tr><th scope="row">시스템 설계</th><td>시스템 아키텍처 · 애플리케이션 구성도 · 인프라·네트워크 구성도 · 배포 구성도 · ADR</td><td>프런트엔드, API, 분석 엔진, 저장소, AWS와 외부 연동 구조 확정</td><td>draw.io · Mermaid · Lucidchart · AWS Architecture Icons · Confluence</td></tr>
+                          <tr><th scope="row">인터페이스 설계</th><td>API 명세서 · 인터페이스 정의서 · 데이터 매핑서 · Webhook·증권사 연동 명세</td><td>서비스 간 요청·응답, 인증, 오류 코드와 데이터 교환 규칙 정의</td><td>OpenAPI/Swagger · Postman · FastAPI Docs</td></tr>
+                          <tr><th scope="row">개발·형상 관리</th><td>소스코드 · 브랜치 전략 · 코딩 표준 · 변경이력 · 코드 리뷰 기록 · 기술 의사결정 기록</td><td>기능 구현, 버전 추적, 변경 통제와 협업 품질 확보</td><td>GitHub · GitHub Issues · Pull Requests · GitHub Projects</td></tr>
+                          <tr><th scope="row">시험·성과 검증</th><td>테스트 계획서 · 테스트 케이스 · 단위·통합·인수시험 결과서 · 백테스트 보고서 · 결함대장</td><td>기능 정확성, 성능, 보안, 전략 성과와 재현 가능성 검증</td><td>pytest · GitHub Actions · Postman · QuantConnect LEAN · TradingView Strategy Tester · JIRA</td></tr>
+                          <tr><th scope="row">배포·운영·인수</th><td>CI/CD 명세 · 배포계획서 · 운영 매뉴얼 · 장애 대응 절차서 · 백업·복구 계획 · 릴리스 노트 · 완료보고서</td><td>안전한 배포, 모니터링, 장애 복구, 운영 이관과 최종 검수 지원</td><td>GitHub Actions · Docker · AWS Management Console · Amazon CloudWatch · JIRA Service Management</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+                  <aside class="project-progress-cautions" aria-label="프로젝트 진행 중 유의사항">
+                    <h3>프로젝트 진행 중 유의사항</h3>
+                    <ol>
+                      <li>각 <b>R&amp;R</b>은 한 사람이 독점하지 않고, <b>주담당·보조담당 2인 이상</b>으로 역할을 배분합니다.</li>
+                      <li>팀원이 취업 등의 사유로 이탈하면 남은 팀원이 해당 역할과 업무를 대체합니다.</li>
+                      <li>팀원 이탈이 많은 팀은 프로젝트 진행 중 타 팀과 협의하여 팀을 <b>Merge(통합)</b>합니다.</li>
+                      <li>팀별 예상 사업비와 실제 발생 비용은 <b>이스트소프트 보조강사</b> 및 <b>위탁교육 학원장</b>과 보전 방안을 협의합니다.</li>
+                      <li>매일 <b>오전 9:00~9:15</b>에 팀별 추천 인원이 진행사항을 보고하고, 팀별 스크럼 회의를 진행합니다.</li>
+                      <li>매일 퇴근 전 <b>오후 5:30~5:50</b>에 팀별 추천 인원이 진행사항, 리스크 및 명일 계획을 보고합니다.</li>
+                    </ol>
+                  </aside>
+                  <div id="day4ProjectSchedule"></div>
+                </section>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="나만의 투자 인디케이터 개발 및 성과 검증 프로젝트 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -877,9 +1090,7 @@
                     </tbody>
                   </table>
                 </div>
-                <p><strong>금리는 하나의 출발 변수일 뿐입니다.</strong> 같은 금리 상승이라도 물가 진정, 경기 호조, 신용불안처럼 원인이 다르면 자산 반응도 달라집니다. 따라서 아래 시뮬레이터의 값은 자산별 민감도 차이를 이해하기 위한 가정이며 <strong>실제 수익률 예측으로 사용하면 안 됩니다.</strong></p>
-                <p>투자 판단에서는 “금리가 오르니 성장주를 무조건 피한다”보다, <strong>가까운 미래의 이익 중심인지 먼 미래의 성장잠재력 중심인지 구분</strong>해 보는 것이 먼저입니다. 기업 재무제표나 상품설명서에서 현재 이익 규모와 성장률 전망을 함께 확인하면, 금리 변화에 따라 내 포트폴리오가 왜 흔들리는지 이해하는 데 도움이 됩니다.</p>
-                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="bokRateTrendTrigger"><i class="fa-solid fa-chart-line"></i> 금리·자산 민감도 시뮬레이터</button><button type="button" class="breaktime-trigger" id="rateMarketBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · 시장 변동성 차트 확장</button><small>최근 기준금리 흐름을 확인하고, 가상의 금리 충격에 따른 자산별 민감도를 비교해 보세요.</small></p>
+                <p class="lesson-video-cta"><button type="button" class="lesson-video-link" id="bokRateTrendTrigger"><i class="fa-solid fa-chart-line"></i> 금리·자산 민감도 시뮬레이터</button><small>최근 기준금리 흐름을 확인하고, 가상의 금리 충격에 따른 자산별 민감도를 비교해 보세요.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="금리와 성장잠재력: 할인율이 기업 가치에 미치는 영향 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -889,12 +1100,13 @@
               <div class="lesson-body">
                 <p><b>가치평가(Valuation)</b>는 자산이 앞으로 제공할 현금흐름·사용가치·희소성에 비춰 현재 가격이 어떤 가정을 담고 있는지 추정하는 과정입니다. 자산마다 현금흐름과 거래 구조가 다르므로 하나의 공식으로 모두 평가할 수는 없습니다.</p>
                 <h3>시간의 가치: 미래의 돈은 왜 현재 가치로 바꿀까요?</h3>
-                <p><b>시간의 가치(Time Value of Money, TVM)</b>는 “지금 내 손에 있는 1원은 미래에 받을 1원보다 더 큰 가치를 가진다”는 금융학의 기본 원칙입니다. 금융시장에서는 시간이 그냥 지나가는 것이 아닙니다. 돈을 투자하거나 빌려주면 시간이 지날수록 이자나 수익이 붙기 때문입니다. 반대로 시간이 길어질수록 금리 변화, 물가, 경기 침체처럼 예상하기 어려운 일이 생길 가능성도 커집니다. 즉, 시간은 돈을 벌게 해주기도 하지만 위험도 함께 늘리는 요소입니다.</p>
+                <p><b>시간의 가치(Time Value of Money, TVM)</b>란 <strong>같은 금액이라면 나중에 받는 돈보다 지금 받는 돈이 더 가치 있다는 뜻</strong>입니다. 예를 들어 오늘 받은 1만 원을 연 5% 예금에 넣으면 1년 뒤에는 1만 500원이 됩니다. 반면 1년 뒤에 1만 원을 받으면 그동안 이자를 얻을 기회를 놓칩니다. 그래서 오늘의 1만 원과 1년 뒤의 1만 원을 같은 가치로 보지 않습니다.</p>
                 <ul>
-                  <li><b>기회비용:</b> 지금 돈을 가지고 있으면 예금·채권·주식 등에 투자해 이자나 수익을 얻을 수 있습니다. 지금의 돈에는 미래에 돈을 굴려 벌 수 있는 수익의 기회가 포함됩니다.</li>
-                  <li><b>인플레이션:</b> 시간이 지나 물가가 오르면 미래의 돈으로 살 수 있는 실제 구매력이 줄어들 수 있습니다.</li>
-                  <li><b>불확실성 및 위험:</b> 시간이 길어질수록 채무자의 재무 악화·파산이나 경제 위기처럼 돈을 받지 못할 위험도 커질 수 있습니다.</li>
+                  <li><b>돈을 불릴 수 있습니다:</b> 지금 돈이 있으면 예금이나 투자로 이자·수익을 얻을 수 있습니다. 이를 놓치는 것을 <strong>기회비용</strong>이라고 합니다.</li>
+                  <li><b>물가가 오를 수 있습니다:</b> 지금은 1만 원으로 살 수 있는 물건을 미래에는 1만 원으로 사지 못할 수 있습니다. 이것이 <strong>인플레이션에 따른 구매력 감소</strong>입니다.</li>
+                  <li><b>받지 못할 위험이 있습니다:</b> 받는 시점이 멀수록 지급이 늦어지거나 상대방이 돈을 갚지 못할 가능성도 커집니다.</li>
                 </ul>
+                <p>따라서 미래에 받을 돈을 오늘의 돈과 비교할 때는, 기다리는 동안 얻을 수 있었던 수익과 물가·위험을 고려해 <strong>현재 가치로 낮춰 계산</strong>합니다.</p>
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
                     <caption>시간을 기준으로 현재와 미래의 가치를 바꾸는 두 방향</caption>
@@ -913,21 +1125,21 @@
                 </ul>
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
-                    <caption>주요 자산군별 가치평가 접근</caption>
-                    <thead><tr><th scope="col">자산군</th><th scope="col">주요 방법</th><th scope="col">무엇을 살피나요?</th></tr></thead>
+                    <caption>주요 자산군별 가치평가 접근: 쉬운 확인 방법과 예시</caption>
+                    <thead><tr><th scope="col">자산</th><th scope="col">쉽게 살펴보는 방법</th><th scope="col">간단한 예시</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="equity">주식</button></th><td><button type="button" class="glossary-term" data-valuation-term="dcf">DCF</button>, <button type="button" class="glossary-term" data-valuation-term="ddm">배당할인모형(DDM)</button></td><td><button type="button" class="glossary-term" data-valuation-term="cashflow">미래 현금흐름</button>·<button type="button" class="glossary-term" data-valuation-term="dividend">배당</button>, <button type="button" class="glossary-term" data-valuation-term="growth">성장률</button>, <button type="button" class="glossary-term" data-valuation-term="profitability">수익성</button></td></tr>
-                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="bond">채권</button></th><td><button type="button" class="glossary-term" data-valuation-term="discounted-cf">현금흐름 할인</button>, <button type="button" class="glossary-term" data-valuation-term="ytm">만기수익률(YTM)</button>, <button type="button" class="glossary-term" data-valuation-term="credit-spread">신용스프레드 분석</button></td><td><button type="button" class="glossary-term" data-valuation-term="coupon-principal">쿠폰·원금</button>, <button type="button" class="glossary-term" data-valuation-term="market-rate">시장금리</button>, <button type="button" class="glossary-term" data-valuation-term="maturity">만기</button>, <button type="button" class="glossary-term" data-valuation-term="creditworthiness">발행자의 상환 능력</button>과 <button type="button" class="glossary-term" data-valuation-term="duration">듀레이션</button></td></tr>
-                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="real-estate">부동산</button></th><td><button type="button" class="glossary-term" data-valuation-term="income-approach">수익환원법</button>, <button type="button" class="glossary-term" data-valuation-term="sales-comparison">거래사례비교법</button>, <button type="button" class="glossary-term" data-valuation-term="cost-approach">원가법</button></td><td><button type="button" class="glossary-term" data-valuation-term="noi">순임대수익</button>과 <button type="button" class="glossary-term" data-valuation-term="cap-rate">환원이율</button>, <button type="button" class="glossary-term" data-valuation-term="comparable-sales">인근 실거래 사례</button>, <button type="button" class="glossary-term" data-valuation-term="replacement-cost">재조달원가</button></td></tr>
-                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="derivative">파생상품</button></th><td><button type="button" class="glossary-term" data-valuation-term="no-arbitrage">무차익거래 관계·콘탱고·백워데이션</button>, <button type="button" class="glossary-term" data-valuation-term="binomial">이항모형</button>, <button type="button" class="glossary-term" data-valuation-term="black-scholes">블랙-숄즈 계열 모형</button></td><td><button type="button" class="glossary-term" data-valuation-term="underlying">기초자산 가격</button>, <button type="button" class="glossary-term" data-valuation-term="volatility">변동성</button>, <button type="button" class="glossary-term" data-valuation-term="interest-rate">금리</button>, <button type="button" class="glossary-term" data-valuation-term="maturity">만기</button>, <button type="button" class="glossary-term" data-valuation-term="carry">배당·보유비용</button>과 <button type="button" class="glossary-term" data-valuation-term="contract">계약 조건</button></td></tr>
-                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="commodity-crypto">원자재·가상자산</button></th><td><button type="button" class="glossary-term" data-valuation-term="supply-demand">수급</button>·<button type="button" class="glossary-term" data-valuation-term="cost">비용</button>·<button type="button" class="glossary-term" data-valuation-term="comparative-metric">비교지표</button>·<button type="button" class="glossary-term" data-valuation-term="network-metric">네트워크 지표</button></td><td><button type="button" class="glossary-term" data-valuation-term="storage-cost">생산·보관비용</button>, <button type="button" class="glossary-term" data-valuation-term="scarcity">희소성</button>, <button type="button" class="glossary-term" data-valuation-term="use-demand">사용 수요</button>, <button type="button" class="glossary-term" data-valuation-term="liquidity-regulation">유동성·제도</button>와 <button type="button" class="glossary-term" data-valuation-term="network-activity">네트워크 활동</button></td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="equity">주식</button></th><td>회사가 실제로 돈을 잘 버는지, 이익이 늘고 있는지, 배당을 주는지 봅니다. 비슷한 회사의 주가와도 비교합니다.</td><td>한 주당 5,000원을 버는 회사와 비슷한 기업들이 이익의 10배 가격에 거래된다면, 약 5만 원을 비교 기준으로 삼아 봅니다. 실제 가격은 성장 기대와 위험에 따라 달라집니다.</td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="bond">채권</button></th><td>앞으로 받을 이자와 원금을 확인하고, 현재 예금·채권 금리보다 유리한지 비교합니다. 발행자가 돈을 갚을 수 있는지도 봅니다.</td><td>연 3% 이자를 주는 채권을 가지고 있는데 새 채권이 연 4%를 준다면, 기존 3% 채권의 매력과 시장가격은 낮아질 수 있습니다.</td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="real-estate">부동산</button></th><td>실제로 남는 임대수익, 주변의 비슷한 집·건물 실거래가, 수리비와 세금 등을 함께 봅니다.</td><td>연 임대료가 1,200만 원이고 수리비·세금이 200만 원이면 실제 남는 돈은 1,000만 원입니다. 이 수익과 인근 건물 가격을 비교합니다.</td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="derivative">파생상품</button></th><td>미래에 사고팔기로 한 가격이 지금 시장가격과 비교해 얼마나 유리한지 봅니다. 만기까지 남은 시간과 가격 변동 가능성도 중요합니다.</td><td>5만 원에 살 수 있는 권리가 있는데 주가가 6만 원이라면 현재 1만 원만큼 유리합니다. 여기에 만기 전 더 오를 가능성에 대한 가치가 추가될 수 있습니다.</td></tr>
+                      <tr><th scope="row"><button type="button" class="glossary-term" data-valuation-term="commodity-crypto">원자재·가상자산</button></th><td>얼마나 공급되고 실제로 얼마나 필요한지, 생산·보관비용이나 이용자·거래 활동이 늘고 있는지 살펴봅니다.</td><td>가뭄으로 곡물 공급은 줄고 식품회사의 수요가 그대로라면 가격이 오를 수 있습니다. 가상자산은 실제 이용자와 거래가 늘어나는지도 함께 확인합니다.</td></tr>
                     </tbody>
                   </table>
                 </div>
                 <ul>
-                  <li><b>수익접근법:</b> 미래에 받을 현금흐름을 위험을 반영한 할인율로 현재 가치로 바꿉니다. 할인율이 올라가면 같은 미래 현금흐름의 현재 가치는 낮아집니다.</li>
-                  <li><b>시장접근법:</b> 비슷한 자산이 시장에서 어떤 가격에 거래되는지 비교합니다. 비교 대상의 성장성·부채·회계 기준이 다르면 단순 비교가 왜곡될 수 있습니다.</li>
-                  <li><b>원가접근법:</b> 같은 자산을 새로 만들거나 대체하는 데 드는 비용을 봅니다. 다만 브랜드·입지·네트워크 효과처럼 비용만으로 설명하기 어려운 가치는 놓칠 수 있습니다.</li>
+                  <li><b>벌어들이는 돈으로 보기:</b> 매년 100만 원을 꾸준히 벌어주는 자산이라면, 그 돈을 앞으로 몇 년 동안 받을 수 있는지 생각해 가격을 살펴봅니다.</li>
+                  <li><b>비슷한 것과 비교하기:</b> 같은 동네의 비슷한 아파트나 같은 업종의 회사를 찾아 가격 차이가 나는 이유를 비교합니다.</li>
+                  <li><b>새로 만드는 비용으로 보기:</b> 같은 건물이나 설비를 지금 새로 만들면 얼마가 드는지 계산합니다. 다만 좋은 입지나 유명 브랜드의 가치는 비용만으로 설명하기 어렵습니다.</li>
                 </ul>
                 <h3>금융에서 말하는 모형이란?</h3>
                 <p><b>금융모형(Financial Model)</b>은 복잡하고 예측하기 어려운 경제·금융 현상을 수학·통계·컴퓨터 알고리즘으로 단순화해, 공통된 규칙으로 표현한 공식 또는 시스템입니다. 쉽게 말해 미래의 돈 흐름과 위험을 가늠하기 위한 ‘정밀한 수학적 일기예보’에 가깝습니다.</p>
@@ -945,26 +1157,24 @@
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
                     <caption>분야별 금융모형의 예</caption>
-                    <thead><tr><th scope="col">분야</th><th scope="col">대표 모형</th><th scope="col">쉽게 말하면</th></tr></thead>
+                    <thead><tr><th scope="col">분야</th><th scope="col">대표 모형</th><th scope="col">무엇을 정할 때 쓰나?</th><th scope="col">아주 쉬운 예시</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">자산 배분·투자</th><td><button type="button" class="glossary-term" data-valuation-term="mpt">현대 포트폴리오 이론(MPT)</button></td><td>위험을 낮추면서 기대수익률을 높이는 자산 조합을 찾습니다.</td></tr>
-                      <tr><th scope="row">자산 가격</th><td><button type="button" class="glossary-term" data-valuation-term="capm">자산가격결정모형(CAPM)</button></td><td>해당 주식의 위험 수준을 고려할 때 요구할 최소 기대수익률을 추정합니다.</td></tr>
-                      <tr><th scope="row">파생상품 평가</th><td><button type="button" class="glossary-term" data-valuation-term="black-scholes-model">블랙-숄즈 모형(Black-Scholes Model)</button></td><td>주식 옵션처럼 특정 가격에 사고팔 수 있는 권리의 이론 가격을 계산합니다.</td></tr>
-                      <tr><th scope="row">위험 관리</th><td><button type="button" class="glossary-term" data-valuation-term="var">위험가치(Value at Risk, VaR)</button></td><td>정상적인 시장 조건이라는 가정 아래, 정한 기간·신뢰수준에서 예상되는 손실 규모를 추정합니다.</td></tr>
-                      <tr><th scope="row">신용 평가</th><td><button type="button" class="glossary-term" data-valuation-term="credit-scoring">신용평가모형(Credit Scoring Model)</button></td><td>소득·부채·상환 이력 등을 바탕으로 대출 상환 가능성과 조건을 판단합니다.</td></tr>
+                      <tr><th scope="row">자산 배분·투자</th><td>현대 포트폴리오 이론(MPT)</td><td>내 돈을 주식·채권·현금에 얼마씩 나눌지 정할 때 씁니다.</td><td>100만 원을 한 종목에 모두 넣지 않고 주식 60만 원, 채권 30만 원, 현금 10만 원으로 나눕니다. 한 자산이 내려도 다른 자산이 충격을 줄이게 하는 방법입니다.</td></tr>
+                      <tr><th scope="row">자산 가격</th><td>자산가격결정모형(CAPM)</td><td>이 주식의 위험을 감수하려면 어느 정도 수익을 기대해야 하는지 생각할 때 씁니다.</td><td>안전한 예금으로 연 3%를 받을 수 있는데 많이 흔들리는 주식의 예상수익도 3%라면 굳이 위험을 감수할 이유가 적습니다. 위험이 큰 만큼 3%보다 더 높은 기대수익이 필요한지 비교합니다.</td></tr>
+                      <tr><th scope="row">파생상품 평가</th><td>블랙-숄즈 모형(Black-Scholes Model)</td><td>미래에 정해진 가격으로 주식을 사고팔 수 있는 권리의 값을 계산할 때 씁니다.</td><td>현재 5만 원인 주식을 한 달 뒤 4만 5천 원에 살 수 있는 쿠폰이 있다고 가정합니다. 주가가 크게 움직일 가능성이 높고 사용할 수 있는 기간이 길수록 그 쿠폰의 값도 달라집니다.</td></tr>
+                      <tr><th scope="row">위험 관리</th><td>위험가치(Value at Risk, VaR)</td><td>보통의 시장 상황에서 하루 손실이 어느 정도까지 커질 수 있는지 미리 점검할 때 씁니다.</td><td>“하루 95% VaR가 100만 원”이면 과거와 비슷한 시장이 계속된다는 가정 아래, 20일 중 약 19일은 하루 손실이 100만 원 안쪽일 것으로 본다는 뜻입니다. 남은 1일에는 100만 원보다 더 잃을 수도 있습니다.</td></tr>
+                      <tr><th scope="row">신용 평가</th><td>신용평가모형(Credit Scoring Model)</td><td>돈을 빌려줘도 되는지, 대출 한도와 금리를 얼마로 정할지 판단할 때 씁니다.</td><td>월급이 꾸준하고 연체가 없으며 기존 빚이 적은 사람은 돈을 갚을 가능성이 높다고 봅니다. 반대로 연체가 많으면 대출 한도가 줄거나 금리가 높아질 수 있습니다.</td></tr>
                     </tbody>
                   </table>
                 </div>
-                <p><b>모형은 현실 그 자체가 아닙니다.</b> 계산을 위해 ‘투자자는 합리적으로 행동한다’거나 ‘위험이 특정 분포를 따른다’는 가정을 둡니다. 과거에 없던 위기처럼 예외적인 사건이 발생하면 과거 데이터에 기반한 추정은 크게 빗나갈 수 있습니다. 따라서 모형의 숫자는 정답이 아니라, 가정·데이터·한계를 함께 확인하며 쓰는 의사결정 도구입니다.</p>
-                <h3>마코위츠의 포트폴리오 이론과 현대 포트폴리오 이론</h3>
-                <p><b>마코위츠의 포트폴리오 이론</b>과 <b>현대 포트폴리오 이론(Modern Portfolio Theory, MPT)</b>은 같은 개념입니다. 해리 마코위츠가 1952년 제시한 평균-분산 접근법을 창시자 이름으로 부르기도, 현대 포트폴리오 이론이라는 학문적 명칭으로 부르기도 합니다.</p>
+                <p class="lesson-note"><b>쉽게 기억하기:</b> 금융모형은 미래를 정확히 맞히는 정답지가 아니라, 같은 기준으로 비교하기 위한 계산 도구입니다. 먼저 “무엇을 결정하려는가?”를 보고, 그다음 숫자와 가정이 현실적인지 확인하면 됩니다.</p>
+                <h3>현대 포트폴리오 이론을 쉽게 이해하기</h3>
+                <p><b>핵심은 투자금 전부를 한 곳에 넣지 않는 것입니다.</b> 예를 들어 100만 원을 한 회사 주식에 모두 투자하면 그 회사에 악재가 생겼을 때 큰 손실을 볼 수 있습니다. 주식 60만 원, 채권 30만 원, 현금 10만 원처럼 나누면 한 자산이 하락해도 다른 자산이 충격을 줄여 줄 수 있습니다. 이처럼 수익과 위험을 함께 보며 투자금을 나누는 방법을 현대 포트폴리오 이론(MPT)이라고 합니다.</p>
                 <ul>
-                  <li><b>분산투자:</b> 여러 종목을 단순히 많이 담는 것보다 서로 함께 움직임이 낮은 자산을 섞어야 전체 변동성을 줄이는 데 도움이 됩니다.</li>
-                  <li><b>효율적 투자선(Efficient Frontier):</b> 같은 위험 수준에서 기대수익률이 가장 높은 조합, 또는 같은 기대수익률에서 위험이 가장 낮은 조합들을 나타냅니다.</li>
-                  <li><b>비체계적 위험과 체계적 위험:</b> 개별 기업의 악재 같은 비체계적 위험은 분산으로 줄일 수 있지만, 경기 침체·시장 전체 급락 같은 체계적 위험까지 없앨 수는 없습니다.</li>
+                  <li><b>나누어 담기:</b> 같은 업종의 주식만 여러 개 사는 것보다 주식·채권·현금처럼 움직임이 다른 자산을 함께 담는 편이 위험을 줄이는 데 도움이 됩니다.</li>
+                  <li><b>더 나은 조합 고르기:</b> 예상 수익이 같은 두 조합이라면 가격이 덜 흔들리는 조합을 고릅니다. 흔들림이 비슷하다면 예상 수익이 더 높은 조합을 고릅니다.</li>
+                  <li><b>분산해도 막을 수 없는 위험:</b> 한 회사의 실적 악화는 여러 자산에 나누어 투자하면 충격을 줄일 수 있습니다. 하지만 금융위기처럼 시장 전체가 함께 하락하면 분산투자만으로 손실을 완전히 피할 수는 없습니다.</li>
                 </ul>
-                <p><small>참고: 마코위츠의 포트폴리오 선택 이론과 평균·분산·자산 간 상관관계의 의미는 <a href="https://www.nobelprize.org/prizes/economic-sciences/1990/press-release/" target="_blank" rel="noopener noreferrer">노벨상위원회의 1990년 경제학상 설명</a>에서 확인할 수 있습니다.</small></p>
-                <p><b>평가값은 정답이 아니라 가정의 결과입니다.</b> 성장률·할인율·마진·변동성처럼 작은 가정 변화도 결과를 크게 바꿀 수 있습니다. 특히 무위험수익률, 체계적 위험(베타), 신용위험과 수익률 변동성은 할인율과 요구수익률에 영향을 줍니다. 금리가 오르면 다른 조건이 같을 때 미래 현금흐름의 현재 가치는 낮아지는 경향이 있지만, 실제 가격은 기대 성장·수급·유동성도 함께 반영합니다.</p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="자산 가치평가 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -980,8 +1190,8 @@
                   <li><b>확률분포:</b> 정규분포는 계산을 쉽게 하는 흔한 가정이지만 랜덤워크의 필수 조건은 아닙니다. 실제 수익률에는 큰 변동이 정규분포 가정보다 더 자주 나타날 수 있습니다.</li>
                 </ul>
                 <h3>주식시장에서는 왜 중요할까요?</h3>
-                <p><button type="button" class="glossary-term" data-person="fama">유진 파마</button>가 정리한 <strong>효율적 시장 가설(EMH)</strong>은 이미 알려진 정보가 가격에 빠르게 반영된다는 생각입니다. 그래서 과거 가격 차트만 보고 내일 가격이 오를지 내릴지를 꾸준히 맞히기는 어렵다고 봅니다. 앞으로 가격을 움직일 핵심 재료는 아직 시장에 알려지지 않은 새 정보이기 때문입니다.</p>
-                <p>이 생각은 가격의 다음 움직임을 쉽게 예측하기 어렵다고 보는 <strong>랜덤워크</strong>·<strong>마팅게일</strong> 논의와 닿아 있습니다. 다만 세 용어가 완전히 같은 뜻은 아닙니다. EMH는 ‘정보가 가격에 반영되는가’를, 랜덤워크는 ‘가격 변화가 어떤 모습으로 움직이는가’를 다룹니다. 시장의 위험과 기대수익률이 시기마다 달라질 수 있다고 보더라도, 알려진 정보만으로 꾸준한 초과수익을 낼 수 있는지는 별도로 검토할 수 있습니다.</p>
+                <p><button type="button" class="glossary-term" data-person="fama">유진 파마</button>의 <strong>효율적 시장 가설(EMH)</strong>은 좋은 뉴스나 나쁜 뉴스가 알려지면 많은 투자자가 바로 주문을 내기 때문에 주가도 빠르게 바뀐다는 생각입니다. 예를 들어 오전 9시에 좋은 실적이 발표되면 내가 뉴스를 읽고 매수 버튼을 누르기 전에 이미 가격이 크게 올라 있을 수 있습니다. 그래서 어제까지의 뉴스와 차트만 보고 내일 주가를 계속 맞히기는 어렵다고 설명합니다.</p>
+                <p><strong>랜덤워크</strong>는 지금까지 주가가 움직인 모양만 보고 다음 방향을 맞히기 어렵다는 뜻입니다. <strong>마팅게일</strong>은 현재 알려진 정보만으로 어느 한쪽이 계속 유리하다고 보기 어렵다는 생각입니다. 세 용어의 자세한 뜻은 다르지만, 공통적으로 <b>이미 알려진 정보에는 누구나 쉽게 얻을 수 있는 확실한 정답이 들어 있지 않다</b>고 설명합니다. 따라서 투자 규칙은 과거에 한두 번 맞았는지가 아니라, 다른 기간에도 반복되는지와 수수료를 빼고도 이익이 남는지를 확인해야 합니다.</p>
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
                     <caption>EMH의 정보 범위에 따른 세 가지 검토 방식</caption>
@@ -994,37 +1204,83 @@
                   </table>
                 </div>
                 <h3>퀀트에게 주는 실전 질문</h3>
-                <p><button type="button" class="glossary-term" data-person="malkiel">버턴 말키엘</button>의 ‘눈가린 원숭이의 다트’ 비유와 월스트리트저널의 다트 대결은 종목 선택의 어려움을 알린 대중적 사례입니다. 하지만 그것만으로 어떤 전략도 무의미하다고 결론낼 수는 없습니다. 퀀트는 신호가 우연이 아닌지, 수수료·세금·슬리피지 뒤에도 남는지, 다른 기간·시장에서도 재현되는지를 검증합니다.</p>
-                <p>액티브 펀드와 지수 추종 상품의 비교도 같은 질문을 던집니다. 많은 액티브 펀드가 각 기준지수를 비용 차감 후 이기기 어렵다는 결과가 보고되지만, 비율은 시장·기간·분류·생존 펀드 처리에 따라 달라집니다. 따라서 <strong>특정 수치 하나로 결론내리기보다 비교 기준과 비용을 함께 확인</strong>해야 합니다.</p>
-                <h3>현실의 한계와 반론</h3>
-                <p>행동재무학은 과잉반응·과소반응·쏠림 같은 현상이 가격에 영향을 줄 수 있다고 봅니다. 모멘텀·가치 등 이상현상 연구도 이어져 왔습니다. 반대로 눈에 보이는 패턴은 위험에 대한 보상, 데이터 탐색 과정의 우연, 거래비용 때문에 실제 투자에서 사라질 수 있습니다. 워런 버핏이나 제임스 사이먼스처럼 장기 성과가 알려진 사례 역시 시장이 항상 완벽하거나 항상 비효율적이라는 단일 결론의 증거가 되지는 않습니다.</p>
-                <p class="lesson-video-cta"><button type="button" class="breaktime-trigger" id="beforeQuantHistoryBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · 규칙과 예측을 구분해 보세요</button></p>
+                <p>경제학자 <button type="button" class="glossary-term" data-person="malkiel">버턴 말키엘(Burton Malkiel)</button>의 비유는 여러 언론사와 교육기관이 실제 비교 행사로 만들어 보았습니다. 다만 재미를 위한 대결과 엄격하게 설계된 학술 실험은 구분해야 하며, 한 번의 결과만으로 전문가·무작위 선택·인덱스 투자 중 어느 하나가 항상 우수하다고 결론낼 수는 없습니다.</p>
+
+                <h4>1. 월스트리트저널(WSJ)의 ‘다트 대결’ — 1988~2002년</h4>
+                <p>말키엘은 1973년 저서 《월가의 랜덤워크》에서 “눈을 가린 원숭이가 신문 주식면에 다트를 던져도 전문가가 고른 포트폴리오만큼 잘할 수 있다”는 비유를 제시했습니다. 이를 계기로 WSJ는 1988년부터 14년 동안 다트로 고른 종목, 전문가 추천 종목, 다우존스 산업평균지수를 비교했습니다.</p>
+                <ul>
+                  <li><b>방식:</b> 실제 원숭이는 사용하지 않았습니다. WSJ 직원이 벽에 붙인 종목표에 다트를 던졌으며, 안전 문제로 눈도 가리지 않았습니다. 각 대결은 나중에 6개월 단위로 운영됐습니다.</li>
+                  <li><b>142회 결과:</b> WSJ가 대회를 마칠 때 발표한 6개월 평균 수익률은 전문가 10.2%, 다트 3.5%, 다우지수 5.6%였습니다. 전문가가 다트를 이긴 횟수는 87대 55였습니다.</li>
+                  <li><b>다른 해석:</b> 후속 연구에서는 전문가 추천 종목의 위험이 더 컸고, 기사 공개 직후 매수세가 몰리는 ‘공개 효과’도 확인됐습니다. 위험과 장기 보유 방식을 반영하면 단순 평균 수익률과 다른 결과가 나왔습니다.</li>
+                  <li><b>말키엘의 지적:</b> 종목이 네 개뿐이고 기간이 짧으며 공개 효과가 있으므로, 이 대결만으로 효율적 시장 가설을 검증할 수 없다고 설명했습니다.</li>
+                </ul>
+
+                <h4>2. 실제 동물을 이용한 사례</h4>
+                <ul>
+                  <li><b>침팬지 ‘레이븐’ — 1999년 미국:</b> 레이븐은 133개 인터넷 관련 종목 중 10개를 다트로 골랐고, ‘MonkeyDex’라는 이름의 포트폴리오는 닷컴 호황기에 213% 상승했다고 보도됐습니다. 다만 인터넷주만을 후보로 삼은 홍보성 행사였으므로 전체 시장에서 무작위 선택의 우수성을 증명한 통제 실험은 아닙니다.</li>
+                  <li><b>고양이 ‘올랜도’ — 2012년 영국:</b> Observer의 가상 투자 대결에서 올랜도는 장난감 쥐를 종목표에 던져 다섯 종목을 골랐습니다. 가상 투자금 5,000파운드는 5,542.60파운드로 늘어 약 10.9%의 수익률을 기록했고, 전문가팀의 5,176.60파운드(약 3.5%)보다 높았습니다. 학생팀은 세 팀 중 마지막이었습니다.</li>
+                </ul>
+                <p><b>확인이 필요한 국내 사례:</b> ‘2011년 LIG투자증권의 붉은털원숭이 루키와 전문가가 대결했다’는 이야기는 여러 2차 글에서 반복되지만, 대결 방식과 최종 수익률을 확인할 수 있는 신뢰도 높은 원문을 찾지 못했습니다. 원문이 확인되기 전에는 검증된 실험 결과로 단정하지 않습니다.</p>
+
+                <h4>이 사례에서 배울 점</h4>
+                <ol>
+                  <li><b>공개 정보만으로 계속 이기기는 어렵습니다.</b> 알려진 정보는 많은 투자자가 동시에 보기 때문에 가격에 빠르게 반영될 수 있습니다.</li>
+                  <li><b>비용과 비교 기준이 중요합니다.</b> 수익률만 보지 말고 위험, 매매수수료, 세금, 종목 수, 측정 기간을 같은 조건으로 비교해야 합니다.</li>
+                  <li><b>무작위 대결이 인덱스의 우위를 직접 증명하지는 않습니다.</b> 다만 소수 종목을 맞히려는 전략과 달리, 넓게 분산하고 비용을 낮추는 인덱스 투자의 장점을 생각하게 하는 사례입니다.</li>
+                  <li><b>퀀트는 우연을 다시 검사합니다.</b> 한 기간의 좋은 결과가 다른 기간·시장에서도 반복되는지, 비용을 빼고도 남는지를 확인합니다.</li>
+                </ol>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="랜덤워크와 효율적 시장 가설 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section><section class="lesson" id="quantHistoryLesson"><span>12.1</span>
             <div class="lesson-content">
-              <h2>퀀트는 언제 금융에 쓰였을까요?</h2>
+              <h2>퀀트는 주식과 코인에 어떻게 쓰일까요?</h2>
               <div class="lesson-body">
-                <p><em>quant</em>는 <em>quantitative analyst</em>(정량 분석가)의 줄임말로, 수학·통계·프로그래밍을 금융에 적용하는 사람을 가리키는 월가의 관용어입니다. 이 별칭을 최초로 쓴 사람이나 날짜를 입증하는 공통 기록은 확인하기 어렵습니다. 따라서 아래에서는 <strong>수학을 금융에 처음 적용한 사례</strong>와 <strong>훗날 퀀트로 불린 방식이 실제 운용에 쓰인 초기 사례</strong>를 나누어 봅니다.</p>
+                <p><b>퀀트(Quant)</b>는 투자 아이디어를 숫자와 규칙으로 바꾸고, 컴퓨터로 반복해서 확인하는 방식입니다. 예를 들어 “좋아 보이는 주식을 산다”가 아니라 <strong>“이익이 늘고 가격이 일정 기간 상승한 종목을 매주 같은 시간에 찾는다”</strong>처럼 조건을 분명하게 적습니다. 주식과 코인은 거래 방식이 다르지만, 데이터를 모으고 규칙을 시험한 뒤 주문하는 기본 흐름은 같습니다.</p>
+
+                <h3>주식에서는 이렇게 사용합니다</h3>
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
-                    <thead><tr><th scope="col">시기</th><th scope="col">인물·사례</th><th scope="col">금융에 적용한 내용</th><th scope="col">의미</th></tr></thead>
+                    <thead><tr><th scope="col">사용 방법</th><th scope="col">아주 쉬운 예시</th><th scope="col">컴퓨터가 하는 일</th><th scope="col">확인할 위험</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">1900년</th><td>루이 바슐리에, <em>Théorie de la spéculation</em></td><td>파리 시장의 가격 움직임과 옵션 가격을 확률·브라운 운동으로 모델링했습니다.</td><td>현대 수리금융의 첫 수학적 시장모형으로 평가되지만, 당시 그를 ‘퀀트’라고 부르지는 않았습니다.</td></tr>
-                      <tr><th scope="row">1952년</th><td>해리 마코위츠, <em>Portfolio Selection</em></td><td>기대수익률·분산·공분산을 써서 여러 자산의 위험과 배분을 함께 계산하는 평균-분산 모형을 제시했습니다.</td><td>감(感)이 아니라 측정 가능한 위험과 상관관계로 포트폴리오를 고르는 정량 운용의 토대를 만들었습니다.</td></tr>
-                      <tr><th scope="row">1969년</th><td>에드워드 소프의 Convertible Hedge Associates<br />(뒤의 Princeton/Newport Partners)</td><td>워런트·장외옵션·전환사채와 주식을 함께 써서 가격 불일치와 델타 헤지를 계산하고 시장중립 포지션을 운용했습니다.</td><td>소프는 이를 세계 최초의 시장중립 헤지펀드라고 설명했습니다. 이러한 수학·데이터·규칙 기반 실전 운용이 후대에 ‘퀀트’로 불린 투자자 집단의 초기 사례입니다.</td></tr>
+                      <tr><th scope="row">조건으로 종목 찾기</th><td>매출과 이익이 늘었고 최근 6개월 수익률이 높은 종목만 목록에 담습니다.</td><td>수백 개 종목의 재무정보와 가격을 같은 기준으로 비교합니다.</td><td>과거에 좋았던 조건이 다음 달에도 통한다는 보장은 없습니다.</td></tr>
+                      <tr><th scope="row">비중 나누기</th><td>한 종목에 몰지 않고 변동성이 큰 종목은 적게, 작은 종목은 더 많이 담습니다.</td><td>종목별 변동성과 함께 움직이는 정도를 계산해 투자 비중을 정합니다.</td><td>시장 전체가 급락하면 여러 종목이 동시에 떨어질 수 있습니다.</td></tr>
+                      <tr><th scope="row">두 종목 비교</th><td>비슷하게 움직이던 A와 B의 가격 차이가 갑자기 커졌을 때 다시 가까워지는지 관찰합니다.</td><td>평소 가격 차이와 현재 차이를 계산하고 진입·종료 조건을 확인합니다.</td><td>두 회사의 상황이 달라지면 가격 차이가 계속 벌어질 수 있습니다.</td></tr>
                     </tbody>
                   </table>
                 </div>
-                <h3>왜 이런 방식이 필요했을까</h3>
-                <p>사람의 직감만으로는 많은 종목·가격·거래 조건을 같은 기준으로 비교하기 어렵습니다. 퀀트 접근은 “가격이 비싼가”, “위험을 줄인 뒤에도 수익 기회가 있는가”, “얼마나 투자해야 하는가”를 <strong>측정 가능한 가설과 계산</strong>으로 바꾸려는 시도에서 나왔습니다. 소프의 사례에서는 방향을 맞히는 것보다 서로 연결된 증권의 가격 차이와 헤지 비율을 계산해 시장 전체의 오르내림 영향을 낮추는 것이 핵심이었습니다.</p>
-                <h3>초기 수학모형에서 오늘의 퀀트 작업으로</h3>
-                <p><strong>1. 모형</strong> — 가격·수익률·변동성·상관관계를 수식과 확률로 표현합니다. <strong>2. 데이터</strong> — 과거 가격, 재무 정보, 거래량처럼 관찰 가능한 자료로 가설을 검증합니다. <strong>3. 규칙</strong> — 매수·매도·비중·손실 제한을 재현 가능한 조건으로 정합니다. <strong>4. 실행과 재검토</strong> — 수수료·세금·슬리피지·유동성을 반영해 백테스트하고, 실전에서도 모델이 계속 유효한지 점검합니다.</p>
-                <p>1980~1990년대에는 물리학·수학·컴퓨터과학 박사들이 월가의 정량 분석 직군으로 대거 유입되면서 ‘퀀트’라는 호칭이 널리 퍼졌습니다. 그러나 <strong>계산을 쓴다고 결과가 자동으로 좋아지는 것은 아닙니다.</strong> 데이터 오류, 과거에만 맞춘 과적합, 시장 환경 변화와 군집 거래 위험을 함께 관리해야 합니다.</p>
+
+                <h3>코인에서는 이렇게 사용합니다</h3>
+                <div class="lesson-table-wrap">
+                  <table class="lesson-table">
+                    <thead><tr><th scope="col">사용 방법</th><th scope="col">아주 쉬운 예시</th><th scope="col">컴퓨터가 하는 일</th><th scope="col">확인할 위험</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">자동 주문</th><td>비트코인이 정한 가격 아래로 내려가면 소량을 사고, 목표 가격에 도달하면 일부를 팝니다.</td><td>24시간 가격을 확인하고 조건이 맞을 때 거래소 API로 주문을 보냅니다.</td><td>인터넷·API 장애, 급격한 가격 변화, 주문 미체결이 발생할 수 있습니다.</td></tr>
+                      <tr><th scope="row">시장조성</th><td>현재 가격이 100이라면 99.9에 매수 주문, 100.1에 매도 주문을 내고 가격이 움직일 때 주문을 다시 배치합니다.</td><td>호가창을 읽고 매수·매도 주문의 가격과 수량을 계속 고칩니다.</td><td>가격이 한쪽으로 급변하면 보유 코인이 쌓이거나 큰 손실이 날 수 있습니다.</td></tr>
+                      <tr><th scope="row">거래소 가격 비교</th><td>같은 코인이 A 거래소에서 100, B 거래소에서 101일 때 가격 차이를 확인합니다.</td><td>두 거래소의 실제 매수·매도 가격과 주문 가능 수량을 동시에 비교합니다.</td><td>수수료, 출금 지연, 가격 변화 때문에 눈에 보인 차익이 사라질 수 있습니다.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3>누가 이런 방식을 시도했을까요?</h3>
+                <ul>
+                  <li><b>에드워드 소프:</b> 1960년대 후반부터 서로 연결된 주식·워런트·전환사채의 가격 차이를 계산하고, 시장 방향의 영향을 줄이는 거래를 운용했습니다. 수학 규칙을 실제 투자에 적용한 초기 인물로 널리 알려져 있습니다.</li>
+                  <li><b>제임스 사이먼스와 르네상스 테크놀로지:</b> 사이먼스는 1978년 회사를 세웠고, 수학자·물리학자·컴퓨터과학자들과 가격 데이터의 반복 패턴을 찾아 주식·원자재·통화 거래에 활용했습니다.</li>
+                  <li><b>재러드 브로드와 QuantConnect 개발자들:</b> QuantConnect는 주식과 코인을 포함한 여러 자산의 전략을 Python·C#으로 작성하고, 백테스트와 모의·실거래에 연결할 수 있는 오픈소스 LEAN 엔진을 개발·관리합니다.</li>
+                  <li><b><a href="https://hummingbot.org/docs/" target="_blank" rel="noopener noreferrer">Hummingbot</a> Foundation과 오픈소스 개발자들:</b> 2019년 공개된 Hummingbot은 여러 코인 거래소의 API를 공통 방식으로 연결하고, 시장조성·거래소 간 가격 비교 같은 자동매매 전략을 만들 수 있게 한 Python 기반 도구입니다.</li>
+                </ul>
+
+                <h3>주식과 코인에 공통으로 필요한 작업</h3>
+                <div class="quant-workflow-lines" aria-label="오늘의 퀀트 작업 4단계">
+                  <p><strong>1. 질문 정하기</strong><span>“오른 종목이 계속 오를까?”, “거래소 가격 차이가 비용보다 클까?”처럼 확인할 질문을 한 문장으로 적습니다.</span></p>
+                  <p><strong>2. 자료 모으기</strong><span>주식은 가격·재무정보·거래량, 코인은 가격·호가·체결·거래소별 수수료를 모읍니다.</span></p>
+                  <p><strong>3. 규칙 시험하기</strong><span>언제 사고팔지, 한 번에 얼마를 거래할지, 손실이 커지면 언제 멈출지를 과거 자료로 시험합니다.</span></p>
+                  <p><strong>4. 비용 포함하기</strong><span>수수료·세금·가격 미끄러짐·주문 지연을 빼고도 결과가 남는지 확인한 뒤 모의 거래로 다시 점검합니다.</span></p>
+                </div>
+                <p><strong>자동화는 판단을 반복해 줄 뿐 수익을 보장하지 않습니다.</strong> 잘못된 데이터나 규칙도 컴퓨터는 그대로 빠르게 실행합니다. 실거래 전에는 기간을 바꿔 다시 시험하고, 모의 거래를 거치며, API 키의 출금 권한을 끄고, 한 번의 주문과 하루 손실 한도를 작게 정해야 합니다.</p>
               </div>
             </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="퀀트의 역사 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="주식과 코인의 퀀트 적용 사례 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section><section class="lesson" id="leanLesson"><span>LEAN</span>
             <div class="lesson-content">
               <h2>QuantConnect LEAN: 오픈소스 퀀트 엔진을 이해하고 사용하기</h2>
@@ -1043,29 +1299,29 @@
                     <title id="slippageVisualTitle">시장가 매수 주문의 불리한 슬리피지 예시</title>
                     <desc id="slippageVisualDesc">예상 가격 10,000원으로 매수 주문을 냈지만 호가 잔량 부족과 가격 이동으로 실제 체결 가격이 10,050원이 되어 50원의 불리한 슬리피지가 발생하는 모습을 나타낸 이미지</desc>
                     <rect x="12" y="22" width="220" height="152" rx="14" fill="#fff" stroke="#bdd4f8" stroke-width="2"/>
-                    <text x="32" y="53" fill="#315ff4" font-size="15" font-weight="800">1. 전략의 주문 요청</text>
+                    <text x="32" y="53" fill="#315ff4" font-size="16.5" font-weight="800">1. 전략의 주문 요청</text>
                     <text x="32" y="89" fill="#18213b" font-size="22" font-weight="800">시장가 매수 10주</text>
-                    <text x="32" y="121" fill="#63708a" font-size="15">예상 가격: 10,000원</text>
-                    <text x="32" y="146" fill="#63708a" font-size="15">즉시 체결을 우선함</text>
+                    <text x="32" y="121" fill="#63708a" font-size="16.5">예상 가격: 10,000원</text>
+                    <text x="32" y="146" fill="#63708a" font-size="16.5">즉시 체결을 우선함</text>
                     <path d="M250 98 H326" stroke="#315ff4" stroke-width="4" stroke-linecap="round"/>
                     <path d="M317 87 L332 98 L317 109" fill="none" stroke="#315ff4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                     <rect x="346" y="22" width="192" height="152" rx="14" fill="#fff" stroke="#f5b9aa" stroke-width="2"/>
-                    <text x="366" y="53" fill="#c2410c" font-size="15" font-weight="800">2. 시장의 호가 상황</text>
+                    <text x="366" y="53" fill="#c2410c" font-size="16.5" font-weight="800">2. 시장의 호가 상황</text>
                     <rect x="366" y="72" width="152" height="28" rx="5" fill="#fff1ec"/>
-                    <text x="378" y="92" fill="#9a3412" font-size="15" font-weight="700">10,000원 · 3주</text>
+                    <text x="378" y="92" fill="#9a3412" font-size="16.5" font-weight="700">10,000원 · 3주</text>
                     <rect x="366" y="108" width="152" height="28" rx="5" fill="#fff1ec"/>
-                    <text x="378" y="128" fill="#9a3412" font-size="15" font-weight="700">10,030원 · 4주</text>
+                    <text x="378" y="128" fill="#9a3412" font-size="16.5" font-weight="700">10,030원 · 4주</text>
                     <rect x="366" y="144" width="152" height="28" rx="5" fill="#ffe0d6"/>
-                    <text x="378" y="164" fill="#9a3412" font-size="15" font-weight="700">10,050원 · 남은 3주</text>
+                    <text x="378" y="164" fill="#9a3412" font-size="16.5" font-weight="700">10,050원 · 남은 3주</text>
                     <path d="M554 98 H630" stroke="#c2410c" stroke-width="4" stroke-linecap="round"/>
                     <path d="M621 87 L636 98 L621 109" fill="none" stroke="#c2410c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                     <rect x="650" y="22" width="138" height="152" rx="14" fill="#fff4f1" stroke="#f26b4f" stroke-width="2"/>
-                    <text x="669" y="53" fill="#c2410c" font-size="15" font-weight="800">3. 실제 체결</text>
+                    <text x="669" y="53" fill="#c2410c" font-size="16.5" font-weight="800">3. 실제 체결</text>
                     <text x="669" y="91" fill="#9a3412" font-size="20" font-weight="800">10,050원</text>
-                    <text x="669" y="120" fill="#c2410c" font-size="15" font-weight="700">불리한 차이</text>
+                    <text x="669" y="120" fill="#c2410c" font-size="16.5" font-weight="700">불리한 차이</text>
                     <text x="669" y="148" fill="#c2410c" font-size="20" font-weight="800">+50원</text>
                     <rect x="12" y="190" width="776" height="28" rx="8" fill="#eaf1ff"/>
-                    <text x="28" y="209" fill="#173d82" font-size="15" font-weight="700">슬리피지 = 예상 체결가와 실제 체결가의 차이 · 거래량이 적거나 주문이 클수록 커질 수 있습니다.</text>
+                    <text x="28" y="209" fill="#173d82" font-size="16.5" font-weight="700">슬리피지 = 예상 체결가와 실제 체결가의 차이 · 거래량이 적거나 주문이 클수록 커질 수 있습니다.</text>
                   </svg>
                   <figcaption><b>이미지 예시: 시장가 매수의 슬리피지</b> · 실제로는 여러 호가에서 나누어 체결될 수 있으며, 이 이미지는 원리를 단순화한 것입니다.</figcaption>
                 </figure>
@@ -1130,24 +1386,6 @@
                     </tbody>
                   </table>
                 </div>
-                <p><b>베타(β)</b>는 개별 주식이나 포트폴리오가 시장 움직임에 얼마나 민감하게 반응해 왔는지 보여 주는 지표입니다. 일반적으로 β가 1이면 시장과 비슷한 폭, 1보다 크면 더 큰 폭으로 움직이는 경향, 1보다 작으면 상대적으로 작은 폭으로 움직이는 경향을 뜻합니다. 다만 과거 수익률로 계산한 값이므로 미래 변동을 보장하지 않으며, 비교 시장·계산 기간에 따라 달라질 수 있습니다.</p>
-                <p>분산투자는 비체계적 위험을 <b>줄이는</b> 방법이지 모든 손실을 막아 주는 장치는 아닙니다. 여러 종목이 같은 경기·금리 충격에 함께 반응하거나, 같은 산업에만 집중하면 분산 효과가 제한될 수 있습니다. 자산 수뿐 아니라 자산끼리 함께 움직이는 정도인 상관관계도 확인해야 합니다.</p>
-                <h3>위험 프리미엄과 샤프지수</h3>
-                <p><b>위험 프리미엄(Risk Premium)</b>은 위험자산에 기대하는 수익률에서 무위험수익률을 뺀 추가 보상입니다. 예를 들어 단기 국채 수익률이 연 3.5%이고 주식의 기대수익률을 연 8.0%로 본다면, 기대 위험 프리미엄은 4.5%p입니다. 이는 예상값일 뿐 실현 수익률을 보장하지 않습니다.</p>
-                <p><b>샤프지수(Sharpe Ratio)</b>는 ‘추가로 얻은 수익을 감수한 변동성으로 나눈 값’입니다. <code>(포트폴리오 수익률 − 무위험수익률) ÷ 수익률 변동성</code>으로 표현하며, 같은 기간·같은 기준으로 비교할 때 위험 1단위당 보상을 살펴보는 데 쓰입니다. 과거 샤프지수가 높아도 미래 성과를 보장하지 않고, 급락 위험·유동성·세금·투자 기간을 대신 판단해 주지는 않습니다.</p>
-                <h3>위험도별 자산배분 비중 예시</h3>
-                <p>아래는 특정 상품을 추천하는 비중이 아니라, 위험자산과 방어 자산을 섞는 방식을 이해하기 위한 예시입니다. 실제 비중은 투자 기간, 소득·부채, 비상자금, 손실 감내 수준과 목표에 따라 달라집니다.</p>
-                <div class="lesson-table-wrap">
-                  <table class="lesson-table">
-                    <thead><tr><th scope="col">예시 성향</th><th scope="col">위험자산</th><th scope="col">방어 자산</th><th scope="col">학습용 해석</th></tr></thead>
-                    <tbody>
-                      <tr><th scope="row">성장형</th><td>주식·리츠 등 70%</td><td>단기채·예금성 자산 30%</td><td>긴 투자 기간과 큰 변동을 감수하는 경우를 가정합니다.</td></tr>
-                      <tr><th scope="row">균형형</th><td>주식 등 50%</td><td>채권·현금성 자산 50%</td><td>성장 가능성과 변동성 완충을 함께 추구하는 예시입니다.</td></tr>
-                      <tr><th scope="row">안정추구형</th><td>주식 등 20%</td><td>단기채·예금성 자산 80%</td><td>단기 목표와 손실 회피를 우선하는 경우를 가정합니다.</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p>다음 단원에서는 단순히 자산 개수를 늘리는 것을 넘어, 자산들이 함께 움직이는 정도인 <b>상관관계</b>가 왜 중요한지 살펴봅니다.</p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="위험자산과 무위험자산: 자산배분의 출발점 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -1169,75 +1407,45 @@
                 </p>
                 <h3>리스크 패리티란?</h3>
                 <p>
-                  리스크 패리티(Risk Parity)는 “얼마나 벌 것 같은가”를
-                  예측하기보다, “각 자산이 포트폴리오 전체의 흔들림(위험)에
-                  얼마나 기여하는가”를 맞추는 데 집중하는 자산배분 방식입니다.
-                  <b>패리티(parity)</b>는 일반적으로 둘 이상의 대상이 같은
-                  수준이거나 균형을 이룬다는 뜻입니다. 여기서는 투자금이나
-                  수익률을 똑같이 나눈다는 말이 아니라, <strong>자산별 위험 기여도를
-                  비슷하게 맞춘다</strong>는 의미입니다.
-                  예를 들어 주식과 채권에 절반씩(50:50) 투자했다고 해도,
-                  주식의 변동성이 채권보다 훨씬 크면 포트폴리오 전체 위험의
-                  대부분은 사실상 주식에서 나옵니다. 즉 <strong>“투입 금액이
-                  균형 잡혔다”는 것이 “위험이 균형 잡혔다”는 뜻은 아닙니다.</strong>
-                </p>
-                <h3>위험을 나누는 방법</h3>
-                <p>
-                  그래서 리스크 패리티는 변동성이 큰 자산(주식)은 적게,
-                  상대적으로 안정적인 자산(채권 등)은 더 많이 담아서, 각
-                  자산이 전체 흔들림에 기여하는 몫을 서로 비슷하게 맞춥니다.
-                  이렇게 하면 특정 한 자산의 충격이 포트폴리오 전체를 크게
-                  흔드는 상황을 줄일 수 있습니다. 다만 안정적인 자산 위주로
-                  짜면 기대수익률 자체는 낮아질 수 있어서, 실제 운용에서는
-                  채권 등 안정적인 자산에 레버리지(빌린 돈)를 더해 기대수익률을
-                  끌어올리는 방식을 함께 쓰기도 합니다. 올웨더 포트폴리오는
-                  이런 리스크 패리티 사고방식을 자산군별 위험 요인(성장·물가)
-                  관점으로 확장한 접근입니다.
-                </p>
-                <h3>함께 검토하는 자산</h3>
-                <p>
-                  주식, 경기 둔화 때 방어 역할을 기대하는 명목채권, 물가
-                  상승에 대비하는 물가연동채·원자재·금처럼 서로 다른 위험
-                  요인을 가진 자산을 함께 검토합니다. 다른 자산이 항상
-                  반대로 움직인다고 보장할 수는 없지만, 한쪽에만 몰아두는
-                  위험을 줄이려는 것입니다.
+                  리스크 패리티(Risk Parity)는 <strong>투자금이 아니라 위험을
+                  비슷하게 나누는 방법</strong>입니다. 예를 들어 100만 원을 주식과
+                  채권에 각각 50만 원씩 넣어도, 주식 가격이 채권보다 훨씬 크게
+                  움직이면 전체 손익은 대부분 주식에 의해 결정됩니다. 금액은
+                  반반이지만 위험은 반반이 아닌 셈입니다. 그래서 가격이 크게
+                  흔들리는 주식은 적게 담고, 비교적 덜 흔들리는 채권은 더 많이
+                  담아 한 자산이 전체 결과를 좌우하지 않도록 조정합니다.
+                  여기서 패리티(parity)는 <b>균형</b>이라는 뜻입니다. 일부 전문
+                  운용사는 수익을 높이기 위해 안정적인 자산에 빌린 돈을 더하기도
+                  하지만, 손실도 커질 수 있습니다. 올웨더 포트폴리오는 이 생각을
+                  이용해 경기와 물가가 달라져도 특정 자산에만 지나치게 의존하지
+                  않도록 구성한 방식입니다.
                 </p>
                 <h3>개인용 예시와 실제 운용의 차이</h3>
                 <p>
-                  여기서 “개인 투자자용으로 널리 알려진 올웨더 비중 예시”란, 토니 로빈스의
-                  책 등을 통해 널리 퍼진 “주식 30% · 장기국채 40% · 중기국채
-                  15% · 금 7.5% · 원자재 7.5%”처럼 고정된 숫자로 소개되는
-                  버전을 말합니다. 이 비율은 이해를 돕는 단순화된 예시일
-                  뿐이며, 브리지워터가 기관 고객을 대상으로 실제 운용하는
-                  올웨더 펀드와는 다음과 같은 점에서 다릅니다.
+                  개인용 올웨더는 보통 100만 원을 투자한다고 가정해
+                  <strong>주식 30만 원, 장기국채 40만 원, 중기국채 15만 원,
+                  금 7만 5천 원, 원자재 7만 5천 원</strong>으로 나누는 쉬운
+                  예시입니다. 여러 자산에 돈을 나누는 원리를 배우기 위한
+                  비율이며, 전문 투자회사인 브리지워터가 실제로 운용하는
+                  상품과 똑같지는 않습니다.
                 </p>
+                <ul>
+                  <li><strong>개인용 예시:</strong> 정해진 비율대로 일반적인 주식·채권·금 상품을 사고, 보통 빌린 돈을 사용하지 않습니다.</li>
+                  <li><strong>실제 기관 운용:</strong> 시장이 변하면 자산별 위험을 다시 계산해 투자 비율을 바꿉니다.</li>
+                  <li><strong>사용하는 상품:</strong> 여러 나라의 채권과 원자재 선물 등 개인이 직접 다루기 어려운 상품도 포함할 수 있습니다.</li>
+                </ul>
+                <h3>그대로 따라 해도 될까요?</h3>
                 <p>
-                  첫째, 브리지워터의 실제 운용은 국채처럼 상대적으로
-                  안정적인 자산에 레버리지(빌린 돈)를 더해 기대수익률을
-                  끌어올리지만, 인터넷에 도는 개인용 비중은 보통 레버리지
-                  없이 그대로 담는 것을 전제로 합니다. 둘째, 브리지워터는
-                  “주식 30%”처럼 고정된 숫자를 유지하는 것이 아니라, 각
-                  자산이 전체 위험에 기여하는 정도를 계속 다시 계산해 비중을
-                  동적으로 조정하는 리스크 패리티 모형을 씁니다. 셋째, 실제
-                  운용에는 여러 국가의 국채·물가연동채·원자재 선물 등 개인이
-                  직접 접근하기 어려운 다양한 상품이 포함되고, 기관 고객을
-                  대상으로 한 최소 투자금액·수수료 구조도 개인 투자와
-                  다릅니다.
-                </p>
-                <h3>활용할 때 유의할 점</h3>
-                <p>
-                  따라서 <strong>“30/40/15/7.5/7.5” 같은 숫자를 그대로 따라 하는
-                  것은 올웨더의 사고방식(위험을 고르게 나누기)을 이해하는
-                  출발점은 될 수 있어도, 브리지워터의 실제 전략을 복제하는
-                  것은 아닙니다.</strong> 투자 기간, 현금 필요 시점, 세금·거래비용,
-                  환율 위험, 상품의 만기 구조에 따라 개인에게 적합한 비중은
+                  위 비율은 설명을 위한 예시이므로 숫자를 그대로 따라야 하는
+                  것은 아닙니다. 돈을 언제 사용할지, 손실을 얼마나 견딜 수
+                  있는지, 환전비용과 세금이 얼마나 드는지에 따라 알맞은 비율은
                   달라집니다.
                 </p>
                 <p>
-                  <strong>올웨더도 손실을 없애 주지 않습니다.</strong> 주식·채권이 함께
-                  하락할 수 있고 장기채는 금리 상승에 민감합니다. 목표 비중과
-                  점검 주기를 정한 뒤 정기 또는 허용 범위 이탈 시에만
-                  리밸런싱하는 교육용 틀로 이해하세요.
+                  <strong>올웨더도 손실이 날 수 있습니다.</strong> 주식과 채권이
+                  동시에 떨어질 때도 있기 때문입니다. 처음 정한 비율에서 크게
+                  벗어났는지 정기적으로 확인하고, 필요할 때만 원래 비율에 가깝게
+                  다시 맞추는 방식으로 이해하면 됩니다.
                 </p>
               </div>
             </div>
@@ -1269,7 +1477,7 @@
                 </p>
                 <p class="lesson-video-cta">
                   <button type="button" class="lesson-video-link" id="fxDepositModalTrigger"><i class="fa-solid fa-building-columns"></i> 실제 외화예금 상품·환율 변동 보기</button>
-                  <small>외화예금의 차이를 살펴보고, 환율·달러 자산 수익률·환전비용을 바꿔 최종 손익을 분석하세요.</small>
+                  <small>외화예금의 차이를 살펴보고, 환율·달러 자산 수익률(외화예금 이자 등)·환전비용을 바꿔 최종 손익을 분석하세요.</small>
                 </p>
                 <h3>환율은 달러 자산의 원화 수익률을 어떻게 바꿀까요?</h3>
                 <p>
@@ -1285,13 +1493,6 @@
                   <article><strong>달러 약세(환율 하락)</strong><p>같은 1달러의 원화 환산액이 줄어 달러 이자나 자산 수익을 일부 또는 전부 상쇄할 수 있습니다.</p></article>
                   <article><strong>환전비용</strong><p>살 때와 팔 때 적용환율의 차이가 수익을 낮춥니다. 보유 기간이 짧고 거래가 잦을수록 영향이 커집니다.</p></article>
                 </div>
-                <p class="fx-return-formula">
-                  비용을 제외한 원화 수익률은 대략
-                  <code>(1 + 달러 자산 수익률) × (현재 환율 ÷ 매입 환율) − 1</code>입니다.
-                  두 효과는 단순히 더해지는 것이 아니라 서로 곱해지므로
-                  ‘상호작용 효과’도 생깁니다. 위 시뮬레이터에서 각 효과를
-                  나누어 확인할 수 있습니다.
-                </p>
                 <p>
                   “달러통장에 달러를 넣어 두었다가 환율이 오른 것 같을 때
                   은행에 가서 판다”는 방식은 외화라는 자산군을 보유한다는
@@ -1399,159 +1600,6 @@
                   </button>
                   <small>팩터 비중을 직접 바꾸며 방어 성향·회전율·집중도를 비교해 보세요.</small>
                 </p>
-                <h3>수익률 하나로는 부족한 이유: 위험을 읽는 네 가지 숫자</h3>
-                <p>
-                  “얼마나 벌었나?”라는 수익률 하나만으로는 그 성과가 얼마나
-                  힘들게, 또는 얼마나 안정적으로 만들어졌는지 알 수
-                  없습니다. 아래 네 가지 숫자를 함께 읽으면 같은 수익률도
-                  훨씬 입체적으로 비교할 수 있습니다.
-                </p>
-                <div class="risk-metric-cards">
-                  <div class="risk-metric-card">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <h4>수익률</h4>
-                    <p>얼마나 벌었는지 보여주는 가장 기본 숫자입니다. 과거
-                    수익률이 미래를 보장하지는 않습니다.</p>
-                  </div>
-                  <div class="risk-metric-card">
-                    <i class="fa-solid fa-wave-square"></i>
-                    <h4>변동성</h4>
-                    <p>수익률이 평소 얼마나 크게 흔들렸는지 보여줍니다.
-                    숫자가 크면 오르내림도 큰 편입니다.</p>
-                  </div>
-                  <div class="risk-metric-card">
-                    <i class="fa-solid fa-arrow-trend-down"></i>
-                    <h4>MDD(최대낙폭)</h4>
-                    <p>최고점에서 가장 크게 떨어진 폭입니다. 내가 실제로
-                    견딜 수 있는 손실을 가늠하는 데 도움이 됩니다.</p>
-                  </div>
-                  <div class="risk-metric-card">
-                    <i class="fa-solid fa-scale-balanced"></i>
-                    <h4>샤프 비율</h4>
-                    <p>감수한 위험 대비 얼마나 효율적으로 수익을 냈는지
-                    보여주는 지표입니다. 아래에서 자세히 설명합니다.</p>
-                  </div>
-                </div>
-                <p>
-                  네 지표는 같은 뜻이 아닙니다. <b>수익률</b>은 시작과 끝의 결과,
-                  <b>변동성</b>은 그 사이의 평소 흔들림, <b>MDD</b>는 한 번이라도
-                  경험한 가장 큰 고점 대비 하락, <b>샤프 비율</b>은 그 흔들림을
-                  감수하고 얻은 성과의 효율을 묻습니다. 따라서 수익률이 높아도
-                  MDD가 크거나 샤프 비율이 낮을 수 있습니다.
-                </p>
-                <p>
-                  샤프 비율은 감수한 위험(변동성) 대비 얼마나 효율적으로
-                  수익을 냈는지 보여주는 지표입니다. 계산식은
-                  <strong>(포트폴리오 수익률 − 무위험수익률) ÷ 변동성</strong>입니다.
-                  무위험수익률은 예금·국채처럼 위험이 거의 없는 투자로도 얻을
-                  수 있었던 수익이므로, 이를 빼서 “위험을 감수한 대가로 추가로
-                  번 몫”만 남기려는 조정입니다.
-                </p>
-                <p>
-                  쉽게 비유하면 등산으로 같은 정상에 오른 두 사람을 비교하는
-                  것과 비슷합니다. A는 완만한 길로 편안하게 올랐고, B는
-                  가파르고 위험한 절벽길로 아슬아슬하게 올랐다면, 같은
-                  높이(수익률)에 도달했더라도 A의 등반이 훨씬 더 “효율적인”
-                  등반입니다. 샤프 비율이 높다는 것은 A처럼 더 적은 위험으로
-                  같은 수익을 내거나, 같은 위험으로 더 높은 수익을 냈다는
-                  뜻입니다.
-                </p>
-                <p>
-                  예를 들어 무위험수익률이 3%이고, 포트폴리오 A는 연 수익률
-                  10%·변동성 8%, 포트폴리오 B는 연 수익률 10%·변동성 20%라면
-                  A의 샤프 비율은 <code>(10 − 3) ÷ 8 ≈ 0.88</code>입니다.
-                  여기서 물결 모양 기호(<b>≈</b>)는 <b>‘거의 같다’</b> 또는
-                  <b>‘근사함’</b>을 뜻하는 근사 기호입니다. B는
-                  <code>(10 − 3) ÷ 20 = 0.35</code>입니다. 두 포트폴리오의
-                  수익률은 같지만 A가 같은 수익을 훨씬 적은 흔들림으로
-                  만들었으므로, 위험조정 성과는 A가 더 좋다고 해석합니다.
-                </p>
-                <section id="sharpeFourPointExplanation">
-                <h3>그림의 네 지점만으로 샤프 비율을 계산하면?</h3>
-                <p>
-                  그림의 시작 100·저점 87·고점 120·마감 115는 수익률과
-                  최대낙폭을 이해하기 위한 예시입니다. 이 네 가격만으로는
-                  계산 기간과 무위험수익률을 알 수 없어, 실제 샤프 비율을
-                  정확히 계산할 수는 없습니다.
-                </p>
-                <p>
-                  특히 가격 100, 87, 120, 115의 <b>가격 자체</b>로 구한
-                  표준편차 약 <b>14.98</b>은 가격 단위의 흔들림입니다. 샤프
-                  비율의 분모에는 이 값을 쓰지 않습니다. 분모는 가격이 아니라
-                  일정 간격마다 계산한 <b>수익률의 표준편차</b>, 즉 변동성입니다.
-                </p>
-                <div class="sharpe-explanation">
-                  <b class="sharpe-calc-title">① 먼저 확인: 가격 자체의 표준편차는 샤프 비율에 쓰지 않습니다</b>
-                  <div class="sharpe-calc-grid four">
-                    <article><span>시작 가격</span><strong>100</strong></article><article><span>저점 가격</span><strong>87</strong></article><article><span>고점 가격</span><strong>120</strong></article><article><span>마감 가격</span><strong>115</strong></article>
-                  </div>
-                  <span class="sharpe-calc-equation">1단계 · 가격 평균 = (100 + 87 + 120 + 115) ÷ 4 = 422 ÷ 4 = <b>105.5</b></span>
-                  <div class="sharpe-calc-grid four">
-                    <article><span>100의 편차</span><strong>−5.5</strong><small>100 − 105.5</small></article><article><span>87의 편차</span><strong>−18.5</strong><small>87 − 105.5</small></article><article><span>120의 편차</span><strong>+14.5</strong><small>120 − 105.5</small></article><article><span>115의 편차</span><strong>+9.5</strong><small>115 − 105.5</small></article>
-                  </div>
-                  <div class="sharpe-calc-grid four">
-                    <article><span>(−5.5)²</span><strong>30.25</strong></article><article><span>(−18.5)²</span><strong>342.25</strong></article><article><span>(+14.5)²</span><strong>210.25</strong></article><article><span>(+9.5)²</span><strong>90.25</strong></article>
-                  </div>
-                  <span class="sharpe-calc-equation">2단계 · 편차 제곱의 합 = 30.25 + 342.25 + 210.25 + 90.25 = <b>673</b></span>
-                  <p class="sharpe-calc-help">편차를 그냥 더하면 음수와 양수가 서로 지워질 수 있으므로 모두 제곱합니다. 평균에서 멀리 떨어진 가격일수록 제곱값이 커집니다.</p>
-                  <span class="sharpe-calc-equation">3단계 · 가격 표본분산 = 673 ÷ (4 − 1) = 673 ÷ 3 = <b>224.333…</b></span>
-                  <span class="sharpe-calc-equation">4단계 · 가격 표본 표준편차 = √224.333… = 14.9778… ≈ <b>14.98</b></span>
-                  <p class="sharpe-calc-help"><b>중요:</b> 14.98은 ‘가격’ 단위의 흔들림입니다. 샤프 비율에는 가격이 아니라 각 구간의 <b>수익률 표준편차</b>를 분모로 써야 합니다.</p>
-                </div>
-                <div class="sharpe-explanation">
-                  <b class="sharpe-calc-title">② 샤프 비율 분모: 가격이 아니라 구간 수익률의 표준편차</b>
-                  <div class="sharpe-calc-grid">
-                    <article><span>1구간 · 100 → 87</span><strong>−13.0%</strong><small>(87 − 100) ÷ 100 = −0.1300</small></article><article><span>2구간 · 87 → 120</span><strong>+37.9%</strong><small>(120 − 87) ÷ 87 = +0.3793</small></article><article><span>3구간 · 120 → 115</span><strong>−4.2%</strong><small>(115 − 120) ÷ 120 = −0.0417</small></article>
-                  </div>
-                  <span class="sharpe-calc-equation">1단계 · 수익률 평균 = (−0.1300 + 0.3793 − 0.0417) ÷ 3 = 0.0692 = <b>+6.92%</b></span>
-                  <div class="sharpe-calc-grid">
-                    <article><span>1구간의 평균 대비 편차</span><strong>−0.1992</strong><small>−0.1300 − 0.0692</small></article><article><span>2구간의 평균 대비 편차</span><strong>+0.3101</strong><small>+0.3793 − 0.0692</small></article><article><span>3구간의 평균 대비 편차</span><strong>−0.1109</strong><small>−0.0417 − 0.0692</small></article>
-                  </div>
-                  <div class="sharpe-calc-grid">
-                    <article><span>1구간 편차 제곱</span><strong>0.039686</strong></article><article><span>2구간 편차 제곱</span><strong>0.096159</strong></article><article><span>3구간 편차 제곱</span><strong>0.012295</strong></article>
-                  </div>
-                  <span class="sharpe-calc-equation">2단계 · 편차 제곱의 합 = 0.039686 + 0.096159 + 0.012295 = <b>0.148140</b></span>
-                  <span class="sharpe-calc-equation">3단계 · 수익률 표본분산 = 0.148140 ÷ (3 − 1) = <b>0.074070</b></span>
-                  <span class="sharpe-calc-equation result">4단계 · 수익률 표본 표준편차 = √0.074070 = 0.2722 ≈ <b>27.2%</b></span>
-                  <p class="sharpe-calc-help"><b>27.2%</b>가 샤프 비율의 <b>분모(변동성)</b>입니다. 아직 샤프 비율 자체가 아니라, 세 구간 수익률이 평균 주변에서 얼마나 크게 흔들렸는지를 나타내는 값입니다.</p>
-                </div>
-                <p>
-                  <b class="sharpe-calc-title">③ 마지막: 초과수익률을 변동성으로 나누기</b>
-                  <span class="sharpe-calc-equation">전체 수익률 = (115 − 100) ÷ 100 = <b>+15%</b></span>
-                  <span class="sharpe-calc-equation">가정한 무위험수익률 = <b>+3%</b> → 초과수익률 = +15% − +3% = <b>+12%</b></span>
-                  <span class="sharpe-calc-equation result">샤프 비율 = 0.1200 ÷ 0.2722 = 0.4409 ≈ <b>0.44</b></span>
-                  <span class="sharpe-calc-help"><b>0.44</b>가 최종 점수이며 %를 붙이지 않습니다. 이 예시에서 변동성 1만큼을 감수할 때마다 0.44만큼의 초과수익을 얻었다는 뜻입니다. 같은 기간·같은 무위험수익률 기준에서는 값이 큰 쪽이 위험 대비 더 효율적일 수 있지만, 절대 합격선은 아닙니다.</span>
-                </p>
-                <p>
-                  다만 이 0.44는 <b>계산 흐름을 보여 주는 단순 예시</b>입니다.
-                  분모의 27.2%는 세 구간 수익률의 변동성인데, 분자의 +15%는
-                  세 구간 전체 수익률이어서 엄밀히는 시간 단위가 완전히 같지
-                  않습니다. 실제 비교에서는 같은 간격의 일별 또는 월별 수익률을
-                  충분히 모으고, 수익률·변동성·무위험수익률을 모두 같은 기간 기준으로
-                  맞춘 뒤 필요하면 연환산합니다.
-                </p>
-                <p>
-                  다만 하나의 숫자만으로 투자 결정을 내리면 안 됩니다. 샤프
-                  비율은 수익률의 분포가 종 모양에 가깝다고 가정하는 지표라서,
-                  급격한 폭락처럼 한쪽으로 크게 치우친 손실(꼬리 위험)은 잘
-                  드러내지 못할 수 있습니다. 계산 기간과 무위험수익률 기준이
-                  다르면 값을 직접 비교할 수 없다는 점도 함께 기억하세요.
-                </p>
-                </section>
-                <p class="lesson-video-cta">
-                  <button
-                    type="button"
-                    class="lesson-video-link"
-                    id="sharpeSimTrigger"
-                  >
-                    <i class="fa-solid fa-scale-balanced"></i> 샤프 비율 비교
-                    계산기 해보기
-                  </button>
-                  <small>
-                    두 포트폴리오의 수익률·변동성을 직접 입력해 위험조정
-                    성과를 비교해 보세요.
-                  </small>
-                </p>
                 <h3>252 연환산 수익률: 투자 속도를 1년 기준으로 보기</h3>
                 <p>
                   252 연환산 수익률은 짧은 기간의 수익을 주식시장 약 1년치인
@@ -1614,6 +1662,14 @@
             <div class="lesson-content">
               <h2>젠포트·퀀터스 같은 노코드 퀀트 플랫폼: 전략을 만들고 검증하는 흐름</h2>
               <div class="lesson-body"><p><strong>젠포트(뉴지스탁)와 퀀터스</strong>는 코드를 직접 작성하지 않고 조건·팩터·비중을 화면에서 조합해 전략을 만들고 백테스트할 수 있는 국내 퀀트 플랫폼의 예입니다. 두 서비스 모두 전략을 실전 계좌 운용에 연결하는 기능을 안내하지만, 이용 가능한 자산·증권사·거래소·주문 방식과 비용은 상품·계좌·시점에 따라 달라질 수 있습니다.</p><p>전략은 “재무 지표가 일정 기준을 충족하는 종목 중 최근 3개월 성과가 좋은 20종목을 고르고, 매월 한 번 다시 구성한다”처럼 간단한 규칙부터 시작합니다. 백테스트에서는 <strong>CAGR만 보지 말고 MDD, 거래 횟수·보유기간·회전율과 비용 차감 뒤 성과</strong>를 함께 확인합니다.</p><p>실전 연결 전에는 <strong>표본 밖 기간에서도 결과가 유지되는지</strong>, 작은 종목에서 실제 체결이 가능한지, 수수료·세금·슬리피지와 리밸런싱 비용을 넣었는지, 자동주문 대신 알림·수동 주문도 가능한지 확인하세요. 가입 전 계좌 연동 범위와 수수료·이용권 정책은 공식 화면에서 다시 확인해야 합니다.</p><p><strong>조건을 계속 늘려 과거 수익률만 높이는 과적합은 흔한 함정입니다.</strong> 자동 주문을 켜더라도 주문 결과·오류 알림을 확인하고, 예상 밖 손실이나 급변동 때 중단할 기준을 미리 정해야 합니다. <strong>플랫폼은 도구이지 수익을 보장하는 전략이 아닙니다.</strong></p></div>
+              <div class="lesson-body no-code-platform-references">
+                <h3>함께 활용할 기업 분석·금융 데이터 서비스</h3>
+                <p><a href="https://www.butler.works/ko/home" target="_blank" rel="noopener noreferrer">버틀러</a>는 재무제표·실적·공시와 여러 증권 계좌의 보유 종목을 한곳에서 살펴보도록 돕는 기업 분석 플랫폼입니다.</p>
+                <p><a href="https://deepsearch.com/" target="_blank" rel="noopener noreferrer">딥서치(DeepSearch)</a>는 기업 조사, 투자 분석과 가치평가에 활용할 수 있는 금융 데이터·AI 분석 도구를 제공합니다.</p>
+                <p><a href="https://comp.fnguide.com/" target="_blank" rel="noopener noreferrer">FnGuide Company Guide</a>에서는 기업 개요, 재무제표, 실적 추이, 시장 예상치와 업종 비교를 한 화면에서 확인할 수 있습니다.</p>
+                <p><a href="https://www.antock.com/" target="_blank" rel="noopener noreferrer">앤톡(Antock)</a>은 비상장기업·스타트업을 포함한 기업 데이터와 금융 AI 분석 사례를 살펴볼 수 있는 서비스입니다.</p>
+                <p><strong>활용 방법:</strong> 분석 서비스에서 종목 조건과 재무정보를 확인하고, 노코드 퀀트 플랫폼에서 전략으로 만든 뒤 백테스트 결과를 검증합니다. 중요한 숫자는 최신 공시 원문과 재무제표로 다시 확인해야 하며, 어떤 서비스도 매매 결과나 수익을 보장하지 않습니다.</p>
+              </div>
             </div>
             <button
               class="lesson-toggle"
@@ -1643,19 +1699,26 @@
           </section><section class="lesson"><span>22</span>
             <div class="lesson-content">
               <h2>벰버거의 페어 트레이딩: 함께 움직이던 두 가격의 간격 보기</h2>
-              <div class="lesson-body"><p><strong>페어 트레이딩(pair trading)</strong>은 비슷한 업종·사업 구조처럼 과거에 함께 움직이는 경향이 있었던 두 자산의 가격 간격이 일시적으로 벌어졌을 때, <strong>비싸진 쪽은 매도(숏)하고 싼 쪽은 매수</strong>해 간격이 다시 좁아지는지를 보는 통계적 차익거래 접근입니다. 1980년대 모건스탠리의 제리(제럴드) 벰버거가 개척한 방식으로 널리 알려져 있습니다.</p><h3>볼린저 밴드도 평균과 표준편차를 씁니다</h3><p><b>볼린저 밴드</b>는 한 종목의 가격 차트에 이동평균선과 ‘평균에서 표준편차의 1~2배 떨어진 범위’를 함께 그린 보조지표입니다. <strong>가격이 밴드 바깥에 있다고 해서 바로 오르거나 내린다는 뜻은 아닙니다.</strong> 다만 평소보다 크게 움직였는지 눈으로 확인하는 데 활용할 수 있습니다. 페어 트레이딩은 이와 비슷한 생각을 <b>두 종목 가격의 차이</b>에 적용해 평균·표준편차·Z-점수를 보는 방식입니다.</p>
+              <div class="lesson-body"><p><strong>페어 트레이딩(pair trading)</strong>은 비슷한 업종·사업 구조처럼 과거에 함께 움직이는 경향이 있었던 두 자산의 가격 간격이 일시적으로 벌어졌을 때, <strong>비싸진 쪽은 매도(숏)하고 싼 쪽은 매수</strong>해 간격이 다시 좁아지는지를 보는 통계적 차익거래 접근입니다. 1980년대 모건스탠리의 제리(제럴드) 벰버거가 개척한 방식으로 널리 알려져 있습니다.</p><h3>볼린저 밴드와 페어 트레이딩의 공통점</h3><p><b>볼린저 밴드</b>는 한 종목의 가격이 평소 움직이던 범위를 차트에 표시합니다. 예를 들어 최근 가격이 주로 9,500원에서 10,500원 사이였다가 오늘 10,800원이 되었다면, “평소보다 많이 올랐다”는 사실을 쉽게 알아볼 수 있습니다. 그렇다고 내일 반드시 떨어진다는 뜻은 아닙니다. <b>페어 트레이딩</b>은 한 종목의 가격 대신 두 종목 사이의 간격을 봅니다. 평소 두 주식의 가격 차이가 2,000원 정도였는데 갑자기 5,000원으로 벌어졌다면, 그 간격이 다시 줄어드는지를 살펴보는 방식입니다.</p>
                 <section class="bollinger-sim" id="bollingerSimulator" aria-labelledby="bollingerSimulatorTitle">
                   <h4 id="bollingerSimulatorTitle">아주 쉬운 볼린저 밴드 시뮬레이터</h4>
-                  <p>아래에서 <b>마지막 가격</b>만 움직여 보세요. 직전 5개 가격의 평균(파란선)과 평균 ± 표준편차 2배(보라색 점선)를 기준으로, 현재 가격이 밴드 안팎 어디에 있는지 즉시 확인합니다.</p>
+                  <p class="bollinger-sim-why"><b>그래프에서 ‘밴드’는 어디일까요?</b> 위쪽의 보라색 점선인 <b>상단 밴드</b>부터 아래쪽의 보라색 점선인 <b>하단 밴드</b>까지, 연한 보라색으로 칠해진 면 전체가 밴드입니다. 두 점선은 띠의 위·아래 테두리이고 파란색 선은 띠의 한가운데를 지나는 최근 5일 평균선입니다. 주황색 선은 실제 가격이며 밴드의 테두리가 아닙니다. 같은 날짜에서 위·아래 점선의 세로 간격이 좁으면 직전 가격들이 비슷했다는 뜻이고, 간격이 넓으면 가격이 크게 흔들렸다는 뜻입니다. 그래프 왼쪽 초반에 밴드가 없는 것은 직전 5개 가격이 아직 모이지 않아 계산할 수 없기 때문입니다.</p>
+                  <ol class="bollinger-sim-guide" aria-label="볼린저 밴드 시뮬레이터 사용법">
+                    <li><b>버튼을 먼저 눌러 보세요.</b> ‘평균 근처’, ‘상단 밖’, ‘하단 밖’ 중 하나를 고르면 대표 상황을 바로 볼 수 있습니다.</li>
+                    <li><b>마지막 가격 막대를 움직여 보세요.</b> 주황색 가격선의 마지막 점이 움직입니다. 오늘 가격을 직전 5개 가격으로 만든 밴드와 비교해, 밴드 안인지 밖인지 확인할 수 있습니다.</li>
+                    <li><b>네 요소를 비교하세요.</b> 주황색은 실제 가격, 파란색은 직전 5일 평균, 위·아래 보라색 점선은 밴드의 경계, 두 점선 사이의 연보라색 면은 밴드 영역입니다. 아래 결과 문장이 오늘 가격의 위치를 알려 줍니다.</li>
+                  </ol>
+                  <p class="bollinger-sim-caution"><b>읽는 법:</b> 밴드 안이면 최근 범위 안, 위쪽 밖이면 평소보다 많이 오른 상태, 아래쪽 밖이면 평소보다 많이 내린 상태입니다. 밴드 밖에 있다는 이유만으로 바로 사고팔아야 한다는 뜻은 아닙니다.</p>
                   <div class="bollinger-sim-presets" aria-label="마지막 가격 빠른 선택"><button type="button" data-bollinger-price="94">하단 밖 · 94</button><button type="button" data-bollinger-price="100">평균 근처 · 100</button><button type="button" data-bollinger-price="106">상단 근처 · 106</button><button type="button" data-bollinger-price="112">상단 밖 · 112</button></div>
                   <div class="bollinger-sim-control"><label for="bollingerLastPrice">마지막 가격을 바꿔 보기</label><input id="bollingerLastPrice" type="range" min="90" max="115" step="1" value="101" /><output id="bollingerLastPriceOutput" for="bollingerLastPrice">101</output></div>
-                  <svg class="bollinger-sim-chart" id="bollingerSimChart" viewBox="0 0 720 230" role="img" aria-label="마지막 가격을 바꾸면 최근 5개 가격의 이동평균선과 볼린저 밴드가 달라지는 교육용 차트"></svg>
+                  <div class="bollinger-sim-line-key" aria-label="볼린저 밴드 차트 선 설명"><span><i class="price-key"></i>주황 실선 · 실제 가격</span><span><i class="mean-key"></i>파랑 실선 · 직전 5일 평균</span><span><i class="edge-key"></i>보라 점선 · 상단/하단 경계</span><span><i class="area-key"></i>연보라 면 · 밴드 전체</span></div>
+                  <svg class="bollinger-sim-chart" id="bollingerSimChart" viewBox="0 0 720 230" role="img" aria-label="마지막 가격을 직전 5개 가격의 이동평균선과 볼린저 밴드에 비교하는 교육용 차트"></svg>
                   <div class="bollinger-sim-stats">
                     <article><span>마지막 가격</span><strong id="bollingerPrice">101</strong></article><article><span>최근 5일 평균</span><strong id="bollingerMean">—</strong></article><article><span>상단 밴드</span><strong id="bollingerUpper">—</strong></article><article><span>하단 밴드</span><strong id="bollingerLower">—</strong></article>
                   </div>
                   <p class="bollinger-sim-status" id="bollingerStatus" aria-live="polite">계산 중</p>
                 </section>
-                <p>아주 단순한 예를 들어 A와 B 주가가 모두 100원에서 출발해 비슷하게 움직였는데, 어느 날 A만 110원으로 오르고 B는 100원에 머문다고 해 보세요. 전략은 A 1주를 매도하고 B 1주를 매수한 뒤, 둘 다 105원 부근으로 돌아올 때 청산하는 것입니다. 수수료·세금·대차비용은 빼지 않은 이해용 예시입니다.</p><p>알고리즘은 보통 ① 경제적으로 비교할 만한 두 자산을 고르고 ② 과거 가격 간격이 평균으로 돌아오는 성질이 있는지 검정한 뒤 ③ 간격이 평소보다 크게 벌어졌을 때만 진입하고 ④ 간격이 정상화되거나 손실 한도를 넘으면 청산하는 규칙으로 구성됩니다. 단순 상관관계가 높다는 사실만으로 평균 회귀가 보장되지는 않으므로, 스프레드·표준편차·Z-점수와 표본 밖 데이터로 함께 점검합니다.</p><p>두 가격이 다시 만나지 않고 A가 더 오르거나 B가 더 내리면 양쪽 포지션에서 손실이 날 수 있습니다. 공매도 가능 여부와 대차비용, 거래비용, 유동성, 기업 합병·실적 같은 구조 변화도 결과를 바꿉니다. 따라서 “시장 중립”은 시장 방향 위험을 일부 줄이려는 설계일 뿐 손실이 없는 전략이라는 뜻은 아닙니다.</p></div>
+                <p><b>숫자로 보면 간단합니다.</b> 평소 비슷하게 움직이던 A와 B가 모두 100원이었는데 A만 110원으로 올랐다고 가정합니다. A는 110원에 빌려서 팔고, 상대적으로 싼 B는 100원에 삽니다. 나중에 둘 다 105원이 되면 A는 5원, B도 5원의 이익이 생겨 합계 10원이 됩니다. 실제로는 여기서 수수료와 주식을 빌리는 비용 등을 빼야 합니다.</p><p><b>진행 순서는 네 단계입니다.</b> ① 같은 업종처럼 평소 함께 움직이는 두 종목을 고릅니다. ② 두 가격이 평소보다 크게 벌어졌는지 봅니다. ③ 비싸 보이는 종목은 팔고 싼 종목은 삽니다. ④ 가격 차이가 다시 줄면 두 거래를 모두 끝냅니다. 예상과 달리 차이가 계속 커지면 미리 정한 손실 금액에서 거래를 중단합니다.</p><p><b>두 가격이 반드시 다시 만나는 것은 아닙니다.</b> A가 110원에서 130원으로 더 오르고 B가 100원에서 90원으로 내리면, A에서 20원과 B에서 10원을 잃어 합계 30원의 손실이 생깁니다. 기업 실적이나 산업 환경이 달라지면 과거에 함께 움직이던 관계가 깨질 수 있습니다. 따라서 이 방법은 시장 전체의 상승·하락 영향을 줄이려는 방법일 뿐, 손실이 없는 투자는 아닙니다.</p></div>
             </div>
             <button
               class="lesson-toggle"
@@ -1669,15 +1732,24 @@
             </button>
           </section><section class="lesson"><span>25</span>
             <div class="lesson-content">
-              <h2>히든 마코프 모델(HMM): 보이지 않는 시장 국면을 추정하는 방법</h2>
-              <div class="lesson-body"><p><strong>히든 마코프 모델(Hidden Markov Model, HMM)</strong>은 우리가 직접 볼 수 없는 상태가 있고, 가격 수익률·변동성·거래량 같은 관측값이 그 상태에 따라 달라진다고 가정하는 확률 모형입니다. 특정 운용사의 실제 전체 운용 모델은 공개되어 있지 않으므로, HMM을 특정 인물의 비공개 전략이라고 단정할 수는 없습니다.</p><p>쉬운 예로 시장에 <strong>“잔잔한 국면”과 “불안한 국면”</strong>이 있다고 생각해 보세요. 이름표는 보이지 않지만 잔잔한 날에는 작은 등락과 낮은 변동성이, 불안한 날에는 큰 등락과 높은 변동성이 자주 관측됩니다. HMM은 최근 수익률·변동성을 보고 오늘이 어느 국면일 가능성이 더 큰지 확률로 추정합니다.</p><p>예를 들어 잔잔한 국면 확률이 75%이면 페어 트레이딩 신호를 평소 규칙으로 검토하고, 불안한 국면 확률이 80%이면 같은 신호라도 거래 규모를 줄이거나 새 진입을 멈추는 안전 규칙을 둘 수 있습니다. <strong>HMM은 방향을 예언하는 기계가 아니며</strong>, 상태 수·입력 데이터에 따라 결과가 달라지므로 표본 밖 검증과 거래비용을 함께 점검해야 합니다.</p></div>
+              <h2>시장 분위기 알아보기: 잔잔한지 불안한지 추정하는 HMM</h2>
+              <div class="lesson-body">
+                <p><strong>한마디로 HMM은 최근 가격 움직임을 보고 현재 시장 분위기를 짐작하는 계산법입니다.</strong> 화면에 ‘오늘은 불안한 시장’이라는 이름표가 붙지는 않지만, 가격이 얼마나 크게 오르내렸는지를 보면 어느 정도 추정할 수 있습니다.</p>
+                <p><b>날씨를 짐작하는 것과 비슷합니다.</b> 밖을 직접 보지 못해도 우산을 든 사람이 많고 바닥이 젖어 있으면 비가 왔다고 짐작할 수 있습니다. HMM도 최근 가격이 조금씩 움직이면 ‘잔잔한 시장’, 큰 폭으로 자주 움직이면 ‘불안한 시장’일 가능성이 높다고 계산합니다.</p>
+                <ol>
+                  <li><b>최근 가격을 봅니다.</b> 며칠 동안 얼마나 오르고 내렸는지 확인합니다.</li>
+                  <li><b>시장 분위기를 나눕니다.</b> 작은 움직임이 많으면 잔잔함, 큰 움직임이 많으면 불안함으로 봅니다.</li>
+                  <li><b>확률로 보여 줍니다.</b> 예를 들어 ‘잔잔함 25%, 불안함 75%’처럼 어느 쪽에 가까운지 표시합니다.</li>
+                </ol>
+                <p><b>사용 예:</b> 불안함이 80%로 높게 나오면 새 투자를 잠시 미루거나 투자금액을 줄이는 안전 규칙에 활용할 수 있습니다. 다만 HMM은 내일 주가가 오를지 내릴지를 맞히는 기계가 아니며, 현재 시장이 얼마나 불안해 보이는지를 판단하도록 돕는 도구입니다.</p>
+              </div>
             </div>
             <button
               class="lesson-toggle"
               type="button"
               data-lesson-toggle
               aria-expanded="true"
-              aria-label="히든 마코프 모델(HMM): 보이지 않는 시장 국면을 추정하는 방법 내용 접기"
+              aria-label="시장 분위기 알아보기: 잔잔한지 불안한지 추정하는 HMM 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
@@ -1701,13 +1773,13 @@
                     <caption>퀀트 이론·투자에 이름을 남긴 대표 인물 — 이론의 존재와 역사적 사실을 소개하는 것이며 투자 조언이 아닙니다.</caption>
                     <thead><tr><th scope="col">인물</th><th scope="col">시대·소속</th><th scope="col">알려진 이론·기법</th><th scope="col">비고</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">해리 마코위츠(Harry Markowitz)<br><a href="https://www.nobelprize.org/prizes/economic-sciences/1990/markowitz/facts/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1952년 논문</td><td>현대 포트폴리오이론(평균-분산모형)</td><td>자산배분 이론의 출발점, 1990년 노벨경제학상</td></tr>
-                      <tr><th scope="row">피셔 블랙·마이런 숄즈·로버트 머튼<br><a href="https://www.nobelprize.org/prizes/economic-sciences/1997/summary/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1973년 논문</td><td>블랙-숄즈 옵션가격모형</td><td>숄즈·머튼 1997년 노벨경제학상, 파생상품 가격결정의 표준 틀</td></tr>
-                      <tr><th scope="row">존 메리웨더 등 / LTCM<br><a href="https://www.britannica.com/money/Long-Term-Capital-Management" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1990년대</td><td>채권 상대가치·차익거래</td><td>1998년 러시아 채무불이행 여파로 대규모 손실, 14개 금융사 공동구제로 마무리 — 정교한 모형도 극단적 상황엔 무너질 수 있다는 대표 반면교사 사례</td></tr>
-                      <tr><th scope="row">리처드 데니스·윌리엄 에크하르트<br><a href="https://www.turtletrader.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1983~1984년</td><td>‘터틀 트레이더’ 실험, 채널 돌파 추세추종</td><td>매매가 가르쳐질 수 있는지를 검증한 실험으로, 전략 자체보다 위험·자금관리의 중요성을 보여준 사례</td></tr>
-                      <tr><th scope="row">레이 달리오(Ray Dalio) / 브리지워터<br><a href="https://www.bridgewater.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>현재</td><td>올웨더(리스크 패리티) 전략</td><td>이 수업 앞부분의 ‘올웨더 포트폴리오’ 레슨 참고</td></tr>
-                      <tr><th scope="row">클리프 애스니스(Cliff Asness) / AQR<br><a href="https://www.aqr.com/our-firm/leadership/cliff-asness" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>현재</td><td>팩터투자(가치·모멘텀 등)의 실전 구현</td><td>학계의 팩터 연구를 대규모 운용전략으로 옮긴 사례</td></tr>
-                      <tr><th scope="row">나심 니콜라스 탈레브<br><a href="https://fooledbyrandomness.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>현재</td><td>블랙스완, 꼬리위험</td><td>이 수업 뒤쪽의 ‘블랙 스완’ 레슨 참고</td></tr>
+                      <tr><th scope="row">해리 마코위츠(Harry Markowitz)<br><a href="https://www.nobelprize.org/prizes/economic-sciences/1990/markowitz/facts/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1952년 논문</td><td>현대 포트폴리오이론(평균-분산모형)</td><td>투자금을 한 곳에 몰지 않고 여러 자산에 나누는 방법을 체계적으로 설명했습니다. 이 연구로 1990년 노벨경제학상을 받았습니다.</td></tr>
+                      <tr><th scope="row">피셔 블랙·마이런 숄즈·로버트 머튼<br><a href="https://www.nobelprize.org/prizes/economic-sciences/1997/summary/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1973년 논문</td><td>블랙-숄즈 옵션가격모형</td><td>주식을 정해진 가격에 사고팔 수 있는 권리인 옵션의 적정 가격을 계산하는 방법을 만들었습니다. 숄즈와 머튼은 1997년 노벨경제학상을 받았습니다.</td></tr>
+                      <tr><th scope="row">존 메리웨더 등 / LTCM<br><a href="https://www.britannica.com/money/Long-Term-Capital-Management" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1990년대</td><td>채권 상대가치·차익거래</td><td>비슷한 채권의 가격 차이가 줄어들 것이라고 투자했지만, 1998년 시장 충격과 과도한 빚 때문에 큰 손실을 냈습니다. 좋은 계산식도 위기와 빚의 위험까지 없애 주지는 못한다는 사례입니다.</td></tr>
+                      <tr><th scope="row">리처드 데니스·윌리엄 에크하르트<br><a href="https://www.turtletrader.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1983~1984년</td><td>‘터틀 트레이더’ 실험, 채널 돌파 추세추종</td><td>초보자에게 같은 매매 규칙과 손실 관리법을 가르쳐 실제로 적용하게 했습니다. 종목을 맞히는 능력만큼 정해진 규칙과 자금 관리가 중요하다는 점을 보여 줬습니다.</td></tr>
+                      <tr><th scope="row">레이 달리오(Ray Dalio) / 브리지워터<br><a href="https://www.bridgewater.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>현재</td><td>올웨더(리스크 패리티) 전략</td><td>주식·채권·원자재 등을 섞어 한 자산이 전체 위험을 좌우하지 않도록 배분하는 방식을 널리 알렸습니다.</td></tr>
+                      <tr><th scope="row">클리프 애스니스(Cliff Asness) / AQR<br><a href="https://www.aqr.com/our-firm/leadership/cliff-asness" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>현재</td><td>팩터투자(가치·모멘텀 등)의 실전 구현</td><td>저평가된 종목이나 최근 상승세가 이어진 종목처럼 연구에서 발견된 특징을 실제 펀드의 투자 규칙으로 활용했습니다.</td></tr>
+                      <tr><th scope="row">나심 니콜라스 탈레브<br><a href="https://fooledbyrandomness.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>현재</td><td>블랙스완, 꼬리위험</td><td>평소에는 드물어 보여도 한 번 발생하면 손실이 매우 큰 사건이 있다고 강조했습니다. 미래를 정확히 맞히기보다 큰 충격을 견딜 준비가 중요하다는 생각입니다.</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -1717,14 +1789,14 @@
                     <caption>퀀트 투자와 관련된 대표 회사·플랫폼 — 성과 수치는 자료마다 수수료·기간 산정 방식이 달라 그대로 비교할 수 없습니다.</caption>
                     <thead><tr><th scope="col">회사·플랫폼</th><th scope="col">알려진 특징</th><th scope="col">비고</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">르네상스 테크놀로지스(메달리온 펀드)<br><a href="https://www.rentec.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1988~2018년 연평균 수익률이 매우 높았다고 알려짐(수수료 포함·차감 여부에 따라 자료마다 수치가 다름)</td><td>앞서 다룬 제임스 사이먼스 레슨 참고, 주로 임직원 자본으로 운용되어 외부 투자자를 상시 모집하지 않는 것으로 알려짐</td></tr>
-                      <tr><th scope="row">시타델(Citadel)·시타델 증권<br><a href="https://www.citadel.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>헤지펀드와 마켓메이킹(유동성 공급)을 함께 운영</td><td>이 수업 뒤쪽의 ‘시타델·메릴린치 사례’ 레슨 참고</td></tr>
-                      <tr><th scope="row">투시그마(Two Sigma)<br><a href="https://www.twosigma.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>데이터과학·머신러닝 기반 시스템 운용</td><td>대형 퀀트 헤지펀드의 대표 예시</td></tr>
-                      <tr><th scope="row">디이쇼(D. E. Shaw &amp; Co.)<br><a href="https://www.deshaw.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>계량적 시스템 트레이딩의 초기 선구자</td><td>아마존 창업자 제프 베조스가 창업 전 근무했던 곳으로도 잘 알려짐</td></tr>
-                      <tr><th scope="row">월드퀀트(WorldQuant)<br><a href="https://www.worldquant.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>‘WorldQuant BRAIN’이라는 크라우드소싱 알파 발굴 플랫폼 운영</td><td>2일차에서 본 국내(서울) 퀀트 채용 사례와 연결</td></tr>
-                      <tr><th scope="row">QuantConnect / LEAN 엔진<br><a href="https://www.quantconnect.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>2012년 시작된 오픈소스 알고리즘 트레이딩·백테스트 엔진(GitHub 공개)</td><td>이 앱의 ‘LEAN 백테스트’ 기능이 실제로 이 오픈소스 엔진을 원격 실행해 결과를 보여줍니다</td></tr>
-                      <tr><th scope="row">Numerai<br><a href="https://numer.ai/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>데이터 과학자들이 암호화(익명화)된 데이터로 예측 모델을 제출해 경쟁하는 크라우드소싱형 헤지펀드</td><td>모델 제출자에게 암호화폐로 보상하는 독특한 구조로 알려짐</td></tr>
-                      <tr><th scope="row">젠포트·퀀터스<br><a href="https://genport.newsystock.com/" target="_blank" rel="noopener noreferrer">홈페이지</a> · <a href="https://www.quantus.kr/ko" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>국내 노코드 퀀트 플랫폼</td><td>이 수업 앞부분의 ‘젠포트·퀀터스’ 레슨 참고</td></tr>
+                      <tr><th scope="row">르네상스 테크놀로지스(메달리온 펀드)<br><a href="https://www.rentec.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>1988~2018년 연평균 수익률이 매우 높았다고 알려짐(수수료 포함·차감 여부에 따라 자료마다 수치가 다름)</td><td>수학자와 과학자들이 데이터를 이용해 투자하는 회사입니다. 유명한 메달리온 펀드는 주로 회사 임직원의 돈을 운용하므로 일반 투자자가 자유롭게 가입하는 상품은 아닙니다.</td></tr>
+                      <tr><th scope="row">시타델(Citadel)·시타델 증권<br><a href="https://www.citadel.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>헤지펀드와 마켓메이킹(유동성 공급)을 함께 운영</td><td>시타델은 고객 자금을 운용하는 투자회사이고, 시타델 증권은 시장에서 매수·매도 주문이 체결되도록 돕는 별도 회사입니다.</td></tr>
+                      <tr><th scope="row">투시그마(Two Sigma)<br><a href="https://www.twosigma.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>데이터과학·머신러닝 기반 시스템 운용</td><td>사람의 감만으로 종목을 고르기보다 컴퓨터로 많은 데이터를 분석해 투자 규칙을 만드는 대형 회사의 예입니다.</td></tr>
+                      <tr><th scope="row">디이쇼(D. E. Shaw &amp; Co.)<br><a href="https://www.deshaw.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>계량적 시스템 트레이딩의 초기 선구자</td><td>컴퓨터와 수학 모형을 투자에 일찍 활용한 회사입니다. 정해진 계산 규칙으로 시장 기회를 찾는 퀀트 운용의 초기 대표 사례입니다.</td></tr>
+                      <tr><th scope="row">월드퀀트(WorldQuant)<br><a href="https://www.worldquant.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>‘WorldQuant BRAIN’이라는 크라우드소싱 알파 발굴 플랫폼 운영</td><td>여러 나라의 참여자가 온라인에서 투자 아이디어를 수식과 코드로 만들어 시험할 수 있는 플랫폼을 운영합니다.</td></tr>
+                      <tr><th scope="row">QuantConnect / LEAN 엔진<br><a href="https://www.quantconnect.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>2012년 시작된 오픈소스 알고리즘 트레이딩·백테스트 엔진(GitHub 공개)</td><td>직접 만든 투자 규칙을 과거 데이터로 먼저 시험해 보는 도구입니다. 이 앱의 ‘LEAN 백테스트’도 같은 공개 엔진을 원격으로 실행합니다.</td></tr>
+                      <tr><th scope="row">Numerai<br><a href="https://numer.ai/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>데이터 과학자들이 암호화(익명화)된 데이터로 예측 모델을 제출해 경쟁하는 크라우드소싱형 헤지펀드</td><td>참가자가 회사명 등을 알 수 없게 가공된 데이터로 예측 모델을 만들고 경쟁합니다. 성과에 따라 암호화폐 보상을 받을 수 있는 구조입니다.</td></tr>
+                      <tr><th scope="row">젠포트·퀀터스<br><a href="https://genport.newsystock.com/" target="_blank" rel="noopener noreferrer">홈페이지</a> · <a href="https://www.quantus.kr/ko" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>국내 노코드 퀀트 플랫폼</td><td>코드를 직접 작성하지 않아도 조건을 선택해 투자 규칙을 만들고 과거 성과를 시험할 수 있습니다. 과거 결과가 미래 수익을 보장하지는 않습니다.</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -1732,15 +1804,15 @@
                 <div class="lesson-table-wrap">
                   <table class="lesson-table">
                     <caption>퀀트 투자에서 널리 알려진 매매기법 — 기법의 존재를 소개하는 것이며 특정 전략의 성과를 보장하지 않습니다.</caption>
-                    <thead><tr><th scope="col">기법</th><th scope="col">핵심 아이디어</th><th scope="col">관련 레슨·사례</th></tr></thead>
+                    <thead><tr><th scope="col">기법</th><th scope="col">핵심 아이디어</th><th scope="col">아주 쉬운 예</th></tr></thead>
                     <tbody>
-                      <tr><th scope="row">페어 트레이딩(통계적 차익거래)<br><a href="https://www.quantconnect.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>함께 움직이던 두 자산의 가격 괴리가 벌어지면 한쪽은 매수, 한쪽은 매도해 좁혀지길 기다리는 기법</td><td>이 수업의 ‘벰버거의 페어 트레이딩’ 레슨</td></tr>
-                      <tr><th scope="row">추세추종(모멘텀, 채널 돌파)<br><a href="https://www.turtletrader.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>가격이 일정 구간을 뚫고 오르내리면 그 방향을 따라가는 규칙</td><td>터틀 트레이더 실험이 대표 사례</td></tr>
-                      <tr><th scope="row">팩터 투자<br><a href="https://www.aqr.com/Insights/Research/White-Papers" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>가치·모멘텀·퀄리티·저변동성 같은 공통 수익 원천(팩터)에 체계적으로 노출을 맞추는 전략</td><td>AQR 등이 대표적으로 활용, 이 수업의 ‘알파와 베타’ 레슨 참고</td></tr>
-                      <tr><th scope="row">리스크 패리티<br><a href="https://www.bridgewater.com/research-and-insights/the-all-weather-strategy" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>자산별 기대수익 예측 대신 위험 기여도를 자산군마다 고르게 맞추는 자산배분 방식</td><td>브리지워터 올웨더 포트폴리오가 대표 사례</td></tr>
-                      <tr><th scope="row">시장 국면 추정<br><a href="https://hmmlearn.readthedocs.io/en/stable/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>관측되지 않는 시장 상태(국면)를 확률로 추정해 전략의 강도·규모를 조절</td><td>이 수업의 ‘히든 마코프 모델(HMM)’ 레슨</td></tr>
-                      <tr><th scope="row">실행 알고리즘(VWAP·TWAP)<br><a href="https://www.interactivebrokers.com/docs/general/order-types/algorithmic-orders/ib-algorithms/twap" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>큰 주문을 시간·거래량에 나누어 체결시켜 시장 충격과 체결가격 변동을 줄이는 기법</td><td>기관·대형 주문 처리의 기본 도구</td></tr>
-                      <tr><th scope="row">마켓메이킹(유동성 공급)<br><a href="https://www.citadelsecurities.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>매수·매도 호가를 동시에 제시해 그 차이(스프레드)로 수익을 얻는 대신 시장에 유동성을 공급하는 방식</td><td>이 수업의 ‘시타델·메릴린치 사례’ 레슨</td></tr>
+                      <tr><th scope="row">페어 트레이딩(통계적 차익거래)<br><a href="https://www.quantconnect.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>함께 움직이던 두 자산의 가격 괴리가 벌어지면 한쪽은 매수, 한쪽은 매도해 좁혀지길 기다리는 기법</td><td>늘 비슷하던 두 주식 중 하나만 갑자기 비싸졌다면, 비싼 쪽은 팔고 싼 쪽은 삽니다. 두 가격의 간격이 다시 줄어들기를 기다리는 방식입니다.</td></tr>
+                      <tr><th scope="row">추세추종(모멘텀, 채널 돌파)<br><a href="https://www.turtletrader.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>가격이 일정 구간을 뚫고 오르내리면 그 방향을 따라가는 규칙</td><td>주가가 최근 최고가를 넘으면 사고, 미리 정한 기준 아래로 내려가면 팝니다. 오르는 흐름을 따라가는 방식입니다.</td></tr>
+                      <tr><th scope="row">팩터 투자<br><a href="https://www.aqr.com/Insights/Research/White-Papers" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>가치·모멘텀·퀄리티·저변동성 같은 공통 수익 원천(팩터)에 체계적으로 노출을 맞추는 전략</td><td>‘가격이 싼가?’, ‘이익이 꾸준한가?’ 같은 조건으로 기업에 점수를 매기고, 점수가 높은 여러 종목을 함께 삽니다.</td></tr>
+                      <tr><th scope="row">리스크 패리티<br><a href="https://www.bridgewater.com/research-and-insights/the-all-weather-strategy" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>자산별 기대수익 예측 대신 위험 기여도를 자산군마다 고르게 맞추는 자산배분 방식</td><td>가격이 많이 흔들리는 주식은 적게, 비교적 덜 흔들리는 채권은 더 담습니다. 한 자산 때문에 전체가 크게 흔들리는 것을 줄이려는 방법입니다.</td></tr>
+                      <tr><th scope="row">시장 국면 추정<br><a href="https://hmmlearn.readthedocs.io/en/stable/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>관측되지 않는 시장 상태(국면)를 확률로 추정해 전략의 강도·규모를 조절</td><td>최근 가격이 조용하면 ‘잔잔한 시장’, 크게 흔들리면 ‘불안한 시장’으로 봅니다. 시장이 불안해 보이면 투자금액을 줄입니다.</td></tr>
+                      <tr><th scope="row">실행 알고리즘(VWAP·TWAP)<br><a href="https://www.interactivebrokers.com/docs/general/order-types/algorithmic-orders/ib-algorithms/twap" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>큰 주문을 시간·거래량에 나누어 체결시켜 시장 충격과 체결가격 변동을 줄이는 기법</td><td>주식 1만 주를 한꺼번에 사지 않고 1,000주씩 열 번에 나누어 삽니다. 큰 주문 때문에 가격이 갑자기 오르는 것을 줄이려는 방식입니다.</td></tr>
+                      <tr><th scope="row">마켓메이킹(유동성 공급)<br><a href="https://www.citadelsecurities.com/" target="_blank" rel="noopener noreferrer">홈페이지</a></th><td>매수·매도 호가를 동시에 제시해 그 차이(스프레드)로 수익을 얻는 대신 시장에 유동성을 공급하는 방식</td><td>9,990원에는 사고 10,010원에는 팔겠다는 주문을 함께 냅니다. 거래를 쉽게 만들어 주지만 가격이 급변하면 손실이 날 수 있습니다.</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -1759,65 +1831,60 @@
             </button>
           </section><section class="lesson"><span>26</span>
             <div class="lesson-content">
-              <h2>시타델·메릴린치 사례로 보는 초단타와 주문 처리의 공정성</h2>
-              <div class="lesson-body"><p>시타델 증권과 메릴린치는 하나의 공동 사건으로 제재받은 것이 아니라, 미국 SEC가 각각 다른 주문 처리 문제를 지적한 별도 사례입니다. 핵심은 초단타의 속도 자체가 아니라 고객 주문정보 보호, 실제 체결 경로와 가격의 투명성입니다.</p><p>메릴린치 사례는 고객이 외부 거래회사로 보내지 말아 달라고 한 주문을 실제로는 외부에 보내고도 내부 처리처럼 알린 문제입니다. 큰 주문의 방향이 새면 다른 거래자가 먼저 움직일 수 있으므로 고객은 주문이 어디에서 체결되는지 알고 선택할 권리가 있습니다.</p><p>시타델 증권 사례는 최선 가격을 제공하거나 찾겠다는 설명과 달리 일부 알고리즘이 작동해 더 나은 가격을 확인·제공하지 못했다고 SEC가 판단한 문제입니다. 10,000원에 산 주문에 9,990원 호가가 있었는데 이를 확인하지 못했다면 10원 차이도 주문이 많아지면 중요한 비용이 됩니다.</p><p>따라서 주문 전에는 내 주문이 어디로 가는지, 이해상충·정보 유출 위험이 있는지, 최선집행 기준과 실제 체결가격이 맞는지를 점검해야 합니다. 이는 특정 회사나 초단타 전체를 단정하는 내용이 아니라, 자동화된 주문 시스템도 투명성·기록·감독이 필요하다는 교육 사례입니다.</p></div>
+              <h2>초단타 주문은 어떻게 공정하게 관리할까: 해외 사례와 한국 규제</h2>
+              <div class="lesson-body">
+                <p><b>초단타 거래</b>는 컴퓨터가 매우 짧은 시간에 주문을 내고 고치거나 취소하는 방식입니다. 빠르다는 이유만으로 불법인 것은 아닙니다. 중요한 것은 <b>고객에게 약속한 가격과 주문 경로를 지켰는지, 다른 투자자를 속이는 주문을 냈는지</b>입니다.</p>
+                <h3>10원 차이로 이해하는 주문 공정성</h3>
+                <p>내가 주식을 10,000원에 사려고 할 때 시장에 9,990원 매도 주문이 있다면 더 싼 가격을 먼저 확인하는 것이 유리합니다. 이를 놓치면 한 주당 10원이지만 1만 주에서는 10만 원의 차이가 납니다. 고객은 주문이 어디로 전달됐고 어떤 가격에 체결됐는지 알 수 있어야 합니다.</p>
+                <p><b>메릴린치 사례</b>에서는 고객이 요청한 주문 처리 방식과 실제 주문 경로가 달랐다는 점이 문제가 됐습니다. <b>시타델 증권 사례</b>에서는 일부 주문이 설명된 방식대로 더 나은 가격을 확인하거나 제공했는지가 쟁점이 됐습니다. 두 회사가 함께 일으킨 하나의 사건이 아니라, 미국 감독당국이 각각 따로 다룬 사례입니다.</p>
+                <h3>한국에서는 세 단계로 관리합니다</h3>
+                <ol>
+                  <li><b>누가 거래하는지 등록:</b> 거래소 기준에 해당하는 고속 알고리즘 거래자는 사전에 등록하고 식별코드로 주문을 남깁니다.</li>
+                  <li><b>사고를 막는 장치 마련:</b> 증권사와 거래자는 잘못된 대량 주문이나 시스템 오류를 막도록 전산설비와 내부통제를 점검합니다.</li>
+                  <li><b>이상 주문 감시:</b> 거래소는 짧은 시간에 반복되는 주문·취소와 가격에 미친 영향을 분석합니다. 실제로 살 생각 없이 매수세가 큰 것처럼 보이게 하는 주문은 제재 대상이 될 수 있습니다.</li>
+                </ol>
+                <p><b>한 줄로 정리하면:</b> 빠른 주문 자체가 문제가 아니라, 고객과의 약속을 어기거나 시장을 속이는 방식으로 사용했는지가 핵심입니다. 자동 주문도 누가, 어디로, 어떤 가격에 보냈는지 기록하고 감독할 수 있어야 합니다.</p>
+              </div>
             </div>
             <button
               class="lesson-toggle"
               type="button"
               data-lesson-toggle
               aria-expanded="true"
-              aria-label="시타델·메릴린치 사례로 보는 초단타와 주문 처리의 공정성 내용 접기"
+              aria-label="초단타 주문은 어떻게 공정하게 관리할까: 해외 사례와 한국 규제 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
             </button>
           </section><section class="lesson"><span>27</span>
             <div class="lesson-content">
-              <h2>한국의 고빈도 알고리즘 거래 규제: 등록·위험관리·시장감시</h2>
-              <div class="lesson-body"><p>한국에서 고빈도 알고리즘 거래(HFT) 자체가 전면 금지된 것은 아닙니다. 2023년 1월 25일 거래자 등록·위험관리 제도가 시행됐고, 3개월 유예 뒤 4월 25일부터 등록이 의무화됐습니다. 거래자는 한국거래소에 사전 등록하고, 거래소는 식별코드(ID)로 거래를 모니터링합니다.</p><p>전산설비의 안정성·적정성, 거래 전문성, 내부통제 관리체계가 필요하며, 증권사도 주문사고 예방을 위해 주문 시스템을 사전에 점검해야 합니다. 거래소는 고빈도 알고리즘 거래에 특화한 시장감시 기준과 이상거래 적출·분석 체계를 운영합니다.</p><p>규제 시행 초기에는 해외 소재 증권사의 고빈도 알고리즘 시장질서 교란행위에 큰 규모의 과징금이 의결된 사례도 있었습니다. 반복적 고가·물량소진 매수나 호가공백 메우기처럼 시장을 오인하게 하는 주문은 속도가 아니라 목적·반복성·시장 영향 때문에 문제가 됩니다.</p><p>알고리즘 매매는 유동성과 가격발견에 도움을 줄 수도 있지만, 속도만으로 공정성이 보장되지는 않습니다. 주문 취소 수수료·최소 호가 유지시간은 해외 사례를 참고한 추가 규제 논의 대상일 뿐, 현행 국내 의무로 단정하지 않습니다.</p></div>
+              <h2>단기 매매와 허수성 주문: 빠른 거래와 시세조종의 차이</h2>
+              <div class="lesson-body">
+                <p><b>짧게 사고파는 것 자체는 허수성 주문이 아닙니다.</b> 실제로 주식을 사고팔 생각이 있는지, 아니면 체결할 생각 없이 큰 주문을 보여 줘 다른 사람을 속이려는지가 가장 중요한 차이입니다.</p>
+                <h3>얼마나 오래 보유하느냐에 따른 구분</h3>
+                <ul>
+                  <li><b>스캘핑:</b> 수초에서 수분 동안 보유하며 10원처럼 작은 가격 차이를 여러 번 노립니다.</li>
+                  <li><b>데이트레이딩:</b> 아침에 산 주식을 당일 장 마감 전에 파는 등 하루 안에 거래를 끝냅니다.</li>
+                  <li><b>스윙 트레이딩:</b> 며칠에서 수주 동안 보유하며 짧은 상승·하락 흐름을 살펴봅니다.</li>
+                </ul>
+                <p>예를 들어 10,000원에 실제로 100주를 산 뒤 10,010원에 파는 것은 스캘핑일 수 있습니다. 실제 매수와 매도가 체결되고 가격 차이로 손익이 생기기 때문입니다. 다만 수수료와 호가 차이 등 거래비용이 주당 10원보다 크면 오히려 손실이 날 수 있습니다.</p>
+                <h3>허수성 주문은 무엇이 다른가?</h3>
+                <p>누군가 실제로 살 생각은 없으면서 호가창에 10만 주의 큰 매수 주문을 올렸다고 가정해 보겠습니다. 다른 사람이 “매수세가 강하다”고 생각해 따라 사자 가격이 오르고, 주문이 체결될 것 같아지면 10만 주 주문을 취소한 뒤 자신이 가진 주식을 판다면 시장을 속이려는 주문으로 의심받을 수 있습니다.</p>
+                <p><b>정상적인 주문 취소와도 구분해야 합니다.</b> 가격이 갑자기 바뀌거나 입력 실수를 발견해 주문을 취소할 수 있습니다. 따라서 큰 주문 하나만 보고 판단하지 않고, 실제 체결 의사, 반복된 주문과 취소, 반대편 거래, 시장에 미친 영향을 함께 살펴봅니다.</p>
+                <p><b>한 줄로 정리하면:</b> 스캘핑·데이트레이딩·스윙은 보유 시간이 다른 거래 방식이고, 허수성 주문은 체결할 생각 없는 주문으로 다른 투자자의 판단을 속이려는 행위입니다. 거래가 빠르다는 사실만으로 두 가지가 같아지지는 않습니다.</p>
+              </div>
             </div>
             <button
               class="lesson-toggle"
               type="button"
               data-lesson-toggle
               aria-expanded="true"
-              aria-label="한국의 고빈도 알고리즘 거래 규제: 등록·위험관리·시장감시 내용 접기"
+              aria-label="단기 매매와 허수성 주문: 빠른 거래와 시세조종의 차이 내용 접기"
               title="내용 접기"
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>28</span>
-            <div class="lesson-content">
-              <h2>스캘핑·데이트레이딩·스윙: 보유 기간으로 보는 단기 매매</h2>
-              <div class="lesson-body"><p>스캘핑(scalping)은 가격의 아주 작은 움직임을 노리고 수초~수분처럼 짧게 보유하며 여러 번 거래하는 방식입니다. 데이트레이딩은 당일 안에 진입과 청산을 끝내 밤새 포지션을 넘기지 않으려는 방식이고, 스윙 트레이딩은 보통 며칠~수주 동안 단기 파동이나 추세를 관찰하는 방식입니다.</p><p>스캘핑은 거래량이 충분하고 호가 차이가 좁은 종목에서 체결을 빠르게 관리해야 합니다. 다만 개인이 수동으로도 할 수 있는 스캘핑과 기관이 알고리즘·전용 시스템으로 실행하는 초단타 매매(HFT)는 같은 뜻이 아닙니다. 모든 스캘핑이 HFT인 것은 아닙니다.</p><p>짧게 보유한다고 위험이 없어지는 것은 아닙니다. 뉴스·변동성·체결 지연·호가 공백은 수초 안에도 생기고, 잦은 매매는 수수료·세금·호가 차이·슬리피지를 누적시킵니다. 한 번에 0.1%의 작은 가격 차이를 기대해도 왕복 비용이 더 크면 전략은 손실입니다.</p><p>따라서 단기 매매는 승률만 보지 말고 거래당 평균 이익·손실, 비용 차감 후 손익, 최대 연속 손실과 실제 체결 비율을 함께 평가해야 합니다. 세금·수수료 조건은 상품과 시점에 따라 달라 실제 거래 전 최신 안내를 확인하세요.</p></div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="스캘핑·데이트레이딩·스윙: 보유 기간으로 보는 단기 매매 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section><section class="lesson"><span>29</span>
-            <div class="lesson-content">
-              <h2>허수성 주문(스푸핑): 호가창 착시를 이용한 시세조종</h2>
-              <div class="lesson-body"><p>허수성 주문은 실제로 체결할 의사 없이 많은 주문을 냈다가 체결될 것 같아지면 취소해 다른 투자자가 수요·공급을 잘못 판단하도록 유도하는 행위입니다. 해외에서는 스푸핑(spoofing)이라고도 부릅니다. 정상적인 주문 취소와 달리 처음부터 시장을 속일 목적이 핵심입니다.</p><p>개념 예시로 대량 매수세가 있는 것처럼 보여 다른 사람이 수요가 강하다고 오인하게 한 뒤, 가격이 움직이면 미리 가진 물량을 반대 방향으로 거래하고 주문을 취소하는 상황을 생각할 수 있습니다. 판단할 때는 한 주문만이 아니라 반복된 주문·취소, 실제 체결 의사, 반대편 거래와 시장을 오인하게 한 목적을 함께 봅니다.</p><p>한국거래소는 체결 가능성이 낮은 가격의 대량 주문을 반복해 다른 사람의 거래를 유인하는 행위를 허수성 주문을 이용한 불공정거래 사례로 안내합니다. 시세조종은 자본시장법상 금지되며 제재·형사처벌 대상이 될 수 있습니다.</p><p>자동화·초단타 시스템이 빠르게 주문을 수정·취소한다고 해서 곧바로 허수성 주문은 아닙니다. 호가창의 큰 잔량 하나만 보고 판단하지 말고 체결량, 지속 시간, 공시·뉴스를 함께 확인하세요.</p></div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="허수성 주문(스푸핑): 호가창 착시를 이용한 시세조종 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
-          </section><section class="lesson" id="marketPsychologyLesson"><span>29.1</span>
+          </section><section class="lesson" id="marketPsychologyLesson"><span>27.1</span>
             <div class="lesson-content">
               <h2>시장 심리: 남을 따라가는 판단과 처음 본 숫자</h2>
               <div class="lesson-body">
@@ -1827,13 +1894,13 @@
                 <h3>손실·정보가 판단을 왜곡할 때</h3>
                 <p><strong>손실회피와 프로스펙트 이론(Loss Aversion and Prospect Theory)</strong>에서 <em>aversion</em>(어버전)은 싫어하거나 피하려는 성향, <em>prospect</em>는 앞으로 일어날 가능성이나 전망을 뜻합니다. 즉, 사람이 미래의 이익·손실 가능성을 판단할 때 손실을 특히 피하려는 경향을 설명하는 이론입니다. 사람은 절대적인 부의 수준보다 기준점에서의 이익과 손실에 민감하게 반응합니다. 많은 실험에서 같은 금액의 이익보다 손실을 더 크게 느끼는 경향이 관찰됐지만, ‘정확히 두 배’처럼 고정된 수치로 모든 사람에게 적용되지는 않습니다. 시장에서는 손실 종목을 지나치게 오래 보유하거나 작은 이익을 너무 빨리 실현하는 행동과 연결해 해석할 수 있습니다.</p>
                 <p><strong>가용성 휴리스틱(Availability Heuristic)</strong>에서 <em>heuristic</em>은 모든 정보를 따져 정답을 찾기보다, 빠르게 판단하기 위해 쓰는 간단한 생각의 지름길을 뜻합니다. 가용성 휴리스틱은 실제 발생 확률보다 기억에 쉽게 떠오르는 뉴스·사례·이미지에 판단이 끌리는 경향입니다. 최근의 급등 종목이나 성공담이 반복 노출되면 그것이 흔한 결과처럼 느껴질 수 있습니다. 자극적인 사례 대신 장기 수익률 분포, 실패 사례, 손실 가능성과 표본 수를 함께 확인하는 습관이 필요합니다.</p>
-                <p><strong>보유 효과(Endowment Effect)</strong>에서 <em>endowment</em>는 원래 누군가에게 주어진 재산·기부금 또는 갖게 된 자산을 뜻합니다. 보유 효과는 어떤 자산을 내 것으로 가진 뒤 그 가치를 더 높게 평가하기 쉬운 경향입니다. 이미 산 주식·부동산의 악재를 과소평가하거나 희망 가격만 고집하는 모습으로 나타날 수 있습니다. ‘오늘 현금이 있다면 같은 가격에 다시 살 것인가?’라는 질문은 보유 여부와 별개로 판단하는 데 도움이 됩니다.</p>
+                <p><strong>보유 효과(Endowment Effect)</strong>에서 <em>endowment</em>(엔다우먼트)는 원래 누군가에게 주어진 재산·기부금 또는 갖게 된 자산을 뜻합니다. 보유 효과는 어떤 자산을 내 것으로 가진 뒤 그 가치를 더 높게 평가하기 쉬운 경향입니다. 이미 산 주식·부동산의 악재를 과소평가하거나 희망 가격만 고집하는 모습으로 나타날 수 있습니다. ‘오늘 현금이 있다면 같은 가격에 다시 살 것인가?’라는 질문은 보유 여부와 별개로 판단하는 데 도움이 됩니다.</p>
                 <p><strong>확증 편향(Confirmation Bias, 컨퍼메이션 바이어스)</strong>은 기존의 믿음과 선택을 뒷받침하는 정보만 찾고 반대 증거는 가볍게 보는 경향입니다. 특정 종목을 산 뒤 긍정적 뉴스·영상만 소비하면 위험 신호를 놓치기 쉽습니다. 투자 근거와 반증 조건, 매도·재검토 기준을 매수 전에 함께 적어 두면 이를 줄이는 데 도움이 됩니다.</p>
                 <p class="lesson-video-cta"><button type="button" class="lesson-video-link" data-bias-quiz-trigger="market"><i class="fa-solid fa-compass"></i> 시장 심리 성향 점검</button><small>8개 질문으로 내 판단이 군중·기준점·손실·정보에 얼마나 민감한지 살펴보세요.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="시장 심리 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson" id="choiceCompetitionLesson"><span>29.2</span>
+          </section><section class="lesson" id="choiceCompetitionLesson"><span>27.2</span>
             <div class="lesson-content">
               <h2>선택과 경쟁: 기회비용·메기 효과·피그말리온 효과</h2>
               <div class="lesson-body">
@@ -1849,12 +1916,11 @@
                 <p><strong>링겔만 효과(Ringelmann Effect)와 사회적 태만(Social Loafing)</strong>은 집단이 커질수록 개인의 노력·책임이 줄어들 수 있는 현상을 말합니다. 두 용어는 관련 있지만 완전히 같은 뜻은 아닙니다. 기업에서는 주주가 많고 책임이 분산될수록 개별 감시 유인이 약해질 수 있으므로, 이사회·공시·감사·의결권 구조 같은 거버넌스 장치를 함께 살펴야 합니다.</p>
                 <p><strong>호손 효과(Hawthorne Effect)</strong>는 관찰 또는 측정되고 있다는 인식 때문에 행동이 달라질 수 있는 현상입니다. 주주 행동주의, 언론 보도, 규제기관의 조사 뒤 기업 행동이 달라지는 과정을 비유적으로 이해하는 데 쓸 수 있습니다. 다만 원래 호손 연구의 해석은 논쟁이 많으므로, 관찰만으로 경영 효율이나 주가가 반드시 좋아진다고 단정해서는 안 됩니다.</p>
                 <p><strong>스티그마 효과(Stigma Effect, 낙인 효과)</strong>는 부정적 평판이나 분류가 신뢰·기회·자금조달 조건을 계속 악화시킬 수 있는 현상입니다. 피그말리온 효과의 엄밀한 ‘반대말’이라기보다, 부정적 기대가 자기실현적으로 작동할 수 있는 관련 개념으로 보는 편이 정확합니다. 분식회계·연체 같은 이력이 남은 기업은 낙인뿐 아니라 실제 재무 상태와 개선 조치도 함께 평가해야 합니다.</p>
-                <p><small>참고: <a href="https://www.nber.org/papers/w8190.pdf" target="_blank" rel="noopener noreferrer">프로스펙트 이론과 손실회피의 해설</a>, <a href="https://www.aeaweb.org/articles?id=10.1257%2Fjep.2.1.191" target="_blank" rel="noopener noreferrer">미국경제학회의 승자의 재앙 연구</a>, <a href="https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Group_Dynamics/Latane_et_al_1979_Many_hands_make_light_the_work.pdf" target="_blank" rel="noopener noreferrer">사회적 태만 연구</a>, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3969247/" target="_blank" rel="noopener noreferrer">호손 효과 체계적 문헌검토</a>.</small></p>
                 <p class="lesson-video-cta"><button type="button" class="lesson-video-link" data-bias-quiz-trigger="choice"><i class="fa-solid fa-scale-balanced"></i> 선택·경쟁 성향 점검</button><small>8개 질문으로 선택 피로·매몰비용·경쟁 과열·평판 민감도를 살펴보세요.</small></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="선택과 경쟁 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson" id="blackSwanLesson"><span>30</span>
+          </section><section class="lesson" id="blackSwanLesson"><span>28</span>
             <div class="lesson-content">
               <h2>블랙 스완: 평소 모형 밖의 큰 충격에 대비하기</h2>
               <div class="lesson-body"><p><strong>블랙 스완(Black Swan)</strong>은 평소의 경험과 통상적인 예측 모형이 놓치기 쉬운데, 발생하면 시장과 사회에 매우 큰 영향을 주는 사건을 가리키는 비유입니다. 나심 니콜라스 탈레브가 2007년 책 《블랙 스완》에서 널리 알렸고, 오스트레일리아에서 검은 백조가 발견되어 기존 상식이 깨진 일에서 이름을 가져왔습니다.</p><p>핵심은 <strong>① 기대 밖의 예외적 사건 ② 매우 큰 파급효과 ③ 사건 뒤의 사후 합리화</strong>입니다. 9·11 테러, 2008년 글로벌 금융위기, 2020년 코로나19 팬데믹은 큰 충격 사례로 자주 언급되지만, 엄밀히 블랙 스완인지에는 견해 차이가 있습니다.</p><p><strong>중요한 것은 사건을 정확히 맞히는 것이 아니라 견디는 힘을 만드는 것입니다.</strong> 손실 한도·분산·유동성 확보·과도한 레버리지 제한·스트레스 시나리오를 활용합니다. 회색 코뿔소는 눈앞의 위험을 무시하는 경우, 하얀 코끼리는 비용은 크지만 효용이 낮아 부담이 되는 자산·사업을 비유합니다.</p><p>블랙 스완은 ‘희귀한 충격’이라는 관점이고, <strong>레밍 효과</strong>는 평소에도 군중을 따라가며 위험을 키울 수 있는 행동이라는 점에서 다릅니다. 둘 다 한 사건의 방향을 예언하기보다, <strong>한 자산·한 시나리오에 과도하게 의존하지 않는지</strong> 점검하게 해 주는 경고로 활용할 수 있습니다.</p></div>
@@ -1869,52 +1935,6 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section>
-          <section class="lesson" id="referenceLesson"><span>31</span>
-            <div class="lesson-content">
-              <h2>레퍼런스</h2>
-              <div class="lesson-body">
-                <p>
-                  <a href="https://www.butler.works/ko/home" target="_blank" rel="noopener noreferrer">버틀러</a>는
-                  투자자가 기업의 재무제표·실적·공시를 이해하기 쉽게 살펴볼 수
-                  있도록 돕는 기업 분석 플랫폼입니다. 여러 증권 계좌와 관심 기업
-                  정보를 모아, 개인 투자자가 기업의 펀더멘털과 자신의 포트폴리오를
-                  점검하는 ‘투자 비서’처럼 활용할 수 있습니다.
-                </p>
-                <p>
-                  매출, 영업이익, 수주잔고, 지역별 실적 등의 숫자는 그래프로 볼 수
-                  있고, 기업공시에서는 투자 판단에 중요한 내용을 빠르게 찾도록
-                  돕습니다. 관심기업을 그룹별로 묶어 추적하고, 여러 증권 계좌에
-                  흩어진 종목도 한 화면에서 살펴볼 수 있습니다.
-                </p>
-                <p>
-                  <a href="https://deepsearch.com/" target="_blank" rel="noopener noreferrer">딥서치(DeepSearch)</a>는
-                  금융 데이터와 AI 기반 조사·분석 도구를 제공하는 국내 금융 데이터
-                  플랫폼입니다. 기업 조사, 투자 분석, 가치평가 등 전문 분석 업무에
-                  활용되는 서비스 성격과 이용 가능 범위를 살펴볼 수 있습니다.
-                </p>
-                <p>
-                  <a href="https://comp.fnguide.com/" target="_blank" rel="noopener noreferrer">FnGuide Company Guide</a>에서는
-                  기업 개요, 재무제표, 실적 추이, 컨센서스와 업종 비교 등을 한 화면에서
-                  살펴볼 수 있습니다. 데이터 기준일과 제공 범위를 확인하고, 중요한 수치는
-                  회사가 공개한 원문 자료로 다시 대조하세요.
-                </p>
-                <p>
-                  <a href="https://www.antock.com/" target="_blank" rel="noopener noreferrer">앤톡(Antock)</a>은
-                  기업 데이터 수집·통합·분석과 금융 AI 분석을 내세우는 국내 분석 기술
-                  기업입니다. 비상장·스타트업을 포함한 기업 데이터와 대체 데이터 기반의
-                  기업 평가 방법을 알아보는 레퍼런스로 활용할 수 있습니다.
-                </p>
-                <p>
-                  다만 데이터와 시각화는 투자 판단을 돕는 정보입니다. 매매를 대신
-                  결정하거나 수익을 보장하지 않으므로, 최신 공시 원문·재무제표·상품
-                  이용 조건을 다시 확인하고 자신의 투자 목적과 위험 감수 수준에 맞춰
-                  판단하세요. 일부 기능·지원 시장은 서비스 정책에 따라 달라질 수
-                  있습니다.
-                </p>
-              </div>
-            </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="레퍼런스 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section>
         </section>
         <section class="glossary">
@@ -2247,7 +2267,7 @@
         <button class="glossary-modal__close" type="button" aria-label="닫기" data-bok-rate-close>×</button>
         <p class="glossary-modal__label">RATE · ASSET SENSITIVITY · SCENARIO</p>
         <h2 id="bokRateTrendTitle">기준금리 흐름과 자산별 금리 민감도 비교</h2>
-        <p class="bok-rate-intro">기준금리는 실제 변경일 기준, KOSPI는 최근 20거래일 수익률로 계산한 연율화 실현변동성, 채권은 KOSEF 국고채10년 ETF의 종가를 시작일 100으로 맞춘 가격지수입니다. 서로 단위가 달라 각 축을 따로 읽습니다.</p>
+        <p class="bok-rate-intro"><b>최근 2년 추이</b>에서는 실제 기준금리 변화와 당시 주식시장의 흔들림, 장기채 ETF 가격을 함께 비교합니다. <b>금리 충격 시뮬레이션</b>에서는 금리가 오르거나 내린다고 가정하고 자산별 가치가 어느 방향으로 얼마나 민감하게 움직일 수 있는지 살펴봅니다.</p>
         <div class="bok-rate-summary">
           <article><span>시작 금리</span><strong>3.50%</strong><small>2024.09.05</small></article>
           <article><span>기간 중 최저</span><strong>2.50%</strong><small>2025.05.29 ~ 2026.07.15</small></article>
@@ -2262,20 +2282,14 @@
         </div>
         <div class="bok-rate-chart" role="img" aria-label="최근 2년의 한국은행 기준금리, KOSPI 20거래일 실현변동성, KOSEF 국고채10년 ETF 가격지수를 비교하는 차트"><div class="bok-rate-chart__canvas" id="rateMarketOverviewChart"></div></div>
         <div class="bok-rate-events" id="rateHistoryEvents"><span><b>인하 구간</b><br />2024.10 ~ 2025.05: 3.50% → 2.50%</span><span><b>유지 구간</b><br />2025.05 ~ 2026.07: 2.50%</span><span><b>인상 구간</b><br />2026.07 ~ 2026.08: 2.50% → 3.00%</span><span><b>변경 단위</b><br />모두 0.25%p(25bp) 단위</span></div>
+        <div class="bok-rate-scenario-guide" id="rateScenarioGuide" hidden>
+          <article><b>① 입력값 읽기</b><span><strong>+1.00%p</strong>는 기준금리가 3.00%에서 4.00%로 1%포인트 오른다는 가정입니다. 슬라이더를 왼쪽으로 옮기면 금리 인하 상황을 볼 수 있습니다.</span></article>
+          <article><b>② 막대 읽기</b><span>가운데 0%를 기준으로 <strong>왼쪽 빨간 막대는 가치 하락</strong>, 오른쪽 초록 막대는 가치 상승 가정입니다. 막대가 길수록 금리 변화에 더 민감하다고 봅니다.</span></article>
+          <article><b>③ 자산 차이 보기</b><span>장기 성장주와 장기채는 먼 미래에 받을 돈의 비중이 커 금리 변화에 더 민감하게 가정했습니다. 단기채와 현금성 자산은 상대적으로 영향이 작습니다.</span></article>
+        </div>
         <p class="bok-rate-note" id="rateHistoryNote"><b>읽는 법:</b> 변동성은 KOSPI가 어느 방향으로 갔는지가 아니라 최근에 얼마나 크게 흔들렸는지를 뜻합니다. 채권 가격지수는 대표 ETF 한 종목의 과거 가격일 뿐 전체 채권시장과 같지 않으며, 기준금리가 움직였다고 주식·채권이 즉시 또는 같은 폭으로 움직인다는 뜻도 아닙니다.</p>
-        <p class="bok-rate-note" id="rateScenarioNote" hidden><b>시나리오 읽는 법:</b> 막대는 금리 충격만 반영한 단순 민감도 가정입니다. 초록색은 가치 상승, 빨간색은 가치 하락 방향을 뜻합니다. 실제 시장에서는 성장률·물가·신용스프레드·환율·수급이 함께 움직이므로 결과가 달라질 수 있습니다.</p>
+        <p class="bok-rate-note" id="rateScenarioNote" hidden><b>숫자의 의미:</b> 예를 들어 +1.00%p에서 장기 성장주 −12.0%가 표시되면, 이 화면이 정한 교육용 민감도에 따라 가치가 12% 낮아지는 상황을 계산한 것입니다. <b>실제 수익률을 예측한 값은 아닙니다.</b> 실제 가격은 기업 실적, 물가, 경기, 환율, 신용위험과 시장 수급이 함께 결정합니다.</p>
         <p class="bok-rate-intro bok-rate-source"><small>출처: <a href="https://www.bok.or.kr/portal/singl/baseRate/list.do?menuNo=200643" target="_blank" rel="noopener noreferrer">한국은행 기준금리 추이</a>, Yahoo Finance (KOSPI ^KS11·KOSEF 국고채10년 148070.KS 일별 종가). 시세는 차트를 열 때 조회합니다.</small></p>
-      </section>
-    </div>
-    <div class="glossary-modal breaktime-modal" id="rateMarketBreakTimeModal" hidden>
-      <div class="glossary-modal__backdrop" data-rate-market-breaktime-close></div>
-      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="rateMarketBreakTimeTitle">
-        <button class="glossary-modal__close" type="button" aria-label="닫기" data-rate-market-breaktime-close>×</button>
-        <p class="glossary-modal__label">BREAKTIME · 시장 변동성</p>
-        <h2 id="rateMarketBreakTimeTitle">시장 변동성 차트를 확장해 보세요</h2>
-        <p><b>확장 과제:</b> 기준금리 변동 차트에 주식·채권·원/달러 환율·금·가상자산처럼 서로 다른 시장의 변동성을 함께 표시해 보세요. 금리 변경일 전후뿐 아니라 일정한 월·주간 단위로 수익률과 변동성을 비교해야 합니다.</p>
-        <p><b>구현 힌트:</b> 각 자산의 가격을 같은 시작값(예: 100)으로 맞춘 뒤, 기간별 등락률 또는 이동 변동성을 별도 선·막대로 그려 보세요. 기준금리와 동시에 움직였다고 해서 원인과 결과가 증명되는 것은 아니므로, 데이터 출처·기간·환율 기준·거래일 차이도 화면에 표시하세요.</p>
-        <p><small>목표는 가격 방향을 예측하는 것이 아니라, 금리 변화 국면에서 자산별로 얼마나 다르게 흔들렸는지 관찰하는 것입니다.</small></p>
       </section>
     </div>
     <div class="glossary-modal breaktime-modal" id="presentValueBreakTimeModal" hidden>
@@ -2303,28 +2317,6 @@
           </table>
         </div>
         <p><b>확인할 점:</b> 할인율이나 기간이 길수록 같은 미래 금액의 현재 가치는 작아집니다. 이 차이가 DCF, 채권 가격, 투자안 평가의 핵심입니다.</p>
-      </section>
-    </div>
-
-    <div class="glossary-modal breaktime-modal" id="beforeQuantHistoryBreakTimeModal" hidden>
-      <div class="glossary-modal__backdrop" data-before-quant-history-breaktime-close></div>
-      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="beforeQuantHistoryBreakTimeTitle">
-        <button class="glossary-modal__close" type="button" aria-label="닫기" data-before-quant-history-breaktime-close>×</button>
-        <p class="glossary-modal__label">BREAKTIME · 핵심 구분</p>
-        <h2 id="beforeQuantHistoryBreakTimeTitle">규칙과 예측을 구분해 보세요</h2>
-        <p>앞에서 본 자산배분·가치평가·시장 효율성은 모두 “무엇을 확실히 알 수 있고, 무엇은 추정해야 하는가?”라는 질문으로 이어집니다.</p>
-        <div class="lesson-table-wrap">
-          <table class="lesson-table">
-            <thead><tr><th scope="col">상황</th><th scope="col">더 가까운 개념</th><th scope="col">스스로 물어볼 질문</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">목표 비중을 정하고 벗어날 때만 조정</th><td>자산배분·리밸런싱</td><td>목표 비중과 조정 기준을 미리 정했는가?</td></tr>
-              <tr><th scope="row">환율이 오를 것 같아 지금 매수·매도</th><td>마켓 타이밍</td><td>예측이 틀렸을 때의 기준과 비용은 무엇인가?</td></tr>
-              <tr><th scope="row">미래 이익을 할인해 적정 가격 추정</th><td>가치평가</td><td>성장률·할인율 가정이 바뀌면 결과는 얼마나 달라지는가?</td></tr>
-              <tr><th scope="row">과거 차트만으로 다음 가격 맞히기</th><td>검증이 필요한 가설</td><td>새 기간과 비용을 반영해도 신호가 남는가?</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p><b>한 줄 정리:</b> 퀀트의 출발점은 미래를 확신하는 예언이 아니라, 가정·규칙·비용을 드러내고 반복 검증하는 태도입니다.</p>
       </section>
     </div>
 
@@ -2382,7 +2374,7 @@
             <label>투자 원금 <output id="fxPrincipalLabel">10,000,000원</output><input id="fxPrincipal" type="range" min="1000000" max="50000000" step="1000000" value="10000000" /></label>
             <label>매입 환율 <output id="fxStartRateLabel">1,300원/USD</output><input id="fxStartRateInput" type="range" min="900" max="1800" step="10" value="1300" /></label>
             <label>현재 환율 <output id="fxCurrentRateLabel">1,400원/USD</output><input id="fxCurrentRate" type="range" min="900" max="1800" step="10" value="1400" /></label>
-            <label>달러 자산 수익률 <output id="fxAssetReturnLabel">+3.0%</output><input id="fxAssetReturn" type="range" min="-30" max="30" step="0.5" value="3" /></label>
+            <label>달러 자산 수익률(외화예금 이자 등) <output id="fxAssetReturnLabel">+3.0%</output><input id="fxAssetReturn" type="range" min="-30" max="30" step="0.5" value="3" /></label>
             <label>매수 환전비용 <output id="fxBuySpreadLabel">0.5%</output><input id="fxBuySpread" type="range" min="0" max="2" step="0.1" value="0.5" /></label>
             <label>매도 환전비용 <output id="fxSellSpreadLabel">0.5%</output><input id="fxSellSpread" type="range" min="0" max="2" step="0.1" value="0.5" /></label>
           </div>
@@ -2962,9 +2954,7 @@
     </script>
     <script>
       [
-        { modalId: "rateMarketBreakTimeModal", triggerId: "rateMarketBreakTimeTrigger", closeSelector: "[data-rate-market-breaktime-close]" },
         { modalId: "presentValueBreakTimeModal", triggerId: "presentValueBreakTimeTrigger", closeSelector: "[data-present-value-breaktime-close]" },
-        { modalId: "beforeQuantHistoryBreakTimeModal", triggerId: "beforeQuantHistoryBreakTimeTrigger", closeSelector: "[data-before-quant-history-breaktime-close]" },
         { modalId: "seventhLearningAssessmentModal", triggerId: "seventhLearningAssessmentTrigger", closeSelector: "[data-seventh-learning-assessment-close]" },
       ].forEach(({ modalId, triggerId, closeSelector }) => {
         const modal = document.getElementById(modalId);
@@ -3075,7 +3065,7 @@
           const guideValues = [min, (min + max) / 2, max];
           const chart = document.getElementById("fxRateChart");
           chart.setAttribute("aria-label", `현재 환율 ${format.format(currentRate)}원일 때 최종 원화 가치 ${format.format(Math.round(finalValue))}원`);
-          chart.innerHTML = `<title>환율별 최종 원화 가치</title>${guideValues.map((value) => `<line x1="${left}" y1="${y(value)}" x2="${width - right}" y2="${y(value)}" stroke="#dbe7f6"/><text x="8" y="${y(value) + 5}" fill="#63708a" font-size="12">${format.format(Math.round(value / 10000))}만원</text>`).join("")}<line x1="${left}" y1="${y(principal)}" x2="${width - right}" y2="${y(principal)}" stroke="#e69b00" stroke-width="2" stroke-dasharray="6 4"/><polygon points="${area}" fill="#315ff41c"/><polyline points="${points}" fill="none" stroke="#315ff4" stroke-width="4" stroke-linecap="round"/><line x1="${x(currentRate)}" y1="${top}" x2="${x(currentRate)}" y2="${height - bottom}" stroke="#b42318" stroke-dasharray="4 4"/><circle cx="${x(currentRate)}" cy="${y(finalValue)}" r="6" fill="#b42318" stroke="#fff" stroke-width="2"/><text x="${left}" y="${height - 12}" fill="#63708a" font-size="12">900원</text><text x="${width - right}" y="${height - 12}" fill="#63708a" font-size="12" text-anchor="end">1,800원/USD</text>`;
+          chart.innerHTML = `<title>환율별 최종 원화 가치</title>${guideValues.map((value) => `<line x1="${left}" y1="${y(value)}" x2="${width - right}" y2="${y(value)}" stroke="#dbe7f6"/><text x="8" y="${y(value) + 5}" fill="#63708a" font-size="13.2">${format.format(Math.round(value / 10000))}만원</text>`).join("")}<line x1="${left}" y1="${y(principal)}" x2="${width - right}" y2="${y(principal)}" stroke="#e69b00" stroke-width="2" stroke-dasharray="6 4"/><polygon points="${area}" fill="#315ff41c"/><polyline points="${points}" fill="none" stroke="#315ff4" stroke-width="4" stroke-linecap="round"/><line x1="${x(currentRate)}" y1="${top}" x2="${x(currentRate)}" y2="${height - bottom}" stroke="#b42318" stroke-dasharray="4 4"/><circle cx="${x(currentRate)}" cy="${y(finalValue)}" r="6" fill="#b42318" stroke="#fff" stroke-width="2"/><text x="${left}" y="${height - 12}" fill="#63708a" font-size="13.2">900원</text><text x="${width - right}" y="${height - 12}" fill="#63708a" font-size="13.2" text-anchor="end">1,800원/USD</text>`;
         };
         const open = () => { modal.hidden = false; draw(); closeButton?.focus(); };
         const close = () => { if (!modal.hidden) { modal.hidden = true; trigger.focus({ preventScroll: true }); } };
@@ -3747,13 +3737,12 @@
           reer: ["실질실효환율(REER)", "Real Effective Exchange Rate · 실질실효환율", ["실질실효환율은 한 나라의 통화가 여러 교역 상대국 통화와 비교해 어느 정도 경쟁력을 가졌는지 보여 주려는 지표입니다. 나라별 무역 비중을 반영하고, 물가 수준의 차이도 함께 고려합니다.", "한국의 관련 통계는 한국은행 경제통계시스템(ECOS)에서 확인할 수 있습니다. 지수의 기준시점, 비교 대상 국가, 명목·실질 구분에 따라 해석이 달라질 수 있습니다."], [["한국은행 경제통계시스템(ECOS)", "https://ecos.bok.or.kr/"]]],
           equity: ["주식", "Equity · 株式", "기업의 지분을 나타내는 자산입니다. 가치평가에서는 기업이 앞으로 만들 현금흐름과 배당, 성장 가능성, 비슷한 기업의 거래 가격을 함께 봅니다."],
           dcf: ["Discounted Cash Flow(DCF) 기반 기업가치", "Discounted Cash Flow · 현금흐름할인법", [
-            "Discounted Cash Flow(DCF) 기반 기업가치는 기업이 미래에 만들 것으로 예상하는 현금흐름을 현재 가치로 바꿔 모두 더한 뒤, 기업의 가치를 추정하는 방법입니다. 핵심은 시간의 가치와 이자율(수익률)입니다.",
-            "먼저 이렇게 계산한 값은 보통 기업 전체의 가치(기업가치)를 뜻합니다. 여기에서 순부채를 빼고 남는 현금을 더하는 방식으로 주주 몫의 가치를 추정한 다음, 주식 수로 나누면 주당 가치의 참고값을 얻을 수 있습니다.",
-            "오늘 받는 100만 원은 바로 이자를 벌 수 있고 받을 수 있다는 확실성도 더 큽니다. 예를 들어 오늘 100만 원을 연 5%로 운용하면 1년 뒤 105만 원이 됩니다. 즉 1년 뒤의 105만 원은 지금의 100만 원과 같은 가치로 볼 수 있습니다.",
-            "현금흐름은 미래에 들어올 돈이고, 할인율은 미래의 돈을 지금 가치로 바꿀 때 적용하는 비율입니다. 위 예시에서는 5%가 할인율입니다. 1년 뒤 105만 원을 5%로 할인하면 현재가치는 100만 원이 됩니다.",
-            "비행기표도 출발 직전에 사면 제값을 내지만, 6개월 뒤 출발하는 표는 기다리는 시간과 계획 변경 위험을 반영해 할인될 수 있습니다. 마찬가지로 미래 현금흐름도 시간과 위험만큼 가격을 낮춰 지금 기준의 가치로 계산합니다.",
-            "할인율을 몇 %로 정할지는 ‘이 돈을 다른 곳에 굴렸다면 벌 수 있었던 기회비용’과 미래 현금을 받지 못할 위험을 함께 반영합니다. 쉽게 말해 내가 요구하는 최소 기대수익률이 할인율의 출발점입니다.",
-            "첫째 기준선은 무위험 이자율입니다. 은행 예금이나 국채처럼 매우 안전한 곳에 돈을 뒀을 때 받을 수 있는 수익률을 참고합니다. 둘째는 위험 프리미엄입니다. 현금흐름이 불확실할수록 추가 수익을 더 요구하므로 할인율도 높아집니다. 셋째는 인플레이션입니다. 물가가 오르면 미래 돈의 구매력이 떨어져 할인율과 요구수익률에 영향을 줄 수 있습니다."
+            "한마디로 DCF는 회사가 앞으로 남길 돈을 오늘 기준의 가격으로 바꾸는 계산입니다. 매출 전체가 아니라 급여·재료비·설비투자 등을 내고 실제로 남는 현금을 사용합니다.",
+            "예를 들어 오늘 100만 원을 연 5%로 맡기면 1년 뒤 105만 원이 됩니다. 따라서 1년 뒤 받을 105만 원은 오늘의 100만 원과 비슷한 가치로 계산합니다. 미래 금액을 오늘 금액으로 바꿀 때 사용하는 비율이 할인율이며, 이 예에서는 5%입니다.",
+            "계산 순서는 세 단계입니다. ① 회사가 앞으로 매년 얼마의 현금을 남길지 예상합니다. ② 미래의 각 금액을 오늘의 가치로 바꿉니다. ③ 바꾼 금액을 모두 더합니다.",
+            "이 합계는 회사 전체의 가치입니다. 여기에서 갚아야 할 빚을 빼고 회사가 보유한 현금을 더하면 주주 몫을 구할 수 있습니다. 주주 몫을 전체 주식 수로 나누면 주당 가치의 참고값이 됩니다.",
+            "할인율은 안전한 예금·국채 수익률과 회사의 위험을 함께 반영해 정합니다. 미래에 돈을 벌 가능성이 불확실할수록 할인율을 높게 잡으며, 할인율이 높아지면 계산된 기업가치는 낮아집니다.",
+            "DCF 계산값은 확정된 주가가 아닙니다. 예상 현금과 할인율을 조금만 바꿔도 결과가 달라지므로, 낙관적인 경우·보통인 경우·나쁜 경우를 나누어 비교합니다."
           ]],
           ddm: ["배당할인모형(DDM)", "Dividend Discount Model · 배당현재가치모형", [
             "배당할인모형(DDM)은 주주에게 앞으로 지급될 것으로 예상되는 배당을 ‘지금 당장 내 손에 있다면 얼마의 가치가 있을까?’로 바꾼 뒤 모두 더해 주식 가치를 추정하는 방법입니다. DCF가 기업 전체의 현금흐름을 보는 방법이라면, DDM은 주주에게 실제로 돌아오는 배당에 초점을 둡니다.",
@@ -3775,11 +3764,10 @@
           "peer-price": ["유사 기업 대비 가격", "Comparable Company Analysis", "사업 구조·성장성·규모·부채가 비슷한 상장사의 PER·PBR·EV/EBITDA 등을 비교해 상대적인 가격 수준을 살피는 방법입니다. 단순히 배수가 낮다는 이유만으로 저평가라고 단정할 수는 없습니다."],
           bond: ["채권", "Bond · 債券", "정부·기업 등에 돈을 빌려주고 이자와 원금을 받기로 한 증서입니다. 가치와 가격은 시장금리, 만기, 발행자의 상환 능력에 따라 달라집니다."],
           "discounted-cf": ["현금흐름 할인", "Present Value Discounting · 현재가치 할인", [
-            "미래에 받을 돈을 ‘지금 당장 내 손에 있다면 얼마의 가치가 있을까?’로 계산해 낮추는 것입니다. 이 개념의 핵심은 시간의 가치와 이자율(수익률)입니다.",
-            "오늘 받는 100만 원은 바로 이자를 벌 수 있고 받을 수 있다는 확실성도 더 큽니다. 예를 들어 오늘 100만 원을 연 5%로 운용하면 1년 뒤 105만 원이 됩니다. 즉 1년 뒤의 105만 원은 지금의 100만 원과 같은 가치로 볼 수 있습니다.",
-            "현금흐름은 미래에 들어올 돈이고, 할인율은 미래의 돈을 지금 가치로 바꿀 때 적용하는 비율입니다. 위 예시에서는 5%가 할인율입니다. 1년 뒤 105만 원을 5%로 할인하면 현재가치는 100만 원이 됩니다.",
-            "비행기표도 출발 직전에 사면 제값을 내지만, 6개월 뒤 출발하는 표는 기다리는 시간과 계획 변경 위험을 반영해 할인될 수 있습니다. 마찬가지로 미래 현금흐름도 시간과 위험만큼 가격을 낮춰 지금 기준의 가치로 계산합니다.",
-            "채권에서는 미래 쿠폰과 만기 원금을 시장이 요구하는 수익률로 할인해 오늘의 가격을 계산합니다. 요구수익률이 오르면 같은 현금흐름의 현재 가치는 대체로 낮아집니다."
+            "현금흐름 할인은 미래에 받을 돈을 오늘 기준으로 얼마인지 다시 계산하는 방법입니다.",
+            "예를 들어 오늘 100만 원을 연 5%로 맡기면 1년 뒤 105만 원이 됩니다. 반대로 계산하면 1년 뒤 받을 105만 원의 오늘 가치는 약 100만 원입니다.",
+            "이때 미래 금액을 오늘 금액으로 바꾸는 5%가 할인율입니다. 할인율이 높을수록 미래에 받을 돈의 오늘 가치는 작아집니다.",
+            "채권도 같은 방식으로 계산합니다. 앞으로 받을 이자와 만기 원금을 오늘 가치로 각각 바꾼 뒤 모두 더해 채권 가격을 구합니다."
           ]],
           ytm: ["만기수익률(YTM)", "Yield to Maturity", "채권을 현재 가격에 사서 만기까지 보유하고 약속된 이자와 원금을 모두 받는다고 가정할 때의 연환산 수익률입니다. 중도 매도 가격, 세금, 부도 가능성은 별도로 고려해야 합니다."],
           "credit-spread": ["신용스프레드 분석", "Credit Spread Analysis", "회사채 수익률이 비슷한 만기의 국채 수익률보다 얼마나 더 높은지 비교하는 분석입니다. 차이가 커지면 시장이 신용위험·유동성 위험을 더 크게 보는 신호일 수 있습니다."],
@@ -3844,8 +3832,8 @@
         };
         const people = {
           markowitz: ["해리 마코위츠", "Harry Markowitz · 경제학자", ["해리 마코위츠는 포트폴리오 전체의 위험을 수학적으로 다룬 경제학자입니다.", "1952년 논문 <Portfolio Selection>에서 기대수익률뿐 아니라 수익률의 분산과 자산 간 공분산을 함께 보는 평균-분산 모형, 즉 현대 포트폴리오 이론(Modern Portfolio Theory, MPT)의 토대를 제시했습니다.", "핵심은 ‘좋은 종목을 하나 고르는 일’보다 서로 다르게 움직이는 자산을 조합해 전체 위험을 관리해야 한다는 점입니다. 이 연구는 분산투자와 효율적 투자선의 출발점이 되었고, 그는 1990년 노벨 경제학상을 공동 수상했습니다."]],
-          fama: ["유진 파마", "Eugene F. Fama · 경제학자", ["유진 파마는 시카고대학교의 금융경제학자로, 자산가격 연구에 큰 영향을 준 학자입니다.", "1970년 논문에서 효율적 시장 가설(Efficient Market Hypothesis, EMH)을 체계적으로 정리했습니다. 이는 이용 가능한 정보가 가격에 빠르게 반영되므로, 공개된 과거 정보만으로 지속적으로 초과수익을 내기 어렵다는 가설입니다.", "이 가설은 인덱스 투자, 액티브 운용 성과 검증, 퀀트 백테스트의 기준 질문에 큰 영향을 주었습니다. ‘어떤 전략도 절대 불가능하다’는 뜻은 아니며, 정보 범위·거래비용·위험 조정 뒤에도 효과가 남는지를 검증하자는 출발점입니다."]],
-          malkiel: ["버턴 말키엘", "Burton G. Malkiel · 경제학자", ["버턴 말키엘은 프린스턴대학교 경제학자이며, 개인 투자자에게도 널리 읽힌 《A Random Walk Down Wall Street》의 저자입니다.", "그는 가격 예측의 어려움과 비용의 중요성을 대중적으로 설명하며, ‘눈가린 원숭이의 다트’ 비유로 알려졌습니다. 이 비유는 개별 종목 선택이 시장 평균을 꾸준히 이기기 어렵다는 문제를 강조합니다.", "중요한 메시지는 유명한 종목 추천이나 차트 패턴만으로 성과를 단정하지 말고, 분산·비용·위험을 함께 보라는 것입니다. 다트 비유 자체가 모든 능동 전략이 무의미하다는 증명은 아닙니다."]],
+          fama: ["유진 파마", "Eugene F. Fama · 경제학자", ["유진 파마는 주식 가격에 정보가 어떻게 반영되는지를 연구한 시카고대학교 경제학자입니다.", "쉽게 말해 기업의 좋은 실적이 발표되면 많은 투자자가 거의 동시에 그 소식을 보고 주식을 삽니다. 그러면 가격도 빠르게 오르기 때문에, 뒤늦게 같은 뉴스를 보고 싸게 사기는 어렵습니다. 파마는 이처럼 이미 알려진 정보가 주가에 빠르게 반영된다는 생각을 효율적 시장 가설(Efficient Market Hypothesis, EMH)로 정리했습니다.", "이 말은 누구도 주식으로 돈을 벌 수 없다는 뜻이 아닙니다. 다만 과거 차트나 이미 모두가 아는 뉴스만으로 시장 평균보다 계속 높은 수익을 내기는 어렵다는 의미입니다. 투자 전략을 평가할 때는 단순한 시장 지수보다 실제로 더 나았는지, 수수료를 빼고도 이익이 남았는지, 큰 손실은 없었는지를 함께 확인해야 합니다."]],
+          malkiel: ["버턴 말키엘", "Burton G. Malkiel · 경제학자", ["버턴 말키엘은 내일 오를 주식을 계속 맞히는 일이 매우 어렵다고 설명한 경제학자입니다. 《월가의 랜덤워크》라는 책으로 널리 알려졌습니다.", "‘눈가린 원숭이의 다트’는 쉬운 비유입니다. 전문가가 고른 종목과 아무렇게나 고른 종목을 비교했을 때 전문가가 언제나 이기는 것은 아니라는 뜻입니다. 원숭이에게 실제로 투자를 맡기라는 말은 아닙니다.", "기억할 점은 간단합니다. 유명인의 추천 하나만 믿고 전 재산을 넣지 말고, 여러 종목에 나누며, 사고팔 때 드는 비용도 확인해야 합니다. 직접 종목을 골라 돈을 벌 수는 있지만 매번 성공할 수는 없습니다."]],
           buffett: ["워런 버핏", "Warren Buffett · 투자자", ["워런 버핏은 버크셔 해서웨이를 이끈 것으로 알려진 미국의 장기 가치투자자입니다.", "그는 특정 수학 모형 하나를 발표한 학자라기보다, 기업의 수익력·경쟁우위·경영진·가격을 함께 살피는 가치투자 원칙으로 유명합니다.", "그의 장기 성과 사례는 시장 효율성 논의에서 자주 언급되지만, 한 개인의 성과만으로 시장이 항상 비효율적이라고 결론낼 수는 없습니다. 학습에서는 장기 투자, 안전마진, 투자 과정의 중요성을 생각해 보는 사례로 활용합니다."]],
           simons: ["제임스 사이먼스", "James H. Simons · 수학자·투자자", ["제임스 사이먼스는 수학 연구자 출신으로, 1978년 르네상스 테크놀로지스를 세운 퀀트 투자자입니다.", "그는 공개된 하나의 단일 이론보다, 수학·통계·데이터·컴퓨터 과학을 결합해 반복적으로 가설을 검증하는 정량투자 조직을 만든 인물로 알려져 있습니다.", "중요한 점은 비밀 공식을 따라 하는 것이 아니라 데이터 품질, 거래비용, 위험 한도, 시장 변화까지 포함해 연구 과정을 운영했다는 데 있습니다. 공개되지 않은 내부 전략과 과거 성과는 미래 수익을 보장하지 않습니다."]],
           bachelier: ["루이 바슐리에", "Louis Bachelier · 수학자", ["루이 바슐리에는 프랑스 수학자로, 1900년 박사논문 <Théorie de la spéculation>에서 가격 움직임과 옵션을 확률로 다룬 선구자입니다.", "그의 연구는 가격 변화를 무작위 과정으로 모델링하고 옵션 가격을 수학적으로 생각하는 초기 시도였습니다.", "오늘날의 가정과는 차이가 있지만, 금융시장을 확률·수학으로 분석하는 수리금융의 출발점 가운데 하나로 평가됩니다."]],
@@ -3887,7 +3875,7 @@
           personMatcher.lastIndex = 0;
           const fragment = document.createDocumentFragment();
           let cursor = 0;
-          text.replace(personMatcher, (name, offset) => {
+          text.replace(personMatcher, (match, name, offset) => {
             fragment.append(text.slice(cursor, offset));
             const button = document.createElement("button");
             button.type = "button";
@@ -3895,8 +3883,8 @@
             button.dataset.person = personAliases[name];
             button.textContent = name;
             fragment.append(button);
-            cursor = offset + name.length;
-            return name;
+            cursor = offset + match.length;
+            return match;
           });
           fragment.append(text.slice(cursor));
           node.replaceWith(fragment);
@@ -4055,13 +4043,13 @@
     <script>
       const relocateNoCodeQuantPlatformLesson = () => {
         const noCodeQuantPlatformLesson = document.getElementById("noCodeQuantPlatformLesson");
-        const referenceLesson = document.getElementById("referenceLesson");
-        if (noCodeQuantPlatformLesson && referenceLesson) referenceLesson.before(noCodeQuantPlatformLesson);
+        const leanLesson = document.getElementById("leanLesson");
+        if (noCodeQuantPlatformLesson && leanLesson) leanLesson.before(noCodeQuantPlatformLesson);
       };
       const relocateLeanLessonToBottom = () => {
         const leanLesson = document.getElementById("leanLesson");
-        const referenceLesson = document.getElementById("referenceLesson");
-        if (leanLesson && referenceLesson) referenceLesson.after(leanLesson);
+        const lessonList = leanLesson?.closest(".lesson-list");
+        if (leanLesson && lessonList) lessonList.append(leanLesson);
       };
       const relocateAssetAllocationTimingLesson = () => {
         const assetAllocationTimingLesson = document.getElementById("assetAllocationTimingLesson");
@@ -4121,12 +4109,16 @@
           const allValues = prices.concat(bands.filter(Boolean).flatMap((band) => [band.upper, band.lower]));
           const min = Math.floor(Math.min(...allValues) - 1);
           const max = Math.ceil(Math.max(...allValues) + 1);
-          const left = 48, right = 16, top = 16, bottom = 28, width = 720 - left - right, height = 230 - top - bottom;
+          const left = 48, right = 105, top = 16, bottom = 28, width = 720 - left - right, height = 230 - top - bottom;
           const x = (index) => left + index / (prices.length - 1) * width;
           const y = (value) => top + (max - value) / (max - min) * height;
           const points = (key) => prices.map((price, index) => ({ x: x(index), y: key === "price" ? y(price) : bands[index] ? y(bands[index][key]) : null }));
+          const upperPoints = points("upper").filter((point) => point.y !== null);
+          const lowerPoints = points("lower").filter((point) => point.y !== null);
+          const bandArea = [...upperPoints, ...[...lowerPoints].reverse()].map((point) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
           const grid = [min, (min + max) / 2, max].map((value) => `<line class="grid" x1="${left}" y1="${y(value)}" x2="${720 - right}" y2="${y(value)}"/><text class="axis" x="6" y="${y(value) + 4}">${value.toFixed(0)}</text>`).join("");
-          chart.innerHTML = `${grid}<path class="upper" d="${path(points("upper"))}"/><path class="lower" d="${path(points("lower"))}"/><path class="mean" d="${path(points("mean"))}"/><path class="price" d="${path(points("price"))}"/><circle class="last-dot" cx="${x(prices.length - 1)}" cy="${y(lastPrice)}" r="5"/><text class="axis" x="${left}" y="${222}">9일 전</text><text class="axis" x="${720 - right - 34}" y="${222}">오늘</text>`;
+          const labelX = 720 - right + 9;
+          chart.innerHTML = `${grid}<polygon class="band-area" points="${bandArea}"/><path class="upper" d="${path(points("upper"))}"/><path class="lower" d="${path(points("lower"))}"/><path class="mean" d="${path(points("mean"))}"/><path class="price" d="${path(points("price"))}"/><circle class="last-dot" cx="${x(prices.length - 1)}" cy="${y(lastPrice)}" r="5"/><text class="line-label band-label" x="${labelX}" y="${y(latest.upper) + 4}">상단 밴드</text><text class="line-label mean-label" x="${labelX}" y="${y(latest.mean) + 4}">5일 평균</text><text class="line-label band-label" x="${labelX}" y="${y(latest.lower) + 4}">하단 밴드</text><text class="line-label price-label" x="${x(prices.length - 1) - 47}" y="${Math.max(15, y(lastPrice) - 9)}">가격선</text><text class="axis" x="${left}" y="${222}">9일 전</text><text class="axis" x="${720 - right - 28}" y="${222}">오늘</text>`;
           output.value = lastPrice;
           output.textContent = lastPrice;
           priceEl.textContent = lastPrice.toFixed(0);
@@ -4144,7 +4136,14 @@
         render();
       })();
     </script>
-    <script src="assets/growth-potential-rate.js?v=20260919-multi-asset"></script>
+    <script src="../assets/day4-project-schedule.js?v=20260919-100-120-hours"></script>
+    <script>
+      (() => {
+        const schedule = document.getElementById('day4ProjectSchedule');
+        if (schedule && window.Day4ProjectSchedule) schedule.innerHTML = window.Day4ProjectSchedule.render();
+      })();
+    </script>
+    <script src="assets/growth-potential-rate.js?v=20260919-small-text110"></script>
     <script src="assets/app-shell.js"></script>
     <script src="../assets/modal-fit.js?v=20260905-simulator-specific-hints"></script>
     <script src="../assets/click-logger.js?v=20260905"></script>
