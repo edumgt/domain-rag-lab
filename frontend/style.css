@@ -1257,10 +1257,27 @@ body.right-panel-open .ref-panel { transform: translateX(0); }
 .theory-lesson h2 { margin: 0 0 12px; font-size: 21px; }
 .theory-lesson p { margin: 0 0 10px; color: var(--text-2); font-size: 17.6px; line-height: 1.8; }
 .theory-lesson p:last-child { margin-bottom: 0; }
+.day4-projects .theory-lesson-body > ul > li > strong:first-child { color: #16835d; font-size: 18px; font-weight: 850; }
+.day4-projects .theory-lesson-body > ul > li > ol > li:not(.has-implementation-detail)::after { display: block; margin-top: 3px; color: #8b5e3c; font-size: 14.5px; font-weight: 800; content: "기술스택 및 구현방안"; }
+.day4-projects .implementation-detail { display: block; margin-top: 3px; color: #8b5e3c; font-size: 14.5px; font-weight: 800; }
+.day4-projects .implementation-detail a { color: inherit; text-decoration: underline; }
+.day4-projects .aws-operations-stack { margin: 8px 0 14px; padding: 10px 12px; border: 1px solid #dcc9b7; border-radius: 10px; background: #fffaf5; }
+.day4-projects .aws-operations-stack > span { display: block; margin-top: 3px; }
 .lesson-accordion-toggle { position: absolute; z-index: 1; top: 16px; right: 16px; display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 1px solid #bfdbfe; border-radius: 999px; background: #eff6ff; color: var(--accent); font: 800 18px/1 var(--font); cursor: pointer; transition: transform .16s ease, background .16s ease; }
 .lesson-accordion-toggle:hover { background: var(--accent-dim); }
 .theory-lesson.is-collapsed .theory-lesson-body { display: none; }
 .theory-lesson.is-collapsed h2 { margin-bottom: 0; }
+.xai-lesson .theory-lesson-body h3 { margin: 24px 0 10px; color: var(--text-1); font-size: 19px; }
+.xai-lesson .theory-lesson-body ul,
+.xai-lesson .theory-lesson-body ol { margin: 0 0 16px; padding-left: 24px; color: var(--text-2); font-size: 17px; line-height: 1.75; }
+.xai-table-wrap { margin: 14px 0 20px; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+.xai-table-wrap table { width: 100%; min-width: 620px; border-collapse: collapse; background: var(--surface); }
+.xai-table-wrap th,
+.xai-table-wrap td { padding: 11px 14px; border-top: 1px solid var(--line); text-align: left; vertical-align: top; }
+.xai-table-wrap thead th { border-top: 0; color: var(--accent); background: var(--accent-dim2); }
+.xai-lesson blockquote { margin: 20px 0 0; padding: 14px 18px; border-left: 4px solid var(--accent); border-radius: 8px; background: var(--accent-dim2); }
+.xai-lesson blockquote p { margin: 0; }
+.xai-lesson blockquote p + p { margin-top: 8px; }
 .theory-lesson.is-collapsed .lesson-accordion-toggle { transform: rotate(180deg); }
 .accordion-summary { position: relative; }
 .section-accordion-toggle { position: absolute; z-index: 3; top: 18px; right: 18px; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 1px solid rgba(186, 230, 253, .65); border-radius: 999px; background: rgba(15, 23, 42, .34); color: #e0f2fe; cursor: pointer; transition: background .16s ease, transform .16s ease; }

@@ -159,7 +159,6 @@
         ['블랙 스완: 평소 모형 밖의 큰 충격에 대비하기', ['블랙 스완(Black Swan)은 평소의 경험과 통상적인 예측 모형이 놓치기 쉬운데, 발생하면 시장과 사회에 매우 큰 영향을 주는 사건을 가리키는 비유입니다. 나심 니콜라스 탈레브(Nassim Nicholas Taleb)가 2007년 책 《블랙 스완》에서 널리 알렸습니다. 유럽인이 “백조는 모두 하얗다”고 여겼지만 오스트레일리아에서 검은 백조가 발견된 일에서 이름을 가져왔습니다.', '탈레브가 말한 핵심은 ① 당시의 기대 밖에 있는 예외적 사건 ② 매우 큰 파급효과 ③ 사건 뒤에는 사람들이 “원래 알 수 있었다”고 이야기를 만들어 설명하는 사후 합리화입니다. 따라서 블랙 스완은 수학적으로 절대 예측할 수 없는 사건만을 뜻하지는 않습니다. 무엇을 당시 정보로 예상할 수 있었는지에 따라 분류에는 논쟁이 있을 수 있습니다.', '예를 들어 9·11 테러, 2008년 글로벌 금융위기, 2020년 코로나19 팬데믹은 금융시장의 큰 충격 사례로 자주 언급됩니다. 다만 어떤 사건이 엄밀히 블랙 스완인지에는 견해 차이가 있습니다. 중요한 학습점은 특정 사건의 이름을 맞히는 것이 아니라, 과거 평균과 정상 분포만 믿을 때 큰 손실 위험을 과소평가할 수 있다는 점입니다.', '위험관리는 블랙 스완을 정확히 맞히려 하기보다, 손실 한도·분산·유동성 확보·과도한 레버리지 제한·스트레스 시나리오로 견디는 힘을 만드는 데 초점을 둡니다. 회색 코뿔소(Gray Rhino)는 부채 급증처럼 위험이 눈앞에 보이는데도 무시하는 경우를, 하얀 코끼리(White Elephant)는 비용은 많이 들지만 효용이 낮아 부담이 되는 자산·사업을 비유합니다.']],
         ['국내 3개 페어로 보는 과거 신호: 삼성전자·삼성전자우, 카카오·NAVER, 기아·현대차', ['2023년 8월 1일부터 2026년 8월 7일까지의 조정 종가를 이용해, 두 가격의 로그 차이를 120거래일 평균과 표준편차로 표준화했습니다. Z-점수가 -2 이하이면 첫 종목 매수·둘째 종목 매도, +2 이상이면 첫 종목 매도·둘째 종목 매수라는 가상 신호를 기록하고, Z가 0을 통과하면 가상 청산으로 보았습니다. 당일 종가를 보고 같은 날 체결할 수 없으므로 이는 과거 신호를 읽는 연습일 뿐입니다.', '삼성전자·삼성전자우는 최근 120거래일 수익률 상관계수가 0.96으로 세 쌍 중 가장 높았지만, 2025년 7월의 “삼성전자 매도·삼성전자우 매수” 가상 신호는 2026년 4월까지 이어져 단순 계산상 -16.5%였습니다. 카카오·NAVER는 같은 인터넷 플랫폼 범주라도 기업별 이슈가 달라 신호의 보유기간과 결과가 달랐고, 기아·현대차는 2025년 9월 “기아 매수·현대차 매도” 가상 신호가 2026년 7월 청산 기준 -38.5%로 나타났습니다.', '이 사례의 핵심은 매수·매도 날짜를 외우는 것이 아니라, 높은 상관관계나 ±2 Z-점수가 수익을 보장하지 않는다는 점입니다. 실제 검토에서는 다음 거래일 체결가, 수수료·세금·대차료, 공매도 가능 여부, 손절선과 최대 보유기간을 넣고 표본 밖 기간에서 다시 검증해야 합니다. 세 쌍의 전체 신호표와 재현 코드는 등록 문서 “국내 주식 페어 트레이딩: 최근 3년 일봉으로 보는 교육용 사례”에서 확인할 수 있습니다.']],
         ['분산투자는 왜 필요한가요?', ['서로 다른 방식으로 움직이는 자산을 섞으면 한 자산의 하락이 전체 포트폴리오에 미치는 충격을 줄일 수 있습니다.', '이를 판단할 때 상관관계를 봅니다. 상관관계가 낮다는 것은 두 자산이 같은 방향으로만 움직이지 않을 가능성이 있다는 뜻입니다.', '자산을 많이 담는 것만으로는 충분하지 않습니다. 비슷한 산업·국가에 몰려 있으면 실제로는 한 방향으로 움직일 수 있습니다.']],
-        ['포지션과 포트폴리오는 무엇이 다를까요?', ['포지션(position)은 한 상품에서 내가 현재 어떤 거래 상태에 있는지를 뜻합니다. 예를 들어 삼성전자 주식 10주를 보유한 상태, KOSPI 200 선물을 매도한 상태, 풋옵션을 매수한 상태가 각각 하나의 포지션입니다. 포지션을 잡는다는 것은 거래를 시작하는 것이고, 청산한다는 것은 반대 거래로 그 상태를 끝내는 것입니다.', '포트폴리오(portfolio)는 내가 가진 여러 자산과 포지션을 모두 합친 전체 바구니입니다. 예를 들어 국내 주식 ETF 40%, 채권 ETF 40%, 현금 15%, 금 ETF 5%와 일부 선물 헤지 포지션을 함께 보유한다면, 이 전체 구성이 하나의 포트폴리오입니다.', '쉽게 말하면 포지션은 “한 칸의 거래 상태”, 포트폴리오는 “그 칸을 모두 모은 투자 바구니”입니다. 포트폴리오 위험을 볼 때는 주식·채권 같은 현물 자산뿐 아니라 선물·옵션 포지션이 전체 손실을 줄이는지, 오히려 레버리지로 위험을 키우는지도 함께 확인해야 합니다.']],
         ['알파와 베타를 포함해 위험을 읽는 여섯 가지 숫자', ['베타(beta)는 시장이 1% 움직일 때 전략·종목이 평균적으로 얼마나 민감하게 움직였는지를 나타내는 시장 노출도입니다. 벤치마크를 KOSPI 200으로 정했을 때 베타가 1이면 시장과 비슷한 폭, 1보다 크면 더 큰 폭으로, 음수면 반대 방향으로 움직이는 경향을 뜻합니다. 과거 회귀분석에서 나온 값이므로 미래에도 유지된다는 보장은 없습니다.', '알파(alpha)는 같은 베타와 위험을 감수했을 때 벤치마크 또는 자본자산가격결정모형(CAPM)이 설명하는 수준을 넘어선 수익을 뜻합니다. 간단히 실제 수익률에서 무위험수익률과 베타를 반영한 기대수익률을 뺀 값으로 생각할 수 있습니다. 양(+)의 알파는 기간·비용·벤치마크를 맞춘 뒤에도 초과성과가 있었음을 뜻할 뿐, 미래 수익 보장이나 운용자의 실력 증명은 아닙니다.', '따라서 “알파 팩터는 새로운 알고리즘, 베타 팩터는 이미 알려진 알고리즘”이라는 구분은 표준 금융 용어가 아닙니다. 퀀트에서 알파 신호는 벤치마크와 알려진 공통 팩터 노출을 통제한 뒤에도 남는 초과수익을 기대하게 하는 예측 신호를 가리킬 수 있고, 베타 팩터는 시장·가치·규모·모멘텀처럼 널리 알려진 공통 수익 원천에 대한 노출을 뜻합니다. 다만 처음에는 알파처럼 보이던 규칙이 연구·공개·복제로 널리 알려지고 저비용으로 구현되면, 시간이 지나 ‘팩터 베타’ 또는 ‘대체 베타’로 재분류되는 경우는 있습니다. 이것은 새로움 자체가 정의가 아니라, 수익을 설명하는 모형과 복제 가능성이 달라졌다는 뜻입니다.', '변동성은 수익률이 평소에 얼마나 크게 흔들렸는지, MDD(최대낙폭)는 최고점에서 가장 크게 떨어진 폭을 보여 줍니다. 샤프 비율은 감수한 변동성에 비해 수익이 어느 정도였는지 비교합니다. 알파·베타·변동성·MDD·샤프 비율은 서로 대체하는 점수가 아니라, 같은 기간·같은 비용·같은 벤치마크에서 함께 해석해야 합니다.']],
         ['수익률보다 먼저 물어볼 질문', ['“얼마나 벌었나?”와 함께 “얼마나 크게, 얼마나 오래 손실을 견뎠나?”를 봐야 합니다.', '같은 수익률이라도 손실 폭이 작고 회복 과정이 안정적인 포트폴리오가 어떤 사람에게는 더 적합할 수 있습니다.', '내 투자 기간, 목표, 손실 허용 범위가 위험 지표를 해석하는 기준입니다.']],
         ['한국 ETF 시장에서 위험을 읽는 법', ['KRX ETP 시장에는 2026년 기준 1,000개가 넘는 ETF와 여러 운용사의 상품이 상장되어 있습니다. 상품이 많다는 것은 선택지가 많다는 뜻이지, 비슷한 이름의 ETF를 여러 개 사면 자동으로 분산된다는 뜻은 아닙니다.', '예를 들어 반도체·2차전지·방산·조선·금융처럼 특정 산업을 담은 ETF는 관련 업황과 몇 개 대형 종목에 함께 흔들릴 수 있습니다. 단일종목 레버리지·인버스 ETF는 일간 수익률을 목표 배수로 추적하므로 장기 보유 때 기초자산의 단순 누적 수익률과 차이가 커질 수 있습니다.', '실제 매수 전에는 KRX ETF/ETN 정보에서 기초자산, 추적배수, 운용사, NAV·iNAV, 거래량과 괴리율을 확인하세요. 괴리율이 양수면 시장가격이 순자산가치보다 높게 거래될 수 있다는 뜻이며, 특히 장 마감 무렵이나 해외자산 ETF에서는 주의가 필요합니다.']],
@@ -1996,16 +1995,31 @@ KOSDAQ|웹젠|게임`,
           <div class="theory-title-side"><section class="theory-goal"><strong>오늘의 학습 목표</strong><p>${escHtml(lesson.goal)}</p></section><section class="lesson-dashboard" aria-label="오늘의 학습 대시보드"><div><span>READ</span><strong>${lesson.lessons.length}</strong><small>개념 카드</small></div><div><span>KEYWORDS</span><strong>${lesson.keywords.length}</strong><small>핵심 용어</small></div><div><span>CHECK</span><strong><i class="fa-solid fa-pen"></i></strong><small>마무리 질문</small></div></section></div>
         </div>
         <p class="glossary-hint"><i class="fa-solid fa-circle-info"></i> 점선 밑줄 용어를 누르면 상세 용어 설명이 열립니다.</p>
+        ${lesson.day === 4 ? addDay4AwsOperationsStacks(expandDay4IndicatorProject(renderDay4Projects()))
+          .replace('<li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 관심 종목·투자 아이디어·의사결정 기록과 사후 성과 재검토 일지 관리<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Vanilla JS</span></li>', '')
+          .replace('<span class="implementation-detail">기술스택 및 구현방안: RDBMS · VectorDB · FastAPI</span>', '')
+          .replace('<strong>목표 기능의 세부 기능 5:</strong> 포트폴리오 및 투자 이력과 관련 지식 연결', '<strong>목표 기능의 세부 기능 4:</strong> 포트폴리오 및 투자 이력과 관련 지식 연결')
+          .replace('<strong>목표 기능의 세부 기능 6:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행', '<strong>목표 기능의 세부 기능 5:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행')
+          .replace('<strong>목표 기능의 세부 기능 7:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명', '<strong>목표 기능의 세부 기능 6:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명')
+          .replace('<span class="implementation-detail">기술스택 및 구현방안: ApexCharts · AG Grid · Vanilla JS</span>', '')
+          .replace('<li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 벤치마크 대비 초과성과와 종목·자산·전략별 수익·위험 기여도 분석<span class="implementation-detail">기술스택 및 구현방안: RDBMS · AG Grid · ApexCharts</span></li>', '')
+          .replace('<strong>목표 기능의 세부 기능 3:</strong> 퀀트 신호를 매수·매도·보유 의견으로 변환', '<strong>목표 기능의 세부 기능 2:</strong> 퀀트 신호를 매수·매도·보유 의견으로 변환')
+          .replace('<strong>목표 기능의 세부 기능 4:</strong> 모의 주문 체결 및 포트폴리오 운용', '<strong>목표 기능의 세부 기능 3:</strong> 모의 주문 체결 및 포트폴리오 운용')
+          .replace('기술스택 및 구현방안: RDBMS · FastAPI · Docker', '기술스택 및 구현방안: RDBMS · FastAPI · Apache Airflow')
+          .replace('기술스택 및 구현방안: Amazon SageMaker AI Training Jobs · Docker · EC2', '기술스택 및 구현방안: Amazon SageMaker AI Training Jobs · ECR + Lambda + API GW · EC2')
+          .replace('기술스택 및 구현방안: RDBMS · FastAPI · Docker', '기술스택 및 구현방안: RDBMS · FastAPI · ECR + Lambda + API GW')
+          .replace('기술스택 및 구현방안: RDBMS · FastAPI · ApexCharts', '기술스택 및 구현방안: <a href="https://github.com/edumgt/stock-coin-trade" target="_blank" rel="noopener noreferrer">stock-coin-trade</a> · FastAPI · ApexCharts')
+          .replace('기술스택 및 구현방안: Amazon Bedrock · FastAPI · Vanilla JS', '기술스택 및 구현방안: <a href="https://github.com/quantconnect" target="_blank" rel="noopener noreferrer">QuantConnect</a> · FastAPI · Vanilla JS')
+          .replace('기술스택 및 구현방안: RDBMS · TA-Lib · FastAPI', '기술스택 및 구현방안: <a href="https://github.com/edumgt/docker-class" target="_blank" rel="noopener noreferrer">docker-class</a> · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a> · FastAPI') : ''}
         ${dayRoadmap}
         ${renderDay1ButlerContent(lesson.day)}
         ${dayVisual}
         ${learningVisual}
-        ${lesson.day === 4 ? renderGreekLettersGuide() : ''}
         ${renderExtendedDailyGuide(lesson.day)}
         ${lesson.day === 1 ? renderLendingFunnel() : ''}
         ${lesson.day === 1 ? renderAiHubRagCase() : ''}
         ${productJourney}
-        <div class="theory-lesson-list">${lessonBlocks}</div>
+        <div class="theory-lesson-list">${lessonBlocks}${renderDay3XaiLesson(lesson.day)}</div>
         <section class="theory-keywords"><strong>핵심 단어</strong><div>${lesson.keywords.map(word => `<span>${escHtml(word)}</span>`).join('')}</div></section>
         <div class="theory-actions">
           <button class="content-cta" data-theory-rag="${escHtml(lesson.ragPrompt)}"><i class="fa-solid fa-comments"></i> 이 내용 RAG에게 질문하기</button>
@@ -2025,8 +2039,78 @@ KOSDAQ|웹젠|게임`,
     });
   }
 
-  function renderGreekLettersGuide() {
-    return `<section class="theory-lesson greek-letters-guide" aria-label="금융과 수학에서 자주 사용하는 주요 그리스 문자"><span>01</span><div class="theory-lesson-content"><h2>금융과 수학에서 자주 사용하는 주요 그리스 문자</h2><div class="theory-lesson-body"><p>금융과 수학에서 자주 사용하는 주요 그리스 문자를 정리해 드립니다.</p><p>수학에서는 <b>변수, 각도, 연산자</b>의 용도로, 금융(특히 옵션 투자의 위험 지표인 '파생상품 파생지수' 및 투자론)에서는 <b>리스크 및 변동성 측정</b> 용도로 주로 쓰입니다.</p><h3>1. 금융에서 쓰이는 주요 그리스 문자 (The Greeks)</h3><p>금융(특히 파생상품 옵션 거래)에서 그리스 문자는 '기초자산의 가격이나 조건이 변할 때 옵션 가격이 얼마나 변하는가'를 나타내는 감도 지표로 사용됩니다.</p><div class="lesson-table-wrap"><table class="lesson-table"><thead><tr><th>기호</th><th>이름</th><th>금융에서의 의미</th></tr></thead><tbody><tr><td><b>β</b></td><td><b>베타 (Beta)</b></td><td>시장 전체 대비 특정 주식의 <b>민감도(변동성)</b>. (예: β=1.5이면 시장보다 1.5배 더 등락)</td></tr><tr><td><b>α</b></td><td><b>알파 (Alpha)</b></td><td>시장 수익률(벤치마크)을 초과하는 <b>펀드매니저의 순수 초과 수익률</b>.</td></tr><tr><td><b>Δ, δ</b></td><td><b>델타 (Delta)</b></td><td>기초자산 가격이 1원 변할 때 <b>옵션 가격이 변하는 양</b>.</td></tr><tr><td><b>Γ, γ</b></td><td><b>감마 (Gamma)</b></td><td>기초자산 가격이 변할 때 <b>델타(Δ)가 변하는 비율</b> (델타의 변화율).</td></tr><tr><td><b>Θ, θ</b></td><td><b>세타 (Theta)</b></td><td>시간이 1일 지나갈 때 감소하는 <b>시간 가치 감소분</b> (시간에 따른 옵션 가격 변화).</td></tr><tr><td><b>𝒱</b></td><td><b>베가 (Vega)</b></td><td>기초자산의 변동성이 1% 변할 때 <b>옵션 가격의 변화량</b>. <i>(참고: 베가는 실제 그리스 문자가 아니지만 금융권에서 그리스 문자처럼 취급함)</i></td></tr><tr><td><b>ρ</b></td><td><b>로 (Rho)</b></td><td>이자율이 1% 변할 때 <b>옵션 가격의 변화량</b>.</td></tr></tbody></table></div><h3>2. 수학에서 쓰이는 주요 그리스 문자</h3><p>수학에서는 문자의 형태(대문자/소문자)에 따라 '연산자'나 '변수'로 역할을 나누어 사용합니다.</p><div class="lesson-table-wrap"><table class="lesson-table"><thead><tr><th>기호</th><th>이름</th><th>대문자 쓰임새</th><th>소문자 쓰임새</th></tr></thead><tbody><tr><td><b>Σ, σ</b></td><td><b>시그마 (Sigma)</b></td><td><b>Σ</b>: 총합(Summation) 연산자</td><td><b>σ</b>: 표준편차(Standard Deviation), 변수</td></tr><tr><td><b>Π, π</b></td><td><b>파이 (Pi)</b></td><td><b>Π</b>: 총곱(Product) 연산자</td><td><b>π</b>: 원주율 (3.14159…)</td></tr><tr><td><b>Δ, δ</b></td><td><b>델타 (Delta)</b></td><td><b>Δ</b>: 변화량(차이), 판별식</td><td><b>δ</b>: 아주 미세한 변화량 (미분/적분)</td></tr><tr><td><b>α, β, γ</b></td><td><b>알파/베타/감마</b></td><td>잘 쓰이지 않음 (알파벳 B, C 등과 유사)</td><td><b>α, β, γ</b>: 삼각형의 각도, 이차방정식의 해</td></tr><tr><td><b>μ</b></td><td><b>뮤 (Mu)</b></td><td>잘 쓰이지 않음</td><td><b>μ</b>: 확률과 통계에서의 <b>평균(Mean)</b></td></tr><tr><td><b>λ</b></td><td><b>람다 (Lambda)</b></td><td>잘 쓰이지 않음</td><td><b>λ</b>: 선형대수학의 <b>고유값(Eigenvalue)</b>, 확률론의 발생 비율</td></tr><tr><td><b>θ</b></td><td><b>세타 (Theta)</b></td><td>잘 쓰이지 않음</td><td><b>θ</b>: 삼각함수 및 미적분에서의 <b>미지의 각도</b></td></tr><tr><td><b>ε</b></td><td><b>엡실론 (Epsilon)</b></td><td>잘 쓰이지 않음</td><td><b>ε</b>: 오차항(Error), 임의의 아주 작은 양수</td></tr></tbody></table></div><h3>💡 한눈에 보는 핵심 요약</h3><ul><li><b>금융:</b> 주식에서는 α(초과 수익)와 β(시장 민감도)가 핵심이며, 옵션 거래에서는 Δ(가격), Γ(변화율), Θ(시간), 𝒱(변동성), ρ(금리)가 핵심 지표입니다.</li><li><b>수학:</b> 대문자(Σ, Π, Δ)는 묶어서 처리하는 <b>연산자나 전체 변화</b>를 뜻하고, 소문자(σ, π, θ, μ)는 <b>특정 수치, 각도, 통계량 변수</b>로 사용됩니다.</li></ul></div></div></section>`;
+  function renderDay3XaiLesson(day) {
+    if (day !== 3) return '';
+    return `<section class="theory-lesson xai-lesson" id="day-3-xai-lesson"><span>XAI</span><div class="theory-lesson-content"><h2>XAI(Explainable AI, 설명 가능한 인구지능)</h2><div class="theory-lesson-body"><p>XAI(Explainable AI, 설명 가능한 인구지능)는 AI가 특정한 의사결정이나 예측을 내렸을 때, <strong>그 결론에 도달한 이유와 과정을 인간이 이해할 수 있도록 설명해 주는 기술 및 연구 분야</strong>를 말합니다.</p><h3>왜 XAI가 필요할까요?</h3><p>최근 유행하는 딥러닝과 대규모 언어 모델(LLM)은 성능이 뛰어난 반면, 내부 동작 원리를 알기 힘든 <strong>'블랙박스(Black Box)'</strong> 특성을 가지고 있습니다. 입력값을 넣으면 결과는 잘 나오지만, "왜 이런 결과가 나왔는지" 과정이 투명하지 않습니다.</p><p>이러한 블랙박스 문제는 다음과 같은 위험을 초래합니다:</p><ul><li><strong>신뢰성 부족:</strong> 의료 진단이나 금융 대출 심사처럼 중요한 결정에서 AI의 말을 무조건 믿기 어렵습니다.</li><li><strong>편향 및 오류:</strong> 잘못된 데이터를 학습해 인종/성별 차별적 결정을 내릴 때 이를 미리 밝혀내기 힘듭니다.</li><li><strong>법적·윤리적 문제:</strong> EU의 인공지능법(AI Act) 등 최신 규제는 AI의 결정에 대한 '설명 요구권'을 법적으로 보장하도록 요구합니다.</li></ul><h3>기존 AI vs XAI 비교</h3><div class="xai-table-wrap"><table><thead><tr><th><strong>구분</strong></th><th><strong>기존 AI (블랙박스)</strong></th><th><strong>XAI (설명 가능한 AI)</strong></th></tr></thead><tbody><tr><th><strong>결과물</strong></th><td>"이 환자는 암일 확률이 95%입니다."</td><td>"이 환자는 X-ray <strong>A 영역의 음영 패턴</strong> 때문에 암일 확률이 95%입니다."</td></tr><tr><th><strong>과정</strong></th><td>내부 판단 로직을 알 수 없음</td><td>중요한 영향을 미친 변수나 데이터 위치를 시각화하여 제시</td></tr><tr><th><strong>장점</strong></th><td>높은 정확도</td><td><strong>높은 신뢰성, 투명성, 오류 수정 용이성</strong></td></tr></tbody></table></div><h3>🛠️ 주요 활용 분야</h3><ol><li><strong>의료 (Medical AI):</strong> AI가 암 진단을 내렸을 때, 영상의 어느 부위를 보고 진단했는지 표시하여 의사의 최종 판단을 돕습니다.</li><li><strong>금융 (Fintech):</strong> 대출 거절이나 신용등급 평가 시, 어떤 요소(연체 기록, 소득 수준 등)가 감점 원인이었는지 고객에게 안내합니다.</li><li><strong>자율주행:</strong> 사고 발생 상황에서 센서 데이터 중 어떤 판단 오류로 급정거나 차선 이탈이 발생했는지 원인을 분석합니다.</li><li><strong>법률 및 채용:</strong> 인재 채용 시 특정 후보자가 탈락한 구체적 이유를 공정하게 제시합니다.</li></ol><blockquote><p>💡 <strong>한 줄 요약</strong></p><p><strong>XAI는 AI에게 "너 왜 그런 결론을 내렸니?"라고 물었을 때, 사람이 납득할 수 있는 정당한 이유를 말해주는 기술입니다.</strong></p></blockquote></div></div><button class="lesson-accordion-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="XAI(Explainable AI, 설명 가능한 인구지능) 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button></section>`;
+  }
+
+
+  function addDay4AwsOperationsStacks(projectsHtml) {
+    const operationsStack = '<div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보완·보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>';
+    const projectMarkers = [
+      '<p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 투자성향진단 · 시각적 포트폴리오 · 시뮬레이션 · 목표 수익률 모의 · 리밸런싱</p>',
+      '<p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 전략 설정 · 지표 차트 · 백테스트 · 성과 대시보드 · 자동매매 모니터링</p>'
+    ];
+    return projectMarkers.reduce((html, marker) => html.replace(marker, `${marker}${operationsStack}`), projectsHtml);
+  }
+
+  function expandDay4IndicatorProject(projectsHtml) {
+    const brokerApiReferences = '<br>연동 API 참고: <a href="https://www.kbsec.com/go.able?linkcd=m06240001" target="_blank" rel="noopener noreferrer">KB증권 Open API</a> · <a href="https://github.com/koreainvestment/open-trading-api" target="_blank" rel="noopener noreferrer">한국투자증권 Open Trading API</a> · <a href="https://alpaca.markets/support" target="_blank" rel="noopener noreferrer">Alpaca Support</a>';
+    const indicatorGoals = [
+      {
+        title: '기본적인 인디케이터(MA, RSI 등)로 전략 설계',
+        details: [
+          ['OHLCV 데이터로 이동평균·RSI·MACD·볼린저 밴드 등 기본 지표 계산', 'QuantConnect LEAN · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a> · 시장 데이터 처리 플랫폼'],
+          ['지표 조건을 조합해 매수·매도·손절·익절 및 포지션 크기 규칙 설계', 'QuantConnect LEAN · 포트폴리오 규칙 엔진 · RDBMS'],
+          ['지표 기간과 임계값 조합을 백테스트해 기준 전략 선정', 'QuantConnect LEAN · 전략 최적화 플랫폼 · ApexCharts']
+        ]
+      },
+      {
+        title: '커스텀 인디케이터 개발',
+        details: [
+          ['가격·거래량·변동성 지표를 결합하고 정규화한 커스텀 산식 정의', 'QuantConnect LEAN · 피처 엔지니어링 파이프라인 · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a>'],
+          ['미래 데이터 참조를 방지하고 실시간 갱신과 단위 테스트가 가능한 지표 함수 구현', 'QuantConnect LEAN · 자동화 테스트 플랫폼 · GitHub Actions'],
+          ['커스텀 지표를 API로 제공하고 계산 결과와 버전을 저장해 재사용', 'QuantConnect LEAN · FastAPI · GitHub']
+        ]
+      },
+      {
+        title: '트레이딩뷰 플랫폼으로 성과 확인 및 코딩 실습(PineScript)',
+        details: [
+          ['Pine Script로 지표·전략을 구현하고 차트에 신호와 보조선을 표시', 'Pine Script · TradingView · GitHub'],
+          ['Strategy Tester로 1차 성과를 확인하고 QuantConnect LEAN으로 교차 검증', 'TradingView Strategy Tester · Pine Script · QuantConnect LEAN'],
+          ['조건 충족 시 알림과 Webhook으로 투자 신호 전달', 'TradingView Webhook · API GW · Lambda']
+        ]
+      },
+      {
+        title: '파이썬 프로그래밍을 통한 성과 검증',
+        displayTitle: 'QuantConnect LEAN을 통한 성과 검증',
+        details: [
+          ['동일한 데이터·기간·수수료 조건으로 QuantConnect LEAN 백테스트 수행', 'QuantConnect LEAN · LEAN CLI · GitHub'],
+          ['누적수익률·Maximum Drawdown (MDD)·샤프 비율·승률 등 성과지표 분석', 'QuantConnect LEAN · 포트폴리오 성과 분석 플랫폼 · ApexCharts'],
+          ['TradingView와 QuantConnect LEAN 결과를 비교해 신호·체결·성과 차이 검증', 'QuantConnect LEAN · 자동화 검증 플랫폼 · GitHub Actions']
+        ]
+      },
+      {
+        title: '증권사 연동(API 활용)을 통한 자동화 모델 구현',
+        details: [
+          ['QuantConnect LEAN 투자 신호를 증권사 API의 계좌·시세·주문 기능과 연결', `QuantConnect LEAN · 증권사 Open API · FastAPI${brokerApiReferences}`],
+          ['모의투자 주문과 중복 주문 방지·손실 한도·비상 정지 등 위험관리 적용', `QuantConnect LEAN · Redis · Amazon CloudWatch${brokerApiReferences}`],
+          ['QuantConnect LEAN 전략의 실행 일정·배포·로그·장애 알림을 자동화', `QuantConnect LEAN · Amazon EC2 · Amazon CloudWatch${brokerApiReferences}`]
+        ]
+      }
+    ];
+    const expandedHtml = indicatorGoals.reduce((html, goal) => {
+      const detailsHtml = goal.details.map(([feature, stack], index) => `<li class="has-implementation-detail"><strong>목표 기능의 세부 기능 ${index + 1}:</strong> ${feature}<span class="implementation-detail">기술스택 및 구현방안: ${stack}</span></li>`).join('');
+      return html.replace(`<li><strong>목표 기능:</strong> ${goal.title}</li>`, `<li><strong>목표 기능:</strong> ${goal.displayTitle || goal.title}<ol>${detailsHtml}</ol></li>`);
+    }, projectsHtml);
+    return expandedHtml.replace(
+      '<h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2><div class="theory-lesson-body"><ul>',
+      '<h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2><div class="theory-lesson-body"><p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 전략 설정 · 지표 차트 · 백테스트 · 성과 대시보드 · 자동매매 모니터링</p><ul>'
+    );
+  }
+
+  function renderDay4Projects() {
+    return `<section class="theory-lesson day4-projects" aria-label="나만의 로보 어드바이저 개발 및 성과 검증 프로젝트"><span>PROJECT 01</span><div class="theory-lesson-content"><h2>나만의 로보 어드바이저 개발 및 성과 검증 프로젝트</h2><div class="theory-lesson-body"><p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 투자성향진단 · 시각적 포트폴리오 · 시뮬레이션 · 목표 수익률 모의 · 리밸런싱</p><ul><li><strong>목표 기능:</strong> AI 기반의 자동화 로보 어드바이저 모델 개발<ol><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 주식·금융·경제 기본 용어사전과 연관 개념 탐색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/domain-rag-lab" target="_blank" rel="noopener noreferrer">domain-rag-lab</a>와 <a href="https://github.com/edumgt/investment-analysis" target="_blank" rel="noopener noreferrer">investment-analysis</a>의 통합 및 AWS EC2 서버 배포</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 가격·거래량·재무·뉴스 등 투자 자료 수집·분류·전처리·검색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/python-crawling-lab" target="_blank" rel="noopener noreferrer">python-crawling-lab</a> 등을 활용한 크롤링 및 적재</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 근거 문서와 출처를 포함한 Retrieval-Augmented Generation (RAG) 질의응답<span class="implementation-detail">기술스택 및 구현방안: Amazon Bedrock 또는 Ollama + GPU · VectorDB · FastAPI</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 관심 종목·투자 아이디어·의사결정 기록과 사후 성과 재검토 일지 관리<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Vanilla JS</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 5:</strong> 포트폴리오 및 투자 이력과 관련 지식 연결<span class="implementation-detail">기술스택 및 구현방안: RDBMS · VectorDB · FastAPI</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 6:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행<span class="implementation-detail">기술스택 및 구현방안: RDBMS · Amazon EventBridge Scheduler · AWS Batch</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 7:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Processing Jobs (SHAP) · AG Grid · ApexCharts</span></li></ol></li><li><strong>목표 기능:</strong> 패턴 인식 기법을 활용한 주식 시장 예측 프로젝트<ol><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> OHLCV 데이터로 이동평균·RSI·MACD·볼린저 밴드·거래량 지표 계산<span class="implementation-detail">기술스택 및 구현방안: RDBMS · TA-Lib · FastAPI</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 캔들 패턴·지지선·저항선·돌파·골든크로스 등 차트 패턴 탐지<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Training Jobs · Docker · EC2</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 분봉·일봉·주봉의 기술적 지표를 종합해 매수·매도·관망 신호와 신뢰도 산출<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI 실시간 추론 엔드포인트 · RDBMS · FastAPI</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 캔들 차트 위에 기술적 지표·탐지 패턴·투자 신호를 겹쳐 보여주는 인터랙티브 차트 구현<span class="implementation-detail">기술스택 및 구현방안: ApexCharts · AG Grid · Vanilla JS</span></li></ol></li><li><strong>목표 기능:</strong> 자산배분모델을 활용한 포트폴리오 최적화, 주식 스크리닝을 통한 종목 선정 등 직접 수행<ol><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 월·분기·연 등 정해진 주기가 도래하면 실행하는 시간 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Docker</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 현재 비중이 목표 비중의 허용 이탈률을 초과하면 실행하는 이탈률 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: FastAPI · AG Grid · Vanilla JS</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 입·출금이나 배당금이 발생하면 새 현금흐름을 활용해 실행하는 입출금·배당금 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · AG Grid</span></li></ol></li><li><strong>목표 기능:</strong> 구축한 퀀트 모델의 결과를 해석해보고 자체적으로 모의 투자 의사결정 진행<ol><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 거래비용·슬리피지를 반영한 수익률, MDD, 샤프 비율 등 성과지표 분석<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · ApexCharts</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 벤치마크 대비 초과성과와 종목·자산·전략별 수익·위험 기여도 분석<span class="implementation-detail">기술스택 및 구현방안: RDBMS · AG Grid · ApexCharts</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 퀀트 신호를 매수·매도·보유 의견으로 변환<span class="implementation-detail">기술스택 및 구현방안: Amazon Bedrock · FastAPI · Vanilla JS</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 모의 주문 체결 및 포트폴리오 운용<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Docker</span></li></ol></li></ul></div></div></section><section class="theory-lesson day4-projects" aria-label="나만의 투자 인디케이터 개발 및 성과 검증 프로젝트"><span>PROJECT 02</span><div class="theory-lesson-content"><h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2><div class="theory-lesson-body"><ul><li><strong>목표 기능:</strong> 기본적인 인디케이터(MA, RSI 등)로 전략 설계</li><li><strong>목표 기능:</strong> 커스텀 인디케이터 개발</li><li><strong>목표 기능:</strong> 트레이딩뷰 플랫폼으로 성과 확인 및 코딩 실습(PineScript)</li><li><strong>목표 기능:</strong> 파이썬 프로그래밍을 통한 성과 검증</li><li><strong>목표 기능:</strong> 증권사 연동(API 활용)을 통한 자동화 모델 구현</li></ul></div></div></section>`;
   }
 
   function renderStocksView(day = 1) {

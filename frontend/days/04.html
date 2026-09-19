@@ -12,11 +12,20 @@
     <link rel="stylesheet" href="assets/app-shell.css?v=20260908-modal-text105" />
     <style>
       /* 분산투자·변동성 매매 단원은 03일차로 이동했습니다. */
-      /* 첫 고정 안내인 그리스 문자는 표시하고, 기존에 이동한 12개 단원만 숨깁니다. */
-      body[data-day="4"] .lesson-list > .lesson:not(#greekLettersLesson):nth-child(-n + 13) { display: none; }
-      /* 그리스 문자 안내 바로 다음의 가치평가 단원은 항상 표시합니다. */
+      /* 기존에 이동한 앞부분 12개 단원을 숨깁니다. */
+      body[data-day="4"] .lesson-list > .lesson:nth-child(-n + 14) { display: none; }
+      body[data-day="4"] .lesson-list > #roboAdvisorProjectLesson,
+      body[data-day="4"] .lesson-list > #indicatorProjectLesson { display: grid !important; }
+      #roboAdvisorProjectLesson .lesson-body > ul > li > strong:first-child,
+      #indicatorProjectLesson .lesson-body > ul > li > strong:first-child { color: #16835d; font-size: 18px; font-weight: 850; }
+      #roboAdvisorProjectLesson .lesson-body > ul > li > ol > li:not(.has-implementation-detail)::after,
+      #indicatorProjectLesson .lesson-body > ul > li > ol > li:not(.has-implementation-detail)::after { display: block; margin-top: 3px; color: #8b5e3c; font-size: 14.5px; font-weight: 800; content: "기술스택 및 구현방안"; }
+      .implementation-detail { display: block; margin-top: 3px; color: #8b5e3c; font-size: 14.5px; font-weight: 800; }
+      .implementation-detail a { color: inherit; text-decoration: underline; }
+      .aws-operations-stack { margin: 8px 0 14px; padding: 10px 12px; border: 1px solid #dcc9b7; border-radius: 10px; background: #fffaf5; }
+      .aws-operations-stack > span { display: block; margin-top: 3px; }
+      /* 가치평가 관련 단원은 항상 표시합니다. */
       body[data-day="4"] .lesson-list > #cashCowFlowLesson,
-      body[data-day="4"] .lesson-list > #creditRiskLesson,
       body[data-day="4"] .lesson-list > #growthPotentialLesson,
       body[data-day="4"] .lesson-list > #valuationLesson { display: grid !important; }
       body[data-day="4"] .lesson-list > #riskAssetsLesson,
@@ -216,7 +225,102 @@
             <p>한 종목의 성과보다 여러 자산을 함께 보고, 목표 비중을 정해 리밸런싱하는 법을 배웁니다.</p>
           </div>
         </header>
-        <section class="lesson-list"><section class="lesson" id="cashCowFlowLesson">
+        <section class="lesson-list"><section class="lesson" id="roboAdvisorProjectLesson">
+            <span>PROJECT 01</span>
+            <div class="lesson-content">
+              <h2>나만의 로보 어드바이저 개발 및 성과 검증 프로젝트</h2>
+              <div class="lesson-body">
+                <p style="color: var(--blue); font-weight: 800;"><strong>UI/UX 필요 요소:</strong> 투자성향진단 · 시각적 포트폴리오 · 시뮬레이션 · 목표 수익률 모의 · 리밸런싱</p>
+                <div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보완·보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>
+                <ul>
+                  <li>
+                    <strong>목표 기능:</strong> AI 기반의 자동화 로보 어드바이저 모델 개발
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 주식·금융·경제 기본 용어사전과 연관 개념 탐색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/domain-rag-lab" target="_blank" rel="noopener noreferrer">domain-rag-lab</a>와 <a href="https://github.com/edumgt/investment-analysis" target="_blank" rel="noopener noreferrer">investment-analysis</a>의 통합 및 AWS EC2 서버 배포</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 가격·거래량·재무·뉴스 등 투자 자료 수집·분류·전처리·검색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/python-crawling-lab" target="_blank" rel="noopener noreferrer">python-crawling-lab</a> 등을 활용한 크롤링 및 적재</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 근거 문서와 출처를 포함한 Retrieval-Augmented Generation (RAG) 질의응답<span class="implementation-detail">기술스택 및 구현방안: Amazon Bedrock 또는 Ollama + GPU · VectorDB · FastAPI</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 포트폴리오 및 투자 이력과 관련 지식 연결</li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 5:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행<span class="implementation-detail">기술스택 및 구현방안: RDBMS · Amazon EventBridge Scheduler · AWS Batch</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 6:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Processing Jobs (SHAP) · AG Grid · ApexCharts</span></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <strong>목표 기능:</strong> 패턴 인식 기법을 활용한 주식 시장 예측 프로젝트
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> OHLCV 데이터로 이동평균·RSI·MACD·볼린저 밴드·거래량 지표 계산<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/docker-class" target="_blank" rel="noopener noreferrer">docker-class</a> · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a> · FastAPI</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 캔들 패턴·지지선·저항선·돌파·골든크로스 등 차트 패턴 탐지<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Training Jobs · ECR + Lambda + API GW · EC2</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 분봉·일봉·주봉의 기술적 지표를 종합해 매수·매도·관망 신호와 신뢰도 산출<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI 실시간 추론 엔드포인트 · RDBMS · FastAPI</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 캔들 차트 위에 기술적 지표·탐지 패턴·투자 신호를 겹쳐 보여주는 인터랙티브 차트 구현</li>
+                    </ol>
+                  </li>
+                  <li>
+                    <strong>목표 기능:</strong> 자산배분모델을 활용한 포트폴리오 최적화, 주식 스크리닝을 통한 종목 선정 등 직접 수행
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 월·분기·연 등 정해진 주기가 도래하면 실행하는 시간 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Apache Airflow</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 현재 비중이 목표 비중의 허용 이탈률을 초과하면 실행하는 이탈률 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: FastAPI · AG Grid · Vanilla JS</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 입·출금이나 배당금이 발생하면 새 현금흐름을 활용해 실행하는 입출금·배당금 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · AG Grid</span></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <strong>목표 기능:</strong> 구축한 퀀트 모델의 결과를 해석해보고 자체적으로 모의 투자 의사결정 진행
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 거래비용·슬리피지를 반영한 수익률, MDD, 샤프 비율 등 성과지표 분석<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/stock-coin-trade" target="_blank" rel="noopener noreferrer">stock-coin-trade</a> · FastAPI · ApexCharts</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 퀀트 신호를 매수·매도·보유 의견으로 변환<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/quantconnect" target="_blank" rel="noopener noreferrer">QuantConnect</a> · FastAPI · Vanilla JS</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 모의 주문 체결 및 포트폴리오 운용<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · ECR + Lambda + API GW</span></li>
+                    </ol>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="나만의 로보 어드바이저 개발 및 성과 검증 프로젝트 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section><section class="lesson" id="indicatorProjectLesson">
+            <span>PROJECT 02</span>
+            <div class="lesson-content">
+              <h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2>
+              <div class="lesson-body">
+                <p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 전략 설정 · 지표 차트 · 백테스트 · 성과 대시보드 · 자동매매 모니터링</p>
+                <div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보완·보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>
+                <ul>
+                  <li><strong>목표 기능:</strong> 기본적인 인디케이터(MA, RSI 등)로 전략 설계
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> OHLCV 데이터로 이동평균·RSI·MACD·볼린저 밴드 등 기본 지표 계산<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a> · 시장 데이터 처리 플랫폼</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 지표 조건을 조합해 매수·매도·손절·익절 및 포지션 크기 규칙 설계<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 포트폴리오 규칙 엔진 · RDBMS</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 지표 기간과 임계값 조합을 백테스트해 기준 전략 선정<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 전략 최적화 플랫폼 · ApexCharts</span></li>
+                    </ol>
+                  </li>
+                  <li><strong>목표 기능:</strong> 커스텀 인디케이터 개발
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 가격·거래량·변동성 지표를 결합하고 정규화한 커스텀 산식 정의<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 피처 엔지니어링 파이프라인 · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a></span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 미래 데이터 참조를 방지하고 실시간 갱신과 단위 테스트가 가능한 지표 함수 구현<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 자동화 테스트 플랫폼 · GitHub Actions</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 커스텀 지표를 API로 제공하고 계산 결과와 버전을 저장해 재사용<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · FastAPI · GitHub</span></li>
+                    </ol>
+                  </li>
+                  <li><strong>목표 기능:</strong> 트레이딩뷰 플랫폼으로 성과 확인 및 코딩 실습(PineScript)
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> Pine Script로 지표·전략을 구현하고 차트에 신호와 보조선을 표시<span class="implementation-detail">기술스택 및 구현방안: Pine Script · TradingView · GitHub</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> Strategy Tester로 1차 성과를 확인하고 QuantConnect LEAN으로 교차 검증<span class="implementation-detail">기술스택 및 구현방안: TradingView Strategy Tester · Pine Script · QuantConnect LEAN</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 조건 충족 시 알림과 Webhook으로 투자 신호 전달<span class="implementation-detail">기술스택 및 구현방안: TradingView Webhook · API GW · Lambda</span></li>
+                    </ol>
+                  </li>
+                  <li><strong>목표 기능:</strong> QuantConnect LEAN을 통한 성과 검증
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 동일한 데이터·기간·수수료 조건으로 QuantConnect LEAN 백테스트 수행<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · LEAN CLI · GitHub</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 누적수익률·Maximum Drawdown (MDD)·샤프 비율·승률 등 성과지표 분석<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 포트폴리오 성과 분석 플랫폼 · ApexCharts</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> TradingView와 QuantConnect LEAN 결과를 비교해 신호·체결·성과 차이 검증<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 자동화 검증 플랫폼 · GitHub Actions</span></li>
+                    </ol>
+                  </li>
+                  <li><strong>목표 기능:</strong> 증권사 연동(API 활용)을 통한 자동화 모델 구현
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> QuantConnect LEAN 투자 신호를 증권사 API의 계좌·시세·주문 기능과 연결<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 증권사 Open API · FastAPI<br>연동 API 참고: <a href="https://www.kbsec.com/go.able?linkcd=m06240001" target="_blank" rel="noopener noreferrer">KB증권 Open API</a> · <a href="https://github.com/koreainvestment/open-trading-api" target="_blank" rel="noopener noreferrer">한국투자증권 Open Trading API</a> · <a href="https://alpaca.markets/support" target="_blank" rel="noopener noreferrer">Alpaca Support</a></span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 모의투자 주문과 중복 주문 방지·손실 한도·비상 정지 등 위험관리 적용<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · Redis · Amazon CloudWatch<br>연동 API 참고: <a href="https://www.kbsec.com/go.able?linkcd=m06240001" target="_blank" rel="noopener noreferrer">KB증권 Open API</a> · <a href="https://github.com/koreainvestment/open-trading-api" target="_blank" rel="noopener noreferrer">한국투자증권 Open Trading API</a> · <a href="https://alpaca.markets/support" target="_blank" rel="noopener noreferrer">Alpaca Support</a></span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> QuantConnect LEAN 전략의 실행 일정·배포·로그·장애 알림을 자동화<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · Amazon EC2 · Amazon CloudWatch<br>연동 API 참고: <a href="https://www.kbsec.com/go.able?linkcd=m06240001" target="_blank" rel="noopener noreferrer">KB증권 Open API</a> · <a href="https://github.com/koreainvestment/open-trading-api" target="_blank" rel="noopener noreferrer">한국투자증권 Open Trading API</a> · <a href="https://alpaca.markets/support" target="_blank" rel="noopener noreferrer">Alpaca Support</a></span></li>
+                    </ol>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="나만의 투자 인디케이터 개발 및 성과 검증 프로젝트 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section><section class="lesson" id="cashCowFlowLesson">
             <span>00</span>
             <div class="lesson-content">
               <h2>Cash Cow와 Cash Flow: 돈을 버는 원천과 돈의 흐름</h2>
@@ -263,64 +367,6 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="Cash Cow와 Cash Flow 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson" id="creditRiskLesson">
-            <span>00.04</span>
-            <div class="lesson-content">
-              <h2>신용위험: 돈을 빌려준 뒤에도 남는 위험</h2>
-              <div class="lesson-body">
-                <p><b>신용위험(Credit Risk)</b>은 돈을 빌린 사람이나 기업이 약속한 대로 원금 또는 이자를 제때 갚지 못해, 돈을 빌려준 금융회사·투자자가 손실을 볼 위험입니다. 채무불이행 위험 또는 부도 위험(Default Risk)은 신용위험의 핵심 유형입니다.</p>
-                <div class="lesson-table-wrap">
-                  <table class="lesson-table">
-                    <caption>신용위험이 손실로 이어지는 주요 경로</caption>
-                    <thead><tr><th scope="col">유형</th><th scope="col">무슨 일이 일어나나요?</th><th scope="col">채권 투자자에게 미치는 영향</th></tr></thead>
-                    <tbody>
-                      <tr><th scope="row">채무불이행·부도</th><td>발행자나 차입자가 원금 또는 이자를 약속대로 지급하지 못합니다.</td><td>회수 절차와 담보·보증에 따라 손실 규모와 회수 시점이 달라집니다.</td></tr>
-                      <tr><th scope="row">신용등급 하락</th><td>재무상태·사업환경 악화 등으로 신용평가사의 등급이 낮아질 수 있습니다.</td><td>시장이 더 높은 수익률을 요구해 보유 채권 가격이 하락할 수 있습니다. 가격 하락 폭은 만기·금리·시장 상황에 따라 다릅니다.</td></tr>
-                      <tr><th scope="row">신용스프레드 확대</th><td>국채 등 상대적으로 안전하다고 여겨지는 채권보다 추가로 요구되는 금리가 커집니다.</td><td>새로 발행되는 채권의 수익률이 높아지면서 기존 채권의 시장가격이 내려갈 수 있습니다.</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <h3>금융회사와 투자자는 어떻게 관리할까요?</h3>
-                <p><b>사전 심사와 담보</b>로 차입자의 상환능력·재무상태를 확인하고, 필요하면 담보와 약정을 설정합니다. 또 특정 기업·산업·국가에 대출이나 채권 투자가 몰리지 않도록 <b>분산</b>하고, 보유 뒤에도 재무정보·신용등급·담보가치와 한도를 계속 점검합니다.</p>
-                <p><b>신용부도스왑(CDS, Credit Default Swap)</b>은 특정 채무자나 채권의 신용사건 위험을 이전하는 장외 신용파생상품입니다. 보호매수자는 정기적으로 프리미엄을 내고, 계약에서 정한 신용사건이 발생하면 보호매도자로부터 약정된 방식으로 보상을 받습니다. 경제적으로는 ‘부도 보험’과 비슷해 보이지만, 일반 보험과 달리 장외 파생계약이며 보상 범위·정산 방식·상대방 신용위험을 계약별로 확인해야 합니다.</p>
-                <p>신용위험 관리는 위험을 완전히 없애는 방법이 아닙니다. 담보 가격이 함께 하락하거나 여러 차입자가 동시에 어려움을 겪을 수 있고, CDS 보호매도자가 이행하지 못할 위험도 남습니다. 따라서 수익률만 보지 말고 발행자, 만기, 담보·보증, 분산 정도와 거래상대방을 함께 확인해야 합니다.</p>
-              </div>
-            </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="신용위험 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson" id="greekLettersLesson"><span>00.05</span>
-            <div class="lesson-content">
-              <h2>금융과 수학에서 자주 사용하는 주요 그리스 문자</h2>
-              <div class="lesson-body">
-                <p>금융과 수학에서 자주 사용하는 주요 그리스 문자를 정리해 드립니다.</p>
-                <p>수학에서는 <b>변수, 각도, 연산자</b>의 용도로, 금융(특히 옵션 투자의 위험 지표인 '파생상품 파생지수' 및 투자론)에서는 <b>리스크 및 변동성 측정</b> 용도로 주로 쓰입니다.</p>
-                <h3>1. 금융에서 쓰이는 주요 그리스 문자 (The Greeks)</h3>
-                <p>금융(특히 파생상품 옵션 거래)에서 그리스 문자는 '기초자산의 가격이나 조건이 변할 때 옵션 가격이 얼마나 변하는가'를 나타내는 감도 지표로 사용됩니다.</p>
-                <div class="lesson-table-wrap"><table class="lesson-table"><thead><tr><th scope="col">기호</th><th scope="col">이름</th><th scope="col">금융에서의 의미</th></tr></thead><tbody>
-                  <tr><th scope="row"><b>β</b></th><td><b>베타 (Beta)</b></td><td>시장 전체 대비 특정 주식의 <b>민감도(변동성)</b>. (예: β=1.5이면 시장보다 1.5배 더 등락)</td></tr>
-                  <tr><th scope="row"><b>α</b></th><td><b>알파 (Alpha)</b></td><td>시장 수익률(벤치마크)을 초과하는 <b>펀드매니저의 순수 초과 수익률</b>.</td></tr>
-                  <tr><th scope="row"><b>Δ, δ</b></th><td><b>델타 (Delta)</b></td><td>기초자산 가격이 1원 변할 때 <b>옵션 가격이 변하는 양</b>.</td></tr>
-                  <tr><th scope="row"><b>Γ, γ</b></th><td><b>감마 (Gamma)</b></td><td>기초자산 가격이 변할 때 <b>델타(Δ)가 변하는 비율</b> (델타의 변화율).</td></tr>
-                  <tr><th scope="row"><b>Θ, θ</b></th><td><b>세타 (Theta)</b></td><td>시간이 1일 지나갈 때 감소하는 <b>시간 가치 감소분</b> (시간에 따른 옵션 가격 변화).</td></tr>
-                  <tr><th scope="row"><b>𝒱</b></th><td><b>베가 (Vega)</b></td><td>기초자산의 변동성이 1% 변할 때 <b>옵션 가격의 변화량</b>. <i>(참고: 베가는 실제 그리스 문자가 아니지만 금융권에서 그리스 문자처럼 취급함)</i></td></tr>
-                  <tr><th scope="row"><b>ρ</b></th><td><b>로 (Rho)</b></td><td>이자율이 1% 변할 때 <b>옵션 가격의 변화량</b>.</td></tr>
-                </tbody></table></div>
-                <h3>2. 수학에서 쓰이는 주요 그리스 문자</h3>
-                <p>수학에서는 문자의 형태(대문자/소문자)에 따라 '연산자'나 '변수'로 역할을 나누어 사용합니다.</p>
-                <div class="lesson-table-wrap"><table class="lesson-table"><thead><tr><th scope="col">기호</th><th scope="col">이름</th><th scope="col">대문자 쓰임새</th><th scope="col">소문자 쓰임새</th></tr></thead><tbody>
-                  <tr><th scope="row"><b>Σ, σ</b></th><td><b>시그마 (Sigma)</b></td><td><b>Σ</b>: 총합(Summation) 연산자</td><td><b>σ</b>: 표준편차(Standard Deviation), 변수</td></tr>
-                  <tr><th scope="row"><b>Π, π</b></th><td><b>파이 (Pi)</b></td><td><b>Π</b>: 총곱(Product) 연산자</td><td><b>π</b>: 원주율 (3.14159…)</td></tr>
-                  <tr><th scope="row"><b>Δ, δ</b></th><td><b>델타 (Delta)</b></td><td><b>Δ</b>: 변화량(차이), 판별식</td><td><b>δ</b>: 아주 미세한 변화량 (미분/적분)</td></tr>
-                  <tr><th scope="row"><b>α, β, γ</b></th><td><b>알파/베타/감마</b></td><td>잘 쓰이지 않음 (알파벳 B, C 등과 유사)</td><td><b>α, β, γ</b>: 삼각형의 각도, 이차방정식의 해</td></tr>
-                  <tr><th scope="row"><b>μ</b></th><td><b>뮤 (Mu)</b></td><td>잘 쓰이지 않음</td><td><b>μ</b>: 확률과 통계에서의 <b>평균(Mean)</b></td></tr>
-                  <tr><th scope="row"><b>λ</b></th><td><b>람다 (Lambda)</b></td><td>잘 쓰이지 않음</td><td><b>λ</b>: 선형대수학의 <b>고유값(Eigenvalue)</b>, 확률론의 발생 비율</td></tr>
-                  <tr><th scope="row"><b>θ</b></th><td><b>세타 (Theta)</b></td><td>잘 쓰이지 않음</td><td><b>θ</b>: 삼각함수 및 미적분에서의 <b>미지의 각도</b></td></tr>
-                  <tr><th scope="row"><b>ε</b></th><td><b>엡실론 (Epsilon)</b></td><td>잘 쓰이지 않음</td><td><b>ε</b>: 오차항(Error), 임의의 아주 작은 양수</td></tr>
-                </tbody></table></div>
-                <h3>💡 한눈에 보는 핵심 요약</h3>
-                <ul><li><b>금융:</b> 주식에서는 α(초과 수익)와 β(시장 민감도)가 핵심이며, 옵션 거래에서는 Δ(가격), Γ(변화율), Θ(시간), 𝒱(변동성), ρ(금리)가 핵심 지표입니다.</li><li><b>수학:</b> 대문자(Σ, Π, Δ)는 묶어서 처리하는 <b>연산자나 전체 변화</b>를 뜻하고, 소문자(σ, π, θ, μ)는 <b>특정 수치, 각도, 통계량 변수</b>로 사용됩니다.</li></ul>
-              </div>
-            </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="금융과 수학에서 자주 사용하는 주요 그리스 문자 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
           </section><section class="lesson" id="diversificationLesson"><span>01</span>
             <div class="lesson-content">
               <h2>분산투자는 왜 필요한가요?</h2>
@@ -770,42 +816,6 @@
             >
               <span aria-hidden="true">⌃</span>
             </button>
-          </section><section class="lesson"><span>12</span>
-            <div class="lesson-content">
-              <h2>포지션과 포트폴리오는 무엇이 다를까요?</h2>
-              <div class="lesson-body">
-                <p>
-                  포지션(position)은 한 상품에서 내가 현재 어떤 거래 상태에
-                  있는지를 뜻합니다. 예를 들어 삼성전자 주식 10주를 보유한 상태,
-                  KOSPI 200 선물을 매도한 상태, 풋옵션을 매수한 상태가 각각
-                  하나의 포지션입니다. 포지션을 잡는다는 것은 거래를 시작하는
-                  것이고, 청산한다는 것은 반대 거래로 그 상태를 끝내는 것입니다.
-                </p>
-                <p>
-                  포트폴리오(portfolio)는 내가 가진 여러 자산과 포지션을 모두
-                  합친 전체 바구니입니다. 예를 들어 국내 주식 ETF 40%, 채권 ETF
-                  40%, 현금 15%, 금 ETF 5%와 일부 선물 헤지 포지션을 함께
-                  보유한다면, 이 전체 구성이 하나의 포트폴리오입니다.
-                </p>
-                <p>
-                  쉽게 말하면 포지션은 “한 칸의 거래 상태”, 포트폴리오는 “그
-                  칸을 모두 모은 투자 바구니”입니다. 포트폴리오 위험을 볼 때는
-                  주식·채권 같은 현물 자산뿐 아니라 선물·옵션 포지션이 전체
-                  손실을 줄이는지, 오히려 레버리지로 위험을 키우는지도 함께
-                  확인해야 합니다.
-                </p>
-              </div>
-            </div>
-            <button
-              class="lesson-toggle"
-              type="button"
-              data-lesson-toggle
-              aria-expanded="true"
-              aria-label="포지션과 포트폴리오는 무엇이 다를까요? 내용 접기"
-              title="내용 접기"
-            >
-              <span aria-hidden="true">⌃</span>
-            </button>
           </section><section class="lesson" id="growthPotentialLesson">
             <span>00.1</span>
             <div class="lesson-content">
@@ -897,7 +907,6 @@
                 </ul>
                 <p><small>참고: 마코위츠의 포트폴리오 선택 이론과 평균·분산·자산 간 상관관계의 의미는 <a href="https://www.nobelprize.org/prizes/economic-sciences/1990/press-release/" target="_blank" rel="noopener noreferrer">노벨상위원회의 1990년 경제학상 설명</a>에서 확인할 수 있습니다.</small></p>
                 <p><b>평가값은 정답이 아니라 가정의 결과입니다.</b> 성장률·할인율·마진·변동성처럼 작은 가정 변화도 결과를 크게 바꿀 수 있습니다. 특히 무위험수익률, 체계적 위험(베타), 신용위험과 수익률 변동성은 할인율과 요구수익률에 영향을 줍니다. 금리가 오르면 다른 조건이 같을 때 미래 현금흐름의 현재 가치는 낮아지는 경향이 있지만, 실제 가격은 기대 성장·수급·유동성도 함께 반영합니다.</p>
-                <p class="lesson-video-cta"><button type="button" class="breaktime-trigger" id="assetValueBreakTimeTrigger"><i class="fa-solid fa-mug-hot"></i> BreakTime · 내 주변 자산의 가치를 직접 비교해 보세요</button></p>
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="자산 가치평가 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
@@ -2312,22 +2321,6 @@
       </section>
     </div>
 
-    <div class="glossary-modal breaktime-modal" id="assetValueBreakTimeModal" hidden>
-      <div class="glossary-modal__backdrop" data-asset-value-breaktime-close></div>
-      <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="assetValueBreakTimeTitle">
-        <button class="glossary-modal__close" type="button" aria-label="닫기" data-asset-value-breaktime-close>×</button>
-        <p class="glossary-modal__label">BREAKTIME · 관찰 과제</p>
-        <h2 id="assetValueBreakTimeTitle">내 주변 자산의 가치를 직접 비교해 보세요</h2>
-        <p>아파트·주식·채권 가운데 하나를 고르고, 현재 시장가격이 무엇을 반영하는지 짧게 정리해 보세요.</p>
-        <ul>
-          <li><b>주식:</b> 미래 이익·배당, 성장률, 유사 기업 대비 가격</li>
-          <li><b>채권:</b> 쿠폰, 만기, 시장금리, 발행자의 상환 능력</li>
-          <li><b>부동산:</b> 임대수익, 인근 거래가격, 재조달원가</li>
-        </ul>
-        <p>한 가지 자산을 골라 <b>“가격에 가장 크게 반영된 요소는 무엇인가?”</b>와 <b>“그 가정이 달라지면 가격은 어느 방향으로 움직일까?”</b>를 한 줄씩 적어 보세요. 평가값은 정답이 아니라 가정과 비교 기준에서 나온 추정치입니다.</p>
-      </section>
-    </div>
-
     <div class="glossary-modal breaktime-modal" id="allocationTimingBreakTimeModal" hidden>
       <div class="glossary-modal__backdrop" data-allocation-timing-breaktime-close></div>
       <section class="glossary-modal__dialog breaktime-dialog" role="dialog" aria-modal="true" aria-labelledby="allocationTimingBreakTimeTitle">
@@ -2900,11 +2893,9 @@
           "OI": "Open Interest (OI)",
           "HTS": "Home Trading System (HTS)",
           "MTS": "Mobile Trading System (MTS)",
-          "API": "Application Programming Interface (API)",
           "RAG": "Retrieval-Augmented Generation (RAG)",
           "ML": "Machine Learning (ML)",
           "DL": "Deep Learning (DL)",
-          "AI": "Artificial Intelligence (AI)",
           "CLI": "Command-Line Interface (CLI)",
           "FICC": "Fixed Income, Currencies and Commodities (FICC)",
           "LEAN": "Lean Algorithmic Trading Engine (LEAN)",
@@ -2932,8 +2923,10 @@
           matcher.lastIndex = 0;
           node.nodeValue = text.replace(matcher, (abbreviation, _match, offset) => {
             const fullName = abbreviations[abbreviation];
-            const precedingText = text.slice(Math.max(0, offset - fullName.length - 3), offset);
-            return precedingText.includes(fullName) ? abbreviation : fullName;
+            const suffix = ` (${abbreviation})`;
+            const expandedName = fullName.endsWith(suffix) ? fullName.slice(0, -suffix.length) : fullName;
+            const precedingText = text.slice(0, offset);
+            return precedingText.endsWith(`${expandedName} (`) ? abbreviation : fullName;
           });
         });
       });
@@ -2982,7 +2975,6 @@
       [
         { modalId: "rateMarketBreakTimeModal", triggerId: "rateMarketBreakTimeTrigger", closeSelector: "[data-rate-market-breaktime-close]" },
         { modalId: "presentValueBreakTimeModal", triggerId: "presentValueBreakTimeTrigger", closeSelector: "[data-present-value-breaktime-close]" },
-        { modalId: "assetValueBreakTimeModal", triggerId: "assetValueBreakTimeTrigger", closeSelector: "[data-asset-value-breaktime-close]" },
         { modalId: "allocationTimingBreakTimeModal", triggerId: "allocationTimingBreakTimeTrigger", closeSelector: "[data-allocation-timing-breaktime-close]" },
         { modalId: "beforeQuantHistoryBreakTimeModal", triggerId: "beforeQuantHistoryBreakTimeTrigger", closeSelector: "[data-before-quant-history-breaktime-close]" },
       ].forEach(({ modalId, triggerId, closeSelector }) => {
