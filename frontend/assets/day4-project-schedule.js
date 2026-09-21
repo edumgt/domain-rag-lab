@@ -105,19 +105,15 @@
     return calendar;
   }
 
-  const roboCalendar = createCalendar('2026-10-01', '2026-10-23', new Set([
-    '2026-10-08-AM', '2026-10-08-PM',
-    '2026-10-15-AM', '2026-10-15-PM',
+  // 2026. 10. 1.–10. 21.의 평일 13일 가운데 마지막 오후를 제외한다.
+  // 25개 반나절 × 4시간으로 개인별 100시간을 배정한다.
+  const roboCalendar = createCalendar('2026-10-01', '2026-10-21', new Set([
     '2026-10-21-PM'
   ]));
 
-  const indicatorCalendar = createCalendar('2026-10-26', '2026-11-20', new Set([
-    '2026-11-02-AM', '2026-11-02-PM',
-    '2026-11-06-AM', '2026-11-06-PM',
-    '2026-11-11-AM', '2026-11-11-PM',
-    '2026-11-16-AM', '2026-11-16-PM',
-    '2026-11-19-AM', '2026-11-19-PM'
-  ]));
+  // 2026. 10. 22.–11. 11.의 평일은 정확히 15일이다.
+  // 오전·오후 각 4시간으로 배정해 개인별 120시간(30개 반나절)을 채운다.
+  const indicatorCalendar = createCalendar('2026-10-22', '2026-11-11', new Set());
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
 
@@ -163,7 +159,7 @@
   }
 
   function render() {
-    return `<section class="project-schedule" aria-labelledby="day4-project-schedule-title"><h4 id="day4-project-schedule-title">1시간을 반나절로 환산, 일차로 표현한 진행표</h4><p><b>2026년 대한민국 주 5일 근무 기준</b>으로 오전 0–4시간과 오후 4–8시간을 합쳐 1일차로 표시합니다. 주말과 10월 5일(개천절 대체공휴일), 10월 9일(한글날)은 제외했습니다. 두 프로젝트는 10월 1일부터 순서대로 진행하고, 중간 검토·보완일을 두어 11월 21일(토) 직전 영업일인 11월 20일에 마칩니다.</p><div class="project-schedule-role-guide">${roles.map((role) => `<span>${escapeHtml(role)}</span>`).join('')}</div>${renderSheet('나만의 로보 어드바이저 개발 및 성과 검증 프로젝트', 100, roboRows, roboCalendar, '2026. 10. 1.(목)–10. 23.(금)', ' · 10. 8. 설계 검토, 10. 15. 중간 통합 점검, 10. 21. 오후 산출물 보완')}${renderSheet('나만의 투자 인디케이터 개발 및 성과 검증 프로젝트', 120, indicatorRows, indicatorCalendar, '2026. 10. 26.(월)–11. 20.(금)', ' · 11. 2. 설계 검토, 11. 6. 백테스트 점검, 11. 11. 통합 검토, 11. 16. QA·보안 보완, 11. 19. 최종 발표 리허설')}</section>`;
+    return `<section class="project-schedule" aria-labelledby="day4-project-schedule-title"><h4 id="day4-project-schedule-title">1시간을 반나절로 환산, 일차로 표현한 진행표</h4><p><b>2026년 대한민국 주 5일 근무 기준</b>으로 오전 0–4시간과 오후 4–8시간을 합쳐 1일차로 표시합니다. 주말과 10월 5일(개천절 대체공휴일), 10월 9일(한글날)은 제외했습니다. 로보 어드바이저 프로젝트는 10월 1일(목)부터 10월 21일(수) 오전까지 25개 반나절을 배정하여 개인별 100시간으로 편성했습니다. 투자 인디케이터 프로젝트는 10월 22일(목)부터 11월 11일(수)까지 15개 영업일을 모두 작업일로 편성하여, 개인별 120시간을 배정했습니다.</p><div class="project-schedule-role-guide">${roles.map((role) => `<span>${escapeHtml(role)}</span>`).join('')}</div>${renderSheet('나만의 로보 어드바이저 개발 및 성과 검증 프로젝트', 100, roboRows, roboCalendar, '2026. 10. 1.(목)–10. 21.(수) 오전', ' · 10. 21. 오후는 산출물 보완을 위한 기준시간 외 완충 시간')}${renderSheet('나만의 투자 인디케이터 개발 및 성과 검증 프로젝트', 120, indicatorRows, indicatorCalendar, '2026. 10. 22.(목)–11. 11.(수)', ' · 별도 완충일 없이 15개 영업일을 모두 작업 일정으로 편성')}</section>`;
   }
 
   global.Day4ProjectSchedule = Object.freeze({ render });
