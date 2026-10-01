@@ -17,6 +17,7 @@ from app.api.routes.market import router as market_router
 from app.api.routes.backtest import router as backtest_router
 from app.api.routes.auth import router as auth_router
 from app.api.routes.quant_lab import router as quant_lab_router
+from app.api.routes.walk_forward import router as walk_forward_router
 from app.core.config import settings
 from app.core.database import Base, engine
 
@@ -91,6 +92,7 @@ app.include_router(market_router)
 app.include_router(backtest_router)
 app.include_router(auth_router)
 app.include_router(quant_lab_router)
+app.include_router(walk_forward_router)
 app.include_router(chat_router)
 
 # Serve frontend static files

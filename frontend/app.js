@@ -753,6 +753,10 @@ KOSDAQ|웹젠|게임`,
       renderQuantLabGuide();
       closePanels();
     }
+    if (view === 'walk-forward') {
+      renderWalkForwardGuide();
+      closePanels();
+    }
     if (view === 'basis') renderBasisWorkflow();
     if (view === 'backtest') renderBacktestWorkflow();
     if (view === 'calendar') renderCalendarView();
@@ -1420,8 +1424,13 @@ KOSDAQ|웹젠|게임`,
   }
 
   function renderQuantLabGuide() {
-    $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">QUANT DATA LAB</div><h1>EDA · <mark>LightGBM</mark></h1></div><p class="content-lead">OHLCV 데이터를 탐색하고 시간순 테스트에서 모델과 모의 전략을 비교합니다.</p></header><div id="quantLabMount"></div></article>`;
+    $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">QUANT DATA LAB</div><h1>EDA · <mark>LightGBM</mark></h1></div><p class="content-lead">하루 가격과 거래량을 살펴본 뒤, 과거로 배운 모델이 나중 날의 상승을 얼마나 맞혔는지 확인합니다.</p></header><div id="quantLabMount"></div></article>`;
     window.QuantLab?.mount(document.getElementById('quantLabMount'), fetchLocalBackendJson);
+  }
+
+  function renderWalkForwardGuide() {
+    $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">MODEL VALIDATION LAB</div><h1>Walk-Forward <mark>검증</mark></h1></div><p class="content-lead">학습 구간을 늘리고 테스트 직전 10거래일을 격리해, 위험 경보 모델을 시간 순서대로 검증합니다.</p></header><div id="walkForwardMount"></div></article>`;
+    window.WalkForwardLab?.mount(document.getElementById('walkForwardMount'), fetchLocalBackendJson);
   }
 
   const basisState = {
@@ -3131,7 +3140,7 @@ effective_date: [기준일]
 
   renderScenarioResult();
   const requestedView = new URLSearchParams(window.location.search).get('view');
-  const initialView = ['home', 'stocks', 'learn', 'simulation', 'quant', 'basis', 'backtest', 'calendar'].includes(requestedView)
+  const initialView = ['home', 'stocks', 'learn', 'simulation', 'quant', 'walk-forward', 'basis', 'backtest', 'calendar'].includes(requestedView)
     ? requestedView
     : 'home';
   setView(initialView);

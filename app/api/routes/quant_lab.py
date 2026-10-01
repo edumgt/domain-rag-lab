@@ -6,12 +6,15 @@ import csv
 import io
 import math
 import random
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from statistics import mean, pstdev
+from threading import Lock
 
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 import lightgbm as lgb
 import numpy as np
+from starlette.concurrency import run_in_threadpool
+import yfinance as yf
 
 router = APIRouter(prefix="/quant-lab", tags=["quant-lab"])
 
@@ -28,6 +31,10 @@ FEATURES = {
 }
 REQUIRED = ("date", "open", "high", "low", "close", "volume")
 MAX_UPLOAD_BYTES = 1_000_000
+SAMSUNG_TICKER = "005930.KS"
+SAMSUNG_CACHE_TTL = timedelta(minutes=30)
+_samsung_cache: tuple[datetime, list[dict], int] | None = None
+_samsung_cache_lock = Lock()
 
 
 def _sample_rows() -> list[dict]:
@@ -49,6 +56,44 @@ def _sample_rows() -> list[dict]:
                          "low": low, "close": close, "volume": int(rng.uniform(500_000, 2_000_000))})
         day += timedelta(days=1)
     return rows
+
+
+def _samsung_rows() -> tuple[datetime, list[dict], int]:
+    """Fetch two years of Samsung daily OHLCV once per cache window."""
+    global _samsung_cache
+    with _samsung_cache_lock:
+        now = datetime.now(timezone.utc)
+        if _samsung_cache and now - _samsung_cache[0] < SAMSUNG_CACHE_TTL:
+            return _samsung_cache
+
+        try:
+            frame = yf.Ticker(SAMSUNG_TICKER).history(
+                period="2y", interval="1d", auto_adjust=False,
+                actions=False, timeout=15,
+            )
+        except Exception as error:
+            raise HTTPException(status_code=502, detail="Yahoo Finance에서 삼성전자 일봉을 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.") from error
+        if frame is None or frame.empty:
+            raise HTTPException(status_code=502, detail="Yahoo Finance에서 삼성전자 일봉이 반환되지 않았습니다.")
+        if any(name.title() not in frame.columns for name in REQUIRED[1:]):
+            raise HTTPException(status_code=502, detail="Yahoo Finance 일봉에 필요한 OHLCV 열이 없습니다.")
+
+        rows = []
+        excluded_rows = 0
+        for index, bar in frame.sort_index().iterrows():
+            values = {name.lower(): float(bar[name.title()]) for name in REQUIRED[1:]}
+            if (any(not math.isfinite(value) for value in values.values())
+                    or min(values["open"], values["high"], values["low"], values["close"]) <= 0
+                    or values["volume"] < 0
+                    or values["high"] < max(values["open"], values["close"])
+                    or values["low"] > min(values["open"], values["close"])):
+                excluded_rows += 1
+                continue
+            rows.append({"date": index.date().isoformat(), **values})
+        if len(rows) < 180:
+            raise HTTPException(status_code=502, detail="삼성전자 일봉이 180거래일 미만이라 분석할 수 없습니다.")
+        _samsung_cache = (now, rows, excluded_rows)
+        return _samsung_cache
 
 
 def _parse_csv(content: bytes) -> tuple[list[dict], dict[str, int]]:
@@ -212,8 +257,10 @@ async def analyze(
     cost_bps: int = Form(10, ge=0, le=100),
     file: UploadFile | None = File(None),
 ) -> dict:
-    if source not in {"sample", "csv"}:
+    if source not in {"sample", "csv", "samsung"}:
         raise HTTPException(status_code=422, detail="데이터 출처를 선택해 주세요.")
+    fetched_at = None
+    excluded_rows = 0
     if source == "csv":
         if file is None or not (file.filename or "").lower().endswith(".csv"):
             raise HTTPException(status_code=422, detail="CSV 파일을 선택해 주세요.")
@@ -222,10 +269,18 @@ async def analyze(
             raise HTTPException(status_code=413, detail="CSV 파일은 1MB 이하여야 합니다.")
         rows, missing = _parse_csv(content)
         source_label = file.filename[:100]
+    elif source == "samsung":
+        fetched_at, rows, excluded_rows = await run_in_threadpool(_samsung_rows)
+        missing = {name: 0 for name in REQUIRED}
+        source_label = "삼성전자 (005930.KS) · Yahoo Finance"
     else:
         rows, missing = _sample_rows(), {name: 0 for name in REQUIRED}
         source_label = "가상 OHLCV 예제"
     if len(rows) < 180:
         raise HTTPException(status_code=422, detail="유효한 거래일 데이터가 최소 180행 필요합니다.")
-    return {"source": source_label, "sample": source == "sample", "eda": _eda(rows, missing),
-            "model": _train(rows, train_pct, threshold, rounds, cost_bps)}
+    eda = _eda(rows, missing)
+    eda["excluded_rows"] = excluded_rows
+    return {"source": source_label, "sample": source == "sample",
+            "fetched_at": fetched_at.isoformat() if fetched_at else None,
+            "eda": eda,
+            "model": await run_in_threadpool(_train, rows, train_pct, threshold, rounds, cost_bps)}

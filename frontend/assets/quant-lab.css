@@ -4,6 +4,11 @@
 .ql-header h2{margin:6px 0;font-size:clamp(23px,2.8vw,32px);line-height:1.2;color:#142b4c}
 .ql-header p{margin:0;color:#52647b;line-height:1.55}
 .ql-header>i{font-size:36px;color:#315ac9}
+.ql-guide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 18px;padding:0;list-style:none}
+.ql-guide li{padding:14px;border:1px solid #d8e4f6;border-radius:10px;background:#fff}
+.ql-guide strong{display:block;margin-bottom:6px;color:#1c4789;font-size:14px}
+.ql-guide span{display:block;color:#4f6078;font-size:13px;line-height:1.6}
+.ql-guide b{color:#233d64}
 .ql-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:18px;border:1px solid #dce6f5;border-radius:12px;background:#fff}
 .ql-form label{display:grid;align-content:start;gap:7px;min-width:0;color:#344763;font-size:14px;font-weight:800}
 .ql-form select,.ql-form input[type=file],.ql-form input[type=text]{box-sizing:border-box;width:100%;min-height:40px;padding:8px 10px;border:1px solid #becde1;border-radius:8px;background:#fff;color:#19304e;font:inherit}
@@ -12,7 +17,7 @@
 .ql-form .ql-stored{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .ql-form .ql-stored[hidden]{display:none}
 .ql-form .ql-stored small{grid-column:1/-1}
-.ql-form small{color:#64748b;font-size:12px;font-weight:500}
+.ql-form small{color:#64748b;font-size:12px;font-weight:500;line-height:1.5}
 .ql-form button{grid-column:1/-1;justify-self:start;min-height:42px;margin-top:2px}
 .ql-form button:disabled{opacity:.65;cursor:wait}
 .ql-help{margin:12px 1px;color:#60728a;font-size:13px;line-height:1.6}
@@ -23,21 +28,25 @@
 .ql-section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}
 .ql-section-head h3{margin:4px 0 0;font-size:21px;color:#142b4c}
 .ql-section-head p{margin:0;color:#64748b;font-size:13px}
+.ql-explain{margin:0 0 15px;padding:12px 14px;border-radius:9px;background:#eef4ff;color:#344e74;font-size:14px;line-height:1.65}
+.ql-explain b{color:#1b4381}
 .ql-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
 .ql-metrics article{padding:12px;border:1px solid #e3eaf4;border-radius:10px;background:#f8fbff}
 .ql-metrics span{display:block;color:#62728a;font-size:12px;font-weight:750}
 .ql-metrics strong{display:block;margin-top:5px;color:#1e3b66;font-size:21px;white-space:nowrap}
+.ql-metrics small{display:block;margin-top:6px;color:#65758d;font-size:12px;line-height:1.45}
 .ql-charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
 .ql-charts figure{min-width:0;margin:0;padding:13px;border:1px solid #e3eaf4;border-radius:10px}
 .ql-charts figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px;margin-bottom:8px;color:#283c59;font-size:14px;font-weight:850}
 .ql-charts figcaption small{color:#75849a;font-size:12px;font-weight:500}
 .ql-eda-charts figure:first-child{grid-column:1/-1}
+.ql-chart-help{margin:8px 2px 0;color:#62728a;font-size:12px;line-height:1.5}
 .ql-note{margin:15px 0 0;padding:11px 13px;border-left:3px solid #6685d7;border-radius:5px;background:#f4f7fc;color:#51637d;font-size:13px;line-height:1.65}
-.ql-section>.ql-note:first-of-type{margin:0 0 15px}
+.ql-section>.ql-explain+.ql-note{margin:0 0 15px}
 .ql-table-wrap{max-height:300px;margin-top:16px;overflow:auto;border:1px solid #e3eaf4;border-radius:9px}
 .ql-table-wrap table{width:100%;border-collapse:collapse;font-size:13px;text-align:left}
 .ql-table-wrap caption{padding:10px 12px;color:#283c59;font-weight:850;text-align:left}
 .ql-table-wrap th,.ql-table-wrap td{padding:8px 12px;border-top:1px solid #e3eaf4}
 .ql-table-wrap th{background:#f3f7fd;color:#52637c}
-@media(max-width:850px){.ql-form{grid-template-columns:repeat(2,minmax(0,1fr))}.ql-charts{grid-template-columns:1fr}}
+@media(max-width:850px){.ql-guide{grid-template-columns:1fr}.ql-form{grid-template-columns:repeat(2,minmax(0,1fr))}.ql-charts{grid-template-columns:1fr}}
 @media(max-width:560px){.quant-lab{padding:15px}.ql-form,.ql-form .ql-stored{grid-template-columns:1fr}.ql-form{padding:13px}.ql-header>i{display:none}.ql-section{padding:14px}.ql-section-head{display:block}.ql-section-head p{margin-top:5px}}
