@@ -105,7 +105,7 @@ def _simulate(n_splits: int, purge_window: int, seed: int) -> dict:
 
 @router.get("/simulate")
 def simulate_walk_forward(
-    n_splits: int = Query(4, ge=3, le=5),
+    n_splits: int = Query(4, ge=3, le=10),
     purge_window: int = Query(10, ge=10, le=30),
     seed: int = Query(42, ge=0, le=9999),
 ) -> dict:
