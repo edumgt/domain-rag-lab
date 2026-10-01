@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
     openssh-client \
+    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
 # docker CLI only (no daemon): the LEAN local runner talks to the host's Docker through

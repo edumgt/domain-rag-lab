@@ -734,6 +734,7 @@ KOSDAQ|웹젠|게임`,
   function setView(view) {
     stopTickDashboard();
     stopDashboardAssets();
+    if (view !== 'quant') window.QuantLab?.unmount();
     state.activeView = view;
     $viewButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
     $chatInputArea.classList.toggle('hidden', view !== 'learn');
@@ -747,6 +748,10 @@ KOSDAQ|웹젠|게임`,
       renderSimulationGuide();
       closePanels();
       requestAnimationFrame(() => $simulationPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    }
+    if (view === 'quant') {
+      renderQuantLabGuide();
+      closePanels();
     }
     if (view === 'basis') renderBasisWorkflow();
     if (view === 'backtest') renderBacktestWorkflow();
@@ -1412,6 +1417,11 @@ KOSDAQ|웹젠|게임`,
     $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">MARKET SHOCK WORKBENCH</div><h1>시장 충격 <mark>시뮬레이션</mark></h1></div><p class="content-lead">다양한 시장 충격 시나리오를 골라 주식/ETF·채권·대체자산이 각각 어떻게 반응하는지 비교합니다.</p></header><div class="simulation-workbench" id="simulationMount"></div></article>`;
     document.getElementById('simulationMount').appendChild($simulationPanel);
     renderScenarioResult();
+  }
+
+  function renderQuantLabGuide() {
+    $messages.innerHTML = `<article class="content-page simulation-page"><header class="simulation-guide-head"><div><div class="content-kicker">QUANT DATA LAB</div><h1>EDA · <mark>LightGBM</mark></h1></div><p class="content-lead">OHLCV 데이터를 탐색하고 시간순 테스트에서 모델과 모의 전략을 비교합니다.</p></header><div id="quantLabMount"></div></article>`;
+    window.QuantLab?.mount(document.getElementById('quantLabMount'), fetchLocalBackendJson);
   }
 
   const basisState = {
@@ -3121,7 +3131,7 @@ effective_date: [기준일]
 
   renderScenarioResult();
   const requestedView = new URLSearchParams(window.location.search).get('view');
-  const initialView = ['home', 'stocks', 'learn', 'simulation', 'basis', 'backtest', 'calendar'].includes(requestedView)
+  const initialView = ['home', 'stocks', 'learn', 'simulation', 'quant', 'basis', 'backtest', 'calendar'].includes(requestedView)
     ? requestedView
     : 'home';
   setView(initialView);
