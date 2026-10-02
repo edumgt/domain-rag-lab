@@ -37,6 +37,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
@@ -69,6 +70,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Generate ECR login password
@@ -83,10 +85,20 @@ jobs:
           EC2_ECR_SSH_PRIVATE_KEY: ${{ secrets.EC2_ECR_SSH_PRIVATE_KEY }}
           EC2_ECR_HOST: ${{ secrets.EC2_ECR_HOST }}
         run: |
+          for name in EC2_ECR_SSH_PRIVATE_KEY EC2_ECR_HOST; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Required GitHub Actions secret $name is missing."
+              exit 1
+            fi
+          done
           install -m 700 -d ~/.ssh
           printf '%s\n' "$EC2_ECR_SSH_PRIVATE_KEY" > ~/.ssh/domain-rag-ecr-deploy.pem
           chmod 600 ~/.ssh/domain-rag-ecr-deploy.pem
-          ssh-keyscan -H "$EC2_ECR_HOST" >> ~/.ssh/known_hosts
+          ssh-keygen -y -f ~/.ssh/domain-rag-ecr-deploy.pem >/dev/null
+          if ! ssh-keyscan -T 15 -H "$EC2_ECR_HOST" >> ~/.ssh/known_hosts; then
+            echo "::error::Cannot retrieve EC2 SSH host key. Check EC2_ECR_HOST, instance status, and inbound TCP 22 access from GitHub runners."
+            exit 1
+          fi
 
       - name: Copy compose file to EC2
         env:

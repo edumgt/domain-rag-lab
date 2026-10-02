@@ -25,10 +25,20 @@ jobs:
           EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           EC2_HOST: ${{ secrets.EC2_HOST }}
         run: |
+          for name in EC2_SSH_PRIVATE_KEY EC2_HOST; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Required GitHub Actions secret $name is missing."
+              exit 1
+            fi
+          done
           install -m 700 -d ~/.ssh
           printf '%s\n' "$EC2_SSH_PRIVATE_KEY" > ~/.ssh/domain-rag-deploy.pem
           chmod 600 ~/.ssh/domain-rag-deploy.pem
-          ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
+          ssh-keygen -y -f ~/.ssh/domain-rag-deploy.pem >/dev/null
+          if ! ssh-keyscan -T 15 -H "$EC2_HOST" >> ~/.ssh/known_hosts; then
+            echo "::error::Cannot retrieve EC2 SSH host key. Check EC2_HOST, instance status, and inbound TCP 22 access from GitHub runners."
+            exit 1
+          fi
 
       - name: Synchronize application files
         env:
@@ -67,3 +77,7 @@ jobs:
           sudo docker compose -f deploy/pr-edumgt/compose.yml ps
           sudo docker compose -f deploy/pr-edumgt/compose.yml exec -T api curl --fail --retry 12 --retry-delay 5 http://localhost:8000/health
           EOF
+
+      - name: Remove SSH key
+        if: always()
+        run: rm -f ~/.ssh/domain-rag-deploy.pem

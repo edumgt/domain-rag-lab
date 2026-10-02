@@ -34,7 +34,7 @@ jobs:
       - name: Run unit tests
         run: |
           if [ -d "tests" ]; then
-            pytest tests/ -v --tb=short
+            python -m pytest tests/ -v --tb=short
           else
             echo "No tests directory found — skipping pytest"
           fi
