@@ -88,7 +88,7 @@ domain-rag-lab LEAN 백테스트를 통과해 export된 전략 스펙만 노출�
 ## 2. 이 저장소에서 할 일
 
 ### 2-1. 전략 스펙 계약 (Phase 0)
-- [ ] `docs/strategy_spec.schema.json` 작성. 최소 필드:
+- [x] 전략 스펙 스키마 작성 — Pydantic `app/schemas/strategy.py` (JSON Schema 파일 대신 코드가 정본, `StrategySpec.model_json_schema()` 로 생성 가능). 최소 필드:
   - `strategy_id`, `version`, `universe`(종목코드 6자리 배열), `timeframe`
   - `entry`/`exit` 규칙 (지표 이름·파라미터·비교 조건)
   - `position_sizing` (종목당 비중 %, 최대 종목 수)
@@ -98,19 +98,19 @@ domain-rag-lab LEAN 백테스트를 통과해 export된 전략 스펙만 노출�
 ### 2-2. 백테스트 워크플로우 정비 (Phase 1)
 - [ ] `main.py` 템플릿을 스펙 JSON에서 생성하는 함수 추가 (`strategy_spec → algorithm_source`)
   - 현재는 호출자가 알고리즘 소스 문자열을 직접 넘김 → 스펙 기반으로 바꿔야 lumina 시그널 규칙과 1:1 대응 가능
-- [ ] 한국 주식 심볼/시장시간 매핑 점검 (`lean_reference_data/market-hours`, `symbol-properties`에 KRX 항목 유무 확인)
-- [ ] 백테스트 결과 파서: LEAN 결과 JSON에서 CAGR/MDD/승률/거래 수를 추출해 `backtest_result`에 채움
-- [ ] 합격 기준 정의 및 코드화 (예: MDD ≤ 20%, 거래 수 ≥ 30, 최근 1년 수익률 > 0) → 미달 시 스펙 export 거부
+- [x] 한국 주식 심볼/시장시간 매핑 점검 (`lean_reference_data/market-hours`, `symbol-properties`에 KRX 항목 유무 확인)
+- [x] 백테스트 결과 파서: LEAN 결과 JSON에서 CAGR/MDD/승률/거래 수를 추출해 `backtest_result`에 채움
+- [x] 합격 기준 정의 및 코드화 (예: MDD ≤ 20%, 거래 수 ≥ 30, 최근 1년 수익률 > 0) → 미달 시 스펙 export 거부
 
 ### 2-3. 전략 스펙 제공 API (Phase 1) — 사이트 통합 아님, lumina-invest가 HTTP로 조회
-- [ ] `POST /backtest/run` 응답에 `strategy_spec` 포함 또는 별도 `POST /backtest/export` 추가
-- [ ] 확정 스펙 저장소: `data/strategies/<strategy_id>_<version>.json` (내부 저장용. lumina가 직접 읽지 않음)
-- [ ] 조회 API 신설 (lumina-invest 종목 선정 화면의 전략 드롭다운이 호출)
+- [x] `POST /backtest/run` 응답에 `strategy_spec` 포함 또는 별도 `POST /backtest/export` 추가
+- [x] 확정 스펙 저장소: `data/strategies/<strategy_id>_<version>.json` (내부 저장용. lumina가 직접 읽지 않음)
+- [x] 조회 API 신설 (lumina-invest 종목 선정 화면의 전략 드롭다운이 호출)
   - `GET /backtest/strategies` — 합격 전략 목록 (id, version, 요약 지표)
   - `GET /backtest/strategies/{strategy_id}` — 최신 버전 스펙 JSON
   - `GET /backtest/strategies/{strategy_id}/versions/{version}` — 특정 버전
-- [ ] API Key 또는 서비스 토큰 인증 추가 (lumina-invest 서버 → domain-rag-lab 서버 간 호출)
-- [ ] 스펙 변경 이력 관리 (version 증가, 이전 버전 보존, 미합격 버전은 목록에서 제외)
+- [x] API Key 또는 서비스 토큰 인증 추가 (lumina-invest 서버 → domain-rag-lab 서버 간 호출)
+- [x] 스펙 변경 이력 관리 (version 증가, 이전 버전 보존, 미합격 버전은 목록에서 제외)
 
 ### 2-4. 테스트 (Phase 1·4)
 - [ ] `tests/`에 스펙 → main.py 생성 단위 테스트
@@ -185,3 +185,70 @@ domain-rag-lab LEAN 백테스트를 통과해 export된 전략 스펙만 노출�
 - lumina-invest는 기존 `KISClient` 직접 호출을 버리고 stock-coin-trade 경유로 바꾸는 작업이라, 자체 호출 유지로 결정하면 Phase 3에서 2~3d 줄어든다 (대신 stock-coin-trade의 감사 로그·승인 토큰 이점을 잃음)
 - KIS 실전 API 승인(계좌 소유자 인증, 모의→실전 전환 절차)은 외부 대기 시간이라 Phase 5 시작 2주 전에 미리 신청한다
 - Phase 4 관찰 중 장 휴장일이 끼면 그만큼 연장된다
+
+---
+
+## 6. 작업 보고 (AI 에이전트 인수인계용)
+
+> 이 섹션은 **작업을 이어받는 AI 에이전트가 가장 먼저 읽는 부분**이다. 작업을 끝낼 때마다 아래 형식으로 항목을 추가한다.
+> 규칙: ① 완료 항목은 2절 체크박스를 `[x]`로 바꾸고 여기엔 파일 경로·검증 방법을 적는다 ② 미완료는 "다음 작업"에 우선순위와 시작 지점(파일:함수)을 적는다
+> ③ 가정·결정은 "결정 사항"에 이유와 함께 적는다 ④ 커밋은 사용자가 한다(에이전트는 커밋하지 않음) ⑤ 테스트 실행 명령을 그대로 적어 재현 가능하게 한다.
+
+### 6-1. 2026-10-02 1차 작업 (Phase 0 + Phase 1 API 완료)
+
+**완료**
+| 항목 | 파일 | 비고 |
+|------|------|------|
+| API 계약 v0.2 | `docs/contracts/kis-autotrade-api.md` | 세 저장소 동일 사본 |
+| 전략 스펙 스키마 | `app/schemas/strategy.py` `StrategySpec`, `SignalRule`, `SignalWeights`, `PositionSizing`, `BacktestResultSummary`, `Acceptance`, `evaluate_acceptance()` | universe 는 `.KS/.KQ` 제거 후 6자리 검증 |
+| 저장소 | `app/services/strategy_store.py` (`data/strategies/<id>_v<n>.json`, env `STRATEGY_STORE_DIR` 로 경로 교체) | 합격 버전만 목록·최신 노출, 불합격은 파일 보존 |
+| 결과→스펙 변환 | `app/services/strategy_export.py` `build_spec/export_spec/rules_for` | BacktestStrategy(buy_hold/ma_cross/dca/momentum) → entry/exit 규칙 매핑 |
+| API | `app/api/routes/strategies.py` `GET /backtests/strategies`, `GET /{id}`, `GET /{id}/versions/{v}`, `POST /backtests/strategies`(백테스트 실행→합격 판정→저장, 불합격 422) | `X-API-Key` = env `STRATEGY_API_KEY`(비우면 공개). `app/main.py` 등록 |
+| 재검증 | `POST /backtests/strategies/{id}/revalidate` + `strategy_export.request_from_spec()` | 스펙 entry 파라미터로 BacktestRequest 복원 → 새 버전 저장. 불합격이면 422, 이전 합격 버전 유지 |
+| README 안내 | `README.md` 끝 "KIS 자동매매 연동" 절 | todo.md 6절·계약 문서 링크 |
+| 테스트 5개 | `tests/test_strategies_api.py` | 라우터만 올린 독립 FastAPI 앱 사용(`app.main` 은 import 시 DB 연결) |
+
+**검증**
+```bash
+cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 6 passed
+```
+
+**결정 사항 (이유)**
+- 경로 접두는 기존 라우터와 같은 **`/backtests`(복수)**. 계약서·lumina `strategy_loader` 도 `/backtests/strategies` 로 맞춤 (이 파일 앞부분의 `/backtest/...` 표기는 구표기)
+- 스키마 정본은 Pydantic 코드. JSON Schema 파일이 필요하면 `StrategySpec.model_json_schema()` 로 생성
+- 합격 기준 기본값: MDD ≤ 20%, 거래 수 ≥ 30, 연환산 수익률 > 0 (`AcceptanceCriteria`). 요청마다 `criteria` 로 덮어쓸 수 있음
+- `win_rate_pct` 는 현재 `BacktestResponse` 에 없어 None. LEAN 결과 파서 확장 시 채움
+
+**다음 작업 (우선순위순)**
+1. **스펙 → LEAN main.py 생성기**: 현재는 `request_from_spec()` 으로 스펙→기존 예시 전략 파라미터로만 복원한다(ma_cross/momentum/dca/buy_hold). 스펙에 새 indicator 를 추가하려면 `app/services/lean_backtest_service.py` 의 algorithm_source 생성부를 스펙 기반으로 확장
+2. LEAN 결과 파서에 승률(`win_rate_pct`)·거래별 손익 추가 → `BacktestResultSummary.win_rate_pct`
+3. `lean_reference_data/market-hours`, `symbol-properties` 에 KRX 항목 존재 확인 (한국 주식 LEAN 실행 전제)
+4. lumina-invest 와 교차 검증: 같은 스펙으로 lumina `apply_strategy_spec_to_signal` 이 내는 시그널과 LEAN 백테스트 매매 시점 비교 (Phase 4)
+5. lumina-invest 에도 있는 `app/services/lean_backtest.py` 중복 정리 (미결 4절)
+
+**알려진 제약**
+- `app.main` import 시 Postgres/pgvector 연결을 시도해 테스트가 멈춘다 → 테스트는 독립 앱으로 작성했다. 통합 테스트는 DB 기동 후
+- `.venv` 는 이 세션에서 `uv venv` 로 새로 만든 것(.gitignore 대상)
+
+### 6-2. 2026-10-02 2차 작업 (6-1 "다음 작업" 2·3 처리)
+
+**완료**
+| 6-1 번호 | 항목 | 파일 | 비고 |
+|------|------|------|------|
+| 2 | 승률 파서 | `lean_backtest_service.LeanBacktestService._win_rate()`, `_analytics()` 에 `win_rate_pct`, `schemas/chat.py BacktestResponse.win_rate_pct` | 포지션 0→>0 진입, >0→0 청산의 왕복 거래 기준. 완결 거래 없으면 None. `strategy_export.build_spec` 이 그대로 `backtest_result.win_rate_pct` 로 전달 |
+| 3 | KRX 참조 데이터 점검 | (점검 결과) | **`market-hours-database.json` 에 `Equity-krx` 항목 없음** — `Future-krx-KM`, `Index-krx` 만 존재. `symbol-properties-database.csv` 도 krx 는 KOSPI200 선물·지수 2행뿐. 현재 LEAN 흐름은 yfinance CSV 커스텀 데이터라 동작하지만, LEAN Equity 심볼로 KRX 종목을 다루려면 두 파일에 `Equity-krx` 항목(09:00~15:30 KST, 호가 단위) 추가 필요 |
+| — | 테스트 3개 추가 (총 9) | `tests/test_lean_analytics.py` | 왕복 승률 50% 케이스, 미완결 None, `_analytics` 통합 |
+
+**검증**
+```bash
+cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 9 passed
+```
+
+**결정 사항**
+- 승률은 LEAN 통계 JSON 대신 서비스가 이미 계산하는 포지션 시계열로 구한다. 이유: 현재 `run()` 이 LEAN 로그와 별개로 pandas 로 지표를 산출하는 구조이고, LEAN `Win Rate` 통계는 전략 소스마다 접근 방식이 달라 파싱 안정성이 낮다
+- DCA 처럼 포지션이 0 으로 돌아오지 않는 전략은 승률 None 이 정상
+
+**다음 작업**
+1. `Equity-krx` 시장시간·심볼 속성 추가 (`lean_reference_data/market-hours/market-hours-database.json`, `symbol-properties-database.csv`) — LEAN 참조 포맷은 `Equity-usa` 항목을 복제해 KST 로 바꾸면 됨
+2. (6-1의 1) 스펙 → main.py 생성기 확장
+3. (6-1의 4) lumina 시그널과 교차 검증 (Phase 4)

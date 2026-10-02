@@ -133,6 +133,7 @@ class LeanBacktestService:
         invested_days = float(position_window.mean() * 100) if len(position_window) else 0.0
         changes = position_window.diff().fillna(position_window.iloc[0] if len(position_window) else 0)
         trade_count = int((changes.abs() > 0.001).sum())
+        win_rate = self._win_rate(close, position_window)
 
         price_window = close.loc[(close.index.date >= start_date) & (close.index.date <= end_date)]
         last = float(price_window.iloc[-1])
@@ -152,6 +153,7 @@ class LeanBacktestService:
             "sharpe_ratio": round(sharpe, 2),
             "invested_days_pct": round(invested_days, 1),
             "trade_count": trade_count,
+            "win_rate_pct": win_rate,
             "market_snapshot": {
                 "as_of": price_window.index[-1].strftime("%Y-%m-%d"),
                 "last_price": round(last, 2),
@@ -195,6 +197,29 @@ class LeanBacktestService:
         daily_return = close.pct_change().fillna(0.0)
         strategy_return = daily_return * position
         return (1.0 + strategy_return).cumprod()
+
+    @staticmethod
+    def _win_rate(close, position_window) -> float | None:
+        """완결된 왕복 거래(포지션 0→>0 진입, >0→0 청산)의 승률(%). 완결 거래가 없으면 None.
+
+        부분 비중 변경(DCA 적립 등)은 왕복으로 세지 않고 진입가 = 최초 진입 종가, 청산가 = 포지션 0 도달 종가로 본다.
+        """
+        if len(position_window) == 0:
+            return None
+        prices = close.reindex(position_window.index)
+        entry_price = None
+        wins = total = 0
+        for idx, pos in position_window.items():
+            price = float(prices.loc[idx]) if prices.loc[idx] == prices.loc[idx] else None
+            if price is None:
+                continue
+            if entry_price is None and pos > 0.001:
+                entry_price = price
+            elif entry_price is not None and pos <= 0.001:
+                total += 1
+                wins += 1 if price > entry_price else 0
+                entry_price = None
+        return round(wins / total * 100, 1) if total else None
 
     @staticmethod
     def _position_ma_cross(close, short_window: int, long_window: int):

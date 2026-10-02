@@ -491,3 +491,11 @@ UI에서 도메인을 `금융·투자`로 선택한 뒤 다음 기능을 사용�
 **청킹이 데이터의 '자르기 작업'이라면, JSONL은 자른 조각들을 '효율적으로 담아 나르는 규격화된 상자'입니다.**
 
 RAG 파이프라인이나 LLM 학습 파이프라인을 구축할 때 **`[원문 문서] -> [청킹(Chunking)] -> [JSONL 포맷 변환] -> [Vector DB / 학습 모델 로드]`** 순서의 표준 흐름을 거치게 됩니다.
+
+
+## KIS 자동매매 연동 (3-repo)
+
+이 저장소는 LEAN 백테스트로 검증한 **전략 스펙 API**(`/backtests/strategies`)를 lumina-invest 에 제공한다.
+- 진행 상태·인수인계: [todo.md](todo.md) — 특히 6절 "작업 보고(AI 에이전트 인수인계용)"
+- 저장소 간 API 계약: [docs/contracts/kis-autotrade-api.md](docs/contracts/kis-autotrade-api.md) (세 저장소 동일 사본)
+- 테스트: `timeout 120 .venv/bin/python -m pytest -q`

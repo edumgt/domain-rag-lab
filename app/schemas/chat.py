@@ -112,6 +112,7 @@ class BacktestResponse(BaseModel):
     sharpe_ratio: float
     invested_days_pct: float
     trade_count: int
+    win_rate_pct: float | None = None  # 완결 왕복 거래 승률. 완결 거래 없으면 None
     market_snapshot: dict
     points: list[dict]
     lean_log: str

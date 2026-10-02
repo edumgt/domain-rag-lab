@@ -15,6 +15,7 @@ from app.api.routes.health import router as health_router
 from app.api.routes.ingest import router as ingest_router
 from app.api.routes.market import router as market_router
 from app.api.routes.backtest import router as backtest_router
+from app.api.routes.strategies import router as strategies_router
 from app.api.routes.auth import router as auth_router
 from app.api.routes.quant_lab import router as quant_lab_router
 from app.api.routes.walk_forward import router as walk_forward_router
@@ -90,6 +91,7 @@ app.include_router(health_router)
 app.include_router(ingest_router)
 app.include_router(market_router)
 app.include_router(backtest_router)
+app.include_router(strategies_router)
 app.include_router(auth_router)
 app.include_router(quant_lab_router)
 app.include_router(walk_forward_router)
