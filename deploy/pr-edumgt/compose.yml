@@ -1,0 +1,92 @@
+# pr.edumgt.co.kr 전체 앱을 fd.edumgt.co.kr과 같은 EC2(43.201.229.188)에서 운영하는 compose.
+# - 호스트 포트를 열지 않습니다. 외부 트래픽은 기존 lumina-invest Caddy(shared-net)가 pr-api:8000으로 전달합니다.
+# - DB/Redis/Qdrant는 이 프로젝트 전용 내부 네트워크(default)에만 붙습니다.
+# - 환경 파일은 저장소 루트의 .env.prod 입니다(.env.prod.example 참고).
+name: domain-rag-lab
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    env_file:
+      - ../../.env.prod
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../../init.sql:/docker-entrypoint-initdb.d/01-enable-pgvector.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:v1.15.1
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/6333'"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    image: domain-rag-lab-api:pr
+    env_file:
+      - ../../.env.prod
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      QDRANT_HOST: qdrant
+      QDRANT_PORT: 6333
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - app_uploads:/app/data/uploads
+    networks:
+      default: {}
+      shared:
+        aliases:
+          - pr-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+    restart: unless-stopped
+
+networks:
+  default: {}
+  shared:
+    external: true
+    name: shared-net
+
+volumes:
+  postgres_data:
+  redis_data:
+  qdrant_data:
+  app_uploads:

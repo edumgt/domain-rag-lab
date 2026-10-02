@@ -1,0 +1,15 @@
+# 기존 /home/ubuntu/lumina-invest/infra/fd-edumgt/Caddyfile 의 fd 블록 뒤에 추가하는 pr 블록.
+# 파일은 컨테이너에 bind mount 되어 있으므로 rename(sed -i, mv) 대신 같은 inode에 덮어써야(tee/cp) 반영됩니다.
+
+pr.edumgt.co.kr {
+    encode zstd gzip
+    reverse_proxy pr-api:8000
+}
+
+# CloudFront(EN6D00UF52FM3) 원본 경로. CloudFront는 HTTP로 접속하며 Host를 EC2 공개 DNS로 바꿔 보냅니다.
+http://ec2-43-201-229-188.ap-northeast-2.compute.amazonaws.com {
+    encode zstd gzip
+    reverse_proxy pr-api:8000 {
+        header_up Host pr.edumgt.co.kr
+    }
+}

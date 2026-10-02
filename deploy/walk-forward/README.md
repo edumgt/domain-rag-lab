@@ -1,5 +1,7 @@
 # Walk-Forward 전용 EC2 배포
 
+> **대체됨(2026-10-02):** pr.edumgt.co.kr 전체 앱이 같은 EC2로 이전되어 `deploy/pr-edumgt/`가 Walk-Forward 경로를 포함한 모든 요청을 처리합니다. 이 디렉터리의 전용 컨테이너와 `Caddyfile.fragment`는 내렸고, CloudFront/ACM 리소스 파일과 `activate-cloudfront.py`만 계속 사용합니다.
+
 대상: `i-0436b32f1d5c9ae5b` (`43.201.229.188`).
 배포 디렉터리: `/home/ubuntu/pr-walk-forward`.
 
