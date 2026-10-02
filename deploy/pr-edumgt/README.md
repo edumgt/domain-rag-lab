@@ -32,9 +32,35 @@ sudo docker compose -f deploy/pr-edumgt/compose.yml up --build -d
 sudo docker compose -f deploy/pr-edumgt/compose.yml ps
 ```
 
-환경 파일 `/home/ubuntu/domain-rag-lab/.env.prod`(600)는 서버에만 있습니다. 항목은 루트 `.env.prod.example`과 같고, 이 서버에서는 `VLLM_BASE_URL=http://fin-ai-ollama:11434/v1`, `VLLM_MODEL=qwen2.5:1.5b`, `LEAN_RUNNER=off`로 설정했습니다. 다른 모델을 쓰려면 `sudo docker exec fin-ai-ollama ollama list`로 확인 후 값만 바꾸고 `up -d`로 api만 재생성합니다.
+환경 파일 `/home/ubuntu/domain-rag-lab/.env.prod`(600)는 서버에만 있습니다. 항목은 루트 `.env.prod.example`과 같고, 이 서버에서는 `VLLM_BASE_URL=http://fin-ai-ollama:11434/v1`, `VLLM_MODEL=qwen2.5:1.5b`, `LEAN_RUNNER=local`로 설정했습니다. 다른 모델을 쓰려면 `sudo docker exec fin-ai-ollama ollama list`로 확인 후 값만 바꾸고 `up -d`로 api만 재생성합니다.
 
 GitHub Actions `cd.yml`을 이 서버로 돌리려면 시크릿 `EC2_HOST=43.201.229.188`, `EC2_SSH_PRIVATE_KEY=fd.edumgt.co.kr.pem 내용`, `EC2_APP_DIR=/home/ubuntu/domain-rag-lab`으로 바꾸고, 워크플로의 compose 명령을 `-f deploy/pr-edumgt/compose.yml`로 수정해야 합니다(`docker-compose.prod.yml`은 자체 Caddy가 80/443을 열어 기존 Caddy와 충돌합니다).
+
+## LEAN 백테스트(로컬 러너)
+
+2026-10-02 루트 EBS 볼륨 `vol-0e250a095c557b18a`를 50GB → 150GB(gp3)로 확장하고(`growpart` + `resize2fs`, 재부팅 없음) `quantconnect/lean:latest`를 받아 두었습니다. 이 이미지는 압축 14GB·해제 후 수십 GB로, 50GB 디스크에서는 pull이 `no space left on device`로 실패합니다.
+
+로컬 러너는 API 컨테이너에 호스트 Docker 소켓과 작업 폴더를 마운트해야 합니다. `compose.yml`의 api 서비스에 아래가 들어가야 하며, 작업 폴더 `/home/ubuntu/domain-rag-lab/data/lean-workflows`는 서버에 만들어 두었습니다.
+
+```yaml
+    environment:
+      LEAN_RUNNER: local
+      LEAN_LOCAL_WORKDIR: /app/data/lean-workflows
+      LEAN_LOCAL_WORKDIR_HOST: /home/ubuntu/domain-rag-lab/data/lean-workflows
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/ubuntu/domain-rag-lab/data/lean-workflows:/app/data/lean-workflows
+```
+
+적용 후 `sudo docker compose -f deploy/pr-edumgt/compose.yml up -d api`로 api만 재생성하고, 백테스트 메뉴 또는 `POST /backtests/run`으로 확인합니다.
+
+## 서버 중지·기동 배치와 한국 공휴일
+
+EventBridge Scheduler(`default` 그룹)의 `ec2-office-hours-start-0840`(08:40 KST 기동)과 `ec2-office-hours-stop-1740`(17:40 KST 중지)이 이 서버와 `i-06f9ae097f2e86af4` 두 대를 매일 돌립니다. cron 식으로는 날짜를 제외할 수 없어, 공휴일에는 08:50 KST에 두 대를 다시 중지하는 일회성 일정을 `kr-holidays` 그룹에 둡니다(실행 후 자동 삭제). 목록과 생성·갱신은 [kr_holiday_stop_schedules.py](kr_holiday_stop_schedules.py)가 담당하며, 2026-10-03~2027-12-27의 법정 공휴일·대체공휴일이 등록돼 있습니다. 임시공휴일·선거일이 지정되면 `HOLIDAYS`에 추가해 다시 실행합니다.
+
+```bash
+python3 deploy/pr-edumgt/kr_holiday_stop_schedules.py --list
+```
 
 ## DNS
 
