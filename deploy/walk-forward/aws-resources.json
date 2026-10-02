@@ -1,0 +1,10 @@
+{
+  "region": "us-east-1",
+  "certificate_arn": "arn:aws:acm:us-east-1:086015456585:certificate/d8376e43-74c0-4b1c-871c-2ce1c750daf7",
+  "distribution_id": "EN6D00UF52FM3",
+  "distribution_domain": "d2apml5a2k9wye.cloudfront.net",
+  "domain": "pr.edumgt.co.kr",
+  "origin": "ec2-43-201-229-188.ap-northeast-2.compute.amazonaws.com",
+  "validation_cname_name": "_b37513a7a2fa2b43cdede9613b999d14.pr.edumgt.co.kr",
+  "validation_cname_value": "_bae4339a6fa4c28c0b5288a2bb42c66b.wzccmgtwzk.acm-validations.aws"
+}

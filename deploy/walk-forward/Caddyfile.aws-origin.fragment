@@ -1,0 +1,15 @@
+http://ec2-43-201-229-188.ap-northeast-2.compute.amazonaws.com {
+    encode zstd gzip
+    @walk_forward path /walk-forward.html /walk-forward/* /static/assets/walk-forward.js /static/assets/walk-forward.css /static/assets/walk-forward-page.js
+    handle @walk_forward {
+        reverse_proxy pr-walk-forward:8000
+    }
+    handle {
+        reverse_proxy https://15.165.30.183 {
+            header_up Host pr.edumgt.co.kr
+            transport http {
+                tls_server_name pr.edumgt.co.kr
+            }
+        }
+    }
+}
