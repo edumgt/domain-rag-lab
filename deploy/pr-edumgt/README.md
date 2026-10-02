@@ -40,9 +40,9 @@ GitHub Actions `cd.yml`을 이 서버로 돌리려면 시크릿 `EC2_HOST=43.201
 
 권한 네임서버는 `ns1~4.whoisdomain.kr`(도메인 등록 대행사)이며 이 AWS 계정의 Route53이 아닙니다.
 
-권장: `pr` 레코드를 `fd`와 같이 **A 43.201.229.188**로 둡니다. Caddy가 Let's Encrypt 인증서(이미 발급됨)를 자동 갱신하고, CloudFront의 60초 원본 응답 제한과 추가 비용이 없습니다.
+2026-10-02 `pr` 레코드를 **A 43.201.229.188**로 변경했습니다(fd와 동일). Caddy가 Let's Encrypt 인증서(이미 발급됨)를 자동 갱신합니다. 변경 직후 일부 리졸버와 whoisdomain 네임서버 일부는 이전 CNAME(d2apml5a2k9wye.cloudfront.net)을 최대 3600초 캐시할 수 있습니다.
 
-현재: `pr` 은 **CNAME d2apml5a2k9wye.cloudfront.net**(전용 CloudFront `EN6D00UF52FM3`)입니다. 이 경로도 동작하도록 Caddy에 CloudFront 원본용 HTTP 블록을 두었고, ACM 인증서가 `ISSUED`되면 `deploy/walk-forward/activate-cloudfront.py`가 Alias·인증서·전체 HTTP 메서드·60초 타임아웃을 설정합니다. A 레코드로 바꾼 뒤에는 CloudFront 배포를 비활성화해도 됩니다.
+CloudFront `EN6D00UF52FM3`와 ACM 요청 `d8376e43-…`(us-east-1, PENDING_VALIDATION)은 더 이상 필요하지 않습니다. Caddy의 CloudFront 원본용 HTTP 블록은 남겨 두어도 무해하며, 정리하려면 CloudFront 배포를 비활성화 후 삭제하고 ACM 요청을 삭제합니다. `deploy/walk-forward/activate-cloudfront.py`는 CloudFront 경로를 다시 쓸 때만 사용합니다.
 
 ## 확인
 
