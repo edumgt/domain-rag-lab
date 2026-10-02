@@ -80,7 +80,7 @@ def historic_bond_image():
 async def prevent_frontend_cache(request: Request, call_next):
     """Always refresh the client shell and its mutable local assets."""
     response = await call_next(request)
-    if request.url.path == "/" or request.url.path.startswith("/static/"):
+    if request.url.path in {"/", "/walk-forward.html"} or request.url.path.startswith("/static/"):
         response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
@@ -159,6 +159,13 @@ def read_learning_document(path: str):
 
 if os.path.isdir(_frontend_dir):
     app.mount("/static", StaticFiles(directory=_frontend_dir), name="static")
+
+    @app.get("/walk-forward.html", include_in_schema=False)
+    def serve_walk_forward():
+        return FileResponse(
+            os.path.join(_frontend_dir, "walk-forward.html"),
+            headers={"Cache-Control": "no-store, max-age=0"},
+        )
 
     @app.get("/", include_in_schema=False)
     def serve_index():
