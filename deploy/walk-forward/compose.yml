@@ -1,0 +1,21 @@
+name: pr-walk-forward
+services:
+  lab:
+    build:
+      context: ../..
+      dockerfile: deploy/walk-forward/Dockerfile
+    image: pr-walk-forward:local
+    restart: unless-stopped
+    networks:
+      shared:
+        aliases:
+          - pr-walk-forward
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+networks:
+  shared:
+    external: true
+    name: shared-net
