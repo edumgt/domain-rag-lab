@@ -308,3 +308,12 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 | R4 | 합격 기준 기본값 | MDD ≤ 20%, 거래 ≥ 30, 연수익 > 0 (현재) | Phase 4 결과 보고 조정 |
 | R5 | 전략 API 인증 | 현재 `STRATEGY_API_KEY` 비어 있어 공개. 키 발급 여부 | 운영 전 키 설정 (lumina `.env DOMAIN_RAG_LAB_API_KEY` 동시) |
 | R6 | 변경분 커밋 | 12개 경로 미커밋 | 기능 단위 커밋 |
+
+### 6-6. 2026-10-02 (7절 권고 수용 적용)
+
+| # | 적용 |
+|---|------|
+| R5 | `.env.local`(git 제외) 에 `STRATEGY_API_KEY` 설정, api 컨테이너 재기동 → 키 없음 401 / 키 있음 200 확인. lumina `.env DOMAIN_RAG_LAB_API_KEY` 동일값 |
+| R2 | 원격 LEAN 서버 없음(`LEAN_SSH_HOST` 비어 있음) → 로컬 Docker: `docker pull quantconnect/lean:latest` 진행(수 GB). 완료 후 R3 |
+| R3 | LEAN 이미지 준비 후 `POST /backtests/strategies` 로 실제 백테스트 1회 → 합격 시 샘플(`sample_ma_cross_kr`) 파일 삭제. 진행 상황은 아래 갱신 |
+| R1 | lumina 의 LEAN 호출이 이 저장소 `/backtests/run` 으로 위임되도록 변경됨(lumina `lean_remote.py`) |
