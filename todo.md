@@ -314,8 +314,8 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 | # | 적용 |
 |---|------|
 | R5 | `.env.local`(git 제외) 에 `STRATEGY_API_KEY` 설정, api 컨테이너 재기동 → 키 없음 401 / 키 있음 200 확인. lumina `.env DOMAIN_RAG_LAB_API_KEY` 동일값 |
-| R2 | 원격 LEAN 서버 없음(`LEAN_SSH_HOST` 비어 있음) → 로컬 Docker: `docker pull quantconnect/lean:latest` 진행(수 GB). 완료 후 R3 |
-| R3 | LEAN 이미지 준비 후 `POST /backtests/strategies` 로 실제 백테스트 1회 → 합격 시 샘플(`sample_ma_cross_kr`) 파일 삭제. 진행 상황은 아래 갱신 |
+| R2 | 원격 LEAN 서버 없음 → 로컬 PC pull 은 docker 데몬 크래시로 실패(42.5GB 이미지). **운영 pr 서버에 이미지가 이미 있어** `deploy/pr-edumgt/compose.yml` 에 docker.sock·작업 폴더·전략 볼륨을 추가하고 LEAN_RUNNER=local 로 서버에서 실행 |
+| R3 | **운영 서버(pr)에서 실제 LEAN 백테스트 실행 성공** — `POST /backtests/strategies` `ma_cross_kr_samsung`(5/20, 삼성전자 2024-01~2025-12): 엔진 "QuantConnect LEAN + yfinance", 연환산 18.52%, **MDD −33.9%**, 거래 35회, 승률 23.5% → 합격 기준(MDD ≤ 20%) 미달로 422, 파일만 보존(`data/strategies/ma_cross_kr_samsung_v1.json`, 서버). 파이프라인(백테스트→스펙→합격 판정→저장)은 검증됨. 추가 변형(20/60 장기, 돌파 20일) 결과는 아래 갱신. 로컬 샘플 `sample_ma_cross_kr` 은 합격 전략이 나오면 삭제 |
 | R1 | lumina 의 LEAN 호출이 이 저장소 `/backtests/run` 으로 위임되도록 변경됨(lumina `lean_remote.py`) |
 
 ---
