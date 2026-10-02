@@ -55,10 +55,18 @@ services:
       REDIS_PORT: 6379
       QDRANT_HOST: qdrant
       QDRANT_PORT: 6333
+      # LEAN 로컬 러너(README "LEAN 백테스트" 절): 호스트 Docker 로 quantconnect/lean 실행. 이미지는 서버에 pull 되어 있다.
+      LEAN_RUNNER: ${LEAN_RUNNER:-local}
+      LEAN_LOCAL_WORKDIR: /app/data/lean-workflows
+      LEAN_LOCAL_WORKDIR_HOST: /home/ubuntu/domain-rag-lab/data/lean-workflows
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
       - app_uploads:/app/data/uploads
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/ubuntu/domain-rag-lab/data/lean-workflows:/app/data/lean-workflows
+      # 전략 스펙 저장소(data/strategies)를 호스트에 두어 api 재생성 시에도 유지한다 (rsync 는 data/ 를 제외)
+      - /home/ubuntu/domain-rag-lab/data/strategies:/app/data/strategies
     networks:
       default: {}
       shared:
