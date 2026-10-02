@@ -1,0 +1,80 @@
+{
+  "charter": {
+    "title": "프로젝트 헌장 문서",
+    "source": "https://www.atlassian.com/software/confluence/templates/project-charter",
+    "original": "https://images.ctfassets.net/xjcz23wx147q/5VQXNNMz1Ia1r8lenWQTfn/b5d5907e6b94baf1c50dbc98f08d0712/3_Project_Charter_Template.png",
+    "file": "charter.png"
+  },
+  "timeline": {
+    "title": "WBS·일정 계획",
+    "source": "https://www.atlassian.com/software/jira/templates/project-management-templates",
+    "original": "https://images.ctfassets.net/xjcz23wx147q/3T5jipSx3VFu9ampiEXu5Y/8700fb24af9b761d1d7dccafbcb95af8/Project_20management_20-_20Timeline_20view_2x.png",
+    "file": "timeline.png"
+  },
+  "board": {
+    "title": "칸반·백로그·결함 관리",
+    "source": "https://www.atlassian.com/software/jira/templates/project-management-templates",
+    "original": "https://images.ctfassets.net/xjcz23wx147q/4scmnWZGlEx8aaBptzGNWL/98eb515524b10740c70be4a78c8ef3b1/Screen_Board.png",
+    "file": "board.png"
+  },
+  "backtest": {
+    "title": "백테스트·성과 대시보드",
+    "source": "https://www.quantconnect.com/docs/v2/local-platform/backtesting/results",
+    "original": "https://cdn.quantconnect.com/i/tu/backtest-result-page-top.png",
+    "file": "backtest.png"
+  },
+  "metrics": {
+    "title": "성과지표·검증 결과",
+    "source": "https://www.quantconnect.com/docs/v2/local-platform/backtesting/results",
+    "original": "https://cdn.quantconnect.com/i/tu/run-time-statistics-2023.png",
+    "file": "metrics.png"
+  },
+  "code": {
+    "title": "전략·분석 코드",
+    "source": "https://www.quantconnect.com/docs/v2/local-platform/backtesting/results",
+    "original": "https://cdn.quantconnect.com/i/tu/backtest-results-project-files.png",
+    "file": "code.png"
+  },
+  "ci": {
+    "title": "CI/CD 실행 흐름",
+    "source": "https://docs.github.com/en/actions/about-github-actions/understanding-github-actions",
+    "original": "https://docs.github.com/assets/cb-25535/images/help/actions/overview-actions-simple.png",
+    "file": "ci.png"
+  },
+  "api": {
+    "title": "Swagger API 명세",
+    "source": "https://fastapi.tiangolo.com/tutorial/first-steps/",
+    "original": "https://raw.githubusercontent.com/fastapi/fastapi/master/docs/en/docs/img/index/index-01-swagger-ui-simple.png",
+    "file": "api.png"
+  },
+  "architecture": {
+    "title": "AI 서비스 아키텍처",
+    "source": "https://medium.com/@shmilysyg/deploy-ai-services-with-a-rest-api-combining-local-llms-and-openai-services-a35fb7f3779e",
+    "original": "https://miro.medium.com/v2/1%2AFhJjbsn_mE-HeXTaWfSRlQ.png",
+    "file": "architecture.png"
+  },
+  "requirements": {
+    "title": "요구사항 정의서",
+    "source": "https://www.atlassian.com/software/confluence/templates/product-requirements",
+    "original": "https://images.ctfassets.net/xjcz23wx147q/4qzDGNX0ulu03UndfHrBRc/c6a4e30b952097cb29e10c0e6e4f3956/product-requirements-preview-en.png",
+    "file": "requirements.png"
+  },
+  "report": {
+    "title": "실험·검증 보고서",
+    "source": "https://www.atlassian.com/software/confluence/templates/experiment-plan-and-results",
+    "original": "https://images.ctfassets.net/xjcz23wx147q/4U279wYTAlaVEZkzWsU04Y/02218b416deb6aa8c7033da136ae4e46/experiment-plan-and-results-preview-en.png",
+    "file": "report.png"
+  },
+  "design": {
+    "title": "화면 설계·디자인 시스템",
+    "source": "https://www.atlassian.com/software/confluence/templates/design-system",
+    "original": "https://images.ctfassets.net/xjcz23wx147q/2yDXBqzm7hIjiQqAQdInFs/02a14eaaae47f298d066ff3954372d32/design-system-preview-en.png",
+    "file": "design.png"
+  },
+  "shap": {
+    "title": "SHAP 설명 차트",
+    "source": "https://shap.readthedocs.io/en/stable/example_notebooks/api_examples/plots/beeswarm.html",
+    "original": "https://shap.readthedocs.io/en/stable/_images/example_notebooks_api_examples_plots_beeswarm_3_0.png",
+    "file": "shap.png"
+  }
+}

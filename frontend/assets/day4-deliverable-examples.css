@@ -1,0 +1,18 @@
+.deliverable-example-button { display: inline; padding: 2px 4px; border: 0; border-radius: 4px; background: #edf3ff; color: #174ea6; font: inherit; line-height: 1.65; text-align: left; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.deliverable-example-button:hover { background: #dbe8ff; }
+.deliverable-example-button:focus-visible { outline: 3px solid #315ff4; outline-offset: 2px; }
+.deliverable-example-hint { color: #174ea6; font-size: 14px; }
+.deliverable-example-dialog { box-sizing: border-box; width: min(1100px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 1px solid #cfd9e8; border-radius: 14px; background: #fff; color: #173d72; overflow: auto; }
+.deliverable-example-dialog::backdrop { background: rgba(10, 25, 50, .7); }
+.deliverable-example-header { position: sticky; top: 0; display: flex; align-items: start; justify-content: space-between; gap: 16px; padding: 16px 20px; background: #fff; border-bottom: 1px solid #dce5f2; z-index: 1; }
+.deliverable-example-header h2 { margin: 4px 0; font-size: 22px; line-height: 1.4; }
+.deliverable-example-context { margin: 0; font-size: 14px; color: #52647e; }
+.deliverable-example-close { flex-shrink: 0; padding: 8px 12px; border: 1px solid #cfd9e8; border-radius: 8px; background: #f5f8ff; color: #173d72; font: inherit; cursor: pointer; }
+.deliverable-example-body { padding: 18px 20px; }
+.deliverable-example-body figure { margin: 16px 0; }
+.deliverable-example-body img { display: block; width: 100%; height: auto; border: 1px solid #dce5f2; border-radius: 8px; background: #f8fafc; }
+.deliverable-example-body figcaption, .deliverable-example-body p { font-size: 15px; line-height: 1.65; }
+.deliverable-example-body figcaption { margin-top: 8px; color: #52647e; }
+.deliverable-example-links { display: flex; gap: 12px; flex-wrap: wrap; }
+.deliverable-example-links a { color: #174ea6; text-decoration: underline; }
+@media (max-width: 620px) { .deliverable-example-header, .deliverable-example-body { padding: 12px; } .deliverable-example-header h2 { font-size: 19px; } }
