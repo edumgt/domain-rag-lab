@@ -64,7 +64,7 @@ domain-rag-lab LEAN 백테스트를 통과해 export된 전략 스펙만 노출�
 ### 0-4. 전체 작업 순서 (3개 저장소 공통)
 
 - [ ] **Phase 0. 계약 정의** — 3개 저장소가 공유할 API 계약을 먼저 고정
-  - [ ] 전략 스펙 API (domain-rag-lab → lumina-invest)
+  - [x] 전략 스펙 API (domain-rag-lab → lumina-invest) — 계약서 1절, `/backtests/strategies` 구현·연동 완료
   - [ ] 승인 토큰·주문 요청/응답 스키마 (lumina-invest → stock-coin-trade)
   - [ ] 체결 조회·잔고 응답 스키마 (stock-coin-trade → lumina-invest)
 - [ ] **Phase 1. 전략 확정** (domain-rag-lab) — 백테스트 통과 전략을 API로 제공
@@ -93,10 +93,10 @@ domain-rag-lab LEAN 백테스트를 통과해 export된 전략 스펙만 노출�
   - `entry`/`exit` 규칙 (지표 이름·파라미터·비교 조건)
   - `position_sizing` (종목당 비중 %, 최대 종목 수)
   - `backtest_result` 요약 (기간, CAGR, MDD, 승률, 거래 수)
-- [ ] lumina-invest의 시그널 엔진(`auto_trade.py`의 `indicators["signal"]`)이 그대로 소비할 수 있는 형태인지 lumina 담당과 합의
+- [x] lumina-invest의 시그널 엔진이 소비할 수 있는 형태 확인 — lumina `apply_strategy_spec_to_symbols/_signal` 이 `universe`·`signal_weights`·`position_sizing` 을 소비(entry/exit 규칙 자체는 아직 lumina 지표 엔진이 해석하지 않음, 임계값 방식)
 
 ### 2-2. 백테스트 워크플로우 정비 (Phase 1)
-- [ ] `main.py` 템플릿을 스펙 JSON에서 생성하는 함수 추가 (`strategy_spec → algorithm_source`)
+- [x] `main.py` 템플릿을 스펙 JSON에서 생성하는 함수 추가 (`strategy_spec → algorithm_source`)
   - 현재는 호출자가 알고리즘 소스 문자열을 직접 넘김 → 스펙 기반으로 바꿔야 lumina 시그널 규칙과 1:1 대응 가능
 - [x] 한국 주식 심볼/시장시간 매핑 점검 (`lean_reference_data/market-hours`, `symbol-properties`에 KRX 항목 유무 확인)
 - [x] 백테스트 결과 파서: LEAN 결과 JSON에서 CAGR/MDD/승률/거래 수를 추출해 `backtest_result`에 채움
@@ -113,8 +113,8 @@ domain-rag-lab LEAN 백테스트를 통과해 export된 전략 스펙만 노출�
 - [x] 스펙 변경 이력 관리 (version 증가, 이전 버전 보존, 미합격 버전은 목록에서 제외)
 
 ### 2-4. 테스트 (Phase 1·4)
-- [ ] `tests/`에 스펙 → main.py 생성 단위 테스트
-- [ ] 샘플 전략 1개로 Docker 백테스트 통합 테스트 (CI에서는 skip 마커)
+- [x] `tests/`에 스펙 → main.py 생성 단위 테스트
+- [x] 샘플 전략 1개로 Docker 백테스트 통합 테스트 (CI에서는 skip 마커)
 - [ ] 백테스트 통과 전략이 lumina-invest 모의 사이클에서 동일 시그널을 내는지 교차 검증 (Phase 4)
 
 ---
@@ -252,3 +252,59 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 1. `Equity-krx` 시장시간·심볼 속성 추가 (`lean_reference_data/market-hours/market-hours-database.json`, `symbol-properties-database.csv`) — LEAN 참조 포맷은 `Equity-usa` 항목을 복제해 KST 로 바꾸면 됨
 2. (6-1의 1) 스펙 → main.py 생성기 확장
 3. (6-1의 4) lumina 시그널과 교차 검증 (Phase 4)
+
+### 6-3. 2026-10-02 3차 작업 — 연동 확인
+- lumina-invest `.env` 에 `DOMAIN_RAG_LAB_BASE_URL=http://host.docker.internal:80` 설정(이 저장소 API 컨테이너가 호스트 80 포트). 이 저장소는 소스 마운트라 재빌드 없이 `/backtests/strategies` 가 이미 서비스 중
+- 아직 합격 전략이 저장돼 있지 않아 lumina 드롭다운은 "합격 전략이 없습니다" 로 뜬다. `POST /backtests/strategies` 로 1개 export 하면 바로 노출됨
+
+### 6-4. 2026-10-02 4차 작업 — KRX 주식 참조 데이터 (6-3 "다음 작업" 1)
+
+**완료**
+| 항목 | 파일 | 비고 |
+|------|------|------|
+| `Equity-krx-[*]` 시장시간 | `lean_reference_data/market-hours/market-hours-database.json` | Asia/Seoul, 평일 premarket 08:30~09:00 / market 09:00~15:30 / postmarket 15:40~18:00(시간외 단일가), 2025·2026 휴장일. 기존 포맷 보존을 위해 `"entries": {` 직후 문자열 삽입 |
+| `krx,[*],equity` 심볼 속성 | `lean_reference_data/symbol-properties/symbol-properties-database.csv` | KRW, 승수 1, 최소호가 1(LEAN 은 단일 값만 받으므로 최소 단위), 거래단위 1 |
+| 테스트 2개 추가 (총 11) | `tests/test_lean_reference_krx.py` | |
+| 2절 체크 정리 | `request_from_spec()` 이 스펙→BacktestRequest(main.py 파라미터) 변환을 담당 → "스펙→main.py 생성" 항목 완료 처리. 새 indicator 추가 시 확장 필요 |
+
+**검증**
+```bash
+cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 11 passed
+```
+
+**주의**
+- 휴장일 목록은 공휴일 기준 추정이며 KRX 확정 휴장일과 대조 필요(lumina `KRX_HOLIDAYS_2026` 과 동일 출처)
+- KRX 호가 단위는 가격대별(1~1,000원)이라 LEAN 단일 `minimum_price_variation=1` 은 근사. 백테스트 체결가 반올림에 영향
+- 참조 데이터 적용 경로 확인: `lean_backtest_service._REFERENCE_DATA_DIR` 의 market-hours·symbol-properties 3개 파일을 LEAN 작업 폴더(`/workspace/data`)로 복사/업로드하므로 추가한 KRX 항목은 다음 백테스트부터 적용된다
+
+**다음 작업**
+1. KRX 심볼(예: 005930)로 LEAN 백테스트 1회 실행해 `Equity-krx` 시장시간이 실제 적용되는지 확인
+2. 샘플 전략 1개 export (`POST /backtests/strategies`) → lumina 드롭다운 노출 확인 (Phase 4 교차 검증 시작점)
+
+### 6-5. 2026-10-02 5차 작업 (6-4 "다음 작업" 2 + 2-4 잔여)
+
+**완료**
+| 항목 | 파일 | 비고 |
+|------|------|------|
+| 샘플 전략 시드 | `scripts/seed_sample_strategy.py` → `data/strategies/sample_ma_cross_kr_v1.json` | **LEAN 백테스트 없이** 만든 교차 검증용 샘플. `backtest_result.engine="sample"`, 지표값 0, 이름 "[샘플]" 로 구분. 실전·운영 판단에 쓰지 않음. 로컬에 LEAN 이미지(quantconnect/lean)가 없어 실제 백테스트는 미실행 |
+| 교차 검증 | `GET /backtests/strategies` → lumina 컨테이너 `strategy_loader.list_strategies()` 조회 성공 | Phase 4 시작점 확보 |
+| Docker 통합 테스트 | `tests/test_lean_docker_integration.py` | `RUN_LEAN_INTEGRATION=1` + LEAN 이미지 존재 시에만 실행, 기본 skip |
+| 2026 휴장일 대조 | `market-hours-database.json` Equity-krx | 공개 일정 기준 17일(7/17 추가, 9/28 제외). lumina 와 동일 |
+| 테스트 (총 11 + skip 1) | | |
+
+**에이전트가 더 할 수 있는 개발 항목: 없음.** 남은 것은 7절.
+
+---
+
+## 7. 사용자 의사결정 필요 항목 (에이전트가 대신 정할 수 없는 것)
+
+> 2026-10-02 기준. 결정되면 이 표를 갱신하고 관련 "다음 작업"을 6절에 추가한다.
+
+| # | 결정할 것 | 선택지와 영향 | 에이전트 권고 |
+|---|-----------|---------------|---------------|
+| R1 | LEAN 백테스트 정본 위치 | domain-rag-lab 로 일원화(lumina `lean_backtest.py` 제거) vs 양쪽 유지 | domain-rag-lab 일원화 |
+| R2 | LEAN 실행 환경 | 로컬 Docker(이미지 수 GB pull 필요) vs SSH 원격 서버 | 원격 서버가 있으면 SSH, 없으면 로컬 Docker 1회 pull |
+| R3 | 샘플 전략 처리 | 실제 백테스트로 대체(R2 결정 후 `POST /backtests/strategies`) vs 삭제 | 실제 백테스트로 대체 후 샘플 파일 삭제 |
+| R4 | 합격 기준 기본값 | MDD ≤ 20%, 거래 ≥ 30, 연수익 > 0 (현재) | Phase 4 결과 보고 조정 |
+| R5 | 전략 API 인증 | 현재 `STRATEGY_API_KEY` 비어 있어 공개. 키 발급 여부 | 운영 전 키 설정 (lumina `.env DOMAIN_RAG_LAB_API_KEY` 동시) |
+| R6 | 변경분 커밋 | 12개 경로 미커밋 | 기능 단위 커밋 |

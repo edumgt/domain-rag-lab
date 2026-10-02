@@ -1,0 +1,59 @@
+{
+  "strategy_id": "sample_ma_cross_kr",
+  "version": 1,
+  "name": "[샘플] 이동평균 교차 5/20 (교차 검증용)",
+  "universe": [
+    "005930",
+    "000660",
+    "035420"
+  ],
+  "timeframe": "1d",
+  "entry": {
+    "indicator": "ma_cross",
+    "params": {
+      "short_window": 5,
+      "long_window": 20
+    },
+    "condition": "short_above_long"
+  },
+  "exit": {
+    "indicator": "ma_cross",
+    "params": {
+      "short_window": 5,
+      "long_window": 20
+    },
+    "condition": "short_below_long"
+  },
+  "signal_weights": {
+    "technical": 1.0,
+    "lightgbm": 0.0,
+    "buy_threshold": 0.25,
+    "sell_threshold": -0.25
+  },
+  "position_sizing": {
+    "max_position_pct": 20.0,
+    "max_symbols": 2
+  },
+  "backtest_result": {
+    "period": {
+      "start": "2024-01-02",
+      "end": "2026-09-30"
+    },
+    "annualized_return_pct": 0.0,
+    "max_drawdown_pct": 0.0,
+    "sharpe_ratio": 0.0,
+    "trade_count": 0,
+    "win_rate_pct": null,
+    "engine": "sample"
+  },
+  "acceptance": {
+    "passed": true,
+    "criteria": {
+      "max_drawdown_pct_lte": 20.0,
+      "trade_count_gte": 30,
+      "annualized_return_pct_gt": 0.0
+    },
+    "failed": []
+  },
+  "created_at": "2026-10-02T14:47:54.641335+09:00"
+}
