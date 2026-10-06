@@ -306,8 +306,9 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 | R2 | LEAN 실행 환경 | 로컬 Docker(이미지 수 GB pull 필요) vs SSH 원격 서버 | 원격 서버가 있으면 SSH, 없으면 로컬 Docker 1회 pull |
 | R3 | 샘플 전략 처리 | 실제 백테스트로 대체(R2 결정 후 `POST /backtests/strategies`) vs 삭제 | 실제 백테스트로 대체 후 샘플 파일 삭제 |
 | R4 | 합격 기준 기본값 | MDD ≤ 20%, 거래 ≥ 30, 연수익 > 0 (현재) | Phase 4 결과 보고 조정 |
-| R5 | 전략 API 인증 | 현재 `STRATEGY_API_KEY` 비어 있어 공개. 키 발급 여부 | 운영 전 키 설정 (lumina `.env DOMAIN_RAG_LAB_API_KEY` 동시) |
-| R6 | 변경분 커밋 | 12개 경로 미커밋 | 기능 단위 커밋 |
+| R5 | ~~전략 API 인증~~ **완료**(fd `.env.prod STRATEGY_API_KEY` = lumina `DOMAIN_RAG_LAB_API_KEY`, 무키 401 확인 — 8절) | — | — |
+| R6 | ~~변경분 커밋~~ **완료**(2026-10-02 푸시, origin/main=241157c). 2026-10-06 8-1 변경분(5경로)은 다시 미커밋 | — | 기능 단위 커밋 |
+| R7 | (2026-10-06) `latest` 태그 LEAN 이미지 고정 여부 | 4 저장소 모두 `quantconnect/lean:latest` → 서버별 버전 상이 가능. 특정 태그로 고정하면 재현성↑, 업데이트는 수동 | R1(일원화)과 함께 태그 고정 |
 
 ### 6-6. 2026-10-02 (7절 권고 수용 적용)
 
@@ -326,7 +327,7 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 | 도메인 | 저장소 | EC2 | 배포 방식 |
 |--------|--------|-----|-----------|
 | fd.edumgt.co.kr | lumina-invest | 43.201.229.188 (`/home/ubuntu/lumina-invest`, compose `docker-compose.yml:compose.fd.yml`) | GitHub Actions `deploy.yml`(push main) 또는 수동 rsync+compose |
-| pr.edumgt.co.kr | domain-rag-lab | 같은 서버 (`/home/ubuntu/domain-rag-lab`, `deploy/pr-edumgt/compose.yml`, Caddy alias `pr-api`) | 수동 rsync+compose. `cd.yml` 을 이 compose 로 고쳤으나 시크릿(EC2_HOST 등)은 구서버 값 → 갱신 필요 |
+| pr.edumgt.co.kr | domain-rag-lab | 같은 서버 (`/home/ubuntu/domain-rag-lab`, `deploy/pr-edumgt/compose.yml`, Caddy alias `pr-api`) | GitHub Actions `cd.yml`(push main). ~~시크릿 구서버 값~~ → 2026-10-06 갱신 완료(8-1). ECR 경로 제거 |
 | st.edumgt.co.kr | stock-coin-trade | 43.202.161.134 (`/opt/stock-coin-trade`, ssl+pg-stock 오버레이) | GitHub Actions `deploy-ec2.yml`(push main) 만. 에이전트는 이 서버 SSH 키 탐색이 보안 정책으로 차단돼 직접 접속하지 않음 |
 
 **에이전트가 수행한 것**
@@ -359,6 +360,8 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
    - 키가 비어 있는 동안 fd 의 live 모드는 레거시 직접 호출로 폴백한다(게이트웨이 미사용). 운영 계정은 아직 paper/mock 이므로 실주문은 나가지 않음
 4. 운영에서 자동매매를 켤 계정의 종목 선정 화면 설정(live + KIS)은 Testbed 1주 관찰 결정(7절 L1)에 따라 진행
 
+> **2026-10-06 갱신**: 아래 표 작성 이후 상황이 바뀌었다. 푸시·st 배포·API 키 발급은 완료됐고, domain-rag-lab 시크릿도 갱신됐다. 현재 상태는 8-1·8-2 절 참고.
+
 **배포 결과 (15:5x KST)**
 | 서버 | 결과 |
 |------|------|
@@ -384,3 +387,19 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 
 **결정 필요**
 - stock-kms-portal `cd.yml` 은 `-p domain-rag-lab -f docker-compose.prod.yml`(자체 Caddy 80/443) 로 올리므로 fd 서버에 그대로 배포하면 pr 스택과 충돌한다. 대상 서버·compose 파일·프로젝트명을 정한 뒤 `EC2_HOST`/`EC2_APP_DIR` 을 넣어야 한다(메모리/8절 권고: fd 서버 + pr-edumgt 방식 별도 compose).
+
+### 8-2. 2026-10-06 현황표
+
+| 항목 | 상태 |
+|------|------|
+| origin/main | `241157c` (ci(cd): AWS 세션 토큰 추가…). 10-06 09:50 로컬=원격 |
+| 로컬 미커밋 | (사용자가 59ef559·cee8839 로 ECR 제거·rsync 수정 커밋 완료) 10-06 추가분: `.github/workflows/cd.yml`(헬스체크 `--retry-connrefused`), `todo.md` |
+| GitHub secret | **갱신**: `EC2_HOST=43.201.229.188`, `EC2_USER=ubuntu`, `EC2_APP_DIR=/home/ubuntu/domain-rag-lab`, `EC2_SSH_PRIVATE_KEY`=fd.edumgt.co.kr.pem. **미사용(정리 가능)**: `AWS_ACCESS_KEY_ID/SECRET/REGION`, `EC2_ECR_*`, `TEST_EC2_*` |
+| 워크플로 | `CI — Lint & Test` cee8839 성공. `CD — Deploy to EC2` run 37396584555(241157c): rsync Permission denied(13) → rsync 보호 규칙으로 수정, 사용자 커밋 cee8839 푸시 → run 37397333606: **rsync 통과, 이미지 빌드·api 재생성·기동 성공**, 마지막 헬스체크 `curl --retry` 가 기동 1초 뒤 연결 거부(exit 7)를 재시도하지 않아 실패 표시(배포 자체는 완료, 공개 `/health` 200). → `--retry-connrefused` 추가(미커밋, 아래). `CD — Build to ECR and Deploy` **disable + 파일 삭제 완료(59ef559)** |
+| 서버 상태 | `https://pr.edumgt.co.kr/health` 200. pr 스택은 fd 서버 Caddy(lumina compose) 뒤에서 `pr-api` alias 로 동작 |
+| 전략 API | `STRATEGY_API_KEY` 설정됨(무키 401). 합격 전략 **0건**(lumina L13 — 운영 계정은 LEAN·ML 미적용 상태) |
+| LEAN | `lean_runner` auto/local/remote, 이미지 `quantconnect/lean:latest`(서버에 pull 됨). stock-kms-portal 은 이 저장소 포크로 `lean_backtest_service.py` 25줄 차이, `lean_reference_data` 없음 |
+
+**다음 작업(사용자)**: `cd.yml`·`todo.md` 커밋·푸시(에이전트의 커밋·푸시는 10-06 자동 모드 분류기가 "민감 정보 과다"로 거부) → run 전 단계 성공 확인(`gh run watch -R edumgt/domain-rag-lab`).
+
+**사이트 헬스(2026-10-06 01:16Z)**: pr `/health` 200(45ms), `/` 200. TLS 만료 2026-12-30.
