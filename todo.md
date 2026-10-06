@@ -366,3 +366,21 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 | pr.edumgt.co.kr (domain-rag-lab) | rsync + `deploy/pr-edumgt/compose.yml up --build -d`. 첫 up 에서 api 가 Created 에 머물러(postgres 재생성 대기) `up -d api` 재실행 → healthy. `/health` 200, `/backtests/strategies` 키 없음 401 / 키 있음 200, lumina 컨테이너에서 `pr-api` 조회 성공(전략 0건). 공개 `https://pr.edumgt.co.kr/health` 200 |
 | st.edumgt.co.kr (stock-coin-trade) | **미배포** — 사용자 푸시 → `deploy-ec2.yml` 자동 배포 필요 (위 1·2·3 절차) |
 
+
+### 8-1. 2026-10-06 GitHub Actions 직접 배포 정비 (사용자 요청)
+
+**한 것**
+- GitHub 시크릿 갱신(`gh secret set`): `EC2_HOST=43.201.229.188`, `EC2_USER=ubuntu`, `EC2_APP_DIR=/home/ubuntu/domain-rag-lab`, `EC2_SSH_PRIVATE_KEY=lumina-invest/fd.edumgt.co.kr.pem`. lumina-invest `FUND_WEB_SSH_KEY` 도 같은 키로 갱신. stock-kms-portal 은 `EC2_SSH_PRIVATE_KEY`·`EC2_USER` 만 넣고 `EC2_HOST`/`EC2_APP_DIR` 은 비워 둠(아래 "결정 필요").
+- `cd.yml` 수동 실행(run 37396584555): SSH 연결·rsync 접속은 성공, rsync `--delete` 가 서버의 `data/lean-workflows`(컨테이너가 root 로 생성) 를 지우려다 `Permission denied (13)` → exit 23 로 실패. 수정: rsync 에 `--exclude 'data/lean-workflows'` 와 `--filter 'protect data/'` 추가(서버 데이터 삭제 금지, 추적 파일은 계속 동기화).
+- ECR 경로 제거: `.github/workflows/cd-ecr.yml`, `docker-compose.ecr.yml` 삭제(git rm, 미커밋). GitHub 에서 "CD — Build to ECR and Deploy" 워크플로 disable. `docs/cicd-troubleshooting.md` 의 ECR 절 제거·rsync 23 절 추가. stock-kms-portal 에도 동일 적용.
+- lumina-invest `deploy.yml` 수동 실행(run 37396581320): pytest → SSH → rsync → compose 재빌드 → 컨테이너 헬스체크 → 공개 도메인 확인까지 **전 단계 성공**. 키 연동 검증 완료.
+
+**검증**
+- `https://pr.edumgt.co.kr/health` 200, `https://fd.edumgt.co.kr/api/health` 200 (배포 전후 동일).
+
+**사용자가 할 것**
+1. 커밋·푸시(두 저장소): 푸시하면 `cd.yml` 이 자동 실행되어 rsync 수정분으로 fd 서버에 배포된다. `gh run watch -R edumgt/domain-rag-lab` 로 확인.
+2. 불필요 시크릿 정리(선택): `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `EC2_ECR_*`, `TEST_EC2_*`.
+
+**결정 필요**
+- stock-kms-portal `cd.yml` 은 `-p domain-rag-lab -f docker-compose.prod.yml`(자체 Caddy 80/443) 로 올리므로 fd 서버에 그대로 배포하면 pr 스택과 충돌한다. 대상 서버·compose 파일·프로젝트명을 정한 뒤 `EC2_HOST`/`EC2_APP_DIR` 을 넣어야 한다(메모리/8절 권고: fd 서버 + pr-edumgt 방식 별도 compose).

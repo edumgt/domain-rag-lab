@@ -17,19 +17,19 @@
 - EC2 인스턴스 실행 상태와 보안 그룹·방화벽의 TCP 22 접근 정책을 확인합니다.
   GitHub 호스팅 러너에서 접근 가능한 경로가 필요합니다.
 - `EC2_SSH_PRIVATE_KEY`에는 PEM 파일 전체 내용을 실제 줄바꿈과 함께 저장합니다.
-- ECR 배포에는 별도의 `EC2_ECR_HOST`, `EC2_ECR_SSH_PRIVATE_KEY`를 확인합니다.
 
 워크플로는 필수 값과 키 형식을 검사하고 호스트 키 조회 실패 시 진단 메시지를 출력합니다.
 
-## ECR CD: `The security token included in the request is invalid`
+## EC2 CD: `rsync ... delete_file ... Permission denied (13)` (exit 23)
 
-AWS 자격 증명 설정 단계에서 실패했으므로 이미지 빌드와 EC2 배포는 시작되지 않았습니다.
+서버의 `data/lean-workflows`(컨테이너가 root 로 생성)를 `--delete` 가 지우려다 실패한 것입니다.
+`cd.yml` 은 `--exclude 'data/lean-workflows'` 와 `--filter 'protect data/'` 로 서버 데이터를 보호합니다.
 
-- `AWS_ACCESS_KEY_ID`와 `AWS_SECRET_ACCESS_KEY`가 같은 유효한 자격 증명 쌍인지 확인하고,
-  비활성화·삭제·만료된 자격 증명이라면 교체합니다.
-- STS 임시 자격 증명은 같은 발급 건의 `AWS_SESSION_TOKEN`도 필요합니다.
-  워크플로의 빌드 및 배포 작업 모두 이 시크릿을 지원합니다.
-- 장기 IAM 액세스 키를 쓴다면 `AWS_SESSION_TOKEN`을 제거합니다.
+## ECR 경로 제거 (2026-10-06)
+
+`cd-ecr.yml` 과 `docker-compose.ecr.yml` 은 삭제했고 GitHub 에서 해당 워크플로는 disable 했습니다.
+배포는 `cd.yml`(rsync → `deploy/pr-edumgt/compose.yml up --build`) 한 경로만 사용합니다.
+`AWS_*`, `EC2_ECR_*` 시크릿은 더 이상 쓰지 않으므로 정리해도 됩니다.
 
 시크릿 값은 로그나 이 문서에 기록하지 않습니다. 수정 커밋을 반영하고 설정을 복구한 뒤
 Actions에서 실패한 워크플로를 다시 실행합니다. 기존 실행의 재실행은 기존 커밋을 사용하므로

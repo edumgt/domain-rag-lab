@@ -54,6 +54,8 @@ jobs:
             --exclude '__pycache__' \
             --exclude '*.pyc' \
             --exclude '*.pem' \
+            --exclude 'data/lean-workflows' \
+            --filter 'protect data/' \
             -e 'ssh -i ~/.ssh/domain-rag-deploy.pem' \
             ./ "$EC2_USER@$EC2_HOST:$EC2_APP_DIR/"
 
