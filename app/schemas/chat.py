@@ -117,5 +117,6 @@ class BacktestResponse(BaseModel):
     points: list[dict]
     lean_log: str
     lean_runner: str | None = None            # local | remote — 실행 과정 화면의 LEAN 노드 라벨
+    price_source: dict | None = None          # {source: db|db+yfinance|pg-stock…, rows, db_rows_before, fetched[], stored_rows}
     timings: dict[str, float] | None = None   # {download_ms, lean_ms, total_ms} — 실행 과정 화면의 실제 소요시간
     disclaimer: str

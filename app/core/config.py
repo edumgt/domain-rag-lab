@@ -57,6 +57,9 @@ class Settings(BaseSettings):
     lean_remote_workdir: str = "/home/ubuntu/lean-workflows"
     lean_docker_image: str = "quantconnect/lean:latest"
     lean_timeout_seconds: int = 300
+    # 백테스트 가격 데이터: 자체 stock_price_history 가 1순위. 설정 시 별도 OHLCV 저장소(stock-coin-trade pg-stock,
+    # 예: postgresql+psycopg2://admin:***@172.31.0.79:55432/admin)를 2순위로 조회하고, 그래도 없으면 yfinance 에서 받아 적재한다.
+    ohlcv_database_url: str = ""
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

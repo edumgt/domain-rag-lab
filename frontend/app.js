@@ -1799,21 +1799,21 @@ KOSDAQ|웹젠|게임`,
   const BT_NODES = [
     { id: 'fe', title: '브라우저 (FE)', lines: ['조건 입력 · 요청 생성', '결과 차트 렌더'] },
     { id: 'be', title: 'FastAPI (BE)', lines: ['POST /backtests/run', '입력 검증 · 기간 계산'] },
-    { id: 'api', title: 'yfinance API', lines: ['일봉 종가 다운로드', '전략별 과거 버퍼 포함'] },
+    { id: 'api', title: 'OHLCV DB · yfinance', lines: ['시스템 DB에서 종가 조회', '없는 구간만 yfinance 수집 → DB 적재'] },
     { id: 'lean', title: 'LEAN 엔진', lines: ['알고리즘 생성 → Docker 실행', '로그·성과 집계'] },
   ];
-  const BT_EDGE_LABELS = ['JSON 요청', 'download()', 'docker run'];
+  const BT_EDGE_LABELS = ['JSON 요청', 'DB 조회 / 수집', 'docker run'];
   const BT_STAGE_TEXT = {
     fe: '① 브라우저가 조건을 모아 요청을 만듭니다',
     be: '② FastAPI 가 요청을 받아 검증하고 데이터 기간을 계산합니다',
-    api: '③ yfinance 에서 일봉 종가를 내려받습니다',
+    api: '③ 시스템 OHLCV DB에서 종가를 찾고, 없는 구간만 yfinance 에서 받아 적재합니다',
     lean: '④ LEAN 컨테이너가 알고리즘을 실행합니다 (수십 초 걸릴 수 있음)',
     done: '⑤ 결과 JSON 을 받아 차트와 지표를 그립니다',
   };
   const btPipeline = createBacktestPipeline();
 
   function createBacktestPipeline() {
-    const state = { running: false, stage: null, startedAt: 0, stageAt: 0, done: new Set(), error: null, finishedAt: 0, timings: null, runner: null, timers: [], raf: 0 };
+    const state = { running: false, stage: null, startedAt: 0, stageAt: 0, done: new Set(), error: null, finishedAt: 0, timings: null, runner: null, priceSource: null, timers: [], raf: 0 };
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let canvas = null, ctx = null, observer = null;
 
@@ -1845,7 +1845,7 @@ KOSDAQ|웹젠|게임`,
 
     function start() {
       clearTimers();
-      Object.assign(state, { running: true, stage: 'fe', startedAt: performance.now(), stageAt: performance.now(), done: new Set(), error: null, finishedAt: 0, timings: null, runner: null });
+      Object.assign(state, { running: true, stage: 'fe', startedAt: performance.now(), stageAt: performance.now(), done: new Set(), error: null, finishedAt: 0, timings: null, runner: null, priceSource: null });
       if (!canvas) mount();
       setStatus(`${BT_STAGE_TEXT.fe} · 0.0초 경과`);
       ensureLoop();
@@ -1869,9 +1869,11 @@ KOSDAQ|웹젠|게임`,
       state.stage = 'done'; state.stageAt = performance.now(); state.finishedAt = performance.now(); state.running = false;
       state.timings = data && data.timings ? data.timings : null;
       state.runner = data && data.lean_runner ? data.lean_runner : null;
+      state.priceSource = data && data.price_source ? data.price_source : null;
       const t = state.timings;
       const parts = [`완료 · 전체 ${((performance.now() - state.startedAt) / 1000).toFixed(1)}초`];
-      if (t) parts.push(`yfinance ${(Number(t.download_ms || 0) / 1000).toFixed(1)}초`, `LEAN ${(Number(t.lean_ms || 0) / 1000).toFixed(1)}초 (${state.runner === 'remote' ? '원격 SSH Docker' : '로컬 Docker'})`);
+      if (state.priceSource) parts.push(describePriceSource(state.priceSource));
+      if (t) parts.push(`데이터 준비 ${(Number(t.download_ms || 0) / 1000).toFixed(1)}초`, `LEAN ${(Number(t.lean_ms || 0) / 1000).toFixed(1)}초 (${state.runner === 'remote' ? '원격 SSH Docker' : '로컬 Docker'})`);
       setStatus(parts.join(' · '));
       ensureLoop();
     }
@@ -1882,6 +1884,14 @@ KOSDAQ|웹젠|게임`,
       state.running = false; state.finishedAt = performance.now();
       setStatus(`실패 (${(BT_NODES.find(n => n.id === state.error.stage) || { title: '결과' }).title}) · ${state.error.message}`);
       ensureLoop();
+    }
+
+    // 응답의 price_source → "데이터 DB 512행 · yfinance 7행 적재" 같은 한 줄
+    function describePriceSource(ps) {
+      const fetched = (ps.fetched || []).filter(f => f.rows > 0);
+      const extra = fetched.map(f => `${f.source} ${Number(f.rows).toLocaleString()}행 적재`).join(' · ');
+      const dbPart = ps.db_rows_before ? `DB ${Number(ps.db_rows_before).toLocaleString()}행` : 'DB 없음';
+      return `데이터 ${dbPart}${extra ? ` · ${extra}` : ''} (총 ${Number(ps.rows || 0).toLocaleString()}행)`;
     }
 
     function roundRect(x, y, w, h, r) {
@@ -1968,7 +1978,12 @@ KOSDAQ|웹젠|게임`,
         ctx.fillStyle = kind === 'idle' ? '#7dd3fc' : '#e0f2fe'; ctx.font = `800 ${compact ? 11 : 12}px Pretendard, sans-serif`;
         ctx.fillText(`0${BT_NODES.indexOf(box) + 1} · ${box.title}`, box.x + 12, box.y + 20);
         ctx.fillStyle = kind === 'idle' ? '#bae6fd' : '#f0f9ff'; ctx.font = `500 ${compact ? 10.5 : 12}px Pretendard, sans-serif`;
-        const lines = box.id === 'lean' && state.runner ? [box.lines[0].replace('Docker', state.runner === 'remote' ? '원격 SSH Docker' : '로컬 Docker'), box.lines[1]] : box.lines;
+        let lines = box.lines;
+        if (box.id === 'lean' && state.runner) lines = [box.lines[0].replace('Docker', state.runner === 'remote' ? '원격 SSH Docker' : '로컬 Docker'), box.lines[1]];
+        if (box.id === 'api' && state.priceSource) {
+          const ps = state.priceSource; const fetched = (ps.fetched || []).filter(f => f.rows > 0);
+          lines = [`DB ${Number(ps.db_rows_before || 0).toLocaleString()}행 조회`, fetched.length ? `${fetched.map(f => f.source).join('+')} ${fetched.reduce((n, f) => n + f.rows, 0).toLocaleString()}행 적재` : '외부 수집 없음 (DB로 충분)'];
+        }
         lines.forEach((line, i) => { if (compact && i > 0) return; ctx.fillText(line, box.x + 12, box.y + 40 + i * 17); });
         // 상태 배지
         const badge = kind === 'active' ? '진행 중' : kind === 'done' ? '완료' : kind === 'error' ? '실패' : '';

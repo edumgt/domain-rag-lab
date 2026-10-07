@@ -413,3 +413,23 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 | `frontend/style.css`·`frontend/index.html` | 섹션 스타일(기존 워크플로 네이비 톤), `app.js`·`style.css` 캐시 버전 `20261007-backtest-pipeline` |
 
 **검증**: 백엔드 pytest 통과(아래 실행 결과), app.js 괄호 균형 델타 HEAD 와 동일, 연결 지점(start/set/finish/fail) 존재. 브라우저 미실행 — 배포 후 확인: 뷰 진입 시 회색 다이어그램, 실행 시 FE→BE→API→LEAN 순으로 켜지고 LEAN 에 경과초, 완료 시 반환 패킷 후 실제 소요시간 표시, 422/502 오류 시 해당 노드 빨강. 배포는 push → `cd.yml`(fd 서버 pr 스택).
+
+### 6-8. 2026-10-07 LEAN 백테스트 가격 데이터 — 시스템 OHLCV DB 우선, 없으면 yfinance 수집 후 적재 (사용자 요청)
+
+**전**: `LeanBacktestService.run` 이 매번 `yf.download` 로 전 구간을 받았다(DB 미사용, 수정주가 `auto_adjust=True`).
+
+| 변경 | 내용 |
+|------|------|
+| `app/services/ohlcv_store.py` 신설 | `OhlcvStore.close_series(symbol, start, end)`: ① 자체 `stock_price_history`(국내 `005930`+KOSPI/KOSDAQ, 해외는 심볼+US) 조회 → ② 없는 구간(전체 / 앞 10일 초과 / 뒤 3일 초과)만 `OHLCV_DATABASE_URL` 설정 시 pg-stock `ohlcv` → ③ yfinance(`auto_adjust=False`, 원시 종가) 순으로 받아 **upsert** → 재조회. 상장 전처럼 외부에도 없는 앞 구간은 프로세스 메모리에 기억해 재요청 안 함. 반환 Series + 메타(`source`, `db_rows_before`, `fetched[]`, `stored_rows`, `rows`) |
+| `lean_backtest_service.py` | yfinance 직접 호출 제거, `store` 주입 가능(`LeanBacktestService(store=)`). 응답 `price_source` 추가. 데이터 없으면 "시스템 OHLCV DB 와 yfinance 어디에서도…" 422 |
+| `app/core/config.py`·`.env.example` | `OHLCV_DATABASE_URL`(선택, pg-stock. st EC2 사설 IP 172.31.0.79:55432 — fd 에서 보안그룹 허용 필요) |
+| `schemas/chat.py` | `price_source: dict | None` |
+| `frontend/app.js`·`index.html` | 실행 과정 캔버스 3번 노드 "OHLCV DB · yfinance", 완료 시 "데이터 DB n행 · yfinance m행 적재 (총 k행)", 노드 2줄에 조회/적재 수. `app.js?v=20261007-ohlcv-db-first` |
+| 테스트 | `tests/test_ohlcv_store.py` 7건(DB만·전체 수집·뒤 구간만+pg-stock 우선·앞 구간 기억·허용 범위·서비스 주입). 전체 **18 passed, 1 skipped** |
+
+**효과·주의**
+- 같은 종목·기간 두 번째 실행부터 외부 호출 0 → 실행 과정의 "데이터 준비" 가 수십 ms. 적재된 국내 봉은 `/market/history`(종목 매거진 과거 데이터)에서도 바로 보인다.
+- 종가가 **수정주가 → 원시 종가**로 바뀌어 배당·액면분할이 있던 종목은 이전 결과와 수치가 다를 수 있다(세 소스를 섞어도 경계 단절이 없게 한 선택).
+- 운영 DB 의 `stock_price_history` 는 현재 0행이라 첫 실행은 전과 같이 yfinance 를 탄다. pg-stock(669k행, ~2026-09-30) 을 2순위로 쓰려면 fd `.env` 에 `OHLCV_DATABASE_URL` 과 st 보안그룹(55432, fd 사설 IP 허용)이 필요 — 7절 결정.
+
+**확인(배포 후)**: 같은 조건으로 2회 실행 → 두 번째 완료 문구가 "데이터 DB n행 … 외부 수집 없음". `select count(*) from stock_price_history` 증가.

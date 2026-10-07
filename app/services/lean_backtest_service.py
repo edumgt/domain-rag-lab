@@ -1,4 +1,4 @@
-"""yfinance data staging and QuantConnect LEAN execution (local Docker or remote SSH)."""
+"""Price staging (system OHLCV DB first, yfinance fallback) and QuantConnect LEAN execution (local Docker or remote SSH)."""
 
 from __future__ import annotations
 
@@ -10,10 +10,9 @@ import uuid
 from datetime import date, timedelta
 from pathlib import Path
 
-import yfinance as yf
-
 from app.core.config import settings
 from app.schemas.chat import STRATEGY_LABELS
+from app.services.ohlcv_store import OhlcvStore
 
 # Extra calendar-day lookback fetched before start_date so indicators (moving
 # averages, breakout windows) have enough history on day one of the backtest.
@@ -41,6 +40,16 @@ class LeanBacktestError(RuntimeError):
 
 
 class LeanBacktestService:
+    def __init__(self, store: OhlcvStore | None = None) -> None:
+        # 가격 데이터 저장소. 테스트에서는 가짜 세션·수집 함수를 가진 OhlcvStore 를 주입한다.
+        self._store = store
+
+    @property
+    def store(self) -> OhlcvStore:
+        if self._store is None:
+            self._store = OhlcvStore()
+        return self._store
+
     def run(
         self,
         *,
@@ -67,13 +76,16 @@ class LeanBacktestService:
         # yfinance's end argument is exclusive. Include the selected final day so the
         # on-screen date range and the calculation match.
         download_end = max(end_date, compare_end_date) + timedelta(days=1)
-        prices = yf.download(ticker, start=fetch_start.isoformat(), end=download_end.isoformat(), auto_adjust=True, progress=False)
+        # 시스템 OHLCV DB(stock_price_history → 선택적 pg-stock)를 먼저 쓰고, 없는 구간만 yfinance 에서 받아 DB 에 적재한다.
+        try:
+            close, price_source = self.store.close_series(ticker, fetch_start, download_end)
+        except LeanBacktestError:
+            raise
+        except Exception as exc:
+            raise LeanBacktestError(f"가격 데이터를 준비하지 못했습니다: {exc}") from exc
         download_ms = round((time.perf_counter() - timer_start) * 1000)
-        if prices.empty or "Close" not in prices:
-            raise LeanBacktestError("yfinance에서 해당 기간의 종가를 받지 못했습니다.")
-        close = prices["Close"]
-        if getattr(close, "ndim", 1) > 1:
-            close = close.iloc[:, 0]
+        if close.empty:
+            raise LeanBacktestError("시스템 OHLCV DB 와 yfinance 어디에서도 해당 기간의 종가를 받지 못했습니다. 티커·상장일을 확인하세요.")
 
         work_id = f"workflow-{uuid.uuid4().hex[:12]}"
         algorithm_source = self._algorithm_source(strategy, start_date, end_date, initial_cash, short_window, long_window, dca_interval_days, breakout_window)
@@ -113,6 +125,7 @@ class LeanBacktestService:
             "points": points,
             "lean_log": lean_log[-6000:],
             "lean_runner": runner,
+            "price_source": price_source,
             "timings": {"download_ms": download_ms, "lean_ms": lean_ms, "total_ms": round((time.perf_counter() - timer_start) * 1000)},
             "disclaimer": "yfinance 일봉 기반 교육용 예시입니다. 배당·세금·수수료·슬리피지·데이터 품질과 실제 체결은 반영하지 않으며 투자 권유가 아닙니다.",
         }
