@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     embedding_dim: int = 384
 
     vllm_base_url: str = "http://localhost:8001/v1"
-    vllm_model: str = "qwen2.5:7b"
+    vllm_model: str = "qwen2.5:3b"
     llm_timeout_seconds: int = 600
     vllm_api_key: str = "EMPTY"
 

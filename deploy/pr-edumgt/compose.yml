@@ -50,7 +50,8 @@ services:
       - ../../.env.prod
     environment:
       VLLM_BASE_URL: http://fin-ai-ollama:11434/v1
-      VLLM_MODEL: qwen2.5:7b
+      VLLM_MODEL: qwen2.5:3b
+      QWEN_MODEL: qwen2.5:3b
       LLM_TIMEOUT_SECONDS: 600
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
