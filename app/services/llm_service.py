@@ -101,7 +101,7 @@ class LLMService:
                 {"role": "user", "content": "\n\n".join(user_parts)},
             ],
             "temperature": 0.2,
-            "max_tokens": 700,
+            "max_tokens": 160,
         }
 
         headers = {
@@ -110,7 +110,7 @@ class LLMService:
         }
 
         try:
-            with httpx.Client(timeout=60.0) as client:
+            with httpx.Client(timeout=settings.llm_timeout_seconds) as client:
                 response = client.post(
                     f"{self.base_url}/chat/completions",
                     json=payload,
@@ -140,7 +140,7 @@ class LLMService:
             "model": self.model,
             "messages": messages,
             "temperature": 0.2,
-            "max_tokens": 1000,
+            "max_tokens": 256,
         }
         if tools:
             payload["tools"] = tools
@@ -152,7 +152,7 @@ class LLMService:
         }
 
         try:
-            with httpx.Client(timeout=60.0) as client:
+            with httpx.Client(timeout=settings.llm_timeout_seconds) as client:
                 response = client.post(
                     f"{self.base_url}/chat/completions",
                     json=payload,

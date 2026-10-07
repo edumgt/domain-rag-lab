@@ -23,6 +23,7 @@ class Settings(BaseSettings):
 
     vllm_base_url: str = "http://localhost:8001/v1"
     vllm_model: str = "qwen2.5:7b"
+    llm_timeout_seconds: int = 600
     vllm_api_key: str = "EMPTY"
 
     upload_dir: str = "/app/data/uploads"
