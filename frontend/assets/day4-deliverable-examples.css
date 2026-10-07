@@ -16,3 +16,19 @@
 .deliverable-example-links { display: flex; gap: 12px; flex-wrap: wrap; }
 .deliverable-example-links a { color: #174ea6; text-decoration: underline; }
 @media (max-width: 620px) { .deliverable-example-header, .deliverable-example-body { padding: 12px; } .deliverable-example-header h2 { font-size: 19px; } }
+
+.deliverable-example-checklist { padding: 14px 18px; margin: 16px 0; border: 1px solid #cfd9e8; border-radius: 10px; background: #f5f8ff; }
+.deliverable-example-checklist h3 { margin: 0 0 8px; font-size: 18px; }
+.deliverable-example-checklist ul { margin: 0; padding-left: 22px; line-height: 1.8; color: #334155; }
+@media (max-width: 620px) {
+  .deliverable-example-body figure { overflow-x: auto; overscroll-behavior-x: contain; }
+  .deliverable-example-body img { min-width: 720px; }
+  .deliverable-example-body figcaption { position: sticky; left: 0; max-width: calc(100vw - 76px); }
+}
+.deliverable-example-document { margin: 16px 0; padding: 14px; border: 1px solid #cfd9e8; border-radius: 10px; }
+.deliverable-example-document summary { cursor: pointer; font-weight: 700; }
+.deliverable-document-table-wrap { overflow-x: auto; margin: 12px 0; }
+.deliverable-example-document table { border-collapse: collapse; width: 100%; min-width: 650px; color: #334155; }
+.deliverable-example-document th, .deliverable-example-document td { padding: 10px; border: 1px solid #cbd5e1; text-align: left; font-size: 14px; vertical-align: top; overflow-wrap: anywhere; }
+.deliverable-example-document th { background: #eef2ff; }
+.deliverable-example-document pre { white-space: pre; overflow: auto; padding: 14px; background: #f1f5f9; color: #1e293b; font-size: 14px; }
