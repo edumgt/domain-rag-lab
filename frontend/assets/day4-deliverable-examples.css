@@ -32,3 +32,20 @@
 .deliverable-example-document th, .deliverable-example-document td { padding: 10px; border: 1px solid #cbd5e1; text-align: left; font-size: 14px; vertical-align: top; overflow-wrap: anywhere; }
 .deliverable-example-document th { background: #eef2ff; }
 .deliverable-example-document pre { white-space: pre; overflow: auto; padding: 14px; background: #f1f5f9; color: #1e293b; font-size: 14px; }
+.deliverable-example-document { background: #fff; border: 1px solid #cbd5e1; box-shadow: 0 3px 16px #0f172a0a; padding: 24px; }
+.deliverable-document-cover { border-bottom: 2px solid #1e3a5f; padding-bottom: 16px; margin-bottom: 18px; }
+.deliverable-document-label { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 4px 8px; border-radius: 4px; font-size: 13px; font-weight: 700; }
+.deliverable-document-title { margin: 12px 0 8px; font-size: 24px; color: #0f172a; }
+.deliverable-document-meta { color: #475569; }
+.deliverable-document-cover small { color: #64748b; }
+.deliverable-example-image-preview { margin: 16px 0; }
+.deliverable-example-image-preview summary { cursor: pointer; color: #174ea6; }
+@media (max-width: 620px) { .deliverable-example-document { padding: 14px; } }
+#day4ProjectSchedule .deliverable-example-button { display: block; width: fit-content; max-width: 100%; margin: 4px 0; padding: 4px 7px; }
+.deliverable-reference-card { width: 400px; max-width: 100%; margin: 18px 0; padding: 0; }
+.deliverable-reference-card h3 { margin: 0 0 10px; font-size: 19px; }
+.deliverable-example-body .deliverable-reference-image { display: block; box-sizing: border-box; width: 400px; height: 400px; max-width: 100%; min-width: 0; object-fit: contain; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; }
+.deliverable-reference-original { display: block; }
+.deliverable-reference-caption { color: #64748b; }
+.deliverable-reference-card a { color: #174ea6; }
+@media (max-width: 460px) { .deliverable-example-body .deliverable-reference-image { width: 100%; height: auto; aspect-ratio: 1 / 1; } }

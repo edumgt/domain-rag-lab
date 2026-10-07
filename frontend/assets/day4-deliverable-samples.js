@@ -1,5 +1,51 @@
 /* Fictional, completed deliverables for the Day 4 workshop. Not production evidence. */
 window.Day4DeliverableSamples = (() => {
+  // Split artifact bundles, retaining the shared document noun in each label.
+  const split = label => {
+    const bundles = {
+      '기술·데이터 인벤토리':['기술 인벤토리','데이터 인벤토리'],
+      '보안·데이터 정책':['보안 정책','데이터 정책'],
+      'ERD·데이터 사전':['ERD','데이터 사전'],
+      '피처·지표 사전':['피처 사전','지표 사전'],
+      'IA·와이어프레임':['IA','와이어프레임'],
+      '개발 표준·DoD':['개발 표준','DoD'],
+      'UI 골격·CI 파이프라인':['UI 골격','CI 파이프라인'],
+      '수집·전처리 파이프라인':['수집 파이프라인','전처리 파이프라인'],
+      '용어·문서 분류체계':['용어 분류체계','문서 분류체계'],
+      '프롬프트·평가 결과':['프롬프트 템플릿','답변 평가 결과'],
+      '프로필·포트폴리오 API':['프로필 API','포트폴리오 API'],
+      '성향진단·배분 UI':['성향진단 UI','자산배분 UI'],
+      '학습 모델·검증 보고서':['학습 모델','모델 검증 보고서'],
+      'XAI API·스키마':['XAI API 명세','XAI 데이터 스키마'],
+      '커스텀 지표·테스트':['커스텀 지표 코드','커스텀 지표 테스트 결과'],
+      '계좌·시세·주문 어댑터':['계좌 어댑터','시세 어댑터','주문 어댑터'],
+      '보안·성능 시험서':['보안 시험서','성능 시험서'],
+      '성능·비용 보고서':['성능 보고서','비용 보고서'],
+      '운영·DR 계획서':['운영 계획서','DR 계획서'],
+      'UAT 결과·결함대장':['UAT 결과서','결함대장'],
+      '완료보고서·인수확인서':['완료보고서','인수확인서'],
+      '모델 카드·성과보고서':['모델 카드','성과보고서'],
+      '재현 패키지·성과보고서':['재현 패키지','성과보고서'],
+      '릴리스 빌드·CI/CD':['릴리스 빌드','CI 파이프라인','CD 파이프라인'],
+      '릴리스 빌드·관제 화면':['릴리스 빌드','관제 화면'],
+      '배포본·운영 런북':['배포 패키지','운영 런북'],
+      '사용자 매뉴얼·릴리스 노트':['사용자 매뉴얼','릴리스 노트']
+    };
+    return label.split(' · ').flatMap(part => {
+      if (bundles[part]) return bundles[part];
+      const pm = part.match(/^(.*) WBS·리스크·의사결정 기록$/);
+      if (pm) return [pm[1]+' WBS',pm[1]+' 위험대장',pm[1]+' 의사결정 기록'];
+      const po = part.match(/^(.*) 제품 백로그·업무 승인기준$/);
+      if (po) return [po[1]+' 제품 백로그',po[1]+' 업무 승인기준'];
+      const api = part.match(/^(.*API) 명세·구현$/);
+      if (api) return [api[1]+' 명세',api[1]+' 구현 코드'];
+      if (!part.includes('·')) return [part];
+      const pieces=part.split('·').map(x=>x.trim());
+      const last=pieces[pieces.length-1];
+      const suffix=last.match(/ (정책|규칙서|사전|분류체계|인벤토리|구성도|대시보드|API|UI|어댑터|시험서|보고서|계획서|기준|아키텍처)$/)?.[1];
+      return pieces.map((piece,index)=>index<pieces.length-1 && suffix && !/(코드|모델|보고서|계획서|명세|헌장|WBS|ERD|API|UI|결과)$/.test(piece) ? piece+' '+suffix : piece);
+    }).filter(Boolean);
+  };
   const build = c => {
     const n = c.name;
     const rag = /RAG|검색|지식|프롬프트|Vector/.test(n+' '+c.phase);
@@ -11,6 +57,8 @@ window.Day4DeliverableSamples = (() => {
     const output = rag ? '{"answer":"여러 자산에 투자해 개별 위험을 낮춥니다.","sources":["DOC-003#p2"]}' : order ? '{"order_id":"P-001","status":"accepted","mode":"paper"}' : allocation ? '{"stock":0.6,"bond":0.4,"turnover":0.08}' : '{"run_id":"BT-001","return":0.1,"mdd":-0.1}';
     const d = {title:n, id:'EX-'+(rag?'RAG':order?'ORD':allocation?'ALC':'QNT')+'-001', summary:'', headers:[], rows:[], notes:[], code:''};
     const table = (summary, headers, rows, notes=[]) => Object.assign(d,{summary,headers,rows,notes});
+    if (/업무 승인기준|DoD/.test(n)) return table(subject+' 업무 승인 및 완료 기준', ['조건 ID','필수 조건','검수 증거','승인'], [['AC-01','정상 입력 fixture 처리 성공','TC-01 PASS','PO 1번 / 적합'],['AC-02','잘못된 입력 오류 처리','TC-02 PASS','PO 1번 / 적합'],['AC-03','결과 원천·버전 추적 가능','run_id BT-001 / v0.1','PM 2번 / 적합']], ['필수 3개 모두 적합 시 완료 / 미해결 치명 결함 0건']);
+    if (/기술 인벤토리/.test(n)) return table('TECH-01 / 보유 기술·도구 조사표', ['도구','버전','사용 범위','상태'], [['Python','3.12','API·계산 코드','샘플 실행 확인'],['PostgreSQL','16','문서·결과 저장','테이블 fixture 준비'],['Qdrant','1.15','벡터 검색','컬렉션 finance_docs 준비']], ['조사 담당: PM 2번 / 조사 기준일: 2026-10-01']);
     if (/결함대장/.test(n)) return table('시험 회차 QA-02의 결함 등록 및 조치 기록', ['ID·증상','심각도·재현','담당','조치·상태'], [
       ['BUG-001 / 빈 종목 조회 시 500','높음 / symbol=""','개발 4번','입력 검증 추가 / 종료'],
       ['BUG-002 / 주문 버튼 중복 요청','높음 / 연속 2회 클릭','개발 4번','request_id 멱등 처리 / 재시험 통과'],
@@ -26,6 +74,12 @@ window.Day4DeliverableSamples = (() => {
       ['instrument.symbol','varchar(12)','PK','005930'],['price_bar.symbol','varchar(12)','FK → instrument','005930'],['price_bar.ts','timestamptz','복합 PK: symbol, ts','2026-10-01 09:00+09'],['price_bar.close','numeric(18,4)','CHECK(close > 0)','70000.0000']], [rag?'관계: document 1:N chunk / 문서 삭제 시 청크도 삭제':'관계: instrument 1:N price_bar / 인덱스: (symbol, ts DESC)', '예시 ID는 설명용 약식 표기']);
     if (/ADR|의사결정/.test(n)) return table('ADR-003 / 시계열 결과 저장소 선정 / 상태: 승인', ['대안','판단 근거','운영 비용','결정'], [
       ['PostgreSQL','트랜잭션·SQL 대사 지원','기존 DB 운영 재사용','채택'],['CSV 파일','동시 기록·검색 제약','초기 비용 낮음','실험 내보내기 전용'],['별도 시계열 DB','집계는 유리, 운영 추가','신규 관제 필요','보류']], ['결정일: 2026-10-02 / 결정자: PM 2번 / 재검토: 일 100만 건 초과']);
+    if (/API 구현 코드/.test(n)) {
+      table(subject+' API 구현 샘플 / demo_api.py', ['파일','내용'], [['demo_api.py','요청 입력 검사와 응답 반환'],['fixture.json',input],['response.json',output]], ['외부 API 호출 없이 fixture를 반환하는 교육용 코드']);
+      d.code='import json\n\ndef handle(payload):\n    if not payload:\n        raise ValueError("EMPTY_INPUT")\n    return json.loads('+JSON.stringify(output)+')\n\nassert isinstance(handle({"demo": True}), dict)';
+      return d;
+    }
+    if (/프롬프트 템플릿/.test(n)) return table('PROMPT-01 / 금융 RAG 답변 프롬프트', ['구분','프롬프트 본문'], [['시스템','제공된 근거 문서에만 기반해 답변한다.'],['근거','[DOC-003] ETF는 여러 자산에 분산 투자한다.'],['질문','ETF의 분산 효과는?'],['출력','답변 뒤에 [DOC-003]을 표시한다. 근거가 없으면 답변을 보류한다.']], ['프롬프트 버전 v0.1 / 교육용 fixture']);
     if (/API|어댑터|Webhook/.test(n)) {
       table('POST '+endpoint+' / 계약 버전 v0.1', ['항목','정의','실제 예시'], [
         ['인증','Bearer 토큰 필요','Authorization: Bearer <DEMO>'],['요청','Content-Type: application/json',input],['성공','HTTP 200 또는 비동기 202',output],['오류','잘못된 입력: 422','{"code":"INVALID_INPUT","field":"symbol"}']], ['타임아웃: 10초 / 동일 request_id는 동일 응답 / 외부 API 호출은 스텁 사용']);
@@ -80,5 +134,5 @@ window.Day4DeliverableSamples = (() => {
       ['ALC-01','전체 비중 합계 100%','주식 60% + 채권 40% / 적합','퀀트 3번'],['ALC-02','단일 자산 비중 ≤ 60%','주식 60% / 적합','PO 1번'],['ALC-03','비중 이탈 5%p 이상 조정','목표 60%, 현재 50% / 조정','개발 4번']] : [
       ['QNT-01','fast < slow','5 < 20 / 적합','퀀트 3번'],['QNT-02','결측 종가는 계산 제외','결측 1건 / 제외 / 적합','개발 4번'],['QNT-03','거래비용 양방향 10bps','매수·매도 각각 반영 / 적합','PO 1번']], ['적용 환경: 교육용 demo / 승인일: 2026-10-02 / 버전: v0.1']);
   };
-  return Object.freeze({build});
+  return Object.freeze({build, split});
 })();

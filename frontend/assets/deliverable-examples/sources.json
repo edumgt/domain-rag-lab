@@ -76,5 +76,29 @@
     "source": "https://shap.readthedocs.io/en/stable/example_notebooks/api_examples/plots/beeswarm.html",
     "original": "https://shap.readthedocs.io/en/stable/_images/example_notebooks_api_examples_plots_beeswarm_3_0.png",
     "file": "shap.png"
+  },
+  "risk": {
+    "title": "위험대장 템플릿",
+    "source": "https://www.atlassian.com/software/confluence/templates/risk-register",
+    "original": "https://images.ctfassets.net/xjcz23wx147q/5hsDNmsyia3N0QD2zKJq3R/f0bd899cf69d909335580910064940d9/AT12EHFZ.webp",
+    "file": "risk.webp"
+  },
+  "adr": {
+    "title": "의사결정 기록 문서",
+    "source": "https://www.atlassian.com/software/confluence/templates/decision",
+    "original": "https://images.ctfassets.net/xjcz23wx147q/5qHaieKlIzrm51Cb8fK2bj/a385b4c4441a5b9668a62fae6e02c40b/decision-preview-en.png",
+    "file": "adr.png"
+  },
+  "erd": {
+    "title": "테이블·키·관계가 표시된 ERD",
+    "source": "https://medium.com/@macaulaymercy1/how-to-create-an-erd-diagram-using-draw-io-a5267c85d788",
+    "original": "https://miro.medium.com/v2/resize:fit:1200/1*h9rWto8jh7cR8Qu2OYGrhA.png",
+    "file": "erd.png"
+  },
+  "test": {
+    "title": "JUnit 시험 결과 보고서",
+    "source": "https://www.tutorialspoint.com/testng/testng_junit_reports.htm",
+    "original": "https://www.tutorialspoint.com/testng/images/junit_reports.png",
+    "file": "test.png"
   }
 }
