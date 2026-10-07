@@ -1,0 +1,24 @@
+/* Standalone page shares the application shell and full-width content gutter. */
+/* 공통 .chat-header 는 grid(패널 버튼 · 제목 · GNB 3열)다. display:flex 로 바꾸면 .chat-header .brand-nav { order:10; flex:0 0 100% } 가 살아나
+   GNB 가 두 번째 줄로 떨어져 줄바꿈된다(2026-10-07 GNB 깨짐 원인). 메인 페이지와 같은 grid 를 그대로 쓴다. */
+.wf-standalone .brand-nav a { text-decoration: none; }
+.wf-lnb { display: flex; flex: 0 0 auto; align-items: center; flex-wrap: wrap; gap: 6px 12px; padding: 10px 22px; border-bottom: 1px solid var(--border); background: var(--surface); }
+.wf-lnb-title { margin-right: 12px; color: var(--text); font-size: 14px; font-weight: 800; }
+.wf-lnb a { padding: 7px 12px; border-radius: 6px; color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 700; }
+.wf-lnb a:hover, .wf-lnb a[aria-current] { background: var(--accent-dim); color: var(--accent); }
+.wf-content { display: block; scroll-behavior: smooth; }
+#walkForwardLab { width: 100%; min-width: 0; }
+.wf-content .walk-forward { width: 100%; margin: 0; padding: clamp(16px, 2vw, 28px); background: var(--surface); border-color: var(--border); border-radius: 12px; }
+.wf-content .wf-hero h2 { font-size: clamp(24px, 2.2vw, 32px); }
+.wf-content .wf-guide { margin-top: 8px; }
+.wf-content :is(.wf-hero,.wf-setup-intro,.wf-preview,#wfResultArea) { scroll-margin-top: 18px; }
+.wf-content .wf-form button { margin-top: 4px; }
+.wf-content .wf-guide :is(ul,ol), .wf-content .wf-howto :is(ul,ol) { padding-left: 20px; }
+.wf-content .wf-guide-more details { min-width: 0; }
+.wf-content :is(.wf-guide article,.wf-section,.wf-form,.wf-preview-fold) { min-width: 0; }
+.wf-content a:focus-visible, .wf-lnb a:focus-visible, .wf-standalone button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.wf-result-empty { margin-top: 12px; padding: 20px; border: 1px dashed var(--border-hi); border-radius: 10px; color: var(--text-muted); font-size: 14px; }
+.wf-skip { position: fixed; top: -80px; left: 16px; z-index: 50; padding: 10px 16px; background: var(--surface); color: var(--accent); }
+.wf-skip:focus { top: 12px; }
+@media (max-width: 700px) { .wf-lnb { padding: 9px 12px; gap: 4px; } .wf-lnb-title { width: 100%; margin: 0 0 3px; } .wf-lnb a { padding: 6px 8px; font-size: 13px; } .wf-standalone .app-footer { font-size: 12px; flex-wrap: wrap; gap: 2px 10px; } }
+@media (prefers-reduced-motion: reduce) { .wf-content { scroll-behavior: auto; } }

@@ -2124,14 +2124,15 @@ KOSDAQ|웹젠|게임`,
 
     $messages.innerHTML = `
       <article class="content-page calendar-page">
-        <header class="calendar-page-head">
-          <div>
-            <div class="content-kicker">MARKET CALENDAR · 학습용 샘플</div>
-            <h1>증시 일정 <mark>캘린더</mark></h1>
-          </div>
-          <p class="content-lead">주요 경제지표 발표, 기업 실적 발표, 선물·옵션 만기일을 한눈에 확인하세요. 일정 이름을 누르면 상세 설명이 열립니다.</p>
+        <header class="calendar-page-head calendar-page-head-compact">
+          <h1><span class="content-kicker">CALENDAR</span> 일정 <mark>캘린더</mark></h1>
+          <nav class="calendar-tabs" role="tablist" aria-label="일정 종류">
+            <button type="button" role="tab" class="calendar-tab${state.calendarTab !== 'system' ? ' active' : ''}" data-calendar-tab="market" aria-selected="${state.calendarTab !== 'system'}"><i class="fa-solid fa-chart-line"></i> 투자일정</button>
+            <button type="button" role="tab" class="calendar-tab${state.calendarTab === 'system' ? ' active' : ''}" data-calendar-tab="system" aria-selected="${state.calendarTab === 'system'}"><i class="fa-solid fa-gears"></i> 시스템일정</button>
+          </nav>
+          <p class="content-lead">${state.calendarTab === 'system' ? 'pr · fd · st · iv 네 서비스의 주기 배치 작업과 다음 실행 시각입니다.' : '경제지표 · 실적 · 선물·옵션 만기. 일정 이름을 누르면 상세 설명이 열립니다.'}</p>
         </header>
-        <div class="calendar-split">
+        ${state.calendarTab === 'system' ? renderSystemScheduleSection() : `<div class="calendar-split">
           <section class="calendar-board" aria-label="월간 증시 일정 캘린더">
             <div class="calendar-toolbar">
               <div class="calendar-toolbar-nav">
@@ -2150,12 +2151,130 @@ KOSDAQ|웹젠|게임`,
             <ul class="calendar-agenda-list">${upcomingHtml || '<li class="calendar-agenda-empty">이번 달 이후 표시할 예정 일정이 없습니다.</li>'}</ul>
           </section>
         </div>
-        <p class="content-disclaimer">학습용 예시 일정입니다. 실제 발표 일정·시간은 변경될 수 있으니 거래소·기관의 공식 캘린더에서 다시 확인하세요. 특정 상품의 매수·매도를 권유하지 않습니다.</p>
+        <p class="content-disclaimer">학습용 예시 일정입니다. 실제 발표 일정·시간은 변경될 수 있으니 거래소·기관의 공식 캘린더에서 다시 확인하세요. 특정 상품의 매수·매도를 권유하지 않습니다.</p>`}
       </article>`;
     bindCalendarInteractions();
+    if (state.calendarTab === 'system' && !systemScheduleLoaded) {
+      ensureSystemSchedule().then(() => { if (state.activeView === 'calendar' && state.calendarTab === 'system') renderCalendar(); });
+    }
+  }
+
+  /* ── 시스템일정: 네 서비스의 주기 배치 (GET /market/system-schedule) ─────────────────────
+     정의는 서버의 정적 목록이고, "다음 실행" 은 여기서 계산한다. interval 은 서비스 기동 시각 기준이라 정각 정렬이 아니므로 "매 N분" 으로만 표시. */
+  let SYSTEM_JOBS = [];
+  let systemScheduleLoaded = false;
+  let systemSchedulePromise = null;
+  let systemScheduleError = '';
+  function ensureSystemSchedule() {
+    if (systemScheduleLoaded) return Promise.resolve(SYSTEM_JOBS);
+    if (!systemSchedulePromise) {
+      systemSchedulePromise = fetchLocalBackendJson('/market/system-schedule', payload => payload && Array.isArray(payload.jobs))
+        .then(payload => { SYSTEM_JOBS = payload.jobs; systemScheduleLoaded = true; systemScheduleError = ''; return SYSTEM_JOBS; })
+        .catch(error => { systemScheduleError = (error && error.message) || '시스템 일정을 불러오지 못했습니다.'; systemScheduleLoaded = true; return SYSTEM_JOBS; });
+    }
+    return systemSchedulePromise;
+  }
+
+  function kstNow() {
+    return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
+  }
+
+  function describeSchedule(schedule) {
+    if (!schedule) return '-';
+    if (schedule.type === 'interval') {
+      const s = Number(schedule.every_sec || 0);
+      if (s >= 86400 && s % 86400 === 0) return `매 ${s / 86400}일`;
+      if (s >= 3600 && s % 3600 === 0) return `매 ${s / 3600}시간`;
+      if (s >= 60) return `매 ${Math.round(s / 60)}분`;
+      return `매 ${s}초`;
+    }
+    if (schedule.type === 'hourly') return `매시 ${String(schedule.minute ?? 0).padStart(2, '0')}분`;
+    if (schedule.type === 'daily') return (schedule.times || []).length ? `매일 ${schedule.times.join(' · ')} KST` : '매일 (시각 미정)';
+    if (schedule.type === 'event') return `이벤트 · ${schedule.trigger || ''}`;
+    return '-';
+  }
+
+  function nextRunText(schedule) {
+    if (!schedule) return '-';
+    const now = kstNow();
+    const pad = n => String(n).padStart(2, '0');
+    const fmt = d => `${d.getMonth() + 1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    if (schedule.type === 'interval') {
+      const s = Number(schedule.every_sec || 0);
+      if (s <= 0) return '-';
+      return s >= 3600 ? `${describeSchedule(schedule)} 안에 (기동 시각 기준)` : `${Math.round(s / 60)}분 안에`;
+    }
+    if (schedule.type === 'hourly') {
+      const next = new Date(now); next.setSeconds(0, 0); next.setMinutes(Number(schedule.minute || 0));
+      if (next <= now) next.setHours(next.getHours() + 1);
+      return `${fmt(next)} KST`;
+    }
+    if (schedule.type === 'daily') {
+      const times = (schedule.times || []).slice().sort();
+      if (!times.length) return '시각 미정';
+      for (const t of times) {
+        const [h, m] = t.split(':').map(Number);
+        const cand = new Date(now); cand.setHours(h, m, 0, 0);
+        if (cand > now) return `${fmt(cand)} KST`;
+      }
+      const [h, m] = times[0].split(':').map(Number);
+      const cand = new Date(now); cand.setDate(cand.getDate() + 1); cand.setHours(h, m, 0, 0);
+      return `${fmt(cand)} KST`;
+    }
+    return '수동/이벤트';
+  }
+
+  const SYSTEM_CATEGORY_LABEL = { trading: '매매', data: '데이터', ops: '점검', infra: '인프라' };
+
+  function renderSystemScheduleSection() {
+    if (!systemScheduleLoaded) return '<section class="system-schedule"><div class="backtest-empty"><i class="fa-solid fa-spinner fa-spin"></i><p>시스템 일정을 불러오는 중입니다.</p></div></section>';
+    if (systemScheduleError && !SYSTEM_JOBS.length) return `<section class="system-schedule"><div class="backtest-error"><i class="fa-solid fa-triangle-exclamation"></i>${escHtml(systemScheduleError)}</div></section>`;
+    const filter = state.systemScheduleFilter || 'all';
+    const systems = [...new Set(SYSTEM_JOBS.map(j => j.system))];
+    const jobs = SYSTEM_JOBS.filter(j => filter === 'all' || j.system === filter);
+    const groups = systems.filter(sys => jobs.some(j => j.system === sys));
+    const todayTimes = SYSTEM_JOBS.flatMap(j => j.schedule && j.schedule.type === 'daily' ? (j.schedule.times || []).map(t => ({ t, j })) : [])
+      .sort((a, b) => a.t.localeCompare(b.t));
+    const timeline = todayTimes.length ? `<div class="system-timeline"><span class="system-timeline-label">오늘 고정 시각</span>${todayTimes.map(({ t, j }) => `<span class="system-timeline-item sys-${escHtml(j.system)}" title="${escHtml(j.name)}"><b>${t}</b> ${escHtml(j.system)} · ${escHtml(j.name.replace(/\s*\(.*$/, ''))}</span>`).join('')}</div>` : '';
+    const rows = groups.map(sys => {
+      const list = jobs.filter(j => j.system === sys);
+      return `<tbody><tr class="system-group-row"><th colspan="6"><span class="system-dot sys-${escHtml(sys)}"></span>${escHtml(sys)} <small>${escHtml(list[0].host || '')} · ${list.length}건</small></th></tr>${list.map(j => `
+        <tr>
+          <td><span class="system-cat cat-${escHtml(j.category || 'ops')}">${escHtml(SYSTEM_CATEGORY_LABEL[j.category] || j.category || '')}</span></td>
+          <td class="system-name"><b>${escHtml(j.name)}</b>${j.window ? `<small>${escHtml(j.window)}</small>` : ''}</td>
+          <td class="system-when">${escHtml(describeSchedule(j.schedule))}</td>
+          <td class="system-next">${escHtml(nextRunText(j.schedule))}</td>
+          <td class="system-desc">${escHtml(j.description || '')}</td>
+          <td class="system-src"><span title="${escHtml(j.source || '')}">${escHtml(j.component || '')}</span></td>
+        </tr>`).join('')}</tbody>`;
+    }).join('');
+    return `
+      <section class="system-schedule" aria-label="시스템 주기 배치 일정">
+        <div class="system-schedule-toolbar">
+          <div class="system-schedule-filters" role="group" aria-label="시스템 선택">
+            <button type="button" class="system-filter${filter === 'all' ? ' active' : ''}" data-system-filter="all">전체 (${SYSTEM_JOBS.length})</button>
+            ${systems.map(sys => `<button type="button" class="system-filter${filter === sys ? ' active' : ''}" data-system-filter="${escHtml(sys)}"><span class="system-dot sys-${escHtml(sys)}"></span>${escHtml(sys)} (${SYSTEM_JOBS.filter(j => j.system === sys).length})</button>`).join('')}
+          </div>
+          <span class="system-schedule-clock">현재 ${escHtml(nextRunText({ type: 'hourly', minute: kstNow().getMinutes() }).replace(' KST', ''))} KST 기준 · 주기형(interval)은 서비스 기동 시각부터 세므로 "N분 안에" 로 표시</span>
+        </div>
+        ${timeline}
+        <div class="system-schedule-table-wrap">
+          <table class="system-schedule-table">
+            <thead><tr><th>구분</th><th>배치 작업</th><th>주기</th><th>다음 실행</th><th>하는 일</th><th>실행 주체</th></tr></thead>
+            ${rows || '<tbody><tr><td colspan="6">표시할 작업이 없습니다.</td></tr></tbody>'}
+          </table>
+        </div>
+        <p class="content-disclaimer">코드에 정의된 스케줄을 옮겨 적은 목록입니다(출처는 실행 주체에 마우스를 올리면 표시). 실제 실행 여부는 각 서비스의 heartbeat·로그·KIS 모의투자결과 화면에서 확인하세요.</p>
+      </section>`;
   }
 
   function bindCalendarInteractions() {
+    $messages.querySelectorAll('[data-calendar-tab]').forEach(button => {
+      button.addEventListener('click', () => { state.calendarTab = button.dataset.calendarTab; renderCalendar(); });
+    });
+    $messages.querySelectorAll('[data-system-filter]').forEach(button => {
+      button.addEventListener('click', () => { state.systemScheduleFilter = button.dataset.systemFilter; renderCalendar(); });
+    });
     $messages.querySelectorAll('[data-calendar-nav]').forEach(button => {
       button.addEventListener('click', () => {
         let { year, month } = state.calendarCursor;

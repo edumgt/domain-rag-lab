@@ -17,6 +17,7 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.stock_price_history import StockPriceHistory
 from app.services.market_calendar_data import CALENDAR_EVENTS
+from app.services.system_schedule_data import SYSTEM_JOBS
 
 router = APIRouter(prefix="/market", tags=["market"])
 
@@ -24,6 +25,13 @@ router = APIRouter(prefix="/market", tags=["market"])
 @router.get("/calendar-events")
 async def calendar_events() -> list[dict[str, str]]:
     return sorted(CALENDAR_EVENTS, key=lambda event: (event["date"], event["id"]))
+
+
+@router.get("/system-schedule")
+async def system_schedule() -> dict[str, Any]:
+    """캘린더 「시스템일정」 탭: 네 서비스의 주기 배치 작업 목록(정적 정의). 다음 실행 시각은 화면에서 계산한다."""
+    systems = sorted({job["system"] for job in SYSTEM_JOBS})
+    return {"jobs": SYSTEM_JOBS, "systems": systems, "generated_from": "코드 정의(system_schedule_data.py)"}
 
 _cache: dict[str, tuple[datetime, dict[str, Any]]] = {}
 _ttl = timedelta(minutes=5)

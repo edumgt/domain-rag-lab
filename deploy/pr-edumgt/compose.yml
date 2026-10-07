@@ -49,6 +49,9 @@ services:
     env_file:
       - ../../.env.prod
     environment:
+      VLLM_BASE_URL: http://fin-ai-ollama:11434/v1
+      VLLM_MODEL: qwen2.5:7b
+      LLM_TIMEOUT_SECONDS: 600
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       REDIS_HOST: redis

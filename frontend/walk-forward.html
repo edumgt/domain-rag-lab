@@ -4,31 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Walk-Forward 검증 · Finance RAG Lab</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css?v=20261007-backtest-pipeline" />
   <link rel="stylesheet" href="/static/assets/walk-forward.css?v=20261001-5" />
-  <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; background: #eef3f9; color: #19304e; font-family: system-ui, sans-serif; }
-    header, main { width: min(1200px, 100%); margin: auto; padding: 0 20px; }
-    header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-top: 24px; }
-    h1 { margin: 0; font-size: 24px; }
-    header a { color: #315ac9; }
-    .btn-primary { border: 0; border-radius: 8px; padding: 10px 18px; background: #315ac9; color: white; font: inherit; font-weight: 700; cursor: pointer; }
-    .btn-primary:hover { background: #2346a4; }
-    @media (max-width: 560px) { header, main { padding-left: 12px; padding-right: 12px; } }
-    .site-gnb { width: min(1200px, 100%); margin: 0 auto; padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 8px; }
-    .site-gnb a { display: inline-block; padding: 9px 12px; background: #fff; color: #315ac9; border: 1px solid #ccd8e8; border-radius: 8px; text-decoration: none; font-size: 14px; }
-    .site-gnb a[aria-current="page"] { background: #315ac9; color: #fff; }
-    .site-gnb a:focus-visible { outline: 3px solid #315ac9; outline-offset: 2px; }
-    @media (max-width: 560px) { .site-gnb { padding: 12px; } }
-  </style>
+  <link rel="stylesheet" href="/static/hangul-scale.css?v=20260919-1" />
+  <link rel="stylesheet" href="/static/assets/walk-forward-page.css?v=20261007-2" />
   <script src="/static/assets/walk-forward.js?v=20261001-8" defer></script>
-  <script src="/static/assets/walk-forward-page.js?v=20261002-1" defer></script>
+  <script src="/static/assets/walk-forward-page.js?v=20261007-2" defer></script>
 </head>
-<body>
-  <nav class="site-gnb" aria-label="학습 서비스 메뉴">
-    <a href="/">홈</a><a href="/?view=stocks">종목보기</a><a href="/?view=learn">RAG 질문</a><a href="/?view=simulation">시뮬레이션</a><a href="/?view=quant">EDA · LightGBM</a><a href="/walk-forward.html" aria-current="page">Walk-Forward 검증</a><a href="/?view=basis">베이시스</a><a href="/?view=backtest">LEAN 백테스트</a><a href="/?view=calendar">캘린더</a>
-  </nav>
-  <header><h1>Walk-Forward 검증</h1><a href="/">학습랩 홈으로</a></header>
-  <main id="walkForwardLab"></main>
+<body class="wf-standalone">
+  <a class="wf-skip" href="#wfOverview">본문 바로가기</a>
+  <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
+  <aside class="sidebar" id="learningPanel" aria-label="학습 메뉴" inert>
+    <div class="sidebar-header"><div class="panel-title-row"><h1 class="logo">Finance RAG Lab</h1><button class="panel-close" id="closeLeftPanel" aria-label="학습 패널 닫기">×</button></div><p class="logo-sub">금융상품 · 생활거래 이해 · 실습</p></div>
+    <nav class="topic-nav" aria-label="4일 이론 학습"><p class="nav-label">4일 이론 학습</p><a class="topic-btn" href="/static/days/01.html"><span class="day-menu-number">1일차</span> 선물과 옵션</a><a class="topic-btn" href="/static/days/02.html"><span class="day-menu-number">2일차</span> 펀드 · ETF</a><a class="topic-btn" href="/static/days/03.html"><span class="day-menu-number">3일차</span> 채권 · 코인</a><a class="topic-btn" href="/static/days/04.html"><span class="day-menu-number">4일차</span> 자산배분, 퀀트</a></nav>
+    <div class="sidebar-section"><p class="nav-label">분석 · 검증</p><a class="topic-btn" href="/?view=quant">EDA · LightGBM</a><a class="topic-btn active" href="/walk-forward.html" aria-current="page">Walk-Forward 검증</a><a class="topic-btn" href="/?view=backtest">LEAN 백테스트</a></div>
+  </aside>
+  <div class="app-layout"><div class="chat-area">
+      <header class="chat-header">
+        <button class="panel-toggle" id="openLeftPanel" aria-controls="learningPanel" aria-label="학습 패널 열기">
+          <i class="fa-solid fa-bars"></i><span>학습</span>
+        </button>
+        <a class="main-kms-title" href="/?view=learn">금융과 행동</a>
+        <nav class="brand-nav" aria-label="학습 서비스 메뉴">
+          <a class="brand-nav-btn brand-nav-link" href="/?view=home"><i class="fa-solid fa-house"></i> 홈</a>
+          <a class="brand-nav-btn brand-nav-link" href="/?view=stocks"><i class="fa-solid fa-building-columns"></i> 종목보기</a>
+          <a class="brand-nav-btn brand-nav-link" href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a>
+          <a class="brand-nav-btn brand-nav-link" href="/?view=simulation"><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</a>
+          <a class="brand-nav-btn brand-nav-link" href="/?view=quant"><i class="fa-solid fa-chart-line"></i> EDA · LightGBM</a>
+          <a class="brand-nav-btn active" href="/walk-forward.html" aria-current="page" style="text-decoration:none"><i class="fa-solid fa-arrows-left-right-to-line"></i> Walk-Forward 검증</a>
+          <a class="brand-nav-btn brand-nav-link" href="/?view=basis"><i class="fa-solid fa-scale-balanced"></i> 베이시스</a>
+          <a class="brand-nav-btn brand-nav-link" href="/?view=backtest"><i class="fa-solid fa-flask"></i> LEAN 백테스트</a>
+          <a class="brand-nav-btn brand-nav-link" href="/?view=calendar"><i class="fa-solid fa-calendar-days"></i> 캘린더</a>
+        </nav>
+      </header>
+    <nav class="wf-lnb" aria-label="Walk-Forward 상세 메뉴">
+      <span class="wf-lnb-title">Walk-Forward 검증</span>
+      <a href="#wfOverview" aria-current="location">검증 개요</a>
+      <a href="#wfSetup">시뮬레이션 설정</a>
+      <a href="#wfPreview">폴드 미리보기</a>
+      <a href="#wfResultArea">검증 결과</a>
+    </nav>
+    <main class="messages wf-content" id="wfContent"><div id="walkForwardLab"></div></main>
+    <footer class="app-footer"><span>Finance RAG Lab · Walk-Forward</span><span>가상 데이터로 검증 구조를 학습합니다.</span></footer>
+  </div></div>
 </body>
 </html>

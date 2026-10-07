@@ -433,3 +433,34 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 - 운영 DB 의 `stock_price_history` 는 현재 0행이라 첫 실행은 전과 같이 yfinance 를 탄다. pg-stock(669k행, ~2026-09-30) 을 2순위로 쓰려면 fd `.env` 에 `OHLCV_DATABASE_URL` 과 st 보안그룹(55432, fd 사설 IP 허용)이 필요 — 7절 결정.
 
 **확인(배포 후)**: 같은 조건으로 2회 실행 → 두 번째 완료 문구가 "데이터 DB n행 … 외부 수집 없음". `select count(*) from stock_price_history` 증가.
+
+### 6-9. 2026-10-07 캘린더 뷰 — 한 줄 헤더 + 「투자일정 / 시스템일정」 탭 (사용자 요청)
+
+| 변경 | 내용 |
+|------|------|
+| `frontend/app.js` | 헤더를 한 줄(18px 제목 + 알약형 탭 + 짧은 설명)로 축소. `state.calendarTab`(market/system). **시스템일정 탭**: `GET /market/system-schedule` 를 받아 서비스별 그룹 표(구분·배치 작업·주기·다음 실행·하는 일·실행 주체), 시스템 필터, 「오늘 고정 시각」 타임라인(daily 작업). 다음 실행은 KST 기준으로 클라이언트 계산(interval 은 기동 시각 기준이라 "N분 안에"). 투자일정 탭은 기존 월간 캘린더·주요 일정 그대로 |
+| `app/services/system_schedule_data.py` 신설 + `routes/market.py` `/market/system-schedule` | 17개 작업 정적 정의: lumina celery-beat 7개(자동매매 3분·체결확인 2분·정합성 10분·heartbeat 1분·지수 1h·캔들 24h·리밸런싱 1h) + autoheal 30초 + SageMaker 일 1회, stock-coin-trade APScheduler 4개(OHLCV 증분 06:20·18:20 → pg-stock, 봇 라운드 10분, CMC 매시, 업비트 18:00) + KRX 목록 캐시 24h + certbot 03:15, pr·iv 는 이벤트(푸시 배포·수동)만. 각 항목에 출처 파일 표기 |
+| `frontend/style.css`·`index.html` | 탭·표·타임라인 스타일, 캐시 버전 `20261007-calendar-tabs` |
+| 테스트 | `tests/test_system_schedule.py` 3건(4개 시스템·스키마·코드와 주기 일치·라우트). 전체 **21 passed, 1 skipped** |
+
+**주의**: 주기 정의는 코드에서 옮겨 적은 정적 목록이라 lumina `QUANT_CYCLE_SEC`·st `OHLCV_SYNC_*` 등이 바뀌면 함께 갱신해야 한다(테스트가 현재 값으로 고정). 실제 실행 여부는 각 서비스 heartbeat·로그에서 확인.
+
+### 6-10. 2026-10-07 walk-forward.html GNB 깨짐 수정 (사용자 요청)
+
+**원인**: 공통 `style.css` 의 `.chat-header` 는 grid(패널 버튼 · 제목 · GNB 3열, 1122행)인데 `frontend/assets/walk-forward-page.css` 의 `.wf-standalone .chat-header { display:flex }` 가 flex 로 바꿔, 메인에선 무효였던 `.chat-header .brand-nav { order:10; flex:0 0 100%; flex-wrap:wrap }`(2118행) 이 살아나 GNB 가 두 번째 줄로 떨어져 줄바꿈됐다.
+
+| 변경 | 내용 |
+|------|------|
+| `frontend/assets/walk-forward-page.css` | 해당 override 1줄 삭제(주석으로 사유 기록) → 메인과 같은 grid 헤더 |
+| `frontend/walk-forward.html` | `walk-forward-page.css?v=20261007-2` |
+
+배포는 push → `cd.yml`. 확인: 상단 GNB 가 메인 페이지와 같은 한 줄(가로 스크롤)로 보이는지.
+
+### 6-11. 2026-10-07 공통 타이포그래피 가이드 — 타이틀 Pretendard 18px 고정, 18px 초과 금지 (사용자 요청, 4개 사이트 공통)
+
+| 변경 | 내용 |
+|------|------|
+| `frontend/style.css` | 파일 맨 위에 공통 가이드 주석(4항), 주 CSS 맨 끝에 「타이틀 고정」 블록: `--title-size:18px`·`--title-font: Pretendard…`, `h1, h2, .page-title { font-size:18px !important; font-family: Pretendard !important }`(인라인·유틸리티 클래스보다 우선), `h1/h2` 안의 mark·small·span 은 inherit |
+| 적용 범위 | 타이틀(h1·h2)만 강제. 본문·KPI 숫자 등 기존 18px 초과 선언은 그대로 두었다(아래 수치) — 가이드 2항에 따라 새 규칙에서는 금지, 기존 값은 화면별로 줄여 나간다 |
+
+같은 블록이 pr(`frontend/style.css`)·fd(`public/css/app.css`)·st(`frontend/css/style.css`, 가이드 주석은 `kis-practice.css` 에도)·iv(`frontend/style.css`, `investment-native/styles.css`) 에 들어 있다. 캐시 버전이 있는 링크는 각 페이지에서 갱신 필요(st `style.css?v=…`, pr/iv `style.css?v=…`); fd `/css` 는 no-cache.
