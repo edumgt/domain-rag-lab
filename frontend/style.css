@@ -2117,3 +2117,12 @@ body.modal-open { overflow: hidden; }
 .chat-header { flex-wrap: wrap; gap: 10px; }
 .chat-header .brand-nav { order: 10; flex: 0 0 100%; width: 100%; flex-wrap: wrap; justify-content: flex-start; overflow: visible; white-space: normal; }
 .chat-header .brand-nav-btn { flex-shrink: 0; }
+
+/* ===== LEAN 백테스트 · 실행 과정 캔버스 (FE → BE → API → LEAN) ===== */
+.backtest-pipeline { margin: 18px 0 0; padding: 14px 18px 12px; border: 1px solid #1d6d96; border-radius: 14px; background: #071a36; }
+.backtest-pipeline-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 8px; }
+.backtest-pipeline-head span { display: block; color: #7dd3fc; font-size: 12.5px; font-weight: 850; letter-spacing: .1em; }
+.backtest-pipeline-head b { display: block; color: #f0f9ff; font-size: 15.5px; font-weight: 800; }
+.backtest-pipeline-head em { color: #bae6fd; font-size: 13.5px; font-style: normal; line-height: 1.5; }
+#btPipelineCanvas { display: block; width: 100%; height: 190px; }
+@media (max-width: 720px) { #btPipelineCanvas { height: 170px; } .backtest-pipeline { padding: 12px 10px 10px; } }

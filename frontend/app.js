@@ -1754,7 +1754,8 @@ KOSDAQ|웹젠|게임`,
     const today = new Date().toISOString().slice(0, 10);
     const strategyOptions = BACKTEST_STRATEGIES.map(s => `<option value="${s.value}">${escHtml(s.label)}</option>`).join('');
     const examples = BACKTEST_EXAMPLES.map((e, index) => `<button class="backtest-example ${index === 0 ? 'selected' : ''}" data-example="${e.id}" type="button"><span>${escHtml(e.tag)}</span><strong>${escHtml(e.title)}</strong><small>${escHtml(e.note)}</small><i class="fa-solid fa-arrow-right"></i></button>`).join('');
-    $messages.innerHTML = `<article class="content-page backtest-page"><header class="backtest-page-head"><div class="content-kicker">QUANTCONNECT LEAN · YFINANCE WORKFLOW</div><h1>LEAN <mark>투자 판단 실습</mark></h1><p class="content-lead">테스트 하나를 고르고, 무엇을 검증하는지부터 결과 해석까지 순서대로 확인합니다.</p></header><div class="backtest-workspace"><aside class="backtest-examples" aria-label="바로 실행할 수 있는 백테스트 예시"><div><span>TEST LIBRARY</span><h2>확인할 상황 선택</h2><p>선택하면 오른쪽에 테스트의 질문과 해석 기준이 표시됩니다.</p></div><div class="backtest-example-grid">${examples}</div></aside><main class="backtest-main"><section class="backtest-test-detail" id="backtestTestDetail" aria-live="polite"></section><section class="backtest-canvas" aria-label="백테스트 설정"><div class="workflow-node input"><span>01 · 전략</span><select id="btStrategy" aria-label="예시 전략 선택">${strategyOptions}</select><small id="btStrategyHint">${escHtml(BACKTEST_STRATEGIES[0].hint)}</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>02 · 종목 / ETF</span><input id="btTicker" value="005930.KS" maxlength="12" aria-label="종목 티커" /><small>한국: 005930.KS · 미국 ETF: SPY</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>03 · 검증 기간</span><div><input id="btStart" type="date" value="2023-01-01" /><input id="btEnd" type="date" value="${today}" /></div><small>전략 성과를 계산할 기간</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>04 · 비교 기간</span><div><input id="btCompareStart" type="date" value="2022-01-01" /><input id="btCompareEnd" type="date" value="${today}" /></div><small>다른 시장 국면에서도 확인</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node engine"><span>05 · 실행 엔진</span><strong><i class="fa-brands fa-docker"></i> LEAN</strong><small>가격 데이터 → 원격 Docker</small></div></section><section class="backtest-parameters" aria-label="전략 세부 조건"><label>단기 이동평균 <input id="btShortWindow" type="number" min="2" max="120" value="20" /></label><label>장기 이동평균 <input id="btLongWindow" type="number" min="5" max="300" value="60" /></label><label>적립 간격(거래일) <input id="btDcaInterval" type="number" min="1" max="120" value="21" /></label><label>돌파 기준(거래일) <input id="btBreakoutWindow" type="number" min="5" max="120" value="20" /></label><small>선택한 전략에 해당하는 값만 계산에 반영됩니다.</small></section><div class="backtest-actions"><button class="content-cta" id="runBacktest"><i class="fa-solid fa-play"></i> 이 조건으로 검증하기</button><span>교육용 과거 검증이며 투자 권유가 아닙니다.</span></div></main></div><section class="backtest-result" id="backtestResult"><div class="backtest-empty"><i class="fa-solid fa-diagram-project"></i><p>왼쪽 테스트를 고른 뒤 조건을 확인하고 실행하세요.</p></div></section></article>`;
+    $messages.innerHTML = `<article class="content-page backtest-page"><header class="backtest-page-head"><div class="content-kicker">QUANTCONNECT LEAN · YFINANCE WORKFLOW</div><h1>LEAN <mark>투자 판단 실습</mark></h1><p class="content-lead">테스트 하나를 고르고, 무엇을 검증하는지부터 결과 해석까지 순서대로 확인합니다.</p></header><section class="backtest-pipeline" aria-label="백테스트 실행 과정"><div class="backtest-pipeline-head"><div><span>EXECUTION FLOW</span><b>FE → BE → API → LEAN 실행 과정</b></div><em id="btPipelineStatus">대기 중 · 「이 조건으로 검증하기」를 누르면 각 단계가 실제 진행에 맞춰 켜집니다.</em></div><canvas id="btPipelineCanvas" role="img" aria-label="브라우저, FastAPI 백엔드, yfinance API, LEAN 엔진 순서로 진행되는 실행 흐름"></canvas></section><div class="backtest-workspace"><aside class="backtest-examples" aria-label="바로 실행할 수 있는 백테스트 예시"><div><span>TEST LIBRARY</span><h2>확인할 상황 선택</h2><p>선택하면 오른쪽에 테스트의 질문과 해석 기준이 표시됩니다.</p></div><div class="backtest-example-grid">${examples}</div></aside><main class="backtest-main"><section class="backtest-test-detail" id="backtestTestDetail" aria-live="polite"></section><section class="backtest-canvas" aria-label="백테스트 설정"><div class="workflow-node input"><span>01 · 전략</span><select id="btStrategy" aria-label="예시 전략 선택">${strategyOptions}</select><small id="btStrategyHint">${escHtml(BACKTEST_STRATEGIES[0].hint)}</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>02 · 종목 / ETF</span><input id="btTicker" value="005930.KS" maxlength="12" aria-label="종목 티커" /><small>한국: 005930.KS · 미국 ETF: SPY</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>03 · 검증 기간</span><div><input id="btStart" type="date" value="2023-01-01" /><input id="btEnd" type="date" value="${today}" /></div><small>전략 성과를 계산할 기간</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>04 · 비교 기간</span><div><input id="btCompareStart" type="date" value="2022-01-01" /><input id="btCompareEnd" type="date" value="${today}" /></div><small>다른 시장 국면에서도 확인</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node engine"><span>05 · 실행 엔진</span><strong><i class="fa-brands fa-docker"></i> LEAN</strong><small>가격 데이터 → 원격 Docker</small></div></section><section class="backtest-parameters" aria-label="전략 세부 조건"><label>단기 이동평균 <input id="btShortWindow" type="number" min="2" max="120" value="20" /></label><label>장기 이동평균 <input id="btLongWindow" type="number" min="5" max="300" value="60" /></label><label>적립 간격(거래일) <input id="btDcaInterval" type="number" min="1" max="120" value="21" /></label><label>돌파 기준(거래일) <input id="btBreakoutWindow" type="number" min="5" max="120" value="20" /></label><small>선택한 전략에 해당하는 값만 계산에 반영됩니다.</small></section><div class="backtest-actions"><button class="content-cta" id="runBacktest"><i class="fa-solid fa-play"></i> 이 조건으로 검증하기</button><span>교육용 과거 검증이며 투자 권유가 아닙니다.</span></div></main></div><section class="backtest-result" id="backtestResult"><div class="backtest-empty"><i class="fa-solid fa-diagram-project"></i><p>왼쪽 테스트를 고른 뒤 조건을 확인하고 실행하세요.</p></div></section></article>`;
+    initBacktestPipeline();
     document.getElementById('runBacktest').addEventListener('click', runBacktest);
     document.getElementById('btStrategy').addEventListener('change', (event) => {
       const chosen = BACKTEST_STRATEGIES.find(s => s.value === event.target.value);
@@ -1790,18 +1791,222 @@ KOSDAQ|웹젠|게임`,
     detail.innerHTML = `<header><span>${escHtml(example.tag)} TEST</span><h2>${escHtml(example.title)}</h2><p>${escHtml(example.note)}</p></header><div class="backtest-detail-grid"><article><i class="fa-solid fa-bullseye"></i><b>이 테스트의 질문</b><p>${escHtml(example.focus)}</p></article><article><i class="fa-solid fa-gears"></i><b>어떻게 계산하나요?</b><p>${escHtml(example.method)}</p></article><article><i class="fa-solid fa-chart-line"></i><b>결과 읽는 법</b><p>${escHtml(example.read)}</p></article><article class="caution"><i class="fa-solid fa-triangle-exclamation"></i><b>놓치기 쉬운 점</b><p>${escHtml(example.caution)}</p></article></div>`;
   }
 
+  /* ── 실행 과정 캔버스: FE → BE → API(yfinance) → LEAN → 결과 반환 ───────────────────────
+     POST /backtests/run 은 동기 호출이라 서버가 중간 진행을 알려 주지 않는다. 그래서 요청 전송·응답 수신이라는 실제 이벤트에
+     단계 전환을 걸고, 그 사이(BE 검증 → yfinance 다운로드 → LEAN 실행)는 보통 걸리는 시간으로 추정해 넘긴다. 응답이 오면 서버가
+     잰 실제 소요시간(timings: download_ms·lean_ms·total_ms)과 실행 방식(lean_runner)으로 라벨을 바로잡는다. */
+  const BT_STAGE_ORDER = ['fe', 'be', 'api', 'lean', 'done'];
+  const BT_NODES = [
+    { id: 'fe', title: '브라우저 (FE)', lines: ['조건 입력 · 요청 생성', '결과 차트 렌더'] },
+    { id: 'be', title: 'FastAPI (BE)', lines: ['POST /backtests/run', '입력 검증 · 기간 계산'] },
+    { id: 'api', title: 'yfinance API', lines: ['일봉 종가 다운로드', '전략별 과거 버퍼 포함'] },
+    { id: 'lean', title: 'LEAN 엔진', lines: ['알고리즘 생성 → Docker 실행', '로그·성과 집계'] },
+  ];
+  const BT_EDGE_LABELS = ['JSON 요청', 'download()', 'docker run'];
+  const BT_STAGE_TEXT = {
+    fe: '① 브라우저가 조건을 모아 요청을 만듭니다',
+    be: '② FastAPI 가 요청을 받아 검증하고 데이터 기간을 계산합니다',
+    api: '③ yfinance 에서 일봉 종가를 내려받습니다',
+    lean: '④ LEAN 컨테이너가 알고리즘을 실행합니다 (수십 초 걸릴 수 있음)',
+    done: '⑤ 결과 JSON 을 받아 차트와 지표를 그립니다',
+  };
+  const btPipeline = createBacktestPipeline();
+
+  function createBacktestPipeline() {
+    const state = { running: false, stage: null, startedAt: 0, stageAt: 0, done: new Set(), error: null, finishedAt: 0, timings: null, runner: null, timers: [], raf: 0 };
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let canvas = null, ctx = null, observer = null;
+
+    function el() { return document.getElementById('btPipelineCanvas'); }
+    function statusEl() { return document.getElementById('btPipelineStatus'); }
+
+    function mount() {
+      canvas = el();
+      if (!canvas) return false;
+      ctx = canvas.getContext('2d');
+      if (observer) observer.disconnect();
+      observer = new ResizeObserver(() => draw());
+      observer.observe(canvas);
+      draw();
+      return true;
+    }
+
+    function clearTimers() { state.timers.forEach(clearTimeout); state.timers = []; }
+    function loop() {
+      draw();
+      const finishing = state.finishedAt && performance.now() - state.finishedAt < 1600;
+      if (state.running || finishing) state.raf = requestAnimationFrame(loop);
+      else { state.raf = 0; draw(); }
+    }
+    function ensureLoop() { if (!state.raf) state.raf = requestAnimationFrame(loop); }
+
+    function setStatus(text) { const node = statusEl(); if (node) node.textContent = text; }
+    function elapsedText() { return `${((performance.now() - state.startedAt) / 1000).toFixed(1)}초 경과`; }
+
+    function start() {
+      clearTimers();
+      Object.assign(state, { running: true, stage: 'fe', startedAt: performance.now(), stageAt: performance.now(), done: new Set(), error: null, finishedAt: 0, timings: null, runner: null });
+      if (!canvas) mount();
+      setStatus(`${BT_STAGE_TEXT.fe} · 0.0초 경과`);
+      ensureLoop();
+    }
+
+    function set(stage) {
+      if (!state.running || !BT_STAGE_ORDER.includes(stage)) return;
+      const from = BT_STAGE_ORDER.indexOf(state.stage), to = BT_STAGE_ORDER.indexOf(stage);
+      for (let i = Math.max(from, 0); i < to; i += 1) state.done.add(BT_STAGE_ORDER[i]);
+      state.stage = stage; state.stageAt = performance.now();
+      clearTimers();
+      // 서버 내부 단계는 보통 걸리는 시간으로 추정해 넘긴다. 응답이 먼저 오면 finish() 가 모두 완료 처리한다.
+      if (stage === 'be') state.timers.push(setTimeout(() => set('api'), 700));
+      if (stage === 'api') state.timers.push(setTimeout(() => set('lean'), 4000));
+      ensureLoop();
+    }
+
+    function finish(data) {
+      clearTimers();
+      BT_STAGE_ORDER.forEach(id => { if (id !== 'done') state.done.add(id); });
+      state.stage = 'done'; state.stageAt = performance.now(); state.finishedAt = performance.now(); state.running = false;
+      state.timings = data && data.timings ? data.timings : null;
+      state.runner = data && data.lean_runner ? data.lean_runner : null;
+      const t = state.timings;
+      const parts = [`완료 · 전체 ${((performance.now() - state.startedAt) / 1000).toFixed(1)}초`];
+      if (t) parts.push(`yfinance ${(Number(t.download_ms || 0) / 1000).toFixed(1)}초`, `LEAN ${(Number(t.lean_ms || 0) / 1000).toFixed(1)}초 (${state.runner === 'remote' ? '원격 SSH Docker' : '로컬 Docker'})`);
+      setStatus(parts.join(' · '));
+      ensureLoop();
+    }
+
+    function fail(message) {
+      clearTimers();
+      state.error = { stage: state.stage || 'fe', message: String(message || '실패') };
+      state.running = false; state.finishedAt = performance.now();
+      setStatus(`실패 (${(BT_NODES.find(n => n.id === state.error.stage) || { title: '결과' }).title}) · ${state.error.message}`);
+      ensureLoop();
+    }
+
+    function roundRect(x, y, w, h, r) {
+      ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h); ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r); ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath();
+    }
+
+    function nodeState(id) {
+      if (state.error && state.error.stage === id) return 'error';
+      if (state.done.has(id)) return 'done';
+      if (state.running && state.stage === id) return 'active';
+      return 'idle';
+    }
+
+    function draw() {
+      if (!canvas || !ctx) return;
+      const rect = canvas.getBoundingClientRect();
+      const width = Math.max(320, Math.floor(rect.width)), height = Math.max(150, Math.floor(rect.height || 190));
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (canvas.width !== Math.round(width * dpr) || canvas.height !== Math.round(height * dpr)) { canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr); }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+      const now = performance.now();
+      const compact = width < 720;
+      const pad = compact ? 10 : 22, gap = compact ? 14 : 44;
+      const nodeW = (width - pad * 2 - gap * (BT_NODES.length - 1)) / BT_NODES.length;
+      const nodeH = compact ? 78 : 92, top = compact ? 18 : 24;
+      const boxes = BT_NODES.map((node, index) => ({ ...node, x: pad + index * (nodeW + gap), y: top, w: nodeW, h: nodeH }));
+
+      // 연결선 + 패킷
+      boxes.forEach((box, index) => {
+        if (index === boxes.length - 1) return;
+        const next = boxes[index + 1];
+        const x1 = box.x + box.w, x2 = next.x, y = box.y + box.h / 2;
+        const edgeActive = state.running && state.stage === next.id;
+        const edgeDone = state.done.has(next.id) || (state.done.has(box.id) && state.stage !== box.id && !state.running && !state.error) ;
+        ctx.strokeStyle = edgeActive ? '#38bdf8' : edgeDone ? '#2dd4bf' : '#1d6d96'; ctx.lineWidth = edgeActive ? 2.5 : 1.5;
+        ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(x2 - 8, y); ctx.stroke();
+        ctx.fillStyle = ctx.strokeStyle; ctx.beginPath(); ctx.moveTo(x2, y); ctx.lineTo(x2 - 9, y - 5); ctx.lineTo(x2 - 9, y + 5); ctx.closePath(); ctx.fill();
+        if (!compact) { ctx.fillStyle = '#7dd3fc'; ctx.font = '600 11px Pretendard, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(BT_EDGE_LABELS[index], (x1 + x2) / 2, y - 9); }
+        if (edgeActive && !reduceMotion) {
+          for (let k = 0; k < 3; k += 1) {
+            const t = ((now / 900) + k / 3) % 1;
+            ctx.fillStyle = '#F5C518'; ctx.beginPath(); ctx.arc(x1 + (x2 - 10 - x1) * t, y, 4, 0, Math.PI * 2); ctx.fill();
+          }
+        }
+      });
+
+      // 결과 반환 (LEAN → 브라우저) 곡선
+      const first = boxes[0], last = boxes[boxes.length - 1];
+      const returnY = top + nodeH + (compact ? 30 : 40);
+      const returning = state.stage === 'done' && state.finishedAt && now - state.finishedAt < 1600;
+      const returned = state.stage === 'done' && !returning;
+      ctx.strokeStyle = returning ? '#38bdf8' : returned ? '#2dd4bf' : '#1d6d96'; ctx.lineWidth = returning ? 2.5 : 1.5;
+      ctx.setLineDash(returned || returning ? [] : [5, 5]);
+      ctx.beginPath(); ctx.moveTo(last.x + last.w / 2, last.y + last.h); ctx.lineTo(last.x + last.w / 2, returnY); ctx.lineTo(first.x + first.w / 2, returnY); ctx.lineTo(first.x + first.w / 2, first.y + first.h + 8); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = ctx.strokeStyle; ctx.beginPath(); ctx.moveTo(first.x + first.w / 2, first.y + first.h); ctx.lineTo(first.x + first.w / 2 - 5, first.y + first.h + 9); ctx.lineTo(first.x + first.w / 2 + 5, first.y + first.h + 9); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = returned || returning ? '#99f6e4' : '#7dd3fc'; ctx.font = '600 11px Pretendard, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(state.timings ? `결과 JSON 반환 · 전체 ${(Number(state.timings.total_ms || 0) / 1000).toFixed(1)}초` : '결과 JSON 반환 (성과 지표 · 자산 곡선 · LEAN 로그)', (first.x + last.x + last.w) / 2, returnY + 14);
+      if (returning && !reduceMotion) {
+        const t = (now - state.finishedAt) / 1600;
+        const seg1 = returnY - (last.y + last.h), seg2 = (last.x + last.w / 2) - (first.x + first.w / 2), seg3 = returnY - (first.y + first.h + 8);
+        const length = seg1 + seg2 + seg3, dist = t * length;
+        let px, py;
+        if (dist < seg1) { px = last.x + last.w / 2; py = last.y + last.h + dist; }
+        else if (dist < seg1 + seg2) { px = last.x + last.w / 2 - (dist - seg1); py = returnY; }
+        else { px = first.x + first.w / 2; py = returnY - (dist - seg1 - seg2); }
+        ctx.fillStyle = '#F5C518'; ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+      }
+
+      // 노드
+      boxes.forEach(box => {
+        const kind = nodeState(box.id);
+        const pulse = kind === 'active' && !reduceMotion ? (Math.sin(now / 260) + 1) / 2 : 0;
+        const fill = kind === 'active' ? '#0369a1' : kind === 'done' ? '#0f766e' : kind === 'error' ? '#991b1b' : '#0c3657';
+        const stroke = kind === 'active' ? '#38bdf8' : kind === 'done' ? '#2dd4bf' : kind === 'error' ? '#f87171' : '#1d6d96';
+        if (kind === 'active') { ctx.shadowColor = 'rgba(56,189,248,.65)'; ctx.shadowBlur = 10 + pulse * 14; }
+        ctx.fillStyle = fill; roundRect(box.x, box.y, box.w, box.h, 12); ctx.fill();
+        ctx.shadowBlur = 0; ctx.shadowColor = 'transparent';
+        ctx.strokeStyle = stroke; ctx.lineWidth = kind === 'idle' ? 1 : 2; roundRect(box.x, box.y, box.w, box.h, 12); ctx.stroke();
+        ctx.textAlign = 'left';
+        ctx.fillStyle = kind === 'idle' ? '#7dd3fc' : '#e0f2fe'; ctx.font = `800 ${compact ? 11 : 12}px Pretendard, sans-serif`;
+        ctx.fillText(`0${BT_NODES.indexOf(box) + 1} · ${box.title}`, box.x + 12, box.y + 20);
+        ctx.fillStyle = kind === 'idle' ? '#bae6fd' : '#f0f9ff'; ctx.font = `500 ${compact ? 10.5 : 12}px Pretendard, sans-serif`;
+        const lines = box.id === 'lean' && state.runner ? [box.lines[0].replace('Docker', state.runner === 'remote' ? '원격 SSH Docker' : '로컬 Docker'), box.lines[1]] : box.lines;
+        lines.forEach((line, i) => { if (compact && i > 0) return; ctx.fillText(line, box.x + 12, box.y + 40 + i * 17); });
+        // 상태 배지
+        const badge = kind === 'active' ? '진행 중' : kind === 'done' ? '완료' : kind === 'error' ? '실패' : '';
+        if (badge) {
+          ctx.font = '800 10px Pretendard, sans-serif'; const bw = ctx.measureText(badge).width + 14;
+          ctx.fillStyle = kind === 'active' ? '#F5C518' : kind === 'done' ? '#2dd4bf' : '#f87171';
+          roundRect(box.x + box.w - bw - 10, box.y + 9, bw, 16, 8); ctx.fill();
+          ctx.fillStyle = '#082f49'; ctx.textAlign = 'center'; ctx.fillText(badge, box.x + box.w - bw / 2 - 10, box.y + 20.5);
+        }
+        if (kind === 'active' && box.id === 'lean') {
+          ctx.textAlign = 'right'; ctx.fillStyle = '#F5C518'; ctx.font = '700 11px Pretendard, sans-serif';
+          ctx.fillText(`${((now - state.stageAt) / 1000).toFixed(0)}초`, box.x + box.w - 12, box.y + box.h - 10);
+        }
+      });
+
+      if (state.running) setStatus(`${BT_STAGE_TEXT[state.stage] || ''} · ${elapsedText()}`);
+    }
+
+    return { mount, start, set, finish, fail };
+  }
+
+  function initBacktestPipeline() { btPipeline.mount(); }
+
   async function runBacktest() {
     const button = document.getElementById('runBacktest');
     const result = document.getElementById('backtestResult');
     const payload = { ticker: document.getElementById('btTicker').value, start_date: document.getElementById('btStart').value, end_date: document.getElementById('btEnd').value, compare_start_date: document.getElementById('btCompareStart').value, compare_end_date: document.getElementById('btCompareEnd').value, initial_cash: 10000, strategy: document.getElementById('btStrategy').value, short_window: Number(document.getElementById('btShortWindow').value), long_window: Number(document.getElementById('btLongWindow').value), dca_interval_days: Number(document.getElementById('btDcaInterval').value), breakout_window: Number(document.getElementById('btBreakoutWindow').value) };
     button.disabled = true; button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> LEAN 실행 중';
     result.innerHTML = '<div class="backtest-empty"><i class="fa-solid fa-spinner fa-spin"></i><p>yfinance 데이터를 정리하고 원격 LEAN 컨테이너를 실행하고 있습니다.</p></div>';
+    btPipeline.start();
     try {
+      btPipeline.set('be');
       const data = await fetchLocalBackendJson('/backtests/run', null, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
         .catch(error => { throw new Error(error && error.detail ? error.detail : '백테스트를 실행하지 못했습니다.'); });
+      btPipeline.finish(data);
       result.innerHTML = `<div class="backtest-result-head"><span>${escHtml(data.engine)} · ${escHtml(data.strategy_label || '')}</span><h2>${escHtml(data.ticker)} 결과</h2></div>${buildBacktestSummary(data)}<div class="backtest-metrics"><article><span>전략 수익률</span><strong class="${data.strategy_return_pct >= 0 ? 'up' : 'down'}">${data.strategy_return_pct >= 0 ? '+' : ''}${data.strategy_return_pct}%</strong></article><article><span>연환산 수익률</span><strong class="${data.annualized_return_pct >= 0 ? 'up' : 'down'}">${data.annualized_return_pct >= 0 ? '+' : ''}${data.annualized_return_pct}%</strong></article><article><span>연환산 변동성</span><strong>${data.annualized_volatility_pct}%</strong></article><article><span>샤프 비율</span><strong>${data.sharpe_ratio}</strong></article><article><span>최대 낙폭</span><strong class="down">${data.max_drawdown_pct}%</strong></article><article><span>시장 노출 일수</span><strong>${data.invested_days_pct}%</strong></article><article><span>규칙 변경 횟수</span><strong>${data.trade_count}회</strong></article><article><span>단순 보유 수익률</span><strong class="${data.benchmark_return_pct >= 0 ? 'up' : 'down'}">${data.benchmark_return_pct >= 0 ? '+' : ''}${data.benchmark_return_pct}%</strong></article></div>${buildInvestmentChecklist(data)}<canvas id="backtestChart" width="900" height="250" aria-label="자산 곡선"></canvas><p class="backtest-disclaimer">${escHtml(data.disclaimer)}</p><details><summary>LEAN 실행 로그 보기</summary><pre>${escHtml(data.lean_log || '결과 로그 없음')}</pre></details>`;
       drawBacktestChart(data.points);
-    } catch (error) { result.innerHTML = `<div class="backtest-error"><i class="fa-solid fa-triangle-exclamation"></i>${escHtml(error.message)}</div>`; }
+    } catch (error) { btPipeline.fail(error.message); result.innerHTML = `<div class="backtest-error"><i class="fa-solid fa-triangle-exclamation"></i>${escHtml(error.message)}</div>`; }
     finally { button.disabled = false; button.innerHTML = '<i class="fa-solid fa-play"></i> 백테스트 실행'; }
   }
 

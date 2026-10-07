@@ -403,3 +403,13 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 **다음 작업(사용자)**: `cd.yml`·`todo.md` 커밋·푸시(에이전트의 커밋·푸시는 10-06 자동 모드 분류기가 "민감 정보 과다"로 거부) → run 전 단계 성공 확인(`gh run watch -R edumgt/domain-rag-lab`).
 
 **사이트 헬스(2026-10-06 01:16Z)**: pr `/health` 200(45ms), `/` 200. TLS 만료 2026-12-30.
+
+### 6-7. 2026-10-07 LEAN 백테스트 뷰 — 타이틀 아래 「FE → BE → API → LEAN 실행 과정」 캔버스 (사용자 요청)
+
+| 변경 | 내용 |
+|------|------|
+| `frontend/app.js` | `renderBacktestWorkflow` 헤더 바로 아래 `.backtest-pipeline` 섹션(`#btPipelineCanvas`, 상태 문구 `#btPipelineStatus`). `createBacktestPipeline()` 모듈: 노드 4개(브라우저 FE · FastAPI BE · yfinance API · LEAN 엔진) + LEAN→FE 결과 반환 곡선. 상태 idle/active(펄스·패킷 이동)/done/error, LEAN 노드에 경과초, 하단 상태 줄에 단계 설명·경과시간. **실제 이벤트 연동**: 실행 버튼 → `start()`(FE), fetch 직전 `set('be')`, 응답 수신 `finish(data)`(전부 완료 + 반환 패킷 1.6초), 실패 `fail(msg)`(해당 단계 빨강 + 메시지). 서버가 중간 진행을 주지 않으므로 BE→API 0.7초, API→LEAN 4초는 추정 전환이며 응답이 먼저 오면 즉시 완료 처리. `prefers-reduced-motion` 이면 패킷·펄스 생략. 캔버스는 ResizeObserver·DPR 대응, 720px 미만 압축 레이아웃. RAF 루프는 실행·마무리 중에만 돈다 |
+| `app/services/lean_backtest_service.py`·`app/schemas/chat.py` | 응답에 `timings{download_ms, lean_ms, total_ms}`·`lean_runner(local|remote)` 추가(선택 필드) → 완료 시 상태 줄 "완료 · 전체 n초 · yfinance n초 · LEAN n초 (원격 SSH Docker/로컬 Docker)", LEAN 노드 라벨에 실행 방식 반영 |
+| `frontend/style.css`·`frontend/index.html` | 섹션 스타일(기존 워크플로 네이비 톤), `app.js`·`style.css` 캐시 버전 `20261007-backtest-pipeline` |
+
+**검증**: 백엔드 pytest 통과(아래 실행 결과), app.js 괄호 균형 델타 HEAD 와 동일, 연결 지점(start/set/finish/fail) 존재. 브라우저 미실행 — 배포 후 확인: 뷰 진입 시 회색 다이어그램, 실행 시 FE→BE→API→LEAN 순으로 켜지고 LEAN 에 경과초, 완료 시 반환 패킷 후 실제 소요시간 표시, 422/502 오류 시 해당 노드 빨강. 배포는 push → `cd.yml`(fd 서버 pr 스택).

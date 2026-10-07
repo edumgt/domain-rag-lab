@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import shutil
 import subprocess
+import time
 import tempfile
 import uuid
 from datetime import date, timedelta
@@ -58,6 +59,8 @@ class LeanBacktestService:
         if start_date >= end_date or compare_start_date >= compare_end_date:
             raise LeanBacktestError("시작일은 종료일보다 앞서야 합니다.")
         runner = self._resolve_runner()
+        # 단계별 소요시간(ms) — 화면의 FE→BE→API→LEAN 실행 과정 표시에 쓴다.
+        timer_start = time.perf_counter()
 
         buffer_days = self._lookback_buffer(strategy, long_window, breakout_window)
         fetch_start = min(start_date, compare_start_date) - timedelta(days=buffer_days)
@@ -65,6 +68,7 @@ class LeanBacktestService:
         # on-screen date range and the calculation match.
         download_end = max(end_date, compare_end_date) + timedelta(days=1)
         prices = yf.download(ticker, start=fetch_start.isoformat(), end=download_end.isoformat(), auto_adjust=True, progress=False)
+        download_ms = round((time.perf_counter() - timer_start) * 1000)
         if prices.empty or "Close" not in prices:
             raise LeanBacktestError("yfinance에서 해당 기간의 종가를 받지 못했습니다.")
         close = prices["Close"]
@@ -73,10 +77,12 @@ class LeanBacktestService:
 
         work_id = f"workflow-{uuid.uuid4().hex[:12]}"
         algorithm_source = self._algorithm_source(strategy, start_date, end_date, initial_cash, short_window, long_window, dca_interval_days, breakout_window)
+        lean_start = time.perf_counter()
         if runner == "local":
             lean_log = self._run_local(work_id, strategy, algorithm_source, close)
         else:
             lean_log = self._run_remote(work_id, strategy, algorithm_source, close)
+        lean_ms = round((time.perf_counter() - lean_start) * 1000)
 
         series = close.loc[(close.index.date >= start_date) & (close.index.date <= end_date)]
         comparison = close.loc[(close.index.date >= compare_start_date) & (close.index.date <= compare_end_date)]
@@ -106,6 +112,8 @@ class LeanBacktestService:
             **analytics,
             "points": points,
             "lean_log": lean_log[-6000:],
+            "lean_runner": runner,
+            "timings": {"download_ms": download_ms, "lean_ms": lean_ms, "total_ms": round((time.perf_counter() - timer_start) * 1000)},
             "disclaimer": "yfinance 일봉 기반 교육용 예시입니다. 배당·세금·수수료·슬리피지·데이터 품질과 실제 체결은 반영하지 않으며 투자 권유가 아닙니다.",
         }
 
