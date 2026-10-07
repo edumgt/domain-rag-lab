@@ -15,11 +15,19 @@
     .btn-primary { border: 0; border-radius: 8px; padding: 10px 18px; background: #315ac9; color: white; font: inherit; font-weight: 700; cursor: pointer; }
     .btn-primary:hover { background: #2346a4; }
     @media (max-width: 560px) { header, main { padding-left: 12px; padding-right: 12px; } }
+    .site-gnb { width: min(1200px, 100%); margin: 0 auto; padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .site-gnb a { display: inline-block; padding: 9px 12px; background: #fff; color: #315ac9; border: 1px solid #ccd8e8; border-radius: 8px; text-decoration: none; font-size: 14px; }
+    .site-gnb a[aria-current="page"] { background: #315ac9; color: #fff; }
+    .site-gnb a:focus-visible { outline: 3px solid #315ac9; outline-offset: 2px; }
+    @media (max-width: 560px) { .site-gnb { padding: 12px; } }
   </style>
   <script src="/static/assets/walk-forward.js?v=20261001-8" defer></script>
   <script src="/static/assets/walk-forward-page.js?v=20261002-1" defer></script>
 </head>
 <body>
+  <nav class="site-gnb" aria-label="학습 서비스 메뉴">
+    <a href="/">홈</a><a href="/?view=stocks">종목보기</a><a href="/?view=learn">RAG 질문</a><a href="/?view=simulation">시뮬레이션</a><a href="/?view=quant">EDA · LightGBM</a><a href="/walk-forward.html" aria-current="page">Walk-Forward 검증</a><a href="/?view=basis">베이시스</a><a href="/?view=backtest">LEAN 백테스트</a><a href="/?view=calendar">캘린더</a>
+  </nav>
   <header><h1>Walk-Forward 검증</h1><a href="/">학습랩 홈으로</a></header>
   <main id="walkForwardLab"></main>
 </body>

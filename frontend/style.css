@@ -2113,3 +2113,7 @@ body.modal-open { overflow: hidden; }
 .rag-source-guide > span { display: block; margin-bottom: 8px; color: #2563eb; font-size: 15.95px; font-weight: 850; letter-spacing: .08em; }
 .rag-source-guide p { margin: 0; font-size: 16.5px; line-height: 1.65; }
 .rag-source-guide code { padding: 1px 5px; color: #1d4ed8; background: #eff6ff; border-radius: 3px; font-size: 15.95px; }
+/* Keep every service link visible instead of concealing them in a scroll strip. */
+.chat-header { flex-wrap: wrap; gap: 10px; }
+.chat-header .brand-nav { order: 10; flex: 0 0 100%; width: 100%; flex-wrap: wrap; justify-content: flex-start; overflow: visible; white-space: normal; }
+.chat-header .brand-nav-btn { flex-shrink: 0; }
