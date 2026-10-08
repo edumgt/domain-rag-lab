@@ -7,7 +7,7 @@
   const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
   const fileFor = (number) => `${String(number).padStart(2, '0')}.html`;
   const nav = (active) => `<nav aria-label="5일 학습 목차"><a class="brand" href="index.html">5일 금융 이론</a><div class="day-nav">${lessons.map((item) => `<a class="${active === item.day ? 'active' : ''}" href="${fileFor(item.day)}"><b>${String(item.day).padStart(2, '0')}</b><span>${escapeHtml(item.title)}</span></a>`).join('')}</div></nav>`;
-  const footer = '<footer>금융 교육용 콘텐츠입니다. 특정 상품의 매수·매도를 권유하지 않습니다.</footer>';
+  const footer = '<footer class="site-footer-unified">© 2026 (주)에듀엠지티 All rights reserved.</footer>';
 
   function renderIndex() {
     $app.innerHTML = `${nav(0)}<section class="hero"><p class="eyebrow">5일 금융 이론</p><h1>상품 이해·<em>자산배분 설계</em></h1><p>하루 한 주제씩, 금융상품의 구조와 위험을 읽고 내 기준으로 비교하는 5일 학습입니다.</p></section><section class="curriculum">${lessons.map((item) => `<a class="day-card" href="${fileFor(item.day)}"><p>${String(item.day).padStart(2, '0')}</p><h2>${escapeHtml(item.title)}</h2><span>${escapeHtml(item.subtitle)}</span><strong>학습 시작 →</strong></a>`).join('')}</section>${footer}`;
