@@ -129,43 +129,4 @@ body[data-day="2"] .bis-capital-trigger{padding:2px 7px;font-size:14.3px;vertica
 @media(max-height:820px){.gap-tracking-sim-modal .gap-tracking-sim-dialog{padding:22px 30px!important}.gap-tracking-sim-dialog h2{font-size:22px!important}.gap-tracking-sim-intro{margin:2px 0 10px;font-size:14.85px;line-height:1.55}.gts-timeline{gap:8px;margin-bottom:10px}.gts-step{padding:10px 12px;gap:6px}.gts-step-desc{font-size:13.75px;line-height:1.5}.gts-step-head strong{font-size:15.4px}.gts-step-head small{font-size:13.75px}.gts-step input{padding:7px 9px}.gts-step-hint{padding:6px 9px;font-size:13.2px}.gap-tracking-sim-results{gap:8px;margin-bottom:10px}.gap-tracking-result{padding:9px 10px}.gap-tracking-result span{margin-bottom:4px;font-size:14.85px}.gap-tracking-result strong{font-size:18px}.gap-tracking-result small{margin-top:4px;font-size:14.3px;line-height:1.35}.gap-tracking-sim-message{padding:9px 12px;margin-bottom:8px;font-size:14.85px;line-height:1.5}.gap-tracking-sim-formula{padding-top:8px;font-size:14.3px}.gap-tracking-sim-disclaimer{margin-top:4px;font-size:14.3px}}
 
 
-/* ══ 공통 푸터 통일 (주식투자 4개 저장소 동일 스타일) ═══════════════════════
-   높이 25px 고정 · 검정 배경 · 한 줄 중앙 정렬 · 동일 문구
-   문구: © 2026 (주)에듀엠지티 All rights reserved.
-   기존 푸터 규칙(테마 오버라이드 포함)을 덮으려면 !important가 필요하다. */
-footer,
-.site-footer-unified {
-  box-sizing: border-box !important;
-  display: flex !important;
-  flex: 0 0 auto !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0 !important;
-  width: 100% !important;
-  max-width: none !important;
-  height: 25px !important;
-  min-height: 25px !important;
-  max-height: 25px !important;
-  margin: 0 !important;
-  padding: 0 12px !important;
-  overflow: hidden !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: #000000 !important;
-  color: #ffffff !important;
-  font-family: inherit !important;
-  font-size: 11.5px !important;
-  font-weight: 500 !important;
-  line-height: 25px !important;
-  letter-spacing: .02em !important;
-  text-align: center !important;
-  white-space: nowrap !important;
-  text-overflow: ellipsis !important;
-  text-transform: none !important;
-  box-shadow: none !important;
-}
-footer a,
-.site-footer-unified a {
-  color: #ffffff !important;
-  text-decoration: none !important;
-}
+/* 공통 스타일(한글 스케일·최소 글자 크기·타이틀 고정·공통 푸터)은 https://www.edumgt.co.kr/css/common.css 정본에 있다. 여기에 다시 복제하지 말 것. */
