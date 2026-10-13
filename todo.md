@@ -670,3 +670,17 @@ python3 shared-css/audit.py --live   # 라이브 4개 사이트
   3분 영상용 수정 포인트(가로형 해상도, 메모리 — 768×1366·24fps·3분 ≈ 13GB 라 루프 안에서 바로 `out.write`, TTS 문구·`-shortest`, OS 권한, 편집 랩 연계).
 - `frontend/assets/project2-presentation.css`: `.recorder-table`·`.recorder pre/code/kbd`·`.recorder-steps`·`.recorder-tips` 추가, HTML 의 CSS 버전 `?v=20261013-rec`.
 - 배포(미완, 사용자 실행): `deploy/pr-presentation-video-recorder.sh` — 호스트 소스 + `docker cp`(정적 파일, 재시작 불필요).
+
+### 6-17. 2026-10-13 LEAN 백테스트 뷰 — TEST LIBRARY 테스트 상세에 「실행 시 호출되는 백엔드 py 파일 구조」 블록 추가 (사용자 요청)
+
+**위치**: `renderBacktestExampleDetail` 의 `<header>` 와 `.backtest-detail-grid`(「이 테스트의 질문」 카드가 첫 칸) 사이. 카드를 바꿀 때마다 선택한 전략에 맞춰 다시 그린다.
+
+| 변경 | 내용 |
+|------|------|
+| `frontend/app.js` | `BACKTEST_STRATEGY_BACKEND`(전략 4종: 생성되는 LEAN 클래스·사전 수집 버퍼·반영 입력값·화면 수치 계산 함수·LEAN on_data 규칙·지표 함수), `backtestBackendRows(example, info)`(호출 순서 ①~⑪ 파일 트리: `frontend/app.js` → `app/main.py` → `app/api/routes/backtest.py` → `app/schemas/chat.py` → `app/core/config.py` → `app/services/lean_backtest_service.py` → `app/services/ohlcv_store.py` → `app/services/lean_reference_data/` → 작업 폴더 `main.py`·`data/prices.csv`·`results/`), `renderBacktestBackendMap(example)`(`.backtest-backend-map`: 헤더 + 2열 그리드 = 파일 트리 `.backend-tree` / 전략별 실행 경로 `.backend-route`). 전략 의존 줄(①·⑥·⑨)은 `.hot` 강조. 파일·함수명은 실제 코드의 이름 그대로이며, 화면 수치가 LEAN 로그가 아닌 `_strategy_curve`·`_analytics` 의 pandas 계산에서 나온다는 점을 명시 |
+| `frontend/style.css` | `.backtest-detail-grid article.caution > i` 다음에 `.backtest-backend-map`·`.backend-map-grid`·`.backend-tree`·`.backend-route` 스타일(본문 15.95px, 제목 17px, 코드 14.5px 모노스페이스). 860px 이하 1열, 560px 이하 트리 행·dl 1열 |
+| `frontend/index.html` | `style.css`·`app.js` 캐시 버전 `20261013-backend-map` |
+| `deploy/pr-backtest-backend-map.sh` 신설 | 호스트 소스 + `docker cp` (정적 파일, 재시작 불필요). 6-16 과 같은 방식 |
+
+**검증**: VS Code 서버 내장 node 로 `app.js` 전체 구문 검사 통과(`new Function(...)`), 다섯 예시(buy_hold·ma_cross·dca×2·momentum) 모두 `renderBacktestBackendMap` 렌더 → 전략 클래스명·`strategy=`·`ticker=` 치환·`<` 이스케이프·행 13개 확인. 브라우저 미실행.
+**배포(미완, 사용자 실행)**: `bash deploy/pr-backtest-backend-map.sh` 또는 main push(`cd.yml` 재빌드). 확인: TEST LIBRARY 카드 전환 시 「BACKEND FILES」 블록의 ⑨ 클래스명과 우측 「실행 경로」가 전략에 따라 바뀌는지, 860px 이하에서 1열로 접히는지.

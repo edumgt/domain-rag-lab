@@ -1785,10 +1785,87 @@ KOSDAQ|웹젠|게임`,
     renderBacktestExampleDetail(example);
   }
 
+  /* ── TEST LIBRARY 실행 시 호출되는 백엔드 파이썬 파일 구조 ───────────────────────────────
+     「이 조건으로 검증하기」 → POST /backtests/run 뒤에 서버가 실제로 거치는 파일을 호출 순서대로 보여 준다(테스트 상세의 「이 테스트의 질문」 위).
+     전략별로 달라지는 항목(생성되는 LEAN 알고리즘 클래스·사전 수집 버퍼·계산 함수)은 BACKTEST_STRATEGY_BACKEND 에서 가져온다.
+     파일 경로·함수명은 app/api/routes/backtest.py, app/services/lean_backtest_service.py, app/services/ohlcv_store.py 의 실제 이름이다. */
+  const BACKTEST_STRATEGY_BACKEND = {
+    buy_hold: {
+      algorithmClass: 'YFinanceBuyHoldAlgorithm',
+      lookback: '0일 — 지표가 없어 검증·비교 기간만 수집',
+      params: '없음 (창 길이 입력값은 계산에 반영되지 않음)',
+      curve: '_strategy_curve() → 포지션 1.0 고정 → _equity_from_position()',
+      leanRule: 'on_data(): 첫 봉에서 set_holdings(asset, 1) 한 번, 이후 그대로 보유',
+      analytics: '_analytics(): 포지션 1.0 → 시장 노출 100%, 규칙 변경 1회',
+    },
+    ma_cross: {
+      algorithmClass: 'YFinanceMovingAverageCrossAlgorithm',
+      lookback: 'long_window × 2 + 15일 — 첫날부터 장기 평균이 계산되도록 앞 구간을 더 받음',
+      params: 'short_window · long_window (장기 > 단기 검증은 schemas/chat.py)',
+      curve: '_position_ma_cross(): rolling 평균 비교 → shift(1) 로 다음 거래일 반영 → _equity_from_position()',
+      leanRule: 'on_data(): 종가 누적 → 단기/장기 평균 비교 → set_holdings(asset, 1) / liquidate(asset)',
+      analytics: '_analytics(): 포지션 변화로 노출 일수·규칙 변경 횟수, _win_rate() 로 왕복 거래 승률',
+    },
+    dca: {
+      algorithmClass: 'YFinanceDollarCostAveragingAlgorithm',
+      lookback: '0일 — 지표가 없어 검증·비교 기간만 수집',
+      params: 'dca_interval_days (21 ≈ 1개월)',
+      curve: '_equity_dca(): interval 마다 1/n 씩 매수, 날마다 주식 가치 + 남은 현금 합산',
+      leanRule: 'on_data(): day_count % interval_days == 0 마다 set_holdings(asset, 누적 비중)',
+      analytics: '_analytics(): 누적 매수 비중을 포지션으로 보아 노출 일수·변경 횟수 계산',
+    },
+    momentum: {
+      algorithmClass: 'YFinanceMomentumBreakoutAlgorithm',
+      lookback: 'breakout_window × 2 + 15일 — 첫날부터 N일 최고·최저가 계산되도록 앞 구간을 더 받음',
+      params: 'breakout_window',
+      curve: '_position_momentum(): 전일까지 N일 최고가 돌파 → 보유, 최저가 이탈 → 청산(상태기계) → shift(1) → _equity_from_position()',
+      leanRule: 'on_data(): price > prior_high 면 set_holdings(asset, 1), price < prior_low 면 liquidate(asset)',
+      analytics: '_analytics(): 포지션 변화로 노출 일수·규칙 변경 횟수, _win_rate() 로 왕복 거래 승률',
+    },
+  };
+
+  function backtestBackendRows(example, info) {
+    return [
+      { depth: 0, dir: true, path: 'domain-rag-lab/', desc: '저장소 루트 — API 컨테이너(domain-rag-lab-api-1)의 /app 에 복사되어 실행됩니다.' },
+      { depth: 1, step: '①', path: 'frontend/app.js', hot: true, desc: `runBacktest() — 입력을 JSON 으로 모아 POST /backtests/run 호출 (strategy=${example.strategy}, ticker=${example.ticker})` },
+      { depth: 1, step: '②', path: 'app/main.py', desc: 'FastAPI 앱 — include_router(backtest_router), 프런트 정적 파일 서빙' },
+      { depth: 1, step: '③', path: 'app/api/routes/backtest.py', desc: 'run_backtest(payload) — LeanBacktestService.run() 호출. LeanBacktestError → 422, 그 밖의 예외 → 502' },
+      { depth: 1, step: '④', path: 'app/schemas/chat.py', desc: 'BacktestRequest — 티커 정규식·기간·창 길이 검증, STRATEGY_LABELS, BacktestResponse 응답 모양' },
+      { depth: 1, step: '⑤', path: 'app/core/config.py', desc: 'settings — LEAN_RUNNER(local·remote·auto·off), LEAN_DOCKER_IMAGE, LEAN_TIMEOUT_SECONDS, 작업 폴더 경로' },
+      { depth: 1, step: '⑥', path: 'app/services/lean_backtest_service.py', hot: true, desc: 'LeanBacktestService.run() — 전체 조율: _resolve_runner() → _lookback_buffer() → store.close_series() → _algorithm_source() → _run_local() 또는 _run_remote() → _strategy_curve() → _analytics()' },
+      { depth: 1, step: '⑦', path: 'app/services/ohlcv_store.py', desc: 'OhlcvStore.close_series() — stock_price_history(PostgreSQL) → 없는 구간만 pg-stock(선택) → yfinance 순으로 받아 upsert, 종가 Series 반환' },
+      { depth: 1, step: '⑧', path: 'app/services/lean_reference_data/', last: true, desc: 'market-hours-database.json · symbol-properties-database.csv · security-database.csv — LEAN 엔진 기동에 필요한 정적 DB, 작업 폴더 data/ 로 복사' },
+      { depth: 0, dir: true, path: '<작업 폴더>/workflow-xxxxxxxxxxxx/', desc: '실행마다 만들고 끝나면 지우는 LEAN 작업 폴더 (LEAN_LOCAL_WORKDIR, 원격이면 LEAN_REMOTE_WORKDIR)' },
+      { depth: 1, step: '⑨', path: 'main.py', hot: true, desc: `_algorithm_source() 가 생성한 LEAN 알고리즘 — class ${info.algorithmClass}(QCAlgorithm) + prices.csv 를 읽는 YFPrice(PythonData) 리더` },
+      { depth: 1, step: '⑩', path: 'data/prices.csv', desc: '_write_prices() — date,close 두 열. LEAN 이 Resolution.DAILY 커스텀 데이터로 읽음' },
+      { depth: 1, step: '⑪', path: 'results/', last: true, desc: 'docker run --rm -v <작업 폴더>:/workspace quantconnect/lean:latest … 의 출력 폴더. 표준 출력·오류가 lean_log 로 응답에 포함' },
+    ];
+  }
+
+  function renderBacktestBackendMap(example) {
+    const info = BACKTEST_STRATEGY_BACKEND[example.strategy] || BACKTEST_STRATEGY_BACKEND.buy_hold;
+    const strategy = BACKTEST_STRATEGIES.find(item => item.value === example.strategy);
+    const label = strategy ? strategy.label : example.strategy;
+    const rows = backtestBackendRows(example, info).map(row => {
+      const glyph = row.depth === 0 ? '' : (row.last ? '└─ ' : '├─ ');
+      const classes = [`depth-${row.depth}`, row.dir ? 'dir' : '', row.hot ? 'hot' : ''].filter(Boolean).join(' ');
+      return `<li class="${classes}"><code>${escHtml(glyph + row.path)}</code><span>${row.step ? `<em>${row.step}</em>` : ''}${escHtml(row.desc)}</span></li>`;
+    }).join('');
+    const route = [
+      ['생성되는 LEAN 클래스', `<code>${escHtml(info.algorithmClass)}</code>`],
+      ['사전 수집 버퍼', escHtml(info.lookback)],
+      ['반영되는 입력값', escHtml(info.params)],
+      ['화면 수치 계산', escHtml(info.curve)],
+      ['LEAN 알고리즘 규칙', escHtml(info.leanRule)],
+      ['위험·추세 지표', escHtml(info.analytics)],
+    ].map(([k, v]) => `<dt>${escHtml(k)}</dt><dd>${v}</dd>`).join('');
+    return `<section class="backtest-backend-map" aria-label="이 테스트가 실행하는 백엔드 파이썬 파일 구조"><header><span>BACKEND FILES</span><b>이 테스트를 실행하면 호출되는 백엔드 파이썬 파일</b><p>「이 조건으로 검증하기」 → <code>POST /backtests/run</code> 뒤에 서버가 거치는 파일을 호출 순서(①~⑪)대로 정리했습니다. 파란 줄은 선택한 전략(<b>${escHtml(label)}</b>)에 따라 내용이 달라지는 파일입니다.</p></header><div class="backend-map-grid"><ul class="backend-tree">${rows}</ul><aside class="backend-route"><h3><i class="fa-solid fa-route"></i> 이 테스트의 실행 경로 · ${escHtml(label)}</h3><dl>${route}</dl><p>화면의 수익률·낙폭·지표는 <code>lean_backtest_service.py</code> 의 pandas 계산(<code>_strategy_curve</code>·<code>_analytics</code>)에서 나오고, LEAN 컨테이너는 같은 규칙을 실제 엔진에서 실행한 로그(결과 아래 「LEAN 실행 로그 보기」)를 제공합니다.</p></aside></div></section>`;
+  }
+
   function renderBacktestExampleDetail(example) {
     const detail = document.getElementById('backtestTestDetail');
     if (!detail || !example) return;
-    detail.innerHTML = `<header><span>${escHtml(example.tag)} TEST</span><h2>${escHtml(example.title)}</h2><p>${escHtml(example.note)}</p></header><div class="backtest-detail-grid"><article><i class="fa-solid fa-bullseye"></i><b>이 테스트의 질문</b><p>${escHtml(example.focus)}</p></article><article><i class="fa-solid fa-gears"></i><b>어떻게 계산하나요?</b><p>${escHtml(example.method)}</p></article><article><i class="fa-solid fa-chart-line"></i><b>결과 읽는 법</b><p>${escHtml(example.read)}</p></article><article class="caution"><i class="fa-solid fa-triangle-exclamation"></i><b>놓치기 쉬운 점</b><p>${escHtml(example.caution)}</p></article></div>`;
+    detail.innerHTML = `<header><span>${escHtml(example.tag)} TEST</span><h2>${escHtml(example.title)}</h2><p>${escHtml(example.note)}</p></header>${renderBacktestBackendMap(example)}<div class="backtest-detail-grid"><article><i class="fa-solid fa-bullseye"></i><b>이 테스트의 질문</b><p>${escHtml(example.focus)}</p></article><article><i class="fa-solid fa-gears"></i><b>어떻게 계산하나요?</b><p>${escHtml(example.method)}</p></article><article><i class="fa-solid fa-chart-line"></i><b>결과 읽는 법</b><p>${escHtml(example.read)}</p></article><article class="caution"><i class="fa-solid fa-triangle-exclamation"></i><b>놓치기 쉬운 점</b><p>${escHtml(example.caution)}</p></article></div>`;
   }
 
   /* ── 실행 과정 캔버스: FE → BE → API(yfinance) → LEAN → 결과 반환 ───────────────────────

@@ -2046,6 +2046,35 @@ body.modal-open { overflow: hidden; }
 .backtest-detail-grid article p { margin: 6px 0 0; color: #475569; font-size: 15.95px; line-height: 1.5; }
 .backtest-detail-grid article.caution { border-color: #fde68a; background: #fffbeb; }
 .backtest-detail-grid article.caution > i { color: #d97706; }
+
+/* 테스트 상세 — 「이 테스트의 질문」 위: 실행 시 호출되는 백엔드 파이썬 파일 구조 */
+.backtest-backend-map { margin-top: 14px; padding: 14px; border: 1px solid #dbeafe; border-radius: 10px; background: #fff; }
+.backtest-backend-map > header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.backtest-backend-map > header > span { color: #0284c7; font-size: 15.95px; font-weight: 850; letter-spacing: .1em; }
+.backtest-backend-map > header > b { color: #0f172a; font-size: 17px; line-height: 1.3; }
+.backtest-backend-map > header > p { flex-basis: 100%; margin: 4px 0 0; color: #475569; font-size: 15.95px; line-height: 1.5; }
+.backtest-backend-map code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: 14.5px; color: #0f172a; word-break: break-all; }
+.backtest-backend-map > header code, .backend-route code { padding: 1px 5px; border-radius: 4px; background: #e0f2fe; color: #075985; }
+.backend-map-grid { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(240px, 1fr); gap: 12px; margin-top: 12px; align-items: start; }
+.backend-tree { margin: 0; padding: 6px 8px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc; list-style: none; }
+.backend-tree li { display: grid; grid-template-columns: minmax(0, 290px) minmax(0, 1fr); gap: 2px 12px; padding: 6px 8px; border-radius: 6px; font-size: 15.95px; line-height: 1.45; }
+.backend-tree li + li { border-top: 1px dashed #e2e8f0; }
+.backend-tree li.depth-1 code { padding-left: 10px; white-space: pre-wrap; }
+.backend-tree li.dir code { color: #0369a1; font-weight: 800; }
+.backend-tree li.dir span { color: #64748b; }
+.backend-tree li.hot { background: #eff6ff; box-shadow: inset 3px 0 0 #0284c7; }
+.backend-tree li.hot code { color: #075985; font-weight: 700; }
+.backend-tree span { color: #475569; }
+.backend-tree em { margin-right: 6px; color: #0284c7; font-style: normal; font-weight: 800; }
+.backend-route { padding: 12px 14px; border: 1px solid #bae6fd; border-radius: 8px; background: #f0f9ff; }
+.backend-route h3 { margin: 0 0 10px; color: #0f172a; font-size: 15.95px; line-height: 1.4; }
+.backend-route h3 i { margin-right: 6px; color: #0284c7; }
+.backend-route dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 7px 10px; margin: 0; font-size: 15.95px; line-height: 1.45; }
+.backend-route dt { color: #0369a1; font-weight: 750; white-space: nowrap; }
+.backend-route dd { margin: 0; color: #334155; }
+.backend-route p { margin: 10px 0 0; padding-top: 9px; border-top: 1px solid #bae6fd; color: #475569; font-size: 15.95px; line-height: 1.5; }
+@media (max-width: 860px) { .backend-map-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .backend-tree li { grid-template-columns: 1fr; } .backend-route dl { grid-template-columns: 1fr; gap: 2px 0; } .backend-route dd { margin-bottom: 6px; } .backend-route dt { white-space: normal; } }
 .backtest-page .backtest-canvas { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 12px 0; padding: 14px; }
 .backtest-page .backtest-canvas > i { display: none; }
 .backtest-page .workflow-node { min-height: 122px; padding: 12px; }
