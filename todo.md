@@ -661,3 +661,12 @@ python3 shared-css/audit.py --live   # 라이브 4개 사이트
 - pr↔iv 포크 중복 337KB(`days/assets/site.css` 147KB 등)를 S3 공통 파일로 끌어올리는 작업은 별건으로 남겼다
 
 **커밋 안 했다** — 변경만 남겨 두었다.
+
+### 6-16. 2026-10-13 프로젝트2 발표 페이지 — 「화면 녹화 스크립트로 시연 동영상 만들기」 섹션 추가 (사용자 요청)
+
+- `frontend/project2-presentation.html`: 동영상 샘플(`#videoSamples`) 다음, 공개 주소(`#publicLinks`) 앞에 `#videoRecorder` 섹션. 좌측 LNB 에 「화면 녹화 · 동영상 생성」 앵커 추가.
+  내용: [edumgt/python-basic-lab](https://github.com/edumgt/python-basic-lab) `lab_video_capture/` 두 스크립트 비교표(`screen_recorder.py` 커서 표시·마지막 5초 자동 트림·24fps /
+  `screen_recorder_basic.py` gTTS 설명 음성 + ffmpeg 합성·15fps), 실행 순서(설치→실행→Ctrl+1/3/5→결과 파일), 핵심 코드(mss grab → PIL 중앙 크롭·리사이즈 → BGR → VideoWriter),
+  3분 영상용 수정 포인트(가로형 해상도, 메모리 — 768×1366·24fps·3분 ≈ 13GB 라 루프 안에서 바로 `out.write`, TTS 문구·`-shortest`, OS 권한, 편집 랩 연계).
+- `frontend/assets/project2-presentation.css`: `.recorder-table`·`.recorder pre/code/kbd`·`.recorder-steps`·`.recorder-tips` 추가, HTML 의 CSS 버전 `?v=20261013-rec`.
+- 배포(미완, 사용자 실행): `deploy/pr-presentation-video-recorder.sh` — 호스트 소스 + `docker cp`(정적 파일, 재시작 불필요).
