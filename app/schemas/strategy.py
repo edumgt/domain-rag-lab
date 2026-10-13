@@ -101,6 +101,24 @@ class StrategyListResponse(BaseModel):
     strategies: list[StrategySummary]
 
 
+class StrategyVersionSummary(BaseModel):
+    version: int
+    name: str
+    passed: bool
+    failed: list[str] = Field(default_factory=list)
+    universe_size: int
+    entry: SignalRule
+    backtest_result: BacktestResultSummary
+    created_at: datetime
+
+
+class StrategyVersionsResponse(BaseModel):
+    """GET /backtests/strategies/{id}/versions — 불합격 버전까지 포함한 이력 (v0.6)."""
+    strategy_id: str
+    latest_passed_version: int | None = None
+    versions: list[StrategyVersionSummary]
+
+
 def evaluate_acceptance(result: BacktestResultSummary, criteria: AcceptanceCriteria | None = None) -> Acceptance:
     criteria = criteria or AcceptanceCriteria()
     failed: list[str] = []

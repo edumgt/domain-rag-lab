@@ -76,6 +76,26 @@ class StrategyApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/backtests/strategies", headers={"X-API-Key": "wrong"}).status_code, 401)
         self.assertEqual(self.client.get("/backtests/strategies", headers={"X-API-Key": "secret"}).status_code, 200)
 
+    def test_bearer_session_accepted_instead_of_api_key(self):
+        os.environ["STRATEGY_API_KEY"] = "secret"
+        with patch("app.api.routes.strategies._bearer_session_valid", side_effect=lambda t: t == "good") as chk:
+            self.assertEqual(self.client.get("/backtests/strategies", headers={"Authorization": "Bearer good"}).status_code, 200)
+            self.assertEqual(self.client.get("/backtests/strategies", headers={"Authorization": "Bearer bad"}).status_code, 401)
+            self.assertEqual(self.client.get("/backtests/strategies", headers={"Authorization": "Basic x"}).status_code, 401)
+            chk.assert_any_call("good")
+
+    def test_versions_endpoint_lists_failed_versions_too(self):
+        strategy_store.save(_spec(version=1))
+        strategy_store.save(_spec(version=2, passed=False, mdd=-33.9))
+        strategy_store.save(_spec(version=3))
+        body = self.client.get("/backtests/strategies/ma_cross_kr/versions").json()
+        self.assertEqual(body["latest_passed_version"], 3)
+        self.assertEqual([(v["version"], v["passed"]) for v in body["versions"]], [(1, True), (2, False), (3, True)])
+        self.assertEqual(body["versions"][1]["failed"], ["x"])
+        self.assertEqual(body["versions"][1]["backtest_result"]["max_drawdown_pct"], -33.9)
+        self.assertEqual(body["versions"][0]["entry"]["indicator"], "ma_cross")
+        self.assertEqual(self.client.get("/backtests/strategies/nope/versions").status_code, 404)
+
     def test_export_runs_backtest_and_saves_passed_spec(self):
         fake = {"ticker": "005930.KS", "engine": "lean", "strategy": "ma_cross", "strategy_label": "x", "strategy_return_pct": 30,
                 "benchmark_return_pct": 10, "comparison_return_pct": 1, "outperformance_pct": 20, "max_drawdown_pct": -12.5,

@@ -684,3 +684,18 @@ python3 shared-css/audit.py --live   # 라이브 4개 사이트
 
 **검증**: VS Code 서버 내장 node 로 `app.js` 전체 구문 검사 통과(`new Function(...)`), 다섯 예시(buy_hold·ma_cross·dca×2·momentum) 모두 `renderBacktestBackendMap` 렌더 → 전략 클래스명·`strategy=`·`ticker=` 치환·`<` 이스케이프·행 13개 확인. 브라우저 미실행.
 **배포(미완, 사용자 실행)**: `bash deploy/pr-backtest-backend-map.sh` 또는 main push(`cd.yml` 재빌드). 확인: TEST LIBRARY 카드 전환 시 「BACKEND FILES」 블록의 ⑨ 클래스명과 우측 「실행 경로」가 전략에 따라 바뀌는지, 860px 이하에서 1열로 접히는지.
+
+### 6-18. 2026-10-13 LEAN 백테스트 → KIS 자동매매 연동 강화 — 결과 화면 「전략 스펙으로 저장」, 버전 이력 API, Bearer 인증, fd 프리필 링크 (사용자 요청)
+
+| 변경 | 내용 |
+|------|------|
+| `app/api/routes/strategies.py` | `GET /backtests/strategies/{id}/versions`(불합격 포함 전 버전 + `latest_passed_version`, 파일 없으면 404). `require_strategy_api_key` 가 **X-API-Key 또는 pr 로그인 Bearer 세션**(`_bearer_session_valid`, auth 와 같은 `user_sessions` 조회, DB 는 필요할 때만) 을 허용 — 브라우저에서 API 키 없이 export |
+| `app/schemas/strategy.py`·`app/services/strategy_store.py` | `StrategyVersionSummary`·`StrategyVersionsResponse`, `list_versions(strategy_id)` |
+| `frontend/app.js` | 백테스트 결과 아래 `.strategy-export` 패널: 합격 기준 사전 점검표(이 결과 vs 기준, 기준 수정 가능·즉시 재판정), 전략 ID(자동 제안 `<strategy>_<6자리>`)·이름·universe(KRX 6자리, 해외 티커는 비활성+안내)·비중·최대 종목 → `POST /backtests/strategies`(Bearer). 201: 버전·지표 + fd 전략설정 링크 안내, 422: 미달 사유, 401: 로그인 안내. `applyBacktestQueryParams()`: `?view=backtest&strategy=&ticker=&short=&long=&breakout=&interval=&start=&from_fd=` 로 폼 프리필 + 안내 줄(fd 「pr 에서 이 전략 백테스트 열기」). 백엔드 파일 트리에 ⑫ `strategies.py` 행 |
+| `frontend/style.css`·`frontend/index.html` | 패널 스타일, 캐시 버전 `20261013-strategy-export` |
+| `docs/contracts/kis-autotrade-api.md` v0.6 (3 저장소 동일) | 위 내용 명시 |
+| 테스트 | `tests/test_strategies_api.py` +2(Bearer 허용/거부, versions 이력) → **7 passed** |
+
+**검증**: pytest 7 passed, `app.js` 구문 검사(node), 패널 렌더 스모크(KOSPI200 ETF → ID `ma_cross_kospi200`·기준 충족, SPY → 저장 비활성). 브라우저 미실행.
+**배포(미완, 사용자)**: 백엔드(라우트·스키마·스토어)가 바뀌어 main push → `cd.yml` 재빌드. 운영 pr 은 `STRATEGY_API_KEY` 가 설정돼 있으므로 화면 저장은 **pr 로그인 후** 가능.
+**연계**: lumina-invest todo 6-53(운영 모드 3분할·전략설정 스펙 카드·수익율검증). 흐름: pr 백테스트 → 「전략 스펙으로 저장」(합격) → fd 전략설정 운영 모드 ② → 전략 선택·저장 → 사이클 적용 → fd 수익율검증에서 전환 전후 비교.

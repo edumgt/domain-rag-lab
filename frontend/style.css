@@ -2074,6 +2074,32 @@ body.modal-open { overflow: hidden; }
 .backend-route dd { margin: 0; color: #334155; }
 .backend-route p { margin: 10px 0 0; padding-top: 9px; border-top: 1px solid #bae6fd; color: #475569; font-size: 15.95px; line-height: 1.5; }
 @media (max-width: 860px) { .backend-map-grid { grid-template-columns: 1fr; } }
+
+/* 백테스트 결과 → 전략 스펙 저장 패널 (fd 전략설정 ② 연동) */
+.strategy-export { margin-top: 18px; padding: 16px; border: 1px solid #bae6fd; border-radius: 12px; background: linear-gradient(120deg, #f0f9ff, #fff); }
+.strategy-export > header > span { color: #0284c7; font-size: 15.95px; font-weight: 850; letter-spacing: .1em; }
+.strategy-export > header > h3 { margin: 4px 0 4px; color: #0f172a; font-size: 17px; }
+.strategy-export > header > p { margin: 0 0 10px; color: #475569; font-size: 15.95px; line-height: 1.5; }
+.strategy-export code { padding: 1px 5px; border-radius: 4px; background: #e0f2fe; color: #075985; font-size: 14.5px; }
+.export-precheck { width: 100%; border-collapse: collapse; font-size: 15.95px; }
+.export-precheck th, .export-precheck td { padding: 7px 8px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+.export-precheck th { color: #64748b; font-weight: 700; }
+.export-precheck input { width: 84px; padding: 5px 7px; border: 1px solid #bfdbfe; border-radius: 6px; font: inherit; }
+.export-precheck .verdict.pass { color: #15803d; font-weight: 800; } .export-precheck .verdict.fail { color: #b91c1c; font-weight: 800; }
+.export-verdict { margin: 8px 0 12px; padding: 8px 10px; border-radius: 8px; font-size: 15.95px; line-height: 1.5; }
+.export-verdict.pass { background: #f0fdf4; color: #166534; } .export-verdict.fail { background: #fffbeb; color: #92400e; }
+.export-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.export-form label { display: grid; gap: 4px; color: #475569; font-size: 15.95px; font-weight: 750; }
+.export-form input { box-sizing: border-box; width: 100%; padding: 8px; border: 1px solid #bfdbfe; border-radius: 7px; color: #0f172a; background: #fff; font: inherit; font-weight: 400; }
+.export-form input:disabled { background: #f1f5f9; color: #94a3b8; }
+.export-form small { color: #64748b; font-size: 14.5px; font-weight: 400; line-height: 1.4; }
+.export-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
+.export-actions a { color: #0369a1; font-size: 15.95px; font-weight: 750; text-decoration: none; }
+.export-actions span { color: #b45309; font-size: 15.95px; }
+.export-ok, .export-fail { margin-top: 12px; padding: 12px; border-radius: 8px; font-size: 15.95px; line-height: 1.55; }
+.export-ok { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; } .export-fail { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+.export-fail ul { margin: 6px 0 0 18px; padding: 0; }
+.backtest-from-fd { margin: 8px 0 0; padding: 8px 10px; border-radius: 8px; background: #eff6ff; color: #1e40af; font-size: 15.95px; }
 @media (max-width: 560px) { .backend-tree li { grid-template-columns: 1fr; } .backend-route dl { grid-template-columns: 1fr; gap: 2px 0; } .backend-route dd { margin-bottom: 6px; } .backend-route dt { white-space: normal; } }
 .backtest-page .backtest-canvas { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 12px 0; padding: 14px; }
 .backtest-page .backtest-canvas > i { display: none; }

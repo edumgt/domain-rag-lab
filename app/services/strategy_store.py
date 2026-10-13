@@ -77,3 +77,15 @@ def list_passed() -> list[StrategySummary]:
                         backtest_result=s.backtest_result, created_at=s.created_at)
         for s in sorted(latest.values(), key=lambda s: s.strategy_id)
     ]
+
+
+def list_versions(strategy_id: str) -> list[StrategySpec]:
+    """한 전략의 모든 버전(합격·불합격 포함), 버전 오름차순. lumina 전략설정의 「버전 이력」 이 쓴다."""
+    out = []
+    for sid, ver in _index():
+        if sid != strategy_id:
+            continue
+        spec = load(sid, ver)
+        if spec:
+            out.append(spec)
+    return sorted(out, key=lambda s: s.version)

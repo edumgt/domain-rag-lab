@@ -1,6 +1,8 @@
 """전략 스펙 API (/backtests/strategies) — lumina-invest 종목 선정 화면·사이클이 호출한다.
 
-인증: 환경변수 STRATEGY_API_KEY 가 설정되어 있으면 X-API-Key 헤더가 일치해야 한다. 비어 있으면(개발) 공개.
+인증: 환경변수 STRATEGY_API_KEY 가 설정되어 있으면 X-API-Key 헤더가 일치하거나, pr 로그인 세션의 Bearer 토큰(auth.current_user 와 같은
+세션 테이블)이 유효해야 한다. 비어 있으면(개발) 공개. Bearer 허용은 LEAN 백테스트 화면의 「이 조건을 전략 스펙으로 저장」(브라우저에서
+API 키 없이 export)을 위한 것이다(v0.6).
 계약서: docs/contracts/kis-autotrade-api.md 1절.
 """
 from __future__ import annotations
@@ -14,7 +16,7 @@ from fastapi import APIRouter, Depends, Header, HTTPException
 from pydantic import BaseModel, Field
 
 from app.schemas.chat import BacktestRequest
-from app.schemas.strategy import AcceptanceCriteria, PositionSizing, SignalWeights, StrategyListResponse, StrategySpec
+from app.schemas.strategy import AcceptanceCriteria, PositionSizing, SignalWeights, StrategyListResponse, StrategySpec, StrategyVersionsResponse
 from app.services import strategy_export, strategy_store
 from app.services.lean_backtest_service import LeanBacktestError, LeanBacktestService
 
@@ -35,17 +37,51 @@ class StrategyExportRequest(BaseModel):
 router = APIRouter(prefix="/backtests/strategies", tags=["strategies"])
 
 
-def require_strategy_api_key(x_api_key: str | None = Header(default=None)) -> None:
+def _bearer_session_valid(token: str) -> bool:
+    """pr 로그인 세션 토큰이 유효한지. auth.current_user 와 같은 규칙(세션 존재 + 만료 전). DB 는 필요할 때만 연다."""
+    from datetime import datetime, timezone
+
+    from app.core.database import SessionLocal
+    from app.models.user import UserSession
+
+    db = SessionLocal()
+    try:
+        session = db.query(UserSession).filter(UserSession.token == token).first()
+        return bool(session and session.expires_at >= datetime.now(timezone.utc))
+    except Exception:   # DB 미연결 등 — 키 인증만 유효
+        return False
+    finally:
+        db.close()
+
+
+def require_strategy_api_key(x_api_key: str | None = Header(default=None), authorization: str | None = Header(default=None)) -> None:
     expected = os.environ.get("STRATEGY_API_KEY", "").strip()
     if not expected:
         return
-    if not x_api_key or not hmac.compare_digest(x_api_key.strip(), expected):
-        raise HTTPException(status_code=401, detail="X-API-Key 헤더가 필요합니다.")
+    if x_api_key and hmac.compare_digest(x_api_key.strip(), expected):
+        return
+    if authorization and authorization.startswith("Bearer ") and _bearer_session_valid(authorization[7:].strip()):
+        return
+    raise HTTPException(status_code=401, detail="X-API-Key 헤더 또는 pr 로그인(Bearer 세션)이 필요합니다.")
 
 
 @router.get("", response_model=StrategyListResponse, dependencies=[Depends(require_strategy_api_key)])
 def list_strategies() -> StrategyListResponse:
     return StrategyListResponse(strategies=strategy_store.list_passed())
+
+
+@router.get("/{strategy_id}/versions", response_model=StrategyVersionsResponse, dependencies=[Depends(require_strategy_api_key)])
+def strategy_versions(strategy_id: str) -> StrategyVersionsResponse:
+    """모든 버전(불합격 포함)과 판정 사유 — lumina 전략설정 「버전 이력」. 파일이 하나도 없으면 404."""
+    specs = strategy_store.list_versions(strategy_id)
+    if not specs:
+        raise HTTPException(status_code=404, detail="해당 전략의 스펙 파일이 없습니다.")
+    latest_passed = max((s.version for s in specs if s.acceptance.passed), default=None)
+    return StrategyVersionsResponse(
+        strategy_id=strategy_id, latest_passed_version=latest_passed,
+        versions=[{"version": s.version, "name": s.name, "passed": s.acceptance.passed, "failed": s.acceptance.failed,
+                   "universe_size": len(s.universe), "entry": s.entry, "backtest_result": s.backtest_result, "created_at": s.created_at} for s in specs],
+    )
 
 
 @router.get("/{strategy_id}", response_model=StrategySpec, dependencies=[Depends(require_strategy_api_key)])

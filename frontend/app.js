@@ -1763,6 +1763,7 @@ KOSDAQ|웹젠|게임`,
     });
     document.querySelectorAll('[data-example]').forEach(button => button.addEventListener('click', () => applyBacktestExample(button.dataset.example)));
     applyBacktestExample(BACKTEST_EXAMPLES[0].id);
+    applyBacktestQueryParams();
   }
 
   function applyBacktestExample(id) {
@@ -1834,7 +1835,8 @@ KOSDAQ|웹젠|게임`,
       { depth: 1, step: '⑤', path: 'app/core/config.py', desc: 'settings — LEAN_RUNNER(local·remote·auto·off), LEAN_DOCKER_IMAGE, LEAN_TIMEOUT_SECONDS, 작업 폴더 경로' },
       { depth: 1, step: '⑥', path: 'app/services/lean_backtest_service.py', hot: true, desc: 'LeanBacktestService.run() — 전체 조율: _resolve_runner() → _lookback_buffer() → store.close_series() → _algorithm_source() → _run_local() 또는 _run_remote() → _strategy_curve() → _analytics()' },
       { depth: 1, step: '⑦', path: 'app/services/ohlcv_store.py', desc: 'OhlcvStore.close_series() — stock_price_history(PostgreSQL) → 없는 구간만 pg-stock(선택) → yfinance 순으로 받아 upsert, 종가 Series 반환' },
-      { depth: 1, step: '⑧', path: 'app/services/lean_reference_data/', last: true, desc: 'market-hours-database.json · symbol-properties-database.csv · security-database.csv — LEAN 엔진 기동에 필요한 정적 DB, 작업 폴더 data/ 로 복사' },
+      { depth: 1, step: '⑧', path: 'app/services/lean_reference_data/', desc: 'market-hours-database.json · symbol-properties-database.csv · security-database.csv — LEAN 엔진 기동에 필요한 정적 DB, 작업 폴더 data/ 로 복사' },
+      { depth: 1, step: '⑫', path: 'app/api/routes/strategies.py', last: true, desc: '(선택) 결과 아래 「전략 스펙으로 저장」 → POST /backtests/strategies: 같은 조건으로 ⑥ 재실행 → strategy_export.build_spec() → 합격 판정(MDD·거래수·연수익) → data/strategies/<id>_v<n>.json. fd(lumina) 전략설정 ② 백테스트 기반 규칙이 이 파일을 읽음' },
       { depth: 0, dir: true, path: '<작업 폴더>/workflow-xxxxxxxxxxxx/', desc: '실행마다 만들고 끝나면 지우는 LEAN 작업 폴더 (LEAN_LOCAL_WORKDIR, 원격이면 LEAN_REMOTE_WORKDIR)' },
       { depth: 1, step: '⑨', path: 'main.py', hot: true, desc: `_algorithm_source() 가 생성한 LEAN 알고리즘 — class ${info.algorithmClass}(QCAlgorithm) + prices.csv 를 읽는 YFPrice(PythonData) 리더` },
       { depth: 1, step: '⑩', path: 'data/prices.csv', desc: '_write_prices() — date,close 두 열. LEAN 이 Resolution.DAILY 커스텀 데이터로 읽음' },
@@ -2082,6 +2084,104 @@ KOSDAQ|웹젠|게임`,
     return { mount, start, set, finish, fail };
   }
 
+  /* ── 백테스트 결과 → 전략 스펙 저장 (lumina-invest 전략설정 「운영 모드 ② 백테스트 기반 규칙」 연동) ───────────────────
+     결과 아래 패널에서 strategy_id·이름·universe·합격 기준을 정하고 POST /backtests/strategies 를 호출한다. 서버는 같은 조건으로
+     LEAN 을 한 번 더 돌려 스펙을 만들고 합격 판정 후 data/strategies/<id>_v<n>.json 에 저장한다(불합격도 파일은 남고 422).
+     인증: STRATEGY_API_KEY 가 설정된 서버에서는 pr 로그인 세션(Bearer, auth.js 와 같은 localStorage 키)으로 통과한다. */
+  const FD_STRATEGY_SETTINGS_URL = 'https://fd.edumgt.co.kr/app.html#strategy-settings';
+  const EXPORT_CRITERIA_DEFAULT = { max_drawdown_pct_lte: 20, trade_count_gte: 30, annualized_return_pct_gt: 0 };
+  function authToken() { try { return localStorage.getItem('finance-rag-auth-token') || ''; } catch (e) { return ''; } }
+  function krxCode(ticker) { const m = String(ticker || '').trim().toUpperCase().match(/^(\d{6})(\.KS|\.KQ)?$/); return m ? m[1] : null; }
+  function suggestStrategyId(payload) {
+    const code = krxCode(payload.ticker) || String(payload.ticker || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    return `${payload.strategy}_${code}`.slice(0, 40);
+  }
+  function exportPrecheck(data, criteria) {
+    return [
+      { key: 'max_drawdown_pct_lte', label: '최대 낙폭 (MDD)', value: Math.abs(Number(data.max_drawdown_pct)), text: `${data.max_drawdown_pct}%`, pass: Math.abs(Number(data.max_drawdown_pct)) <= Number(criteria.max_drawdown_pct_lte), rule: `≤ ${criteria.max_drawdown_pct_lte}%` },
+      { key: 'trade_count_gte', label: '규칙 변경(거래) 횟수', value: Number(data.trade_count), text: `${data.trade_count}회`, pass: Number(data.trade_count) >= Number(criteria.trade_count_gte), rule: `≥ ${criteria.trade_count_gte}회` },
+      { key: 'annualized_return_pct_gt', label: '연환산 수익률', value: Number(data.annualized_return_pct), text: `${data.annualized_return_pct}%`, pass: Number(data.annualized_return_pct) > Number(criteria.annualized_return_pct_gt), rule: `> ${criteria.annualized_return_pct_gt}%` },
+    ];
+  }
+  function renderStrategyExportPanel(data, payload) {
+    const code = krxCode(payload.ticker);
+    const checks = exportPrecheck(data, EXPORT_CRITERIA_DEFAULT);
+    const allPass = checks.every(c => c.pass);
+    const fromFd = new URLSearchParams(window.location.search).get('from_fd') || '';
+    const rows = checks.map(c => `<tr data-check="${c.key}"><td>${escHtml(c.label)}</td><td><b>${escHtml(c.text)}</b></td><td><input type="number" step="any" data-criteria="${c.key}" value="${EXPORT_CRITERIA_DEFAULT[c.key]}" aria-label="${escHtml(c.label)} 기준" /> <span>${escHtml(c.rule.split(' ')[0])}</span></td><td class="verdict ${c.pass ? 'pass' : 'fail'}">${c.pass ? '충족' : '미달'}</td></tr>`).join('');
+    return `<section class="strategy-export" id="strategyExport" aria-label="전략 스펙으로 저장">
+      <header><span>STRATEGY EXPORT · KIS 자동매매 연동</span><h3>이 조건을 전략 스펙으로 저장</h3>
+        <p>저장하면 fd(lumina-invest) 전략설정의 <b>운영 모드 ② 백테스트 기반 규칙</b> 드롭다운에 나타나고, 그 전략의 진입·청산 규칙과 파라미터가 KIS 자동매매 사이클에서 그대로 쓰입니다. 서버는 같은 조건으로 LEAN 을 한 번 더 돌려 합격 판정합니다(수십 초).${fromFd ? ` fd 에서 연 전략 <code>${escHtml(fromFd)}</code> 의 새 버전을 만들려면 같은 ID 로 저장하세요.` : ''}</p></header>
+      <table class="export-precheck" aria-label="합격 기준 사전 점검"><thead><tr><th>지표</th><th>이 결과</th><th>합격 기준 (수정 가능)</th><th>판정</th></tr></thead><tbody>${rows}</tbody></table>
+      <p class="export-verdict ${allPass ? 'pass' : 'fail'}" id="exportVerdict">${allPass ? '기본 기준을 모두 충족합니다. 저장하면 합격 스펙이 됩니다.' : '기본 기준에 미달하는 항목이 있습니다. 기준을 조정하거나(교육용), 조건을 바꿔 다시 백테스트하세요. 불합격이어도 파일은 보존되며 fd 에는 노출되지 않습니다.'}</p>
+      <div class="export-form">
+        <label>전략 ID <input id="exportStrategyId" value="${escHtml(fromFd || suggestStrategyId(payload))}" maxlength="40" pattern="[a-z0-9_]{3,40}" /><small>소문자·숫자·밑줄 3~40자. 같은 ID 로 다시 저장하면 새 버전</small></label>
+        <label>이름 <input id="exportName" value="${escHtml(`${data.strategy_label || payload.strategy} (${payload.ticker})`)}" maxlength="80" /></label>
+        <label>universe (KRX 6자리, 쉼표) <input id="exportUniverse" value="${escHtml(code || '')}" ${code ? '' : 'disabled'} /><small>${code ? '백테스트 종목이 기본. 같은 규칙을 적용할 종목을 더 적을 수 있음' : '해외 티커는 KIS 국내 주문 대상이 아니라 저장할 수 없습니다'}</small></label>
+        <label>종목 비중 한도 % <input id="exportMaxPos" type="number" min="1" max="100" value="20" /></label>
+        <label>최대 종목 수 <input id="exportMaxSymbols" type="number" min="1" max="50" value="2" /></label>
+      </div>
+      <div class="export-actions">
+        <button class="content-cta" id="exportStrategyBtn" ${code ? '' : 'disabled'}><i class="fa-solid fa-floppy-disk"></i> 전략 스펙으로 저장 (백테스트 재실행)</button>
+        <a href="${FD_STRATEGY_SETTINGS_URL}" target="_blank" rel="noopener">fd 전략설정 열기 ↗</a>
+        <span id="exportStatus">${authToken() ? '' : '저장하려면 우측 상단에서 로그인하세요.'}</span>
+      </div>
+      <div id="exportResult"></div>
+    </section>`;
+  }
+  function bindStrategyExport(data, payload) {
+    const panel = document.getElementById('strategyExport'); if (!panel) return;
+    const criteriaNow = () => { const c = { ...EXPORT_CRITERIA_DEFAULT }; panel.querySelectorAll('[data-criteria]').forEach(i => { c[i.dataset.criteria] = Number(i.value); }); return c; };
+    const refresh = () => {
+      const checks = exportPrecheck(data, criteriaNow());
+      checks.forEach(c => { const td = panel.querySelector(`tr[data-check="${c.key}"] .verdict`); if (td) { td.textContent = c.pass ? '충족' : '미달'; td.className = `verdict ${c.pass ? 'pass' : 'fail'}`; } });
+      const all = checks.every(c => c.pass); const v = document.getElementById('exportVerdict');
+      v.className = `export-verdict ${all ? 'pass' : 'fail'}`; v.textContent = all ? '현재 기준을 모두 충족합니다. 저장하면 합격 스펙이 됩니다.' : '현재 기준에 미달하는 항목이 있습니다. 저장해도 불합격(422)으로 fd 에 노출되지 않습니다.';
+    };
+    panel.querySelectorAll('[data-criteria]').forEach(i => i.addEventListener('input', refresh));
+    document.getElementById('exportStrategyBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('exportStrategyBtn'), status = document.getElementById('exportStatus'), out = document.getElementById('exportResult');
+      const strategyId = (document.getElementById('exportStrategyId').value || '').trim().toLowerCase();
+      if (!/^[a-z0-9_]{3,40}$/.test(strategyId)) { status.textContent = '전략 ID 는 소문자·숫자·밑줄 3~40자여야 합니다.'; return; }
+      const universe = (document.getElementById('exportUniverse').value || '').split(/[,\s]+/).map(x => krxCode(x)).filter(Boolean);
+      if (!universe.length) { status.textContent = 'universe 에 KRX 6자리 코드가 하나 이상 필요합니다.'; return; }
+      const body = { strategy_id: strategyId, name: (document.getElementById('exportName').value || '').trim() || null, universe, backtest: payload, criteria: criteriaNow(),
+        position_sizing: { max_position_pct: Number(document.getElementById('exportMaxPos').value) || 20, max_symbols: Number(document.getElementById('exportMaxSymbols').value) || 2 } };
+      btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> LEAN 재실행 · 스펙 저장 중'; status.textContent = ''; out.innerHTML = '';
+      const headers = { 'Content-Type': 'application/json', ...(authToken() ? { Authorization: `Bearer ${authToken()}` } : {}) };
+      try {
+        const res = await fetch(`${localBackendBases()[0]}/backtests/strategies`, { method: 'POST', headers, body: JSON.stringify(body) });
+        const json = await res.json().catch(() => ({}));
+        if (res.status === 201) {
+          const br = json.backtest_result || {};
+          out.innerHTML = `<div class="export-ok"><i class="fa-solid fa-circle-check"></i> <b>${escHtml(json.strategy_id)} v${json.version}</b> 합격 저장 — 연환산 ${br.annualized_return_pct}% · MDD ${br.max_drawdown_pct}% · 거래 ${br.trade_count}회 · 승률 ${br.win_rate_pct ?? '-'}%<br/>다음: <a href="${FD_STRATEGY_SETTINGS_URL}" target="_blank" rel="noopener">fd 전략설정 ↗</a> → 운영 모드 「② 백테스트 기반 규칙」 → 전략 스펙에서 <code>${escHtml(json.strategy_id)}</code> 선택 → 저장·적용.</div>`;
+        } else if (res.status === 422 && json.detail && typeof json.detail === 'object') {
+          out.innerHTML = `<div class="export-fail"><i class="fa-solid fa-triangle-exclamation"></i> <b>불합격 (v${json.detail.spec?.version ?? '?'} 파일 보존, fd 비노출)</b><ul>${(json.detail.failed || []).map(f => `<li>${escHtml(f)}</li>`).join('')}</ul>${escHtml(json.detail.message || '')}</div>`;
+        } else if (res.status === 401) {
+          out.innerHTML = `<div class="export-fail"><i class="fa-solid fa-lock"></i> 로그인이 필요합니다. 우측 상단 로그인 후 다시 누르세요. (서버에 STRATEGY_API_KEY 가 설정돼 있어 Bearer 세션으로만 저장할 수 있습니다)</div>`;
+        } else {
+          out.innerHTML = `<div class="export-fail"><i class="fa-solid fa-triangle-exclamation"></i> ${escHtml(typeof json.detail === 'string' ? json.detail : `저장 실패 (${res.status})`)}</div>`;
+        }
+      } catch (error) { out.innerHTML = `<div class="export-fail">${escHtml(error.message || '저장 요청 실패')}</div>`; }
+      finally { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> 전략 스펙으로 저장 (백테스트 재실행)'; }
+    });
+  }
+
+  /* fd 전략설정 「pr 에서 이 전략 백테스트 열기」 → ?view=backtest&strategy=ma_cross&ticker=069500&short=20&long=60&breakout=20&interval=21&start=2021-01-01&from_fd=<id> */
+  function applyBacktestQueryParams() {
+    const q = new URLSearchParams(window.location.search);
+    if (!q.get('strategy') && !q.get('ticker')) return;
+    const set = (id, v) => { const el = document.getElementById(id); if (el && v != null && v !== '') el.value = v; };
+    const strategy = q.get('strategy');
+    if (strategy && BACKTEST_STRATEGIES.some(s => s.value === strategy)) { set('btStrategy', strategy); const chosen = BACKTEST_STRATEGIES.find(s => s.value === strategy); document.getElementById('btStrategyHint').textContent = chosen ? chosen.hint : ''; }
+    const ticker = q.get('ticker'); if (ticker) set('btTicker', /^\d{6}$/.test(ticker) ? `${ticker}.KS` : ticker);
+    set('btShortWindow', q.get('short')); set('btLongWindow', q.get('long')); set('btBreakoutWindow', q.get('breakout')); set('btDcaInterval', q.get('interval'));
+    set('btStart', q.get('start')); set('btCompareStart', q.get('start'));
+    const head = document.querySelector('.backtest-page-head');
+    if (head && q.get('from_fd')) head.insertAdjacentHTML('beforeend', `<p class="backtest-from-fd"><i class="fa-solid fa-link"></i> fd 전략설정에서 연 조건 — 전략 <code>${escHtml(q.get('from_fd'))}</code>. 조건을 바꿔 실행한 뒤 결과 아래 「전략 스펙으로 저장」 에서 같은 ID 로 저장하면 새 버전이 됩니다.</p>`);
+    document.querySelectorAll('[data-example]').forEach(button => button.classList.remove('selected'));
+  }
+
   function initBacktestPipeline() { btPipeline.mount(); }
 
   async function runBacktest() {
@@ -2098,6 +2198,8 @@ KOSDAQ|웹젠|게임`,
       btPipeline.finish(data);
       result.innerHTML = `<div class="backtest-result-head"><span>${escHtml(data.engine)} · ${escHtml(data.strategy_label || '')}</span><h2>${escHtml(data.ticker)} 결과</h2></div>${buildBacktestSummary(data)}<div class="backtest-metrics"><article><span>전략 수익률</span><strong class="${data.strategy_return_pct >= 0 ? 'up' : 'down'}">${data.strategy_return_pct >= 0 ? '+' : ''}${data.strategy_return_pct}%</strong></article><article><span>연환산 수익률</span><strong class="${data.annualized_return_pct >= 0 ? 'up' : 'down'}">${data.annualized_return_pct >= 0 ? '+' : ''}${data.annualized_return_pct}%</strong></article><article><span>연환산 변동성</span><strong>${data.annualized_volatility_pct}%</strong></article><article><span>샤프 비율</span><strong>${data.sharpe_ratio}</strong></article><article><span>최대 낙폭</span><strong class="down">${data.max_drawdown_pct}%</strong></article><article><span>시장 노출 일수</span><strong>${data.invested_days_pct}%</strong></article><article><span>규칙 변경 횟수</span><strong>${data.trade_count}회</strong></article><article><span>단순 보유 수익률</span><strong class="${data.benchmark_return_pct >= 0 ? 'up' : 'down'}">${data.benchmark_return_pct >= 0 ? '+' : ''}${data.benchmark_return_pct}%</strong></article></div>${buildInvestmentChecklist(data)}<canvas id="backtestChart" width="900" height="250" aria-label="자산 곡선"></canvas><p class="backtest-disclaimer">${escHtml(data.disclaimer)}</p><details><summary>LEAN 실행 로그 보기</summary><pre>${escHtml(data.lean_log || '결과 로그 없음')}</pre></details>`;
       drawBacktestChart(data.points);
+      result.insertAdjacentHTML('beforeend', renderStrategyExportPanel(data, payload));
+      bindStrategyExport(data, payload);
     } catch (error) { btPipeline.fail(error.message); result.innerHTML = `<div class="backtest-error"><i class="fa-solid fa-triangle-exclamation"></i>${escHtml(error.message)}</div>`; }
     finally { button.disabled = false; button.innerHTML = '<i class="fa-solid fa-play"></i> 백테스트 실행'; }
   }
