@@ -361,10 +361,15 @@ class LeanBacktestService:
         finally:
             shutil.rmtree(workdir, ignore_errors=True)
         log = (result.stdout + "\n" + result.stderr).strip()
-        if result.returncode and "Algorithm Id" not in log and "Engine.Run" not in log:
-            # docker itself failed (image missing, socket permission, bad mount) rather than the algorithm
-            raise LeanBacktestError((result.stderr.strip() or "로컬 Docker에서 LEAN 컨테이너를 실행하지 못했습니다.")[-1500:])
+        self._validate_engine_run(log, result.returncode)
         return log
+
+    @staticmethod
+    def _validate_engine_run(log: str, returncode: int) -> None:
+        # Engine startup messages do not prove an algorithm completed successfully.
+        errors = ("Runtime Error:", "Algorithm.Initialize() Error", "Error invoking", "BacktestingRealTimeHandler.Run(): There was an error")
+        if returncode or any(marker in log for marker in errors):
+            raise LeanBacktestError("LEAN 실행이 실패했습니다. 성과를 성공 결과로 표시하지 않습니다. " + log[-1500:])
 
     def _ensure_local_reference_data(self, base: Path) -> Path:
         shared = base / "_shared-lean-data"
@@ -393,7 +398,9 @@ class LeanBacktestService:
             self._scp(local / "main.py", f"{remote}/main.py")
             self._scp(local / "data" / "prices.csv", f"{remote}/data/prices.csv")
             command = f"docker run --rm -v {remote}:/workspace {settings.lean_docker_image} " + " ".join(self._lean_arguments(strategy))
-            return self._ssh(command, timeout=settings.lean_timeout_seconds, check=False)
+            log = self._ssh(command, timeout=settings.lean_timeout_seconds, check=True)
+            self._validate_engine_run(log, 0)
+            return log
 
     @staticmethod
     def _write_prices(path: Path, close) -> None:
