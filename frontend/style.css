@@ -2309,8 +2309,40 @@ body.modal-open { overflow: hidden; }
 @media (max-width: 860px) { .backtest-metrics { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .lean-toggle span { display: none; } .backtest-metrics { grid-template-columns: 1fr; } }
 
-/* ── 종목 보기: 카드·글자 15% 축소(2026-10-15 사용자 요청). 모달은 body 직속이라 영향 없음. ── */
-.stocks-page { zoom: .85; }
+/* ── 종목 보기: 전체 축소(2026-10-15 사용자 요청 — 15% 축소 후 "전문가 스타일로 10% 더": .85 × .9 = .765). 모달은 body 직속이라 영향 없음. ── */
+.stocks-page { zoom: .765; }
+/* ── 종목 보기 타이틀 영역 압축(2026-10-15 "타이틀 영역이 너무 큼") — 페이지 헤더·아틀라스 헤더를 한 줄 정보 띠 수준으로. 타이틀 18px 가이드(6-11) 준수. ── */
+.stocks-page { padding-top: 10px; }
+.stocks-page-head { grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: baseline; margin-bottom: 6px; padding: 0 0 6px; border-bottom: 1px solid #e2e8f0; }
+.stocks-page-head > div > span { display: none; }
+.stocks-page-head h1 { margin: 0; font-size: 18px; line-height: 1.2; letter-spacing: -.02em; }
+.stocks-page-head > p { font-size: 13.5px; line-height: 1.4; color: #64748b; }
+.atlas-day-tabs { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; margin: 6px 0; }
+.atlas-day-tabs button { min-height: 28px; padding: 4px; border-radius: 6px; font-size: 13.5px; }
+.stocks-page-note { margin-bottom: 4px; padding: 6px 10px; font-size: 13px; line-height: 1.4; }
+.company-atlas { margin: 10px 0 18px; border-radius: 10px; box-shadow: 0 6px 18px rgba(15,23,42,.06); }
+.atlas-header { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 12px 18px; }
+.atlas-header::after { display: none; }
+.atlas-header > div:first-child { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.atlas-header > div:first-child > span { font-size: 12px; letter-spacing: .12em; }
+.atlas-header h2 { margin: 0; font-size: 18px; line-height: 1.2; letter-spacing: -.02em; }
+.atlas-header p { flex-basis: 100%; max-width: none; margin: 2px 0 0; font-size: 13px; line-height: 1.45; color: #94a3b8; }
+.atlas-number-board { display: none; }
+.atlas-toolbar { gap: 12px; padding: 8px 16px; }
+.atlas-count { font-size: 13px; }.atlas-count b { font-size: 14px; }.atlas-filters button { padding: 5px 10px; font-size: 13px; }
+.atlas-arrow-line { padding: 7px; font-size: 13px; }.atlas-arrow-line i { width: 34px; }
+/* 전문가 스타일: 카드 밀도 — 여백·행간 축소 */
+.atlas-card { min-height: 0; padding: 14px 16px; }
+.atlas-card h3 { margin: 10px 0 3px; font-size: 19px; line-height: 1.2; }
+.atlas-summary { margin: 8px 0; line-height: 1.5; }
+.atlas-watch, .atlas-risk { margin-top: 6px; line-height: 1.4; }.atlas-risk { padding-top: 6px; }
+.atlas-detail-btn { margin-top: 10px; padding: 7px 10px; }
+@media (max-width: 700px) {
+  .stocks-page-head { grid-template-columns: 1fr; gap: 2px; }
+  .stocks-page-head h1 { font-size: 18px; }
+  .atlas-day-tabs { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .atlas-header { padding: 10px 14px; }.atlas-header h2 { font-size: 18px; }
+}
 /* ── 재무건전성(알트먼 Z-Score) 배지 — 카드·모달 공용 ── */
 .atlas-health-badge { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 3px 8px; border: 1px solid #cbd5e1; border-radius: 999px; background: #f8fafc; color: #475569; font-size: 13.5px; font-weight: 800; letter-spacing: .01em; vertical-align: 1px; white-space: nowrap; }
 .atlas-health-badge b { font-weight: 900; }.atlas-health-badge small { font-size: .85em; font-weight: 700; opacity: .8; }
