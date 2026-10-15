@@ -2308,3 +2308,29 @@ body.modal-open { overflow: hidden; }
 @media (max-width: 1100px) { .metric-guide-groups { grid-template-columns: 1fr; } .backtest-metrics { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 860px) { .backtest-metrics { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .lean-toggle span { display: none; } .backtest-metrics { grid-template-columns: 1fr; } }
+
+/* ── 종목 보기: 카드·글자 15% 축소(2026-10-15 사용자 요청). 모달은 body 직속이라 영향 없음. ── */
+.stocks-page { zoom: .85; }
+/* ── 재무건전성(알트먼 Z-Score) 배지 — 카드·모달 공용 ── */
+.atlas-health-badge { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 3px 8px; border: 1px solid #cbd5e1; border-radius: 999px; background: #f8fafc; color: #475569; font-size: 13.5px; font-weight: 800; letter-spacing: .01em; vertical-align: 1px; white-space: nowrap; }
+.atlas-health-badge b { font-weight: 900; }.atlas-health-badge small { font-size: .85em; font-weight: 700; opacity: .8; }
+.atlas-health-badge.zone-safe { border-color: #86efac; background: #f0fdf4; color: #15803d; }
+.atlas-health-badge.zone-grey { border-color: #fcd34d; background: #fffbeb; color: #b45309; }
+.atlas-health-badge.zone-distress { border-color: #fca5a5; background: #fef2f2; color: #b91c1c; }
+.atlas-health-badge.zone-excluded { border-color: #cbd5e1; background: #f1f5f9; color: #64748b; }
+.atlas-card .atlas-health-badge { margin: 6px 0 0; display: inline-flex; }
+.atlas-card .atlas-sector { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.atlas-health { padding: 22px 38px; border-bottom: 1px solid #e2e8f0; }
+.atlas-health > div:first-child span { color: #0284c7; font-size: 15.95px; font-weight: 850; letter-spacing: .12em; }
+.atlas-health h3 { margin: 5px 0 14px; font-size: 20px; }
+.atlas-health-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 12px; }
+.atlas-health-head .atlas-health-badge { margin-left: 0; font-size: 15px; padding: 5px 11px; }
+.atlas-health-head p { flex: 1 1 320px; margin: 0; color: #334155; line-height: 1.55; }
+.atlas-health-head small { flex-basis: 100%; color: #64748b; font-size: 14px; }
+.atlas-health-table { width: 100%; border-collapse: collapse; margin: 6px 0 12px; font-size: 15px; }
+.atlas-health-table th, .atlas-health-table td { padding: 7px 8px; border-bottom: 1px solid #e2e8f0; text-align: right; }
+.atlas-health-table th:nth-child(-n+2), .atlas-health-table td:nth-child(-n+2) { text-align: left; }
+.atlas-health-table th { color: #0369a1; background: #f0f9ff; font-weight: 800; }
+.atlas-health-inputs { margin: 0 0 8px; color: #334155; font-size: 14.5px; line-height: 1.6; }
+.atlas-health-note, .atlas-health-empty { margin: 0; color: #64748b; font-size: 14px; line-height: 1.6; }
+.atlas-health-empty { padding: 12px 14px; border: 1px dashed #cbd5e1; border-radius: 8px; background: #f8fafc; }

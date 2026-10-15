@@ -2904,6 +2904,86 @@ KOSDAQ|웹젠|게임`,
     bindAtlasFilters();
     bindAtlasDetails();
     $messages.querySelectorAll('[data-atlas-day]').forEach(button => button.addEventListener('click', () => renderStocksView(button.dataset.atlasDay)));
+    applyFinancialHealthBadges();
+  }
+
+  // ===== 재무건전성(알트먼 Z-Score) 배지 =====
+  // 백엔드 수집기가 한 시간에 한 종목씩 DART 재무제표로 계산해 둔 값을 읽는다(실시간 조회 아님). 값이 있는 종목만 배지를 보인다.
+  const HEALTH_ZONE = {
+    safe: { label: '안전', icon: 'fa-shield-heart' },
+    grey: { label: '회색', icon: 'fa-scale-balanced' },
+    distress: { label: '위험', icon: 'fa-triangle-exclamation' },
+    excluded: { label: 'Z 미적용 · 금융업', icon: 'fa-building-columns' },
+  };
+  let financialHealthCache = { at: 0, items: null, promise: null };
+
+  function loadFinancialHealthSummary() {
+    const fresh = financialHealthCache.items && Date.now() - financialHealthCache.at < 10 * 60 * 1000;
+    if (fresh) return Promise.resolve(financialHealthCache.items);
+    if (financialHealthCache.promise) return financialHealthCache.promise;
+    financialHealthCache.promise = fetchLocalBackendJson('/market/financial-health/summary')
+      .then(data => { financialHealthCache = { at: Date.now(), items: data.items || {}, promise: null }; return financialHealthCache.items; })
+      .catch(() => { financialHealthCache.promise = null; return financialHealthCache.items || {}; });
+    return financialHealthCache.promise;
+  }
+
+  function renderHealthBadge(item) {
+    const zone = item && HEALTH_ZONE[item.zone];
+    if (!zone) return '';
+    const score = item.z == null ? '' : ` <b>${Number(item.z).toFixed(2)}</b>`;
+    const model = item.zone === 'excluded' ? '' : ` <small>${escHtml(item.model)}</small>`;
+    return `<i class="fa-solid ${zone.icon}" aria-hidden="true"></i> 재무건전성 ${zone.label}${score}${model}`;
+  }
+
+  function applyFinancialHealthBadges() {
+    const slots = $messages.querySelectorAll('[data-health-for]');
+    if (!slots.length) return;
+    loadFinancialHealthSummary().then(items => {
+      slots.forEach(slot => {
+        if (!document.body.contains(slot)) return;
+        const item = items[slot.dataset.healthFor];
+        const html = renderHealthBadge(item);
+        slot.hidden = !html;
+        slot.className = `atlas-health-badge${item && item.zone ? ` zone-${item.zone}` : ''}`;
+        slot.innerHTML = html;
+        if (item && item.report) slot.title = `${item.report} 기준 · 알트먼 ${item.model} · 교육용 참고`;
+      });
+    });
+  }
+
+  function fmtEok(n) {
+    if (n == null) return '—';
+    const eok = Number(n) / 1e8;
+    return `${Math.abs(eok) >= 10000 ? (eok / 10000).toLocaleString('ko-KR', { maximumFractionDigits: 1 }) + '조' : eok.toLocaleString('ko-KR', { maximumFractionDigits: 0 }) + '억'}`;
+  }
+
+  function renderFinancialHealthPanel(detail) {
+    if (!detail || !detail.available) {
+      return `<div class="atlas-health-empty"><i class="fa-solid fa-hourglass-half"></i> ${escHtml(detail?.reason || '아직 수집되지 않았습니다.')} 수집기는 한 시간에 한 종목씩 DART 재무제표를 읽습니다.</div>`;
+    }
+    const zone = HEALTH_ZONE[detail.zone] || { label: detail.zone_label || '계산 불가', icon: 'fa-circle-question' };
+    const badge = `<span class="atlas-health-badge zone-${escHtml(detail.zone || 'none')}">${renderHealthBadge(detail) || `<i class="fa-solid fa-circle-question"></i> ${escHtml(zone.label)}`}</span>`;
+    const basis = detail.report ? `${escHtml(detail.report)} · ${escHtml(detail.fs_div || '')}` : '산업 분류 기준';
+    const rows = Object.entries(detail.components || {}).map(([key, value]) => {
+      const weight = detail.weights?.[key];
+      const contribution = detail.contributions?.[key];
+      return `<tr><td>${escHtml(key.toUpperCase())}</td><td>${escHtml(detail.component_labels?.[key] || key)}</td><td>${Number(value).toFixed(3)}</td><td>${weight == null ? '—' : `× ${weight}`}</td><td>${contribution == null ? '—' : contribution.toFixed(3)}</td></tr>`;
+    }).join('');
+    const inputs = detail.inputs || {};
+    const inputLine = detail.zone === 'excluded' ? '' : `<p class="atlas-health-inputs">자산총계 ${fmtEok(inputs.assets)} · 부채총계 ${fmtEok(inputs.liabilities)} · 운전자본 ${inputs.current_assets == null || inputs.current_liabilities == null ? '—' : fmtEok(inputs.current_assets - inputs.current_liabilities)} · 이익잉여금 ${fmtEok(inputs.retained_earnings)} · 영업이익(TTM) ${fmtEok(inputs.operating_income_ttm)}${detail.model === 'Z' ? ` · 매출액(TTM) ${fmtEok(inputs.revenue_ttm)} · 시가총액 ${fmtEok(inputs.market_cap)}${inputs.close_date ? ` (${escHtml(inputs.close_date)} 종가)` : ''}` : ''}</p>`;
+    const thresholds = detail.thresholds ? `<small>${escHtml(detail.model)} 기준: 위험 &lt; ${detail.thresholds[0]} · 회색 ${detail.thresholds[0]}~${detail.thresholds[1]} · 안전 &gt; ${detail.thresholds[1]}</small>` : '';
+    return `<div class="atlas-health-head">${badge}<p>${escHtml(detail.description || '')}</p>${thresholds}</div>
+      ${rows ? `<table class="atlas-health-table"><thead><tr><th>항목</th><th>비율</th><th>값</th><th>가중치</th><th>기여</th></tr></thead><tbody>${rows}</tbody></table>` : ''}
+      ${inputLine}
+      <p class="atlas-health-note"><i class="fa-solid fa-circle-info"></i> ${escHtml(basis)} · 출처 ${escHtml(detail.source || 'DART')} · 계산 ${detail.computed_at ? escHtml(detail.computed_at.slice(0, 10)) : '—'}. 영업이익은 EBIT 근사, 비제조·연구개발형 기업은 Z''(시가총액·매출 제외). 교육용 참고이며 매수·매도 권유가 아닙니다.</p>`;
+  }
+
+  function loadFinancialHealthPanel(modal, company) {
+    const body = modal.querySelector('#atlasHealthBody');
+    if (!body) return;
+    fetchLocalBackendJson(`/market/financial-health?ticker=${encodeURIComponent(company.ticker)}&market=${encodeURIComponent(company.market)}`)
+      .then(detail => { if (document.body.contains(modal)) body.innerHTML = renderFinancialHealthPanel(detail); })
+      .catch(() => { if (document.body.contains(modal)) body.innerHTML = '<div class="atlas-health-empty"><i class="fa-solid fa-circle-exclamation"></i> 재무건전성 정보를 불러오지 못했습니다.</div>'; });
   }
 
   function renderDayRoadmap(lesson) {
@@ -3226,7 +3306,7 @@ effective_date: [기준일]
       <div class="atlas-grid">${companies.map(([market, name, sector], index) => {
         const [summary, watch, risk] = ATLAS_PROFILES[sector] || ATLAS_PROFILES.기본;
         const ticker = COMPANY_TICKERS[day]?.[index] || '—';
-        return `<article class="atlas-card" data-atlas-market="${market}"><div class="atlas-card-top"><span>${market}</span><b>${String(index + 1).padStart(2, '0')}</b></div><h3>${name} <small class="atlas-ticker">${ticker}</small></h3><p class="atlas-sector">${sector}</p><p class="atlas-summary">${name}은(는) ${summary}</p><div class="atlas-watch"><i class="fa-solid fa-eye"></i><span><b>관찰</b>${watch}</span></div><div class="atlas-risk"><i class="fa-solid fa-triangle-exclamation"></i><span><b>위험</b>${risk}</span></div><button class="atlas-detail-btn" data-atlas-detail data-name="${name}" data-ticker="${ticker}" data-market="${market}" data-sector="${sector}" data-summary="${summary}" data-watch="${watch}" data-risk="${risk}">매거진 보기 <i class="fa-solid fa-arrow-up-right-from-square"></i></button></article>`;
+        return `<article class="atlas-card" data-atlas-market="${market}" data-atlas-ticker="${ticker}"><div class="atlas-card-top"><span>${market}</span><b>${String(index + 1).padStart(2, '0')}</b></div><h3>${name} <small class="atlas-ticker">${ticker}</small></h3><p class="atlas-sector">${sector}<span class="atlas-health-badge" data-health-for="${ticker}" hidden></span></p><p class="atlas-summary">${name}은(는) ${summary}</p><div class="atlas-watch"><i class="fa-solid fa-eye"></i><span><b>관찰</b>${watch}</span></div><div class="atlas-risk"><i class="fa-solid fa-triangle-exclamation"></i><span><b>위험</b>${risk}</span></div><button class="atlas-detail-btn" data-atlas-detail data-name="${name}" data-ticker="${ticker}" data-market="${market}" data-sector="${sector}" data-summary="${summary}" data-watch="${watch}" data-risk="${risk}">매거진 보기 <i class="fa-solid fa-arrow-up-right-from-square"></i></button></article>`;
       }).join('')}</div>
 
     </section>`;
@@ -3256,7 +3336,7 @@ effective_date: [기준일]
     const modal = document.createElement('div');
     modal.className = 'atlas-magazine-modal';
     modal.id = 'atlasMagazineModal';
-    modal.innerHTML = `<div class="atlas-magazine-backdrop" data-atlas-close></div><article class="atlas-magazine-sheet" role="dialog" aria-modal="true" aria-label="${escHtml(company.name)} 기업 매거진"><button class="atlas-magazine-close" data-atlas-close aria-label="닫기"><i class="fa-solid fa-xmark"></i></button><header><span>COMPANY MAGAZINE · ${escHtml(company.market)}</span><h2>${escHtml(company.name)} <small>${escHtml(company.ticker)}</small></h2><p>${escHtml(company.sector)} · 사업 구조와 시장 정보를 한 화면에서 읽는 학습 노트</p></header><section class="atlas-magazine-lead"><div><span>BUSINESS SNAPSHOT</span><h3>${escHtml(company.summary)}</h3><p><b>관찰 변수</b>${escHtml(company.watch)}</p><p><b>핵심 위험</b>${escHtml(company.risk)}</p></div><div class="atlas-price-panel" id="atlasPricePanel"><span>MARKET SNAPSHOT</span><strong><i class="fa-solid fa-spinner fa-spin"></i> 시세 불러오는 중</strong><small>지연 시세 · 교육용 참고</small></div></section><section class="atlas-magazine-links"><a href="https://search.naver.com/search.naver?where=nexearch&query=${searchQuery}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-house"></i> 공식 홈페이지 찾기</a><a href="${kindUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-lines"></i> KIND 공시·기업정보</a><a href="${naverFinanceUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-chart-line"></i> 시세 상세</a><button type="button" class="atlas-history-btn" id="atlasHistoryBtn" disabled><i class="fa-solid fa-chart-candlestick"></i> 과거 데이터 보기</button></section><section class="atlas-history" id="atlasHistoryPanel" hidden><div><span>OHLCV HISTORY</span><h3>일별 과거 시세</h3></div><div id="atlasHistoryBody"></div></section><section class="atlas-news"><div><span>RECENT NEWS</span><h3>최근 뉴스</h3></div><div id="atlasNewsList"><p><i class="fa-solid fa-spinner fa-spin"></i> 최신 뉴스를 불러오는 중입니다.</p></div></section></article>`;
+    modal.innerHTML = `<div class="atlas-magazine-backdrop" data-atlas-close></div><article class="atlas-magazine-sheet" role="dialog" aria-modal="true" aria-label="${escHtml(company.name)} 기업 매거진"><button class="atlas-magazine-close" data-atlas-close aria-label="닫기"><i class="fa-solid fa-xmark"></i></button><header><span>COMPANY MAGAZINE · ${escHtml(company.market)}</span><h2>${escHtml(company.name)} <small>${escHtml(company.ticker)}</small></h2><p>${escHtml(company.sector)} · 사업 구조와 시장 정보를 한 화면에서 읽는 학습 노트</p></header><section class="atlas-magazine-lead"><div><span>BUSINESS SNAPSHOT</span><h3>${escHtml(company.summary)}</h3><p><b>관찰 변수</b>${escHtml(company.watch)}</p><p><b>핵심 위험</b>${escHtml(company.risk)}</p></div><div class="atlas-price-panel" id="atlasPricePanel"><span>MARKET SNAPSHOT</span><strong><i class="fa-solid fa-spinner fa-spin"></i> 시세 불러오는 중</strong><small>지연 시세 · 교육용 참고</small></div></section><section class="atlas-magazine-links"><a href="https://search.naver.com/search.naver?where=nexearch&query=${searchQuery}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-house"></i> 공식 홈페이지 찾기</a><a href="${kindUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-lines"></i> KIND 공시·기업정보</a><a href="${naverFinanceUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-chart-line"></i> 시세 상세</a><button type="button" class="atlas-history-btn" id="atlasHistoryBtn" disabled><i class="fa-solid fa-chart-candlestick"></i> 과거 데이터 보기</button></section><section class="atlas-health" id="atlasHealthPanel"><div><span>FINANCIAL HEALTH</span><h3>재무건전성 · 알트먼 Z-Score</h3></div><div id="atlasHealthBody"><p><i class="fa-solid fa-spinner fa-spin"></i> 저장된 재무건전성 값을 확인하는 중입니다.</p></div></section><section class="atlas-history" id="atlasHistoryPanel" hidden><div><span>OHLCV HISTORY</span><h3>일별 과거 시세</h3></div><div id="atlasHistoryBody"></div></section><section class="atlas-news"><div><span>RECENT NEWS</span><h3>최근 뉴스</h3></div><div id="atlasNewsList"><p><i class="fa-solid fa-spinner fa-spin"></i> 최신 뉴스를 불러오는 중입니다.</p></div></section></article>`;
     document.body.appendChild(modal);
     document.body.classList.add('modal-open');
     modal.querySelectorAll('[data-atlas-close]').forEach(item => item.addEventListener('click', () => { modal.remove(); document.body.classList.remove('modal-open'); }));
@@ -3270,6 +3350,7 @@ effective_date: [기준일]
       modal.querySelector('#atlasNewsList').innerHTML = '<p>최근 뉴스를 불러오지 못했습니다. 공시와 뉴스 검색을 함께 확인하세요.</p>';
     }
     bindAtlasHistory(modal, company);
+    loadFinancialHealthPanel(modal, company);
   }
 
   function bindAtlasHistory(modal, company) {

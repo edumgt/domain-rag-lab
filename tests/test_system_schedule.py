@@ -22,6 +22,7 @@ def test_jobs_cover_four_systems_and_have_valid_schedules():
 def test_known_periods_match_code():
     by_id = {j["id"]: j for j in SYSTEM_JOBS}
     assert by_id["fd-auto-trade"]["schedule"]["every_sec"] == 180          # lumina QUANT_CYCLE_SEC
+    assert by_id["pr-financial-health"]["schedule"]["every_sec"] == 3600   # pr FINANCIAL_HEALTH_INTERVAL_SECONDS
     assert by_id["fd-confirm-fills"]["schedule"]["every_sec"] == 120
     assert by_id["st-ohlcv-sync"]["schedule"]["times"] == ["06:20", "18:20"]  # OHLCV_SYNC_HOUR 18 + 12h, minute 20
     assert by_id["st-certbot"]["schedule"]["times"] == ["03:15"]

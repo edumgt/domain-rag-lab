@@ -329,6 +329,7 @@ cd /home/ubuntu/domain-rag-lab && timeout 120 .venv/bin/python -m pytest -q   # 
 | R5 | ~~전략 API 인증~~ **완료**(fd `.env.prod STRATEGY_API_KEY` = lumina `DOMAIN_RAG_LAB_API_KEY`, 무키 401 확인 — 8절) | — | — |
 | R6 | ~~변경분 커밋~~ **완료**(2026-10-02 푸시, origin/main=241157c). 2026-10-06 8-1 변경분(5경로)은 다시 미커밋 | — | 기능 단위 커밋 |
 | R7 | (2026-10-06) `latest` 태그 LEAN 이미지 고정 여부 | 4 저장소 모두 `quantconnect/lean:latest` → 서버별 버전 상이 가능. 특정 태그로 고정하면 재현성↑, 업데이트는 수동 | R1(일원화)과 함께 태그 고정 |
+| R8 | (2026-10-15, 6-21→6-22 구현) 알트먼 Z-Score | ①~⑤ 중 ① 키 재사용 ② api 프로세스 내 1시간 1종목 수집 ③ 매핑·④ 시총 권고안 ⑤ 카드 배지+모달 패널로 **구현 완료**. 남은 결정: 배지 필터(안전/회색/위험) 추가 여부, 수집 간격 단축(`FINANCIAL_HEALTH_INTERVAL_SECONDS`) 여부 | 배포 후 한 바퀴(≈8일) 보고 결정 |
 
 ### 6-6. 2026-10-02 (7절 권고 수용 적용)
 
@@ -721,3 +722,60 @@ python3 shared-css/audit.py --live   # 라이브 4개 사이트
 **수정 2(2026-10-15 사용자 요청 "상단 간단히 종목설명의 타이틀만")**: 종목별 화면 헤더(`.backtest-page-head` 는 flex 가로 배치라 kicker·h1·설명·종목 칩이 한 줄에 몰려 h1 이 잘림)를 **h1(종목명 · 전략 종류 · 티커)만** 남기고 kicker·설명·종목 이동 칩 제거(`.lean-single-head`). 전체 워크플로우 헤더는 원래대로(칩 제거). `renderLeanSiblings`·`.lean-chip` 코드 삭제. 종목 이동은 우측 「LEAN」 메뉴로. 캐시 버스트 `-3`(style·app). V8 컴파일 통과. 재배포: `bash deploy/pr-lean-menu.sh`.
 **수정 3(2026-10-15 사용자 요청 "EXECUTION FLOW 섹션을 「이 조건으로 검증하기」 아래로")**: `.backtest-pipeline`(FE→BE→API→LEAN 캔버스) 을 헤더 바로 아래에서 `.backtest-workspace`(설정·실행 버튼) 뒤, `#backtestResult` 앞으로 이동(전체 폭). `initBacktestPipeline()` 은 id 로 마운트하므로 변경 없음. 상단 여백 26px. 캐시 버스트 `-4`. V8 컴파일 통과. 재배포: `bash deploy/pr-lean-menu.sh`.
 **수정 4(2026-10-15 사용자 보고 "섹션이 제대로 안 보임" — METRIC GUIDE 종합 판정이 검은 한 줄 띠로 눌림)**: 원인 — 공통 `www.edumgt.co.kr/css/common.css` 가 모든 `footer` 요소에 `height 25px · 검정 · flex 한 줄 · !important`(4개 사이트 푸터 통일 규칙)를 강제해 `<footer class="metric-guide-overall">` 이 푸터로 렌더됨. 수정 — 요소를 `<div class="metric-guide-overall">` 로 교체(스타일은 클래스 기준이라 동일). 교훈: 이 저장소 콘텐츠 안에서는 `<footer>` 태그를 쓰지 않는다(`investment-checklist footer` 등 기존 것도 같은 영향 가능성 → 확인 필요). 캐시 버스트 `-5`. 재배포: `bash deploy/pr-lean-menu.sh`.
+
+### 6-21. 2026-10-15 종목 보기(`?view=stocks`) — 알트먼 Z-Score 재무건전성 분석 **계획** (사용자 요청, 미구현)
+
+**요청**: "종목 보기에 알트먼 Z-Score 기반 재무건전성을 분석하는 기능을 추가. 종목별 실시간으로 가져오기는 어려울 것 같으니 일단 계획만."
+**결론(권고)**: **실시간 조회는 하지 않는다.** 아틀라스 200종목(5일차×40)의 Z-Score 를 **배치로 미리 계산해 PostgreSQL 에 저장**하고, 화면은 DB 만 읽는다(`/market/history` 와 같은 패턴). 재무제표는 분기 공시라 주 1회 갱신이면 충분하다.
+
+**현재 구조(파악)**
+- 종목 보기: `renderStocksView()` → `renderCompanyAtlas(day)` 카드 40개 → 「매거진 보기」 `openAtlasMagazine()` 모달(`#atlasPricePanel` 지연 시세 · 과거 데이터 · 뉴스). 종목 목록은 `COMPANY_ATLAS`·`COMPANY_TICKERS`(app.js 298·500행), 산업 라벨은 카드마다 `sector` 문자열.
+- 백엔드: `app/api/routes/market.py`(`/market/company` 5분 캐시 Yahoo+뉴스, `/market/history` 는 `stock_price_history` 테이블만 읽음). 스키마는 `Base.metadata.create_all`(alembic 없음). 배치 관례는 `app/ops/backfill_ohlcv.py`(`docker compose exec api python -m app.ops.…`, 티커 목록은 `/app/frontend/app.js` 를 정규식으로 읽음).
+- **재사용 가능 자산**: lumina-invest `app/services/dart.py` — OpenDART `fnlttSinglAcntAll` 파싱(연결 CFS→별도 OFS 폴백, BS 한정 규칙, 사업보고서 연간/분기 누적 구분, TTM 계산 `ttm_amount`, 발행주식수 `shares_outstanding`, 응답 `status` 코드 규약). pr 에는 DART 연동이 없다. 지금 파싱 대상은 자산·부채·자본·현금·영업이익·매출·순이익뿐이라 **유동자산·유동부채·이익잉여금 3개 계정을 추가**해야 Z 가 나온다.
+
+**산식과 판정**
+| 모델 | 식 | 안전 / 회색 / 위험 | 적용 대상 |
+|---|---|---|---|
+| Z (1968 원식, 상장 제조업) | 1.2·X1 + 1.4·X2 + 3.3·X3 + 0.6·X4 + 1.0·X5 | > 2.99 / 1.81~2.99 / < 1.81 | 반도체·배터리·소재·자동차·조선·식품·전력기기·방산·화장품·의류·전자·제약 등 제조 |
+| Z'' (1995, 비제조·신흥시장) | 6.56·X1 + 3.26·X2 + 6.72·X3 + 1.05·X4′ | > 2.6 / 1.1~2.6 / < 1.1 | 플랫폼·게임·콘텐츠·소프트웨어·의료AI·유통·통신·건설·해운·항공·렌탈·지주·연구개발형 바이오 |
+| 적용 제외 | — | 「금융업 제외」 배지 | 금융·보험·증권·증권·금융(15종목) — 유동/비유동 구분이 없고 부채 구조가 달라 Z 무의미 |
+
+X1 = (유동자산 − 유동부채)/자산총계 · X2 = 이익잉여금/자산총계 · X3 = 영업이익(TTM, EBIT 근사)/자산총계 · X4 = 시가총액/부채총계 · X4′ = 자본총계(장부)/부채총계 · X5 = 매출액(TTM)/자산총계.
+시가총액 = DART 발행주식총수(보통주) × `stock_price_history` 최근 종가. 매핑은 `ALTMAN_MODEL_BY_SECTOR`(산업 라벨 → Z/Z''/제외) 표로 두고 **미지정 산업은 Z''** (시가총액·매출 불필요라 결측에 강함). 계정 결측 시 해당 종목은 `reason`(예: "유동성 구분 없음", "DART 자료 없음")과 함께 N/A 저장 — 추정·보간하지 않는다(lumina dart.py 원칙 동일).
+
+**단계별 작업**
+| 단계 | 내용 | 산출물 | 예상 |
+|---|---|---|---|
+| 0 준비 | pr `.env` 에 `DART_API_KEY`(lumina 와 같은 키 재사용 가능, 일 20,000건 한도 — 200종목×≤4건이면 여유). 삼성전자·카카오·셀트리온·KB금융 4건으로 `유동자산`·`유동부채`·`이익잉여금(결손금)` 계정명 실측 | 계정명 표 | 0.5h |
+| 1 데이터 | `app/services/dart_client.py`(lumina dart.py 에서 corp_code ZIP·fnlttSinglAcntAll·shares 부분 이식 + 3계정 추가) · `app/services/altman.py`(순수 함수: 입력 dict → X1~X5·Z·Z''·zone·model, DB·lightgbm 의존 없음) · 모델 `app/models/stock_financial_health.py`(ticker·market·fiscal_year·quarter·report_name·fs_div·원시 계정 8개·shares·close_used·x1~x5·z·zone·model·reason·source·computed_at, UNIQUE(ticker,market)) · `app/ops/backfill_financial_health.py`(app.js 티커 추출 재사용, 동시성 3, upsert, 실패 종목 요약 출력) | 서비스 3 + 배치 1 + `tests/test_altman.py`(픽스처 JSON 으로 파싱·산식·구간 경계 검증) | 4h |
+| 2 API | `GET /market/financial-health?ticker=&market=` → 최신 행 + 구성요소별 기여도 + 판정 문구 + 기준 보고서 · `GET /market/financial-health/summary?day=` → 40종목 {ticker, z, zone, model} 한 번에(카드 배지용) · (선택) `POST /market/financial-health/refresh?ticker=` `X-API-Key` 보호, 단일 종목 즉시 재계산(`period-return/extend` 패턴) | market.py 3 엔드포인트 | 1.5h |
+| 3 화면 | ① 카드: 산업 아래 작은 배지(안전 초록 / 회색 / 위험 빨강 / 금융업 제외 회색, Z 값) — summary API 1회 호출 후 주입, 로드 전엔 비표시 ② 툴바 필터에 「안전·회색·위험」 추가(기존 KOSPI/KOSDAQ 필터와 AND) ③ 모달에 섹션 「FINANCIAL HEALTH · 알트먼 Z-Score」: 구간 게이지 바(두 모델의 경계가 다르므로 모델별 눈금), 구성요소 5행 표(비율·가중치·기여도·한 줄 해석 — METRIC GUIDE 의 정의·현재 값·판정·상황 설명 형식 재사용), 기준(보고서명·연결/별도·계산일·종가 기준일), 한계 안내(교육용·금융업 제외·비제조는 Z''·EBIT 는 영업이익 근사). `<footer>` 태그 금지(6-20 수정 4 교훈) | app.js · style.css(`.atlas-health-*`) | 3h |
+| 4 운영 | 최초 1회 `docker compose exec api python -m app.ops.backfill_financial_health`(사용자 실행). 정기 갱신은 fd 호스트 cron **주 1회 일요일 04:00 KST**(공시 마감: 1Q 5/15 · 반기 8/14 · 3Q 11/14 · 사업보고서 3/31 전후에 새 보고서가 잡힘) → `system_schedule_data.py` 에 `pr-financial-health` 등록 · `deploy/pr-financial-health.sh` | cron 1줄 + 일정 등록 + 배포 스크립트 | 1h |
+
+**검증 계획**: 로컬은 DB 없음 → `tests/test_altman.py` 는 순수 함수·파싱만. DART 키가 있으면 `dart_client` 실호출 1건(삼성전자 2025 사업보고서: 자산 ≈ 514조, 검산은 lumina dart.py 주석의 실측값과 비교). app.js 는 V8 컴파일 검사(6-20 방식). 배포 후: 카드 배지 → 모달 섹션 → 금융업 종목은 「제외」 → 필터 동작.
+**검토한 대안(비권고)**: (A) lumina 의 DART 서비스를 shared-net HTTP 로 호출 — lumina 에 재무 원문 라우트가 없어 어차피 추가 작업이고 pr 이 fd 가동 상태에 묶인다. (B) 모달 열 때 DART 실시간 조회 — 보고서 1건당 2~3회 호출·수 초 지연, 키 한도 공유, 사용자가 이미 제외.
+**사용자 결정 필요** → 7절 R8.
+
+### 6-22. 2026-10-15 종목 보기 재무건전성(알트먼 Z-Score) 구현 — DART 수집기(1시간 1종목) + 카드 배지 + 모달 패널, 종목 보기 15% 축소 (사용자 요청)
+
+**요청**: ① "해당 키(lumina DART 키) 사용해서 배치로 1시간에 한번씩 한종목 단위로 Z-Score 에 필요한 데이타 수집하고, Z-Score 가 있는 경우 재무건전성 뱃지로 상태 표시" ② "종목보기 카드와 글자가 너무 큼 15% 줄여줘". 설계는 6-21 계획대로(실시간 조회 없음, DB 만 읽음).
+**변경**:
+| 파일 | 내용 |
+|---|---|
+| `app/core/config.py` | `dart_api_key`(env `DART_API_KEY`), `financial_health_collector_enabled`(기본 true), `financial_health_interval_seconds`(3600), `financial_health_startup_delay_seconds`(45) |
+| `app/services/dart_client.py` (신규) | lumina `dart.py` 에서 Z 에 필요한 부분 이식: corpCode ZIP → 종목코드 매핑(프로세스 메모리 30일), `fnlttSinglAcntAll`(CFS→OFS 폴백, BS 한정), 사업보고서 연간/분기 누적 구분, `ttm_amount`, `stockTotqySttus` 발행주식수. **계정 추가**: 유동자산·유동부채·이익잉여금(결손금·미처리결손금은 부호 반전)·`영업손실`(HLB 실측: 적자 회사는 계정명이 "영업손실", 금액은 이미 음수) |
+| `app/services/altman.py` (신규) | 순수 계산. Z(제조: 1.2/1.4/3.3/0.6/1.0, 안전>2.99·위험<1.81) · Z''(비제조: 6.56/3.26/6.72/1.05, 안전>2.6·위험<1.1) · EXCLUDED(금융·보험·증권·증권·금융). `MANUFACTURING_SECTORS` 표, 미지정 산업은 Z''. 입력 결측이면 계산하지 않고 `missing`·`reason` |
+| `app/models/stock_financial_health.py` (신규) | 종목당 1행(UNIQUE ticker+market): 모델·zone·z, 보고서(연도·분기·이름·연결/별도), 원시 계정 8개, 발행주식수·종가·시가총액, x1~x5, ok·reason·source·computed_at. `create_all` 로 생성(main.py import 추가) |
+| `app/services/financial_health_collector.py` (신규) | `parse_companies()`(app.js COMPANY_ATLAS·COMPANY_TICKERS 정본, 중복 종목 1회) · `pick_next()`(미수집 먼저 → 가장 오래된 computed_at) · `build_record()`(DART 최신 보고서 탐색 5분기, 분기면 전기 사업보고서로 TTM, Z 모델만 발행주식수×종가(`stock_price_history` 최근 종가, 없으면 Yahoo 5d) 시가총액) · `upsert()` · `collect_next()`(**적용 제외 산업은 DART 없이 즉시 기록하고 다음 종목으로**, 비제외 1종목 수집 후 종료) · `run_forever()`(기동 45초 후 interval 마다 1종목, 키 없으면 종료) |
+| `app/main.py` | `lifespan` 에서 수집기 asyncio 태스크 시작·종료(uvicorn 단일 워커 전제 — Dockerfile·compose CMD 확인) |
+| `app/api/routes/market.py` | `GET /market/financial-health/summary`(전 종목 {ticker:{zone,z,model,report}} + count/scored/last_computed_at) · `GET /market/financial-health?ticker=&market=`(상세: 원시 계정·x·가중치·기여·판정 문구·임계값, 미수집이면 available=false) |
+| `app/ops/collect_financial_health.py` (신규) | 수동 수집: `--ticker 005930` / `--next N` / `--all --sleep 2` |
+| `app/services/system_schedule_data.py` | `pr-financial-health`(interval 3600, api 프로세스) 등록, pr 주석·설명 갱신 |
+| `frontend/app.js` | 카드 `data-atlas-ticker` + `.atlas-sector` 안 `<span class="atlas-health-badge" data-health-for>`(hidden) → `renderStocksView()` 끝에 `applyFinancialHealthBadges()`(summary 10분 캐시, 값 있는 종목만 표시: 안전/회색/위험 + Z 값 + 모델, 금융업은 「Z 미적용 · 금융업」). 모달 링크 섹션 뒤 `#atlasHealthPanel` 「FINANCIAL HEALTH · 재무건전성 · 알트먼 Z-Score」 — 배지·판정 문구·임계값, 구성요소 표(값·가중치·기여), 주요 계정(억/조 단위), 기준 보고서·출처·계산일·한계 안내. 미수집이면 "한 시간에 한 종목씩" 안내 |
+| `frontend/style.css` | `.stocks-page { zoom: .85 }`(② 카드·글자 15% 축소, 모달은 body 직속이라 제외) · `.atlas-health-badge.zone-*` · `.atlas-health*` 모달 패널 |
+| `frontend/index.html` | 캐시 버스트 `?v=20261015-zscore-1` |
+| `.env.local`(로컬, gitignore) · `.env.example` · `.env.prod.example` | 로컬 키는 **`.env.local`** 에만(lumina 와 같은 값). 주의: 이 저장소의 `.env` 는 `.gitignore` 에 있지만 **이미 git 추적 중**이라 비밀을 넣으면 푸시된다 — 처음에 `.env` 에 넣었다가 HEAD 로 되돌렸음. docker-compose.yml(dev) 는 `.env.local` 을 env_file 로 읽고, 서버는 `.env.prod`. 예시 파일엔 빈 키 + 수집기 변수 2개 문서화 |
+| `tests/test_financial_health.py` (신규) · `tests/test_system_schedule.py` | 13 + 1건: 모델 매핑, Z/Z'' 구간·기여 검산, 결측 보고, DART 파싱(분기 누적·사업보고서 연간·결손금 반전·SCE 무시), TTM, 주식수, 후보 분기, app.js 파싱(첫 종목 삼성전자), 순서, 제외 산업 DART 미호출, 스텁 DART 로 Z 계산(2.76 회색), DART 오류 시 예외 없이 reason |
+**검증**: `pytest tests --ignore=test_lean_docker_integration.py` **47 passed**. app.js V8 컴파일 통과(py-mini-racer 를 pr `.venv` 에 설치, `new Function(src)`), 괄호 델타 HEAD 와 동일. **DART 실호출 실측(로컬, 2026-10-15)**: 삼성전자 Z 6.83 안전(2026 반기 연결, 자산 759조·시총 1,228조) · 카카오 Z'' 3.21 안전 · 셀트리온 Z'' 4.76 안전 · 알테오젠 Z'' 8.69 안전 · KB금융 제외 · HLB Z'' −2.35 위험(영업손실 계정 추가 후 계산됨). 브라우저 미실행.
+**운영 메모**: 200종목 한 바퀴 ≈ 8.3일(금융업 15종목은 슬롯 미사용). DART 호출 종목당 ≤ 10회 → 하루 ≤ 240회(lumina 와 키 공유, 한도 20,000). 기동 직후 45초 뒤 첫 종목. 즉시 채우려면 `python -m app.ops.collect_financial_health --next 10 --sleep 2`. 수집기 끄기: `FINANCIAL_HEALTH_COLLECTOR_ENABLED=false`.
+**배포(미완, 사용자 실행)**: `bash deploy/pr-zscore.sh` — 호스트 소스 갱신 + `.env.prod` 에 DART 키 자동 복사(같은 서버 `~/lumina-invest/.env`) + `compose up --build -d api`(새 테이블·환경변수 반영). 또는 main push(`cd.yml`) 후 `.env.prod` 에 `DART_API_KEY` 수동 추가.

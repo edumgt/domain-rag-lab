@@ -65,10 +65,14 @@ SYSTEM_JOBS: list[dict] = [
     {"id": "st-certbot", "system": "stock-coin-trade", "host": "st.edumgt.co.kr", "component": "호스트 cron", "category": "infra",
      "name": "Let's Encrypt 인증서 갱신 (certbot renew)", "schedule": {"type": "daily", "times": ["03:15"], "tz": "Asia/Seoul"},
      "description": "st·iv 공용 인증서를 webroot 방식으로 무중단 갱신 후 nginx reload.", "source": "stock-coin-trade/scripts/ec2/init-letsencrypt.sh"},
-    # ── domain-rag-lab (pr) · stock-kms-portal (iv) — 주기 배치 없음(온디맨드·푸시 배포) ─────
+    # ── domain-rag-lab (pr) · stock-kms-portal (iv) — pr 은 api 프로세스 내 수집기 1개, 그 외 온디맨드·푸시 배포 ─────
+    {"id": "pr-financial-health", "system": "domain-rag-lab", "host": "pr.edumgt.co.kr", "component": "api 프로세스(asyncio)", "category": "data",
+     "name": "재무건전성 Z-Score 수집 (financial_health_collector)", "schedule": {"type": "interval", "every_sec": 3600},
+     "description": "종목 보기 200종목을 한 시간에 한 종목씩 DART 재무제표로 알트먼 Z-Score 계산해 stock_financial_health 에 저장(한 바퀴 ≈ 8.3일). 금융업은 즉시 '적용 제외' 기록.",
+     "source": "domain-rag-lab/app/services/financial_health_collector.py · FINANCIAL_HEALTH_INTERVAL_SECONDS"},
     {"id": "pr-deploy", "system": "domain-rag-lab", "host": "pr.edumgt.co.kr", "component": "GitHub Actions", "category": "infra",
      "name": "main 푸시 배포 (cd.yml)", "schedule": {"type": "event", "trigger": "git push main"},
-     "description": "주기 배치는 없고 푸시 시 rsync·compose 재빌드. LEAN 백테스트·yfinance 수집은 사용자 요청 시 실행.", "source": "domain-rag-lab/.github/workflows/cd.yml"},
+     "description": "푸시 시 rsync·compose 재빌드. LEAN 백테스트·yfinance 수집은 사용자 요청 시 실행(재무건전성 수집기는 별도 항목).", "source": "domain-rag-lab/.github/workflows/cd.yml"},
     {"id": "iv-deploy", "system": "stock-kms-portal", "host": "iv.edumgt.co.kr", "component": "수동 반영", "category": "infra",
      "name": "포털 반영 (scp + compose up api)", "schedule": {"type": "event", "trigger": "수동"},
      "description": "주기 배치 없음. 과거 시세 백필(backfill_ohlcv)은 수동 실행.", "source": "stock-kms-portal/todo.md 8절"},

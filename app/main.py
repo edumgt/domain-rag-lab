@@ -1,3 +1,7 @@
+import asyncio
+from contextlib import asynccontextmanager
+import logging
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -21,6 +25,7 @@ from app.api.routes.quant_lab import router as quant_lab_router
 from app.api.routes.walk_forward import router as walk_forward_router
 from app.core.config import settings
 from app.core.database import Base, engine
+from app.services.financial_health_collector import run_forever as run_financial_health_collector
 
 # 모든 모델을 import해야 Base.metadata가 테이블을 인식함
 import app.models.chat_log           # noqa: F401
@@ -28,10 +33,32 @@ import app.models.document_chunk     # noqa: F401
 import app.models.long_term_memory   # noqa: F401
 import app.models.user               # noqa: F401
 import app.models.stock_price_history  # noqa: F401
+import app.models.stock_financial_health  # noqa: F401
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title=settings.app_name)
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    """재무건전성(알트먼 Z-Score) 수집기 — 한 시간에 한 종목. uvicorn 단일 워커 전제(compose·Dockerfile CMD)."""
+    task = None
+    if settings.financial_health_collector_enabled:
+        task = asyncio.create_task(run_financial_health_collector(), name="financial-health-collector")
+    else:
+        logging.getLogger(__name__).info("재무건전성 수집기 비활성(FINANCIAL_HEALTH_COLLECTOR_ENABLED=false)")
+    try:
+        yield
+    finally:
+        if task:
+            task.cancel()
+            try:
+                await task
+            except (asyncio.CancelledError, Exception):  # noqa: BLE001
+                pass
+
+
+app = FastAPI(title=settings.app_name, lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

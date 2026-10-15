@@ -11,11 +11,14 @@ import xml.etree.ElementTree as ET
 
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.models.stock_financial_health import StockFinancialHealth
 from app.models.stock_price_history import StockPriceHistory
+from app.services import altman
 from app.services.market_calendar_data import CALENDAR_EVENTS
 from app.services.system_schedule_data import SYSTEM_JOBS
 
@@ -458,6 +461,45 @@ async def intraday_chart(
     payload = {"ticker": ticker, "symbol": symbol, "market": market, "bars": bars, "meta": meta_out, "updated_at": now.isoformat(), "error": error}
     _intraday_cache[cache_key] = (now, payload)
     return payload
+
+
+@router.get("/financial-health/summary")
+def financial_health_summary(db: Session = Depends(get_db)) -> dict[str, Any]:
+    """종목 보기 카드 배지용: 수집된 모든 종목의 {ticker: {zone, z, model, report}}. 수집기가 한 시간에 한 종목씩 채운다."""
+    rows = db.execute(select(StockFinancialHealth)).scalars().all()
+    items = {row.ticker: row.to_summary() for row in rows}
+    computed = [row.computed_at for row in rows if row.computed_at]
+    return {
+        "items": items, "count": len(items), "scored": sum(1 for row in rows if row.z is not None),
+        "last_computed_at": max(computed).isoformat() if computed else None,
+        "labels": altman.ZONE_LABELS, "thresholds": altman.THRESHOLDS,
+        "note": "알트먼 Z-Score · DART 최신 보고서 기준 · 교육용 참고(매수·매도 권유 아님)",
+    }
+
+
+@router.get("/financial-health")
+def financial_health_detail(
+    ticker: str = Query(pattern=r"^\d{6}$"),
+    market: str = Query(pattern=r"^(KOSPI|KOSDAQ)$"),
+    db: Session = Depends(get_db),
+) -> dict[str, Any]:
+    """종목 매거진용 상세: 원시 계정·구성 비율·판정·기준 보고서. 아직 수집 전이면 available=false."""
+    row = db.execute(
+        select(StockFinancialHealth).where(StockFinancialHealth.ticker == ticker, StockFinancialHealth.market == market)
+    ).scalar_one_or_none()
+    if not row:
+        return {"available": False, "ticker": ticker, "market": market, "reason": "아직 수집되지 않았습니다(한 시간에 한 종목씩 수집)."}
+    detail = row.to_detail()
+    weights = altman.WEIGHTS.get(row.model, {})
+    detail["weights"] = weights
+    detail["contributions"] = {k: round(weights[k] * v, 4) for k, v in detail["components"].items() if k in weights}
+    detail["component_labels"] = {k: (altman.COMPONENT_LABELS["x4b"] if (k == "x4" and row.model == altman.MODEL_Z2) else altman.COMPONENT_LABELS[k])
+                                  for k in detail["components"]}
+    detail["thresholds"] = altman.THRESHOLDS.get(row.model)
+    detail["zone_label"] = altman.ZONE_LABELS.get(row.zone or "", "계산 불가")
+    detail["description"] = altman.describe(row.model, row.zone, row.z)
+    detail["available"] = True
+    return detail
 
 
 @router.get("/history")
