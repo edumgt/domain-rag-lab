@@ -702,3 +702,18 @@ python3 shared-css/audit.py --live   # 라이브 4개 사이트
 
 ### 6-19. 2026-10-15 계약 문서 v0.7 사본 동기화 (stock-coin-trade 6-23 연동)
 `docs/contracts/kis-autotrade-api.md` 에 2-7 시세 `GET /quote/{symbol}` 추가·v0.7 표기. 3사본 md5 일치. pr 코드 변경 없음.
+
+### 6-20. 2026-10-15 LEAN 백테스트 → 우측 offcanvas 「LEAN」 메뉴 + 종목별 세부 화면 분리 + 결과 지표 3형태 구분·지표별 상황 설명 (사용자 요청)
+
+**요청**: ① "LEAN 백테스트를 우측 offcanvas 에 LEAN 메뉴로 빼고, 각 종목별 세부 사항을 서브 메뉴로 각각 화면으로 분리" ② "백테스트 실행 후 보는 지표 3가지 형태 구분부터, 상세하게 지표별 상황 설명 추가"(앞서 주신 분석 예시 — 위험 대비 수익률·알파 부재·거래비용·체크리스트 형식).
+**구조 파악**: 좌측 offcanvas = `#learningPanel`(.sidebar, 「학습」 버튼), 우측 offcanvas = `#referencePanel`(.ref-panel, RAG 도구) — 헤더에 여는 버튼(`#openRightPanel`)이 없어 데스크톱에서 열 수 없었음(app.js 는 `$openRightPanel?.` 로 이미 대비). LEAN 은 GNB `data-view="backtest"` 버튼 → `renderBacktestWorkflow()` 가 TEST LIBRARY(BACKTEST_EXAMPLES 5개: 삼성전자 장기보유 · KOSPI200 이동평균 · 현대차 정액매수 · SK하이닉스 돌파 · SPY 적립)와 설정·결과를 한 화면에 그림.
+**변경(frontend/)**:
+| 파일 | 내용 |
+|---|---|
+| `index.html` | GNB 「LEAN 백테스트」 버튼 제거. 헤더 우측에 `#openRightPanel`(.lean-toggle, 「LEAN」) 추가 → 우측 offcanvas 토글. `#referencePanel` 헤더 「LEAN · RAG 도구」, 그 아래 `<nav id="leanNav">`(서브메뉴는 JS 생성). style/app 캐시 버스트 `?v=20261015-lean-menu` |
+| `app.js` | `BACKTEST_EXAMPLE_MENU`(종목명·코드·전략 종류 라벨) · `renderLeanNav()`(전체 워크플로우 + 종목별 5개 `data-lean` 버튼) · `openLeanScreen(id)`(패널 닫고 `setView('backtest',{example})`, URL 을 `?view=backtest&example=<id>` 로 replaceState) · `setView(view, options)` 가 `state.leanExample` 보관·메뉴 active 동기화 · `renderBacktestWorkflow(exampleId)` — 종목 화면이면 TEST LIBRARY aside 를 빼고(`.backtest-workspace.single`) 헤더를 「종목명 · 전략 종류 · 티커」로, 종목 간 이동 칩 `renderLeanSiblings()` 표시, 해당 예시를 프리필·`BacktestPreconditions.mount(..., () => example)`. 초기 진입 `?view=backtest&example=` 지원(fd 프리필 링크 `?view=backtest&strategy=…` 는 그대로 동작) |
+| `app.js` 결과 | 지표 카드를 `buildBacktestMetrics()` 로 — **① 수익(빨강: 전략·연환산·단순 보유·비교 기간 수익률) ② 위험(주황: 최대 낙폭·연환산 변동성·샤프) ③ 실행(파랑: 노출 일수·규칙 변경 횟수·승률)** 색 띠 + 범례. 신규 `buildBacktestMetricGuide(data, payload)` 「METRIC GUIDE」: 형태별 3개 그룹, 지표마다 **정의 · 현재 값 · 구간 판정(양호/보통/주의/문제) · 상황 설명**(예: MDD 42% → "극심… 회복에 +74% 필요… 위험 대비 효율 부족", 단순 보유 대비 −324%p → "알파 부재·기회비용", 연 매매 24회 초과 → "수수료·세금·슬리피지로 실전 수익률 더 낮음", 샤프 ≥2 → 과최적화 경고). 하단 종합 판정(문제/주의 개수 + 결론 문장) 과 핵심 체크리스트(샤프·벤치마크 적절성·과최적화·비용 반영). 기존 `buildBacktestAnalysis`(성과·위험 상세 분석 4개)는 그대로 뒤에 유지 |
+| `style.css` | 헤더 4열(`auto auto 1fr auto`), `.lean-toggle` · `.lean-nav` · `.lean-menu-btn.sub`(코드 배지) · `.lean-siblings`/`.lean-chip` · `.backtest-workspace.single` · `.metric-legend` · 카드 `kind-*` 색 띠(5열) · `.backtest-metric-guide`(3열 그룹, 판정 배지, 종합 다크 박스), 반응형 |
+**판정 구간**: MDD <10 완만 / <20 보통 / <35 큼 / ≥35 극심 · 변동성 <15 / <30 / <45 / ≥45 · 샤프 <0 음수 / <0.5 낮음 / <1 보통 / <2 양호 / ≥2 우수(과최적화 경고) · 연환산 ≥10 양호 / ≥0 보통 / <0 문제 · 벤치마크 격차 ≥0 알파 있음 / <0 알파 부재 · 노출 <40% 현금 비중 큼 / >85% 거의 상시 보유 · 규칙 변경 연 ≤6 적음 / ≤24 보통 / >24 잦음 · 승률 ≥60 / ≥40 / <40.
+**검증**: app.js 를 V8(py mini-racer, `new Function(src)` 컴파일)로 구문 검사 통과 — esprima 는 optional chaining(`?.`) 미지원이라 HEAD 도 실패하므로 부적합. 괄호 수 델타 HEAD 와 동일. 브라우저 미실행. 배포 후 확인: 우측 상단 「LEAN」 → 서브메뉴 6개 → 종목 화면에 TEST LIBRARY 없이 해당 종목 프리필 → 실행 후 카드 색 띠·METRIC GUIDE·기존 상세 분석 순서로 표시.
+**배포(미완, 사용자 실행)**: `bash deploy/pr-lean-menu.sh`(호스트 소스 + docker cp, 재시작 없음) 또는 main push(`cd.yml`).

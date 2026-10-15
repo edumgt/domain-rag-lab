@@ -731,12 +731,15 @@ KOSDAQ|웹젠|게임`,
     $questionInput.focus();
   });
 
-  function setView(view) {
+  function setView(view, options = {}) {
     stopTickDashboard();
     stopDashboardAssets();
     if (view !== 'quant') window.QuantLab?.unmount();
     state.activeView = view;
+    state.leanExample = view === 'backtest' ? (options.example || 'all') : null;
     $viewButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
+    document.querySelectorAll('[data-lean]').forEach(btn => btn.classList.toggle('active', view === 'backtest' && btn.dataset.lean === state.leanExample));
+    $openRightPanel?.classList.toggle('active', view === 'backtest');
     $chatInputArea.classList.toggle('hidden', view !== 'learn');
     $clearChatBtn?.classList.toggle('hidden', view !== 'learn');
 
@@ -758,8 +761,31 @@ KOSDAQ|웹젠|게임`,
       closePanels();
     }
     if (view === 'basis') renderBasisWorkflow();
-    if (view === 'backtest') renderBacktestWorkflow();
+    if (view === 'backtest') renderBacktestWorkflow(state.leanExample === 'all' ? null : state.leanExample);
     if (view === 'calendar') renderCalendarView();
+  }
+
+  /* ── 우측 offcanvas 「LEAN」 메뉴 (6-20): 전체 워크플로우 + 종목별 세부 화면 서브메뉴. BACKTEST_EXAMPLES 와 항상 같은 목록. */
+  function renderLeanNav() {
+    const nav = document.getElementById('leanNav');
+    if (!nav) return;
+    const items = [`<button class="topic-btn lean-menu-btn" type="button" data-lean="all"><i class="fa-solid fa-flask"></i> 전체 워크플로우 <small>TEST LIBRARY 5개</small></button>`,
+      `<p class="nav-sublabel">종목별 세부 화면</p>`]
+      .concat(BACKTEST_EXAMPLES.map(e => {
+        const m = BACKTEST_EXAMPLE_MENU[e.id] || { name: e.ticker, code: '', kind: e.tag };
+        return `<button class="topic-btn lean-menu-btn sub" type="button" data-lean="${e.id}"><span class="lean-menu-code">${escHtml(m.code || e.ticker)}</span><b>${escHtml(m.name)}</b><small>${escHtml(m.kind)}</small></button>`;
+      }));
+    nav.insertAdjacentHTML('beforeend', items.join(''));
+    nav.querySelectorAll('[data-lean]').forEach(btn => btn.addEventListener('click', () => openLeanScreen(btn.dataset.lean)));
+  }
+
+  function openLeanScreen(id) {
+    closePanels();
+    setView('backtest', { example: id });
+    const url = new URL(window.location.href);
+    url.search = id === 'all' ? '?view=backtest' : `?view=backtest&example=${encodeURIComponent(id)}`;
+    window.history.replaceState(null, '', url.toString());
+    requestAnimationFrame(() => $messages.scrollTo({ top: 0, behavior: 'smooth' }));
   }
 
   function togglePanel(panel) {
@@ -1750,11 +1776,32 @@ KOSDAQ|웹젠|게임`,
     { id: 'spy-dca', title: '해외 ETF · S&P 500 적립식', tag: '분산', ticker: 'SPY', strategy: 'dca', start: '2020-01-01', compareStart: '2017-01-01', interval: 21, note: '지수 ETF에서도 환율·세금 전의 가격 기반 성과를 학습합니다.', focus: '개별 기업 대신 넓은 미국 주식시장 ETF를 정액으로 샀을 때 가격 흐름과 분산의 의미를 확인합니다.', method: 'SPY를 21거래일마다 같은 금액으로 매수하는 가격 데이터 기반의 가상 적립식 계산입니다.', read: '개별 종목 예시보다 낙폭이 줄었는지, 그리고 장기 기간·다른 시작일에도 결과가 유지되는지 확인해 보세요.', caution: '이 화면은 달러 가격만 사용합니다. 원화 투자자는 환율, 환전 비용, 세금과 실제 ETF 비용을 별도로 반영해야 합니다.' },
   ];
 
-  function renderBacktestWorkflow() {
+  // 우측 LEAN 메뉴의 서브메뉴 라벨(종목명·코드·전략 종류). 예시 ID 는 BACKTEST_EXAMPLES 와 같다.
+  const BACKTEST_EXAMPLE_MENU = {
+    'samsung-long': { name: '삼성전자', code: '005930', kind: '장기보유 기준선' },
+    'kospi-trend': { name: 'KOSPI 200 ETF', code: '069500', kind: '이동평균 추세' },
+    'hyundai-dca': { name: '현대차', code: '005380', kind: '정액 적립매수' },
+    'sk-momentum': { name: 'SK하이닉스', code: '000660', kind: '돌파 추세추종' },
+    'spy-dca': { name: 'S&P 500 ETF', code: 'SPY', kind: '해외 적립식' },
+  };
+
+  function renderLeanSiblings(currentId) {
+    const chips = [`<a class="lean-chip ${currentId ? '' : 'active'}" href="?view=backtest" data-lean-link="all"><i class="fa-solid fa-flask"></i> 전체 워크플로우</a>`]
+      .concat(BACKTEST_EXAMPLES.map(e => { const m = BACKTEST_EXAMPLE_MENU[e.id] || { name: e.ticker, code: '' }; return `<a class="lean-chip ${e.id === currentId ? 'active' : ''}" href="?view=backtest&example=${e.id}" data-lean-link="${e.id}">${escHtml(m.name)} <small>${escHtml(m.code || e.ticker)}</small></a>`; }));
+    return `<nav class="lean-siblings" aria-label="다른 종목 화면으로 이동">${chips.join('')}</nav>`;
+  }
+
+  function renderBacktestWorkflow(exampleId = null) {
     const today = new Date().toISOString().slice(0, 10);
+    const single = exampleId ? BACKTEST_EXAMPLES.find(item => item.id === exampleId) || null : null;
+    const menu = single ? (BACKTEST_EXAMPLE_MENU[single.id] || { name: single.ticker, code: single.ticker, kind: single.tag }) : null;
+    const pageHead = single
+      ? `<header class="backtest-page-head"><div class="content-kicker">QUANTCONNECT LEAN · 종목별 세부 화면</div><h1>${escHtml(menu.name)} <mark>${escHtml(menu.kind)}</mark> <small class="lean-head-code">${escHtml(single.ticker)}</small></h1><p class="content-lead">${escHtml(single.title)} — ${escHtml(single.note)}</p>${renderLeanSiblings(single.id)}</header>`
+      : `<header class="backtest-page-head"><div class="content-kicker">QUANTCONNECT LEAN · YFINANCE WORKFLOW</div><h1>LEAN <mark>투자 판단 실습</mark></h1><p class="content-lead">테스트 하나를 고르고, 무엇을 검증하는지부터 결과 해석까지 순서대로 확인합니다. 종목별 세부 화면은 우측 상단 「LEAN」 메뉴에서 엽니다.</p>${renderLeanSiblings(null)}</header>`;
     const strategyOptions = BACKTEST_STRATEGIES.map(s => `<option value="${s.value}">${escHtml(s.label)}</option>`).join('');
     const examples = BACKTEST_EXAMPLES.map((e, index) => `<button class="backtest-example ${index === 0 ? 'selected' : ''}" data-example="${e.id}" type="button"><span>${escHtml(e.tag)}</span><strong>${escHtml(e.title)}</strong><small>${escHtml(e.note)}</small><i class="fa-solid fa-arrow-right"></i></button>`).join('');
-    $messages.innerHTML = `<article class="content-page backtest-page"><header class="backtest-page-head"><div class="content-kicker">QUANTCONNECT LEAN · YFINANCE WORKFLOW</div><h1>LEAN <mark>투자 판단 실습</mark></h1><p class="content-lead">테스트 하나를 고르고, 무엇을 검증하는지부터 결과 해석까지 순서대로 확인합니다.</p></header><section class="backtest-pipeline" aria-label="백테스트 실행 과정"><div class="backtest-pipeline-head"><div><span>EXECUTION FLOW</span><b>FE → BE → API → LEAN 실행 과정</b></div><em id="btPipelineStatus">대기 중 · 「이 조건으로 검증하기」를 누르면 각 단계가 실제 진행에 맞춰 켜집니다.</em></div><canvas id="btPipelineCanvas" role="img" aria-label="브라우저, FastAPI 백엔드, yfinance API, LEAN 엔진 순서로 진행되는 실행 흐름"></canvas></section><div class="backtest-workspace"><aside class="backtest-examples" aria-label="바로 실행할 수 있는 백테스트 예시"><div><span>TEST LIBRARY</span><h2>확인할 상황 선택</h2><p>선택하면 오른쪽에 테스트의 질문과 해석 기준이 표시됩니다.</p></div><div class="backtest-example-grid">${examples}</div></aside><main class="backtest-main"><section class="backtest-test-detail" id="backtestTestDetail" aria-live="polite"></section><section class="backtest-canvas" aria-label="백테스트 설정"><div class="workflow-node input"><span>01 · 전략</span><select id="btStrategy" aria-label="예시 전략 선택">${strategyOptions}</select><small id="btStrategyHint">${escHtml(BACKTEST_STRATEGIES[0].hint)}</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>02 · 종목 / ETF</span><input id="btTicker" value="005930.KS" maxlength="12" aria-label="종목 티커" /><small>한국: 005930.KS · 미국 ETF: SPY</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>03 · 검증 기간</span><div><input id="btStart" type="date" value="2023-01-01" /><input id="btEnd" type="date" value="${today}" /></div><small>전략 성과를 계산할 기간</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>04 · 비교 기간</span><div><input id="btCompareStart" type="date" value="2022-01-01" /><input id="btCompareEnd" type="date" value="${today}" /></div><small>다른 시장 국면에서도 확인</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node engine"><span>05 · 실행 엔진</span><strong><i class="fa-brands fa-docker"></i> LEAN</strong><small>가격 데이터 → 원격 Docker</small></div></section><section class="backtest-parameters" aria-label="전략 세부 조건"><label>단기 이동평균 <input id="btShortWindow" type="number" min="2" max="120" value="20" /></label><label>장기 이동평균 <input id="btLongWindow" type="number" min="5" max="300" value="60" /></label><label>적립 간격(거래일) <input id="btDcaInterval" type="number" min="1" max="120" value="21" /></label><label>돌파 기준(거래일) <input id="btBreakoutWindow" type="number" min="5" max="120" value="20" /></label><small>선택한 전략에 해당하는 값만 계산에 반영됩니다.</small></section><div id="btPrecheckMount"></div><div id="btResearchMount"></div><div class="backtest-actions"><button class="content-cta" id="runBacktest"><i class="fa-solid fa-play"></i> 이 조건으로 검증하기</button><span>교육용 과거 검증이며 투자 권유가 아닙니다.</span></div></main></div><section class="backtest-result" id="backtestResult"><div class="backtest-empty"><i class="fa-solid fa-diagram-project"></i><p>왼쪽 테스트를 고른 뒤 조건을 확인하고 실행하세요.</p></div></section></article>`;
+    const examplesAside = single ? '' : `<aside class="backtest-examples" aria-label="바로 실행할 수 있는 백테스트 예시"><div><span>TEST LIBRARY</span><h2>확인할 상황 선택</h2><p>선택하면 오른쪽에 테스트의 질문과 해석 기준이 표시됩니다.</p></div><div class="backtest-example-grid">${examples}</div></aside>`;
+    $messages.innerHTML = `<article class="content-page backtest-page${single ? ' lean-single' : ''}">${pageHead}<section class="backtest-pipeline" aria-label="백테스트 실행 과정"><div class="backtest-pipeline-head"><div><span>EXECUTION FLOW</span><b>FE → BE → API → LEAN 실행 과정</b></div><em id="btPipelineStatus">대기 중 · 「이 조건으로 검증하기」를 누르면 각 단계가 실제 진행에 맞춰 켜집니다.</em></div><canvas id="btPipelineCanvas" role="img" aria-label="브라우저, FastAPI 백엔드, yfinance API, LEAN 엔진 순서로 진행되는 실행 흐름"></canvas></section><div class="backtest-workspace${single ? ' single' : ''}">${examplesAside}<main class="backtest-main"><section class="backtest-test-detail" id="backtestTestDetail" aria-live="polite"></section><section class="backtest-canvas" aria-label="백테스트 설정"><div class="workflow-node input"><span>01 · 전략</span><select id="btStrategy" aria-label="예시 전략 선택">${strategyOptions}</select><small id="btStrategyHint">${escHtml(BACKTEST_STRATEGIES[0].hint)}</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>02 · 종목 / ETF</span><input id="btTicker" value="005930.KS" maxlength="12" aria-label="종목 티커" /><small>한국: 005930.KS · 미국 ETF: SPY</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>03 · 검증 기간</span><div><input id="btStart" type="date" value="2023-01-01" /><input id="btEnd" type="date" value="${today}" /></div><small>전략 성과를 계산할 기간</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node input"><span>04 · 비교 기간</span><div><input id="btCompareStart" type="date" value="2022-01-01" /><input id="btCompareEnd" type="date" value="${today}" /></div><small>다른 시장 국면에서도 확인</small></div><i class="fa-solid fa-arrow-right"></i><div class="workflow-node engine"><span>05 · 실행 엔진</span><strong><i class="fa-brands fa-docker"></i> LEAN</strong><small>가격 데이터 → 원격 Docker</small></div></section><section class="backtest-parameters" aria-label="전략 세부 조건"><label>단기 이동평균 <input id="btShortWindow" type="number" min="2" max="120" value="20" /></label><label>장기 이동평균 <input id="btLongWindow" type="number" min="5" max="300" value="60" /></label><label>적립 간격(거래일) <input id="btDcaInterval" type="number" min="1" max="120" value="21" /></label><label>돌파 기준(거래일) <input id="btBreakoutWindow" type="number" min="5" max="120" value="20" /></label><small>선택한 전략에 해당하는 값만 계산에 반영됩니다.</small></section><div id="btPrecheckMount"></div><div id="btResearchMount"></div><div class="backtest-actions"><button class="content-cta" id="runBacktest"><i class="fa-solid fa-play"></i> 이 조건으로 검증하기</button><span>교육용 과거 검증이며 투자 권유가 아닙니다.</span></div></main></div><section class="backtest-result" id="backtestResult"><div class="backtest-empty"><i class="fa-solid fa-diagram-project"></i><p>왼쪽 테스트를 고른 뒤 조건을 확인하고 실행하세요.</p></div></section></article>`;
     initBacktestPipeline();
     document.getElementById('runBacktest').addEventListener('click', runBacktest);
     document.getElementById('btStrategy').addEventListener('change', (event) => {
@@ -1762,9 +1809,10 @@ KOSDAQ|웹젠|게임`,
       document.getElementById('btStrategyHint').textContent = chosen ? chosen.hint : '';
     });
     document.querySelectorAll('[data-example]').forEach(button => button.addEventListener('click', () => applyBacktestExample(button.dataset.example)));
-    applyBacktestExample(BACKTEST_EXAMPLES[0].id);
+    document.querySelectorAll('[data-lean-link]').forEach(link => link.addEventListener('click', (event) => { event.preventDefault(); openLeanScreen(link.dataset.leanLink); }));
+    applyBacktestExample(single ? single.id : BACKTEST_EXAMPLES[0].id);
     applyBacktestQueryParams();
-    BacktestPreconditions.mount(fetchLocalBackendJson, () => BACKTEST_EXAMPLES[0]);
+    BacktestPreconditions.mount(fetchLocalBackendJson, () => single || BACKTEST_EXAMPLES[0]);
     BacktestResearch.mount(fetchLocalBackendJson);
   }
 
@@ -2202,12 +2250,131 @@ KOSDAQ|웹젠|게임`,
       const data = await fetchLocalBackendJson('/backtests/run', null, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
         .catch(error => { throw new Error(error && error.detail ? error.detail : '백테스트를 실행하지 못했습니다.'); });
       btPipeline.finish(data);
-      result.innerHTML = `<div class="backtest-result-head"><span>${escHtml(data.engine)} · ${escHtml(data.strategy_label || '')}</span><h2>${escHtml(data.ticker)} 결과</h2></div>${buildBacktestSummary(data)}<div class="backtest-metrics"><article><span>전략 수익률</span><strong class="${data.strategy_return_pct >= 0 ? 'up' : 'down'}">${data.strategy_return_pct >= 0 ? '+' : ''}${data.strategy_return_pct}%</strong></article><article><span>연환산 수익률</span><strong class="${data.annualized_return_pct >= 0 ? 'up' : 'down'}">${data.annualized_return_pct >= 0 ? '+' : ''}${data.annualized_return_pct}%</strong></article><article><span>연환산 변동성</span><strong>${data.annualized_volatility_pct}%</strong></article><article><span>샤프 비율</span><strong>${data.sharpe_ratio}</strong></article><article><span>최대 낙폭</span><strong class="down">${data.max_drawdown_pct}%</strong></article><article><span>시장 노출 일수</span><strong>${data.invested_days_pct}%</strong></article><article><span>규칙 변경 횟수</span><strong>${data.trade_count}회</strong></article><article><span>단순 보유 수익률</span><strong class="${data.benchmark_return_pct >= 0 ? 'up' : 'down'}">${data.benchmark_return_pct >= 0 ? '+' : ''}${data.benchmark_return_pct}%</strong></article></div>${buildBacktestAnalysis(data, payload)}${buildInvestmentChecklist(data)}<canvas id="backtestChart" width="900" height="250" aria-label="자산 곡선"></canvas><p class="backtest-disclaimer">${escHtml(data.disclaimer)}</p><details><summary>LEAN 실행 로그 보기</summary><pre>${escHtml(data.lean_log || '결과 로그 없음')}</pre></details>`;
+      result.innerHTML = `<div class="backtest-result-head"><span>${escHtml(data.engine)} · ${escHtml(data.strategy_label || '')}</span><h2>${escHtml(data.ticker)} 결과</h2></div>${buildBacktestSummary(data)}${buildBacktestMetrics(data)}${buildBacktestMetricGuide(data, payload)}${buildBacktestAnalysis(data, payload)}${buildInvestmentChecklist(data)}<canvas id="backtestChart" width="900" height="250" aria-label="자산 곡선"></canvas><p class="backtest-disclaimer">${escHtml(data.disclaimer)}</p><details><summary>LEAN 실행 로그 보기</summary><pre>${escHtml(data.lean_log || '결과 로그 없음')}</pre></details>`;
       drawBacktestChart(data.points);
       result.insertAdjacentHTML('beforeend', renderStrategyExportPanel(data, payload));
       bindStrategyExport(data, payload);
     } catch (error) { btPipeline.fail(error.message); result.innerHTML = `<div class="backtest-error"><i class="fa-solid fa-triangle-exclamation"></i>${escHtml(error.message)}</div>`; }
     finally { BacktestPreconditions.lock(false); button.disabled = false; button.innerHTML = '<i class="fa-solid fa-play"></i> 백테스트 실행'; }
+  }
+
+  /* ── 결과 지표 3가지 형태 구분 (6-20): ① 수익 지표(얼마나 벌었나) ② 위험 지표(얼마나 흔들렸나) ③ 실행 지표(규칙이 어떻게 움직였나).
+     지표 카드에 형태별 색 띠를 두고, 아래 「METRIC GUIDE」가 지표마다 현재 값의 구간 판정과 상황 설명을 붙인다. 값은 /backtests/run 응답 그대로. */
+  const BT_METRIC_KINDS = { return: '① 수익', risk: '② 위험', exec: '③ 실행' };
+
+  function buildBacktestMetrics(data) {
+    const sign = v => (Number(v) >= 0 ? '+' : '');
+    const cards = [
+      ['return', '전략 수익률', `${sign(data.strategy_return_pct)}${data.strategy_return_pct}%`, Number(data.strategy_return_pct) >= 0 ? 'up' : 'down'],
+      ['return', '연환산 수익률', `${sign(data.annualized_return_pct)}${data.annualized_return_pct}%`, Number(data.annualized_return_pct) >= 0 ? 'up' : 'down'],
+      ['return', '단순 보유 수익률', `${sign(data.benchmark_return_pct)}${data.benchmark_return_pct}%`, Number(data.benchmark_return_pct) >= 0 ? 'up' : 'down'],
+      ['return', '비교 기간 수익률', data.comparison_return_pct == null ? '-' : `${sign(data.comparison_return_pct)}${data.comparison_return_pct}%`, Number(data.comparison_return_pct) >= 0 ? 'up' : 'down'],
+      ['risk', '최대 낙폭', `${data.max_drawdown_pct}%`, 'down'],
+      ['risk', '연환산 변동성', `${data.annualized_volatility_pct}%`, ''],
+      ['risk', '샤프 비율', `${data.sharpe_ratio}`, ''],
+      ['exec', '시장 노출 일수', `${data.invested_days_pct}%`, ''],
+      ['exec', '규칙 변경 횟수', `${data.trade_count}회`, ''],
+      ['exec', '승률', data.win_rate_pct == null ? '-' : `${data.win_rate_pct}%`, ''],
+    ];
+    const legend = Object.entries(BT_METRIC_KINDS).map(([k, label]) => `<span class="kind-${k}">${label}</span>`).join('');
+    return `<div class="metric-legend" aria-label="지표 형태 범례">${legend}<em>카드 위 색 띠가 지표의 형태입니다</em></div><div class="backtest-metrics">${cards.map(([kind, label, value, cls]) => `<article class="kind-${kind}"><span>${label}</span><strong class="${cls}">${value}</strong></article>`).join('')}</div>`;
+  }
+
+  function buildBacktestMetricGuide(data, input = {}) {
+    const num = v => (v == null || v === '' || !Number.isFinite(Number(v)) ? null : Number(v));
+    const pct = v => (v == null ? '미제공' : `${v >= 0 ? '+' : ''}${v.toFixed(2)}%`);
+    const ret = num(data.strategy_return_pct), ann = num(data.annualized_return_pct), bench = num(data.benchmark_return_pct);
+    const comp = num(data.comparison_return_pct), outp = num(data.outperformance_pct);
+    const mdd = num(data.max_drawdown_pct) == null ? null : Math.abs(num(data.max_drawdown_pct));
+    const vol = num(data.annualized_volatility_pct), sharpe = num(data.sharpe_ratio);
+    const exposure = num(data.invested_days_pct), trades = num(data.trade_count), win = num(data.win_rate_pct);
+    const gap = ret == null || bench == null ? null : ret - bench;
+    const days = input.start_date && input.end_date ? Math.max(1, (new Date(input.end_date) - new Date(input.start_date)) / 86400000) : null;
+    const years = days ? days / 365.25 : null;
+    const perYear = trades != null && years ? trades / years : null;
+    const recovery = mdd != null && mdd < 100 ? (mdd / (100 - mdd)) * 100 : null;
+    const row = (name, value, level, verdict, detail, meaning) => ({ name, value, level, verdict, detail, meaning });
+    const LEVEL = { good: '양호', info: '보통', warn: '주의', bad: '문제' };
+
+    const returnRows = [
+      row('전략 수익률', pct(ret), ret == null ? 'info' : ret > 0 ? 'good' : 'bad', ret == null ? '미제공' : ret > 0 ? '이익' : '손실',
+        ret == null ? '값이 없습니다.' : ret > 0
+          ? `검증 기간 동안 투입 자금이 ${pct(ret)} 늘었습니다. 절대 수익이 플러스라도 아래 단순 보유·위험 지표와 함께 봐야 "잘한 결과" 인지 판단할 수 있습니다.`
+          : `검증 기간 동안 투입 자금이 ${pct(ret)} 줄었습니다. 손실 구간이 전략 규칙 때문인지, 종목·기간 자체의 하락 때문인지 단순 보유 수익률과 비교하세요.`,
+        '검증 기간 처음과 끝의 자산 변화율. 규칙대로 사고팔았을 때 최종적으로 남은 수익.'),
+      row('연환산 수익률', pct(ann), ann == null ? 'info' : ann >= 10 ? 'good' : ann >= 0 ? 'info' : 'bad', ann == null ? '미제공' : ann >= 10 ? '연 10% 이상' : ann >= 0 ? '연 0~10%' : '연 마이너스',
+        ann == null ? '값이 없습니다.' : ann >= 10
+          ? `1년 단위로 환산하면 ${pct(ann)} 입니다. 시장 지수의 장기 평균(연 7~10%)보다 높지만, 기간이 짧을수록 연환산은 과장되기 쉬우니 비교 기간 결과도 확인하세요.`
+          : ann >= 0
+            ? `1년 단위로 환산하면 ${pct(ann)} 입니다. 예금·국채 금리(연 3% 안팎)와 지수 장기 평균(연 7~10%)에 견주어 감수한 위험만큼의 보상이 있었는지 따져 보세요.`
+            : `1년 단위로 환산하면 ${pct(ann)} 로 원금이 줄어드는 속도입니다. 규칙이 하락장을 피하지 못했거나 신호가 늦었을 가능성을 점검하세요.`,
+        '기간 수익률을 1년 기준으로 바꾼 값. 기간이 다른 전략끼리 비교할 때 쓴다.'),
+      row('단순 보유 수익률 (벤치마크)', `${pct(bench)} · 차이 ${gap == null ? '-' : `${gap >= 0 ? '+' : ''}${gap.toFixed(2)}%p`}`, gap == null ? 'info' : gap >= 0 ? 'good' : 'bad', gap == null ? '비교 불가' : gap >= 0 ? '초과수익(알파) 있음' : '알파 부재',
+        gap == null ? '같은 기간 단순 보유 값이 없습니다.' : gap >= 0
+          ? `같은 종목을 같은 기간 그냥 들고 있었을 때(${pct(bench)})보다 ${gap.toFixed(2)}%p 더 벌었습니다. 규칙이 시장 자체 수익 이상을 만든 것이므로, 비용 차감과 다른 기간에서도 유지되는지가 다음 확인 사항입니다.`
+          : `같은 종목을 그냥 들고 있었다면 ${pct(bench)} 였는데 규칙은 ${pct(ret)} 에 그쳐 ${Math.abs(gap).toFixed(2)}%p 뒤졌습니다. 복잡한 규칙을 만들고도 Buy & Hold 를 이기지 못한 것이므로 시장 초과 수익(알파) 창출에는 실패한 셈이고, 그 차이가 기회비용입니다.`,
+        '같은 종목·같은 기간에 한 번 사서 끝까지 보유했을 때의 수익률. 전략이 이겨야 할 최소 기준.'),
+      row('비교 기간 수익률', `${pct(comp)} · 전략 대비 ${outp == null ? '-' : `${outp >= 0 ? '+' : ''}${outp.toFixed(2)}%p`}`, outp == null ? 'info' : outp >= 0 ? 'good' : 'warn', outp == null ? '비교 불가' : outp >= 0 ? '다른 국면에서도 우위' : '다른 국면에서 열위',
+        comp == null ? '비교 기간 값이 없습니다.' : outp >= 0
+          ? `별도로 고른 비교 기간(${escHtml(input.compare_start_date || '')}~${escHtml(input.compare_end_date || '')})의 단순 보유 수익률 ${pct(comp)} 보다 전략이 ${outp.toFixed(2)}%p 앞섭니다. 한 구간에만 맞춘 결과는 아닐 가능성이 높습니다.`
+          : `비교 기간(${escHtml(input.compare_start_date || '')}~${escHtml(input.compare_end_date || '')})의 단순 보유는 ${pct(comp)} 인데 전략은 그보다 ${Math.abs(outp).toFixed(2)}%p 낮습니다. 검증 기간에만 유리했던 규칙(과최적화)일 수 있으니 기간을 바꿔 다시 돌려 보세요.`,
+        '다른 시장 국면(비교 기간)에서의 단순 보유 수익률. 전략 성과가 특정 기간에만 좋았는지 가려낸다.'),
+    ];
+    const riskRows = [
+      row('최대 낙폭 (MDD)', mdd == null ? '미제공' : `${mdd.toFixed(2)}%`, mdd == null ? 'info' : mdd < 10 ? 'good' : mdd < 20 ? 'info' : mdd < 35 ? 'warn' : 'bad', mdd == null ? '미제공' : mdd < 10 ? '완만' : mdd < 20 ? '보통' : mdd < 35 ? '큼' : '극심',
+        mdd == null ? '값이 없습니다.' : `자산이 고점 대비 최대 ${mdd.toFixed(2)}% 빠졌습니다.${recovery != null ? ` 이 낙폭을 원래 고점으로 되돌리려면 저점에서 +${recovery.toFixed(1)}% 가 필요합니다.` : ''} ${mdd >= 35
+          ? '절반 가까운 손실을 견뎌야 했던 극심한 변동입니다. 이만한 위험을 감수하고 얻은 결과가 단순 보유보다 낮다면 위험 대비 효율이 크게 부족한 전략입니다. 실전이라면 중도 포기 가능성이 큽니다.'
+          : mdd >= 20 ? '심리적으로 버티기 어려운 수준입니다. 감내 가능한 손실 한도와 비교하고, 손절·비중 축소 규칙이 필요한지 검토하세요.'
+            : mdd >= 10 ? '일반적인 주식 투자에서 흔히 겪는 범위입니다. 다만 낙폭이 어느 구간에서 났는지(급락장인지 횡보장인지) 자산 곡선에서 확인하세요.'
+              : '낙폭이 작아 보유 중 손실 고통이 적었습니다. 노출 일수가 낮아서(현금 보유) 낙폭이 작게 나온 것은 아닌지 ③ 실행 지표와 함께 보세요.'}`,
+        '검증 기간 중 자산이 고점에서 저점까지 가장 크게 떨어진 비율. 전략을 끝까지 유지할 수 있는지(심리적 감내)를 가늠한다.'),
+      row('연환산 변동성', vol == null ? '미제공' : `${vol.toFixed(2)}%`, vol == null ? 'info' : vol < 15 ? 'good' : vol < 30 ? 'info' : vol < 45 ? 'warn' : 'bad', vol == null ? '미제공' : vol < 15 ? '낮음' : vol < 30 ? '보통' : vol < 45 ? '높음' : '매우 높음',
+        vol == null ? '값이 없습니다.' : `일별 수익률의 흔들림을 1년 기준으로 환산하면 ${vol.toFixed(2)}% 입니다. ${vol >= 30
+          ? '개별 성장주 수준의 큰 흔들림입니다. 같은 수익률이라도 변동성이 크면 샤프가 낮아지고, 실제 운용에서는 진입 시점에 따라 결과가 크게 달라집니다.'
+          : vol >= 15 ? '코스피·S&P 500 지수(연 15~25%)와 비슷한 흔들림입니다. 수익률이 이 변동성을 보상하는지는 샤프 비율로 확인합니다.'
+            : '지수보다 잔잔합니다. 현금 비중이 높았거나 추세 규칙이 하락 구간을 피한 결과일 수 있습니다.'}`,
+        '수익률이 평균에서 얼마나 자주·크게 벗어났는지. 값이 클수록 같은 수익을 얻기까지 더 큰 등락을 겪는다.'),
+      row('샤프 비율', sharpe == null ? '미제공' : sharpe.toFixed(2), sharpe == null ? 'info' : vol === 0 ? 'info' : sharpe < 0 ? 'bad' : sharpe < 0.5 ? 'warn' : sharpe < 1 ? 'info' : 'good', sharpe == null ? '미제공' : vol === 0 ? '판단 불가' : sharpe < 0 ? '음수' : sharpe < 0.5 ? '낮음' : sharpe < 1 ? '보통' : sharpe < 2 ? '양호' : '우수',
+        sharpe == null ? '값이 없습니다.' : vol === 0 ? '변동성이 0이라 샤프를 해석할 수 없습니다(거의 투자하지 않은 구간).' : sharpe < 0
+          ? `연환산 수익률이 무위험수익률(계산 가정 2%)에도 못 미쳐 샤프가 ${sharpe.toFixed(2)} 입니다. 위험을 감수한 보상이 전혀 없었다는 뜻이며, 위 낙폭·변동성이 컸다면 "위험만 지고 수익은 없는" 전략입니다.`
+          : sharpe < 1
+            ? `변동성 1단위당 초과수익이 ${sharpe.toFixed(2)} 입니다. 보통 1 이상을 양호로 보므로, 감수한 위험에 비해 보상이 충분하지 않습니다. 낙폭이 ${mdd == null ? '' : mdd.toFixed(0) + '% 로 '}컸다면 특히 그렇습니다.`
+            : `변동성 1단위당 초과수익이 ${sharpe.toFixed(2)} 로 양호합니다.${sharpe >= 2 ? ' 2 를 넘는 값은 짧은 기간·특정 국면에 맞춘 과최적화(overfitting)에서도 자주 나오므로 비교 기간 결과를 반드시 확인하세요.' : ' 다만 샤프는 낙폭의 크기를 직접 보여 주지 않으니 MDD 와 같이 읽어야 합니다.'}`,
+        '(연환산 수익률 − 무위험수익률 2%) ÷ 연환산 변동성. 위험 한 단위를 감수하고 얻은 초과수익. 1 이상이면 양호로 본다.'),
+    ];
+    const execRows = [
+      row('시장 노출 일수', exposure == null ? '미제공' : `${exposure.toFixed(1)}%`, exposure == null ? 'info' : exposure < 40 ? 'warn' : 'info', exposure == null ? '미제공' : exposure < 40 ? '현금 비중 큼' : exposure > 85 ? '거의 상시 보유' : '부분 보유',
+        exposure == null ? '값이 없습니다.' : exposure < 40
+          ? `검증 기간의 ${exposure.toFixed(1)}% 만 주식을 들고 있었습니다. 낙폭·변동성이 작게 나왔다면 전략이 좋아서가 아니라 현금을 많이 들고 있었기 때문일 수 있고, 상승장에서는 수익 기회를 놓치는 기회비용이 생깁니다.`
+          : exposure > 85
+            ? `거의 내내(${exposure.toFixed(1)}%) 보유했으므로 결과는 단순 보유와 비슷하게 움직입니다. 단순 보유와 차이가 작다면 규칙이 실제로 한 일이 적은 것입니다.`
+            : `기간의 ${exposure.toFixed(1)}% 동안 보유했습니다. 보유하지 않은 구간이 하락장이었는지(위험 회피 성공) 상승장이었는지(기회 손실) 자산 곡선에서 확인하세요.`,
+        '검증 기간 중 포지션을 들고 있던 날의 비율. 규칙이 얼마나 자주 시장 밖(현금)에 있었는지.'),
+      row('규칙 변경 횟수', trades == null ? '미제공' : `${trades}회${perYear != null ? ` (연 약 ${perYear.toFixed(1)}회)` : ''}`, trades == null ? 'info' : perYear == null ? 'info' : perYear <= 6 ? 'good' : perYear <= 24 ? 'warn' : 'bad', trades == null ? '미제공' : perYear == null ? '-' : perYear <= 1 ? '거의 없음' : perYear <= 6 ? '적음' : perYear <= 24 ? '보통' : '잦음',
+        trades == null ? '값이 없습니다.' : `${trades}회 포지션이 바뀌었습니다${perYear != null ? ` (연 ${perYear.toFixed(1)}회)` : ''}. 이 백테스트는 수수료·세금·슬리피지를 반영하지 않으므로 ${perYear != null && perYear > 24
+          ? '이 정도로 잦은 매매는 실제로는 왕복 수수료·세금(국내 주식 매도세 0.18%)·호가 스프레드가 쌓여 표시된 수익률을 크게 갉아먹습니다. 실전 수익률은 더 낮다고 봐야 합니다.'
+          : perYear != null && perYear > 6 ? '매매당 비용 0.3~0.5% 를 가정해 차감해도 단순 보유를 이기는지 다시 계산해 보세요.'
+            : '비용 영향은 작습니다. 다만 신호가 드문 만큼 한 번의 진입·청산 시점이 결과를 좌우하므로 비교 기간 결과를 같이 보세요.'}`,
+        '규칙이 비중을 바꾼 횟수(매수·매도 신호). 많을수록 거래비용·슬리피지의 영향이 커진다.'),
+      row('승률', win == null ? '미제공' : `${win.toFixed(1)}%`, win == null ? 'info' : win >= 60 ? 'good' : win >= 40 ? 'info' : 'warn', win == null ? '미제공' : win >= 60 ? '높음' : win >= 40 ? '보통' : '낮음',
+        win == null ? '승률은 포지션 변경이 2회 이상일 때만 계산됩니다.' : `진입 뒤 이익으로 끝난 비율이 ${win.toFixed(1)}% 입니다. ${win < 40
+          ? '추세추종형 규칙은 승률이 낮아도 큰 추세 한 번으로 만회하기도 하지만, 그렇지 않다면 신호의 질이 낮은 것입니다. 평균 이익/손실 크기와 함께 보세요.'
+          : '승률만으로는 부족합니다. 몇 번 이기고 졌는지보다 이긴 거래의 평균 이익이 진 거래의 평균 손실보다 큰지가 수익을 결정합니다.'}`,
+        '포지션 변경 쌍(진입→청산) 중 이익으로 끝난 비율.'),
+    ];
+
+    const badCount = [...returnRows, ...riskRows, ...execRows].filter(r => r.level === 'bad').length;
+    const warnCount = [...returnRows, ...riskRows, ...execRows].filter(r => r.level === 'warn').length;
+    const overall = ret != null && gap != null && ret > 0 && gap < 0 && mdd != null && mdd >= 20
+      ? `절대 수익률 ${pct(ret)} 은 플러스지만, 단순 보유보다 ${Math.abs(gap).toFixed(2)}%p 낮고(알파 부재) 최대 낙폭 ${mdd.toFixed(2)}% 를 감수했습니다. 위험을 부담한 것에 비해 효율이 부족한 전략입니다.`
+      : ret != null && gap != null && gap >= 0 && (sharpe == null || sharpe >= 1)
+        ? `단순 보유를 ${gap.toFixed(2)}%p 앞서고 위험 효율(샤프 ${sharpe == null ? '-' : sharpe.toFixed(2)})도 양호합니다. 비용 차감과 비교 기간 결과까지 유지되면 실전 검토 후보입니다.`
+        : ret != null && gap != null && gap >= 0
+          ? `단순 보유를 ${gap.toFixed(2)}%p 앞섰지만 위험 효율(샤프 ${sharpe == null ? '-' : sharpe.toFixed(2)})이 낮습니다. 수익은 냈으나 그 과정의 흔들림이 큰 전략입니다.`
+          : ret != null && ret <= 0 ? `손실(${pct(ret)}) 전략입니다. 종목·기간 자체의 하락인지 규칙의 문제인지 단순 보유 수익률(${pct(bench)})과 비교해 가르세요.`
+            : '지표 일부가 없어 종합 판정을 보류합니다.';
+    const group = (kind, title, lead, rows) => `<article class="metric-group kind-${kind}"><h4><i>${BT_METRIC_KINDS[kind].slice(0, 1)}</i> ${title}</h4><p class="metric-group-lead">${lead}</p><ul>${rows.map(r => `<li class="level-${r.level}"><div class="metric-row-head"><b>${r.name}</b><em>${r.value}</em><span class="metric-badge">${LEVEL[r.level]} · ${escHtml(r.verdict)}</span></div><p class="metric-meaning">${r.meaning}</p><p class="metric-detail">${r.detail}</p></li>`).join('')}</ul></article>`;
+    return `<section class="backtest-metric-guide" aria-label="지표 형태별 상세 설명"><header><span><i class="fa-solid fa-layer-group" aria-hidden="true"></i> METRIC GUIDE</span><h3>지표는 3가지 형태로 나눠 읽습니다</h3><p><b>① 수익 지표</b>는 얼마나 벌었는지, <b>② 위험 지표</b>는 그 과정에서 얼마나 흔들렸는지, <b>③ 실행 지표</b>는 규칙이 실제로 어떻게 움직였는지를 보여 줍니다. 수익 지표만 보면 ②·③에서 치른 대가를 놓칩니다. 각 지표의 판정(양호·보통·주의·문제)은 이번 결과값의 구간에 따른 규칙 기반 해석입니다.</p></header><div class="metric-guide-groups">${group('return', '수익 지표 — 얼마나 벌었나', '절대 수익률은 출발점일 뿐입니다. 같은 종목을 그냥 들고 있었을 때(벤치마크)와 다른 국면(비교 기간)을 이겨야 규칙의 가치가 있습니다.', returnRows)}${group('risk', '위험 지표 — 얼마나 흔들렸나', '수익을 얻기까지 견뎌야 했던 손실과 등락입니다. 큰 위험을 지고도 벤치마크보다 못 벌었다면 효율이 부족한 전략입니다.', riskRows)}${group('exec', '실행 지표 — 규칙이 어떻게 움직였나', '규칙이 시장에 얼마나 머물렀고 얼마나 자주 사고팔았는지입니다. 비용·슬리피지와 기회비용이 여기서 나옵니다.', execRows)}</div><footer class="metric-guide-overall"><span>종합 판정 <small>문제 ${badCount} · 주의 ${warnCount}</small></span><p>${overall}</p><ul><li><b>샤프 비율 확인</b> — 변동성 대비 보상이 1 이상인지. 아니라면 수익률 숫자보다 위험이 먼저입니다.</li><li><b>벤치마크 적절성</b> — 비교 대상이 전략 성격과 맞는지(개별 성장주 전략에 지수를 비교했는지 등).</li><li><b>과최적화 점검</b> — 비교 기간에서도 우위가 유지되는지, 파라미터(이동평균·돌파 기준)를 조금 바꿔도 결과가 무너지지 않는지.</li><li><b>비용 반영</b> — 규칙 변경 횟수에 수수료·세금·슬리피지를 곱해 차감한 뒤에도 단순 보유를 이기는지.</li></ul></footer></section>`;
   }
 
   function buildBacktestSummary(data) {
@@ -3693,10 +3860,12 @@ effective_date: [기준일]
   }
 
   renderScenarioResult();
-  const requestedView = new URLSearchParams(window.location.search).get('view');
+  renderLeanNav();
+  const requestedParams = new URLSearchParams(window.location.search);
+  const requestedView = requestedParams.get('view');
   const initialView = ['home', 'stocks', 'learn', 'simulation', 'quant', 'walk-forward', 'basis', 'backtest', 'calendar'].includes(requestedView)
     ? requestedView
     : 'home';
-  setView(initialView);
+  setView(initialView, { example: requestedParams.get('example') || undefined });
   $topKLabel.textContent = state.topK;
 })();
