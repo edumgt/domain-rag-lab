@@ -699,3 +699,6 @@ python3 shared-css/audit.py --live   # 라이브 4개 사이트
 **검증**: pytest 7 passed, `app.js` 구문 검사(node), 패널 렌더 스모크(KOSPI200 ETF → ID `ma_cross_kospi200`·기준 충족, SPY → 저장 비활성). 브라우저 미실행.
 **배포(미완, 사용자)**: 백엔드(라우트·스키마·스토어)가 바뀌어 main push → `cd.yml` 재빌드. 운영 pr 은 `STRATEGY_API_KEY` 가 설정돼 있으므로 화면 저장은 **pr 로그인 후** 가능.
 **연계**: lumina-invest todo 6-53(운영 모드 3분할·전략설정 스펙 카드·수익율검증). 흐름: pr 백테스트 → 「전략 스펙으로 저장」(합격) → fd 전략설정 운영 모드 ② → 전략 선택·저장 → 사이클 적용 → fd 수익율검증에서 전환 전후 비교.
+
+### 6-19. 2026-10-15 계약 문서 v0.7 사본 동기화 (stock-coin-trade 6-23 연동)
+`docs/contracts/kis-autotrade-api.md` 에 2-7 시세 `GET /quote/{symbol}` 추가·v0.7 표기. 3사본 md5 일치. pr 코드 변경 없음.
