@@ -2175,7 +2175,7 @@ body.modal-open { overflow: hidden; }
 .chat-header .brand-nav-btn { flex-shrink: 0; }
 
 /* ===== LEAN 백테스트 · 실행 과정 캔버스 (FE → BE → API → LEAN) ===== */
-.backtest-pipeline { margin: 18px 0 0; padding: 14px 18px 12px; border: 1px solid #1d6d96; border-radius: 14px; background: #071a36; }
+.backtest-pipeline { margin: 26px 0 0; padding: 14px 18px 12px; border: 1px solid #1d6d96; border-radius: 14px; background: #071a36; }
 .backtest-pipeline-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 8px; }
 .backtest-pipeline-head span { display: block; color: #7dd3fc; font-size: 12.5px; font-weight: 850; letter-spacing: .1em; }
 .backtest-pipeline-head b { display: block; color: #f0f9ff; font-size: 15.5px; font-weight: 800; }
@@ -2244,7 +2244,10 @@ body.modal-open { overflow: hidden; }
 
 /* ===== 6-20 (2026-10-15) 우측 offcanvas 「LEAN」 메뉴 · 종목별 세부 화면 · 결과 지표 3형태 가이드 ===== */
 .chat-header { grid-template-columns: auto auto minmax(0, 1fr) auto; }
-.lean-toggle { align-self: center; color: #0369a1; border-color: #bae6fd; background: #f0f9ff; white-space: nowrap; }
+/* .brand-nav 에 order:10 이 걸려 있어 LEAN 버튼이 3번째(1fr) 칸을 차지하며 늘어났음 → order 로 GNB 뒤(4번째 auto 칸)에 두고 GNB 버튼과 같은 크기로 */
+.lean-toggle { order: 20; grid-column: 4; align-self: center; justify-self: end; width: auto; padding: 8px 11px; color: #0369a1; border: 1px solid #bae6fd; border-radius: var(--radius-sm); background: #f0f9ff; font: 700 14.5px var(--font); line-height: 1.2; white-space: nowrap; }
+.chat-header .brand-nav { grid-column: 3; }
+.lean-toggle i { font-size: 14px; }
 .lean-toggle:hover, .lean-toggle.active { color: #fff; border-color: #0284c7; background: #0284c7; }
 .lean-nav { padding: 16px 20px 10px; border-bottom: 2px solid var(--border); }
 .lean-nav .nav-label { margin-bottom: 10px; }
@@ -2256,12 +2259,7 @@ body.modal-open { overflow: hidden; }
 .lean-menu-btn.sub b { color: var(--text); }
 .lean-menu-btn.sub small { flex-basis: auto; margin-left: auto; }
 .lean-menu-btn.active .lean-menu-code { color: #fff; background: var(--accent); }
-.lean-siblings { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.lean-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; color: #0c4a6e; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 999px; font-size: 14.5px; font-weight: 750; text-decoration: none; transition: .15s ease; }
-.lean-chip small { color: #0369a1; font-weight: 700; }
-.lean-chip:hover { border-color: #0284c7; background: #e0f2fe; }
-.lean-chip.active { color: #fff; background: #0284c7; border-color: #0284c7; }
-.lean-chip.active small { color: #e0f2fe; }
+.lean-single-head { justify-content: flex-start; }
 .lean-head-code { display: inline-block; margin-left: 8px; padding: 3px 9px; color: #0369a1; background: #e0f2fe; border-radius: 8px; font-size: 15px; font-weight: 800; vertical-align: middle; }
 .backtest-workspace.single { grid-template-columns: minmax(0, 1fr); }
 .backtest-page.lean-single .backtest-test-detail { margin-top: 0; }

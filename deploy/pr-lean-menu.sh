@@ -12,7 +12,7 @@ tar czf - $FILES deploy/pr-lean-menu.sh | ssh -i "$K" -o StrictHostKeyChecking=n
   tar cf - $FILES | sudo -n docker cp - domain-rag-lab-api-1:/app/
   sudo -n docker exec domain-rag-lab-api-1 grep -c 'renderLeanNav' /app/frontend/app.js
   sudo -n docker exec domain-rag-lab-api-1 grep -c 'backtest-metric-guide' /app/frontend/style.css
-  sudo -n docker exec domain-rag-lab-api-1 grep -c '20261015-lean-menu' /app/frontend/index.html
+  sudo -n docker exec domain-rag-lab-api-1 grep -c '20261015-lean-menu-5' /app/frontend/index.html
 "
 echo "== live check"
 curl -s -m 10 https://pr.edumgt.co.kr/ | grep -o 'app.js?v=[^"]*\|id="openRightPanel"\|id="leanNav"' || true
