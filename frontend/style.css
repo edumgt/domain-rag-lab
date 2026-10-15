@@ -2366,3 +2366,23 @@ body.modal-open { overflow: hidden; }
 .atlas-health-inputs { margin: 0 0 8px; color: #334155; font-size: 14.5px; line-height: 1.6; }
 .atlas-health-note, .atlas-health-empty { margin: 0; color: #64748b; font-size: 14px; line-height: 1.6; }
 .atlas-health-empty { padding: 12px 14px; border: 1px dashed #cbd5e1; border-radius: 8px; background: #f8fafc; }
+
+/* ── 종목 보기 상단 심플화(2026-10-15 사용자 요청, 스크린샷 기준) — 짙은 그라데이션 헤더·숫자 원판·안내문·화살표 줄을 치우고
+      [제목 한 줄] → [일차 탭] → [얇은 집계·필터 줄] 만 남긴다. 마크업은 그대로 두고 CSS 로만 숨기거나 평면화한다. ── */
+.stocks-page-note { display: none; }
+.atlas-arrow-line { display: none; }
+.atlas-number-board { display: none; }
+.company-atlas { margin: 8px 0 18px; border: 1px solid #dbe4f0; border-radius: 8px; box-shadow: none; background: #fff; }
+.atlas-header { padding: 10px 16px; color: #172554; background: #fff; border-bottom: 1px solid #e2e8f0; }
+.atlas-header::after { display: none; }
+.atlas-header > div:first-child > span { display: none; }
+.atlas-header > div:first-child > p { display: none; }
+.atlas-header h2 { margin: 0; color: #172554; font-size: 18px; font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
+.atlas-header h2 em { color: #1d4ed8; }
+.atlas-toolbar { padding: 7px 16px; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+.atlas-count { color: #475569; font-size: 12.5px; font-weight: 700; letter-spacing: .04em; }.atlas-count b { color: #1d4ed8; font-size: 13px; }
+.atlas-filters button { padding: 4px 10px; border-color: #dbe4f0; font-size: 12.5px; font-weight: 700; }
+.stocks-page-head { margin-bottom: 4px; padding-bottom: 4px; border-bottom: 0; }
+.stocks-page-head > p { font-size: 13px; }
+.atlas-day-tabs { gap: 4px; margin: 4px 0 6px; }
+.atlas-day-tabs button { min-height: 26px; font-size: 13px; font-weight: 700; }
