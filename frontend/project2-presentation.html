@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="/static/style.css?v=20261012-common-3">
 <link rel="stylesheet" href="/static/assets/walk-forward-page.css?v=20261007-2">
 <link rel="stylesheet" href="https://www.edumgt.co.kr/css/common.css?v=20261012-common-3">
-<link rel="stylesheet" href="/static/assets/project2-presentation.css?v=20261013-rec">
-<script src="/static/assets/project2-presentation.js?v=20261013-2" defer></script>
+<link rel="stylesheet" href="/static/assets/project2-presentation.css?v=20261020-pdf-charts-columns">
+<script src="/static/assets/project2-presentation.js?v=20261020-pdf-charts-columns" defer></script>
 </head><body class="wf-standalone presentation-page">
 <a class="wf-skip" href="#presentationOverview">본문 바로가기</a>
 <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
@@ -35,11 +35,12 @@
           <a class="brand-nav-btn brand-nav-link" href="/?view=calendar"><i class="fa-solid fa-calendar-days"></i> 캘린더</a>
         </nav>
       </header>
-<nav class="wf-lnb" aria-label="프로젝트2 발표 상세 메뉴"><span class="wf-lnb-title">프로젝트2 발표</span><a href="#videoPreparation" aria-current="location">발표 준비</a><a href="#videoSamples">동영상 샘플</a><a href="#videoRecorder">화면 녹화 · 동영상 생성</a><a href="#publicLinks">데모 · GitHub</a><a href="#teamPresentation">팀원별 발표</a><a href="#questionsAndAnswers">질의응답</a></nav>
+<nav class="wf-lnb" aria-label="프로젝트2 발표 상세 메뉴"><span class="wf-lnb-title">프로젝트2 발표</span><a href="#videoPreparation" aria-current="location">발표 준비</a><a href="#videoSamples">동영상 샘플</a><a href="#videoRecorder">화면 녹화 · 동영상 생성</a><a href="#publicLinks">데모 · GitHub</a><a href="#teamPresentation">팀원별 발표</a><a href="#questionsAndAnswers">질의응답</a><a href="#presentationOrder">발표 순서</a><a href="#presentationOpinions">의견 게시</a><a href="#projectEvaluations">프로젝트 평가</a></nav>
 <main class="messages wf-content" id="presentationContent"><div class="presentation">
 <div class="eyebrow" id="presentationOverview">PROJECT 2 · PRESENTATION</div>
 <h1>프로젝트2 발표</h1>
 <p class="intro">프로젝트 발표용 준비사항을 확인하고, 주요 기능과 본인이 수행한 업무를 중심으로 발표를 준비하세요.</p>
+<div id="panel-guide">
 <div class="requirements">
 <section class="requirement" id="videoPreparation"><h2>01. 주요 기능 동영상 준비</h2>
 <p><strong>주요 기능 동영상을 3개 이상 준비합니다.</strong> 각 동영상은 <strong>3분 내외</strong>로 구성하여 주요 기능을 간결하게 시연합니다.</p>
@@ -110,5 +111,38 @@ out.release()</code></pre></li>
 </section>
 </div>
 
+</div><section id="presentationOrder">
+<div class="requirement"><div class="eyebrow">PRESENTATION ORDER</div><h2>발표 순서 · 랜덤 배정</h2>
+<p>8명의 발표자에게 1~8번을 중복 없이 배정했습니다. 랜덤 버튼은 전체 접속자 합산 3회까지 사용하며, 세 번째 추첨으로 최종 확정됩니다. 새로고침해도 횟수와 확정 순서는 유지됩니다.</p>
+<p class="video-note">LSH 발표자는 LSH(이상하), LSH(이세현)으로 구분합니다.</p>
+<p id="orderStatus" role="status">발표 순서를 불러오는 중입니다.</p><div class="presenter-grid" id="presenterCards"></div>
+<button type="button" id="reloadOrder">랜덤</button></div></section>
+<section id="presentationOpinions">
+<div class="requirement"><div class="eyebrow">FEEDBACK BOARD</div><h2>발표 의견 게시</h2><p>발표자에게 질문, 응원, 개선 의견을 남겨주세요. 등록한 의견은 모든 방문자에게 공개됩니다.</p>
+<section class="survey-section" aria-labelledby="surveyTitle">
+<h3 id="surveyTitle">프로젝트 성과물 검증 설문 · 10문항</h3>
+<p><a href="https://committee.iso.org/standard/78176.html" target="_blank" rel="noopener noreferrer">ISO/IEC 25010:2023 제품 품질 모델</a>을 참고하고 창의성·실 제품화 항목을 추가해 수업용으로 구성한 설문입니다. 공식 ISO 인증 평가가 아닙니다. 평가 설명과 예시는 특정 산업의 업무 성과가 아닌 소프트웨어의 구현·시험·운영 품질을 기준으로 합니다.</p>
+<p class="survey-scale"><strong>1. 매우 우수 · 2. 우수 · 3. 보통 · 4. 미흡 · 5. 매우 미흡</strong><br>낮은 점수일수록 우수합니다. 시연·코드·테스트·문서 근거를 확인한 후 10문항 모두 선택해주세요. 판단 근거가 부족하면 발표자에게 시연·자료를 요청한 뒤 응답해주세요. 아래 예시는 평가를 돕는 가이드이며, 자료가 없다는 이유만으로 기능이 없다고 단정하지 마세요.</p>
+<form id="surveyForm" novalidate><div class="opinion-fields"><label>평가 대상 발표자<select name="presenter_id" id="surveyPresenter" required><option value="" selected>팀을 선택해주세요</option></select></label><label>평가자<input name="author" maxlength="40" required placeholder="이름 또는 닉네임"></label></div>
+<p class="video-note">팀과 평가자 이름을 조합해 1회만 등록할 수 있습니다. 이름의 공백·영문 대소문자 차이는 중복으로 처리합니다.</p>
+<div id="surveyQuestions"><p>설문을 불러오는 중입니다.</p></div>
+<label class="survey-evidence">주관식 종합 의견 (선택)<textarea name="evidence" rows="5" maxlength="2000" placeholder="프로젝트의 잘된 점, 검증 근거, 개선할 점, 질문과 응원 등 전체 의견을 자유롭게 적어주세요."></textarea></label>
+<p class="video-note">위에서 선택한 팀과 평가자 이름으로 10문항 평가와 주관식 의견을 함께 저장합니다.</p><button type="submit" id="submitSurvey" disabled>평가·의견 함께 제출</button></form>
+<p id="surveyStatus" role="status"></p>
+<div class="opinion-toolbar"><h3>선택한 발표자의 설문 집계</h3><button type="button" id="reloadSurvey">집계 새로고침</button></div>
+<p class="video-note">문항별 동일 가중치 · 응답 원점수 평균(1~5) · 낮을수록 우수 · 응답 건수 기준 집계입니다.</p><div id="surveySummary" aria-live="polite"></div>
+</section></div></section>
+<section id="projectEvaluations" class="requirement" aria-labelledby="evaluationTitle">
+<div class="eyebrow">PROJECT EVALUATIONS</div><div class="opinion-toolbar"><h2 id="evaluationTitle">프로젝트 평가</h2><div class="report-actions"><button type="button" id="reloadEvaluations">평가 새로고침</button><button type="button" id="downloadEvaluationReport">PDF 다운로드</button></div></div>
+<div class="report-heading"><h3>나만의 로보 어드바이저 개발 및 성과 검증 프로젝트 과정 중 팀별 소분과 프로젝트 수행결과</h3><p><strong>기간: 2026년 10월 1일 ~ 10월 21일</strong></p><p class="video-note">PDF 보고서: 전체·팀별 응답 수, 10개 문항의 질문, 1~5단계 응답 건수·비율과 평균을 다운로드합니다.</p></div><p>중복을 제외한 팀·평가자별 설문을 집계합니다. <strong>1 매우 우수 → 5 매우 미흡 · 낮을수록 우수</strong></p>
+<p class="video-note">현재 10문항 설문만 집계하며 문항별 가중치는 동일합니다. 응답이 없는 팀은 ‘평가 없음’으로 표시합니다.</p>
+<p class="video-note">파이는 1~5단계 응답 비율, 가운데 숫자는 평균입니다. 조각에 마우스를 올리거나 선택하면 비율을 확인할 수 있습니다. 전체 평균 선택 시 10문항 응답을 합산합니다.</p><div class="pie-legend" aria-label="평가 척도 색상"><span style="--slice-color:#10b981">1 매우 우수</span><span style="--slice-color:#38bdf8">2 우수</span><span style="--slice-color:#818cf8">3 보통</span><span style="--slice-color:#fbbf24">4 미흡</span><span style="--slice-color:#fb7185">5 매우 미흡</span></div><p id="evaluationStatus" role="status">평가 결과를 불러오는 중입니다.</p>
+
+<section class="ranking-section" aria-labelledby="rankingTitle"><h3 id="rankingTitle">전체 팀 랭킹</h3><p class="video-note">10문항 전체 평균이 낮을수록 상위입니다. 소수 둘째 자리 평균이 같으면 공동 순위(1위·1위·3위)를 적용합니다. 응답이 없는 팀은 미평가로 표시하며, 평가 수가 적은 팀의 순위는 변동될 수 있습니다.</p><div class="ranking-table-wrap"><table class="ranking-table"><thead><tr><th scope="col">순위</th><th scope="col">팀</th><th scope="col">전체 평균 (1~5)</th><th scope="col">평가 수</th></tr></thead><tbody id="teamRankingBody"></tbody></table></div></section>
+<div class="evaluation-grid"><section class="evaluation-chart"><h3>팀별 평가 비교</h3><label for="evaluationMetric">비교 항목</label><select id="evaluationMetric"><option value="overall">전체 평균</option></select><div id="teamEvaluationChart" class="evaluation-pies"></div></section>
+<section class="evaluation-chart"><h3>팀의 문항별 평가</h3><label for="evaluationPresenter">발표 팀</label><select id="evaluationPresenter"></select><div id="questionEvaluationChart" class="evaluation-pies"></div></section></div><section class="evaluation-comments" aria-labelledby="evaluationCommentsTitle"><h3 id="evaluationCommentsTitle">팀별 객관식 집계 및 주관식 의견</h3><p class="video-note">각 팀의 객관식 설문 집계 다음에 주관식 의견을 표시합니다. 평가자 이름·작성 시각·의견 전문을 확인하세요. 설문 종합 의견과 기존 자유 의견을 구분하며, 자유 의견은 점수 집계에 포함하지 않습니다.</p>
+<div class="comment-filters"><label>의견을 볼 팀<select id="commentTeamFilter"><option value="all">모든 팀</option></select></label><label>평가자·의견 검색<input id="commentSearch" type="search" placeholder="평가자 이름 또는 의견 내용"></label></div><div id="evaluationComments" aria-live="polite"></div></section>
+
+</section>
 </div></main><footer class="site-footer-unified">© 2026 (주)에듀엠지티 All rights reserved.</footer>
-</div></div></body></html>
+</div></div><dialog id="identityWarning" aria-labelledby="identityWarningTitle" aria-describedby="identityWarningText"><h2 id="identityWarningTitle">필수 정보 확인</h2><p id="identityWarningText"></p><form method="dialog"><button type="submit" autofocus>확인</button></form></dialog></body></html>

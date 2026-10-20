@@ -16,3 +16,5 @@ yfinance==0.2.66
 numpy>=1.26,<3
 lightgbm>=4.3,<5
 scikit-learn>=1.5,<2
+
+reportlab==4.4.10

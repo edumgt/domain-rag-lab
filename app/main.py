@@ -23,6 +23,7 @@ from app.api.routes.strategies import router as strategies_router
 from app.api.routes.auth import router as auth_router
 from app.api.routes.quant_lab import router as quant_lab_router
 from app.api.routes.walk_forward import router as walk_forward_router
+from app.api.routes.presentation import router as presentation_router
 from app.core.config import settings
 from app.core.database import Base, engine
 from app.services.financial_health_collector import run_forever as run_financial_health_collector
@@ -114,6 +115,7 @@ async def prevent_frontend_cache(request: Request, call_next):
         response.headers["Expires"] = "0"
     return response
 
+app.include_router(presentation_router)
 app.include_router(health_router)
 app.include_router(ingest_router)
 app.include_router(market_router)
