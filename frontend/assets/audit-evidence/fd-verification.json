@@ -1,0 +1,1435 @@
+{
+  "target": "https://fd.edumgt.co.kr",
+  "executed_at": "2026-10-21T02:34:06.836357+00:00",
+  "summary": {
+    "live": {
+      "PASS": 22,
+      "FAIL": 3
+    },
+    "live_total": 25,
+    "source_pytest_total": 50,
+    "source_pytest_passed": 50,
+    "allocation_source_total": 9,
+    "allocation_source_failed": 2,
+    "entries_total": 84,
+    "critical_findings": 1,
+    "high_findings": 1,
+    "cleanup": "임시 일반 계정 2개 및 세션 제거 · 잔존 테스트 사용자 0",
+    "limitations": [
+      "기존 가상 시나리오 135건 전체를 운영 검증으로 대체하지 않음",
+      "브로커 주문·자동매매·설정 변경 및 미승인 CR 구현 시험 미실시",
+      "소스 pytest는 합성 데이터/모의 의존성 기반",
+      "확인한 서비스 4개 서비스은 운영 컨테이너와 해시 일치. 라우트 ML 라우트는 로컬·운영 차이가 있어 운영 소스로 수식 별도 검증.",
+      "부산대 문서는 계속 가상/미실행 상태 유지"
+    ]
+  },
+  "entries": [
+    {
+      "id": "FD-AUTH-001",
+      "requirements": [
+        "MGT-007"
+      ],
+      "name": "비로그인 계산 API 인증 경계",
+      "verdict": "PASS",
+      "detail": "HTTP 401 · 미인증 요청 거부",
+      "severity": "INFO",
+      "endpoint": "/api/ml/robo/questions",
+      "planned": [],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/questions",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-AUTH-002",
+      "requirements": [
+        "MGT-007"
+      ],
+      "name": "임시 일반계정 인증",
+      "verdict": "PASS",
+      "detail": "일반 user 역할로 세션 발급. 자격정보는 기록하지 않음.",
+      "severity": "INFO",
+      "endpoint": "/api/auth/register",
+      "planned": [],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/auth/register",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-ROBO-001",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "투자성향 문항 조회",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 문항 7개",
+      "severity": "INFO",
+      "endpoint": "/api/ml/robo/questions",
+      "planned": [
+        "UT-FINANCE-RA-015-N"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/questions",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-ROBO-002",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "투자성향 정상 채점",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 점수 21 · 성향 위험중립형",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/risk-profile",
+      "planned": [
+        "UT-FINANCE-RA-015-N"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/risk-profile",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-ROBO-003-0",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "진단 선택 경계",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 선택 0 · 결과 안정형",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/risk-profile",
+      "planned": [
+        "UT-FINANCE-RA-015-B"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/risk-profile",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-ROBO-003-4",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "진단 선택 경계",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 선택 4 · 결과 공격투자형",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/risk-profile",
+      "planned": [
+        "UT-FINANCE-RA-015-B"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/risk-profile",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-ROBO-004",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "미응답 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 전체 문항 누락 입력의 HTTP 계약",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/risk-profile",
+      "planned": [
+        "UT-FINANCE-RA-015-E"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/risk-profile",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-ROBO-005",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "범위 밖 선택 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 선택값 9 거부",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/risk-profile",
+      "planned": [
+        "UT-FINANCE-RA-015-E"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/risk-profile",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-SIM-001",
+      "requirements": [
+        "RA-015",
+        "RA-012"
+      ],
+      "name": "무변동성 확률·복리 검산",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 확률 100.0%, p50 1469.3 · 독립 복리 기대 1469.3",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/goal-simulation",
+      "planned": [
+        "UT-FINANCE-RA-015-N",
+        "UT-FINANCE-RA-012-N"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/goal-simulation",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-SIM-002",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "달성 불가 목표 분기",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 확률 0.0%",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/goal-simulation",
+      "planned": [
+        "UT-FINANCE-RA-015-B"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/goal-simulation",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-SIM-003",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "수익률 -100% 미만 입력 검증",
+      "verdict": "FAIL",
+      "detail": "HTTP 500 · expected_return_pct=-101 입력은 422 기대; 실제 오류 응답 여부 확인",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/goal-simulation",
+      "planned": [
+        "UT-FINANCE-RA-015-E"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/goal-simulation",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-SIM-004",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "수익률 -100% 미만 입력 검증",
+      "verdict": "FAIL",
+      "detail": "HTTP 500 · target_return_pct=-101 입력은 422 기대; 실제 오류 응답 여부 확인",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/goal-simulation",
+      "planned": [
+        "UT-FINANCE-RA-015-E"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/goal-simulation",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-DSL-001",
+      "requirements": [
+        "IND-004",
+        "IND-006"
+      ],
+      "name": "산식 문법·체크섬 검증",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · ok=True · checksum 길이 16",
+      "severity": "HIGH",
+      "endpoint": "/api/formula-indicators/validate",
+      "planned": [
+        "UT-FINANCE-IND-004-N",
+        "UT-FINANCE-IND-006-N"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/formula-indicators/validate",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-DSL-BLOCK-1",
+      "requirements": [
+        "IND-004",
+        "IND-005"
+      ],
+      "name": "금지 산식 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 미래 참조/코드 실행/속성 접근 산식 거부",
+      "severity": "INFO",
+      "endpoint": "/api/formula-indicators/validate",
+      "planned": [
+        "UT-FINANCE-IND-005-E",
+        "UT-FINANCE-IND-004-E"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/formula-indicators/validate",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-DSL-BLOCK-2",
+      "requirements": [
+        "IND-004",
+        "IND-005"
+      ],
+      "name": "금지 산식 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 미래 참조/코드 실행/속성 접근 산식 거부",
+      "severity": "INFO",
+      "endpoint": "/api/formula-indicators/validate",
+      "planned": [
+        "UT-FINANCE-IND-005-E",
+        "UT-FINANCE-IND-004-E"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/formula-indicators/validate",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-DSL-BLOCK-3",
+      "requirements": [
+        "IND-004",
+        "IND-005"
+      ],
+      "name": "금지 산식 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 미래 참조/코드 실행/속성 접근 산식 거부",
+      "severity": "INFO",
+      "endpoint": "/api/formula-indicators/validate",
+      "planned": [
+        "UT-FINANCE-IND-005-E",
+        "UT-FINANCE-IND-004-E"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/formula-indicators/validate",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-DSL-002",
+      "requirements": [
+        "IND-006"
+      ],
+      "name": "미정의 변수 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 미정의 n 변수 거부",
+      "severity": "HIGH",
+      "endpoint": "/api/formula-indicators/validate",
+      "planned": [
+        "UT-FINANCE-IND-006-E"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/formula-indicators/validate",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-CMP-001",
+      "requirements": [
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "전략 비교 동일 스냅샷·비용",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 전략 수 3 · source db · 비용/일자 비교. 실주문 없음.",
+      "severity": "HIGH",
+      "endpoint": "/api/quant/compare?symbol=005930.KS&period=1y&strategies=rsi,ma&cost_bps=10&slippage_bps=5",
+      "planned": [
+        "UT-FINANCE-IND-010-N",
+        "UT-FINANCE-IND-012-N"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/quant/compare?symbol=005930.KS&period=1y&strategies=rsi,ma&cost_bps=10&slippage_bps=5",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-CMP-002",
+      "requirements": [
+        "IND-003"
+      ],
+      "name": "미지원 전략 입력 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 미지원 전략 HTTP422 기대",
+      "severity": "HIGH",
+      "endpoint": "/api/quant/compare?strategies=invalid",
+      "planned": [
+        "UT-FINANCE-IND-003-E"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/quant/compare?strategies=invalid",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-CMP-003",
+      "requirements": [
+        "RA-012",
+        "IND-010"
+      ],
+      "name": "음수 비용 입력 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 음수 거래비용 HTTP422 기대",
+      "severity": "HIGH",
+      "endpoint": "/api/quant/compare?cost_bps=-1",
+      "planned": [
+        "UT-FINANCE-RA-012-E",
+        "UT-FINANCE-IND-010-E"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/quant/compare?cost_bps=-1",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-DSL-003",
+      "requirements": [
+        "IND-004",
+        "IND-006",
+        "IND-010"
+      ],
+      "name": "실제 OHLCV 산식 계산",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 계산 rows 246 · latest_value 253450.0 · source None",
+      "severity": "HIGH",
+      "endpoint": "/api/formula-indicators/compute",
+      "planned": [
+        "UT-FINANCE-IND-004-N",
+        "UT-FINANCE-IND-006-N"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/formula-indicators/compute",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-ALLOC-001",
+      "requirements": [
+        "RA-015",
+        "RA-009"
+      ],
+      "name": "장기 공격형 비중 비음수 검사",
+      "verdict": "FAIL",
+      "detail": "HTTP 200 · 실제 allocations={\"국내주식\": 51.0, \"해외주식\": 41.0, \"국내채권\": 4.0, \"대체자산\": 8.0, \"현금\": -4.0} · 합계 100.0%; 음수 현금 비중 확인",
+      "severity": "CRITICAL",
+      "endpoint": "/api/ml/robo/allocation",
+      "planned": [
+        "UT-FINANCE-RA-015-B"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/api/ml/robo/allocation",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-UI-001",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "화면 설문→API→성향 반영",
+      "verdict": "PASS",
+      "detail": "실제 브라우저 7문항 선택, 위험중립형 표시 및 자산배분 성향 연동",
+      "severity": "INFO",
+      "endpoint": "/app.html#robo-portfolio",
+      "planned": [
+        "IT-FINANCE-PORTFOLIO"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/app.html#robo-portfolio",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-UI-002",
+      "requirements": [
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "화면 멀티전략 비교→결과",
+      "verdict": "PASS",
+      "detail": "5개 전략 비교 완료. 결과는 실행 당시의 설정 기준입니다.",
+      "severity": "INFO",
+      "endpoint": "/app.html#indicator-backtest",
+      "planned": [
+        "IT-FINANCE-PERFORMANCE"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/app.html#indicator-backtest",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-UI-003",
+      "requirements": [
+        "IND-016"
+      ],
+      "name": "모바일 문서 폭",
+      "verdict": "PASS",
+      "detail": "{'page': 390, 'viewport': 390}",
+      "severity": "MEDIUM",
+      "endpoint": "/app.html#indicator-backtest",
+      "planned": [
+        "UT-FINANCE-IND-016-B"
+      ],
+      "origin": "운영 HTTPS/API·브라우저",
+      "source": "https://fd.edumgt.co.kr/app.html#indicator-backtest",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00"
+    },
+    {
+      "id": "FD-SOURCE-001",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "test_robo_profile::test_profile_levels_by_score",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_robo_profile.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-002",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "test_robo_profile::test_profile_requires_all_answers",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_robo_profile.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-003",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "test_robo_profile::test_goal_simulation_deterministic_when_no_volatility",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_robo_profile.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-004",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "test_robo_profile::test_goal_simulation_with_contributions_and_volatility",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_robo_profile.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-005",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_blocked_constructs",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-006",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_validate_reports_names_and_checksum",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-007",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_checksum_changes_only_with_definition",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-008",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_compute_is_causal",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-009",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_compute_backtest_and_signals",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-010",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_where_and_params_and_templates_run",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-011",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_code_generation",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-012",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_negative_shift_rejected_at_validation",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-013",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_pine_no_double_prefix",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-014",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_pine_v6_syntax_pitfalls",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-015",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_pine_casts_numeric_signal_to_bool",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-016",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_pine_param_input_types",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-017",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_pine_rejects_nested_history_operator",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-018",
+      "requirements": [
+        "IND-004",
+        "IND-005",
+        "IND-006",
+        "IND-007"
+      ],
+      "name": "test_formula::test_pine_rejects_unconvertible_function",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_formula.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-019",
+      "requirements": [
+        "RA-006",
+        "IND-001",
+        "IND-005",
+        "IND-010"
+      ],
+      "name": "test_ta_utils_lookahead::test_indicators_are_causal[<lambda>0]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_ta_utils_lookahead.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-020",
+      "requirements": [
+        "RA-006",
+        "IND-001",
+        "IND-005",
+        "IND-010"
+      ],
+      "name": "test_ta_utils_lookahead::test_indicators_are_causal[<lambda>1]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_ta_utils_lookahead.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-021",
+      "requirements": [
+        "RA-006",
+        "IND-001",
+        "IND-005",
+        "IND-010"
+      ],
+      "name": "test_ta_utils_lookahead::test_indicators_are_causal[<lambda>2]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_ta_utils_lookahead.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-022",
+      "requirements": [
+        "RA-006",
+        "IND-001",
+        "IND-005",
+        "IND-010"
+      ],
+      "name": "test_ta_utils_lookahead::test_indicators_are_causal[<lambda>3]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_ta_utils_lookahead.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-023",
+      "requirements": [
+        "RA-006",
+        "IND-001",
+        "IND-005",
+        "IND-010"
+      ],
+      "name": "test_ta_utils_lookahead::test_rsi_bounds",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_ta_utils_lookahead.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-024",
+      "requirements": [
+        "RA-006",
+        "IND-001",
+        "IND-005",
+        "IND-010"
+      ],
+      "name": "test_ta_utils_lookahead::test_feature_engineering_is_causal",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_ta_utils_lookahead.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-025",
+      "requirements": [
+        "RA-006",
+        "IND-001",
+        "IND-005",
+        "IND-010"
+      ],
+      "name": "test_ta_utils_lookahead::test_backtest_applies_signal_next_day",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_ta_utils_lookahead.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-026",
+      "requirements": [
+        "RA-006",
+        "IND-001",
+        "IND-005",
+        "IND-010"
+      ],
+      "name": "test_ta_utils_lookahead::test_sharpe_and_mdd_helpers",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_ta_utils_lookahead.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-027",
+      "requirements": [
+        "RA-012",
+        "IND-002",
+        "IND-010",
+        "IND-011"
+      ],
+      "name": "test_backtest_costs::test_costs_reduce_return_by_turnover",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_backtest_costs.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-028",
+      "requirements": [
+        "RA-012",
+        "IND-002",
+        "IND-010",
+        "IND-011"
+      ],
+      "name": "test_backtest_costs::test_stop_loss_exits_and_blocks_until_reentry",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_backtest_costs.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-029",
+      "requirements": [
+        "RA-012",
+        "IND-002",
+        "IND-010",
+        "IND-011"
+      ],
+      "name": "test_backtest_costs::test_take_profit_then_reentry_on_fresh_signal",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_backtest_costs.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-030",
+      "requirements": [
+        "RA-012",
+        "IND-002",
+        "IND-010",
+        "IND-011"
+      ],
+      "name": "test_backtest_costs::test_no_stops_is_identity",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_backtest_costs.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-031",
+      "requirements": [
+        "RA-012",
+        "IND-002",
+        "IND-010",
+        "IND-011"
+      ],
+      "name": "test_backtest_costs::test_backtest_strategy_accepts_costs_and_stops",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_backtest_costs.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-032",
+      "requirements": [
+        "RA-012",
+        "IND-002",
+        "IND-010",
+        "IND-011"
+      ],
+      "name": "test_backtest_costs::test_optimize_portfolio_expected_return_is_shrunk",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_backtest_costs.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-033",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_comparison_uses_one_indicator_window",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-034",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_hold_benchmark_pays_entry_cost_but_remains_hold",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-035",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_invalid_selection[selected0]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-036",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_invalid_selection[selected1]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-037",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_invalid_selection[selected2]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-038",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_subset_deduplication_and_insufficient_data",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-039",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_compare_endpoint_fetches_once_and_returns_selected",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-040",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_endpoint_validation_happens_before_fetch[strategies=]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-041",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_endpoint_validation_happens_before_fetch[strategies=bad]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-042",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_endpoint_validation_happens_before_fetch[period=2y]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-043",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_endpoint_validation_happens_before_fetch[cost_bps=-1]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-044",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_endpoint_validation_happens_before_fetch[stop_loss_pct=0]",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-045",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_endpoint_requires_login",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-046",
+      "requirements": [
+        "IND-003",
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "test_strategy_compare::test_endpoint_reports_missing_prices",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_strategy_compare.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-047",
+      "requirements": [
+        "IND-014"
+      ],
+      "name": "test_risk_guard_boundaries::test_cooldown_expiry_boundary",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_risk_guard_boundaries.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-048",
+      "requirements": [
+        "IND-014"
+      ],
+      "name": "test_risk_guard_boundaries::test_daily_order_counter_reaches_limit",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_risk_guard_boundaries.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-049",
+      "requirements": [
+        "IND-014"
+      ],
+      "name": "test_risk_guard_boundaries::test_risk_limits_from_row_and_kill_switch",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_risk_guard_boundaries.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-SOURCE-050",
+      "requirements": [
+        "IND-014"
+      ],
+      "name": "test_risk_guard_boundaries::test_real_order_skipped_when_risk_store_is_memory_fallback",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "로컬 저장소의 순수 계산/격리 테스트 실제 실행. 합성 OHLCV·mock 의존성 사용; 운영 화면 전체 통과를 의미하지 않음.",
+      "origin": "소스 pytest · 합성 fixture/모의 의존성",
+      "source": "소스 검증: tests/test_risk_guard_boundaries.py",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-ALLOC-SOURCE-01",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "운영 자산배분 수식 · conservative / 1년",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "{\"국내주식\": 15.0, \"해외주식\": 10.0, \"국내채권\": 50.0, \"대체자산\": 10.0, \"현금\": 15.0} · 운영 함수의 비중 계산 구간을 AST로 추출해 외부 시세·주문 없이 격리 실행.",
+      "origin": "운영 소스 수식 격리 검증",
+      "source": "소스 검증: app/routes/ml.py:98-115",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-ALLOC-SOURCE-02",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "운영 자산배분 수식 · conservative / 5년",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "{\"국내주식\": 17.0, \"해외주식\": 12.0, \"국내채권\": 48.0, \"대체자산\": 10.0, \"현금\": 13.0} · 운영 함수의 비중 계산 구간을 AST로 추출해 외부 시세·주문 없이 격리 실행.",
+      "origin": "운영 소스 수식 격리 검증",
+      "source": "소스 검증: app/routes/ml.py:98-115",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-ALLOC-SOURCE-03",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "운영 자산배분 수식 · conservative / 10년",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "{\"국내주식\": 21.0, \"해외주식\": 16.0, \"국내채권\": 44.0, \"대체자산\": 10.0, \"현금\": 9.0} · 운영 함수의 비중 계산 구간을 AST로 추출해 외부 시세·주문 없이 격리 실행.",
+      "origin": "운영 소스 수식 격리 검증",
+      "source": "소스 검증: app/routes/ml.py:98-115",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-ALLOC-SOURCE-04",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "운영 자산배분 수식 · moderate / 1년",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "{\"국내주식\": 30.0, \"해외주식\": 25.0, \"국내채권\": 30.0, \"대체자산\": 10.0, \"현금\": 5.0} · 운영 함수의 비중 계산 구간을 AST로 추출해 외부 시세·주문 없이 격리 실행.",
+      "origin": "운영 소스 수식 격리 검증",
+      "source": "소스 검증: app/routes/ml.py:98-115",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-ALLOC-SOURCE-05",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "운영 자산배분 수식 · moderate / 5년",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "{\"국내주식\": 32.0, \"해외주식\": 27.0, \"국내채권\": 28.0, \"대체자산\": 10.0, \"현금\": 3.0} · 운영 함수의 비중 계산 구간을 AST로 추출해 외부 시세·주문 없이 격리 실행.",
+      "origin": "운영 소스 수식 격리 검증",
+      "source": "소스 검증: app/routes/ml.py:98-115",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-ALLOC-SOURCE-06",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "운영 자산배분 수식 · moderate / 10년",
+      "verdict": "FAIL",
+      "severity": "CRITICAL",
+      "detail": "{\"국내주식\": 36.0, \"해외주식\": 31.0, \"국내채권\": 24.0, \"대체자산\": 10.0, \"현금\": -1.0} · 운영 함수의 비중 계산 구간을 AST로 추출해 외부 시세·주문 없이 격리 실행.",
+      "origin": "운영 소스 수식 격리 검증",
+      "source": "소스 검증: app/routes/ml.py:98-115",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-ALLOC-SOURCE-07",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "운영 자산배분 수식 · aggressive / 1년",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "{\"국내주식\": 45.0, \"해외주식\": 35.0, \"국내채권\": 10.0, \"대체자산\": 8.0, \"현금\": 2.0} · 운영 함수의 비중 계산 구간을 AST로 추출해 외부 시세·주문 없이 격리 실행.",
+      "origin": "운영 소스 수식 격리 검증",
+      "source": "소스 검증: app/routes/ml.py:98-115",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-ALLOC-SOURCE-08",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "운영 자산배분 수식 · aggressive / 5년",
+      "verdict": "PASS",
+      "severity": "INFO",
+      "detail": "{\"국내주식\": 47.0, \"해외주식\": 37.0, \"국내채권\": 8.0, \"대체자산\": 8.0, \"현금\": 0.0} · 운영 함수의 비중 계산 구간을 AST로 추출해 외부 시세·주문 없이 격리 실행.",
+      "origin": "운영 소스 수식 격리 검증",
+      "source": "소스 검증: app/routes/ml.py:98-115",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    },
+    {
+      "id": "FD-ALLOC-SOURCE-09",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "운영 자산배분 수식 · aggressive / 10년",
+      "verdict": "FAIL",
+      "severity": "CRITICAL",
+      "detail": "{\"국내주식\": 51.0, \"해외주식\": 41.0, \"국내채권\": 4.0, \"대체자산\": 8.0, \"현금\": -4.0} · 운영 함수의 비중 계산 구간을 AST로 추출해 외부 시세·주문 없이 격리 실행.",
+      "origin": "운영 소스 수식 격리 검증",
+      "source": "소스 검증: app/routes/ml.py:98-115",
+      "timestamp": "2026-10-21T02:34:06.836357+00:00",
+      "planned": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "FD-FIND-001",
+      "severity": "CRITICAL",
+      "requirements": [
+        "RA-015",
+        "RA-009"
+      ],
+      "title": "장기 자산배분의 음수 현금 비중",
+      "observed": "운영 HTTPS 응답: aggressive·10년·1,000만원 → 국내주식 51%, 해외주식 41%, 국내채권 4%, 대체자산 8%, 현금 -4%. 운영 수식 격리 검증에서 moderate·10년 현금 -1%도 확인.",
+      "cause": "현금의 하한 확인 없이 horizon_boost를 현금 비중에서 차감하고 합계 100%만 정규화.",
+      "source": "app/routes/ml.py:98-115 (운영 소스)",
+      "action": "자산군별 비중 하한·상한과 합계 제약을 적용하고 성향×기간 경계 및 UI/API 회귀시험 후 승인.",
+      "state": "실제 결함 확인 · 소스 수정/배포 미실시"
+    },
+    {
+      "id": "FD-FIND-002",
+      "severity": "HIGH",
+      "requirements": [
+        "RA-015"
+      ],
+      "title": "허용 불가 수익률의 입력 검증 누락",
+      "observed": "운영 API에 expected_return_pct=-101 또는 target_return_pct=-101을 각각 입력하면 HTTP500. 기대 HTTP422.",
+      "cause": "GoalSimBody의 유효 수익률 범위 제약 부재. log1p(mu) 및 음수 밑의 분수 거듭제곱이 유효 실수가 아닌 결과를 생성.",
+      "source": "app/routes/ml.py:307-339 / app/services/robo_profile.py:71-91",
+      "action": "허용 수익률·금액·변동성·기간의 경계를 모델에서 검증하고 비유한/복소 계산 결과를 반환하지 않도록 검증.",
+      "state": "운영 재현 · 소스 수정/배포 미실시"
+    }
+  ]
+}

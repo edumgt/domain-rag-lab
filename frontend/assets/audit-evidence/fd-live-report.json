@@ -1,0 +1,373 @@
+{
+  "target": "https://fd.edumgt.co.kr",
+  "executed_at": "2026-10-21T02:34:06.836357+00:00",
+  "checks": [
+    {
+      "id": "FD-AUTH-001",
+      "requirements": [
+        "MGT-007"
+      ],
+      "name": "비로그인 계산 API 인증 경계",
+      "verdict": "PASS",
+      "detail": "HTTP 401 · 미인증 요청 거부",
+      "severity": "INFO",
+      "endpoint": "/api/ml/robo/questions",
+      "planned": []
+    },
+    {
+      "id": "FD-AUTH-002",
+      "requirements": [
+        "MGT-007"
+      ],
+      "name": "임시 일반계정 인증",
+      "verdict": "PASS",
+      "detail": "일반 user 역할로 세션 발급. 자격정보는 기록하지 않음.",
+      "severity": "INFO",
+      "endpoint": "/api/auth/register",
+      "planned": []
+    },
+    {
+      "id": "FD-ROBO-001",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "투자성향 문항 조회",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 문항 7개",
+      "severity": "INFO",
+      "endpoint": "/api/ml/robo/questions",
+      "planned": [
+        "UT-FINANCE-RA-015-N"
+      ]
+    },
+    {
+      "id": "FD-ROBO-002",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "투자성향 정상 채점",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 점수 21 · 성향 위험중립형",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/risk-profile",
+      "planned": [
+        "UT-FINANCE-RA-015-N"
+      ]
+    },
+    {
+      "id": "FD-ROBO-003-0",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "진단 선택 경계",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 선택 0 · 결과 안정형",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/risk-profile",
+      "planned": [
+        "UT-FINANCE-RA-015-B"
+      ]
+    },
+    {
+      "id": "FD-ROBO-003-4",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "진단 선택 경계",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 선택 4 · 결과 공격투자형",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/risk-profile",
+      "planned": [
+        "UT-FINANCE-RA-015-B"
+      ]
+    },
+    {
+      "id": "FD-ROBO-004",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "미응답 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 전체 문항 누락 입력의 HTTP 계약",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/risk-profile",
+      "planned": [
+        "UT-FINANCE-RA-015-E"
+      ]
+    },
+    {
+      "id": "FD-ROBO-005",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "범위 밖 선택 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 선택값 9 거부",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/risk-profile",
+      "planned": [
+        "UT-FINANCE-RA-015-E"
+      ]
+    },
+    {
+      "id": "FD-SIM-001",
+      "requirements": [
+        "RA-015",
+        "RA-012"
+      ],
+      "name": "무변동성 확률·복리 검산",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 확률 100.0%, p50 1469.3 · 독립 복리 기대 1469.3",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/goal-simulation",
+      "planned": [
+        "UT-FINANCE-RA-015-N",
+        "UT-FINANCE-RA-012-N"
+      ]
+    },
+    {
+      "id": "FD-SIM-002",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "달성 불가 목표 분기",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 확률 0.0%",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/goal-simulation",
+      "planned": [
+        "UT-FINANCE-RA-015-B"
+      ]
+    },
+    {
+      "id": "FD-SIM-003",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "수익률 -100% 미만 입력 검증",
+      "verdict": "FAIL",
+      "detail": "HTTP 500 · expected_return_pct=-101 입력은 422 기대; 실제 오류 응답 여부 확인",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/goal-simulation",
+      "planned": [
+        "UT-FINANCE-RA-015-E"
+      ]
+    },
+    {
+      "id": "FD-SIM-004",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "수익률 -100% 미만 입력 검증",
+      "verdict": "FAIL",
+      "detail": "HTTP 500 · target_return_pct=-101 입력은 422 기대; 실제 오류 응답 여부 확인",
+      "severity": "HIGH",
+      "endpoint": "/api/ml/robo/goal-simulation",
+      "planned": [
+        "UT-FINANCE-RA-015-E"
+      ]
+    },
+    {
+      "id": "FD-DSL-001",
+      "requirements": [
+        "IND-004",
+        "IND-006"
+      ],
+      "name": "산식 문법·체크섬 검증",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · ok=True · checksum 길이 16",
+      "severity": "HIGH",
+      "endpoint": "/api/formula-indicators/validate",
+      "planned": [
+        "UT-FINANCE-IND-004-N",
+        "UT-FINANCE-IND-006-N"
+      ]
+    },
+    {
+      "id": "FD-DSL-BLOCK-1",
+      "requirements": [
+        "IND-004",
+        "IND-005"
+      ],
+      "name": "금지 산식 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 미래 참조/코드 실행/속성 접근 산식 거부",
+      "severity": "INFO",
+      "endpoint": "/api/formula-indicators/validate",
+      "planned": [
+        "UT-FINANCE-IND-005-E",
+        "UT-FINANCE-IND-004-E"
+      ]
+    },
+    {
+      "id": "FD-DSL-BLOCK-2",
+      "requirements": [
+        "IND-004",
+        "IND-005"
+      ],
+      "name": "금지 산식 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 미래 참조/코드 실행/속성 접근 산식 거부",
+      "severity": "INFO",
+      "endpoint": "/api/formula-indicators/validate",
+      "planned": [
+        "UT-FINANCE-IND-005-E",
+        "UT-FINANCE-IND-004-E"
+      ]
+    },
+    {
+      "id": "FD-DSL-BLOCK-3",
+      "requirements": [
+        "IND-004",
+        "IND-005"
+      ],
+      "name": "금지 산식 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 미래 참조/코드 실행/속성 접근 산식 거부",
+      "severity": "INFO",
+      "endpoint": "/api/formula-indicators/validate",
+      "planned": [
+        "UT-FINANCE-IND-005-E",
+        "UT-FINANCE-IND-004-E"
+      ]
+    },
+    {
+      "id": "FD-DSL-002",
+      "requirements": [
+        "IND-006"
+      ],
+      "name": "미정의 변수 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 미정의 n 변수 거부",
+      "severity": "HIGH",
+      "endpoint": "/api/formula-indicators/validate",
+      "planned": [
+        "UT-FINANCE-IND-006-E"
+      ]
+    },
+    {
+      "id": "FD-CMP-001",
+      "requirements": [
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "전략 비교 동일 스냅샷·비용",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 전략 수 3 · source db · 비용/일자 비교. 실주문 없음.",
+      "severity": "HIGH",
+      "endpoint": "/api/quant/compare?symbol=005930.KS&period=1y&strategies=rsi,ma&cost_bps=10&slippage_bps=5",
+      "planned": [
+        "UT-FINANCE-IND-010-N",
+        "UT-FINANCE-IND-012-N"
+      ]
+    },
+    {
+      "id": "FD-CMP-002",
+      "requirements": [
+        "IND-003"
+      ],
+      "name": "미지원 전략 입력 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 미지원 전략 HTTP422 기대",
+      "severity": "HIGH",
+      "endpoint": "/api/quant/compare?strategies=invalid",
+      "planned": [
+        "UT-FINANCE-IND-003-E"
+      ]
+    },
+    {
+      "id": "FD-CMP-003",
+      "requirements": [
+        "RA-012",
+        "IND-010"
+      ],
+      "name": "음수 비용 입력 차단",
+      "verdict": "PASS",
+      "detail": "HTTP 422 · 음수 거래비용 HTTP422 기대",
+      "severity": "HIGH",
+      "endpoint": "/api/quant/compare?cost_bps=-1",
+      "planned": [
+        "UT-FINANCE-RA-012-E",
+        "UT-FINANCE-IND-010-E"
+      ]
+    },
+    {
+      "id": "FD-DSL-003",
+      "requirements": [
+        "IND-004",
+        "IND-006",
+        "IND-010"
+      ],
+      "name": "실제 OHLCV 산식 계산",
+      "verdict": "PASS",
+      "detail": "HTTP 200 · 계산 rows 246 · latest_value 253450.0 · source None",
+      "severity": "HIGH",
+      "endpoint": "/api/formula-indicators/compute",
+      "planned": [
+        "UT-FINANCE-IND-004-N",
+        "UT-FINANCE-IND-006-N"
+      ]
+    },
+    {
+      "id": "FD-ALLOC-001",
+      "requirements": [
+        "RA-015",
+        "RA-009"
+      ],
+      "name": "장기 공격형 비중 비음수 검사",
+      "verdict": "FAIL",
+      "detail": "HTTP 200 · 실제 allocations={\"국내주식\": 51.0, \"해외주식\": 41.0, \"국내채권\": 4.0, \"대체자산\": 8.0, \"현금\": -4.0} · 합계 100.0%; 음수 현금 비중 확인",
+      "severity": "CRITICAL",
+      "endpoint": "/api/ml/robo/allocation",
+      "planned": [
+        "UT-FINANCE-RA-015-B"
+      ]
+    },
+    {
+      "id": "FD-UI-001",
+      "requirements": [
+        "RA-015"
+      ],
+      "name": "화면 설문→API→성향 반영",
+      "verdict": "PASS",
+      "detail": "실제 브라우저 7문항 선택, 위험중립형 표시 및 자산배분 성향 연동",
+      "severity": "INFO",
+      "endpoint": "/app.html#robo-portfolio",
+      "planned": [
+        "IT-FINANCE-PORTFOLIO"
+      ]
+    },
+    {
+      "id": "FD-UI-002",
+      "requirements": [
+        "IND-010",
+        "IND-012"
+      ],
+      "name": "화면 멀티전략 비교→결과",
+      "verdict": "PASS",
+      "detail": "5개 전략 비교 완료. 결과는 실행 당시의 설정 기준입니다.",
+      "severity": "INFO",
+      "endpoint": "/app.html#indicator-backtest",
+      "planned": [
+        "IT-FINANCE-PERFORMANCE"
+      ]
+    },
+    {
+      "id": "FD-UI-003",
+      "requirements": [
+        "IND-016"
+      ],
+      "name": "모바일 문서 폭",
+      "verdict": "PASS",
+      "detail": "{'page': 390, 'viewport': 390}",
+      "severity": "MEDIUM",
+      "endpoint": "/app.html#indicator-backtest",
+      "planned": [
+        "UT-FINANCE-IND-016-B"
+      ]
+    }
+  ],
+  "scope": "운영 HTTPS·임시 일반계정·비주문 계산/UI. 주문/자동매매/설정변경 제외.",
+  "ui_errors": []
+}
