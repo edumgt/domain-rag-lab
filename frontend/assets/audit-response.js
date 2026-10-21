@@ -28,6 +28,8 @@
     });return result;
   }
   function render(){
+    const widths={rfp:[155,135,150,380,310,360,310],proposal:[135,240,150,430,330,320,200],requirements:[145,165,150,410,370,150,190,320],traceability:[145,165,150,400,175,200,175,370,230,320]}[active];
+    table.querySelector('colgroup')?.remove();const cols=document.createElement('colgroup');widths.forEach(width=>{const col=document.createElement('col');col.style.width=width+'px';cols.append(col);});table.insertBefore(cols,table.tHead);table.style.setProperty('--grid-width',widths.reduce((a,b)=>a+b,0)+'px');
     const cfg=configs[active],query=search.value.trim().toLocaleLowerCase('ko');
     const source=active==='proposal'?proposals(data.requirements):data.requirements;
     visible=source.filter(r=>(!scope.value||r.category===scope.value)&&(!query||cfg.row(r).join(' ').toLocaleLowerCase('ko').includes(query))).map(cfg.row);
@@ -35,7 +37,7 @@
     document.getElementById('documentTitle').textContent=cfg.title;document.getElementById('documentDescription').textContent=cfg.description;
     document.getElementById('auditCaption').textContent=cfg.title+' · Day 4 기반 문서 초안 · 열 제목을 눌러 정렬';
     document.querySelectorAll('.wf-lnb a').forEach(a=>{if(a.hash==='#'+active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
-    const header=node('tr','');cfg.columns.forEach((label,i)=>{const th=node('th','');th.scope='col';th.setAttribute('aria-sort',sortIndex===i?(ascending?'ascending':'descending'):'none');const btn=node('button',label+(sortIndex===i?(ascending?' ↑':' ↓'):''));btn.type='button';btn.addEventListener('click',()=>{ascending=sortIndex===i?!ascending:true;sortIndex=i;render();});th.append(btn);header.append(th);});table.tHead.replaceChildren(header);
+    const header=node('tr','');cfg.columns.forEach((label,i)=>{const th=node('th','');th.scope='col';th.setAttribute('aria-sort',sortIndex===i?(ascending?'ascending':'descending'):'none');const btn=node('button',label+(sortIndex===i?(ascending?' ↑':' ↓'):' ↕'));btn.type='button';btn.addEventListener('click',()=>{ascending=sortIndex===i?!ascending:true;sortIndex=i;render();});th.append(btn);header.append(th);});table.tHead.replaceChildren(header);
     const body=table.tBodies[0];body.replaceChildren();visible.forEach(row=>{const tr=node('tr','');row.forEach(value=>tr.append(node('td',value)));body.append(tr);});
     if(!visible.length){const tr=node('tr',''),td=node('td','검색 조건에 맞는 항목이 없습니다.');td.colSpan=cfg.columns.length;tr.append(td);body.append(tr);}
     status.textContent='전체 '+source.length+'건 중 '+visible.length+'건 표시 · 문서 기준: Day 4 · 모든 구현·시험 증빙은 확인 대기';
