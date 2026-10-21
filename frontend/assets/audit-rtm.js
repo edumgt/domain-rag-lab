@@ -1,0 +1,73 @@
+/* Canvas workspace: document chains are resolved by exact requirement membership. */
+window.AuditRtm = class {
+  constructor(root) {
+    this.root=root;this.canvas=root.querySelector('canvas');this.ctx=this.canvas.getContext('2d');this.view=root.querySelector('.rtm-canvas-wrap');this.world=root.querySelector('.rtm-world');this.palette=root.querySelector('[data-rtm-palette]');this.choice=root.querySelector('[data-rtm-choice]');this.detail=root.querySelector('[data-rtm-detail]');this.boards=new Map();this.rows=[];this.boxes=[];this.fontFamily=getComputedStyle(root).fontFamily;
+    document.fonts.ready.then(()=>{this.fontFamily=getComputedStyle(root).fontFamily;if(this.board)this.draw();});
+    this.resize=new ResizeObserver(()=>{if(this.board&&!this.root.hidden)this.draw();});this.resize.observe(this.view);
+    this.view.addEventListener('scroll',()=>this.draw(),{passive:true});
+    this.choice.addEventListener('change',()=>{this.board.selected={id:this.choice.value,stage:0};this.refresh();this.reveal(this.choice.value);});
+    root.querySelector('[data-rtm-clear]').addEventListener('click',()=>{this.board.placed.clear();this.board.selected=null;this.refresh();});
+    root.querySelector('[data-rtm-remove]').addEventListener('click',()=>{if(!this.board.selected)return;this.board.placed.delete(this.board.selected.id);const id=this.board.placed.keys().next().value;this.board.selected=id?{id,stage:0}:null;this.refresh();});
+    root.querySelectorAll('[data-rtm-stage]').forEach(button=>button.addEventListener('click',()=>{if(this.board.selected){this.board.selected.stage=Number(button.dataset.rtmStage);this.draw();this.showDetail();}}));
+    root.querySelectorAll('[data-rtm-zoom]').forEach(button=>button.addEventListener('click',()=>{const mode=button.dataset.rtmZoom;const bounds=this.bounds();this.board.zoom=mode==='reset'?1:mode==='fit'?Math.max(.25,Math.min(1,(this.view.clientWidth-20)/bounds.w,(this.view.clientHeight-20)/bounds.h)):Math.max(.25,Math.min(1.6,this.board.zoom+Number(mode)));this.draw();if(mode==='fit')this.view.scrollTo(0,0);}));
+    this.view.addEventListener('dragover',event=>{if(event.dataTransfer.types.includes('application/x-audit-rfp')){event.preventDefault();event.dataTransfer.dropEffect='copy';this.view.classList.add('rtm-drop-active');}});
+    this.view.addEventListener('dragleave',event=>{if(!this.view.contains(event.relatedTarget))this.view.classList.remove('rtm-drop-active');});
+    this.view.addEventListener('drop',event=>{event.preventDefault();this.view.classList.remove('rtm-drop-active');try{const payload=JSON.parse(event.dataTransfer.getData('application/x-audit-rfp'));if(payload.example!==this.example)return;this.add(payload.id,this.point(event));}catch{/* Ignore unrelated drags. */}});
+    this.canvas.addEventListener('pointerdown',event=>{if(event.button!==0)return;const point=this.point(event),hit=this.hit(point);this.drag={pointer:event.pointerId,hit,startX:event.clientX,startY:event.clientY,point,scrollX:this.view.scrollLeft,scrollY:this.view.scrollTop,moved:false};if(hit){this.board.selected={id:hit.id,stage:hit.stage};const n=this.board.placed.get(hit.id).nodes[hit.stage];this.drag.origin={...n};this.showDetail();}this.canvas.setPointerCapture(event.pointerId);this.draw();});
+    this.canvas.addEventListener('pointermove',event=>{if(!this.drag){this.canvas.style.cursor=this.hit(this.point(event))?'grab':'default';return;}const drag=this.drag,dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;if(Math.abs(dx)+Math.abs(dy)>4)drag.moved=true;if(drag.hit){const n=this.board.placed.get(drag.hit.id).nodes[drag.hit.stage];n.x=Math.max(24,Math.min(12000,drag.origin.x+dx/this.board.zoom));n.y=Math.max(24,Math.min(20000,drag.origin.y+dy/this.board.zoom));this.draw();}else this.view.scrollTo(drag.scrollX-dx,drag.scrollY-dy);});
+    const end=()=>{if(this.drag){this.drag=null;this.refresh();}};this.canvas.addEventListener('pointerup',end);this.canvas.addEventListener('pointercancel',end);
+  }
+  setData({rows,allRows,proposals,example,title}) {
+    const switched=this.example!==example;this.example=example;this.rows=rows;this.allRows=allRows;this.proposals=proposals;this.title=title;
+    if(!this.boards.has(example))this.boards.set(example,{placed:new Map(),selected:null,zoom:.8});this.board=this.boards.get(example);
+    this.refresh();if(switched)this.view.scrollTo(0,0);
+  }
+  point(event){const rect=this.canvas.getBoundingClientRect();return{x:(event.clientX-rect.left+this.view.scrollLeft)/this.board.zoom,y:(event.clientY-rect.top+this.view.scrollTop)/this.board.zoom};}
+  hit(point){return [...this.boxes].reverse().find(box=>point.x>=box.x&&point.x<=box.x+box.w&&point.y>=box.y&&point.y<=box.y+box.h);}
+  bounds(){let w=1800,h=850;for(const item of this.board.placed.values())for(const n of item.nodes){w=Math.max(w,n.x+320);h=Math.max(h,n.y+280);}return{w,h};}
+  add(id,point){const row=this.allRows.find(r=>r.id===id);if(!row)return;if(!this.board.placed.has(id)){const x=Math.max(24,Math.min(12000,point?.x||40)),y=Math.max(30,Math.min(20000,point?.y||(this.board.placed.size*290+60)));this.board.placed.set(id,{row,nodes:Array.from({length:5},(_,stage)=>({x:x+stage*310,y}))});}this.board.selected={id,stage:0};this.refresh();if(!point)this.reveal(id);}
+  reveal(id){const n=this.board.placed.get(id)?.nodes[0];if(n)this.view.scrollTo(Math.max(0,n.x*this.board.zoom-20),Math.max(0,n.y*this.board.zoom-30));}
+  refresh(){
+    this.palette.replaceChildren();this.root.querySelector('[data-rtm-palette-count]').textContent=this.rows.length+'개';
+    for(const row of this.rows){const card=document.createElement('article');card.className='rtm-source-card';card.draggable=true;card.dataset.rfpId=row.id;const title=document.createElement('strong'),copy=document.createElement('span'),button=document.createElement('button');title.textContent=this.example==='pnu'?row.id:row.rfp;copy.textContent=row.name;button.type='button';button.textContent=this.board.placed.has(row.id)?'배치됨 ↗':'+ 추가';button.setAttribute('aria-label',row.id+' Canvas에 추가 또는 선택');button.addEventListener('click',()=>this.add(row.id));card.append(title,copy,button);card.addEventListener('dragstart',event=>{event.dataTransfer.setData('application/x-audit-rfp',JSON.stringify({id:row.id,example:this.example}));event.dataTransfer.effectAllowed='copy';});
+      // Touch drag has an explicit add-button equivalent for keyboard and small screens.
+      card.addEventListener('pointerdown',event=>{if(event.pointerType!=='touch'||event.target.closest('button'))return;const start={x:event.clientX,y:event.clientY};let ghost;
+        const move=e=>{if(!ghost&&Math.hypot(e.clientX-start.x,e.clientY-start.y)<10)return;if(!ghost){ghost=document.createElement('div');ghost.className='rtm-drag-ghost';ghost.textContent=row.id;document.body.append(ghost);}ghost.style.left=e.clientX+'px';ghost.style.top=e.clientY+'px';};
+        const finish=e=>{if(ghost){const r=this.view.getBoundingClientRect();if(e.type==='pointerup'&&e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)this.add(row.id,this.point(e));ghost.remove();}card.removeEventListener('pointermove',move);card.removeEventListener('pointerup',finish);card.removeEventListener('pointercancel',finish);};card.setPointerCapture(event.pointerId);card.addEventListener('pointermove',move);card.addEventListener('pointerup',finish);card.addEventListener('pointercancel',finish);});
+      this.palette.append(card);
+    }
+    if(!this.rows.length){const p=document.createElement('p');p.textContent='검색 조건에 맞는 RFP가 없습니다.';this.palette.append(p);}
+    this.choice.replaceChildren(...[...this.board.placed].map(([id,{row}])=>new Option(id+' · '+row.name,id)));if(this.board.selected)this.choice.value=this.board.selected.id;this.choice.disabled=!this.board.placed.size;
+    this.root.querySelector('[data-rtm-remove]').disabled=!this.board.selected;this.root.querySelector('[data-rtm-clear]').disabled=!this.board.placed.size;
+    this.root.querySelector('[data-rtm-board-status]').textContent=this.board.placed.size?this.board.placed.size+'개 RFP · '+this.board.placed.size*5+'개 문서 카드 배치':'왼쪽 RFP를 Canvas로 드래그하세요.';
+    this.draw();this.showDetail();
+  }
+  chain(row) {
+    const proposal=this.proposals.find(p=>p.links.split(' · ').includes(row.id));
+    const tc='TC-'+this.example.toUpperCase()+'-'+row.id;
+    return [
+      {title:'RFP',id:this.example==='pnu'?row.id:row.rfp,body:row.definition||row.name,state:this.example==='pnu'?'원문':'요청사항 예시',hash:'rfp',fields:[['요청 기능',row.name],['정의',row.definition||row.name],['제출 산출물',row.artifact]]},
+      {title:'제안서',id:proposal?.id||'연결 미등록',body:proposal?.name||'대응 제안이 등록되지 않았습니다.',state:'수행 제안 예시',hash:'proposal',fields:[['대응 제안',proposal?.name||'미등록'],['수행 방법',proposal?.tool||'미등록'],['연계 요구사항',proposal?.links||'미등록']]},
+      {title:'요건정의',id:row.id,body:row.name,state:'정의·인수 기준 검토안',hash:'requirements',fields:[['요구사항',row.name],['정의',row.definition||row.name],['검증 기준(안)',row.acceptance]]},
+      {title:'추적표',id:'RTM-'+this.example.toUpperCase()+'-'+row.id,body:'요구사항 '+row.id+' → 설계 → 구현 → 시험 '+tc,state:'구현·시험 증빙 미등록',hash:'traceability',fields:[['설계 ID(예정)','DES-'+this.example.toUpperCase()+'-'+row.id],['구현 증빙','파일·커밋 미등록'],['시험 ID(예정)',tc],['인수 상태','검증 대기 · 인수 미확정']]},
+      {title:'테스트 사양서',id:tc,body:row.acceptance,state:'시험 계획 예시 · 미실행',fields:[['연계 요구사항',row.id+' · '+row.name],['사전 조건','대상 기능·테스트 환경·입력 데이터·기대 결과와 담당자를 확정합니다.'],['시험 절차(예시)','1. 정상 입력과 경계·오류 입력을 준비합니다.\n2. 요구 기능을 실행하고 결과·로그를 수집합니다.\n3. 아래 검증 기준과 결과를 대조하고 결함·재시험 이력을 기록합니다.'],['기대 결과·판정 기준(안)',row.acceptance],['시험 증빙','시험 데이터·실행 로그·결과 파일 미등록'],['실행 결과','미실행 · 합격 여부 미확정']]}
+    ];
+  }
+  wrap(text,x,y,maxWidth,maxLines) {
+    let line='',count=0;for(const char of String(text||'')){if(char==='\n'||this.ctx.measureText(line+char).width>maxWidth){this.ctx.fillText(line,x,y+count*21);line=char==='\n'?'':char;if(++count>=maxLines-1){while(line&&this.ctx.measureText(line+'…').width>maxWidth)line=line.slice(0,-1);this.ctx.fillText(line+'…',x,y+count*21);return;}}else line+=char;}this.ctx.fillText(line,x,y+count*21);
+  }
+  drawScene(c,w,h,offsetX=0,offsetY=0,zoom=this.board.zoom){
+    c.fillStyle='#f7f9fd';c.fillRect(0,0,w,h);c.save();c.scale(zoom,zoom);c.translate(-offsetX/zoom,-offsetY/zoom);
+    const left=offsetX/zoom,top=offsetY/zoom,right=left+w/zoom,bottom=top+h/zoom;
+    c.fillStyle='#d9e2ef';for(let x=Math.floor(left/28)*28;x<right;x+=28)for(let y=Math.floor(top/28)*28;y<bottom;y+=28)c.fillRect(x,y,1.3,1.3);
+    this.boxes=[];const colors=['#2563eb','#7c3aed','#0891b2','#0f766e','#b45309'];
+    if(!this.board.placed.size){c.fillStyle='#e7efff';c.beginPath();c.roundRect(100,170,600,210,20);c.fill();c.fillStyle='#2563eb';c.font='700 24px '+this.fontFamily;c.fillText('RFP 카드를 여기에 놓으세요',140,235);c.fillStyle='#64748b';c.font='15px '+this.fontFamily;c.fillText('연결 ID의 제안서 · 요건정의 · 추적표 · 테스트 사양서가 나타납니다.',140,280);c.fillText('왼쪽 카드의 + 추가 버튼으로도 배치할 수 있습니다.',140,310);}
+    for(const [id,item] of this.board.placed){const chain=this.chain(item.row);
+      for(let i=0;i<4;i++){const a=item.nodes[i],b=item.nodes[i+1],x=a.x+270,y=a.y+110,tx=b.x,ty=b.y+110;c.strokeStyle=this.board.selected?.id===id?'#6883ad':'#a8b8ce';c.lineWidth=2;c.beginPath();c.moveTo(x,y);const bend=Math.max(50,Math.abs(tx-x)*.45);c.bezierCurveTo(x+bend,y,tx-bend,ty,tx,ty);c.stroke();c.beginPath();c.moveTo(tx-8,ty-5);c.lineTo(tx,ty);c.lineTo(tx-8,ty+5);c.stroke();}
+      chain.forEach((card,stage)=>{const {x,y}=item.nodes[stage],selected=this.board.selected?.id===id&&this.board.selected.stage===stage;this.boxes.push({id,stage,x,y,w:270,h:220});if(x>right||y>bottom||x+270<left||y+220<top)return;c.fillStyle='#fff';c.strokeStyle=selected?colors[stage]:'#ced9e8';c.lineWidth=selected?3:1;c.beginPath();c.roundRect(x,y,270,220,12);c.fill();c.stroke();c.fillStyle=colors[stage];c.fillRect(x+15,y+18,4,20);c.font='700 17px '+this.fontFamily;c.fillText(card.title,x+28,y+34);c.font='600 11px '+this.fontFamily;c.fillText(card.id,x+17,y+63);c.font='13px '+this.fontFamily;c.fillStyle='#334155';this.wrap(card.body,x+17,y+92,236,4);c.fillStyle='#f1f5f9';c.fillRect(x+15,y+183,240,24);c.fillStyle='#64748b';c.font='11px '+this.fontFamily;c.fillText(card.state,x+22,y+199);});
+    }c.restore();
+  }
+  draw(){if(!this.board||this.root.hidden)return;const w=Math.max(1,this.view.clientWidth),h=Math.max(1,this.view.clientHeight),dpr=Math.min(devicePixelRatio||1,2),bounds=this.bounds();this.world.style.width=Math.max(w,bounds.w*this.board.zoom)+'px';this.world.style.height=Math.max(h,bounds.h*this.board.zoom)+'px';this.canvas.width=Math.round(w*dpr);this.canvas.height=Math.round(h*dpr);this.canvas.style.width=w+'px';this.canvas.style.height=h+'px';this.ctx.setTransform(dpr,0,0,dpr,0,0);this.drawScene(this.ctx,w,h,this.view.scrollLeft,this.view.scrollTop);this.root.querySelector('[data-rtm-zoom-label]').textContent=Math.round(this.board.zoom*100)+'%';this.canvas.setAttribute('aria-label',this.title+' · '+this.board.placed.size+'개 RFP 연결 경로. 배치된 RFP 선택과 단계 버튼으로 상세를 확인할 수 있습니다.');}
+  showDetail(){this.detail.replaceChildren();const selected=this.board.selected;this.root.querySelectorAll('[data-rtm-stage]').forEach(button=>{button.disabled=!selected;button.setAttribute('aria-pressed',String(selected?.stage===Number(button.dataset.rtmStage)));});if(!selected){const p=document.createElement('p');p.textContent='Canvas에 RFP를 배치한 후 문서 카드를 선택하세요.';this.detail.append(p);return;}const item=this.board.placed.get(selected.id);if(!item)return;const card=this.chain(item.row)[selected.stage],heading=document.createElement('h3');heading.textContent=card.title+' · '+card.id;this.detail.append(heading);const dl=document.createElement('dl');card.fields.forEach(([label,text])=>{const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=label;dd.textContent=text;dl.append(dt,dd);});this.detail.append(dl);if(card.hash){const a=document.createElement('a');a.href='#'+this.example+'-'+card.hash;a.textContent=card.title+' 문서 열기 →';this.detail.append(a);}}
+  download(){const bounds=this.bounds(),scale=Math.min(1,Math.sqrt(16000000/(bounds.w*bounds.h)),12000/bounds.w,12000/bounds.h),canvas=document.createElement('canvas');canvas.width=Math.ceil(bounds.w*scale);canvas.height=Math.ceil(bounds.h*scale);const ctx=canvas.getContext('2d'),original=this.ctx;this.ctx=ctx;this.drawScene(ctx,canvas.width,canvas.height,0,0,scale);this.ctx=original;this.draw();const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='RTM-'+this.example+'-workspace.png';a.click();}
+};
