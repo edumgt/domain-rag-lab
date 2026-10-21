@@ -131,7 +131,7 @@ def post_opinion(payload: OpinionInput, db: Session = Depends(get_db)):
     return opinion_json(row)
 
 
-SURVEY_VERSION = 2
+SURVEY_VERSION = 3
 SURVEY_QUESTIONS = [
     {"id": 1, "category": "산출물 완성도 · 종합", "text": "계획한 산출물이 빠짐없이 완성되어 실제 시연·제출이 가능한가요?"},
     {"id": 2, "category": "기능 적합성", "text": "핵심 기능이 요구사항과 사용 목적에 맞게 정확한 결과를 제공하나요?"},
@@ -215,9 +215,9 @@ SURVEY_RUBRICS = [{'guidance': '처음 약속한 기능·화면·문서가 얼�
               '발표자 PC 시연 위주이며 외부 제공 준비에 큰 작업이 남아 있음',
               '실행 가능한 제품 흐름이나 실제 사용자 제공 계획을 확인하기 어려움']}]
 for question, rubric in zip(SURVEY_QUESTIONS, SURVEY_RUBRICS):
-    question.update(rubric)
+    question.update({**rubric, "ratings": list(reversed(rubric["ratings"]))})
 
-SURVEY_SCALE = ["매우 우수", "우수", "보통", "미흡", "매우 미흡"]
+SURVEY_SCALE = ["매우 미흡", "미흡", "보통", "우수", "매우 우수"]
 
 
 class PresentationSurvey(Base):
@@ -251,9 +251,18 @@ class SurveyInput(BaseModel):
         return value
 
 
+def normalized_survey(row):
+    # Preserve stored responses; version 2 used 1=excellent, version 3 uses 5=excellent.
+    from types import SimpleNamespace
+    return SimpleNamespace(id=row.id, presenter_id=row.presenter_id, author=row.author,
+        evidence=row.evidence, created_at=row.created_at,
+        scores=[6 - score for score in row.scores] if row.version == 2 else row.scores)
+
+
 @router.get("/survey")
 def survey(presenter_id: int = Query(ge=1, le=8), db: Session = Depends(get_db)):
-    rows = db.query(PresentationSurvey.scores).filter_by(presenter_id=presenter_id, version=SURVEY_VERSION).all()
+    rows = db.query(PresentationSurvey).filter(PresentationSurvey.presenter_id == presenter_id, PresentationSurvey.version.in_([2, SURVEY_VERSION])).all()
+    rows = [normalized_survey(row) for row in rows]
     count = len(rows)
     means = [round(sum(row.scores[i] for row in rows) / count, 2) for i in range(10)] if count else [None] * 10
     distribution = [[sum(row.scores[i] == score for row in rows) for score in range(1, 6)] for i in range(10)]
@@ -279,7 +288,7 @@ def post_survey(payload: SurveyInput, db: Session = Depends(get_db)):
 
 def rank_teams(teams):
     ordered = sorted(teams, key=lambda team: (team['overall_mean'] is None,
-        team['overall_mean'] if team['overall_mean'] is not None else 0, team['presenter_id']))
+        -team['overall_mean'] if team['overall_mean'] is not None else 0, team['presenter_id']))
     ranking = []
     last_mean, rank = None, None
     for index, team in enumerate(ordered, 1):
@@ -295,7 +304,8 @@ def rank_teams(teams):
 
 @router.get("/evaluations")
 def evaluations(db: Session = Depends(get_db)):
-    rows = db.query(PresentationSurvey).filter_by(version=SURVEY_VERSION).order_by(PresentationSurvey.created_at.desc(), PresentationSurvey.id.desc()).all()
+    rows = db.query(PresentationSurvey).filter(PresentationSurvey.version.in_([2, SURVEY_VERSION])).order_by(PresentationSurvey.created_at.desc(), PresentationSurvey.id.desc()).all()
+    rows = [normalized_survey(row) for row in rows]
     opinions = db.query(PresentationOpinion).order_by(PresentationOpinion.created_at.desc(), PresentationOpinion.id.desc()).all()
     teams = []
     for index, name in enumerate(PRESENTERS):

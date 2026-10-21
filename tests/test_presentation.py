@@ -93,7 +93,7 @@ def test_survey_validation_and_presenter_summary():
         assert client.post('/presentation/survey',json={**payload,'presenter_id':8}).status_code == 201
         summary = client.get('/presentation/evaluations').json()
         assert summary['count'] == 3 and len(summary['teams']) == 8
-        assert [team['presenter_id'] for team in summary['ranking'][:2]] == [8,6]
+        assert [team['presenter_id'] for team in summary['ranking'][:2]] == [6,8]
         assert [team['rank'] for team in summary['ranking'][:2]] == [1,2]
         assert all(team['rank'] is None for team in summary['ranking'][2:])
         by_id = {team['presenter_id']:team for team in summary['teams']}
@@ -149,5 +149,17 @@ def test_ranking_ties_and_unrated():
     from app.api.routes.presentation import rank_teams
     teams = [{"presenter_id":i,"label":str(i),"count":0 if value is None else 1,"overall_mean":value} for i,value in enumerate([None,3,1,1,2],1)]
     result = rank_teams(teams)
-    assert [team['presenter_id'] for team in result] == [3,4,5,2,1]
-    assert [team['rank'] for team in result] == [1,1,3,4,None]
+    assert [team['presenter_id'] for team in result] == [2,5,3,4,1]
+    assert [team['rank'] for team in result] == [1,2,3,3,None]
+
+
+def test_legacy_score_conversion():
+    from types import SimpleNamespace
+    from app.api.routes.presentation import normalized_survey, SURVEY_SCALE
+    row = SimpleNamespace(id=1, presenter_id=1, author='기존', evidence='', created_at=None,
+                          version=2, scores=[1,2,3,4,5]*2)
+    assert normalized_survey(row).scores == [5,4,3,2,1]*2
+    assert row.scores == [1,2,3,4,5]*2
+    row.version = 3
+    assert normalized_survey(row).scores == row.scores
+    assert SURVEY_SCALE == ['매우 미흡','미흡','보통','우수','매우 우수']

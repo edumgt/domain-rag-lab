@@ -141,7 +141,8 @@
           });
           guide.append(standards); copy.append(guide);
           const options = element('div', '', 'survey-options');
-          data.scale.forEach((label, index) => {
+          [4,3,2,1,0].forEach(index => {
+            const label = data.scale[index];
             const choice = document.createElement('label');
             const input = document.createElement('input');
             input.setAttribute('aria-describedby', guide.id);
@@ -158,7 +159,7 @@
       }
       if (!surveySelect.value) { summary.textContent = '팀을 선택하면 해당 팀의 집계를 확인할 수 있습니다.'; return; }
       summary.replaceChildren();
-      summary.append(element('p', labels[data.presenter_id - 1] + ' · 응답 ' + data.count + '건 · 전체 평균 ' + (data.overall_mean === null ? '응답 없음' : data.overall_mean.toFixed(2) + ' / 5 (낮을수록 우수)')));
+      summary.append(element('p', labels[data.presenter_id - 1] + ' · 응답 ' + data.count + '건 · 전체 평균 ' + (data.overall_mean === null ? '응답 없음' : data.overall_mean.toFixed(2) + ' / 5 (높을수록 우수)')));
       data.questions.forEach((question, i) => {
         const row = element('div', '', 'survey-summary-row');
         row.append(element('span', question.id + '. ' + question.category), element('strong', data.means[i] === null ? '—' : data.means[i].toFixed(2) + ' / 5'));
@@ -205,7 +206,7 @@
   const metricSelect = document.getElementById('evaluationMetric');
   const teamSelect = document.getElementById('evaluationPresenter');
   labels.forEach((label, i) => teamSelect.add(new Option(label, String(i + 1))));
-  const pieColors = ['#10b981', '#38bdf8', '#818cf8', '#fbbf24', '#fb7185'];
+  const pieColors = ['#fb7185', '#fbbf24', '#818cf8', '#38bdf8', '#10b981'];
   function pieChart(label, mean, distribution, count) {
     const total = distribution.reduce((sum, value) => sum + value, 0);
     const card = element('article', '', 'evaluation-pie-card');
@@ -285,7 +286,7 @@
       section.append(element('h5', '객관식 설문 집계', 'team-result-subtitle'));
       const tableWrap = element('div', '', 'team-result-table-wrap');
       const table = document.createElement('table'); table.className = 'team-result-table';
-      table.append(element('caption', team.label + ' · 10문항 · 낮을수록 우수'));
+      table.append(element('caption', team.label + ' · 10문항 · 높을수록 우수'));
       const thead = document.createElement('thead'), headRow = document.createElement('tr');
       ['문항', '평균', ...evaluationData.scale.map((label,i) => (i+1) + ' ' + label)].forEach(label => { const th=element('th',label);th.scope='col';headRow.append(th); });
       thead.append(headRow);table.append(thead);

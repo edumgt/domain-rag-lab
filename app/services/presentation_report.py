@@ -48,17 +48,17 @@ def create_report(snapshot):
     generated = datetime.fromisoformat(snapshot['updated_at']).astimezone(ZoneInfo("Asia/Seoul")).strftime("%Y-%m-%d %H:%M:%S KST")
     story = [p(TITLE,title_style),p(PERIOD),p("보고서 생성·집계 시각: " + generated),Spacer(1,14),p("프로젝트 평가 종합",heading_style),
         p(f"평가 대상 {len(snapshot['teams'])}팀 · 유효 응답 {snapshot['count']}건 · 전체 평균 {mean(snapshot['overall']['overall_mean'])}"),
-        p("척도: 1 매우 우수 · 2 우수 · 3 보통 · 4 미흡 · 5 매우 미흡. 낮은 점수일수록 우수합니다."),Spacer(1,12)]
+        p("척도: 1 매우 미흡 · 2 미흡 · 3 보통 · 4 우수 · 5 매우 우수. 높은 점수일수록 우수합니다."),Spacer(1,12)]
     rows=[[p(x,cell_style) for x in ["순위", "발표 팀", "평가 응답 수", "전체 평균 (1~5)"]]]
     for team in snapshot['ranking']:
         rows.append([p('미평가' if team['rank'] is None else f"{team['rank']}위",cell_style), p(team['label'],cell_style),p(f"{team['count']}건",cell_style),p(mean(team['overall_mean']),cell_style)])
     story += [table(rows,[100,260,180,240],padding=4),Spacer(1,14),p("집계 기준",heading_style),
-        p("팀 랭킹: 전체 평균이 낮을수록 상위이며, 소수 둘째 자리 평균이 같으면 공동 순위(1위·1위·3위)입니다. 응답이 없는 팀은 미평가로 표시합니다.",cell_style),
+        p("팀 랭킹: 전체 평균이 높을수록 상위이며, 소수 둘째 자리 평균이 같으면 공동 순위(1위·1위·3위)입니다. 응답이 없는 팀은 미평가로 표시합니다.",cell_style),
         p("팀 ID와 평가자 이름의 복합 고유키로 중복 등록을 제외합니다. 현재 설문 버전의 응답만 포함하며, 10문항은 동일 가중치입니다.",cell_style),
         p("표의 비율은 해당 문항의 유효 응답 수를 분모로 계산합니다. 반올림 때문에 비율 합계에 미세한 차이가 있을 수 있습니다.",cell_style),
         p("평가가 없는 경우 평균과 응답 비율은 ‘—’로 표시하며 0점으로 해석하지 않습니다. 프로젝트 기간과 별도로 다운로드 시점까지 저장된 응답을 집계합니다.",cell_style),
         p("ISO/IEC 25010:2023을 참고하고 창의성·실 제품화 항목을 추가한 수업용 설문이며, 공식 ISO 인증 평가는 아닙니다.",cell_style)]
-    chart_colors = [colors.HexColor(value) for value in ['#10b981','#38bdf8','#818cf8','#fbbf24','#fb7185']]
+    chart_colors = [colors.HexColor(value) for value in ['#fb7185','#fbbf24','#818cf8','#38bdf8','#10b981']]
     def pie_grid(stats):
         drawing = Drawing(doc.width, 640)
         for i, question in enumerate(snapshot['questions']):
@@ -93,7 +93,7 @@ def create_report(snapshot):
             p('색상 조각은 문항별 1~5단계 응답 비율, 가운데 숫자는 평균입니다. 낮은 평균일수록 우수합니다.', cell_style),
             Spacer(1,12),pie_grid(stats)]
         section += [PageBreak(),p(label,heading_style),p(f"{PERIOD} · 유효 응답 {stats['count']}건 · 전체 평균 {mean(stats['overall_mean'])}"),Spacer(1,10)]
-        headings=["문항 · 질문", "1 매우 우수", "2 우수", "3 보통", "4 미흡", "5 매우 미흡", "평균"]
+        headings=["문항 · 질문", "1 매우 미흡", "2 미흡", "3 보통", "4 우수", "5 매우 우수", "평균"]
         rows=[[p(x,center_style) for x in headings]]
         for i,q in enumerate(snapshot['questions']):
             cells=[p(f"{q['id']}. {q['category']} — {q['text']}",cell_style)]
@@ -101,7 +101,7 @@ def create_report(snapshot):
                 cells.append(p(f"{count}건 ({count/stats['count']*100:.1f}%)" if stats['count'] else "—",center_style))
             cells.append(p("—" if stats['means'][i] is None else f"{stats['means'][i]:.2f}",center_style))
             rows.append(cells)
-        section += [table(rows,[330,78,72,72,72,84,72]),Spacer(1,10),p("1~5점 원점수 평균 · 낮을수록 우수 · 응답 비율 = 단계별 응답 수 / 유효 응답 수 × 100",cell_style)]
+        section += [table(rows,[330,78,72,72,72,84,72]),Spacer(1,10),p("1~5점 원점수 평균 · 높을수록 우수 · 응답 비율 = 단계별 응답 수 / 유효 응답 수 × 100",cell_style)]
         return section
     # Each team has quantitative results followed immediately by qualitative opinions.
     story += detail("전체 10문항 질문 및 답변 통계", snapshot["overall"])
