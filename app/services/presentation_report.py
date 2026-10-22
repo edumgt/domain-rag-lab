@@ -19,13 +19,13 @@ PERIOD = "기간: 2026년 10월 1일 ~ 10월 21일"
 FONT = "ProjectNanumGothic"
 
 
-def create_report(snapshot):
+def create_report(snapshot, *, title=TITLE):
     font_path = Path(__file__).resolve().parents[2] / "frontend/assets/fonts/NanumGothic-Regular.ttf"
     if FONT not in pdfmetrics.getRegisteredFontNames():
         pdfmetrics.registerFont(TTFont(FONT, str(font_path)))
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=A4, rightMargin=30, leftMargin=30,
-        topMargin=32, bottomMargin=32, title=TITLE, author="Finance RAG Lab")
+        topMargin=32, bottomMargin=32, title=title, author="Finance RAG Lab")
     text_style = ParagraphStyle("body", fontName=FONT, fontSize=10, leading=16, wordWrap="CJK", textColor=colors.HexColor("#243047"))
     title_style = ParagraphStyle("title", parent=text_style, fontSize=22, leading=32, spaceAfter=14)
     heading_style = ParagraphStyle("heading", parent=text_style, fontSize=16, leading=24, spaceAfter=10)
@@ -46,7 +46,7 @@ def create_report(snapshot):
         result.setStyle(TableStyle(commands))
         return result
     generated = datetime.fromisoformat(snapshot['updated_at']).astimezone(ZoneInfo("Asia/Seoul")).strftime("%Y-%m-%d %H:%M:%S KST")
-    story = [p(TITLE,title_style),p(PERIOD),p("보고서 생성·집계 시각: " + generated),Spacer(1,14),p("프로젝트 평가 종합",heading_style),
+    story = [p(title,title_style),p(PERIOD),p("보고서 생성·집계 시각: " + generated),Spacer(1,14),p("프로젝트 평가 종합",heading_style),
         p(f"평가 대상 {len(snapshot['teams'])}팀 · 유효 응답 {snapshot['count']}건 · 전체 평균 {mean(snapshot['overall']['overall_mean'])}"),
         p("척도: 1 매우 미흡 · 2 미흡 · 3 보통 · 4 우수 · 5 매우 우수. 높은 점수일수록 우수합니다."),Spacer(1,12)]
     rows=[[p(x,cell_style) for x in ["순위", "발표 팀", "평가 응답 수", "전체 평균 (1~5)"]]]

@@ -32,6 +32,15 @@ def test_project3_presentation_is_separate():
         assert client.post('/presentation3/survey',json=payload).status_code==201
         assert client.get('/presentation3/evaluations').json()['count']==1
         assert client.get('/presentation/evaluations').json()['count']==0
+        from io import BytesIO
+        from pypdf import PdfReader
+        report = client.get('/presentation3/evaluations/report.pdf')
+        assert report.status_code == 200
+        reader = PdfReader(BytesIO(report.content))
+        assert reader.metadata.title == '나만의 투자 인디케이터 개발 및 성과 검증 프로젝트 중 팀별 소분과 수행'
+        text = ''.join(reader.pages[0].extract_text().split())
+        assert ''.join('나만의 투자 인디케이터 개발 및 성과 검증 프로젝트 중 팀별 소분과 수행'.split()) in text
+        assert '로보어드바이저' not in text
 
 
 def test_project3_metadata_and_dependency_are_isolated():

@@ -338,6 +338,6 @@ def evaluations(db: Session = Depends(get_db)):
 def evaluation_report(db: Session = Depends(get_db)):
     from app.services.presentation_report import create_report
     snapshot = evaluations(db)
-    return Response(create_report(snapshot), media_type="application/pdf", headers={
+    return Response(create_report(snapshot, title="나만의 투자 인디케이터 개발 및 성과 검증 프로젝트 중 팀별 소분과 수행"), media_type="application/pdf", headers={
         "Content-Disposition": 'attachment; filename="project3-evaluation-report-20261001-20261021.pdf"',
         "Cache-Control": "no-store"})

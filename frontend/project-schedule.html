@@ -403,6 +403,25 @@
 .day-brand-nav{min-width:0;max-width:100%;overflow-x:auto}
 @media(max-width:640px){.lesson-list>.lesson{grid-template-columns:minmax(0,1fr)}.lesson-body table{display:block;max-width:100%;overflow-x:auto}}
 </style><script defer src="/static/assets/compact-typography.js?v=20261022-92"></script>
+
+<style>
+.project-finale{position:relative;isolation:isolate;margin:32px 0 12px;padding:30px;border:1px solid #C9A86A;border-radius:16px;background:#0E2340;color:#fff;box-shadow:0 12px 32px #0e23401a;overflow:hidden}
+.project-finale::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#C9A86A,#ead9b7,#C9A86A)}
+.project-finale-head{display:flex;align-items:center;gap:22px;margin-bottom:24px}
+.project-finale-date{display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;gap:5px;min-width:105px;min-height:92px;border:1px solid #c9a86a66;border-radius:10px;background:#c9a86a14;color:#C9A86A}
+.project-finale-date span{font-size:11px;letter-spacing:.14em;font-weight:600}
+.project-finale-date strong{font-size:18px;font-weight:800;letter-spacing:.04em}
+.project-finale .project-finale-kicker{margin:0 0 7px;color:#C9A86A;font-size:11px;letter-spacing:.16em;font-weight:700}
+.project-finale h2{margin:0 0 9px;color:#fff;font-weight:750;line-height:1.5}
+.project-finale .project-finale-intro{margin:0;color:#cbd5e1;font-size:13px;line-height:1.7}
+.project-finale-sessions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.project-finale-session{min-width:0;padding:22px;border:1px solid #c9a86a40;border-radius:10px;background:#ffffff06}
+.project-finale-session-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.project-finale-session-top span{display:inline-flex;align-items:center;padding:4px 10px;border:1px solid #c9a86a66;border-radius:99px;color:#C9A86A;font-size:12px;font-weight:650}
+.project-finale-session-top i{font-size:18px;color:#C9A86A}
+.project-finale h3{margin:0;color:#fff;font-size:17px;font-weight:700;line-height:1.5}
+@media(max-width:640px){.project-finale{padding:22px 18px;margin-top:24px}.project-finale-head{align-items:flex-start;gap:14px;margin-bottom:18px}.project-finale-date{min-width:80px;min-height:85px}.project-finale-sessions{grid-template-columns:minmax(0,1fr);gap:10px}.project-finale-session{padding:18px}.project-finale .project-finale-kicker{letter-spacing:.08em}}
+</style>
 </head>
   <body data-day="4">
     <header class="day-appbar">
@@ -621,7 +640,28 @@
               </div>
             </div>
             <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="나만의 투자 인디케이터 개발 및 성과 검증 프로젝트 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section></section></article></main>
+          </section></section>
+<section class="project-finale" id="projectFinale" aria-labelledby="projectFinaleTitle">
+  <div class="project-finale-head">
+    <time class="project-finale-date" datetime="2026-11-12"><span>2026 · NOV</span><strong>11월 12일</strong></time>
+    <div>
+      <p class="project-finale-kicker">PROJECT FINALE</p>
+      <h2 id="projectFinaleTitle">프로젝트 3 발표 · 수료식</h2>
+      <p class="project-finale-intro">함께 만든 성과를 나누고, 배움의 여정을 마무리합니다.</p>
+    </div>
+  </div>
+  <div class="project-finale-sessions">
+    <div class="project-finale-session">
+      <div class="project-finale-session-top"><span>오전</span><i class="fa-solid fa-person-chalkboard" aria-hidden="true"></i></div>
+      <h3>프로젝트 3 발표</h3>
+    </div>
+    <div class="project-finale-session">
+      <div class="project-finale-session-top"><span>오후</span><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
+      <h3>수료식</h3>
+    </div>
+  </div>
+</section>
+</article></main>
 <script src="/static/assets/day4-project-schedule.js?v=20260919-100-120-hours"></script>
 <script>
 const schedule = document.getElementById('day4ProjectSchedule');
