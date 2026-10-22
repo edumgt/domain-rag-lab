@@ -109,6 +109,7 @@ def test_parse_amount_and_shares_and_candidates():
 def test_parse_companies_reads_atlas_from_app_js():
     companies = collector.parse_companies()
     assert len(companies) >= 150
+    assert {c['day'] for c in companies} == {1, 2, 3, 4}
     tickers = [c["ticker"] for c in companies]
     assert len(tickers) == len(set(tickers))
     first = companies[0]
@@ -123,6 +124,49 @@ def test_pick_next_prefers_uncollected_then_oldest():
     rows = {"A": now, "B": now - timedelta(days=2), "C": now - timedelta(days=1)}
     assert collector.pick_next(companies, rows)["ticker"] == "B"
     assert collector.pick_next([], {}) is None
+
+
+def test_dart_cache_and_quota_do_not_repeat_upstream_requests(monkeypatch):
+    monkeypatch.setattr(dart_client, '_json_cache', {})
+    monkeypatch.setattr(dart_client, '_request_count', 0)
+    monkeypatch.setattr(dart_client, '_request_day', dart_client.time.strftime('%Y-%m-%d', dart_client.time.gmtime()))
+    calls = []
+    async def get(path, params):
+        calls.append(path)
+        class Response:
+            def json(self):
+                return {'status': '000', 'list': []}
+        return Response()
+    monkeypatch.setattr(dart_client, '_get', get)
+    async def run():
+        await dart_client._get_json('report', {'year': 2026})
+        await dart_client._get_json('report', {'year': 2026})
+        assert calls == ['report']
+        monkeypatch.setattr(dart_client, '_request_count', 4000)
+        with pytest.raises(dart_client.DartError):
+            await dart_client._get_json('other', {})
+        assert calls == ['report']
+    asyncio.run(run())
+
+
+def test_hourly_collector_visits_all_companies_and_isolates_failure(monkeypatch):
+    monkeypatch.setattr(dart_client, 'is_enabled', lambda: True)
+    monkeypatch.setattr(collector.settings, 'financial_health_startup_delay_seconds', 0)
+    monkeypatch.setattr(collector, 'parse_companies', lambda: [{'ticker': 'A'}, {'ticker': 'B'}, {'ticker': 'C'}])
+    visited = []
+    async def collect(company):
+        visited.append(company['ticker'])
+        if company['ticker'] == 'B':
+            raise ValueError('temporary upstream failure')
+        return {'zone': 'safe', 'z': 3, 'reason': None}
+    async def sleep(seconds):
+        if seconds > 1:
+            raise asyncio.CancelledError()
+    monkeypatch.setattr(collector, 'collect_one', collect)
+    monkeypatch.setattr(collector.asyncio, 'sleep', sleep)
+    with pytest.raises(asyncio.CancelledError):
+        asyncio.run(collector.run_forever())
+    assert visited == ['A', 'B', 'C']
 
 
 def test_build_record_excluded_sector_never_calls_dart(monkeypatch):

@@ -4,7 +4,7 @@
   const threshold = 800;
   const records = new Map();
   let frame = 0, serial = 0;
-  const excluded = 'aside,nav,dialog,footer,[role="dialog"],.glossary-modal,.modal,.chart-modal,[data-pr-accordion-bar]';
+  const excluded = '[data-pr-accordion-exempt],aside,nav,dialog,footer,[role="dialog"],.glossary-modal,.modal,.chart-modal,[data-pr-accordion-bar]';
   const headingSelector = ':scope>h1,:scope>h2,:scope>h3,:scope>header h1,:scope>header h2,:scope>header h3,:scope>div>h2,:scope>div>h3';
   function hashTarget(hash = location.hash) {
     try { return hash && document.getElementById(decodeURIComponent(hash.replace(/^#/,''))); }

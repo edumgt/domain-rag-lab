@@ -165,7 +165,7 @@
     const intro = robo
       ? '2026년 10월 1일(목)부터 10월 21일(수) 오전까지 25개 반나절 · 개인별 100시간. 주말과 10월 5일·9일은 제외합니다.'
       : '2026년 10월 22일(목)부터 11월 11일(수)까지 15개 영업일 · 개인별 120시간. 별도 완충일 없이 모든 영업일을 작업 일정으로 편성합니다.';
-    return `<section class="lesson project-timeline" id="${id}" aria-labelledby="${id}Title"><span>PROJECT ${projectNumber}</span><div class="lesson-content"><h2 id="${id}Title">${heading}</h2><div class="lesson-body"><p>${escapeHtml(intro)}</p><p>오전 0–4시간과 오후 4–8시간을 합쳐 1일차로 표시합니다.</p><div class="project-schedule-role-guide">${roles.map((role) => `<span>${escapeHtml(role)}</span>`).join('')}</div>${robo
+    return `<section class="lesson project-timeline project-schedule" id="${id}" aria-labelledby="${id}Title"><span>PROJECT ${projectNumber}</span><div class="lesson-content"><h2 id="${id}Title">${heading}</h2><div class="lesson-body"><p>${escapeHtml(intro)}</p><p>오전 0–4시간과 오후 4–8시간을 합쳐 1일차로 표시합니다.</p><div class="project-schedule-role-guide">${roles.map((role) => `<span>${escapeHtml(role)}</span>`).join('')}</div>${robo
       ? renderSheet('나만의 로보 어드바이저 개발 및 성과 검증 프로젝트', 100, roboRows, roboCalendar, '2026. 10. 1.(목)–10. 21.(수) 오전', ' · 10. 21. 오후는 산출물 보완을 위한 기준시간 외 완충 시간')
       : renderSheet('나만의 투자 인디케이터 개발 및 성과 검증 프로젝트', 120, indicatorRows, indicatorCalendar, '2026. 10. 22.(목)–11. 11.(수)', ' · 별도 완충일 없이 15개 영업일을 모두 작업 일정으로 편성')}</div></div></section>`;
   }

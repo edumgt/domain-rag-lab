@@ -732,6 +732,13 @@ KOSDAQ|웹젠|게임`,
   });
 
   function setView(view, options = {}) {
+    if (view === 'stocks') view = 'home';
+    if (view === 'home') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('view', 'home');
+      url.searchParams.delete('example');
+      window.history.replaceState(null, '', url.toString());
+    }
     if (view === 'basis') {
       window.location.replace('https://iv.edumgt.co.kr/?view=lessons&lesson=08&practice=basis');
       return;
@@ -748,7 +755,6 @@ KOSDAQ|웹젠|게임`,
     $clearChatBtn?.classList.toggle('hidden', view !== 'learn');
 
     if (view === 'home') renderHome();
-    if (view === 'stocks') renderStocksView();
     if (view === 'learn') showWelcome();
     if (view === 'theory') renderTheoryIndex();
     if (view === 'simulation') {
@@ -1187,7 +1193,7 @@ KOSDAQ|웹젠|게임`,
     if (!q) { list.innerHTML = ''; list.hidden = true; return; }
     const matches = ATLAS_COMPANY_LIST.filter(c => c.name.toLowerCase().includes(q) || c.ticker.includes(q)).slice(0, 8);
     if (!matches.length) {
-      list.innerHTML = '<li class="tick-search-empty">일치하는 종목이 없습니다 (종목보기 200개 중 검색)</li>';
+      list.innerHTML = '<li class="tick-search-empty">일치하는 종목이 없습니다 (홈 종목 목록 중 검색)</li>';
       list.hidden = false;
       return;
     }
@@ -1434,17 +1440,7 @@ KOSDAQ|웹젠|게임`,
   }
 
   function renderHome() {
-    $messages.innerHTML = `
-      <article class="content-page home-page">
-        <div class="home-live-layout">
-          <div class="home-live-assets">${renderDashboardAssetSection()}</div>
-          <div class="home-live-chart">${renderTickChartSection()}</div>
-        </div>
-        <p class="content-disclaimer">학습용 서비스이며 특정 투자상품의 매수·매도를 권유하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
-      </article>`;
-    bindViewLinks();
-    initDashboardAssets();
-    initTickDashboard();
+    renderStocksView();
   }
 
   function renderSimulationGuide() {
@@ -2893,21 +2889,23 @@ KOSDAQ|웹젠|게임`,
     return `<section class="theory-lesson day4-projects" aria-label="나만의 로보 어드바이저 개발 및 성과 검증 프로젝트"><span>PROJECT 01</span><div class="theory-lesson-content"><h2>나만의 로보 어드바이저 개발 및 성과 검증 프로젝트</h2><div class="theory-lesson-body"><p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 투자성향진단 · 시각적 포트폴리오 · 시뮬레이션 · 목표 수익률 모의 · 리밸런싱</p><ul><li><strong>목표 기능:</strong> AI 기반의 자동화 로보 어드바이저 모델 개발<ol><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 주식·금융·경제 기본 용어사전과 연관 개념 탐색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/domain-rag-lab" target="_blank" rel="noopener noreferrer">domain-rag-lab</a>와 <a href="https://github.com/edumgt/investment-analysis" target="_blank" rel="noopener noreferrer">investment-analysis</a>의 통합 및 AWS EC2 서버 배포</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 가격·거래량·재무·뉴스 등 투자 자료 수집·분류·전처리·검색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/python-crawling-lab" target="_blank" rel="noopener noreferrer">python-crawling-lab</a> 등을 활용한 크롤링 및 적재</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 근거 문서와 출처를 포함한 Retrieval-Augmented Generation (RAG) 질의응답<span class="implementation-detail">기술스택 및 구현방안: Amazon Bedrock 또는 Ollama + GPU · VectorDB · FastAPI</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 관심 종목·투자 아이디어·의사결정 기록과 사후 성과 재검토 일지 관리<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Vanilla JS</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 5:</strong> 포트폴리오 및 투자 이력과 관련 지식 연결<span class="implementation-detail">기술스택 및 구현방안: RDBMS · VectorDB · FastAPI</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 6:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행<span class="implementation-detail">기술스택 및 구현방안: RDBMS · Amazon EventBridge Scheduler · AWS Batch</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 7:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Processing Jobs (SHAP) · AG Grid · ApexCharts</span></li></ol></li><li><strong>목표 기능:</strong> 패턴 인식 기법을 활용한 주식 시장 예측 프로젝트<ol><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> OHLCV 데이터로 이동평균·RSI·MACD·볼린저 밴드·거래량 지표 계산<span class="implementation-detail">기술스택 및 구현방안: RDBMS · TA-Lib · FastAPI</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 캔들 패턴·지지선·저항선·돌파·골든크로스 등 차트 패턴 탐지<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Training Jobs · Docker · EC2</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 분봉·일봉·주봉의 기술적 지표를 종합해 매수·매도·관망 신호와 신뢰도 산출<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI 실시간 추론 엔드포인트 · RDBMS · FastAPI</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 캔들 차트 위에 기술적 지표·탐지 패턴·투자 신호를 겹쳐 보여주는 인터랙티브 차트 구현<span class="implementation-detail">기술스택 및 구현방안: ApexCharts · AG Grid · Vanilla JS</span></li></ol></li><li><strong>목표 기능:</strong> 자산배분모델을 활용한 포트폴리오 최적화, 주식 스크리닝을 통한 종목 선정 등 직접 수행<ol><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 월·분기·연 등 정해진 주기가 도래하면 실행하는 시간 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Docker</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 현재 비중이 목표 비중의 허용 이탈률을 초과하면 실행하는 이탈률 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: FastAPI · AG Grid · Vanilla JS</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 입·출금이나 배당금이 발생하면 새 현금흐름을 활용해 실행하는 입출금·배당금 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · AG Grid</span></li></ol></li><li><strong>목표 기능:</strong> 구축한 퀀트 모델의 결과를 해석해보고 자체적으로 모의 투자 의사결정 진행<ol><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 거래비용·슬리피지를 반영한 수익률, MDD, 샤프 비율 등 성과지표 분석<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · ApexCharts</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 벤치마크 대비 초과성과와 종목·자산·전략별 수익·위험 기여도 분석<span class="implementation-detail">기술스택 및 구현방안: RDBMS · AG Grid · ApexCharts</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 퀀트 신호를 매수·매도·보유 의견으로 변환<span class="implementation-detail">기술스택 및 구현방안: Amazon Bedrock · FastAPI · Vanilla JS</span></li><li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 모의 주문 체결 및 포트폴리오 운용<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Docker</span></li></ol></li></ul></div></div></section><section class="theory-lesson day4-projects" aria-label="나만의 투자 인디케이터 개발 및 성과 검증 프로젝트"><span>PROJECT 02</span><div class="theory-lesson-content"><h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2><div class="theory-lesson-body"><ul><li><strong>목표 기능:</strong> 기본적인 인디케이터(MA, RSI 등)로 전략 설계</li><li><strong>목표 기능:</strong> 커스텀 인디케이터 개발</li><li><strong>목표 기능:</strong> 트레이딩뷰 플랫폼으로 성과 확인 및 코딩 실습(PineScript)</li><li><strong>목표 기능:</strong> 파이썬 프로그래밍을 통한 성과 검증</li><li><strong>목표 기능:</strong> 증권사 연동(API 활용)을 통한 자동화 모델 구현</li></ul></div></div></section>`;
   }
 
-  function renderStocksView(day = 1) {
-    const selectedDay = Number(day);
-    $messages.innerHTML = `<article class="content-page stocks-page">
+  function renderStocksView() {
+    $messages.innerHTML = `<article class="content-page stocks-page home-page" data-pr-accordion-exempt>
       <header class="stocks-page-head">
         <div><span>LISTED COMPANY ATLAS</span><h1>사업과 변수로 읽는 <mark>국내 상장사</mark></h1></div>
         <p>국내 상장사의 사업 구조와 실적 변수, 핵심 위험을 함께 확인하세요.</p>
       </header>
-      <nav class="atlas-day-tabs" aria-label="일차별 종목 아틀라스">${THEORY_DAYS.map(item => `<button class="${item.day === selectedDay ? 'active' : ''}" data-atlas-day="${item.day}" aria-label="${item.day}일차 종목 보기">${item.day}</button>`).join('')}</nav>
+      <nav class="atlas-day-tabs" aria-label="일차별 종목 섹션 이동">${THEORY_DAYS.map(item => `<button data-atlas-day="${item.day}" aria-controls="atlas-day-${item.day}">${item.day}일차</button>`).join('')}</nav>
       <p class="stocks-page-note"><i class="fa-solid fa-circle-info"></i> 종목 카드를 누르면 사업·관찰 변수·위험, 지연 시세와 관련 링크를 볼 수 있습니다.</p>
-      ${renderCompanyAtlas(selectedDay)}
+      ${THEORY_DAYS.map(item => renderCompanyAtlas(item.day)).join('')}
     </article>`;
     bindViewLinks();
     bindAtlasFilters();
     bindAtlasDetails();
-    $messages.querySelectorAll('[data-atlas-day]').forEach(button => button.addEventListener('click', () => renderStocksView(button.dataset.atlasDay)));
+    $messages.querySelectorAll('[data-atlas-day]').forEach(button => button.addEventListener('click', () => {
+      $messages.querySelectorAll('[data-atlas-day]').forEach(item => item.classList.toggle('active', item === button));
+      document.getElementById(`atlas-day-${button.dataset.atlasDay}`)?.scrollIntoView({block:'start',behavior:'smooth'});
+    }));
     applyFinancialHealthBadges();
   }
 
@@ -2963,7 +2961,7 @@ KOSDAQ|웹젠|게임`,
 
   function renderFinancialHealthPanel(detail) {
     if (!detail || !detail.available) {
-      return `<div class="atlas-health-empty"><i class="fa-solid fa-hourglass-half"></i> ${escHtml(detail?.reason || '아직 수집되지 않았습니다.')} 수집기는 한 시간에 한 종목씩 DART 재무제표를 읽습니다.</div>`;
+      return `<div class="atlas-health-empty"><i class="fa-solid fa-hourglass-half"></i> ${escHtml(detail?.reason || '아직 수집되지 않았습니다.')} 수집기는 매시간 홈 전체 종목을 순차 분석합니다. 공시 원문은 최대 24시간 캐시하며, 보고서 기준과 계산 시각을 확인하세요.</div>`;
     }
     const zone = HEALTH_ZONE[detail.zone] || { label: detail.zone_label || '계산 불가', icon: 'fa-circle-question' };
     const badge = `<span class="atlas-health-badge zone-${escHtml(detail.zone || 'none')}">${renderHealthBadge(detail) || `<i class="fa-solid fa-circle-question"></i> ${escHtml(zone.label)}`}</span>`;
@@ -2979,7 +2977,7 @@ KOSDAQ|웹젠|게임`,
     return `<div class="atlas-health-head">${badge}<p>${escHtml(detail.description || '')}</p>${thresholds}</div>
       ${rows ? `<table class="atlas-health-table"><thead><tr><th>항목</th><th>비율</th><th>값</th><th>가중치</th><th>기여</th></tr></thead><tbody>${rows}</tbody></table>` : ''}
       ${inputLine}
-      <p class="atlas-health-note"><i class="fa-solid fa-circle-info"></i> ${escHtml(basis)} · 출처 ${escHtml(detail.source || 'DART')} · 계산 ${detail.computed_at ? escHtml(detail.computed_at.slice(0, 10)) : '—'}. 영업이익은 EBIT 근사, 비제조·연구개발형 기업은 Z''(시가총액·매출 제외). 교육용 참고이며 매수·매도 권유가 아닙니다.</p>`;
+      <p class="atlas-health-note"><i class="fa-solid fa-circle-info"></i> ${escHtml(basis)} · 출처 ${escHtml(detail.source || 'DART')} · 계산 ${detail.computed_at ? escHtml(new Date(detail.computed_at).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })) : '—'}. 영업이익은 EBIT 근사, 비제조·연구개발형 기업은 Z''(시가총액·매출 제외). 교육용 참고이며 매수·매도 권유가 아닙니다.</p>`;
   }
 
   function loadFinancialHealthPanel(modal, company) {
@@ -3303,8 +3301,8 @@ effective_date: [기준일]
   function renderCompanyAtlas(day) {
     const companies = COMPANY_ATLAS[day] || [];
     const counts = companies.reduce((acc, [market]) => ({ ...acc, [market]: (acc[market] || 0) + 1 }), {});
-    return `<section class="company-atlas" aria-label="${day}일차 국내 상장사 40개 아틀라스">
-      <header class="atlas-header"><div><span>KOREAN LISTED COMPANY ATLAS · ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를 사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>일차<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
+    return `<section class="company-atlas" id="atlas-day-${day}" aria-label="${day}일차 국내 상장사 40개 아틀라스">
+      <header class="atlas-header"><div><span>KOREAN LISTED COMPANY ATLAS · ${String(day).padStart(2, '0')}</span><h2>${day}일차 · 국내 상장사 <em>${companies.length}개</em>를 사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>일차<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
       <div class="atlas-toolbar"><div class="atlas-count"><span><b>${companies.length}</b> COMPANIES</span><i></i><span>KOSPI <b>${counts.KOSPI || 0}</b></span><i></i><span>KOSDAQ <b>${counts.KOSDAQ || 0}</b></span></div><div class="atlas-filters" role="group" aria-label="시장별 기업 필터"><button class="active" data-atlas-filter="all">전체 ${companies.length}</button><button data-atlas-filter="KOSPI">KOSPI ${counts.KOSPI || 0}</button><button data-atlas-filter="KOSDAQ">KOSDAQ ${counts.KOSDAQ || 0}</button></div></div>
       <div class="atlas-arrow-line"><span>시장</span><i></i><span>산업</span><i></i><span>핵심 변수</span><i></i><span>위험</span></div>
       <div class="atlas-grid">${companies.map(([market, name, sector], index) => {
@@ -3317,13 +3315,15 @@ effective_date: [기준일]
   }
 
   function bindAtlasFilters() {
-    const buttons = $messages.querySelectorAll('[data-atlas-filter]');
-    const cards = $messages.querySelectorAll('[data-atlas-market]');
-    buttons.forEach(button => button.addEventListener('click', () => {
-      const filter = button.dataset.atlasFilter;
-      buttons.forEach(item => item.classList.toggle('active', item === button));
-      cards.forEach(card => { card.hidden = filter !== 'all' && card.dataset.atlasMarket !== filter; });
-    }));
+    $messages.querySelectorAll('.company-atlas').forEach(section => {
+      const buttons = section.querySelectorAll('[data-atlas-filter]');
+      const cards = section.querySelectorAll('[data-atlas-market]');
+      buttons.forEach(button => button.addEventListener('click', () => {
+        const filter = button.dataset.atlasFilter;
+        buttons.forEach(item => item.classList.toggle('active', item === button));
+        cards.forEach(card => { card.hidden = filter !== 'all' && card.dataset.atlasMarket !== filter; });
+      }));
+    });
   }
 
   function bindAtlasDetails() {

@@ -106,8 +106,32 @@ async def _get(path: str, params: dict) -> httpx.Response:
     return resp
 
 
+_json_cache: dict[tuple, tuple[float, dict]] = {}
+_request_day = ""
+_request_count = 0
+
+
 async def _get_json(path: str, params: dict) -> dict:
-    body = (await _get(path, params)).json()
+    # Quarterly statements change slowly. Recalculate hourly without fetching
+    # the same reports repeatedly; reserve the shared key's quota for FD too.
+    global _request_day, _request_count
+    key = (path, tuple(sorted(params.items())))
+    cached = _json_cache.get(key)
+    if cached and time.monotonic() - cached[0] < 24 * 3600:
+        body = cached[1]
+    else:
+        day = time.strftime("%Y-%m-%d", time.gmtime())
+        if day != _request_day:
+            _request_day, _request_count = day, 0
+        if _request_count >= 4000:
+            raise DartError("020", "PR 수집기 일일 호출 예산(4000건) 도달")
+        _request_count += 1
+        await asyncio.sleep(0.2)
+        body = (await _get(path, params)).json()
+        if str(body.get("status")) in ("000", "013"):
+            if len(_json_cache) >= 4000:
+                _json_cache.clear()
+            _json_cache[key] = (time.monotonic(), body)
     status = str(body.get("status") or "")
     if status and status != "000":
         raise DartError(status, str(body.get("message") or "알 수 없는 오류"))

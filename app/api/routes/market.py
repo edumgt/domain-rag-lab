@@ -488,7 +488,7 @@ def financial_health_detail(
         select(StockFinancialHealth).where(StockFinancialHealth.ticker == ticker, StockFinancialHealth.market == market)
     ).scalar_one_or_none()
     if not row:
-        return {"available": False, "ticker": ticker, "market": market, "reason": "아직 수집되지 않았습니다(한 시간에 한 종목씩 수집)."}
+        return {"available": False, "ticker": ticker, "market": market, "reason": "초기 수집 대기 중입니다. 홈 전체 종목을 매시간 순차 분석합니다."}
     detail = row.to_detail()
     weights = altman.WEIGHTS.get(row.model, {})
     detail["weights"] = weights

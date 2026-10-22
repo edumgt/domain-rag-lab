@@ -60,7 +60,11 @@ def parse_companies(source: str | None = None) -> list[dict[str, Any]]:
         ticker_days[m.group(1)] = m.group(2).split()
     seen: set[str] = set()
     out: list[dict[str, Any]] = []
+    theory_path = APP_JS_PATH.parent / "assets" / "theory-data.js"
+    visible_days = set(re.findall(r"day:\s*(\d+)", theory_path.read_text())) if theory_path.exists() else set(atlas_days)
     for day in sorted(atlas_days, key=int):
+        if day not in visible_days:
+            continue
         codes = ticker_days.get(day, [])
         for index, (row, code) in enumerate(zip(atlas_days[day], codes)):
             if len(row) < 3 or code in seen:
@@ -232,12 +236,18 @@ async def run_forever() -> None:
         return
     interval = max(60, int(settings.financial_health_interval_seconds))
     await asyncio.sleep(max(0, int(settings.financial_health_startup_delay_seconds)))
-    logger.info("재무건전성 수집기 시작: %d초마다 한 종목", interval)
+    logger.info("재무건전성 수집기 시작: %d초 주기로 홈 전체 종목", interval)
     while True:
-        try:
-            await collect_next()
-        except asyncio.CancelledError:
-            raise
-        except Exception as exc:  # noqa: BLE001 — 한 종목 실패가 루프를 멈추면 안 된다
-            logger.exception("재무건전성 수집 실패: %s", exc)
-        await asyncio.sleep(interval)
+        started = asyncio.get_running_loop().time()
+        companies = parse_companies()
+        for company in companies:
+            try:
+                record = await collect_one(company)
+                logger.info("재무건전성 수집 %s: zone=%s z=%s reason=%s", company["ticker"], record["zone"], record["z"], record["reason"])
+            except asyncio.CancelledError:
+                raise
+            except Exception:
+                logger.exception("재무건전성 종목 수집 실패 %s", company["ticker"])
+            await asyncio.sleep(0.5)
+        logger.info("재무건전성 전체 수집 완료: %d종목", len(companies))
+        await asyncio.sleep(max(1, interval - (asyncio.get_running_loop().time() - started)))
