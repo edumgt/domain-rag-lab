@@ -2895,7 +2895,7 @@ KOSDAQ|웹젠|게임`,
         <div><span>LISTED COMPANY ATLAS</span><h1>사업과 변수로 읽는 <mark>국내 상장사</mark></h1></div>
         <p>국내 상장사의 사업 구조와 실적 변수, 핵심 위험을 함께 확인하세요.</p>
       </header>
-      <nav class="atlas-day-tabs" aria-label="일차별 종목 섹션 이동">${THEORY_DAYS.map(item => `<button data-atlas-day="${item.day}" aria-controls="atlas-day-${item.day}">${item.day}일차</button>`).join('')}</nav>
+      <nav class="atlas-day-tabs" aria-label="종목 그룹 이동">${THEORY_DAYS.map(item => `<button data-atlas-day="${item.day}" aria-controls="atlas-day-${item.day}">${item.day}</button>`).join('')}</nav>
       <p class="stocks-page-note"><i class="fa-solid fa-circle-info"></i> 종목 카드를 누르면 사업·관찰 변수·위험, 지연 시세와 관련 링크를 볼 수 있습니다.</p>
       ${THEORY_DAYS.map(item => renderCompanyAtlas(item.day)).join('')}
     </article>`;
@@ -2910,7 +2910,7 @@ KOSDAQ|웹젠|게임`,
   }
 
   // ===== 재무건전성(알트먼 Z-Score) 배지 =====
-  // 백엔드 수집기가 한 시간에 한 종목씩 DART 재무제표로 계산해 둔 값을 읽는다(실시간 조회 아님). 값이 있는 종목만 배지를 보인다.
+  // 백엔드 수집기가 30분에 한 종목씩 DART 재무제표로 계산해 둔 값을 읽는다(실시간 조회 아님). 값이 있는 종목만 배지를 보인다.
   const HEALTH_ZONE = {
     safe: { label: '안전', icon: 'fa-shield-heart' },
     grey: { label: '회색', icon: 'fa-scale-balanced' },
@@ -2918,9 +2918,12 @@ KOSDAQ|웹젠|게임`,
     excluded: { label: 'Z 미적용 · 금융업', icon: 'fa-building-columns' },
   };
   let financialHealthCache = { at: 0, items: null, promise: null };
+  setInterval(() => {
+    if (!document.hidden && $messages.querySelector('[data-health-for]')) applyFinancialHealthBadges();
+  }, 60 * 1000);
 
   function loadFinancialHealthSummary() {
-    const fresh = financialHealthCache.items && Date.now() - financialHealthCache.at < 10 * 60 * 1000;
+    const fresh = financialHealthCache.items && Date.now() - financialHealthCache.at < 60 * 1000;
     if (fresh) return Promise.resolve(financialHealthCache.items);
     if (financialHealthCache.promise) return financialHealthCache.promise;
     financialHealthCache.promise = fetchLocalBackendJson('/market/financial-health/summary')
@@ -2961,7 +2964,7 @@ KOSDAQ|웹젠|게임`,
 
   function renderFinancialHealthPanel(detail) {
     if (!detail || !detail.available) {
-      return `<div class="atlas-health-empty"><i class="fa-solid fa-hourglass-half"></i> ${escHtml(detail?.reason || '아직 수집되지 않았습니다.')} 수집기는 매시간 홈 전체 종목을 순차 분석합니다. 공시 원문은 최대 24시간 캐시하며, 보고서 기준과 계산 시각을 확인하세요.</div>`;
+      return `<div class="atlas-health-empty"><i class="fa-solid fa-hourglass-half"></i> ${escHtml(detail?.reason || '아직 수집되지 않았습니다.')} 수집기는 30분마다 한 종목씩 DART 수집 → 분석 → 반영을 진행합니다. 공시 원문은 최대 24시간 캐시하며, 보고서 기준과 계산 시각을 확인하세요.</div>`;
     }
     const zone = HEALTH_ZONE[detail.zone] || { label: detail.zone_label || '계산 불가', icon: 'fa-circle-question' };
     const badge = `<span class="atlas-health-badge zone-${escHtml(detail.zone || 'none')}">${renderHealthBadge(detail) || `<i class="fa-solid fa-circle-question"></i> ${escHtml(zone.label)}`}</span>`;
@@ -3301,8 +3304,8 @@ effective_date: [기준일]
   function renderCompanyAtlas(day) {
     const companies = COMPANY_ATLAS[day] || [];
     const counts = companies.reduce((acc, [market]) => ({ ...acc, [market]: (acc[market] || 0) + 1 }), {});
-    return `<section class="company-atlas" id="atlas-day-${day}" aria-label="${day}일차 국내 상장사 40개 아틀라스">
-      <header class="atlas-header"><div><span>KOREAN LISTED COMPANY ATLAS · ${String(day).padStart(2, '0')}</span><h2>${day}일차 · 국내 상장사 <em>${companies.length}개</em>를 사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>일차<br>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
+    return `<section class="company-atlas" id="atlas-day-${day}" aria-label="종목 그룹 ${day} · 국내 상장사 ${companies.length}개">
+      <header class="atlas-header"><div><span>KOREAN LISTED COMPANY ATLAS · ${String(day).padStart(2, '0')}</span><h2>국내 상장사 <em>${companies.length}개</em>를 사업과 변수로 읽기</h2><p>카드의 <b>매거진 보기</b>에서 사업 특징·관찰 변수·위험과 함께 지연 시세, 최근 뉴스, 공식 홈페이지·공시 링크를 확인할 수 있습니다.</p></div><div class="atlas-number-board"><b>${String(day).padStart(2, '0')}</b><span>ATLAS</span><i class="fa-solid fa-arrow-down"></i></div></header>
       <div class="atlas-toolbar"><div class="atlas-count"><span><b>${companies.length}</b> COMPANIES</span><i></i><span>KOSPI <b>${counts.KOSPI || 0}</b></span><i></i><span>KOSDAQ <b>${counts.KOSDAQ || 0}</b></span></div><div class="atlas-filters" role="group" aria-label="시장별 기업 필터"><button class="active" data-atlas-filter="all">전체 ${companies.length}</button><button data-atlas-filter="KOSPI">KOSPI ${counts.KOSPI || 0}</button><button data-atlas-filter="KOSDAQ">KOSDAQ ${counts.KOSDAQ || 0}</button></div></div>
       <div class="atlas-arrow-line"><span>시장</span><i></i><span>산업</span><i></i><span>핵심 변수</span><i></i><span>위험</span></div>
       <div class="atlas-grid">${companies.map(([market, name, sector], index) => {

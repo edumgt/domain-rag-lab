@@ -1,6 +1,6 @@
 """종목 보기 재무건전성(알트먼 Z-Score) 수동 수집.
 
-평소에는 API 프로세스의 백그라운드 수집기(app/services/financial_health_collector.py)가 한 시간에 한 종목씩 돈다.
+평소에는 API 프로세스의 백그라운드 수집기(app/services/financial_health_collector.py)가 30분마다 한 종목씩 돈다.
 이 스크립트는 특정 종목을 바로 보고 싶거나, 최초 적재를 앞당기고 싶을 때 컨테이너 안에서 실행한다.
 
     docker compose exec api python -m app.ops.collect_financial_health --ticker 005930      # 한 종목

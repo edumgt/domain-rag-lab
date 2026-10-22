@@ -1,0 +1,12 @@
+/* Shared label/layout only. Existing page controllers continue to own the left panel. */
+.chat-header{grid-template-columns:auto auto minmax(0,1fr) auto}
+#theoryPanel{display:flex;flex-direction:column;position:fixed;inset-block:0;right:0;width:min(360px,calc(100vw - 32px));z-index:60;overflow-y:auto;background:var(--surface,#fff);box-shadow:0 20px 48px #0e234030;transform:translateX(105%);transition:transform .24s ease}
+body.right-panel-open #theoryPanel{transform:translateX(0)}
+#theoryPanel .topic-nav{padding:16px}
+#theoryPanel .ref-header{display:flex;align-items:center;justify-content:space-between;padding:20px;gap:12px}
+#theoryPanel .topic-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;color:#0e2340;text-decoration:none}
+#theoryPanel .panel-close{background:transparent;border:0;font-size:24px;cursor:pointer}
+.theory-backdrop-open{position:fixed!important;inset:0!important;z-index:50!important;background:#0e234055!important;opacity:1!important;pointer-events:auto!important;display:block!important}
+#openTheoryPanel{flex-shrink:0}
+@media(max-width:700px){.chat-header{grid-template-columns:auto minmax(0,1fr) auto}.chat-header .brand-nav{grid-row:2;grid-column:1/-1}#openTheoryPanel,#openRightPanel{grid-row:1;grid-column:3}.panel-toggle span,.day-panel-toggle span{display:inline!important}.main-kms-title,.day-kms-title{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:13px}.panel-toggle,.day-panel-toggle{font-size:12px;padding:7px}.chat-header{gap:7px;padding-inline:10px}.day-appbar{height:auto;min-height:60px;flex-wrap:wrap;padding:8px 10px}.day-brand-nav{order:4;width:100%;max-width:100%}#openTheoryPanel{margin-left:auto}}
+#referencePanel,#learningPanel{display:flex;flex-direction:column}

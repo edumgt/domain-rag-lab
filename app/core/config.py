@@ -69,9 +69,9 @@ class Settings(BaseSettings):
     # DART(금융감독원 전자공시) 인증키 — 종목 보기 재무건전성(알트먼 Z-Score) 수집에 사용(app/services/dart_client.py).
     # 비어 있으면 수집기가 조용히 비활성이고 화면은 배지를 표시하지 않는다. lumina-invest 와 같은 키를 쓴다(일 20,000건 한도 공유).
     dart_api_key: str = ""
-    # 재무건전성 수집기(app/services/financial_health_collector.py): API 기동 시 백그라운드로 interval 마다 한 종목만 수집한다.
+    # 재무건전성 수집기(app/services/financial_health_collector.py): API 기동 시 백그라운드로 interval 마다 한 종목을 수집한다.
     financial_health_collector_enabled: bool = True
-    financial_health_interval_seconds: int = 3600
+    financial_health_interval_seconds: int = 1800
     financial_health_startup_delay_seconds: int = 45
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")

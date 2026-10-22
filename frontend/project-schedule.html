@@ -440,6 +440,11 @@
 .project-timeline.project-schedule .schedule-project-tag{padding:2px 5px;margin-bottom:3px;font-size:10.5px!important;line-height:1.5}
 @media(max-width:720px){.project-timeline.project-schedule tbody tr{padding:8px}.project-timeline.project-schedule tbody th,.project-timeline.project-schedule td{padding:6px 8px}.project-timeline.project-schedule .project-schedule-sheet-head{grid-template-columns:minmax(0,1fr)}}
 </style>
+<link rel="stylesheet" href="/static/assets/learning-panel.css?v=20261022-split-1">
+<script defer src="/static/assets/learning-panel.js?v=20261022-split-1"></script>
+<link rel="stylesheet" href="/static/assets/project3-sdlc.css?v=20261022-1">
+<link rel="stylesheet" href="/static/assets/project3-wbs.css?v=20261022-1">
+<script defer src="/static/assets/project3-wbs.js?v=20261022-1"></script>
 </head>
   <body data-day="4" class="pr-document-page">
     <header class="day-appbar">
@@ -450,7 +455,7 @@
         aria-controls="dayOffcanvas"
         aria-expanded="false"
       >
-        <i class="fa-solid fa-bars"></i><span>학습</span>
+        <i class="fa-solid fa-bars"></i><span>프로젝트</span>
       </button>
       <a class="day-kms-title" href="/?view=learn">금융과 행동</a>
       <div
@@ -467,13 +472,13 @@
         >
       </div>
       <div class="day-header-actions"></div>
-    </header>
+    <button class="day-panel-toggle" id="openTheoryPanel" type="button" aria-controls="theoryPanel" aria-expanded="false" aria-label="학습 메뉴 열기"><i class="fa-solid fa-book-open"></i><span>학습</span></button></header>
     <div class="day-backdrop" id="dayBackdrop"></div>
-    <aside class="day-offcanvas" id="dayOffcanvas" aria-label="학습 메뉴">
-      <header class="day-offcanvas-header"><div class="day-offcanvas-title-row"><h2 class="day-offcanvas-title"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h2><button class="day-offcanvas-close" type="button" id="dayMenuClose" aria-label="학습 메뉴 닫기"><i class="fa-solid fa-xmark"></i></button></div><p class="day-offcanvas-subtitle">금융상품 · 실물자산 · 생활거래 이해 · 실습</p></header>
-      <nav class="day-offcanvas-nav" aria-label="4일 이론 학습"><p class="day-offcanvas-nav-label">4일 이론 학습</p><a class="day-offcanvas-link" href="/static/days/01.html"><span class="day-offcanvas-day">1일차</span> 선물과 옵션</a><a class="day-offcanvas-link" href="/static/days/02.html"><span class="day-offcanvas-day">2일차</span> 펀드 · ETF</a><a class="day-offcanvas-link" href="/static/days/03.html"><span class="day-offcanvas-day">3일차</span> 채권 · 코인</a><a class="day-offcanvas-link" href="/static/days/04.html"><span class="day-offcanvas-day">4일차</span> 자산배분, 퀀트</a><a class="day-offcanvas-link active" aria-current="page" href="/static/project-schedule.html" style="text-decoration:none"><i class="fa-solid fa-calendar-days"></i> 프로젝트 일정</a><a class="day-offcanvas-link" href="/static/project2-presentation.html"><span class="day-offcanvas-day">발표</span> 프로젝트2 발표</a><a class="day-offcanvas-link" href="/static/project3-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트3 발표</a></nav>
+    <aside class="day-offcanvas" id="dayOffcanvas" aria-label="프로젝트 메뉴">
+      <header class="day-offcanvas-header"><div class="day-offcanvas-title-row"><h2 class="day-offcanvas-title"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h2><button class="day-offcanvas-close" type="button" id="dayMenuClose" aria-label="프로젝트 메뉴 닫기"><i class="fa-solid fa-xmark"></i></button></div><p class="day-offcanvas-subtitle">금융상품 · 실물자산 · 생활거래 이해 · 실습</p></header>
+      <nav class="day-offcanvas-nav" aria-label="프로젝트"><p class="day-offcanvas-nav-label">프로젝트</p><a class="day-offcanvas-link active" aria-current="page" href="/static/project-schedule.html" style="text-decoration:none"><i class="fa-solid fa-calendar-days"></i> 프로젝트 일정</a><a class="day-offcanvas-link" href="/static/project2-presentation.html"><span class="day-offcanvas-day">발표</span> 프로젝트2 발표</a><a class="day-offcanvas-link" href="/static/project3-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트3 발표</a></nav>
 
-    </aside>
+    </aside><aside class="ref-panel" id="theoryPanel" aria-label="학습 메뉴" inert><div class="ref-header"><h3>학습</h3><button class="panel-close" id="closeTheoryPanel" aria-label="학습 메뉴 닫기">×</button></div><nav class="topic-nav" aria-label="4일 이론 학습"><p class="nav-label">4일 이론 학습</p><a class="topic-btn" href="/static/days/01.html"><span class="day-offcanvas-day">1일차</span> 선물과 옵션</a><a class="topic-btn" href="/static/days/02.html"><span class="day-offcanvas-day">2일차</span> 펀드 · ETF</a><a class="topic-btn" href="/static/days/03.html"><span class="day-offcanvas-day">3일차</span> 채권 · 코인</a><a class="topic-btn" href="/static/days/04.html"><span class="day-offcanvas-day">4일차</span> 자산배분, 퀀트</a></nav></aside>
     <nav aria-label="4일 학습 목차">
       <a class="brand" href="/static/days/index.html">4일 금융 이론</a>
       <div class="day-nav">
@@ -680,7 +685,7 @@
 </section>
 </article></main>
 <footer class="site-footer-unified">© 2026 (주)에듀엠지티 All rights reserved.</footer>
-<script src="/static/assets/day4-project-schedule.js?v=20261022-compact-table-2"></script>
+<script src="/static/assets/day4-project-schedule.js?v=20261022-project3-wbs-1"></script>
 <script>
 const schedule = document.getElementById('day4ProjectSchedule');
 if (schedule && window.Day4ProjectSchedule) schedule.innerHTML = window.Day4ProjectSchedule.render();

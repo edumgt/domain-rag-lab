@@ -1,0 +1,24 @@
+/* SDLC colors are scoped to Project 3; names remain visible without color. */
+#project3Schedule .sdlc-plan{--sdlc-color:#0e2340;--sdlc-bg:#edf1f6}
+#project3Schedule .sdlc-requirements{--sdlc-color:#16635b;--sdlc-bg:#edf8f4}
+#project3Schedule .sdlc-design{--sdlc-color:#255ba1;--sdlc-bg:#eef4fc}
+#project3Schedule .sdlc-build{--sdlc-color:#62439a;--sdlc-bg:#f4effa}
+#project3Schedule .sdlc-verify{--sdlc-color:#8a570d;--sdlc-bg:#fff7e7}
+#project3Schedule .sdlc-release{--sdlc-color:#9c405b;--sdlc-bg:#fceff3}
+#project3Schedule .sdlc-operate{--sdlc-color:#73591f;--sdlc-bg:#f7f3e9}
+#project3Schedule .schedule-sdlc-guide{padding:16px;border-top:1px solid #d5deea;background:#fff}
+#project3Schedule .schedule-sdlc-guide h3{margin:0 0 7px;font-size:14px;color:#0e2340}
+#project3Schedule .schedule-sdlc-guide p{margin:6px 0 12px;font-size:12px;line-height:1.65;color:#475569}
+#project3Schedule .schedule-sdlc-legend{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+#project3Schedule .schedule-sdlc-legend article{display:flex;flex-direction:column;gap:6px;padding:10px 9px;background:var(--sdlc-bg);border:1px solid #dce2eb;border-top:4px solid var(--sdlc-color);border-radius:7px;min-width:0}
+#project3Schedule .schedule-sdlc-legend b{font-size:12px;color:var(--sdlc-color)}
+#project3Schedule .schedule-sdlc-legend span{font-size:11px;line-height:1.55;color:#24344a}
+#project3Schedule .schedule-sdlc-legend small{font-size:10.5px;line-height:1.5;color:#526174}
+#project3Schedule .schedule-sdlc-legend em{margin-top:auto;font-size:10.5px;font-style:normal;font-weight:700;color:var(--sdlc-color)}
+#project3Schedule .schedule-sdlc-guide .schedule-sdlc-note{margin-bottom:0;font-size:10.5px}
+#project3Schedule tr[data-sdlc-stage]>th,#project3Schedule tr[data-sdlc-stage]>td{background:var(--sdlc-bg)}
+#project3Schedule tr[data-sdlc-stage]>th{border-left:4px solid var(--sdlc-color)}
+#project3Schedule .schedule-sdlc-tag{display:block;width:fit-content;margin-bottom:5px;padding:3px 6px;border:1px solid var(--sdlc-color);border-radius:4px;font-size:10.5px;font-weight:800;line-height:1.3;color:var(--sdlc-color);background:#fff}
+@media(max-width:1100px){#project3Schedule .schedule-sdlc-legend{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:600px){#project3Schedule .schedule-sdlc-guide{padding:12px}#project3Schedule .schedule-sdlc-legend{grid-template-columns:repeat(2,minmax(0,1fr))}#project3Schedule tr[data-sdlc-stage]{background:var(--sdlc-bg);border-left:4px solid var(--sdlc-color)}#project3Schedule tr[data-sdlc-stage]>th{border-left:0}}
+#project3Schedule .schedule-sdlc-legend small{font-size:10.5px!important;line-height:1.5!important}

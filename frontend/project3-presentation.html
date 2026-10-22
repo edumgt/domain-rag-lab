@@ -14,18 +14,22 @@
 <link rel="stylesheet" href="/static/assets/site-footer-layout.css?v=20261022-single-footer-1">
 <link rel="stylesheet" href="/static/assets/content-accordion.css?v=20261022-800-1">
 <script defer src="/static/assets/content-accordion.js?v=20261022-home-expanded-1"></script>
+<link rel="stylesheet" href="/static/assets/learning-panel.css?v=20261022-split-1">
+<script defer src="/static/assets/learning-panel.js?v=20261022-split-1"></script>
 </head><body class="wf-standalone presentation-page" data-presentation-api="/presentation3" data-project-number="3">
 <a class="wf-skip" href="#presentationOverview">본문 바로가기</a>
 <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
-  <aside class="sidebar" id="learningPanel" aria-label="학습 메뉴" inert>
-    <div class="sidebar-header"><div class="panel-title-row"><h1 class="logo">Finance RAG Lab</h1><button class="panel-close" id="closeLeftPanel" aria-label="학습 패널 닫기">×</button></div><p class="logo-sub">금융상품 · 생활거래 이해 · 실습</p></div>
-    <nav class="topic-nav" aria-label="4일 이론 학습"><p class="nav-label">4일 이론 학습</p><a class="topic-btn" href="/static/days/01.html"><span class="day-menu-number">1일차</span> 선물과 옵션</a><a class="topic-btn" href="/static/days/02.html"><span class="day-menu-number">2일차</span> 펀드 · ETF</a><a class="topic-btn" href="/static/days/03.html"><span class="day-menu-number">3일차</span> 채권 · 코인</a><a class="topic-btn" href="/static/days/04.html"><span class="day-menu-number">4일차</span> 자산배분, 퀀트</a><a class="topic-btn" href="/static/project-schedule.html" style="text-decoration:none"><i class="fa-solid fa-calendar-days"></i> 프로젝트 일정</a><a class="topic-btn" href="/static/project2-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트2 발표</a><a class="topic-btn active" aria-current="page" href="/static/project3-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트3 발표</a>
+  <aside class="sidebar" id="learningPanel" aria-label="프로젝트 메뉴" inert>
+    <div class="sidebar-header"><div class="panel-title-row"><h1 class="logo">Finance RAG Lab</h1><button class="panel-close" id="closeLeftPanel" aria-label="프로젝트 패널 닫기">×</button></div><p class="logo-sub">금융상품 · 생활거래 이해 · 실습</p></div>
+    <nav class="topic-nav" aria-label="프로젝트"><p class="nav-label">프로젝트</p><a class="topic-btn" href="/static/project-schedule.html" style="text-decoration:none"><i class="fa-solid fa-calendar-days"></i> 프로젝트 일정</a><a class="topic-btn" href="/static/project2-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트2 발표</a><a class="topic-btn active" aria-current="page" href="/static/project3-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트3 발표</a>
 </nav>
-    <div class="sidebar-section"><p class="nav-label">분석 · 검증</p><a class="topic-btn" href="/?view=quant">EDA · LightGBM</a><a class="topic-btn" href="/walk-forward.html">Walk-Forward 검증</a><a class="topic-btn" href="/?view=backtest">LEAN 백테스트</a></div>
-  </aside><div class="app-layout"><div class="chat-area">
+
+  </aside>
+<aside class="ref-panel" id="theoryPanel" aria-label="4일간의 이론학습" inert><div class="ref-header"><h3>학습</h3><button class="panel-close" id="closeTheoryPanel" aria-label="이론학습 패널 닫기">×</button></div><nav class="topic-nav" aria-label="4일 이론 학습"><a class="topic-btn" href="/static/days/01.html"><span class="day-menu-number">1일차</span> 선물과 옵션</a><a class="topic-btn" href="/static/days/02.html"><span class="day-menu-number">2일차</span> 펀드 · ETF</a><a class="topic-btn" href="/static/days/03.html"><span class="day-menu-number">3일차</span> 채권 · 코인</a><a class="topic-btn" href="/static/days/04.html"><span class="day-menu-number">4일차</span> 자산배분, 퀀트</a></nav><div class="sidebar-section"><p class="nav-label">분석 · 검증</p><a class="topic-btn" href="/?view=quant">EDA · LightGBM</a><a class="topic-btn" href="/walk-forward.html">Walk-Forward 검증</a><a class="topic-btn" href="/?view=backtest">LEAN 백테스트</a></div></aside>
+<div class="app-layout"><div class="chat-area">
       <header class="chat-header">
-        <button class="panel-toggle" id="openLeftPanel" aria-controls="learningPanel" aria-label="학습 패널 열기">
-          <i class="fa-solid fa-bars"></i><span>학습</span>
+        <button class="panel-toggle" id="openLeftPanel" aria-controls="learningPanel" aria-label="프로젝트 메뉴 열기">
+          <i class="fa-solid fa-bars"></i><span>프로젝트</span>
         </button>
         <a class="main-kms-title" href="/?view=learn">금융과 행동</a>
         <nav class="brand-nav" aria-label="학습 서비스 메뉴">
@@ -39,6 +43,7 @@
           <a class="brand-nav-btn brand-nav-link" href="/?view=backtest"><i class="fa-solid fa-flask"></i> LEAN 백테스트</a>
           <a class="brand-nav-btn brand-nav-link" href="/?view=calendar"><i class="fa-solid fa-calendar-days"></i> 캘린더</a>
         </nav>
+        <button class="panel-toggle panel-toggle-right" id="openTheoryPanel" aria-controls="theoryPanel" aria-expanded="false" aria-label="이론학습 메뉴 열기"><i class="fa-solid fa-book-open"></i><span>학습</span></button>
       </header>
 <nav class="wf-lnb" aria-label="프로젝트3 발표 상세 메뉴"><span class="wf-lnb-title">프로젝트3 발표</span><a href="#videoPreparation" aria-current="location">발표 준비</a><a href="#videoSamples">동영상 샘플</a><a href="#videoRecorder">화면 녹화 · 동영상 생성</a><a href="#publicLinks">데모 · GitHub</a><a href="#teamPresentation">팀원별 발표</a><a href="#questionsAndAnswers">질의응답</a><a href="#presentationOrder">발표 순서</a><a href="#presentationOpinions">의견 게시</a><a href="#projectEvaluations">프로젝트 평가</a></nav>
 <main class="messages wf-content" id="presentationContent"><div class="presentation">

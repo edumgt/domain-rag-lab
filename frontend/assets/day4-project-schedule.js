@@ -96,6 +96,7 @@
       if (!periods.length) continue;
       projectDay += 1;
       periods.forEach((period) => calendar.push({
+        isoDate,
         projectDay,
         period: period === 'AM' ? '오전' : '오후',
         time: period === 'AM' ? '0–4시간' : '4–8시간',
@@ -148,14 +149,36 @@
     return `<td><b>${escapeHtml(item[0])}</b><small>산출물 · ${escapeHtml(item[1])}</small></td>`;
   }
 
-  function renderSheet(title, hours, rows, calendar, period, bufferNote) {
+  const sdlcStages = [
+    { key: 'plan', label: '기획', meaning: '무엇을 왜 만들 것인가', output: '헌장 · WBS · 위험대장', phases: ['착수·범위', '일정·분담'] },
+    { key: 'requirements', label: '요구분석', meaning: '사용자 요구와 인수 기준 합의', output: '요구사항 · 사용자 스토리', phases: ['요구사항'] },
+    { key: 'design', label: '설계', meaning: '구조·데이터·화면을 구현 가능한 명세로', output: '아키텍처 · ERD · 와이어프레임', phases: ['아키텍처', '데이터·화면 설계'] },
+    { key: 'build', label: '구현', meaning: '지표·API·화면을 동작하는 기능으로', output: '실행 코드 · API · CI 빌드', phases: [] },
+    { key: 'verify', label: '검증', meaning: '요구 충족·정확성·안전성을 증거로 확인', output: '시험 결과 · 결함대장 · 검증 보고서', phases: ['백테스트', '전략 최적화', '데이터 품질', 'Pine 교차검증', '백테스트 대사', '강건성 검증', '서비스 통합', '단위 시험', '통합·회귀 시험', '보안 점검', 'UAT·파일럿'] },
+    { key: 'release', label: '배포', meaning: '검증한 버전을 운영 환경으로 전환', output: '배포 계획 · 운영 배포본 · 관제', phases: ['AWS 배포'] },
+    { key: 'operate', label: '인수·운영', meaning: '운영 책임과 재현·복구 지식을 인계', output: '운영 인수인계 · 재현 패키지', phases: ['인수·지식이전'] }
+  ];
+
+  function sdlcStage(phase) {
+    return sdlcStages.find(stage => stage.phases.includes(phase)) || sdlcStages[3];
+  }
+
+  function renderSdlcGuide(rows) {
+    return `<section class="schedule-sdlc-guide" aria-label="프로젝트3 SDLC 단계 안내"><div class="schedule-sdlc-heading"><h3>SDLC · 소프트웨어 개발 생명주기</h3><button class="schedule-wbs-button" type="button" data-project3-wbs aria-haspopup="dialog"><i class="fa-solid fa-chart-gantt" aria-hidden="true"></i> WBS</button></div><p>기획 → 요구분석 → 설계 → 구현 → 검증 → 배포 → 인수·운영. 각 일정의 <b>주요 활동</b>을 색상과 단계명으로 연결했습니다. 구현과 검증은 반복되며, 배포 후 UAT·파일럿 결과를 다시 검증에 반영합니다.</p><div class="schedule-sdlc-legend">${sdlcStages.map((stage, index) => {
+      const count = rows.filter(row => sdlcStage(row[1]) === stage).length;
+      return `<article class="sdlc-${stage.key}"><b>${String(index + 1).padStart(2, '0')} · ${stage.label}</b><span>${stage.meaning}</span><small>산출물 · ${stage.output}</small><em>${count}개 반나절 · 개인별 ${count * 4}시간</em></article>`;
+    }).join('')}</div><p class="schedule-sdlc-note">색상은 진행 완료 상태가 아닌 SDLC 활동 구분입니다. 산출물은 다음 단계의 입력으로 이어지며, 일정의 날짜·총 120시간·담당 역할은 동일합니다.</p></section>`;
+  }
+
+  function renderSheet(title, hours, rows, calendar, period, bufferNote, showSdlc = false) {
     const body = rows.map((sourceRow, index) => {
       const row = reassignRoles(sourceRow);
       const slot = calendar[index];
-      return `<tr><th scope="row"><b>${slot.projectDay}일차 · ${slot.period}</b><small>${slot.date}</small><small>${slot.time}</small></th><td><span class="schedule-project-tag ${row[0] === '로보' ? 'robo' : row[0] === '인디케이터' ? 'indicator' : row[0] === '통합' ? 'integration' : ''}">${escapeHtml(row[0])}</span><b>${escapeHtml(row[1])}</b></td>${row.slice(2).map(renderMemberCell).join('')}</tr>`;
+      const stage = showSdlc ? sdlcStage(row[1]) : null;
+      return `<tr${stage ? ` class="sdlc-${stage.key}" data-sdlc-stage="${stage.key}"` : ''}><th scope="row"><b>${slot.projectDay}일차 · ${slot.period}</b><small>${slot.date}</small><small>${slot.time}</small></th><td>${stage ? `<span class="schedule-sdlc-tag">${stage.label}</span>` : ''}<span class="schedule-project-tag ${row[0] === '로보' ? 'robo' : row[0] === '인디케이터' ? 'indicator' : row[0] === '통합' ? 'integration' : ''}">${escapeHtml(row[0])}</span><b>${escapeHtml(row[1])}</b></td>${row.slice(2).map(renderMemberCell).join('')}</tr>`;
     }).join('');
     const teamHours = hours * roles.length;
-    return `<section class="project-schedule-sheet"><header class="project-schedule-sheet-head"><span>${escapeHtml(title)}</span><b>${hours}시간 기준 · ${rows.length}개 반나절 · 팀 총 ${teamHours}인시</b><small>${escapeHtml(period)} · ${hours / 8}일 × 4명</small></header><p class="project-schedule-buffer-note"><b>기준시간 외 일정 완충</b>${escapeHtml(bufferNote)}</p><div class="project-schedule-table-wrap"><table><thead><tr><th scope="col">일차·날짜</th><th scope="col">프로젝트·단계</th>${roles.map((role) => `<th scope="col">${escapeHtml(role)}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div></section>`;
+    return `<section class="project-schedule-sheet"><header class="project-schedule-sheet-head"><span>${escapeHtml(title)}</span><b>${hours}시간 기준 · ${rows.length}개 반나절 · 팀 총 ${teamHours}인시</b><small>${escapeHtml(period)} · ${hours / 8}일 × 4명</small></header><p class="project-schedule-buffer-note"><b>기준시간 외 일정 완충</b>${escapeHtml(bufferNote)}</p>${showSdlc ? renderSdlcGuide(rows) : ''}<div class="project-schedule-table-wrap"><table><thead><tr><th scope="col">일차·날짜</th><th scope="col">프로젝트·단계</th>${roles.map((role) => `<th scope="col">${escapeHtml(role)}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div></section>`;
   }
 
   function renderProject(projectNumber) {
@@ -167,12 +190,27 @@
       : '2026년 10월 22일(목)부터 11월 11일(수)까지 15개 영업일 · 개인별 120시간. 별도 완충일 없이 모든 영업일을 작업 일정으로 편성합니다.';
     return `<section class="lesson project-timeline project-schedule" id="${id}" aria-labelledby="${id}Title"><span>PROJECT ${projectNumber}</span><div class="lesson-content"><h2 id="${id}Title">${heading}</h2><div class="lesson-body"><p>${escapeHtml(intro)}</p><p>오전 0–4시간과 오후 4–8시간을 합쳐 1일차로 표시합니다.</p><div class="project-schedule-role-guide">${roles.map((role) => `<span>${escapeHtml(role)}</span>`).join('')}</div>${robo
       ? renderSheet('나만의 로보 어드바이저 개발 및 성과 검증 프로젝트', 100, roboRows, roboCalendar, '2026. 10. 1.(목)–10. 21.(수) 오전', ' · 10. 21. 오후는 산출물 보완을 위한 기준시간 외 완충 시간')
-      : renderSheet('나만의 투자 인디케이터 개발 및 성과 검증 프로젝트', 120, indicatorRows, indicatorCalendar, '2026. 10. 22.(목)–11. 11.(수)', ' · 별도 완충일 없이 15개 영업일을 모두 작업 일정으로 편성')}</div></div></section>`;
+      : renderSheet('나만의 투자 인디케이터 개발 및 성과 검증 프로젝트', 120, indicatorRows, indicatorCalendar, '2026. 10. 22.(목)–11. 11.(수)', ' · 별도 완충일 없이 15개 영업일을 모두 작업 일정으로 편성', true)}</div></div></section>`;
   }
 
   function render() {
     return renderProject(2) + renderProject(3);
   }
 
-  global.Day4ProjectSchedule = Object.freeze({ render, renderProject });
+  function getProject3Wbs() {
+    return {
+      title: '프로젝트3 · 투자 인디케이터 WBS',
+      start: '2026-10-22', end: '2026-11-11',
+      roles: [...roles],
+      stages: sdlcStages.map(({key, label, meaning, output}) => ({key, label, meaning, output})),
+      tasks: indicatorRows.map((source, index) => {
+        const row = reassignRoles(source);
+        return {id: `3.${String(index + 1).padStart(2, '0')}`, phase: row[1], stage: sdlcStage(row[1]).key,
+          date: indicatorCalendar[index].isoDate, period: indicatorCalendar[index].period,
+          hours: 4, members: row.slice(2).map((item, role) => ({id: `3.${String(index + 1).padStart(2, '0')}.${role + 1}`, role, task: item[0], output: item[1], hours: 4}))};
+      })
+    };
+  }
+
+  global.Day4ProjectSchedule = Object.freeze({ render, renderProject, getProject3Wbs });
 })(window);

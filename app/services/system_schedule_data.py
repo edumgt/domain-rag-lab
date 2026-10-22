@@ -67,8 +67,8 @@ SYSTEM_JOBS: list[dict] = [
      "description": "st·iv 공용 인증서를 webroot 방식으로 무중단 갱신 후 nginx reload.", "source": "stock-coin-trade/scripts/ec2/init-letsencrypt.sh"},
     # ── domain-rag-lab (pr) · stock-kms-portal (iv) — pr 은 api 프로세스 내 수집기 1개, 그 외 온디맨드·푸시 배포 ─────
     {"id": "pr-financial-health", "system": "domain-rag-lab", "host": "pr.edumgt.co.kr", "component": "api 프로세스(asyncio)", "category": "data",
-     "name": "재무건전성 Z-Score 수집 (financial_health_collector)", "schedule": {"type": "interval", "every_sec": 3600},
-     "description": "종목 보기 200종목을 한 시간에 한 종목씩 DART 재무제표로 알트먼 Z-Score 계산해 stock_financial_health 에 저장(한 바퀴 ≈ 8.3일). 금융업은 즉시 '적용 제외' 기록.",
+     "name": "재무건전성 Z-Score 수집 (financial_health_collector)", "schedule": {"type": "interval", "every_sec": 1800},
+     "description": "30분마다 미수집·오래된 한 종목을 DART 수집 → 분석 → DB 반영. DB 갱신 시각으로 재시작 후 재개하며 중복 실행 잠금 적용. DART 공시 응답은 24시간 캐시, 프로세스당 일일 호출 예산 4000건. 금융업은 적용 제외.",
      "source": "domain-rag-lab/app/services/financial_health_collector.py · FINANCIAL_HEALTH_INTERVAL_SECONDS"},
     {"id": "pr-deploy", "system": "domain-rag-lab", "host": "pr.edumgt.co.kr", "component": "GitHub Actions", "category": "infra",
      "name": "main 푸시 배포 (cd.yml)", "schedule": {"type": "event", "trigger": "git push main"},

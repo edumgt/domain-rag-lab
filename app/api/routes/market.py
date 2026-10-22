@@ -465,13 +465,24 @@ async def intraday_chart(
 
 @router.get("/financial-health/summary")
 def financial_health_summary(db: Session = Depends(get_db)) -> dict[str, Any]:
-    """종목 보기 카드 배지용: 수집된 모든 종목의 {ticker: {zone, z, model, report}}. 수집기가 한 시간에 한 종목씩 채운다."""
+    """종목 보기 카드 배지용: 수집된 모든 종목의 {ticker: {zone, z, model, report}}. 수집기가 30분마다 한 종목을 갱신한다."""
     rows = db.execute(select(StockFinancialHealth)).scalars().all()
     items = {row.ticker: row.to_summary() for row in rows}
     computed = [row.computed_at for row in rows if row.computed_at]
+    from app.core.config import settings
+    from app.services import dart_client
+    interval = max(60, int(settings.financial_health_interval_seconds))
+    latest = max(computed) if computed else None
     return {
         "items": items, "count": len(items), "scored": sum(1 for row in rows if row.z is not None),
         "last_computed_at": max(computed).isoformat() if computed else None,
+        "pipeline": {
+            "enabled": settings.financial_health_collector_enabled and dart_client.is_enabled(),
+            "interval_seconds": interval,
+            "batch_size": 1,
+            "order": "uncollected_then_oldest",
+            "next_due_at": (latest + timedelta(seconds=interval)).isoformat() if latest else None,
+        },
         "labels": altman.ZONE_LABELS, "thresholds": altman.THRESHOLDS,
         "note": "알트먼 Z-Score · DART 최신 보고서 기준 · 교육용 참고(매수·매도 권유 아님)",
     }
@@ -488,7 +499,7 @@ def financial_health_detail(
         select(StockFinancialHealth).where(StockFinancialHealth.ticker == ticker, StockFinancialHealth.market == market)
     ).scalar_one_or_none()
     if not row:
-        return {"available": False, "ticker": ticker, "market": market, "reason": "초기 수집 대기 중입니다. 홈 전체 종목을 매시간 순차 분석합니다."}
+        return {"available": False, "ticker": ticker, "market": market, "reason": "초기 수집 대기 중입니다. 30분마다 한 종목씩 순차 분석합니다."}
     detail = row.to_detail()
     weights = altman.WEIGHTS.get(row.model, {})
     detail["weights"] = weights

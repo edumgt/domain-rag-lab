@@ -4,7 +4,7 @@ from app.core.database import Base
 
 
 class StockFinancialHealth(Base):
-    """종목 보기 재무건전성(알트먼 Z-Score) — 종목당 한 행, 수집기가 한 시간에 한 종목씩 갱신한다.
+    """종목 보기 재무건전성(알트먼 Z-Score) — 종목당 한 행, 수집기가 30분마다 한 종목씩 갱신한다.
 
     원시 계정(원 단위)·비율·판정을 함께 저장해 화면이 DART 를 다시 두드리지 않게 한다. 계산 불가면 z 는 NULL 이고 reason 에 사유.
     """

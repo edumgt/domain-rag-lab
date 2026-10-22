@@ -1,0 +1,5 @@
+.presentation-page .chat-header{grid-template-columns:auto auto minmax(0,1fr) auto}
+.presentation-page #theoryPanel{display:flex;flex-direction:column;background:var(--surface);overflow-y:auto}
+.presentation-page #theoryPanel .topic-nav{padding:16px}
+@media(max-width:700px){.presentation-page .chat-header{grid-template-columns:auto minmax(0,1fr) auto}.presentation-page .chat-header .brand-nav{grid-row:2;grid-column:1/-1}.presentation-page #openTheoryPanel{grid-row:1;grid-column:3}}
+@media(max-width:700px){.presentation-page .panel-toggle span{display:inline}.presentation-page .main-kms-title{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:13px}.presentation-page .panel-toggle{font-size:12px;padding:7px}.presentation-page .chat-header{gap:7px;padding-inline:10px}}

@@ -45,7 +45,7 @@ initialize_project3_database(engine)
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    """재무건전성(알트먼 Z-Score) 수집기 — 한 시간에 한 종목. uvicorn 단일 워커 전제(compose·Dockerfile CMD)."""
+    """재무건전성(알트먼 Z-Score) 수집기 — 30분마다 한 종목. uvicorn 단일 워커 전제(compose·Dockerfile CMD)."""
     task = None
     if settings.financial_health_collector_enabled:
         task = asyncio.create_task(run_financial_health_collector(), name="financial-health-collector")

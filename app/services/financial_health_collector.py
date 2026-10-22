@@ -1,16 +1,7 @@
-"""종목 보기 재무건전성(알트먼 Z-Score) 수집기 — 한 시간에 한 종목.
+"""30분마다 한 종목을 수집·분석·반영하는 재무건전성 수집기.
 
-왜 이렇게 하나
-  DART 재무제표는 분기 공시라 실시간 조회가 의미 없고, 200종목을 한 번에 긁으면 키 한도(일 20,000건)를 lumina 와 나눠 쓰는 데 부담이 된다.
-  그래서 API 프로세스 안에서 `interval` 마다 **한 종목만** 수집해 `stock_financial_health` 에 upsert 하고, 화면은 DB 만 읽는다.
-  200종목 한 바퀴 ≈ 8.3일. 금융업(적용 제외)은 DART 를 부르지 않고 바로 기록하므로 시간 슬롯을 쓰지 않는다.
-
-순서
-  1. 아직 행이 없는 종목(종목 보기 일차·카드 순서) → 2. 가장 오래전에 계산한 종목.
-종목 목록은 frontend/app.js 의 COMPANY_ATLAS·COMPANY_TICKERS 가 정본이다(app/ops/backfill_ohlcv.py 와 같은 방식).
-
-종목당 DART 호출: 최신 보고서 탐색 1~5회(연결→별도 폴백 포함 ≤10) + 전기 사업보고서 1~2회 + 발행주식수 1회.
-시가총액 = 발행주식수(보통주, 최신 보고서 기준) × 최근 종가(stock_price_history, 없으면 Yahoo 5일 차트의 마지막 종가).
+DART 공시 응답은 24시간 캐시하고 프로세스당 일일 호출을 4000건으로 제한한다.
+종목 목록은 홈의 theory-data.js에 표시되는 일차와 app.js의 기업·티커 매핑을 사용한다.
 """
 from __future__ import annotations
 
@@ -22,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 import httpx
-from sqlalchemy import select
+from sqlalchemy import select, text as sql_text
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import Session
 
@@ -209,24 +200,42 @@ async def collect_one(company: dict[str, Any]) -> dict[str, Any]:
 
 
 async def collect_next() -> dict[str, Any] | None:
-    """미수집·가장 오래된 종목 하나를 수집한다. 적용 제외 산업은 DART 없이 즉시 기록하고 다음 종목으로 넘어간다."""
+    """미수집·가장 오래된 종목 정확히 하나만 처리한다(금융업 제외 판정 포함)."""
     companies = parse_companies()
     db = SessionLocal()
     try:
         rows = existing_rows(db)
     finally:
         db.close()
-    for _ in range(len(companies) + 1):
-        company = pick_next(companies, rows)
-        if not company:
-            return None
-        record = await collect_one(company)
-        rows[company["ticker"]] = record["computed_at"]
-        if record["model"] != altman.MODEL_EXCLUDED:
-            logger.info("재무건전성 수집 %s %s: model=%s zone=%s z=%s reason=%s",
-                        company["ticker"], company["name"], record["model"], record["zone"], record["z"], record["reason"])
-            return record
-    return None
+    company = pick_next(companies, rows)
+    return await collect_one(company) if company else None
+
+
+def seconds_until_due(rows: dict[str, datetime | None], interval: int, now: datetime) -> float:
+    timestamps = [value for value in rows.values() if value]
+    if not timestamps:
+        return 0
+    return max(0, interval - (now - max(timestamps)).total_seconds())
+
+
+async def collect_if_due(interval: int) -> float:
+    """DB 갱신 시각으로 재시작 후 주기를 이어가며, 워커 간 중복 실행을 막는다."""
+    lock_db = SessionLocal()
+    try:
+        locked = lock_db.execute(sql_text("SELECT pg_try_advisory_xact_lock(724031802)")).scalar()
+        if not locked:
+            return 30
+        remaining = seconds_until_due(existing_rows(lock_db), interval, datetime.now(timezone.utc))
+        if remaining > 0:
+            return remaining
+        record = await collect_next()
+        if record:
+            logger.warning("재무건전성 파이프라인 반영: %s %s model=%s zone=%s z=%s reason=%s",
+                           record["ticker"], record["name"], record["model"], record["zone"], record["z"], record["reason"])
+        return interval
+    finally:
+        # Closing rolls back the lock transaction, releasing the advisory lock.
+        lock_db.close()
 
 
 async def run_forever() -> None:
@@ -236,18 +245,13 @@ async def run_forever() -> None:
         return
     interval = max(60, int(settings.financial_health_interval_seconds))
     await asyncio.sleep(max(0, int(settings.financial_health_startup_delay_seconds)))
-    logger.info("재무건전성 수집기 시작: %d초 주기로 홈 전체 종목", interval)
+    logger.warning("재무건전성 수집기 시작: %d초마다 한 종목 (DB 시각 기준 재개)", interval)
     while True:
-        started = asyncio.get_running_loop().time()
-        companies = parse_companies()
-        for company in companies:
-            try:
-                record = await collect_one(company)
-                logger.info("재무건전성 수집 %s: zone=%s z=%s reason=%s", company["ticker"], record["zone"], record["z"], record["reason"])
-            except asyncio.CancelledError:
-                raise
-            except Exception:
-                logger.exception("재무건전성 종목 수집 실패 %s", company["ticker"])
-            await asyncio.sleep(0.5)
-        logger.info("재무건전성 전체 수집 완료: %d종목", len(companies))
-        await asyncio.sleep(max(1, interval - (asyncio.get_running_loop().time() - started)))
+        try:
+            delay = await collect_if_due(interval)
+        except asyncio.CancelledError:
+            raise
+        except Exception:
+            logger.exception("재무건전성 파이프라인 실패 — 다음 주기에 재시도")
+            delay = interval
+        await asyncio.sleep(max(1, delay))

@@ -8,7 +8,7 @@
   button.id = 'auditNavButton'; button.className = 'brand-nav-btn audit-nav-button';button.type='button';button.innerHTML='<svg class="audit-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3 4.5 6v5c0 4.6 3.1 7.7 7.5 10 4.4-2.3 7.5-5.4 7.5-10V6L12 3Z"/><path d="m8.5 11.8 2.4 2.4 4.8-5"/></svg><span>감리대응</span><span class="audit-badge-tag" aria-hidden="true">AUDIT</span><span class="audit-badge-arrow" aria-hidden="true">▾</span>';button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','auditNavMenu');
   const menu=document.createElement('div');menu.setAttribute('role','navigation');menu.id='auditNavMenu';menu.className='audit-nav-menu';menu.hidden=true;menu.setAttribute('aria-label','감리대응 서브 메뉴');
   const addLink=(id,label)=>{const a=document.createElement('a');a.href='/static/audit-response.html#'+id;a.textContent=label;menu.append(a);};
-  [['finance','로보어드바이저 · 인디케이터'],['pnu','부산대 교육혁신본부']].forEach(([example,title])=>{addLink(example+'-rfp',title);menu.lastElementChild.dataset.example=example;});
+  [['finance','로보어드바이저 · 인디케이터'],['pnu','OO대학교 샘플']].forEach(([example,title])=>{addLink(example+'-rfp',title);menu.lastElementChild.dataset.example=example;});
   nav.append(button);document.body.append(menu);
   function close(){menu.hidden=true;button.setAttribute('aria-expanded','false');}
   function position(){const rect=button.getBoundingClientRect();menu.style.left=Math.max(12,Math.min(rect.left,innerWidth-menu.offsetWidth-12))+'px';menu.style.top=Math.min(rect.bottom+6,innerHeight-menu.offsetHeight-12)+'px';}

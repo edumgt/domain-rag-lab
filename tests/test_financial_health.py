@@ -149,24 +149,69 @@ def test_dart_cache_and_quota_do_not_repeat_upstream_requests(monkeypatch):
     asyncio.run(run())
 
 
-def test_hourly_collector_visits_all_companies_and_isolates_failure(monkeypatch):
+def test_due_time_survives_restart():
+    now = datetime.now(timezone.utc)
+    assert collector.seconds_until_due({}, 1800, now) == 0
+    assert collector.seconds_until_due({'A': now - timedelta(minutes=10)}, 1800, now) == 1200
+    assert collector.seconds_until_due({'A': now - timedelta(hours=1)}, 1800, now) == 0
+
+
+def test_collect_next_processes_exactly_one_even_when_excluded(monkeypatch):
+    class DB:
+        def close(self):
+            pass
+    monkeypatch.setattr(collector, 'SessionLocal', DB)
+    monkeypatch.setattr(collector, 'existing_rows', lambda db: {})
+    monkeypatch.setattr(collector, 'parse_companies', lambda: [{'ticker': 'A'}, {'ticker': 'B'}])
+    calls = []
+    async def collect(company):
+        calls.append(company['ticker'])
+        return {'model': 'EXCLUDED'}
+    monkeypatch.setattr(collector, 'collect_one', collect)
+    assert asyncio.run(collector.collect_next())['model'] == 'EXCLUDED'
+    assert calls == ['A']
+
+
+@pytest.mark.parametrize('locked,age,expected', [(False, 3600, False), (True, 60, False), (True, 3600, True)])
+def test_due_guard_blocks_overlap_and_early_runs(monkeypatch, locked, age, expected):
+    class DB:
+        closed = False
+        def execute(self, statement):
+            return self
+        def scalar(self):
+            return locked
+        def close(self):
+            self.closed = True
+    db = DB()
+    monkeypatch.setattr(collector, 'SessionLocal', lambda: db)
+    monkeypatch.setattr(collector, 'existing_rows', lambda db: {'A': datetime.now(timezone.utc) - timedelta(seconds=age)})
+    calls = []
+    async def collect():
+        calls.append(True)
+        return None
+    monkeypatch.setattr(collector, 'collect_next', collect)
+    asyncio.run(collector.collect_if_due(1800))
+    assert bool(calls) is expected
+    assert db.closed
+
+
+def test_collector_failure_waits_full_interval(monkeypatch):
     monkeypatch.setattr(dart_client, 'is_enabled', lambda: True)
     monkeypatch.setattr(collector.settings, 'financial_health_startup_delay_seconds', 0)
-    monkeypatch.setattr(collector, 'parse_companies', lambda: [{'ticker': 'A'}, {'ticker': 'B'}, {'ticker': 'C'}])
-    visited = []
-    async def collect(company):
-        visited.append(company['ticker'])
-        if company['ticker'] == 'B':
-            raise ValueError('temporary upstream failure')
-        return {'zone': 'safe', 'z': 3, 'reason': None}
+    monkeypatch.setattr(collector.settings, 'financial_health_interval_seconds', 1800)
+    calls = []
+    async def collect(interval):
+        calls.append(interval)
+        raise ValueError('temporary failure')
     async def sleep(seconds):
-        if seconds > 1:
+        if seconds:
+            assert seconds == 1800
             raise asyncio.CancelledError()
-    monkeypatch.setattr(collector, 'collect_one', collect)
+    monkeypatch.setattr(collector, 'collect_if_due', collect)
     monkeypatch.setattr(collector.asyncio, 'sleep', sleep)
     with pytest.raises(asyncio.CancelledError):
         asyncio.run(collector.run_forever())
-    assert visited == ['A', 'B', 'C']
+    assert calls == [1800]
 
 
 def test_build_record_excluded_sector_never_calls_dart(monkeypatch):

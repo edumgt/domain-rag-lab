@@ -17,34 +17,22 @@
 <link rel="stylesheet" href="/static/assets/site-footer-layout.css?v=20261022-single-footer-1">
 <link rel="stylesheet" href="/static/assets/content-accordion.css?v=20261022-800-1">
 <script defer src="/static/assets/content-accordion.js?v=20261022-home-expanded-1"></script>
+<link rel="stylesheet" href="/static/assets/learning-panel.css?v=20261022-split-1">
 </head>
 <body>
   <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
   <div class="app-layout">
-    <aside class="sidebar" id="learningPanel" aria-label="학습과 문서 등록">
+    <aside class="sidebar" id="learningPanel" aria-label="프로젝트 메뉴">
       <div class="sidebar-header">
         <div class="panel-title-row">
           <h1 class="logo"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h1>
-          <button class="panel-close" id="closeLeftPanel" aria-label="학습 패널 닫기"><i class="fa-solid fa-xmark"></i></button>
+          <button class="panel-close" id="closeLeftPanel" aria-label="프로젝트 메뉴 닫기"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <p class="logo-sub">금융상품 · 실물자산 · 생활거래 이해 · 실습</p>
       </div>
 
       <nav class="topic-nav">
-        <p class="nav-label">4일 이론 학습</p>
-        <button class="topic-btn theory-menu-btn" data-theory-day="1">
-          <span class="day-menu-number">1일차</span> 선물과 옵션
-        </button>
-        <button class="topic-btn theory-menu-btn" data-theory-day="2">
-          <span class="day-menu-number">2일차</span> 펀드 · ETF
-        </button>
-        <button class="topic-btn theory-menu-btn" data-theory-day="3">
-          <span class="day-menu-number">3일차</span> 채권 · 코인
-        </button>
-        <button class="topic-btn theory-menu-btn" data-theory-day="4">
-          <span class="day-menu-number">4일차</span> 자산배분, 퀀트
-        </button>
-
+        <p class="nav-label">프로젝트</p>
       <a class="topic-btn" href="/static/project-schedule.html" style="text-decoration:none"><i class="fa-solid fa-calendar-days"></i> 프로젝트 일정</a><a class="topic-btn" href="/static/project2-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트2 발표</a><a class="topic-btn" href="/static/project3-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트3 발표</a>
 </nav>
 
@@ -68,20 +56,13 @@
         </div>
       </div>
 
-      <div class="sidebar-footer">
-        <a href="/docs" target="_blank" class="docs-link">
-          <i class="fa-solid fa-book-open"></i> API 문서 (Swagger)
-        </a>
-        <a href="/health" target="_blank" class="docs-link">
-          <i class="fa-solid fa-heart-pulse"></i> 상태 확인
-        </a>
-      </div>
+
     </aside>
 
     <main class="chat-area">
       <header class="chat-header">
-        <button class="panel-toggle" id="openLeftPanel" aria-controls="learningPanel" aria-label="학습 패널 열기">
-          <i class="fa-solid fa-bars"></i><span>학습</span>
+        <button class="panel-toggle" id="openLeftPanel" aria-controls="learningPanel" aria-label="프로젝트 메뉴 열기">
+          <i class="fa-solid fa-bars"></i><span>프로젝트</span>
         </button>
         <a class="main-kms-title" href="/?view=learn">금융과 행동</a>
         <div class="brand-nav" aria-label="학습 서비스 메뉴">
@@ -95,8 +76,8 @@
           <button class="brand-nav-btn" data-view="calendar"><i class="fa-solid fa-calendar-days"></i> 캘린더</button>
         </div>
         <!-- LEAN 백테스트는 GNB 에서 빼고 우측 offcanvas(LEAN 메뉴 · 종목별 서브메뉴)로 이동 (6-20) -->
-        <button class="panel-toggle panel-toggle-right lean-toggle" id="openRightPanel" aria-controls="referencePanel" aria-expanded="false" aria-label="LEAN 백테스트 메뉴 열기">
-          <i class="fa-solid fa-flask"></i><span>LEAN</span>
+        <button class="panel-toggle panel-toggle-right lean-toggle" id="openRightPanel" aria-controls="referencePanel" aria-expanded="false" aria-label="학습 메뉴 열기">
+          <i class="fa-solid fa-flask"></i><span>학습</span>
         </button>
       </header>
 
@@ -127,11 +108,26 @@
       <footer class="site-footer-unified">© 2026 (주)에듀엠지티 All rights reserved.</footer>
     </main>
 
-    <aside class="ref-panel" id="referencePanel" aria-label="LEAN 백테스트 메뉴 · RAG 자료 등록과 참고 문서">
+    <aside class="ref-panel" id="referencePanel" aria-label="학습 메뉴 · 이론 · LEAN · RAG">
       <div class="ref-header">
-        <h3><i class="fa-solid fa-flask"></i> LEAN · RAG 도구</h3>
+        <h3><i class="fa-solid fa-book-open"></i> 학습</h3>
         <button class="btn-ghost" id="closeRefBtn" aria-label="패널 닫기"><i class="fa-solid fa-xmark"></i></button>
       </div>
+      <nav class="topic-nav" aria-label="4일 이론 학습">        <p class="nav-label">4일 이론 학습</p>
+        <button class="topic-btn theory-menu-btn" data-theory-day="1">
+          <span class="day-menu-number">1일차</span> 선물과 옵션
+        </button>
+        <button class="topic-btn theory-menu-btn" data-theory-day="2">
+          <span class="day-menu-number">2일차</span> 펀드 · ETF
+        </button>
+        <button class="topic-btn theory-menu-btn" data-theory-day="3">
+          <span class="day-menu-number">3일차</span> 채권 · 코인
+        </button>
+        <button class="topic-btn theory-menu-btn" data-theory-day="4">
+          <span class="day-menu-number">4일차</span> 자산배분, 퀀트
+        </button>
+
+</nav>
       <nav class="lean-nav" id="leanNav" aria-label="LEAN 백테스트 메뉴">
         <p class="nav-label">LEAN 백테스트</p>
         <!-- 서브메뉴(전체 워크플로우 + 종목별 화면)는 app.js renderLeanNav() 가 BACKTEST_EXAMPLES 로 생성 -->
@@ -139,7 +135,15 @@
       <div id="refList" class="ref-list">
         <p class="ref-empty">질문 후 참고 문서가 여기에 표시됩니다.</p>
       </div>
-    </aside>
+          <div class="sidebar-footer">
+        <a href="/docs" target="_blank" class="docs-link">
+          <i class="fa-solid fa-book-open"></i> API 문서 (Swagger)
+        </a>
+        <a href="/health" target="_blank" class="docs-link">
+          <i class="fa-solid fa-heart-pulse"></i> 상태 확인
+        </a>
+      </div>
+</aside>
 
     <div id="simulationStaging" hidden>
       <div class="simulation-panel" id="simulationPanel">
@@ -241,7 +245,7 @@
   <script src="/static/assets/walk-forward.js?v=20261001-8"></script>
   <script src="/static/assets/backtest-preconditions.js?v=20261015-research"></script>
   <script src="/static/assets/backtest-research.js?v=20261015-research"></script>
-  <script src="/static/app.js?v=20261022-health-hourly-1"></script>
+  <script src="/static/app.js?v=20261022-atlas-numbers-1"></script>
   <script src="/static/auth.js?v=20260905-gnb-unified"></script>
   <script src="/static/assets/modal-fit.js?v=20260905-simulator-specific-hints"></script>
   <script src="/static/assets/click-logger.js?v=20260905"></script>

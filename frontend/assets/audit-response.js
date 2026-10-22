@@ -3,6 +3,13 @@
   const status=document.getElementById('auditStatus');
   const search=document.getElementById('auditSearch'), scope=document.getElementById('auditScope');
   const table=document.getElementById('auditGrid');
+  // Keep original evidence files intact; anonymize institution labels in displayed document data and CSV.
+  const sampleLabel = value => {
+    if (typeof value === 'string') return value.replace(/부산대학교|부산대/g, 'OO대학교 샘플');
+    if (Array.isArray(value)) return value.map(sampleLabel);
+    if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key,item]) => [key,sampleLabel(item)]));
+    return value;
+  };
   const node=(tag,text)=>{const el=document.createElement(tag);el.textContent=text;return el;};
   // Reuse the established learning offcanvas without coupling it to the presentation forms.
   const panel=document.getElementById('learningPanel'), open=document.getElementById('openLeftPanel'),close=document.getElementById('closeLeftPanel'),backdrop=document.getElementById('offcanvasBackdrop');
@@ -38,7 +45,7 @@
   configs.designs={title:'가상 설계서',columns:['설계 ID','설계서 종류','설계서명','요구사항 ID','RFP ID','설계 기준 DES ID','구분','설계 내용(가상)','상태'],widths:[250,160,400,180,200,260,190,600,300],row:r=>[r.id,r.type,r.name,r.requirement,r.rfp,r.parent,r.category,r.fields.map(([label,value])=>label+' : '+value).join('\n\n'),r.status]};
   configs.diagram={title:'RTM Diagram'};
   const rtm=new window.AuditRtm(document.getElementById('auditRtm'));
-  const examples={finance:{title:'로보어드바이저 · 인디케이터',description:'이 저장소의 투자 서비스 기능 정의와 프로젝트 산출물·진행 도구를 기반으로 구성한 예시입니다.'},pnu:{title:'부산대 교육혁신본부',description:'AI 에이전트 플랫폼 RFP의 58개 요구사항을 기반으로 구성한 예시입니다. 원문 번호를 정의서·추적표에 연결하며, 제안 접근법과 검증 계획은 작성 예시입니다.'}};
+  const examples={finance:{title:'로보어드바이저 · 인디케이터',description:'이 저장소의 투자 서비스 기능 정의와 프로젝트 산출물·진행 도구를 기반으로 구성한 예시입니다.'},pnu:{title:'OO대학교 샘플',description:'AI 에이전트 플랫폼 RFP의 58개 요구사항을 기반으로 구성한 예시입니다. 원문 번호를 정의서·추적표에 연결하며, 제안 접근법과 검증 계획은 작성 예시입니다.'}};
   let data,active='rfp',example='finance',sortIndex=-1,ascending=true,visible=[];
   function financeProposals(){
     const result=[];
@@ -67,7 +74,7 @@
     const header=node('tr','');cfg.columns.forEach((label,i)=>{const th=node('th','');th.scope='col';th.setAttribute('aria-sort',sortIndex===i?(ascending?'ascending':'descending'):'none');const btn=node('button',label+(sortIndex===i?(ascending?' ↑':' ↓'):' ↕'));btn.type='button';btn.addEventListener('click',()=>{ascending=sortIndex===i?!ascending:true;sortIndex=i;render();});th.append(btn);header.append(th);});table.tHead.replaceChildren(header);
     const body=table.tBodies[0];body.replaceChildren();visible.forEach(row=>{const tr=node('tr','');row.forEach(value=>{const td=node('td','');if((active==='results'||active==='comparison')&&(row[1]==='CRITICAL'||row[1]==='HIGH')&&(active==='comparison'?[1,2,12]:[1,11,12]).includes(tr.children.length)){td.className=row[1]==='CRITICAL'?'audit-critical-cell':'audit-high-cell';td.setAttribute('aria-label',row[1]+' · '+value);}if(String(value).length>240){const details=node('details',''),summary=node('summary',String(value).slice(0,80)+'… 전문 보기');details.append(summary,node('div',value));td.append(details);}else td.textContent=value;tr.append(td);});body.append(tr);});
     if(!visible.length){const tr=node('tr',''),td=node('td','검색 조건에 맞는 항목이 없습니다.');td.colSpan=cfg.columns.length;tr.append(td);body.append(tr);}
-    status.textContent='전체 '+source.length+'건 중 '+visible.length+'건 표시 · '+(active==='results'&&example==='finance'?'실제 검증 항목 84건 / 기존 예상 시나리오 135건 · 미실행 계획은 별도 표시':(active==='rfp'?(example==='pnu'?'부산대 제안요청서 원문':'로보어드바이저 · 인디케이터 RFP 예시'):examples[example].title+' 예시 · 구현·시험 증빙 확인 대기'));
+    status.textContent='전체 '+source.length+'건 중 '+visible.length+'건 표시 · '+(active==='results'&&example==='finance'?'실제 검증 항목 84건 / 기존 예상 시나리오 135건 · 미실행 계획은 별도 표시':(active==='rfp'?(example==='pnu'?'OO대학교 샘플 제안요청서 원문':'로보어드바이저 · 인디케이터 RFP 예시'):examples[example].title+' 예시 · 구현·시험 증빙 확인 대기'));
   }
   function select(){
     const hash=location.hash.slice(1),match=/^(finance|pnu)-(rfp|comparison|guide|evidence|inspection|corrections|proposal|requirements|traceability|diagram|designs|gap|actions|meetings|changes|units|integrations|specs|results)$/.exec(hash);
@@ -83,5 +90,5 @@
   ['auditResultOrigin','auditSeverity'].forEach(id=>document.getElementById(id).addEventListener('change',()=>{if(data)render();}));
   window.addEventListener('hashchange',select);search.addEventListener('input',()=>{if(data)render();});scope.addEventListener('change',()=>{if(data)render();});
   document.getElementById('auditExport').addEventListener('click',()=>{if(!data)return;if(active==='diagram'){rtm.download();return;}const cell=value=>'"'+String(value).replace(/^[=+@-]/,"'$&").replaceAll('"','""')+'"';const csv='\ufeff'+[Array.from(table.tHead.querySelectorAll('button'),b=>b.textContent.replace(/ [↕↑↓]$/,'')),...visible].map(row=>row.map(cell).join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='감리대응-'+(examples[example].title+'-'+configs[active].title)+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
-  try{const [existing,rfp,verification]=await Promise.all(['/static/assets/audit-response-data.json?v=examples2','/static/assets/audit-rfp-data.json?v=examples2','/static/assets/audit-evidence/fd-verification.json?v=fd-live1'].map(async url=>{const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw Error('문서 데이터 응답 '+res.status);return res.json();}));data={...existing,rfp,verification};select();}catch(error){status.textContent='문서를 불러오지 못했습니다. 새로고침해주세요. '+error.message;document.getElementById('auditExport').disabled=true;}
+  try{const [existing,rfp,verification]=await Promise.all(['/static/assets/audit-response-data.json?v=examples2','/static/assets/audit-rfp-data.json?v=examples2','/static/assets/audit-evidence/fd-verification.json?v=fd-live1'].map(async url=>{const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw Error('문서 데이터 응답 '+res.status);return res.json();}));data={...sampleLabel(existing),rfp:sampleLabel(rfp),verification};select();}catch(error){status.textContent='문서를 불러오지 못했습니다. 새로고침해주세요. '+error.message;document.getElementById('auditExport').disabled=true;}
 })();
