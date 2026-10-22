@@ -1,0 +1,17 @@
+/* Only long content sections participate; original layouts stay intact when expanded. */
+[data-pr-accordion] { scroll-margin-top:112px; }
+[data-pr-accordion]>[data-pr-replaced-toggle] { display:none!important; }
+.pr-accordion-bar { grid-column:1/-1;display:flex;align-items:center;justify-content:flex-end;gap:14px;min-width:0;width:100%;padding:0 0 12px; }
+.pr-accordion-title { flex:1;min-width:0;color:#0E2340;font-size:15px;font-weight:700;line-height:1.6;overflow-wrap:anywhere; }
+.pr-accordion-title[hidden] { display:none!important; }
+.pr-accordion-toggle { flex:0 0 auto;min-height:32px;padding:6px 12px;border:1px solid #C9A86A;border-radius:6px;background:#fff;color:#0E2340;font:600 12px/1.5 'Pretendard Variable',Pretendard,sans-serif;cursor:pointer;white-space:nowrap; }
+.pr-accordion-toggle:hover { background:#F5F1E9; }
+.pr-accordion-toggle:focus-visible { outline:2px solid #0E2340;outline-offset:3px; }
+[data-pr-accordion][data-pr-collapsed="true"] { height:auto!important;min-height:0!important;max-height:none!important; }
+[data-pr-accordion][data-pr-collapsed="true"]>:not(.pr-accordion-bar) { display:none!important; }
+[data-pr-collapsed="true"]>.pr-accordion-bar { padding-bottom:0; }
+@media(max-width:640px){.pr-accordion-bar{gap:10px;flex-wrap:wrap}.pr-accordion-title{flex-basis:180px}.pr-accordion-toggle{padding:6px 10px}}
+[data-pr-accordion] { min-width:0;max-width:100%;overflow-wrap:anywhere; }
+.lesson[data-pr-accordion] { grid-template-columns:minmax(0,1fr); }
+[data-pr-accordion]>.lesson-content,[data-pr-accordion]>.theory-lesson-content { min-width:0;max-width:100%; }
+@media(max-width:640px){[data-pr-accordion] .lesson-title-row{flex-wrap:wrap}[data-pr-accordion] .lesson-title-row>h2{min-width:0}}

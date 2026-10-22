@@ -1,0 +1,29 @@
+/* PR has one page-level copyright footer; panel/content footers do not own it. */
+.app-layout:has(.chat-area),
+.app-layout .chat-area {
+  height:100vh;
+  height:100dvh;
+  min-height:0;
+}
+.chat-area { display:flex; flex-direction:column; }
+.chat-area>.messages { flex:1 1 auto; min-height:0; overflow-y:auto; }
+.chat-area>.site-footer-unified { flex:0 0 25px !important; }
+body.pr-document-page {
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  min-height:100dvh;
+  height:auto;
+  margin:0;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+.pr-document-page>main { flex:1 0 auto; width:100%; }
+.pr-document-page>.site-footer-unified { flex:0 0 25px !important; }
+.site-footer-unified {
+  position:static !important;
+  inset:auto !important;
+  float:none !important;
+  transform:none !important;
+  clear:both;
+}
