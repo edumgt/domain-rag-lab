@@ -732,6 +732,10 @@ KOSDAQ|웹젠|게임`,
   });
 
   function setView(view, options = {}) {
+    if (view === 'basis') {
+      window.location.replace('https://iv.edumgt.co.kr/?view=lessons&lesson=08&practice=basis');
+      return;
+    }
     stopTickDashboard();
     stopDashboardAssets();
     if (view !== 'quant') window.QuantLab?.unmount();

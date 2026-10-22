@@ -10,13 +10,10 @@
     <title>04일차 | 4일 금융 이론 — 자산배분, 퀀트</title>
     <link rel="stylesheet" href="assets/site.css?v=20261008-common-2" />
     <link rel="stylesheet" href="assets/app-shell.css?v=20260919-small-text110" />
-    <link rel="stylesheet" href="../assets/day4-deliverable-examples.css?v=20261007-6" />
     <style>
       /* 분산투자·변동성 매매 단원은 03일차로 이동했습니다. */
       /* 기존에 이동한 앞부분 12개 단원을 숨깁니다. */
-      body[data-day="4"] .lesson-list > .lesson:nth-child(-n + 14) { display: none; }
-      body[data-day="4"] .lesson-list > #roboAdvisorProjectLesson,
-      body[data-day="4"] .lesson-list > #indicatorProjectLesson { display: grid !important; }
+      body[data-day="4"] .lesson-list > .lesson:nth-child(-n + 12) { display: none; }
       #roboAdvisorProjectLesson .lesson-body > ul > li > strong:first-child,
       #indicatorProjectLesson .lesson-body > ul > li > strong:first-child { color: #16835d; font-size: 18px; font-weight: 850; }
       #roboAdvisorProjectLesson .lesson-body > ul > li > ol > li:not(.has-implementation-detail)::after,
@@ -395,6 +392,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@7.1.0"></script>
   <link rel="stylesheet" href="https://www.edumgt.co.kr/css/common.css?v=20261012-common-3" />
   <script src="/static/assets/audit-navigation.js?v=compact-gnb1" defer></script>
+<script defer src="/static/assets/compact-typography.js?v=20261022-92"></script>
 </head>
   <body data-day="4">
     <header class="day-appbar">
@@ -417,10 +415,6 @@
         ><a href="/?view=stocks"
           ><i class="fa-solid fa-building-columns"></i> 종목보기</a
         ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
-        ><a href="/?view=simulation"
-          ><i class="fa-solid fa-chart-pie"></i> 시뮬레이션</a
-        ><a href="/?view=basis"
-          ><i class="fa-solid fa-scale-balanced"></i> 베이시스</a
         ><a href="/?view=backtest"
           ><i class="fa-solid fa-flask"></i> LEAN 백테스트</a
         ><a href="/?view=calendar"
@@ -432,7 +426,7 @@
     <div class="day-backdrop" id="dayBackdrop"></div>
     <aside class="day-offcanvas" id="dayOffcanvas" aria-label="학습 메뉴">
       <header class="day-offcanvas-header"><div class="day-offcanvas-title-row"><h2 class="day-offcanvas-title"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h2><button class="day-offcanvas-close" type="button" id="dayMenuClose" aria-label="학습 메뉴 닫기"><i class="fa-solid fa-xmark"></i></button></div><p class="day-offcanvas-subtitle">금융상품 · 실물자산 · 생활거래 이해 · 실습</p></header>
-      <nav class="day-offcanvas-nav" aria-label="4일 이론 학습"><p class="day-offcanvas-nav-label">4일 이론 학습</p><a class="day-offcanvas-link" href="01.html"><span class="day-offcanvas-day">1일차</span> 선물과 옵션</a><a class="day-offcanvas-link" href="02.html"><span class="day-offcanvas-day">2일차</span> 펀드 · ETF</a><a class="day-offcanvas-link" href="03.html"><span class="day-offcanvas-day">3일차</span> 채권 · 코인</a><a class="day-offcanvas-link active" href="04.html"><span class="day-offcanvas-day">4일차</span> 자산배분, 퀀트</a><a class="day-offcanvas-link" href="/static/project2-presentation.html"><span class="day-offcanvas-day">발표</span> 프로젝트2 발표</a></nav>
+      <nav class="day-offcanvas-nav" aria-label="4일 이론 학습"><p class="day-offcanvas-nav-label">4일 이론 학습</p><a class="day-offcanvas-link" href="01.html"><span class="day-offcanvas-day">1일차</span> 선물과 옵션</a><a class="day-offcanvas-link" href="02.html"><span class="day-offcanvas-day">2일차</span> 펀드 · ETF</a><a class="day-offcanvas-link" href="03.html"><span class="day-offcanvas-day">3일차</span> 채권 · 코인</a><a class="day-offcanvas-link active" href="04.html"><span class="day-offcanvas-day">4일차</span> 자산배분, 퀀트</a><a class="day-offcanvas-link" href="/static/project-schedule.html" style="text-decoration:none"><i class="fa-solid fa-calendar-days"></i> 프로젝트 일정</a><a class="day-offcanvas-link" href="/static/project2-presentation.html"><span class="day-offcanvas-day">발표</span> 프로젝트2 발표</a><a class="day-offcanvas-link" href="/static/project3-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트3 발표</a></nav>
       <footer class="site-footer-unified">© 2026 (주)에듀엠지티 All rights reserved.</footer>
     </aside>
     <nav aria-label="4일 학습 목차">
@@ -457,167 +451,7 @@
             <p>한 종목의 성과보다 여러 자산을 함께 보고, 목표 비중을 정해 리밸런싱하는 법을 배웁니다.</p>
           </div>
         </header>
-        <section class="lesson-list"><section class="lesson" id="roboAdvisorProjectLesson">
-            <span>PROJECT 01</span>
-            <div class="lesson-content">
-              <h2>나만의 로보 어드바이저 개발 및 성과 검증 프로젝트</h2>
-              <div class="lesson-body">
-                <p style="color: var(--blue); font-weight: 800;"><strong>UI/UX 필요 요소:</strong> 투자성향진단 · 시각적 포트폴리오 · 시뮬레이션 · 목표 수익률 모의 · 리밸런싱</p>
-                <ul>
-                  <li>
-                    <strong>목표 기능:</strong> AI 기반의 자동화 로보 어드바이저 모델 개발
-                    <ol>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 주식·금융·경제 기본 용어사전과 연관 개념 탐색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/domain-rag-lab" target="_blank" rel="noopener noreferrer">domain-rag-lab</a>와 <a href="https://github.com/edumgt/investment-analysis" target="_blank" rel="noopener noreferrer">investment-analysis</a>의 통합 및 AWS EC2 서버 배포</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 가격·거래량·재무·뉴스 등 투자 자료 수집·분류·전처리·검색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/python-crawling-lab" target="_blank" rel="noopener noreferrer">python-crawling-lab</a> 등을 활용한 크롤링 및 적재</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 근거 문서와 출처를 포함한 Retrieval-Augmented Generation (RAG) 질의응답<span class="implementation-detail">기술스택 및 구현방안: Amazon Bedrock 또는 Ollama + GPU · VectorDB · FastAPI</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행<span class="implementation-detail">기술스택 및 구현방안: RDBMS · Amazon EventBridge Scheduler · AWS Batch</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 5:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Processing Jobs (SHAP) · AG Grid · ApexCharts</span></li>
-                    </ol>
-                  </li>
-                  <li>
-                    <strong>목표 기능:</strong> 패턴 인식 기법을 활용한 주식 시장 예측 프로젝트
-                    <ol>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> OHLCV 데이터로 이동평균·RSI·MACD·볼린저 밴드·거래량 지표 계산<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/docker-class" target="_blank" rel="noopener noreferrer">docker-class</a> · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a> · FastAPI</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 캔들 패턴·지지선·저항선·돌파·골든크로스 등 차트 패턴 탐지<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Training Jobs · ECR + Lambda + API GW · EC2</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 분봉·일봉·주봉의 기술적 지표를 종합해 매수·매도·관망 신호와 신뢰도 산출<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI 실시간 추론 엔드포인트 · RDBMS · FastAPI</span></li>
-                    </ol>
-                  </li>
-                  <li>
-                    <strong>목표 기능:</strong> 자산배분모델을 활용한 포트폴리오 최적화, 주식 스크리닝을 통한 종목 선정 등 직접 수행
-                    <ol>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 월·분기·연 등 정해진 주기가 도래하면 실행하는 시간 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Apache Airflow</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 현재 비중이 목표 비중의 허용 이탈률을 초과하면 실행하는 이탈률 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: FastAPI · AG Grid · Vanilla JS</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 입·출금이나 배당금이 발생하면 새 현금흐름을 활용해 실행하는 입출금·배당금 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · AG Grid</span></li>
-                    </ol>
-                  </li>
-                  <li>
-                    <strong>목표 기능:</strong> 구축한 퀀트 모델의 결과를 해석해보고 자체적으로 모의 투자 의사결정 진행
-                    <ol>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 거래비용·슬리피지를 반영한 수익률, MDD, 샤프 비율 등 성과지표 분석<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/stock-coin-trade" target="_blank" rel="noopener noreferrer">stock-coin-trade</a> · FastAPI · ApexCharts</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 퀀트 신호를 매수·매도·보유 의견으로 변환<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/quantconnect" target="_blank" rel="noopener noreferrer">QuantConnect</a> · FastAPI · Vanilla JS</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 모의 주문 체결 및 포트폴리오 운용<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · ECR + Lambda + API GW</span></li>
-                    </ol>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="나만의 로보 어드바이저 개발 및 성과 검증 프로젝트 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson" id="indicatorProjectLesson">
-            <span>PROJECT 02</span>
-            <div class="lesson-content">
-              <h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2>
-              <div class="lesson-body">
-                <p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 전략 설정 · 지표 차트 · 백테스트 · 성과 대시보드 · 자동매매 모니터링</p>
-                <ul>
-                  <li><strong>목표 기능:</strong> 기본적인 인디케이터(MA, RSI 등)로 전략 설계
-                    <ol>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> OHLCV 데이터로 이동평균·RSI·MACD·볼린저 밴드 등 기본 지표 계산<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a> · 시장 데이터 처리 플랫폼</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 지표 조건을 조합해 매수·매도·손절·익절 및 포지션 크기 규칙 설계<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 포트폴리오 규칙 엔진 · RDBMS</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 지표 기간과 임계값 조합을 백테스트해 기준 전략 선정<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 전략 최적화 플랫폼 · ApexCharts</span></li>
-                    </ol>
-                  </li>
-                  <li><strong>목표 기능:</strong> 커스텀 인디케이터 개발
-                    <ol>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 가격·거래량·변동성 지표를 결합하고 정규화한 커스텀 산식 정의<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 피처 엔지니어링 파이프라인 · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a></span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 미래 데이터 참조를 방지하고 실시간 갱신과 단위 테스트가 가능한 지표 함수 구현<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 자동화 테스트 플랫폼 · GitHub Actions</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 커스텀 지표를 API로 제공하고 계산 결과와 버전을 저장해 재사용<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · FastAPI · GitHub</span></li>
-                    </ol>
-                  </li>
-                  <li><strong>목표 기능:</strong> 트레이딩뷰 플랫폼으로 성과 확인 및 코딩 실습(PineScript)
-                    <ol>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> Pine Script로 지표·전략을 구현하고 차트에 신호와 보조선을 표시<span class="implementation-detail">기술스택 및 구현방안: Pine Script · TradingView · GitHub</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> Strategy Tester로 1차 성과를 확인하고 QuantConnect LEAN으로 교차 검증<span class="implementation-detail">기술스택 및 구현방안: TradingView Strategy Tester · Pine Script · QuantConnect LEAN</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 조건 충족 시 알림과 Webhook으로 투자 신호 전달<span class="implementation-detail">기술스택 및 구현방안: TradingView Webhook · API GW · Lambda</span></li>
-                    </ol>
-                  </li>
-                  <li><strong>목표 기능:</strong> QuantConnect LEAN을 통한 성과 검증
-                    <ol>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 동일한 데이터·기간·수수료 조건으로 QuantConnect LEAN 백테스트 수행<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · LEAN CLI · GitHub</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 누적수익률·Maximum Drawdown (MDD)·샤프 비율·승률 등 성과지표 분석<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 포트폴리오 성과 분석 플랫폼 · ApexCharts</span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> TradingView와 QuantConnect LEAN 결과를 비교해 신호·체결·성과 차이 검증<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 자동화 검증 플랫폼 · GitHub Actions</span></li>
-                    </ol>
-                  </li>
-                  <li><strong>목표 기능:</strong> 증권사 연동(API 활용)을 통한 자동화 모델 구현
-                    <ol>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> QuantConnect LEAN 투자 신호를 증권사 API의 계좌·시세·주문 기능과 연결<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 증권사 Open API · FastAPI<br>연동 API 참고: <a href="https://www.kbsec.com/go.able?linkcd=m06240001" target="_blank" rel="noopener noreferrer">KB증권 Open API</a> · <a href="https://github.com/koreainvestment/open-trading-api" target="_blank" rel="noopener noreferrer">한국투자증권 Open Trading API</a> · <a href="https://alpaca.markets/support" target="_blank" rel="noopener noreferrer">Alpaca Support</a></span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 모의투자 주문과 중복 주문 방지·손실 한도·비상 정지 등 위험관리 적용<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · Redis · Amazon CloudWatch<br>연동 API 참고: <a href="https://www.kbsec.com/go.able?linkcd=m06240001" target="_blank" rel="noopener noreferrer">KB증권 Open API</a> · <a href="https://github.com/koreainvestment/open-trading-api" target="_blank" rel="noopener noreferrer">한국투자증권 Open Trading API</a> · <a href="https://alpaca.markets/support" target="_blank" rel="noopener noreferrer">Alpaca Support</a></span></li>
-                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> QuantConnect LEAN 전략의 실행 일정·배포·로그·장애 알림을 자동화<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · Amazon EC2 · Amazon CloudWatch<br>연동 API 참고: <a href="https://www.kbsec.com/go.able?linkcd=m06240001" target="_blank" rel="noopener noreferrer">KB증권 Open API</a> · <a href="https://github.com/koreainvestment/open-trading-api" target="_blank" rel="noopener noreferrer">한국투자증권 Open Trading API</a> · <a href="https://alpaca.markets/support" target="_blank" rel="noopener noreferrer">Alpaca Support</a></span></li>
-                    </ol>
-                  </li>
-                </ul>
-                <section class="technology-stack-summary" aria-labelledby="indicatorTechnologyStackTitle">
-                  <h3 id="indicatorTechnologyStackTitle">기술스택</h3>
-                  <p>로보 어드바이저와 투자 인디케이터 프로젝트에 사용되는 기술을 역할별로 통합한 구성입니다.</p>
-                  <div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>
-                  <div class="technology-stack-table-wrap">
-                    <table>
-                      <thead><tr><th scope="col">종류</th><th scope="col">기능</th><th scope="col">용도</th><th scope="col">요소기술</th></tr></thead>
-                      <tbody>
-                        <tr><th scope="row">금융 데이터 수집·처리</th><td>가격·거래량·재무·뉴스와 OHLCV 수집, 정제, 정규화</td><td>지표 계산과 전략 검증에 사용할 시계열·비정형 데이터 구축</td><td>python-crawling-lab · 시장 데이터 처리 플랫폼 · 피처 엔지니어링 파이프라인</td></tr>
-                        <tr><th scope="row">데이터·지식 저장</th><td>계산 결과, 전략 버전, 포트폴리오 이력과 문서 임베딩 저장</td><td>재현 가능한 분석, 투자 이력 조회, 관련 지식 검색</td><td>RDBMS · VectorDB · Redis</td></tr>
-                        <tr><th scope="row">인디케이터·퀀트 엔진</th><td><span class="no-glossary-link">MA·RSI·MACD·볼린저 밴드와 커스텀 지표 계산</span></td><td>매수·매도·관망 신호 및 신뢰도 산출</td><td>QuantConnect LEAN · LEAN CLI · TA-Lib · lumina-invest</td></tr>
-                        <tr><th scope="row">AI·패턴 분석·XAI</th><td>차트 패턴 학습·추론과 추천 근거 설명</td><td>캔들·돌파·골든크로스 탐지 및 모델 해석</td><td>Amazon SageMaker AI Training Jobs · 실시간 추론 엔드포인트 · Processing Jobs (SHAP)</td></tr>
-                        <tr><th scope="row">RAG·생성형 AI</th><td>금융 지식 검색과 출처 기반 질의응답</td><td>용어·시장 자료 탐색 및 투자 추천 이유 보강</td><td>domain-rag-lab · investment-analysis · Amazon Bedrock · Ollama + GPU · VectorDB</td></tr>
-                        <tr><th scope="row">전략·포트폴리오</th><td>매매·포지션 규칙, 자산배분, 리밸런싱과 위험 한도 관리</td><td>전략 실행 기준과 포트폴리오 운용 자동화</td><td>QuantConnect LEAN · 포트폴리오 규칙 엔진 · 전략 최적화 플랫폼 · Redis</td></tr>
-                        <tr><th scope="row">백테스트·성과 검증</th><td>수수료·슬리피지를 반영한 교차 검증과 성과 측정</td><td>수익률·MDD·샤프 비율·승률 및 전략 차이 분석</td><td>TradingView Strategy Tester · QuantConnect LEAN · stock-coin-trade · 포트폴리오 성과 분석 플랫폼 · 자동화 검증 플랫폼</td></tr>
-                        <tr><th scope="row">차트·UI/UX</th><td>지표·패턴·신호 시각화와 데이터 그리드 제공</td><td>전략 설정, 성과 대시보드, 자동매매 모니터링</td><td>TradingView · Pine Script · ApexCharts · AG Grid · Vanilla JS</td></tr>
-                        <tr><th scope="row">백엔드·API</th><td>지표 계산, 전략, 저장소와 외부 서비스를 API로 연결</td><td>웹 화면·분석 엔진·주문 시스템 간 통신</td><td>FastAPI · Amazon API Gateway (API GW) · TradingView Webhook</td></tr>
-                        <tr><th scope="row">증권사·주문 연동</th><td>계좌·시세·주문 조회와 모의 주문 체결</td><td>신호를 주문으로 변환하고 중복 주문·손실 한도·비상 정지 적용</td><td>증권사 Open API · KB증권 Open API · 한국투자증권 Open Trading API · Alpaca</td></tr>
-                        <tr><th scope="row">워크플로·품질 자동화</th><td>정기 배치, 실행 일정, 단위 테스트와 지속적 검증</td><td>데이터 갱신과 전략 실행·검증의 반복 자동화</td><td>Apache Airflow · Amazon EventBridge Scheduler · AWS Batch · GitHub Actions · 자동화 테스트 플랫폼</td></tr>
-                        <tr><th scope="row">배포·컴퓨팅</th><td>애플리케이션과 모델의 서버·컨테이너·서버리스 배포</td><td>개발 환경 재현, API 제공, 학습·추론 운영</td><td>Amazon EC2 · Docker · docker-class · Amazon ECR · AWS Lambda · Ollama + GPU</td></tr>
-                        <tr><th scope="row">소스·버전 관리</th><td>코드, 지표 산식과 전략 버전 추적</td><td>협업, 변경 이력 관리와 결과 재현</td><td>GitHub · GitHub Actions · domain-rag-lab · investment-analysis · python-crawling-lab · lumina-invest · stock-coin-trade</td></tr>
-                        <tr><th scope="row">백업·복구</th><td>데이터·객체 버전 백업과 장기 보관</td><td>장애·오삭제 시 데이터와 서비스 복원</td><td>AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</td></tr>
-                        <tr><th scope="row">보안</th><td>비밀정보·암호화 키 관리와 웹 공격 차단</td><td>API 키·증권계좌 연동 정보 및 서비스 보호</td><td>AWS Secrets Manager · AWS KMS · AWS WAF</td></tr>
-                        <tr><th scope="row">관제·알림</th><td>로그·지표·감사 추적과 장애 알림</td><td>전략 실행, 주문, 인프라 상태 모니터링</td><td>Amazon CloudWatch · AWS CloudTrail · Amazon SNS</td></tr>
-                        <tr><th scope="row">데이터·시스템 이관</th><td>데이터베이스·파일·서버 마이그레이션</td><td>기존 투자 데이터와 실행 환경의 AWS 이전</td><td>AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <p class="technology-stack-interview-note"><strong>요즘 IT 직원 채용 시 인터뷰의 첫 번째 질문은 “코딩을 잘합니까?”, “무엇을 할 줄 압니까?”가 아니라 “프로젝트에서 본인의 애티튜드는 어떠했나요?”, “어떤 솔루션을 사용해 보셨나요?”입니다.</strong></p>
-                  <div class="project-staffing-note" aria-label="개발 인력 산정 및 AI 기반 수행안">
-                    <strong>개발 인력 산정 및 AI 기반 수행안</strong>
-                    <article><b>일반 개발 방식 · 총 36MM</b><span>위 솔루션을 구현하려면 6개월 동안 월평균 6명의 개발 인력이 필요합니다. 즉, 6명 × 6개월 = 36MM(Man-Month) 기준입니다.</span></article>
-                    <article><b>AI 기반 개발 방식 · 총 4MM</b><span>AI 코딩·문서화·테스트·자동화 도구를 적극 활용하면 동일한 구현 범위를 4명의 인력이 1개월 안에 수행할 수 있다는 의미입니다. 즉, 4명 × 1개월 = 4MM 기준입니다.</span></article>
-                  </div>
-                  <section class="project-deliverables" aria-labelledby="indicatorProjectDeliverablesTitle">
-                    <h4 id="indicatorProjectDeliverablesTitle">프로젝트 산출물 및 진행 도구</h4>
-                    <p>해당 솔루션을 계획하고 개발·검증·배포·운영하기 위해 단계별로 작성하고 관리할 문서와 협업 도구입니다.</p>
-                    <div class="project-deliverables-table-wrap">
-                      <table>
-                        <thead><tr><th scope="col">구분</th><th scope="col">주요 산출물</th><th scope="col">목적</th><th scope="col">프로젝트 진행 도구</th></tr></thead>
-                        <tbody>
-                          <tr><th scope="row">착수·과업 정의</th><td>과업지시서 · 프로젝트 헌장 · 범위기술서 · 착수보고서 · 이해관계자 목록</td><td>목표, 범위, 수행 조직, 일정, 예산, 인수 기준과 책임 범위 확정</td><td>Confluence · Markdown</td></tr>
-                          <tr><th scope="row">요구사항 관리</th><td>요구사항정의서 · 사용자 스토리 · 유스케이스 · 요구사항 추적표(RTM) · 인수 기준</td><td>기능·비기능 요구사항을 식별하고 구현·시험 결과까지 추적</td><td>JIRA · Confluence · Markdown · Google Sheets</td></tr>
-                          <tr><th scope="row">일정·업무 관리</th><td>WBS · 마일스톤 · 간트차트 · 스프린트 계획 · 백로그 · 주간보고서</td><td>작업을 세분화하고 담당자, 선후행 관계, 일정과 진척률 관리</td><td>JIRA 칸반보드 · JIRA Scrum Board · Roadmap · Excel</td></tr>
-                          <tr><th scope="row">화면·서비스 설계</th><td>정보구조(IA) · 화면흐름도 · 와이어프레임 · UI 명세서 · 프로토타입</td><td>전략 설정, 차트, 백테스트, 성과 대시보드의 사용자 흐름 정의</td><td>Figma · FigJam · draw.io · Mermaid</td></tr>
-                          <tr><th scope="row">데이터 설계</th><td>ERD · 테이블 명세서 · 데이터 사전 · 코드 정의서 · 데이터 흐름도 · 보존정책</td><td>시장 데이터, 지표, 전략, 주문, 포트폴리오 데이터의 구조와 관계 정의</td><td>ERDCloud · dbdiagram.io · DBeaver · draw.io · Mermaid</td></tr>
-                          <tr><th scope="row">시스템 설계</th><td>시스템 아키텍처 · 애플리케이션 구성도 · 인프라·네트워크 구성도 · 배포 구성도 · ADR</td><td>프런트엔드, API, 분석 엔진, 저장소, AWS와 외부 연동 구조 확정</td><td>draw.io · Mermaid · Lucidchart · AWS Architecture Icons · Confluence</td></tr>
-                          <tr><th scope="row">인터페이스 설계</th><td>API 명세서 · 인터페이스 정의서 · 데이터 매핑서 · Webhook·증권사 연동 명세</td><td>서비스 간 요청·응답, 인증, 오류 코드와 데이터 교환 규칙 정의</td><td>OpenAPI/Swagger · Postman · FastAPI Docs</td></tr>
-                          <tr><th scope="row">개발·형상 관리</th><td>소스코드 · 브랜치 전략 · 코딩 표준 · 변경이력 · 코드 리뷰 기록 · 기술 의사결정 기록</td><td>기능 구현, 버전 추적, 변경 통제와 협업 품질 확보</td><td>GitHub · GitHub Issues · Pull Requests · GitHub Projects</td></tr>
-                          <tr><th scope="row">시험·성과 검증</th><td>테스트 계획서 · 테스트 케이스 · 단위·통합·인수시험 결과서 · 백테스트 보고서 · 결함대장</td><td>기능 정확성, 성능, 보안, 전략 성과와 재현 가능성 검증</td><td>pytest · GitHub Actions · Postman · QuantConnect LEAN · TradingView Strategy Tester · JIRA</td></tr>
-                          <tr><th scope="row">배포·운영·인수</th><td>CI/CD 명세 · 배포계획서 · 운영 매뉴얼 · 장애 대응 절차서 · 백업·복구 계획 · 릴리스 노트 · 완료보고서</td><td>안전한 배포, 모니터링, 장애 복구, 운영 이관과 최종 검수 지원</td><td>GitHub Actions · Docker · AWS Management Console · Amazon CloudWatch · JIRA Service Management</td></tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </section>
-                  <aside class="project-progress-cautions" aria-label="프로젝트 진행 중 유의사항">
-                    <h3>프로젝트 진행 중 유의사항</h3>
-                    <ol>
-                      <li>각 <b>R&amp;R</b>은 한 사람이 독점하지 않고, <b>주담당·보조담당 2인 이상</b>으로 역할을 배분합니다.</li>
-                      <li>팀원이 취업 등의 사유로 이탈하면 남은 팀원이 해당 역할과 업무를 대체합니다.</li>
-                      <li>팀원 이탈이 많은 팀은 프로젝트 진행 중 타 팀과 협의하여 팀을 <b>Merge(통합)</b>합니다.</li>
-                      <li>팀별 예상 사업비와 실제 발생 비용은 <b>이스트소프트 보조강사</b> 과 보전 방안을 협의합니다.</li>
-                      <li>매일 <b>오전 9:00~9:15</b>에 팀별 추천 인원이 진행사항을 보고하고, 팀별 스크럼 회의를 진행합니다.</li>
-                      <li>매일 퇴근 전 <b>오후 5:30~5:50</b>에 팀별 추천 인원이 진행사항, 리스크 및 명일 계획을 보고합니다.</li>
-                      <li><b>9월 30일까지</b> 팀을 구성하는데, 잔여 인력은 <b>10월 1일</b> 인원수 모자른 팀에 자동 배치됩니다.</li>
-                    </ol>
-                  </aside>
-                  <div id="day4ProjectSchedule"></div>
-                </section>
-              </div>
-            </div>
-            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="나만의 투자 인디케이터 개발 및 성과 검증 프로젝트 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
-          </section><section class="lesson" id="xaiLesson">
+        <section class="lesson-list"><section class="lesson" id="xaiLesson">
             <span>XAI</span>
             <div class="lesson-content">
               <h2>XAI(Explainable AI, 설명 가능한 인구지능)</h2>
@@ -4703,15 +4537,7 @@
         load();
       })();
     </script>
-    <script src="../assets/day4-project-schedule.js?v=20260919-100-120-hours"></script>
-    <script>
-      (() => {
-        const schedule = document.getElementById('day4ProjectSchedule');
-        if (schedule && window.Day4ProjectSchedule) schedule.innerHTML = window.Day4ProjectSchedule.render();
-      })();
-    </script>
-    <script src="../assets/day4-deliverable-samples.js?v=20261007-6"></script>
-    <script src="../assets/day4-deliverable-examples.js?v=20261007-6"></script>
+
     <script src="assets/growth-potential-rate.js?v=20260919-small-text110"></script>
     <script src="assets/app-shell.js"></script>
     <script src="../assets/modal-fit.js?v=20260905-simulator-specific-hints"></script>

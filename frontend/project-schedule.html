@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="프로젝트 목표 기능, 개발 일정과 산출물, 수행 시 유의사항을 확인합니다."
+    />
+    <title>프로젝트 일정 · Finance RAG Lab</title>
+    <link rel="stylesheet" href="/static/days/assets/site.css?v=20261008-common-2" />
+    <link rel="stylesheet" href="/static/days/assets/app-shell.css?v=20260919-small-text110" />
+    <link rel="stylesheet" href="/static/assets/day4-deliverable-examples.css?v=20261007-6" />
+    <style>
+      /* 분산투자·변동성 매매 단원은 03일차로 이동했습니다. */
+      /* 기존에 이동한 앞부분 12개 단원을 숨깁니다. */
+      body[data-day="4"] .lesson-list > .lesson:nth-child(-n + 14) { display: none; }
+      body[data-day="4"] .lesson-list > #roboAdvisorProjectLesson,
+      body[data-day="4"] .lesson-list > #indicatorProjectLesson { display: grid !important; }
+      #roboAdvisorProjectLesson .lesson-body > ul > li > strong:first-child,
+      #indicatorProjectLesson .lesson-body > ul > li > strong:first-child { color: #16835d; font-size: 18px; font-weight: 850; }
+      #roboAdvisorProjectLesson .lesson-body > ul > li > ol > li:not(.has-implementation-detail)::after,
+      #indicatorProjectLesson .lesson-body > ul > li > ol > li:not(.has-implementation-detail)::after { display: block; margin-top: 3px; color: #8b5e3c; font-size: 15.95px; font-weight: 800; content: "기술스택 및 구현방안"; }
+      .implementation-detail { display: block; margin-top: 3px; color: #8b5e3c; font-size: 15.95px; font-weight: 800; }
+      .implementation-detail a { color: inherit; text-decoration: underline; }
+      .lesson-body p > strong, .lesson-body p > b, .lesson-body li > strong, .lesson-body li > b { color: #173d72; font-weight: 850; }
+      .quant-workflow-lines { display: grid; gap: 8px; margin: 12px 0 16px; }
+      .quant-workflow-lines p { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; align-items: start; margin: 0; padding: 11px 14px; border-left: 4px solid #315ff4; border-radius: 8px; background: #f5f8ff; color: #405572; line-height: 1.65; }
+      .quant-workflow-lines strong { color: #173d72; font-size: 17.05px; font-weight: 900; }
+      @media (max-width: 620px) { .quant-workflow-lines p { grid-template-columns: 1fr; gap: 3px; } }
+      .aws-operations-stack { margin: 8px 0 14px; padding: 10px 12px; border: 1px solid #dcc9b7; border-radius: 10px; background: #fffaf5; }
+      .aws-operations-stack > span { display: block; margin-top: 3px; }
+      .technology-stack-summary { margin: 14px 0 20px; }
+      .technology-stack-summary h3 { margin: 0 0 8px; color: #173d72; font-size: 19px; }
+      .technology-stack-summary p { margin: 0 0 10px; color: #52647e; font-size: 15.95px; line-height: 1.65; }
+      .technology-stack-table-wrap { overflow-x: auto; border: 1px solid #cfd9e8; border-radius: 10px; }
+      .technology-stack-summary table { width: 100%; min-width: 880px; border-collapse: collapse; background: #fff; }
+      .technology-stack-summary th, .technology-stack-summary td { padding: 10px 12px; border-top: 1px solid #e1e7f0; border-left: 1px solid #e1e7f0; text-align: left; vertical-align: top; font-size: 15.4px; line-height: 1.55; }
+      .technology-stack-summary th:first-child, .technology-stack-summary td:first-child { border-left: 0; }
+      .technology-stack-summary thead th { border-top: 0; color: #173d72; background: #eef4ff; font-weight: 850; }
+      .technology-stack-summary tbody th { width: 15%; color: #16835d; background: #f8fbff; }
+      .technology-stack-summary .technology-stack-interview-note { margin: 20px 0 0; padding: 22px 24px; border: 2px solid #f6c453; border-left: 8px solid #f59e0b; border-radius: 14px; background: linear-gradient(135deg, #102a5d 0%, #214c9c 58%, #315ff4 100%); color: #fff; font-size: clamp(20px, 2vw, 26px); font-weight: 900; line-height: 1.55; letter-spacing: -.02em; box-shadow: 0 12px 30px rgba(16, 42, 93, .24); }
+      .technology-stack-summary .technology-stack-interview-note::before { display: block; margin-bottom: 7px; color: #ffd875; font-size: 13.2px; font-weight: 900; letter-spacing: .14em; content: "INTERVIEW POINT"; }
+      .technology-stack-summary .technology-stack-interview-note strong { color: #fff; font: inherit; }
+      .project-staffing-note { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+      .project-staffing-note > strong { grid-column: 1 / -1; color: #173d72; font-size: 19.4px; line-height: 1.45; }
+      .project-staffing-note article { padding: 13px 15px; border: 1px solid #cfd9e8; border-radius: 10px; background: #fbfcff; }
+      .project-staffing-note article:last-child { border-color: #9bd6b8; background: #f0fbf5; }
+      .project-staffing-note b, .project-staffing-note span { display: block; }
+      .project-staffing-note b { color: #173d72; font-size: 17px; line-height: 1.5; }
+      .project-staffing-note span { margin-top: 4px; color: #405572; font-size: 17px; line-height: 1.6; }
+      .project-staffing-note article:last-child b { color: #0c5f38; }
+      .project-deliverables { margin-top: 20px; }
+      .project-deliverables h4 { margin: 0 0 7px; color: #173d72; font-size: 18px; }
+      .project-deliverables > p { margin: 0 0 10px; color: #52647e; font-size: 15.95px; line-height: 1.65; }
+      .project-deliverables-table-wrap { overflow-x: auto; border: 1px solid #cfd9e8; border-radius: 10px; }
+      .project-deliverables table { width: 100%; min-width: 900px; border-collapse: collapse; background: #fff; }
+      .project-deliverables th, .project-deliverables td { padding: 10px 12px; border-top: 1px solid #e1e7f0; border-left: 1px solid #e1e7f0; text-align: left; vertical-align: top; font-size: 15.4px; line-height: 1.55; }
+      .project-deliverables th:first-child, .project-deliverables td:first-child { border-left: 0; }
+      .project-deliverables thead th { border-top: 0; color: #173d72; background: #eef4ff; font-weight: 850; }
+      .project-deliverables tbody th { width: 15%; color: #7a4b12; background: #fffaf5; }
+      .project-progress-cautions { margin: 24px 0 18px; padding: 22px; border: 1px solid #b8ccf5; border-radius: 16px; background: linear-gradient(135deg, #eef4ff 0%, #f5f8ff 55%, #edf7ff 100%); box-shadow: 0 12px 28px rgba(35, 76, 145, .12); }
+      .project-progress-cautions::before { display: block; margin-bottom: 5px; color: #315ff4; font-size: 13.75px; font-weight: 900; letter-spacing: .12em; content: "PROJECT OPERATING GUIDE"; }
+      .project-progress-cautions h3 { margin: 0 0 15px; color: #123b72; font-size: 22px; line-height: 1.4; }
+      .project-progress-cautions ol { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; counter-reset: project-caution; color: #304867; font-size: 17px; line-height: 1.65; }
+      .project-progress-cautions li { position: relative; min-height: 48px; padding: 10px 14px 10px 52px; border: 1px solid #d6e2f7; border-radius: 10px; background: rgba(255, 255, 255, .9); counter-increment: project-caution; }
+      .project-progress-cautions li::before { position: absolute; top: 10px; left: 12px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #315ff4; color: #fff; font-size: 15.4px; font-weight: 900; content: counter(project-caution); }
+      .project-progress-cautions b { color: #174ea6; }
+      .project-schedule { margin-top: 24px; }
+      .project-schedule h4 { margin: 0 0 7px; color: #173d72; font-size: 19.8px; }
+      .project-schedule > p { margin: 0 0 12px; color: #52647e; font-size: 17.6px; line-height: 1.65; }
+      .project-schedule-role-guide { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin-bottom: 12px; }
+      .project-schedule-role-guide span { padding: 8px 10px; border-radius: 8px; background: #eef4ff; color: #173d72; font-size: 15.18px; font-weight: 800; }
+      .project-schedule-sheet { margin-top: 18px; border: 1px solid #cfd9e8; border-radius: 10px; background: #fff; }
+      .project-schedule-sheet-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 14px; align-items: center; padding: 13px 14px; border-radius: 10px 10px 0 0; background: #f5f8ff; color: #173d72; }
+      .project-schedule-sheet-head span { font-size: 17.6px; font-weight: 900; }
+      .project-schedule-sheet-head b { font-size: 16.39px; text-align: right; }
+      .project-schedule-sheet-head small { grid-column: 2; color: #52647e; font-size: 15.18px; text-align: right; }
+      .project-schedule-buffer-note { margin: 0; padding: 10px 14px; border-top: 1px solid #cfd9e8; background: #fffaf0; color: #6f4d17; font-size: 15.18px; line-height: 1.55; }
+      .project-schedule-buffer-note b { margin-right: 5px; color: #9a5b00; }
+      .project-schedule-table-wrap { border-top: 1px solid #cfd9e8; }
+      .project-schedule table { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; background: #fff; }
+      .project-schedule th, .project-schedule td { padding: 10px; border-right: 1px solid #e1e7f0; border-bottom: 1px solid #e1e7f0; text-align: left; vertical-align: top; font-size: 15.73px; line-height: 1.45; }
+      .project-schedule thead th { color: #173d72; background: #eaf1ff; font-weight: 850; }
+      .project-schedule thead th:first-child { width: 11%; }
+      .project-schedule thead th:nth-child(2) { width: 13%; }
+      .project-schedule tbody th { color: #173d72; background: #f8fbff; text-align: center; }
+      .project-schedule tbody th b, .project-schedule tbody th small, .project-schedule td b, .project-schedule td small { display: block; }
+      .project-schedule tbody th b { font-size: 16.5px; }
+      .project-schedule tbody th small { margin-top: 3px; color: #6b7d98; font-size: 13.31px; font-weight: 700; }
+      .project-schedule td b { color: #243b63; font-size: 15.18px; }
+      .project-schedule td small { margin-top: 5px; color: #64748b; font-size: 13.97px; }
+      .project-schedule td { word-break: keep-all; overflow-wrap: anywhere; }
+      .project-schedule td:nth-child(2) { background: #fbfcff; }
+      .schedule-project-tag { display: inline-block; margin-bottom: 5px; padding: 2px 7px; border-radius: 999px; background: #e5e7eb; color: #475569; font-size: 12.76px; font-weight: 900; }
+      .schedule-project-tag.robo { background: #e6f7ef; color: #087653; }
+      .schedule-project-tag.indicator { background: #eef3ff; color: #2455c7; }
+      .schedule-project-tag.integration { background: #f4edff; color: #6841c7; }
+      @media (max-width: 720px) { .project-staffing-note { grid-template-columns: 1fr; } }
+      @media (max-width: 720px) {
+        .project-schedule-role-guide { grid-template-columns: 1fr 1fr; }
+        .project-schedule-sheet-head { grid-template-columns: 1fr; }
+        .project-schedule-sheet-head b, .project-schedule-sheet-head small { grid-column: 1; text-align: left; }
+        .project-schedule table, .project-schedule thead, .project-schedule tbody, .project-schedule tr, .project-schedule th, .project-schedule td { display: block; width: 100%; }
+        .project-schedule thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        .project-schedule tbody tr { padding: 10px; border-bottom: 1px solid #cfd9e8; }
+        .project-schedule tbody tr:last-child { border-bottom: 0; }
+        .project-schedule tbody th, .project-schedule td { box-sizing: border-box; border: 0; }
+        .project-schedule tbody th { padding: 7px 10px; border-radius: 7px; text-align: left; }
+        .project-schedule tbody th b, .project-schedule tbody th small { display: inline; margin: 0 0 0 7px; }
+        .project-schedule td { padding: 9px 10px; border-bottom: 1px solid #e1e7f0; }
+        .project-schedule td:last-child { border-bottom: 0; }
+        .project-schedule td:nth-child(n + 3)::before { display: block; margin-bottom: 4px; color: #315ff4; font-size: 12.1px; font-weight: 900; }
+        .project-schedule td:nth-child(3)::before { content: "1번 · 금융 Product Owner"; }
+        .project-schedule td:nth-child(4)::before { content: "2번 · PM/아키텍처"; }
+        .project-schedule td:nth-child(5)::before { content: "3번 · 데이터·퀀트/SA"; }
+        .project-schedule td:nth-child(6)::before { content: "4번 · 풀스택 개발"; }
+      }
+      /* 가치평가 관련 단원은 항상 표시합니다. */
+      body[data-day="4"] .lesson-list > #cashCowFlowLesson,
+      body[data-day="4"] .lesson-list > #growthPotentialLesson,
+      body[data-day="4"] .lesson-list > #valuationLesson { display: grid !important; }
+      body[data-day="4"] .lesson-list > #riskAssetsLesson { display: grid; }
+      /* 통합 플랫폼 단원과 실습 엔진 단원은 학습 목록의 아래에 둡니다. */
+      body[data-day="4"] .lesson-list { display: flex; flex-direction: column; }
+      body[data-day="4"] .lesson-list > #noCodeQuantPlatformLesson { order: 9998; }
+      body[data-day="4"] .lesson-list > #leanLesson { order: 10000; }
+      .factor-sim-dialog { width: min(860px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; }
+      .factor-sim-intro { margin: 4px 0 18px; color: #243b63; font-size: 16.5px; font-weight: 650; line-height: 1.7; }
+      .factor-sim-presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+      .factor-sim-presets button { border: 1px solid #bfd0ff; border-radius: 999px; background: #fff; color: var(--blue); padding: 7px 11px; font: 800 14.5px/1 inherit; cursor: pointer; }
+      .factor-sim-presets button.active, .factor-sim-presets button:hover { background: var(--blue); color: #fff; }
+      .factor-sim-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; }
+      .factor-sim-controls, .factor-sim-output { padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #fbfcff; }
+      .factor-sim-control { margin-bottom: 14px; }
+      .factor-sim-control:last-child { margin-bottom: 0; }
+      .factor-sim-control-head { display: flex; justify-content: space-between; gap: 12px; color: #102a5d; font-size: 16.5px; font-weight: 850; }
+      .factor-sim-control small { display: block; margin-top: 3px; color: #38527c; font-size: 15.95px; font-weight: 750; }
+      .factor-sim-control input { width: 100%; accent-color: var(--blue); }
+      .factor-sim-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; margin-bottom: 14px; }
+      .factor-sim-summary article { padding: 12px; border-radius: 9px; background: #fff; border: 1px solid var(--line); }
+      .factor-sim-summary span { display: block; color: #38527c; font-size: 15.95px; font-weight: 850; }
+      .factor-sim-summary strong { display: block; margin-top: 4px; color: var(--ink); font-size: 18px; }
+      .factor-sim-weights { display: grid; gap: 8px; }
+      .factor-sim-weight { display: grid; grid-template-columns: 62px minmax(70px, 1fr) 48px; gap: 8px; align-items: center; color: #102a5d; font-size: 16.5px; font-weight: 850; }
+      .factor-sim-weight-track { height: 12px; overflow: hidden; border-radius: 99px; background: #e8edf6; }
+      .factor-sim-weight-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #315ff4, #6e91ff); }
+      .factor-sim-note { margin: 15px 0 0; padding: 12px 14px; border-left: 4px solid var(--blue); border-radius: 8px; background: #f4f7ff; color: #173d82; font-size: 15.95px; font-weight: 650; line-height: 1.65; }
+      .factor-quality-guide { margin: 12px 0 0; padding: 12px 14px; border: 1px solid #9bd6b8; border-radius: 9px; background: #f0fbf5; color: #15533a; font-size: 15.95px; font-weight: 650; line-height: 1.65; }
+      .factor-quality-guide b { color: #0c5f38; font-size: 16.5px; }
+      .sharpe-formula { display: inline-flex; flex-direction: column; vertical-align: middle; margin: 0 5px; color: var(--ink); font-family: Georgia, serif; font-size: 18px; line-height: 1.15; text-align: center; }
+      .sharpe-formula span:first-child { padding: 0 5px 3px; border-bottom: 1px solid currentColor; }
+      .sharpe-formula span:last-child { padding-top: 3px; }
+      .sharpe-symbol-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 14px 0; }
+      .sharpe-symbol-grid article { padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcff; }
+      .sharpe-symbol-grid code { color: var(--blue); font: 800 17px/1.2 Georgia, serif; }
+      .sharpe-symbol-grid strong { display: block; margin-top: 6px; color: var(--ink); font-size: 15.95px; }
+      .sharpe-symbol-grid p { margin: 4px 0 0; color: var(--muted); font-size: 15.95px; line-height: 1.55; }
+      .sharpe-explanation { margin: 14px 0; padding: 13px 15px; border-left: 4px solid #315ff4; border-radius: 8px; background: #f4f7ff; color: #405572; font-size: 15.95px; line-height: 1.7; }
+      #sharpeFourPointExplanation .sharpe-explanation { padding: 20px; border-left-width: 5px; font-size: 17.6px; line-height: 1.75; }
+      .sharpe-calc-title { display: block; margin-bottom: 13px; color: var(--ink); font-size: 21px; line-height: 1.35; }
+      .sharpe-calc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+      .sharpe-calc-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .sharpe-calc-grid article { padding: 13px 11px; border: 1px solid #cddafb; border-radius: 10px; background: #fff; }
+      .sharpe-calc-grid span { display: block; color: var(--muted); font-size: 14.3px; font-weight: 800; }
+      .sharpe-calc-grid strong { display: block; margin-top: 5px; color: #164eaf; font-size: 22px; line-height: 1.25; letter-spacing: -.02em; }
+      .sharpe-calc-grid small { display: block; margin-top: 6px; color: #526783; font-size: 14.3px; line-height: 1.45; }
+      .sharpe-calc-equation { display: block; margin: 12px 0; padding: 13px 15px; border-radius: 9px; background: #e5edff; color: #123b72; font-size: 19px; font-weight: 800; line-height: 1.55; letter-spacing: -.01em; }
+      .sharpe-calc-equation.result { border: 2px solid #315ff4; background: #fff; color: #123b72; font-size: 24px; text-align: center; }
+      .sharpe-calc-help { margin: 9px 0 0; color: #405572; font-size: 15.95px; line-height: 1.65; }
+      .bollinger-sim { margin: 18px 0; padding: 18px; border: 1px solid #cddafb; border-radius: 14px; background: linear-gradient(135deg, #f7faff, #f5f0ff); }
+      .bollinger-sim h4 { margin: 0; color: var(--ink); font-size: 19px; }
+      .bollinger-sim > p { margin: 6px 0 14px; color: #405572; font-size: 15.95px; line-height: 1.6; }
+      .bollinger-sim-why { padding: 11px 13px; border-left: 4px solid #7c3aed; border-radius: 8px; background: #f1edff; }
+      .bollinger-sim-why b { color: #5130a7; }
+      .bollinger-sim-guide { display: grid; gap: 7px; margin: 10px 0 14px; padding: 0; list-style: none; counter-reset: bollinger-step; }
+      .bollinger-sim-guide li { position: relative; min-height: 34px; padding: 9px 12px 9px 48px; border: 1px solid #dce5f8; border-radius: 9px; background: #fff; color: #405572; font-size: 15.4px; line-height: 1.55; counter-increment: bollinger-step; }
+      .bollinger-sim-guide li::before { position: absolute; top: 9px; left: 11px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #315ff4; color: #fff; font-size: 14.3px; font-weight: 900; content: counter(bollinger-step); }
+      .bollinger-sim-guide b { color: #173d72; }
+      .bollinger-sim-caution { padding: 10px 12px; border-radius: 8px; background: #fff8e8; color: #704d00!important; }
+      .bollinger-sim-line-key { display: flex; flex-wrap: wrap; gap: 7px 15px; margin: 11px 0 0; padding: 9px 11px; border: 1px solid #dce5f8; border-radius: 9px; background: #fff; }
+      .bollinger-sim-line-key span { display: inline-flex; align-items: center; gap: 7px; color: #405572; font-size: 14.85px; font-weight: 800; }
+      .bollinger-sim-line-key i { display: inline-block; width: 24px; height: 4px; border-radius: 999px; }
+      .bollinger-sim-line-key .price-key { background: #eb7b24; }.bollinger-sim-line-key .mean-key { background: #2563eb; }.bollinger-sim-line-key .edge-key { height: 0; border-top: 3px dashed #8b5cf6; border-radius: 0; }.bollinger-sim-line-key .area-key { height: 12px; border: 1px solid #c4b5fd; background: #ede9fe; }
+      .bollinger-sim-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 13px; }
+      .bollinger-sim-presets button { padding: 7px 11px; border: 1px solid #aebff2; border-radius: 999px; background: #fff; color: #214c9c; font: 800 14px/1 inherit; cursor: pointer; }
+      .bollinger-sim-presets button:hover, .bollinger-sim-presets button:focus-visible { border-color: #315ff4; background: #eaf1ff; outline: none; }
+      .bollinger-sim-control { display: grid; grid-template-columns: 150px 1fr 62px; gap: 12px; align-items: center; padding: 12px; border-radius: 10px; background: #fff; }
+      .bollinger-sim-control label { color: #203f7a; font-size: 15.95px; font-weight: 800; }.bollinger-sim-control input { width: 100%; accent-color: #7c3aed; }.bollinger-sim-control output { color: var(--ink); font-size: 19px; font-weight: 850; text-align: right; }
+      .bollinger-sim-chart { display: block; width: 100%; height: 230px; margin-top: 13px; overflow: visible; border: 1px solid #dce5f8; border-radius: 10px; background: #fff; }
+      .bollinger-sim-chart .grid { stroke: #e3eaf7; stroke-width: 1; }.bollinger-sim-chart .axis { fill: #64748b; font-size: 13.2px; }.bollinger-sim-chart .band-area { fill: #8b5cf6; fill-opacity: .13; stroke: none; }.bollinger-sim-chart .upper, .bollinger-sim-chart .lower { fill: none; stroke: #8b5cf6; stroke-width: 2; stroke-dasharray: 5 4; }.bollinger-sim-chart .mean { fill: none; stroke: #2563eb; stroke-width: 2.5; }.bollinger-sim-chart .price { fill: none; stroke: #eb7b24; stroke-width: 3; }.bollinger-sim-chart .last-dot { fill: #eb7b24; stroke: #fff; stroke-width: 2; }.bollinger-sim-chart .line-label { font-size: 12.65px; font-weight: 900; }.bollinger-sim-chart .band-label { fill: #6d3fd1; }.bollinger-sim-chart .mean-label { fill: #1d4ed8; }.bollinger-sim-chart .price-label { fill: #c65300; }.bollinger-sim-chart .breach-guide { stroke: #ef4444; stroke-width: 1.5; stroke-dasharray: 4 4; opacity: .7; }.bollinger-sim-chart .breach-axis { fill: #c2410c; font-weight: 900; }
+      .bollinger-sim-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 13px; }.bollinger-sim-stats article { padding: 10px; border: 1px solid #dce5f8; border-radius: 9px; background: #fff; }.bollinger-sim-stats span { display: block; color: var(--muted); font-size: 13.2px; font-weight: 800; }.bollinger-sim-stats strong { display: block; margin-top: 4px; color: var(--ink); font-size: 18px; }
+      .bollinger-sim-status { margin: 12px 0 0!important; padding: 10px 12px; border-left: 4px solid #7c3aed; border-radius: 8px; background: #f1edff; color: #4c357c!important; font-weight: 750; }
+      .bollinger-real { margin-top: 18px; padding-top: 18px; border-top: 1px solid #cddafb; }
+      .bollinger-real h4 { margin-bottom: 7px; }
+      .bollinger-real-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin: 12px 0; }
+      .bollinger-real-controls label { display: grid; gap: 5px; color: #405572; font-size: 14.85px; font-weight: 800; }
+      .bollinger-real-controls select { width: 100%; padding: 9px 10px; border: 1px solid #b9c9e8; border-radius: 8px; background: #fff; color: #173d72; font: inherit; }
+      .bollinger-real-chart-shell { position: relative; overflow: hidden; border: 1px solid #dce5f8; border-radius: 10px; background: #fff; }
+      .bollinger-real-chart { display: block; width: 100%; height: 320px; }
+      .bollinger-real-chart .grid { stroke: #e3eaf7; stroke-width: 1; }.bollinger-real-chart .axis { fill: #64748b; font-size: 13px; }.bollinger-real-chart .band-area { fill: #8b5cf6; fill-opacity: .13; }.bollinger-real-chart .band-edge { fill: none; stroke: #8b5cf6; stroke-width: 2; stroke-dasharray: 6 4; }.bollinger-real-chart .middle { fill: none; stroke: #2563eb; stroke-width: 2.2; }.bollinger-real-chart .close { fill: none; stroke: #eb7b24; stroke-width: 2.6; }.bollinger-real-chart .focus-line { stroke: #64748b; stroke-width: 1; stroke-dasharray: 4 4; }.bollinger-real-chart .focus-dot { fill: #eb7b24; stroke: #fff; stroke-width: 2; }
+      .bollinger-real-tooltip { position: absolute; z-index: 2; min-width: 170px; padding: 9px 11px; border: 1px solid #b9c9e8; border-radius: 8px; background: rgba(255,255,255,.96); box-shadow: 0 8px 24px rgba(31,50,88,.14); color: #334155; font-size: 13.75px; line-height: 1.55; pointer-events: none; transform: translate(10px,-50%); }
+      .bollinger-real-tooltip b, .bollinger-real-tooltip span { display: block; }.bollinger-real-tooltip b { color: #173d72; }.bollinger-real-tooltip span { white-space: nowrap; }
+      .bollinger-real-status { min-height: 24px; margin: 9px 0 0!important; color: #52647f!important; font-size: 14.85px!important; }
+      .bollinger-date-help { margin: 0 0 9px!important; padding: 10px 12px; border-left: 4px solid #2563eb; border-radius: 8px; background: #f8fbff; color: #405572!important; font-size: 14.85px!important; line-height: 1.6!important; }
+      .bollinger-multiplier-help { margin: 0 0 12px!important; padding: 10px 12px; border-radius: 8px; background: #eef5ff; color: #294c7a!important; }
+      .emh-swot-compare { margin: 18px 0 24px; overflow: hidden; border: 1px solid #cbd9f4; border-radius: 14px; background: #fff; box-shadow: 0 10px 28px rgba(37, 99, 235, .08); }
+      .emh-swot-compare > header { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; padding: 13px 16px; background: linear-gradient(110deg, #173d82, #315ff4); color: #fff; }
+      .emh-swot-compare > header span { font-size: 12.65px; font-weight: 900; letter-spacing: .1em; opacity: .82; }
+      .emh-swot-compare > header strong { font-size: 15.95px; }
+      .emh-swot-compare > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 14px; }
+      .emh-swot-compare article { position: relative; padding: 17px; border: 1px solid #d9e4f8; border-radius: 11px; }
+      .emh-swot-compare .emh-card { background: linear-gradient(145deg, #f6f9ff, #eaf1ff); }
+      .emh-swot-compare .swot-card { border-color: #cae9df; background: linear-gradient(145deg, #f7fffb, #e9f8f2); }
+      .emh-swot-compare .compare-badge { display: inline-flex; min-width: 52px; justify-content: center; padding: 4px 9px; border-radius: 999px; background: #315ff4; color: #fff; font-size: 12.65px; font-weight: 900; letter-spacing: .06em; }
+      .emh-swot-compare .swot-card .compare-badge { background: #16866a; }
+      .emh-swot-compare h4 { margin: 10px 0 5px; color: #173d72; font-size: 17.6px; }
+      .emh-swot-compare .swot-card h4 { color: #11634f; }
+      .emh-swot-compare article > p { margin: 0 0 11px!important; color: #52647f!important; font-size: 14.85px!important; line-height: 1.55!important; }
+      .emh-swot-compare ul { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+      .emh-swot-compare li { position: relative; padding-left: 18px; color: #263c60; font-size: 14.85px; font-weight: 750; line-height: 1.5; }
+      .emh-swot-compare li::before { position: absolute; top: .58em; left: 2px; width: 7px; height: 7px; border-radius: 50%; background: #315ff4; content: ""; }
+      .emh-swot-compare .swot-card li::before { background: #16866a; }
+      .bollinger-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 12px 0; }
+      .bollinger-compare-grid article { padding: 12px; border: 1px solid #dce5f8; border-radius: 9px; background: #fff; color: #405572; font-size: 14.85px; line-height: 1.55; }
+      .bollinger-compare-grid b { display: block; margin-bottom: 4px; color: #173d72; }
+      .bollinger-pair-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 12px 0; }
+      .bollinger-pair-controls .bollinger-sim-control { grid-template-columns: 110px 1fr 58px; }
+      .bollinger-pair-chart { display: block; width: 100%; height: 300px; border: 1px solid #dce5f8; border-radius: 10px; background: #fff; }
+      .bollinger-pair-chart .grid { stroke: #e3eaf7; stroke-width: 1; }.bollinger-pair-chart .divider { stroke: #b9c9e8; stroke-width: 1.5; }.bollinger-pair-chart .axis { fill: #64748b; font-size: 12.8px; }.bollinger-pair-chart .a-line { fill: none; stroke: #eb7b24; stroke-width: 2.6; }.bollinger-pair-chart .b-line { fill: none; stroke: #10a36c; stroke-width: 2.6; }.bollinger-pair-chart .gap-line { fill: none; stroke: #334155; stroke-width: 2.7; }.bollinger-pair-chart .band-area { fill: #8b5cf6; fill-opacity: .13; }.bollinger-pair-chart .band-edge { fill: none; stroke: #8b5cf6; stroke-width: 2; stroke-dasharray: 5 4; }
+      .bollinger-pair-key .a-key { background: #eb7b24; }.bollinger-pair-key .b-key { background: #10a36c; }.bollinger-pair-key .gap-key { background: #334155; }
+      .sharpe-vol-steps { margin: 12px 0; padding-left: 20px; color: #405572; font-size: 15.95px; line-height: 1.7; }
+      .fx-deposit-dialog { width: min(900px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }
+      .fx-deposit-intro { margin: 4px 0 16px; color: var(--muted); font-size: 15.95px; line-height: 1.7; }
+      .fx-product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .fx-product-card { padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #fbfcff; }
+      .fx-product-card h3 { margin: 0 0 8px; color: var(--ink); font-size: 17px; }
+      .fx-product-card p { margin: 0; color: #405572; font-size: 15.95px; line-height: 1.65; }
+      .fx-product-card a { display: inline-block; margin-top: 10px; color: var(--blue); font-size: 15.95px; font-weight: 800; }
+      .fx-sim-panel { margin-top: 16px; padding: 17px; border: 1px solid #b9d6ff; border-radius: 12px; background: #f5f9ff; }
+      .fx-sim-panel h3 { margin: 0 0 5px; color: var(--ink); font-size: 18px; }
+      .fx-sim-panel > p { margin: 0 0 14px; color: var(--muted); font-size: 15.95px; line-height: 1.6; }
+      .fx-sim-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .fx-sim-controls label { display: grid; grid-template-columns: 1fr auto; gap: 6px; color: #405572; font-size: 15.95px; font-weight: 800; }
+      .fx-sim-controls input { grid-column: 1 / -1; width: 100%; accent-color: var(--blue); }
+      .fx-sim-controls output { color: var(--ink); font-size: 16.5px; }
+      .fx-rate-chart { width: 100%; height: 210px; margin-top: 15px; border: 1px solid #d7e5f8; border-radius: 10px; background: #fff; }
+      .fx-sim-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+      .fx-sim-summary article { padding: 12px; border: 1px solid #d7e5f8; border-radius: 9px; background: #fff; }
+      .fx-sim-summary span { display: block; color: var(--muted); font-size: 15.95px; font-weight: 700; }
+      .fx-sim-summary strong { display: block; margin-top: 5px; color: var(--ink); font-size: 18px; }
+      .fx-sim-summary strong.up { color: #b42318; }.fx-sim-summary strong.down { color: #1769e0; }
+      .fx-sim-note { margin: 13px 0 0; color: var(--muted); font-size: 15.95px; line-height: 1.6; }
+      .fx-analysis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0; }
+      .fx-analysis-grid article { padding: 14px; border: 1px solid #d6e2f5; border-radius: 10px; background: #f8faff; }
+      .fx-analysis-grid strong { display: block; margin-bottom: 5px; color: #174b9a; font-size: 16.5px; }
+      .fx-analysis-grid p { margin: 0; color: #405572; font-size: 15.4px; line-height: 1.6; }
+      .fx-sim-controls--full { grid-template-columns: repeat(3, 1fr); }
+      .fx-sim-breakdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+      .fx-sim-breakdown article { padding: 10px; border-radius: 8px; background: #eef4ff; color: #405572; font-size: 14.3px; }
+      .fx-sim-breakdown span, .fx-sim-breakdown strong { display: block; }
+      .fx-sim-breakdown strong { margin-top: 4px; color: #173d82; font-size: 16.5px; }
+      @media (min-width: 761px) {
+        .glossary-modal .fx-deposit-dialog { display: grid; grid-template-columns: minmax(260px, .52fr) minmax(0, 1.7fr); grid-template-rows: auto auto minmax(0, 1fr); align-items: stretch; column-gap: 12px; width: 96vw !important; height: 96vh !important; max-width: none !important; max-height: none !important; padding: 16px 18px !important; overflow: hidden !important; }
+        .fx-deposit-dialog > .glossary-modal__label,
+        .fx-deposit-dialog > h2,
+        .fx-deposit-dialog > .fx-deposit-intro { grid-column: 1 / -1; }
+        .fx-deposit-dialog > h2 { margin: 0 48px 3px 0; font-size: 23px; line-height: 1.2; }
+        .fx-deposit-intro { margin: 0 48px 8px 0; font-size: 13.2px; line-height: 1.4; }
+        .fx-deposit-dialog > .fx-product-grid { grid-column: 1; grid-row: 3; grid-template-columns: 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); align-content: stretch; gap: 8px; min-height: 0; }
+        .fx-deposit-dialog .fx-product-card { display: flex; flex-direction: column; min-height: 0; padding: 12px; }
+        .fx-deposit-dialog .fx-product-card h3 { margin-bottom: 5px; font-size: 16.5px; }
+        .fx-deposit-dialog .fx-product-card p { font-size: 13.75px; line-height: 1.48; }
+        .fx-deposit-dialog .fx-product-card a { margin-top: auto; padding-top: 7px; font-size: 13.75px; }
+        .fx-deposit-dialog > .fx-sim-panel { display: grid; grid-column: 2; grid-row: 3; grid-template-columns: minmax(245px, .8fr) minmax(0, 1.4fr); grid-template-rows: auto auto minmax(185px, 1fr) auto auto auto; align-content: stretch; gap: 7px 10px; min-height: 0; margin: 0; padding: 11px 12px; overflow: hidden; }
+        .fx-deposit-dialog article { width: auto; max-width: none; margin: 0; }
+        .fx-deposit-dialog .fx-sim-panel > h3,
+        .fx-deposit-dialog .fx-sim-panel > p,
+        .fx-deposit-dialog .fx-sim-breakdown,
+        .fx-deposit-dialog .fx-sim-note { grid-column: 1 / -1; }
+        .fx-deposit-dialog .fx-sim-panel > h3 { margin: 0; font-size: 17.6px; line-height: 1.25; }
+        .fx-deposit-dialog .fx-sim-panel > p { margin: 0; font-size: 13.2px; line-height: 1.4; }
+        .fx-deposit-dialog .fx-sim-controls--full { grid-column: 1; grid-row: 3; grid-template-columns: 1fr; gap: 5px; align-content: space-between; }
+        .fx-deposit-dialog .fx-sim-controls label { gap: 2px 6px; font-size: 12.65px; line-height: 1.2; }
+        .fx-deposit-dialog .fx-sim-controls output { font-size: 12.65px; }
+        .fx-deposit-dialog .fx-sim-controls input { height: 15px; margin: 0; }
+        .fx-deposit-dialog .fx-rate-chart { grid-column: 2; grid-row: 3; height: 100%; min-height: 185px; max-height: none; margin: 0; }
+        .fx-deposit-dialog .fx-sim-summary { grid-column: 1 / -1; grid-row: 4; align-items: stretch; gap: 7px; margin: 0; }
+        .fx-deposit-dialog .fx-sim-summary article { align-self: stretch; justify-self: stretch; min-width: 0; min-height: 62px; padding: 9px 11px; }
+        .fx-deposit-dialog .fx-sim-summary article:nth-child(2) { border-color: #b9d6ff; background: #f7fbff; }
+        .fx-deposit-dialog .fx-sim-summary article:nth-child(3) { border-color: #f3cf9c; background: #fffaf2; }
+        .fx-deposit-dialog .fx-sim-summary span { font-size: 13.2px; }
+        .fx-deposit-dialog .fx-sim-summary strong { margin-top: 3px; font-size: 16.5px; line-height: 1.25; overflow-wrap: anywhere; }
+        .fx-deposit-dialog .fx-sim-breakdown { grid-row: 5; align-items: stretch; gap: 6px; margin: 0; }
+        .fx-deposit-dialog .fx-sim-breakdown article { align-self: stretch; justify-self: stretch; min-width: 0; min-height: 50px; padding: 8px 10px; font-size: 12.65px; }
+        .fx-deposit-dialog .fx-sim-breakdown strong { margin-top: 2px; font-size: 14.3px; }
+        .fx-deposit-dialog .fx-sim-note { grid-row: 6; margin: 0; font-size: 12.1px; line-height: 1.4; }
+      }
+      .slippage-visual { max-width: 720px; margin: 18px auto; padding: 14px; border: 1px solid #ffd0c7; border-radius: 12px; background: #fffaf8; }
+      .slippage-visual figcaption { margin-top: 10px; color: var(--muted); font-size: 15.95px; line-height: 1.6; }
+      .slippage-visual figcaption b { color: var(--ink); }
+      .slippage-visual svg { display: block; width: 100%; height: auto; }
+      .inline-term-trigger { margin: 0; padding: 0; border: 0; border-bottom: 1px dashed var(--blue); background: transparent; color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
+      .inline-term-trigger:hover, .inline-term-trigger:focus-visible { color: var(--blue); outline: none; }
+      .sunk-cost-dialog { max-width: 660px; }
+      .sunk-cost-dialog p { color: #3e4c67; line-height: 1.75; }
+      .sunk-cost-compare { width: 100%; margin: 16px 0; border-collapse: collapse; font-size: 15.95px; }
+      .sunk-cost-compare th, .sunk-cost-compare td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+      .sunk-cost-compare th { color: var(--blue); background: #eef3ff; }
+      .forecast-breaktime-dialog { width: min(940px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }
+      .forecast-breaktime-dialog h3 { margin: 24px 0 9px; color: var(--ink); font-size: 19px; }.forecast-breaktime-dialog h3:first-of-type { margin-top: 0; }
+      .forecast-breaktime-dialog p, .forecast-breaktime-dialog li { color: #405572; font-size: 15.95px; line-height: 1.7; }
+      .forecast-breaktime-dialog ul { margin: 8px 0; padding-left: 22px; }.forecast-breaktime-dialog li { margin-bottom: 6px; }
+      .forecast-model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }.forecast-model-card { padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbfcff; }.forecast-model-card b { display: block; color: var(--blue); font-size: 17.6px; }.forecast-model-card p { margin: 7px 0 0; }
+      .forecast-breaktime-table { width: 100%; border-collapse: collapse; margin: 12px 0; background: #fff; }.forecast-breaktime-table th, .forecast-breaktime-table td { padding: 11px; border: 1px solid var(--line); color: #405572; font-size: 15.95px; line-height: 1.55; text-align: left; vertical-align: top; }.forecast-breaktime-table th { color: var(--blue); background: #eef3ff; font-weight: 800; }
+      .forecast-caution { padding: 13px 15px; border-left: 4px solid #e69b00; border-radius: 8px; background: #fff8e8; color: #704d00!important; font-weight: 700; }
+      .present-value-sim { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0 12px; padding: 14px; border: 1px solid #c9d9fb; border-radius: 12px; background: #f6f9ff; }
+      .present-value-sim label { display: grid; grid-template-columns: 1fr auto; gap: 6px; color: #284a87; font-size: 15.4px; font-weight: 800; }
+      .present-value-sim input { grid-column: 1 / -1; width: 100%; box-sizing: border-box; accent-color: var(--blue); }
+      .present-value-sim input[type="number"] { padding: 9px; border: 1px solid #b9cce9; border-radius: 8px; background: #fff; color: var(--ink); font: 700 15px inherit; }
+      .present-value-sim output { color: var(--blue); }
+      .present-value-sim-result { margin: 0 0 16px; padding: 13px 15px; border-radius: 10px; background: #eaf1ff; color: #1c3e7a; line-height: 1.6; }
+      .present-value-sim-result strong { display: block; color: var(--blue); font-size: 21px; }
+      .bok-rate-modal .bok-rate-dialog { display: flex; flex-direction: column; gap: 14px; width: 96vw !important; height: 96vh !important; max-width: none !important; max-height: none !important; padding: 28px 30px 22px !important; overflow-x: hidden !important; overflow-y: auto !important; border: 1px solid #dbe5f4; border-radius: 20px; background: #fff; box-shadow: 0 24px 70px rgba(22, 48, 90, .2); }
+      .bok-rate-dialog [hidden] { display: none !important; }
+      .bok-rate-dialog h2 { margin: -4px 48px 0 0; color: #08285c; font-size: clamp(30px, 2.35vw, 38px); font-weight: 900; line-height: 1.2; letter-spacing: -.025em; }
+      .bok-rate-dialog > .glossary-modal__label { margin-bottom: -8px; color: #164ed3; font-size: 14.3px; font-weight: 900; letter-spacing: .13em; }
+      .bok-rate-intro { margin: 0; color: #2b456b; font-size: 17.6px; font-weight: 650; line-height: 1.65; }
+      .bok-rate-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: 100%; margin: 0; }
+      .bok-rate-summary article { width: auto !important; min-width: 0; justify-self: stretch !important; padding: 14px 17px; border: 1px solid #bfd0ea; border-radius: 12px; background: linear-gradient(145deg, #fbfdff, #edf4ff); text-align: left; box-shadow: 0 3px 12px rgba(45, 81, 135, .07); }
+      .bok-rate-summary span { display: block; color: #334f76; font-size: 15.4px; font-weight: 850; }
+      .bok-rate-summary strong { display: block; margin: 4px 0 3px; color: #08285c; font-size: 27px; line-height: 1.15; }
+      .bok-rate-summary small { color: #4c6282; font-size: 14.3px; font-weight: 650; }
+      .bok-rate-controls { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; justify-content: space-between; padding: 9px 10px; border: 1px solid #dce6f4; border-radius: 12px; background: #f6f9fe; }
+      .bok-rate-view-toggle { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 3px; border: 1px solid #d4dfef; border-radius: 9px; background: #eaf0f9; }
+      .bok-rate-view-toggle button { min-width: 154px; padding: 10px 14px; border: 0; border-radius: 7px; background: transparent; color: #3c5578; font: 850 15px/1.2 inherit; cursor: pointer; }
+      .bok-rate-view-toggle button[aria-pressed="true"] { background: #fff; color: #2458df; box-shadow: 0 2px 7px rgba(31, 52, 89, .14); }
+      .bok-rate-shock-control { display: grid; grid-template-columns: auto minmax(220px, 360px) 84px; gap: 12px; align-items: center; color: #17365f; font-size: 16.5px; font-weight: 900; }
+      .bok-rate-shock-control input { width: 100%; accent-color: #315ff4; cursor: pointer; }
+      .bok-rate-shock-control output { padding: 7px 9px; border-radius: 7px; background: #dfe9ff; color: #0d47d5; font-size: 17.6px; font-weight: 900; text-align: center; }
+      .bok-rate-chart { flex: 0 0 auto; height: clamp(350px, 42vh, 470px); min-height: 350px; padding: 14px 14px 6px; overflow: hidden; border: 1px solid #c8d7eb; border-radius: 14px; background: linear-gradient(180deg, #fff 0%, #f5f9ff 100%); box-shadow: inset 0 1px 0 #fff; }
+      .bok-rate-dialog.is-scenario { gap: 10px; }
+      .bok-rate-dialog.is-scenario .bok-rate-chart { height: clamp(290px, 31vh, 340px); min-height: 290px; }
+      .bok-rate-chart__canvas { width: 100%; height: 100%; min-height: 0; }
+      .bok-rate-events { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; margin: 0; }
+      .bok-rate-events span { min-height: 0 !important; padding: 11px 13px; border: 1px solid #cedced; border-left: 4px solid #315ff4; border-radius: 9px; background: #f4f8ff; color: #2c476d; font-size: 15.4px; font-weight: 650; line-height: 1.5; }
+      .bok-rate-events b { color: #183969; }
+      .bok-rate-note { margin: 0; padding: 12px 15px; border: 1px solid #e7c874; border-left: 5px solid #d78b00; border-radius: 9px; background: #fff8e2; color: #593f08; font-size: 15.4px; font-weight: 650; line-height: 1.6; }
+      .bok-rate-scenario-guide { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0; }
+      .bok-rate-scenario-guide article { padding: 12px 14px; border: 1px solid #c9d9ee; border-radius: 10px; background: #f4f8ff; color: #294568; font-size: 15.4px; font-weight: 650; line-height: 1.5; }
+      .bok-rate-scenario-guide b { display: block; margin-bottom: 3px; color: #0b3a82; font-size: 16.5px; font-weight: 900; }
+      .bok-rate-source { padding-top: 4px; border-top: 1px solid #d9e2ef; color: #405879; font-size: 14.3px; line-height: 1.5; }
+      .bok-rate-source small { font-size: inherit; }
+      .seventh-learning-assessment-modal .glossary-modal__backdrop { background: rgba(13, 22, 48, .52); backdrop-filter: blur(8px); }
+      .glossary-modal .seventh-learning-assessment-dialog { isolation: isolate; display: flex; flex-direction: column; justify-content: flex-start; box-sizing: border-box; width: 96vw !important; height: 96vh !important; min-height: 0 !important; max-width: none !important; max-height: none !important; padding: 54px 6vw 46px; overflow-x: hidden !important; overflow-y: auto !important; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: #8ba5df transparent; border: 2px solid #aabde8; border-radius: 28px; background-color: #f7f9ff; background-image: radial-gradient(circle at 12% 20%, rgba(81, 145, 255, .3) 0 10%, transparent 34%), radial-gradient(circle at 88% 18%, rgba(142, 91, 255, .25) 0 11%, transparent 35%), radial-gradient(circle at 78% 82%, rgba(31, 203, 190, .23) 0 10%, transparent 34%), radial-gradient(circle at 22% 86%, rgba(245, 113, 184, .18) 0 9%, transparent 32%), linear-gradient(135deg, #f8fbff 0%, #f5f2ff 50%, #effcff 100%); background-size: 145% 145%; background-position: 0% 0%; box-shadow: 0 28px 80px rgba(19, 38, 95, .3), inset 0 0 0 1px rgba(255, 255, 255, .75); animation: seventhAssessmentAurora 14s ease-in-out infinite alternate; }
+      .glossary-modal .seventh-learning-assessment-dialog::-webkit-scrollbar { width: 10px; }
+      .glossary-modal .seventh-learning-assessment-dialog::-webkit-scrollbar-track { background: rgba(255, 255, 255, .42); border-radius: 999px; }
+      .glossary-modal .seventh-learning-assessment-dialog::-webkit-scrollbar-thumb { border: 2px solid transparent; border-radius: 999px; background: #8ba5df; background-clip: padding-box; }
+      .seventh-learning-assessment-dialog::before,
+      .seventh-learning-assessment-dialog::after { content: none; }
+      .seventh-learning-assessment-dialog > .glossary-modal__label,
+      .seventh-learning-assessment-dialog > h2,
+      .seventh-learning-assessment-dialog > p { position: relative; z-index: 2; width: min(1120px, 100%); margin-right: auto; margin-left: auto; box-sizing: border-box; }
+      .seventh-learning-assessment-dialog > .glossary-modal__close { z-index: 3; border-color: rgba(88, 112, 190, .28); background: rgba(255, 255, 255, .72); backdrop-filter: blur(10px); }
+      .seventh-learning-assessment-dialog > .glossary-modal__label { margin: 0 auto 8px; color: #315ff4; font-size: 14.3px; font-weight: 900; letter-spacing: .12em; }
+      .seventh-learning-assessment-dialog > h2 { margin-top: 0; margin-bottom: 30px; background: linear-gradient(100deg, #174bc5 0%, #7357e8 48%, #087f91 100%); color: transparent; font-size: clamp(42px, 5vw, 64px); font-weight: 900; line-height: 1.12; letter-spacing: -.04em; -webkit-background-clip: text; background-clip: text; }
+      .seventh-learning-assessment-dialog > p { margin: 14px auto 0; padding: 20px 22px; border: 1px solid rgba(175, 193, 231, .75); border-radius: 16px; background: rgba(255, 255, 255, .72); box-shadow: 0 10px 26px rgba(43, 69, 126, .09); color: #253c63; font-size: clamp(17px, 1.55vw, 20px); font-weight: 650; line-height: 1.75; backdrop-filter: blur(14px); }
+      .seventh-learning-assessment-dialog > p > b:first-child { color: #133b91; font-size: 1.04em; }
+      .seventh-learning-assessment-dialog a { color: #315ff4; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+      @keyframes seventhAssessmentAurora { 0% { background-position: 0% 15%; } 50% { background-position: 55% 45%; } 100% { background-position: 100% 85%; } }
+      .bias-quiz-dialog { width: min(720px, calc(100vw - 40px)); max-height: calc(100vh - 40px); overflow: auto; }.bias-quiz-intro, .bias-quiz-disclaimer { color: #405572; font-size: 16.748px; line-height: 1.7; }.bias-quiz-progress { display: flex; justify-content: space-between; gap: 12px; margin: 18px 0 10px; color: var(--blue); font-size: 16.748px; font-weight: 800; }.bias-quiz-progress i { flex: 1; height: 7px; margin-top: 6px; border-radius: 999px; background: #dce7fb; overflow: hidden; }.bias-quiz-progress i::after { content: ""; display: block; width: var(--bias-progress, 0%); height: 100%; background: var(--blue); transition: width .2s ease; }.bias-quiz-question { margin: 20px 0 14px; color: var(--ink); font-size: 21px; font-weight: 800; line-height: 1.5; }.bias-quiz-answers { display: grid; gap: 9px; }.bias-quiz-answer { width: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: #314562; font: 650 15.75px/1.55 inherit; text-align: left; cursor: pointer; }.bias-quiz-answer:hover, .bias-quiz-answer:focus-visible { border-color: var(--blue); background: #eef3ff; color: var(--ink); outline: none; }.bias-quiz-result { margin-top: 18px; padding: 18px; border: 1px solid #c9d9fb; border-radius: 12px; background: #f6f9ff; }.bias-quiz-result h3 { margin: 0 0 8px; color: var(--blue); font-size: 22.05px; }.bias-quiz-result p { margin: 8px 0 0; color: #405572; font-size: 16.748px; line-height: 1.7; }.bias-quiz-restart { margin-top: 16px; padding: 9px 14px; border: 1px solid var(--blue); border-radius: 999px; background: #fff; color: var(--blue); font: 800 15.225px inherit; cursor: pointer; }
+      .bias-quiz-advisor-title { display: block; margin: 0 52px 10px 0; padding: 9px 13px; border-left: 5px solid #315ff4; border-radius: 8px; background: #eaf1ff; color: #173d82; font-size: 18px; font-weight: 900; line-height: 1.45; }
+      .bias-quiz-dialog { width: min(820px, calc(100vw - 40px)); }
+      .bias-quiz-intro, .bias-quiz-disclaimer { font-size: 17px; }
+      .bias-quiz-progress { font-size: 16.5px; }
+      .bias-quiz-question { font-size: 25px; line-height: 1.55; }
+      .bias-quiz-answer { padding: 15px 17px; font-size: 18.5px; line-height: 1.6; }
+      .bias-quiz-result h3 { font-size: 24px; }
+      .bias-quiz-result p, .bias-quiz-restart { font-size: 17px; }
+      @media (max-width: 640px) { .factor-sim-dialog, .fx-deposit-dialog { width: calc(100vw - 24px); padding: 28px 20px; } .factor-sim-grid, .sharpe-symbol-grid, .sharpe-calc-grid, .sharpe-calc-grid.four, .bollinger-sim-stats, .fx-product-grid, .fx-sim-controls, .fx-sim-summary, .fx-analysis-grid, .fx-sim-breakdown, .present-value-sim { grid-template-columns: 1fr; } .bollinger-sim-control { grid-template-columns: 1fr; gap: 7px; }.bollinger-sim-control output { text-align: left; } #sharpeFourPointExplanation .sharpe-explanation { padding: 16px; } .sharpe-calc-equation { font-size: 17px; } .sharpe-calc-equation.result { font-size: 21px; } .bok-rate-modal .bok-rate-dialog { gap: 11px; width: calc(100vw - 16px) !important; max-height: calc(100vh - 16px); padding: 20px 14px 16px !important; border-radius: 15px; } .bok-rate-dialog h2 { font-size: 27px; } .bok-rate-summary { grid-template-columns: 1fr; gap: 7px; } .bok-rate-summary article { padding: 9px 12px; } .bok-rate-summary strong { font-size: 22px; } .bok-rate-controls { align-items: stretch; flex-direction: column; } .bok-rate-view-toggle { width: 100%; } .bok-rate-view-toggle button { min-width: 0; font-size: 15.4px; } .bok-rate-shock-control { grid-template-columns: auto 1fr 78px; gap: 7px; } .bok-rate-chart, .bok-rate-dialog.is-scenario .bok-rate-chart { height: 410px; min-height: 410px; padding: 8px 4px 2px; } .bok-rate-events, .bok-rate-scenario-guide { grid-template-columns: 1fr; } .bok-rate-source { display: none; } }
+      @media (max-width: 640px) { .bollinger-real-controls, .bollinger-compare-grid, .bollinger-pair-controls, .emh-swot-compare > div { grid-template-columns: 1fr; gap: 7px; } .bollinger-real-chart { height: 280px; } .bollinger-pair-controls .bollinger-sim-control { grid-template-columns: 1fr; } }
+      @media (max-width: 640px) { .glossary-modal .seventh-learning-assessment-dialog { width: calc(100vw - 12px) !important; height: calc(100vh - 12px) !important; max-height: calc(100vh - 12px) !important; padding: 42px 18px 24px; border-radius: 20px; } .seventh-learning-assessment-dialog > h2 { margin-bottom: 18px; font-size: 38px; } .seventh-learning-assessment-dialog > p { padding: 16px; font-size: 16.5px; line-height: 1.65; } }
+      @media (prefers-reduced-motion: reduce) { .glossary-modal .seventh-learning-assessment-dialog { animation: none; } }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    
+    
+    
+    
+    
+    
+    
+  <link rel="stylesheet" href="https://www.edumgt.co.kr/css/common.css?v=20261012-common-3" />
+  
+<style>body[data-day="4"] .lesson-list > .lesson{display:grid!important}</style><style>
+.lesson-content,.lesson-body,#day4ProjectSchedule{min-width:0;max-width:100%}
+.lesson-body{overflow-wrap:anywhere}
+#day4ProjectSchedule{overflow-x:auto}
+.day-appbar{max-width:100%;min-width:0;overflow:hidden}
+.day-brand-nav{min-width:0;max-width:100%;overflow-x:auto}
+@media(max-width:640px){.lesson-list>.lesson{grid-template-columns:minmax(0,1fr)}.lesson-body table{display:block;max-width:100%;overflow-x:auto}}
+</style><script defer src="/static/assets/compact-typography.js?v=20261022-92"></script>
+</head>
+  <body data-day="4">
+    <header class="day-appbar">
+      <button
+        class="day-panel-toggle"
+        type="button"
+        id="dayMenuButton"
+        aria-controls="dayOffcanvas"
+        aria-expanded="false"
+      >
+        <i class="fa-solid fa-bars"></i><span>학습</span>
+      </button>
+      <a class="day-kms-title" href="/?view=learn">금융과 행동</a>
+      <div
+        class="day-brand-nav"
+        role="navigation"
+        aria-label="학습 서비스 메뉴"
+      >
+        <a href="/?view=home"><i class="fa-solid fa-house"></i> 홈</a
+        ><a href="/?view=stocks"
+          ><i class="fa-solid fa-building-columns"></i> 종목보기</a
+        ><a href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a
+        ><a href="/?view=backtest"
+          ><i class="fa-solid fa-flask"></i> LEAN 백테스트</a
+        ><a href="/?view=calendar"
+          ><i class="fa-solid fa-calendar-days"></i> 캘린더</a
+        >
+      </div>
+      <div class="day-header-actions"></div>
+    </header>
+    <div class="day-backdrop" id="dayBackdrop"></div>
+    <aside class="day-offcanvas" id="dayOffcanvas" aria-label="학습 메뉴">
+      <header class="day-offcanvas-header"><div class="day-offcanvas-title-row"><h2 class="day-offcanvas-title"><i class="fa-solid fa-chart-pie"></i> Finance RAG Lab</h2><button class="day-offcanvas-close" type="button" id="dayMenuClose" aria-label="학습 메뉴 닫기"><i class="fa-solid fa-xmark"></i></button></div><p class="day-offcanvas-subtitle">금융상품 · 실물자산 · 생활거래 이해 · 실습</p></header>
+      <nav class="day-offcanvas-nav" aria-label="4일 이론 학습"><p class="day-offcanvas-nav-label">4일 이론 학습</p><a class="day-offcanvas-link" href="/static/days/01.html"><span class="day-offcanvas-day">1일차</span> 선물과 옵션</a><a class="day-offcanvas-link" href="/static/days/02.html"><span class="day-offcanvas-day">2일차</span> 펀드 · ETF</a><a class="day-offcanvas-link" href="/static/days/03.html"><span class="day-offcanvas-day">3일차</span> 채권 · 코인</a><a class="day-offcanvas-link" href="/static/days/04.html"><span class="day-offcanvas-day">4일차</span> 자산배분, 퀀트</a><a class="day-offcanvas-link active" aria-current="page" href="/static/project-schedule.html" style="text-decoration:none"><i class="fa-solid fa-calendar-days"></i> 프로젝트 일정</a><a class="day-offcanvas-link" href="/static/project2-presentation.html"><span class="day-offcanvas-day">발표</span> 프로젝트2 발표</a><a class="day-offcanvas-link" href="/static/project3-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트3 발표</a></nav>
+      <footer class="site-footer-unified">© 2026 (주)에듀엠지티 All rights reserved.</footer>
+    </aside>
+    <nav aria-label="4일 학습 목차">
+      <a class="brand" href="/static/days/index.html">4일 금융 이론</a>
+      <div class="day-nav">
+        <a class="" href="/static/days/01.html"
+          ><b>01</b><span>선물과 옵션</span></a
+        ><a class="" href="/static/days/02.html"
+          ><b>02</b><span>펀드 · ETF</span></a
+        ><a class="" href="/static/days/03.html"
+          ><b>03</b><span>채권 · 코인</span></a
+        ><a class="active" href="/static/days/04.html"
+          ><b>04</b><span>자산배분, 퀀트</span></a
+        >
+      </div>
+    </nav>
+    <main id="app">
+      <article>
+        <header class="lesson-head">
+          <div class="lesson-head-line">
+            <h1>프로젝트 일정</h1>
+            <p>프로젝트 목표 기능, 개발 일정과 산출물, 수행 시 유의사항을 확인합니다.</p>
+          </div>
+        </header>
+        <section class="lesson-list"><section class="lesson" id="roboAdvisorProjectLesson">
+            <span>PROJECT 01</span>
+            <div class="lesson-content">
+              <h2>나만의 로보 어드바이저 개발 및 성과 검증 프로젝트</h2>
+              <div class="lesson-body">
+                <p style="color: var(--blue); font-weight: 800;"><strong>UI/UX 필요 요소:</strong> 투자성향진단 · 시각적 포트폴리오 · 시뮬레이션 · 목표 수익률 모의 · 리밸런싱</p>
+                <ul>
+                  <li>
+                    <strong>목표 기능:</strong> AI 기반의 자동화 로보 어드바이저 모델 개발
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 주식·금융·경제 기본 용어사전과 연관 개념 탐색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/domain-rag-lab" target="_blank" rel="noopener noreferrer">domain-rag-lab</a>와 <a href="https://github.com/edumgt/investment-analysis" target="_blank" rel="noopener noreferrer">investment-analysis</a>의 통합 및 AWS EC2 서버 배포</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 가격·거래량·재무·뉴스 등 투자 자료 수집·분류·전처리·검색<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/python-crawling-lab" target="_blank" rel="noopener noreferrer">python-crawling-lab</a> 등을 활용한 크롤링 및 적재</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 근거 문서와 출처를 포함한 Retrieval-Augmented Generation (RAG) 질의응답<span class="implementation-detail">기술스택 및 구현방안: Amazon Bedrock 또는 Ollama + GPU · VectorDB · FastAPI</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 4:</strong> 금융정보의 갱신일·문서 버전·캘린더 일정 관리 및 정기 배치 업무 실행<span class="implementation-detail">기술스택 및 구현방안: RDBMS · Amazon EventBridge Scheduler · AWS Batch</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 5:</strong> Explainable Artificial Intelligence (XAI)를 활용해 투자 추천 이유를 사람이 이해하기 쉬운 말로 설명<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Processing Jobs (SHAP) · AG Grid · ApexCharts</span></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <strong>목표 기능:</strong> 패턴 인식 기법을 활용한 주식 시장 예측 프로젝트
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> OHLCV 데이터로 이동평균·RSI·MACD·볼린저 밴드·거래량 지표 계산<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/docker-class" target="_blank" rel="noopener noreferrer">docker-class</a> · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a> · FastAPI</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 캔들 패턴·지지선·저항선·돌파·골든크로스 등 차트 패턴 탐지<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI Training Jobs · ECR + Lambda + API GW · EC2</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 분봉·일봉·주봉의 기술적 지표를 종합해 매수·매도·관망 신호와 신뢰도 산출<span class="implementation-detail">기술스택 및 구현방안: Amazon SageMaker AI 실시간 추론 엔드포인트 · RDBMS · FastAPI</span></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <strong>목표 기능:</strong> 자산배분모델을 활용한 포트폴리오 최적화, 주식 스크리닝을 통한 종목 선정 등 직접 수행
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 월·분기·연 등 정해진 주기가 도래하면 실행하는 시간 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · Apache Airflow</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 현재 비중이 목표 비중의 허용 이탈률을 초과하면 실행하는 이탈률 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: FastAPI · AG Grid · Vanilla JS</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 입·출금이나 배당금이 발생하면 새 현금흐름을 활용해 실행하는 입출금·배당금 기반 리밸런싱<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · AG Grid</span></li>
+                    </ol>
+                  </li>
+                  <li>
+                    <strong>목표 기능:</strong> 구축한 퀀트 모델의 결과를 해석해보고 자체적으로 모의 투자 의사결정 진행
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 거래비용·슬리피지를 반영한 수익률, MDD, 샤프 비율 등 성과지표 분석<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/edumgt/stock-coin-trade" target="_blank" rel="noopener noreferrer">stock-coin-trade</a> · FastAPI · ApexCharts</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 퀀트 신호를 매수·매도·보유 의견으로 변환<span class="implementation-detail">기술스택 및 구현방안: <a href="https://github.com/quantconnect" target="_blank" rel="noopener noreferrer">QuantConnect</a> · FastAPI · Vanilla JS</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 모의 주문 체결 및 포트폴리오 운용<span class="implementation-detail">기술스택 및 구현방안: RDBMS · FastAPI · ECR + Lambda + API GW</span></li>
+                    </ol>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="나만의 로보 어드바이저 개발 및 성과 검증 프로젝트 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section><section class="lesson" id="indicatorProjectLesson">
+            <span>PROJECT 02</span>
+            <div class="lesson-content">
+              <h2>나만의 투자 인디케이터 개발 및 성과 검증 프로젝트</h2>
+              <div class="lesson-body">
+                <p style="color:#315ff4;font-weight:800"><strong>UI/UX 필요 요소:</strong> 전략 설정 · 지표 차트 · 백테스트 · 성과 대시보드 · 자동매매 모니터링</p>
+                <ul>
+                  <li><strong>목표 기능:</strong> 기본적인 인디케이터(MA, RSI 등)로 전략 설계
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> OHLCV 데이터로 이동평균·RSI·MACD·볼린저 밴드 등 기본 지표 계산<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a> · 시장 데이터 처리 플랫폼</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 지표 조건을 조합해 매수·매도·손절·익절 및 포지션 크기 규칙 설계<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 포트폴리오 규칙 엔진 · RDBMS</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 지표 기간과 임계값 조합을 백테스트해 기준 전략 선정<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 전략 최적화 플랫폼 · ApexCharts</span></li>
+                    </ol>
+                  </li>
+                  <li><strong>목표 기능:</strong> 커스텀 인디케이터 개발
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 가격·거래량·변동성 지표를 결합하고 정규화한 커스텀 산식 정의<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 피처 엔지니어링 파이프라인 · <a href="https://github.com/edumgt/lumina-invest" target="_blank" rel="noopener noreferrer">lumina-invest</a></span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 미래 데이터 참조를 방지하고 실시간 갱신과 단위 테스트가 가능한 지표 함수 구현<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 자동화 테스트 플랫폼 · GitHub Actions</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 커스텀 지표를 API로 제공하고 계산 결과와 버전을 저장해 재사용<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · FastAPI · GitHub</span></li>
+                    </ol>
+                  </li>
+                  <li><strong>목표 기능:</strong> 트레이딩뷰 플랫폼으로 성과 확인 및 코딩 실습(PineScript)
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> Pine Script로 지표·전략을 구현하고 차트에 신호와 보조선을 표시<span class="implementation-detail">기술스택 및 구현방안: Pine Script · TradingView · GitHub</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> Strategy Tester로 1차 성과를 확인하고 QuantConnect LEAN으로 교차 검증<span class="implementation-detail">기술스택 및 구현방안: TradingView Strategy Tester · Pine Script · QuantConnect LEAN</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> 조건 충족 시 알림과 Webhook으로 투자 신호 전달<span class="implementation-detail">기술스택 및 구현방안: TradingView Webhook · API GW · Lambda</span></li>
+                    </ol>
+                  </li>
+                  <li><strong>목표 기능:</strong> QuantConnect LEAN을 통한 성과 검증
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> 동일한 데이터·기간·수수료 조건으로 QuantConnect LEAN 백테스트 수행<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · LEAN CLI · GitHub</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 누적수익률·Maximum Drawdown (MDD)·샤프 비율·승률 등 성과지표 분석<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 포트폴리오 성과 분석 플랫폼 · ApexCharts</span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> TradingView와 QuantConnect LEAN 결과를 비교해 신호·체결·성과 차이 검증<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 자동화 검증 플랫폼 · GitHub Actions</span></li>
+                    </ol>
+                  </li>
+                  <li><strong>목표 기능:</strong> 증권사 연동(API 활용)을 통한 자동화 모델 구현
+                    <ol>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 1:</strong> QuantConnect LEAN 투자 신호를 증권사 API의 계좌·시세·주문 기능과 연결<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · 증권사 Open API · FastAPI<br>연동 API 참고: <a href="https://www.kbsec.com/go.able?linkcd=m06240001" target="_blank" rel="noopener noreferrer">KB증권 Open API</a> · <a href="https://github.com/koreainvestment/open-trading-api" target="_blank" rel="noopener noreferrer">한국투자증권 Open Trading API</a> · <a href="https://alpaca.markets/support" target="_blank" rel="noopener noreferrer">Alpaca Support</a></span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 2:</strong> 모의투자 주문과 중복 주문 방지·손실 한도·비상 정지 등 위험관리 적용<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · Redis · Amazon CloudWatch<br>연동 API 참고: <a href="https://www.kbsec.com/go.able?linkcd=m06240001" target="_blank" rel="noopener noreferrer">KB증권 Open API</a> · <a href="https://github.com/koreainvestment/open-trading-api" target="_blank" rel="noopener noreferrer">한국투자증권 Open Trading API</a> · <a href="https://alpaca.markets/support" target="_blank" rel="noopener noreferrer">Alpaca Support</a></span></li>
+                      <li class="has-implementation-detail"><strong>목표 기능의 세부 기능 3:</strong> QuantConnect LEAN 전략의 실행 일정·배포·로그·장애 알림을 자동화<span class="implementation-detail">기술스택 및 구현방안: QuantConnect LEAN · Amazon EC2 · Amazon CloudWatch<br>연동 API 참고: <a href="https://www.kbsec.com/go.able?linkcd=m06240001" target="_blank" rel="noopener noreferrer">KB증권 Open API</a> · <a href="https://github.com/koreainvestment/open-trading-api" target="_blank" rel="noopener noreferrer">한국투자증권 Open Trading API</a> · <a href="https://alpaca.markets/support" target="_blank" rel="noopener noreferrer">Alpaca Support</a></span></li>
+                    </ol>
+                  </li>
+                </ul>
+                <section class="technology-stack-summary" aria-labelledby="indicatorTechnologyStackTitle">
+                  <h3 id="indicatorTechnologyStackTitle">기술스택</h3>
+                  <p>로보 어드바이저와 투자 인디케이터 프로젝트에 사용되는 기술을 역할별로 통합한 구성입니다.</p>
+                  <div class="implementation-detail aws-operations-stack" aria-label="AWS 운영 기술스택"><strong>AWS 운영 기술스택:</strong><span><b>백업·복구:</b> AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</span><span><b>보안:</b> AWS Secrets Manager · AWS KMS · AWS WAF</span><span><b>관제:</b> Amazon CloudWatch · AWS CloudTrail · Amazon SNS</span><span><b>이관:</b> AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</span></div>
+                  <div class="technology-stack-table-wrap">
+                    <table>
+                      <thead><tr><th scope="col">종류</th><th scope="col">기능</th><th scope="col">용도</th><th scope="col">요소기술</th></tr></thead>
+                      <tbody>
+                        <tr><th scope="row">금융 데이터 수집·처리</th><td>가격·거래량·재무·뉴스와 OHLCV 수집, 정제, 정규화</td><td>지표 계산과 전략 검증에 사용할 시계열·비정형 데이터 구축</td><td>python-crawling-lab · 시장 데이터 처리 플랫폼 · 피처 엔지니어링 파이프라인</td></tr>
+                        <tr><th scope="row">데이터·지식 저장</th><td>계산 결과, 전략 버전, 포트폴리오 이력과 문서 임베딩 저장</td><td>재현 가능한 분석, 투자 이력 조회, 관련 지식 검색</td><td>RDBMS · VectorDB · Redis</td></tr>
+                        <tr><th scope="row">인디케이터·퀀트 엔진</th><td><span class="no-glossary-link">MA·RSI·MACD·볼린저 밴드와 커스텀 지표 계산</span></td><td>매수·매도·관망 신호 및 신뢰도 산출</td><td>QuantConnect LEAN · LEAN CLI · TA-Lib · lumina-invest</td></tr>
+                        <tr><th scope="row">AI·패턴 분석·XAI</th><td>차트 패턴 학습·추론과 추천 근거 설명</td><td>캔들·돌파·골든크로스 탐지 및 모델 해석</td><td>Amazon SageMaker AI Training Jobs · 실시간 추론 엔드포인트 · Processing Jobs (SHAP)</td></tr>
+                        <tr><th scope="row">RAG·생성형 AI</th><td>금융 지식 검색과 출처 기반 질의응답</td><td>용어·시장 자료 탐색 및 투자 추천 이유 보강</td><td>domain-rag-lab · investment-analysis · Amazon Bedrock · Ollama + GPU · VectorDB</td></tr>
+                        <tr><th scope="row">전략·포트폴리오</th><td>매매·포지션 규칙, 자산배분, 리밸런싱과 위험 한도 관리</td><td>전략 실행 기준과 포트폴리오 운용 자동화</td><td>QuantConnect LEAN · 포트폴리오 규칙 엔진 · 전략 최적화 플랫폼 · Redis</td></tr>
+                        <tr><th scope="row">백테스트·성과 검증</th><td>수수료·슬리피지를 반영한 교차 검증과 성과 측정</td><td>수익률·MDD·샤프 비율·승률 및 전략 차이 분석</td><td>TradingView Strategy Tester · QuantConnect LEAN · stock-coin-trade · 포트폴리오 성과 분석 플랫폼 · 자동화 검증 플랫폼</td></tr>
+                        <tr><th scope="row">차트·UI/UX</th><td>지표·패턴·신호 시각화와 데이터 그리드 제공</td><td>전략 설정, 성과 대시보드, 자동매매 모니터링</td><td>TradingView · Pine Script · ApexCharts · AG Grid · Vanilla JS</td></tr>
+                        <tr><th scope="row">백엔드·API</th><td>지표 계산, 전략, 저장소와 외부 서비스를 API로 연결</td><td>웹 화면·분석 엔진·주문 시스템 간 통신</td><td>FastAPI · Amazon API Gateway (API GW) · TradingView Webhook</td></tr>
+                        <tr><th scope="row">증권사·주문 연동</th><td>계좌·시세·주문 조회와 모의 주문 체결</td><td>신호를 주문으로 변환하고 중복 주문·손실 한도·비상 정지 적용</td><td>증권사 Open API · KB증권 Open API · 한국투자증권 Open Trading API · Alpaca</td></tr>
+                        <tr><th scope="row">워크플로·품질 자동화</th><td>정기 배치, 실행 일정, 단위 테스트와 지속적 검증</td><td>데이터 갱신과 전략 실행·검증의 반복 자동화</td><td>Apache Airflow · Amazon EventBridge Scheduler · AWS Batch · GitHub Actions · 자동화 테스트 플랫폼</td></tr>
+                        <tr><th scope="row">배포·컴퓨팅</th><td>애플리케이션과 모델의 서버·컨테이너·서버리스 배포</td><td>개발 환경 재현, API 제공, 학습·추론 운영</td><td>Amazon EC2 · Docker · docker-class · Amazon ECR · AWS Lambda · Ollama + GPU</td></tr>
+                        <tr><th scope="row">소스·버전 관리</th><td>코드, 지표 산식과 전략 버전 추적</td><td>협업, 변경 이력 관리와 결과 재현</td><td>GitHub · GitHub Actions · domain-rag-lab · investment-analysis · python-crawling-lab · lumina-invest · stock-coin-trade</td></tr>
+                        <tr><th scope="row">백업·복구</th><td>데이터·객체 버전 백업과 장기 보관</td><td>장애·오삭제 시 데이터와 서비스 복원</td><td>AWS Backup · Amazon S3 Versioning · Amazon S3 Glacier</td></tr>
+                        <tr><th scope="row">보안</th><td>비밀정보·암호화 키 관리와 웹 공격 차단</td><td>API 키·증권계좌 연동 정보 및 서비스 보호</td><td>AWS Secrets Manager · AWS KMS · AWS WAF</td></tr>
+                        <tr><th scope="row">관제·알림</th><td>로그·지표·감사 추적과 장애 알림</td><td>전략 실행, 주문, 인프라 상태 모니터링</td><td>Amazon CloudWatch · AWS CloudTrail · Amazon SNS</td></tr>
+                        <tr><th scope="row">데이터·시스템 이관</th><td>데이터베이스·파일·서버 마이그레이션</td><td>기존 투자 데이터와 실행 환경의 AWS 이전</td><td>AWS Database Migration Service (DMS) · AWS DataSync · AWS Application Migration Service (MGN)</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="technology-stack-interview-note"><strong>요즘 IT 직원 채용 시 인터뷰의 첫 번째 질문은 “코딩을 잘합니까?”, “무엇을 할 줄 압니까?”가 아니라 “프로젝트에서 본인의 애티튜드는 어떠했나요?”, “어떤 솔루션을 사용해 보셨나요?”입니다.</strong></p>
+                  <div class="project-staffing-note" aria-label="개발 인력 산정 및 AI 기반 수행안">
+                    <strong>개발 인력 산정 및 AI 기반 수행안</strong>
+                    <article><b>일반 개발 방식 · 총 36MM</b><span>위 솔루션을 구현하려면 6개월 동안 월평균 6명의 개발 인력이 필요합니다. 즉, 6명 × 6개월 = 36MM(Man-Month) 기준입니다.</span></article>
+                    <article><b>AI 기반 개발 방식 · 총 4MM</b><span>AI 코딩·문서화·테스트·자동화 도구를 적극 활용하면 동일한 구현 범위를 4명의 인력이 1개월 안에 수행할 수 있다는 의미입니다. 즉, 4명 × 1개월 = 4MM 기준입니다.</span></article>
+                  </div>
+                  <section class="project-deliverables" aria-labelledby="indicatorProjectDeliverablesTitle">
+                    <h4 id="indicatorProjectDeliverablesTitle">프로젝트 산출물 및 진행 도구</h4>
+                    <p>해당 솔루션을 계획하고 개발·검증·배포·운영하기 위해 단계별로 작성하고 관리할 문서와 협업 도구입니다.</p>
+                    <div class="project-deliverables-table-wrap">
+                      <table>
+                        <thead><tr><th scope="col">구분</th><th scope="col">주요 산출물</th><th scope="col">목적</th><th scope="col">프로젝트 진행 도구</th></tr></thead>
+                        <tbody>
+                          <tr><th scope="row">착수·과업 정의</th><td>과업지시서 · 프로젝트 헌장 · 범위기술서 · 착수보고서 · 이해관계자 목록</td><td>목표, 범위, 수행 조직, 일정, 예산, 인수 기준과 책임 범위 확정</td><td>Confluence · Markdown</td></tr>
+                          <tr><th scope="row">요구사항 관리</th><td>요구사항정의서 · 사용자 스토리 · 유스케이스 · 요구사항 추적표(RTM) · 인수 기준</td><td>기능·비기능 요구사항을 식별하고 구현·시험 결과까지 추적</td><td>JIRA · Confluence · Markdown · Google Sheets</td></tr>
+                          <tr><th scope="row">일정·업무 관리</th><td>WBS · 마일스톤 · 간트차트 · 스프린트 계획 · 백로그 · 주간보고서</td><td>작업을 세분화하고 담당자, 선후행 관계, 일정과 진척률 관리</td><td>JIRA 칸반보드 · JIRA Scrum Board · Roadmap · Excel</td></tr>
+                          <tr><th scope="row">화면·서비스 설계</th><td>정보구조(IA) · 화면흐름도 · 와이어프레임 · UI 명세서 · 프로토타입</td><td>전략 설정, 차트, 백테스트, 성과 대시보드의 사용자 흐름 정의</td><td>Figma · FigJam · draw.io · Mermaid</td></tr>
+                          <tr><th scope="row">데이터 설계</th><td>ERD · 테이블 명세서 · 데이터 사전 · 코드 정의서 · 데이터 흐름도 · 보존정책</td><td>시장 데이터, 지표, 전략, 주문, 포트폴리오 데이터의 구조와 관계 정의</td><td>ERDCloud · dbdiagram.io · DBeaver · draw.io · Mermaid</td></tr>
+                          <tr><th scope="row">시스템 설계</th><td>시스템 아키텍처 · 애플리케이션 구성도 · 인프라·네트워크 구성도 · 배포 구성도 · ADR</td><td>프런트엔드, API, 분석 엔진, 저장소, AWS와 외부 연동 구조 확정</td><td>draw.io · Mermaid · Lucidchart · AWS Architecture Icons · Confluence</td></tr>
+                          <tr><th scope="row">인터페이스 설계</th><td>API 명세서 · 인터페이스 정의서 · 데이터 매핑서 · Webhook·증권사 연동 명세</td><td>서비스 간 요청·응답, 인증, 오류 코드와 데이터 교환 규칙 정의</td><td>OpenAPI/Swagger · Postman · FastAPI Docs</td></tr>
+                          <tr><th scope="row">개발·형상 관리</th><td>소스코드 · 브랜치 전략 · 코딩 표준 · 변경이력 · 코드 리뷰 기록 · 기술 의사결정 기록</td><td>기능 구현, 버전 추적, 변경 통제와 협업 품질 확보</td><td>GitHub · GitHub Issues · Pull Requests · GitHub Projects</td></tr>
+                          <tr><th scope="row">시험·성과 검증</th><td>테스트 계획서 · 테스트 케이스 · 단위·통합·인수시험 결과서 · 백테스트 보고서 · 결함대장</td><td>기능 정확성, 성능, 보안, 전략 성과와 재현 가능성 검증</td><td>pytest · GitHub Actions · Postman · QuantConnect LEAN · TradingView Strategy Tester · JIRA</td></tr>
+                          <tr><th scope="row">배포·운영·인수</th><td>CI/CD 명세 · 배포계획서 · 운영 매뉴얼 · 장애 대응 절차서 · 백업·복구 계획 · 릴리스 노트 · 완료보고서</td><td>안전한 배포, 모니터링, 장애 복구, 운영 이관과 최종 검수 지원</td><td>GitHub Actions · Docker · AWS Management Console · Amazon CloudWatch · JIRA Service Management</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+                  <aside class="project-progress-cautions" aria-label="프로젝트 진행 중 유의사항">
+                    <h3>프로젝트 진행 중 유의사항</h3>
+                    <ol>
+                      <li>각 <b>R&amp;R</b>은 한 사람이 독점하지 않고, <b>주담당·보조담당 2인 이상</b>으로 역할을 배분합니다.</li>
+                      <li>팀원이 취업 등의 사유로 이탈하면 남은 팀원이 해당 역할과 업무를 대체합니다.</li>
+                      <li>팀원 이탈이 많은 팀은 프로젝트 진행 중 타 팀과 협의하여 팀을 <b>Merge(통합)</b>합니다.</li>
+                      <li>팀별 예상 사업비와 실제 발생 비용은 <b>이스트소프트 보조강사</b> 과 보전 방안을 협의합니다.</li>
+                      <li>매일 <b>오전 9:00~9:15</b>에 팀별 추천 인원이 진행사항을 보고하고, 팀별 스크럼 회의를 진행합니다.</li>
+                      <li>매일 퇴근 전 <b>오후 5:30~5:50</b>에 팀별 추천 인원이 진행사항, 리스크 및 명일 계획을 보고합니다.</li>
+                      <li><b>9월 30일까지</b> 팀을 구성하는데, 잔여 인력은 <b>10월 1일</b> 인원수 모자른 팀에 자동 배치됩니다.</li>
+                    </ol>
+                  </aside>
+                  <div id="day4ProjectSchedule"></div>
+                </section>
+              </div>
+            </div>
+            <button class="lesson-toggle" type="button" data-lesson-toggle aria-expanded="true" aria-label="나만의 투자 인디케이터 개발 및 성과 검증 프로젝트 내용 접기" title="내용 접기"><span aria-hidden="true">⌃</span></button>
+          </section></section></article></main>
+<script src="/static/assets/day4-project-schedule.js?v=20260919-100-120-hours"></script>
+<script>
+const schedule = document.getElementById('day4ProjectSchedule');
+if (schedule && window.Day4ProjectSchedule) schedule.innerHTML = window.Day4ProjectSchedule.render();
+document.querySelectorAll('[data-lesson-toggle]').forEach(button => button.addEventListener('click', () => {
+  const collapsed = button.closest('.lesson').classList.toggle('is-collapsed');
+  button.setAttribute('aria-expanded', String(!collapsed));
+  button.title = collapsed ? '내용 펼치기' : '내용 접기';
+}));
+</script>
+<script src="/static/assets/day4-deliverable-samples.js?v=20261007-6"></script>
+<script src="/static/assets/day4-deliverable-examples.js?v=20261007-6"></script>
+<script src="/static/days/assets/app-shell.js"></script>
+<script src="/static/assets/audit-navigation.js?v=compact-gnb1"></script>
+<script src="/static/assets/modal-fit.js?v=20260905-simulator-specific-hints"></script>
+<script src="/static/assets/click-logger.js?v=20260905"></script>
+</body></html>

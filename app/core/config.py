@@ -15,6 +15,10 @@ class Settings(BaseSettings):
     postgres_user: str = "raguser"
     postgres_password: str = "ragpass"
 
+    project3_postgres_db: str = "project3db"
+    project3_postgres_user: str = "project3_app"
+    project3_postgres_password: str = ""
+
     redis_host: str = "localhost"
     redis_port: int = 6379
 

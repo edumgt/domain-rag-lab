@@ -1,5 +1,6 @@
 (function () {
   'use strict';
+  const presentationApi = document.body.dataset.presentationApi || '/presentation';
   const panel = document.getElementById('learningPanel');
   const open = document.getElementById('openLeftPanel');
   const close = document.getElementById('closeLeftPanel');
@@ -59,7 +60,7 @@
     return node;
   }
   async function request(path, options) {
-    const response = await fetch('/presentation/' + path, {cache: 'no-store', ...options});
+    const response = await fetch(presentationApi + '/' + path, {cache: 'no-store', ...options});
     if (!response.ok) {
       const data = await response.json().catch(() => ({}));
       throw new Error(typeof data.detail === 'string' ? data.detail : '요청에 실패했습니다. 잠시 후 다시 시도해주세요.');
@@ -335,11 +336,11 @@
     const status = document.getElementById('evaluationStatus');
     button.disabled = true; button.textContent = 'PDF 생성 중…';
     try {
-      const response = await fetch('/presentation/evaluations/report.pdf', {cache:'no-store'});
+      const response = await fetch(presentationApi + '/evaluations/report.pdf', {cache:'no-store'});
       if (!response.ok) throw new Error('보고서 생성에 실패했습니다. 잠시 후 다시 시도해주세요.');
       const url = URL.createObjectURL(await response.blob());
       const link = document.createElement('a'); link.href = url;
-      link.download = '프로젝트_수행결과_평가보고서_20261001-20261021.pdf';
+      link.download = (document.body.dataset.projectNumber ? `프로젝트${document.body.dataset.projectNumber}_` : '프로젝트_') + '수행결과_평가보고서_20261001-20261021.pdf';
       document.body.append(link); link.click(); link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 30000);
       status.textContent = 'PDF 보고서를 다운로드했습니다. 보고서에는 다운로드 시점의 집계가 반영됩니다.';

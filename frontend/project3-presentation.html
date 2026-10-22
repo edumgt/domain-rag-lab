@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프로젝트3 발표 · Finance RAG Lab</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css?v=20261012-common-3">
+<link rel="stylesheet" href="/static/assets/walk-forward-page.css?v=20261007-2">
+<link rel="stylesheet" href="https://www.edumgt.co.kr/css/common.css?v=20261012-common-3">
+<link rel="stylesheet" href="/static/assets/project2-presentation.css?v=20261021-score5">
+<script src="/static/assets/project2-presentation.js?v=20261022-project3-1" defer></script>
+<script src="/static/assets/audit-navigation.js?v=compact-gnb1" defer></script>
+<script defer src="/static/assets/compact-typography.js?v=20261022-92"></script>
+</head><body class="wf-standalone presentation-page" data-presentation-api="/presentation3" data-project-number="3">
+<a class="wf-skip" href="#presentationOverview">본문 바로가기</a>
+<div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
+  <aside class="sidebar" id="learningPanel" aria-label="학습 메뉴" inert>
+    <div class="sidebar-header"><div class="panel-title-row"><h1 class="logo">Finance RAG Lab</h1><button class="panel-close" id="closeLeftPanel" aria-label="학습 패널 닫기">×</button></div><p class="logo-sub">금융상품 · 생활거래 이해 · 실습</p></div>
+    <nav class="topic-nav" aria-label="4일 이론 학습"><p class="nav-label">4일 이론 학습</p><a class="topic-btn" href="/static/days/01.html"><span class="day-menu-number">1일차</span> 선물과 옵션</a><a class="topic-btn" href="/static/days/02.html"><span class="day-menu-number">2일차</span> 펀드 · ETF</a><a class="topic-btn" href="/static/days/03.html"><span class="day-menu-number">3일차</span> 채권 · 코인</a><a class="topic-btn" href="/static/days/04.html"><span class="day-menu-number">4일차</span> 자산배분, 퀀트</a><a class="topic-btn" href="/static/project-schedule.html" style="text-decoration:none"><i class="fa-solid fa-calendar-days"></i> 프로젝트 일정</a><a class="topic-btn" href="/static/project2-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트2 발표</a><a class="topic-btn active" aria-current="page" href="/static/project3-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트3 발표</a>
+</nav>
+    <div class="sidebar-section"><p class="nav-label">분석 · 검증</p><a class="topic-btn" href="/?view=quant">EDA · LightGBM</a><a class="topic-btn" href="/walk-forward.html">Walk-Forward 검증</a><a class="topic-btn" href="/?view=backtest">LEAN 백테스트</a></div>
+  </aside><div class="app-layout"><div class="chat-area">
+      <header class="chat-header">
+        <button class="panel-toggle" id="openLeftPanel" aria-controls="learningPanel" aria-label="학습 패널 열기">
+          <i class="fa-solid fa-bars"></i><span>학습</span>
+        </button>
+        <a class="main-kms-title" href="/?view=learn">금융과 행동</a>
+        <nav class="brand-nav" aria-label="학습 서비스 메뉴">
+          <a class="brand-nav-btn brand-nav-link" href="/?view=home"><i class="fa-solid fa-house"></i> 홈</a>
+          <a class="brand-nav-btn brand-nav-link" href="/?view=stocks"><i class="fa-solid fa-building-columns"></i> 종목보기</a>
+          <a class="brand-nav-btn brand-nav-link" href="/?view=learn"><i class="fa-solid fa-comments"></i> RAG 질문</a>
+
+          <a class="brand-nav-btn brand-nav-link" href="/?view=quant"><i class="fa-solid fa-chart-line"></i> EDA · LightGBM</a>
+          <a class="brand-nav-btn brand-nav-link" href="/walk-forward.html" style="text-decoration:none"><i class="fa-solid fa-arrows-left-right-to-line"></i> Walk-Forward 검증</a>
+
+          <a class="brand-nav-btn brand-nav-link" href="/?view=backtest"><i class="fa-solid fa-flask"></i> LEAN 백테스트</a>
+          <a class="brand-nav-btn brand-nav-link" href="/?view=calendar"><i class="fa-solid fa-calendar-days"></i> 캘린더</a>
+        </nav>
+      </header>
+<nav class="wf-lnb" aria-label="프로젝트3 발표 상세 메뉴"><span class="wf-lnb-title">프로젝트3 발표</span><a href="#videoPreparation" aria-current="location">발표 준비</a><a href="#videoSamples">동영상 샘플</a><a href="#videoRecorder">화면 녹화 · 동영상 생성</a><a href="#publicLinks">데모 · GitHub</a><a href="#teamPresentation">팀원별 발표</a><a href="#questionsAndAnswers">질의응답</a><a href="#presentationOrder">발표 순서</a><a href="#presentationOpinions">의견 게시</a><a href="#projectEvaluations">프로젝트 평가</a></nav>
+<main class="messages wf-content" id="presentationContent"><div class="presentation">
+<div class="eyebrow" id="presentationOverview">PROJECT 3 · PRESENTATION</div>
+<h1>프로젝트3 발표</h1>
+<p class="intro">프로젝트 발표용 준비사항을 확인하고, 주요 기능과 본인이 수행한 업무를 중심으로 발표를 준비하세요.</p>
+<div id="panel-guide">
+<div class="requirements">
+<section class="requirement" id="videoPreparation"><h2>01. 주요 기능 동영상 준비</h2>
+<p><strong>주요 기능 동영상을 3개 이상 준비합니다.</strong> 각 동영상은 <strong>3분 내외</strong>로 구성하여 주요 기능을 간결하게 시연합니다.</p>
+<ul><li>동영상마다 다른 주요 기능을 선정하고, 기능의 목적 → 실행 과정 → 결과 순서로 보여줍니다.</li><li>화면 녹화에 설명이나 자막을 넣어 어떤 기능인지 이해할 수 있게 준비합니다.</li><li>발표자료에 동영상 링크 또는 파일을 연결하고, 발표 전에 재생 여부를 확인합니다.</li></ul>
+<p class="note">구성 예시: 동영상 1 — 핵심 사용자 흐름 / 동영상 2 — 데이터 처리·분석 기능 / 동영상 3 — 결과 조회·활용 기능 (각 3분 내외)</p></section>
+<section class="requirement" id="videoSamples"><h2>3분 내외 시연 동영상 샘플</h2><p>CampusX의 공개 프로젝트 소개·시연 영상입니다. 영상의 기능 소개와 화면 시연 구성을 참고해 본인 프로젝트의 동영상을 준비하세요.</p><div class="video-grid"><article class="video-card"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/zKmxFfOCyD0?rel=0&amp;origin=https%3A%2F%2Fpr.edumgt.co.kr" title="챗봇 시연 · CampusX · 2:50" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="video-copy"><h3>챗봇 시연 <span class="duration">2:50</span></h3><p class="video-source">CampusX · How To Build A Chatbot | Project Teaser Full Video Coming Soon</p><p>대화형 기능의 시연 흐름을 참고하고, 본인 프로젝트의 질문 입력과 응답 결과를 짧게 보여주세요.</p><a href="https://www.youtube.com/watch?v=zKmxFfOCyD0" target="_blank" rel="noopener noreferrer">YouTube에서 원본 보기 <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div></article><article class="video-card"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/scFDGSTuVQY?rel=0&amp;origin=https%3A%2F%2Fpr.edumgt.co.kr" title="스팸 분류 시연 · CampusX · 2:50" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="video-copy"><h3>스팸 분류 시연 <span class="duration">2:50</span></h3><p class="video-source">CampusX · Email Spam Classifier End to End Project Teaser | Full Video coming soon</p><p>분류 기능의 시연 구성을 참고하고, 본인 프로젝트에서는 입력과 판별 결과를 연결해 설명하세요.</p><a href="https://www.youtube.com/watch?v=scFDGSTuVQY" target="_blank" rel="noopener noreferrer">YouTube에서 원본 보기 <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div></article><article class="video-card"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/rTMUvrqKveA?rel=0&amp;origin=https%3A%2F%2Fpr.edumgt.co.kr" title="영화 추천 시연 · CampusX · 2:47" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="video-copy"><h3>영화 추천 시연 <span class="duration">2:47</span></h3><p class="video-source">CampusX · Movie Recommender System Project -Teaser</p><p>추천 기능의 결과 화면을 참고하고, 본인 프로젝트의 선택 조건과 추천 결과를 함께 보여주세요.</p><a href="https://www.youtube.com/watch?v=rTMUvrqKveA" target="_blank" rel="noopener noreferrer">YouTube에서 원본 보기 <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div></article></div><p class="video-note">플레이어에서 재생 버튼을 누르세요. 영상 재생이 제한되면 ‘YouTube에서 원본 보기’로 열 수 있습니다.</p></section><section class="requirement recorder" id="videoRecorder"><h2>화면 녹화 스크립트로 시연 동영상 만들기 — python-basic-lab</h2>
+<p>별도 녹화 프로그램 없이 <strong>Python 스크립트로 화면을 캡처해 mp4 동영상을 만드는 방법</strong>입니다. <a href="https://github.com/edumgt/python-basic-lab" target="_blank" rel="noopener noreferrer">edumgt / python-basic-lab</a> 저장소의 <code>lab_video_capture/</code> 폴더에 두 가지 버전이 있습니다. 단축키로 녹화를 시작·종료하면 <code>mss</code> 가 화면을 프레임 단위로 캡처하고 <code>OpenCV</code> 가 mp4 로 저장합니다.</p>
+<table class="recorder-table"><thead><tr><th>스크립트</th><th>특징</th><th>의존성</th><th>결과 파일</th></tr></thead><tbody>
+<tr><td><a href="https://github.com/edumgt/python-basic-lab/blob/main/lab_video_capture/screen_recorder.py" target="_blank" rel="noopener noreferrer"><code>screen_recorder.py</code></a><br><span>고급 버전</span></td><td>Ctrl+1 → 5초 뒤 녹화 시작 · 마우스 커서를 녹색 점으로 표시 · Ctrl+3 종료 시 <strong>마지막 5초 자동 제거</strong>(종료 단축키 누르는 장면이 영상에 남지 않음) · 24 fps</td><td><code>opencv-python mss pillow pynput pyautogui numpy</code></td><td><code>z_YYYYMMDD_HHMMSS.mp4</code></td></tr>
+<tr><td><a href="https://github.com/edumgt/python-basic-lab/blob/main/lab_video_capture/screen_recorder_basic.py" target="_blank" rel="noopener noreferrer"><code>screen_recorder_basic.py</code></a><br><span>기본 버전 + TTS</span></td><td>Ctrl+1 시작 · Ctrl+3 종료 후 <strong>gTTS 로 설명 음성을 합성</strong>하고 ffmpeg 로 영상에 입힘 · 15 fps</td><td><code>opencv-python mss pillow pynput gtts numpy</code> + <code>ffmpeg</code> 실행 파일</td><td><code>record_….mp4</code> → <code>final_record_….mp4</code>(음성 포함)</td></tr>
+</tbody></table>
+<h3>실행 순서</h3>
+<ol class="recorder-steps">
+<li><strong>준비</strong> — 저장소를 받고 가상환경에 의존성을 설치합니다. TTS 버전은 PATH 에 <code>ffmpeg</code> 가 있어야 합니다.
+<pre><code>git clone https://github.com/edumgt/python-basic-lab.git
+cd python-basic-lab
+python -m venv .venv &amp;&amp; .venv\Scripts\activate        # macOS/Linux: source .venv/bin/activate
+pip install opencv-python mss pillow pynput pyautogui numpy gtts</code></pre></li>
+<li><strong>실행</strong> — 녹화할 화면(브라우저 데모 등)을 미리 띄운 뒤 터미널에서 스크립트를 켭니다.
+<pre><code>python lab_video_capture/screen_recorder.py          # 커서 표시 · 자동 트림
+python lab_video_capture/screen_recorder_basic.py    # TTS 설명 음성 합성</code></pre></li>
+<li><strong>녹화</strong> — <kbd>Ctrl</kbd>+<kbd>1</kbd> 시작(고급 버전은 5초 뒤) → 기능의 목적 → 실행 과정 → 결과 순서로 시연 → <kbd>Ctrl</kbd>+<kbd>3</kbd> 종료·저장. <kbd>Ctrl</kbd>+<kbd>5</kbd> 는 저장 없이 강제 종료입니다.</li>
+<li><strong>확인</strong> — 스크립트를 실행한 폴더에 mp4 가 생깁니다. 재생해 보고, 자막이나 설명이 필요하면 아래 편집 랩으로 이어갑니다.</li>
+</ol>
+<h3>핵심 코드 — 화면 캡처가 동영상이 되는 과정</h3>
+<p>두 스크립트의 녹화 루프는 같은 구조입니다. 모니터를 캡처해 중앙을 잘라 해상도를 맞추고, BGR 로 바꿔 프레임을 모은 뒤 <code>VideoWriter</code> 로 씁니다.</p>
+<pre><code>sct = mss(); monitor = sct.monitors[1]                      # 주 모니터
+while RECORDING:
+    sct_img = sct.grab(monitor)                               # ① 화면 캡처 (raw 버퍼)
+    img = Image.frombytes("RGB", sct_img.size, sct_img.rgb)   # ② PIL 이미지로
+    img = img.crop(center_crop(sct_img.width, sct_img.height, RESOLUTION)).resize(RESOLUTION)  # ③ 중앙 크롭 · 리사이즈
+    frame = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)   # ④ OpenCV 색순서(BGR)
+    frames.append(frame)                                      # ⑤ 프레임 누적
+    time.sleep(1 / FPS)
+
+out = cv2.VideoWriter(VIDEO_NAME, cv2.VideoWriter_fourcc(*"mp4v"), FPS, RESOLUTION)
+for f in frames: out.write(f)                                 # ⑥ mp4 로 저장
+out.release()</code></pre>
+<div class="note recorder-tips"><h3>3분 내외 시연 영상에 맞게 고칠 점</h3><ul>
+<li><strong>해상도를 가로형으로</strong> — 기본값 <code>RESOLUTION = (768, 1366)</code>(고급) · <code>(720, 1080)</code>(기본)은 세로형입니다. 브라우저 시연이면 <code>RESOLUTION = (1280, 720)</code> 처럼 가로형으로 바꾸고, 모니터 해상도보다 작아야 중앙 크롭이 됩니다.</li>
+<li><strong>메모리 주의</strong> — 두 스크립트는 프레임을 메모리에 모았다가 저장합니다. 768×1366 · 24 fps 로 3분을 찍으면 약 4,320 프레임 × 3 MB ≈ <strong>13 GB</strong> 가 필요합니다. 3분 영상은 <code>FPS = 10</code> 정도로 낮추거나, 아래처럼 루프 안에서 바로 파일에 쓰도록 바꾸세요.
+<pre><code>out = cv2.VideoWriter(VIDEO_NAME, cv2.VideoWriter_fourcc(*"mp4v"), FPS, RESOLUTION)   # 녹화 시작 때 열고
+while RECORDING:
+    ...                       # 캡처·크롭·BGR 변환은 그대로
+    out.write(frame)          # frames.append 대신 바로 기록 → 메모리 사용량 일정
+out.release()</code></pre></li>
+<li><strong>TTS 설명 문구</strong> — 기본 버전의 <code>description</code> 문자열이 그대로 음성이 됩니다. "이 영상은 … 기능을 시연합니다. 먼저 … 다음 … 결과는 …" 처럼 영상 구성에 맞춰 바꾸세요. 음성이 영상보다 짧으면 <code>-shortest</code> 때문에 영상이 잘리니, 길이를 맞추거나 그 옵션을 빼세요.</li>
+<li><strong>단축키가 안 먹을 때</strong> — macOS 는 터미널에 손쉬운 사용(입력 모니터링) 권한을, Linux Wayland 는 X11 세션을 써야 <code>pynput</code> 전역 단축키와 <code>mss</code> 캡처가 동작합니다. Windows 는 그대로 됩니다.</li>
+<li><strong>이어서 편집</strong> — 같은 저장소의 <code>lab_video_edit/</code>(클립 자르기·이어 붙이기), <code>lab_video_analysis/video_captioner.py</code>(자막) 로 녹화본에 자막·구간 편집을 더할 수 있습니다.</li>
+</ul></div>
+<p class="video-note">참고: <a href="https://github.com/edumgt/python-basic-lab/blob/main/CURRICULUM.md" target="_blank" rel="noopener noreferrer">CURRICULUM.md Phase 9 — 화면 녹화 실습</a> · <a href="https://github.com/edumgt/python-basic-lab#화면-녹화-lab_video_capture" target="_blank" rel="noopener noreferrer">README 화면 녹화 절</a></p></section>
+<section class="requirement" id="publicLinks"><h2>02. 개발 시스템 공개 주소 준비</h2>
+<p><strong>개발 시스템 데모 사이트 주소 또는 GitHub public 저장소 주소를 준비합니다.</strong></p>
+<ul><li>데모 사이트: 접속 가능한 URL과 시연 순서를 발표자료에 기재합니다. 로그인이 필요하면 시연용 계정과 이용 방법도 준비합니다.</li><li>GitHub: public 저장소 주소를 기재하고, README에 프로젝트 소개, 실행 방법, 주요 기능을 정리합니다.</li><li>발표 전에 다른 브라우저에서도 링크가 열리는지 확인하고, 시연에 필요한 데이터를 준비합니다.</li></ul>
+<div class="note github-samples"><h3>GitHub public 저장소 샘플</h3><p>프로젝트 소개와 README 구성, 소스 코드 정리 방식을 참고하세요.</p><ul>
+<li><a href="https://github.com/seom98/catale" target="_blank" rel="noopener noreferrer">seom98 / catale</a><br><span>https://github.com/seom98/catale</span></li>
+<li><a href="https://github.com/jykim1187/SilverPotion-Backend" target="_blank" rel="noopener noreferrer">jykim1187 / SilverPotion-Backend</a><br><span>https://github.com/jykim1187/SilverPotion-Backend</span></li>
+</ul></div></section>
+<section class="requirement" id="teamPresentation"><h2>03. 팀원별 발표자료와 담당 업무 정리</h2>
+<p><strong>팀 프로젝트의 경우 각자 발표자료를 준비하고, 본인 업무 위주로 발표합니다.</strong></p>
+<ul><li><strong>본인 소개:</strong> 이름, 관심 분야, 보유 기술과 강점을 간단히 소개합니다.</li>
+<li><strong>지향하는 취업 또는 창업의 방향:</strong> 취업을 희망하는 직무·산업 분야 또는 창업하고 싶은 서비스·해결할 문제를 설명합니다. 이번 프로젝트에서 쌓은 경험과 앞으로의 준비 계획을 연결해 발표합니다.</li>
+<li>팀 전체 프로젝트의 목적과 역할 분담을 간단히 소개합니다.</li><li>각 팀원은 본인이 맡은 업무, 직접 구현한 기능, 개발 과정과 결과를 중심으로 발표합니다.</li><li>본인 업무와 연결되는 화면·코드·동영상 등 구체적인 결과물을 제시합니다.</li><li>해결한 문제, 개선한 내용, 남은 과제와 배운 점을 정리하고 팀원 간 발표 순서를 맞춥니다.</li></ul></section>
+<section class="requirement" id="questionsAndAnswers"><h2>04. 질의응답</h2>
+<p><strong>질의자는 공격적으로, 답변자는 적극적으로 모의 인터뷰 스타일로 진행합니다.</strong></p>
+<ul><li><strong>질의자:</strong> 프로젝트의 기획 의도, 기술 선택, 구현 방식과 결과를 날카롭게 질문하고, 답변에 따라 구체적인 근거를 묻는 후속 질문을 이어갑니다.</li><li><strong>답변자:</strong> 본인이 수행한 업무와 결과를 중심으로 적극적으로 답변하고, 실제 코드·화면·시연 결과를 근거로 설명합니다.</li><li><strong>진행 방식:</strong> 질문 → 답변 → 후속 질문 순서로 모의 인터뷰를 진행합니다. 모르는 내용은 솔직하게 인정하고 확인 방법이나 개선 계획을 제시합니다.</li></ul>
+<p class="note">질문 예시: “왜 이 기술을 선택했나요?”, “본인이 직접 구현한 부분은 어디인가요?”, “기능이 실패하면 어떻게 대응하나요?”, “이 경험이 희망하는 취업 또는 창업 방향과 어떻게 연결되나요?”</p>
+</section>
+</div>
+
+</div><section id="presentationOrder">
+<div class="requirement"><div class="eyebrow">PRESENTATION ORDER</div><h2>발표 순서 · 랜덤 배정</h2>
+<p>8명의 발표자에게 1~8번을 중복 없이 배정했습니다. 랜덤 버튼은 전체 접속자 합산 3회까지 사용하며, 세 번째 추첨으로 최종 확정됩니다. 새로고침해도 횟수와 확정 순서는 유지됩니다.</p>
+<p class="video-note">LSH 발표자는 LSH(이상하), LSH(이세현)으로 구분합니다.</p>
+<p id="orderStatus" role="status">발표 순서를 불러오는 중입니다.</p><div class="presenter-grid" id="presenterCards"></div>
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><button type="button" id="reloadOrder">랜덤</button><span id="team1OrderNote">팀1의 경우 발표시간이 길어 1순위를 희망함.</span></div></div></section>
+<section id="presentationOpinions">
+<div class="requirement"><div class="eyebrow">FEEDBACK BOARD</div><h2>발표 의견 게시</h2><p>발표자에게 질문, 응원, 개선 의견을 남겨주세요. 등록한 의견은 모든 방문자에게 공개됩니다.</p>
+<section class="survey-section" aria-labelledby="surveyTitle">
+<h3 id="surveyTitle">프로젝트 성과물 검증 설문 · 10문항</h3>
+<p><a href="https://committee.iso.org/standard/78176.html" target="_blank" rel="noopener noreferrer">ISO/IEC 25010:2023 제품 품질 모델</a>을 참고하고 창의성·실 제품화 항목을 추가해 수업용으로 구성한 설문입니다. 공식 ISO 인증 평가가 아닙니다. 평가 설명과 예시는 특정 산업의 업무 성과가 아닌 소프트웨어의 구현·시험·운영 품질을 기준으로 합니다.</p>
+<p class="survey-scale"><strong>5. 매우 우수 · 4. 우수 · 3. 보통 · 2. 미흡 · 1. 매우 미흡</strong><br>높은 점수일수록 우수합니다. 시연·코드·테스트·문서 근거를 확인한 후 10문항 모두 선택해주세요. 판단 근거가 부족하면 발표자에게 시연·자료를 요청한 뒤 응답해주세요. 아래 예시는 평가를 돕는 가이드이며, 자료가 없다는 이유만으로 기능이 없다고 단정하지 마세요.</p>
+<form id="surveyForm" novalidate><div class="opinion-fields"><label>평가 대상 발표자<select name="presenter_id" id="surveyPresenter" required><option value="" selected>팀을 선택해주세요</option></select></label><label>평가자<input name="author" maxlength="40" required placeholder="이름 또는 닉네임"></label></div>
+<p class="video-note">팀과 평가자 이름을 조합해 1회만 등록할 수 있습니다. 이름의 공백·영문 대소문자 차이는 중복으로 처리합니다.</p>
+<div id="surveyQuestions"><p>설문을 불러오는 중입니다.</p></div>
+<label class="survey-evidence">주관식 종합 의견 (선택)<textarea name="evidence" rows="5" maxlength="2000" placeholder="프로젝트의 잘된 점, 검증 근거, 개선할 점, 질문과 응원 등 전체 의견을 자유롭게 적어주세요."></textarea></label>
+<p class="video-note">위에서 선택한 팀과 평가자 이름으로 10문항 평가와 주관식 의견을 함께 저장합니다.</p><button type="submit" id="submitSurvey" disabled>평가·의견 함께 제출</button></form>
+<p id="surveyStatus" role="status"></p>
+<div class="opinion-toolbar"><h3>선택한 발표자의 설문 집계</h3><button type="button" id="reloadSurvey">집계 새로고침</button></div>
+<p class="video-note">문항별 동일 가중치 · 응답 원점수 평균(1~5) · 높을수록 우수 · 응답 건수 기준 집계입니다.</p><div id="surveySummary" aria-live="polite"></div>
+</section></div></section>
+<section id="projectEvaluations" class="requirement" aria-labelledby="evaluationTitle">
+<div class="eyebrow">PROJECT EVALUATIONS</div><div class="opinion-toolbar"><h2 id="evaluationTitle">프로젝트 평가</h2><div class="report-actions"><button type="button" id="reloadEvaluations">평가 새로고침</button><button type="button" id="downloadEvaluationReport">PDF 다운로드</button></div></div>
+<div class="report-heading"><h3>나만의 로보 어드바이저 개발 및 성과 검증 프로젝트 과정 중 팀별 소분과 프로젝트 수행결과</h3><p><strong>기간: 2026년 10월 1일 ~ 10월 21일</strong></p><p class="video-note">PDF 보고서: 전체·팀별 응답 수, 10개 문항의 질문, 1~5단계 응답 건수·비율과 평균을 다운로드합니다.</p></div><p>중복을 제외한 팀·평가자별 설문을 집계합니다. <strong>5 매우 우수 → 1 매우 미흡 · 높을수록 우수</strong></p>
+<p class="video-note">현재 10문항 설문만 집계하며 문항별 가중치는 동일합니다. 응답이 없는 팀은 ‘평가 없음’으로 표시합니다.</p>
+<p class="video-note">파이는 1~5단계 응답 비율, 가운데 숫자는 평균입니다. 조각에 마우스를 올리거나 선택하면 비율을 확인할 수 있습니다. 전체 평균 선택 시 10문항 응답을 합산합니다.</p><div class="pie-legend" aria-label="평가 척도 색상"><span style="--slice-color:#fb7185">1 매우 미흡</span><span style="--slice-color:#fbbf24">2 미흡</span><span style="--slice-color:#818cf8">3 보통</span><span style="--slice-color:#38bdf8">4 우수</span><span style="--slice-color:#10b981">5 매우 우수</span></div><p id="evaluationStatus" role="status">평가 결과를 불러오는 중입니다.</p>
+
+<section class="ranking-section" aria-labelledby="rankingTitle"><h3 id="rankingTitle">전체 팀 랭킹</h3><p class="video-note">10문항 전체 평균이 높을수록 상위입니다. 소수 둘째 자리 평균이 같으면 공동 순위(1위·1위·3위)를 적용합니다. 응답이 없는 팀은 미평가로 표시하며, 평가 수가 적은 팀의 순위는 변동될 수 있습니다.</p><div class="ranking-table-wrap"><table class="ranking-table"><thead><tr><th scope="col">순위</th><th scope="col">팀</th><th scope="col">전체 평균 (1~5)</th><th scope="col">평가 수</th></tr></thead><tbody id="teamRankingBody"></tbody></table></div></section>
+<div class="evaluation-grid"><section class="evaluation-chart"><h3>팀별 평가 비교</h3><label for="evaluationMetric">비교 항목</label><select id="evaluationMetric"><option value="overall">전체 평균</option></select><div id="teamEvaluationChart" class="evaluation-pies"></div></section>
+<section class="evaluation-chart"><h3>팀의 문항별 평가</h3><label for="evaluationPresenter">발표 팀</label><select id="evaluationPresenter"></select><div id="questionEvaluationChart" class="evaluation-pies"></div></section></div><section class="evaluation-comments" aria-labelledby="evaluationCommentsTitle"><h3 id="evaluationCommentsTitle">팀별 객관식 집계 및 주관식 의견</h3><p class="video-note">각 팀의 객관식 설문 집계 다음에 주관식 의견을 표시합니다. 평가자 이름·작성 시각·의견 전문을 확인하세요. 설문 종합 의견과 기존 자유 의견을 구분하며, 자유 의견은 점수 집계에 포함하지 않습니다.</p>
+<div class="comment-filters"><label>의견을 볼 팀<select id="commentTeamFilter"><option value="all">모든 팀</option></select></label><label>평가자·의견 검색<input id="commentSearch" type="search" placeholder="평가자 이름 또는 의견 내용"></label></div><div id="evaluationComments" aria-live="polite"></div></section>
+
+</section>
+</div></main><footer class="site-footer-unified">© 2026 (주)에듀엠지티 All rights reserved.</footer>
+</div></div><dialog id="identityWarning" aria-labelledby="identityWarningTitle" aria-describedby="identityWarningText"><h2 id="identityWarningTitle">필수 정보 확인</h2><p id="identityWarningText"></p><form method="dialog"><button type="submit" autofocus>확인</button></form></dialog></body></html>
