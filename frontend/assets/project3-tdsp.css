@@ -1,0 +1,51 @@
+#project3Schedule .schedule-method-buttons{display:flex;align-items:center;gap:6px;flex-shrink:0}
+#project3Schedule .schedule-sdlc-heading h3{min-width:0}
+#project3TdspDialog{box-sizing:border-box;width:min(95vw,1200px)!important;max-width:95vw!important;height:92dvh!important;max-height:92dvh!important;padding:0!important;border:1px solid #c9a86a;border-radius:14px;background:#fff;color:#0e2340;overflow:hidden!important;box-shadow:0 24px 80px #08152c66}
+#project3TdspDialog[open]{display:flex!important;flex-direction:column}
+#project3TdspDialog::backdrop{background:#07182bbd}
+#project3TdspDialog *{box-sizing:border-box}
+#project3TdspDialog .tdsp-header{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:17px 22px;background:#0e2340;color:white;flex-shrink:0}
+#project3TdspDialog .tdsp-header span{font-size:10px;letter-spacing:.09em;color:#e2c68f}
+#project3TdspDialog h2{font-size:18px!important;margin:5px 0 0;color:#fff;line-height:1.4}
+#project3TdspDialog button{font-family:inherit;font-size:12px;font-weight:700;padding:8px 12px;border:1px solid #ccd5e1;border-radius:6px;background:#fff;color:#0e2340;cursor:pointer}
+#project3TdspDialog .tdsp-header button{background:transparent;color:#f5deb1;border-color:#c9a86a;white-space:nowrap}
+#project3TdspDialog :focus-visible{outline:3px solid #c9a86a;outline-offset:2px}
+#project3TdspDialog .tdsp-tabs{display:flex;gap:7px;padding:12px 20px;border-bottom:1px solid #dce3ed;flex-shrink:0}
+#project3TdspDialog .tdsp-tabs [aria-selected="true"]{background:#0e2340;color:#f5deb1;border-color:#0e2340}
+#project3TdspDialog .tdsp-content{overflow:auto;overscroll-behavior:contain;min-height:0;flex:1;padding:18px 24px}
+#project3TdspDialog [hidden]{display:none!important}
+#project3TdspDialog h3{font-size:15px!important;margin:18px 0 12px;color:#0e2340}
+#project3TdspDialog h4{font-size:13px!important;margin:0 0 7px;color:#0e2340}
+#project3TdspDialog p,#project3TdspDialog li{font-size:12px!important;line-height:1.75;color:#43536c}
+#project3TdspDialog p{margin:7px 0 12px}
+#project3TdspDialog a{color:#255ba1;text-decoration:underline;text-underline-offset:2px}
+#project3TdspDialog .tdsp-intro{background:#f6f2e8;padding:12px;border-radius:7px}
+#project3TdspDialog .tdsp-pillars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+#project3TdspDialog .tdsp-pillars article{padding:12px;border:1px solid #dce3ed;border-top:3px solid #c9a86a;border-radius:7px;background:#fafbfd}
+#project3TdspDialog .tdsp-pillars b{font-size:12px}
+#project3TdspDialog .tdsp-pillars p{margin-bottom:0}
+#project3TdspDialog .tdsp-stages{display:grid;gap:9px}
+#project3TdspDialog .tdsp-stages article{display:flex;gap:12px;border:1px solid #dce3ed;padding:13px;border-radius:7px}
+#project3TdspDialog .tdsp-stages article>span{display:flex;align-items:center;justify-content:center;align-self:flex-start;background:#0e2340;color:#f5deb1;border-radius:50%;width:30px;height:30px;flex-shrink:0;font-size:12px;font-weight:800}
+#project3TdspDialog .tdsp-stages article>div{min-width:0}
+#project3TdspDialog h4 small{font-size:11px!important;font-weight:500;color:#64748b;display:inline-block;margin-left:5px}
+#project3TdspDialog .tdsp-stages p{margin-bottom:5px}
+#project3TdspDialog .tdsp-stages .tdsp-output{font-size:11px!important;color:#16635b}
+#project3TdspDialog .tdsp-note{font-size:11px!important;padding:10px 12px;background:#f0f4fa;border-radius:6px}
+#project3TdspDialog pre{margin:12px 0;background:#0e2340;color:#e4edf8;border-radius:8px;padding:18px;overflow:auto;font-size:12px!important;line-height:1.8;tab-size:4;white-space:pre}
+#project3TdspDialog code{font-family:ui-monospace,Consolas,monospace;font-size:inherit!important;color:inherit}
+#project3TdspDialog .tdsp-folder-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#project3TdspDialog .tdsp-folder-notes p{padding:10px;background:#f2f6fb;border-radius:6px}
+#project3TdspDialog .tdsp-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#project3TdspDialog .tdsp-map article{padding:13px;border:1px solid #dce3ed;border-left:3px solid #c9a86a;border-radius:6px}
+#project3TdspDialog ul{padding-left:18px;margin-bottom:0}
+#project3TdspDialog .tdsp-map li{font-size:11px!important}
+#project3TdspDialog .tdsp-sources{flex-shrink:0;padding:10px 20px;background:#f5f7fb;border-top:1px solid #dce3ed;font-size:11px;color:#526174;line-height:1.7}
+#project3TdspDialog .tdsp-sources small{display:block;font-size:10px!important}
+@media(max-width:700px){#project3TdspDialog{width:98vw!important;max-width:98vw!important;height:96dvh!important;max-height:96dvh!important;border-radius:8px}#project3TdspDialog .tdsp-header{padding:12px}#project3TdspDialog h2{font-size:15px!important}#project3TdspDialog .tdsp-header span{font-size:8px}#project3TdspDialog .tdsp-tabs{padding:9px;gap:5px}#project3TdspDialog .tdsp-tabs button{font-size:11px;padding:7px}#project3TdspDialog .tdsp-content{padding:12px}#project3TdspDialog .tdsp-pillars{grid-template-columns:repeat(2,minmax(0,1fr))}#project3TdspDialog .tdsp-folder-notes,#project3TdspDialog .tdsp-map{grid-template-columns:1fr}#project3TdspDialog .tdsp-sources{padding:8px 12px;font-size:10px}#project3TdspDialog pre{padding:12px;font-size:11px!important}#project3Schedule .schedule-method-buttons .schedule-wbs-button{padding:6px 9px;font-size:11px}}
+#project3TdspDialog .tdsp-stages{justify-items:stretch}
+#project3TdspDialog .tdsp-stages article,#project3TdspDialog .tdsp-pillars article,#project3TdspDialog .tdsp-map article{width:100%;max-width:none;margin:0}
+#project3TdspDialog .tdsp-sources{display:block!important;position:static!important;width:100%!important;height:auto!important;text-align:left!important;background:#f5f7fb!important;color:#526174!important;padding:10px 20px!important}
+#project3TdspDialog .tdsp-sources a{color:#255ba1!important}
+#project3TdspDialog .tdsp-sources small{color:#526174!important}
+@media(max-width:700px){#project3TdspDialog .tdsp-sources{padding:8px 12px!important}}

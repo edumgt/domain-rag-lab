@@ -164,7 +164,7 @@
   }
 
   function renderSdlcGuide(rows) {
-    return `<section class="schedule-sdlc-guide" aria-label="프로젝트3 SDLC 단계 안내"><div class="schedule-sdlc-heading"><h3>SDLC · 소프트웨어 개발 생명주기</h3><button class="schedule-wbs-button" type="button" data-project3-wbs aria-haspopup="dialog"><i class="fa-solid fa-chart-gantt" aria-hidden="true"></i> WBS</button></div><p>기획 → 요구분석 → 설계 → 구현 → 검증 → 배포 → 인수·운영. 각 일정의 <b>주요 활동</b>을 색상과 단계명으로 연결했습니다. 구현과 검증은 반복되며, 배포 후 UAT·파일럿 결과를 다시 검증에 반영합니다.</p><div class="schedule-sdlc-legend">${sdlcStages.map((stage, index) => {
+    return `<section class="schedule-sdlc-guide" aria-label="프로젝트3 SDLC 단계 안내"><div class="schedule-sdlc-heading"><h3>SDLC · 소프트웨어 개발 생명주기</h3><div class="schedule-method-buttons"><button class="schedule-wbs-button" type="button" data-project3-tdsp aria-haspopup="dialog">TDSP</button><button class="schedule-wbs-button" type="button" data-project3-wbs aria-haspopup="dialog"><i class="fa-solid fa-chart-gantt" aria-hidden="true"></i> WBS</button></div></div><p>기획 → 요구분석 → 설계 → 구현 → 검증 → 배포 → 인수·운영. 각 일정의 <b>주요 활동</b>을 색상과 단계명으로 연결했습니다. 구현과 검증은 반복되며, 배포 후 UAT·파일럿 결과를 다시 검증에 반영합니다.</p><div class="schedule-sdlc-legend">${sdlcStages.map((stage, index) => {
       const count = rows.filter(row => sdlcStage(row[1]) === stage).length;
       return `<article class="sdlc-${stage.key}"><b>${String(index + 1).padStart(2, '0')} · ${stage.label}</b><span>${stage.meaning}</span><small>산출물 · ${stage.output}</small><em>${count}개 반나절 · 개인별 ${count * 4}시간</em></article>`;
     }).join('')}</div><p class="schedule-sdlc-note">색상은 진행 완료 상태가 아닌 SDLC 활동 구분입니다. 산출물은 다음 단계의 입력으로 이어지며, 일정의 날짜·총 120시간·담당 역할은 동일합니다.</p></section>`;
