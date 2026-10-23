@@ -1,242 +1,244 @@
-# 금융상품·자산배분 RAG 에이전트
+# Financial Products and Asset Allocation RAG Agent
 
-금융상품과 자산배분 방법론을 학습·탐색하기 위한 도메인 특화 RAG(Retrieval-Augmented Generation) 서비스입니다. 등록한 금융 문서를 근거로 주식·ETF·채권·파생상품의 구조와 위험을 설명하고, 포트폴리오 이론·성과지표·자산배분 모델을 대화형으로 검토합니다. 
+[한국어 README](readme-kr.md)
 
-## 이 저장소의 의미
+This domain-specific RAG (Retrieval-Augmented Generation) service helps users study and explore financial products and asset allocation methods. It uses registered financial documents to explain the structure and risks of stocks, ETFs, bonds, and derivatives, and supports interactive exploration of portfolio theory, performance metrics, and asset allocation models.
 
-이 저장소는 아래 두 층위를 하나로 묶습니다.
+## Purpose of this repository
 
-1. **팀 단위 인프라 실습**: 이 RAG 시스템을 개인 PC/로컬 환경에서 AWS 클라우드 기반(EC2)으로 이관하며 AWS 계정 설정, AWS CLI, IAM, EC2 운영을 익힙니다. 이관 대상 애플리케이션이 바로 이 저장소이며, 병행 인프라 실습은 [aws-ec2-alb-lab](/home/ubuntu/aws-ec2-alb-lab/README.md)에서 관리합니다.
-2. **퀀트를 위한 금융 필수 지식 학습(약 40시간)**: RAG·4일 이론 페이지·시뮬레이터를 통해 아래 두 축을 학습합니다.
-   - **금융상품 이해**: 주식/ETF 상품(개요 및 운용 전략), 채권 상품(개요 및 운용 전략), 파생상품(개요 및 운용 전략)
-   - **자산배분방법론**: 포트폴리오 이론(개요·성과분석·리스크 지표), 자산배분 모델(평균분산, 블랙-리터만, Risk-Parity), 사례 분석 실습
+This repository combines two learning tracks:
 
-즉 이 코드베이스는 완성된 상용 서비스가 아니라, RAG·백테스트 애플리케이션을 직접 구축·운영해 보면서 금융 지식과 AWS 인프라 운영 경험을 함께 쌓기 위한 학습용 실습 저장소입니다.
+1. **Team infrastructure practice:** Move this RAG system from a personal computer or local environment to AWS EC2, learning AWS account setup, the AWS CLI, IAM, and EC2 operations along the way. This repository contains the application being migrated; the parallel infrastructure exercises are maintained in the `aws-ec2-alb-lab` repository.
+2. **Essential finance for quants (about 40 hours):** Learn through RAG, four days of theory pages, and simulators:
+   - **Financial products:** Stocks and ETFs, bonds, and derivatives, including their structures and investment strategies.
+   - **Asset allocation methods:** Portfolio theory, performance analysis, risk metrics, mean-variance optimization, Black-Litterman, Risk Parity, and case studies.
 
-## 병행하는 AWS 인프라 저장소
+This is an educational practice repository for building and operating RAG and backtesting applications while gaining finance knowledge and AWS operations experience. It is not a finished commercial service.
 
-이 애플리케이션 저장소는 AWS 인프라 학습·설정 저장소인 [aws-ec2-alb-lab](/home/ubuntu/aws-ec2-alb-lab/README.md)과 병행합니다. `domain-rag-lab`에서는 RAG·LEAN 기능과 Docker 실행 구성을 관리하고, `aws-ec2-alb-lab`에서는 EC2·VPC·보안 그룹·ALB·ECS/ECR 등 AWS 배포 구조와 점검 절차를 관리합니다.
+## Related AWS infrastructure repository
 
-현재 단일 AWS EC2 운영은 이 저장소의 `docker-compose.prod.yml`과 Caddy 구성을 따릅니다. ALB, 고가용성, ECS/Fargate 또는 EKS로 확장할 때는 `aws-ec2-alb-lab`의 EC2·LB·ECS 실습 문서를 기준으로 네트워크와 배포 구성을 함께 점검합니다. 두 저장소의 환경 파일·PEM 키·AWS 자격 증명은 서로 공유하거나 Git에 커밋하지 않습니다.
+This application is developed alongside the `aws-ec2-alb-lab` repository, which covers AWS infrastructure learning and setup. `domain-rag-lab` manages the RAG and LEAN features and Docker configuration; `aws-ec2-alb-lab` covers deployment architecture and checks for EC2, VPC, security groups, ALB, ECS/ECR, and related AWS services.
 
-> 이 프로젝트는 금융 교육 및 분석 보조 목적의 예제입니다. 특정 상품이나 종목의 매수·매도를 권유하지 않으며, 투자 판단과 책임은 투자자 본인에게 있습니다.
+The current single-instance EC2 deployment follows this repository's `docker-compose.prod.yml` and Caddy configuration. When expanding to ALB, high availability, ECS/Fargate, or EKS, review the network and deployment setup alongside the EC2, load balancer, and ECS exercises in `aws-ec2-alb-lab`. Do not share environment files, PEM keys, or AWS credentials between repositories or commit them to Git.
 
-## 핵심 실습 목표
+> This project is an example for financial education and analytical assistance. It does not recommend buying or selling any product or security. Investors are responsible for their own decisions.
 
-이 저장소의 주요 실습은 두 가지입니다.
+## Core exercises
 
-1. **AI Hub 등 데이터 소스를 활용한 RAG 구축**: 금융·금융법률 데이터의 이용 조건을 확인하고, 허용된 원문을 정제·청킹·메타데이터화하여 근거 중심 질의응답을 만듭니다.
-2. **QuantConnect LEAN 백테스트 웹앱 제작**: yfinance 일봉과 원격 LEAN Docker 엔진을 연결해 종목·기간·비교 기간을 입력하고 수익률·최대낙폭을 워크플로우 UI로 확인합니다.
+This repository has two main hands-on exercises:
 
-두 실습 모두 출처·라이선스·기준일을 기록하고, 백테스트 결과를 투자 권유나 법률 자문으로 해석하지 않는 것을 원칙으로 합니다.
+1. **Build RAG with sources such as AI Hub:** Check the usage terms of financial and financial-law datasets, then clean, chunk, and add metadata to permitted source material for evidence-based question answering.
+2. **Build a QuantConnect LEAN backtesting web app:** Connect yfinance daily prices to a remote LEAN Docker engine. Enter a security, test period, and comparison period, then inspect returns and maximum drawdown in a workflow UI.
 
-## 다루는 주제
+For both exercises, record sources, licenses, and reference dates. Do not interpret backtest results as investment recommendations or legal advice.
 
-| 영역 | 주요 내용 |
+## Topics covered
+
+| Area | Main topics |
 |---|---|
-| 금융상품 | 주식, ETF, 일반펀드, 채권, 파생상품, 배당, 금융투자상품 분류 |
-| 상품 비교 | 총보수·수수료·스프레드, 유동성, 추적오차, 괴리율, 계좌 목적별 고려사항 |
-| 포트폴리오 이론 | 분산투자, 상관관계, 효율적 투자선, 기대수익률과 공분산 |
-| 성과·위험 분석 | CAGR, 변동성, MDD, 샤프 비율, 소르티노 비율 |
-| 자산배분 | 평균-분산 최적화, 블랙-리터만, Risk Parity, 60/40·All Weather 등 사례 |
-| 투자 분석 기초 | 재무제표, 밸류에이션, 거시경제, 산업 분석, 기술적 분석 |
+| Financial products | Stocks, ETFs, mutual funds, bonds, derivatives, dividends, and classification of financial investment products |
+| Product comparison | Expense ratios, fees, spreads, liquidity, tracking error, premiums and discounts, and account-specific considerations |
+| Portfolio theory | Diversification, correlation, efficient frontier, expected returns, and covariance |
+| Performance and risk | CAGR, volatility, MDD, Sharpe ratio, and Sortino ratio |
+| Asset allocation | Mean-variance optimization, Black-Litterman, Risk Parity, and cases such as 60/40 and All Weather |
+| Investment analysis basics | Financial statements, valuation, macroeconomics, industry analysis, and technical analysis |
 
-## 주요 기능
+## Main features
 
-- 금융 문서 기반 하이브리드 검색: Qdrant 벡터 검색과 PostgreSQL 키워드 검색 결과를 RRF로 결합합니다.
-- 금융 교육형 응답 정책: 제공 문서 근거를 우선하며, 단정적 매매 추천 대신 상품 구조·운용 관점·위험을 설명합니다.
-- 멀티턴 대화: 세션 단기 기억과 pgvector 장기 기억을 함께 활용합니다.
-- 오케스트레이터: LLM이 문서 검색, 세션 이력, 장기 기억 조회 도구를 필요에 따라 호출합니다.
-- 문서 수집: TXT/PDF 업로드 또는 텍스트 직접 등록 후 청킹·임베딩·저장을 수행합니다.
-- Streamlit UI: 금융 도메인을 선택해 대화하고, 일반 RAG와 도구 호출 방식의 결과를 비교할 수 있습니다.
+- **Hybrid financial document search:** Combines Qdrant vector search and PostgreSQL keyword search using reciprocal rank fusion (RRF).
+- **Educational response policy:** Prioritizes evidence from supplied documents and explains product structure, investment approaches, and risks instead of making definitive trading recommendations.
+- **Multi-turn conversations:** Uses short-term session memory together with pgvector long-term memory.
+- **Orchestrator:** Lets the LLM call document search, session history, and long-term memory tools as needed.
+- **Document ingestion:** Upload TXT/PDF files or register text directly for chunking, embedding, and storage.
+- **Streamlit UI:** Select a financial domain, chat, and compare standard RAG responses with tool-calling results.
 
-## 아키텍처
+## Architecture
 
 ```text
-사용자 / Streamlit UI
+User / Streamlit UI
         │
         ▼
 FastAPI
- ├─ POST /chat               고정 RAG: 검색 → 답변
- ├─ POST /chat/orchestrate   도구 호출 기반 오케스트레이션
- └─ POST /ingest/*           금융 문서 등록
+ ├─ POST /chat               Fixed RAG: search → answer
+ ├─ POST /chat/orchestrate   Tool-calling orchestration
+ └─ POST /ingest/*           Register financial documents
         │
-        ├─ Qdrant       금융 문서 임베딩·유사도 검색
-        ├─ PostgreSQL   문서 청크, 대화 로그, 장기 기억(pgvector)
-        ├─ Redis        확장용 캐시 인프라
-        └─ OpenAI 호환 LLM API (vLLM 등)
+        ├─ Qdrant       Financial document embeddings and similarity search
+        ├─ PostgreSQL   Document chunks, conversation logs, long-term memory (pgvector)
+        ├─ Redis        Cache infrastructure for future expansion
+        └─ OpenAI-compatible LLM API (such as vLLM)
 ```
 
-### 응답 흐름
+### Response flow
 
 ```text
-질문
-  → 금융 도메인 규칙 적용
-  → 벡터 검색 + 키워드 검색(RRF 병합)
-  → 세션/장기 기억 결합
-  → LLM 답변
-  → 근거 문서 및 투자 유의사항 제공
+Question
+  → Apply financial-domain rules
+  → Vector search + keyword search (merged with RRF)
+  → Add session and long-term memory
+  → Generate LLM answer
+  → Return source documents and investment cautions
 ```
 
-`/chat/orchestrate`는 위 흐름에서 LLM이 다음 도구를 선택적으로 호출합니다.
+For `/chat/orchestrate`, the LLM can choose from these tools:
 
-| 도구 | 용도 |
+| Tool | Purpose |
 |---|---|
-| `search_documents` | 금융 문서 청크를 하이브리드 검색 |
-| `get_session_history` | 같은 세션의 최근 대화 확인 |
-| `get_long_term_memory` | 의미적으로 유사한 과거 대화·기억 조회 |
+| `search_documents` | Hybrid search across financial document chunks |
+| `get_session_history` | Retrieve recent messages from the same session |
+| `get_long_term_memory` | Retrieve semantically similar past conversations and memories |
 
-## 빠른 시작
+## Quick start
 
-### 실행 환경 구분
+### Environments
 
-| 환경 | 대상 | Compose 파일 | 환경 파일 | 공개 방식 |
+| Environment | Intended use | Compose file | Environment file | Exposure |
 |---|---|---|---|---|
-| Local | 내 PC 개발 | `docker-compose.yml` | `.env.local` | API·Streamlit·DB·Qdrant 포트를 로컬에 공개, 코드 핫리로드 |
-| Production | AWS EC2 운영 | `docker-compose.prod.yml` | `.env.prod` | Caddy를 통한 80/443만 공개, 데이터 서비스는 내부 네트워크 |
+| Local | Development on your computer | `docker-compose.yml` | `.env.local` | API, Streamlit, database, and Qdrant ports available locally; code hot reload |
+| Production | AWS EC2 deployment | `docker-compose.prod.yml` | `.env.prod` | Only ports 80/443 exposed through Caddy; data services stay on the internal network |
 
-로컬과 AWS의 환경 파일, 데이터 볼륨, Compose 프로젝트 이름은 분리되어 있습니다. `.env.local`, `.env.prod`, PEM 키는 모두 Git에 포함되지 않습니다.
+Local and AWS deployments use separate environment files, data volumes, and Compose project names. `.env.local`, `.env.prod`, and PEM keys are excluded from Git.
 
-### 1. 사전 조건
+### 1. Prerequisites
 
-- Docker 및 Docker Compose
-- OpenAI 호환 Chat Completions API를 제공하는 LLM 서버(vLLM, LM Studio, Ollama 등)
+- Docker and Docker Compose
+- An LLM server with an OpenAI-compatible Chat Completions API, such as vLLM, LM Studio, or Ollama
 
-`docker-compose.yml`은 내 PC 개발 전용 설정입니다. 이 저장소 전용 PostgreSQL(pgvector)·Redis·Qdrant를 함께 실행하며, 다른 프로젝트의 컨테이너나 외부 Docker 네트워크는 필요하지 않습니다.
+`docker-compose.yml` is configured for local development. It starts PostgreSQL with pgvector, Redis, and Qdrant for this repository; no containers or external Docker networks from other projects are required.
 
-| 서비스 | 컨테이너 이름 | 내부 포트 |
+| Service | Container/service name | Internal port |
 |---|---|---:|
-| PostgreSQL | `postgres` 서비스 | 5432 |
-| Redis | `redis` 서비스 | 6379 |
-| Qdrant | `qdrant` 서비스 | 6333 |
+| PostgreSQL | `postgres` | 5432 |
+| Redis | `redis` | 6379 |
+| Qdrant | `qdrant` | 6333 |
 
-PostgreSQL 초기화 시 [init.sql](/home/ubuntu/domain-rag-lab/init.sql)이 자동 실행되어 pgvector 확장이 활성화됩니다.
+[init.sql](init.sql) runs automatically when PostgreSQL initializes and enables the pgvector extension.
 
-### 2. 내 PC에서 실행 (Local)
+### 2. Run locally
 
-로컬 템플릿을 복사해 개인 PC의 LLM 주소와, 필요하다면 AWS LEAN 접속 정보를 입력합니다.
+Copy the local template and set your LLM address. Add AWS LEAN connection details if needed.
 
 ```bash
 cp .env.local.example .env.local
-# .env.local 편집
+# Edit .env.local
 docker compose --env-file .env.local -f docker-compose.yml up --build -d
 ```
 
-오케스트레이터를 쓰려면 LLM 서버와 모델이 Function/Tool Calling을 지원해야 합니다.
+To use the orchestrator, your LLM server and model must support function/tool calling.
 
-LEAN 백테스트는 기본값(`LEAN_RUNNER=local`)으로 같은 PC의 Docker에서 `quantconnect/lean` 컨테이너를 직접 실행합니다. `docker-compose.yml`이 `/var/run/docker.sock`을 API 컨테이너에 마운트하고, 작업 파일은 `./data/lean-workflows`에 잠시 생성된 뒤 삭제됩니다. 첫 실행 전 `docker pull quantconnect/lean:latest`로 이미지를 미리 받아 두면 첫 백테스트가 타임아웃되지 않습니다. 백테스트를 끄려면 `LEAN_RUNNER=off`, 원격 서버를 쓰려면 `LEAN_RUNNER=remote`와 SSH 설정을 지정합니다.
+By default (`LEAN_RUNNER=local`), LEAN backtests run the `quantconnect/lean` container on the same computer through Docker. `docker-compose.yml` mounts `/var/run/docker.sock` into the API container. Temporary job files are created under `./data/lean-workflows` and then deleted. Running `docker pull quantconnect/lean:latest` beforehand helps prevent a timeout on the first backtest. Set `LEAN_RUNNER=off` to disable backtesting, or set `LEAN_RUNNER=remote` and configure SSH to use a remote server.
 
-| 서비스 | 주소 |
+| Service | Address |
 |---|---|
 | Streamlit UI | http://localhost:8290 |
 | FastAPI | http://localhost:8300 |
-| API 문서 | http://localhost:8300/docs |
-| 상태 확인 | http://localhost:8300/health |
-| Qdrant 대시보드 | http://localhost:6335/dashboard |
-| PostgreSQL (호스트 접속) | `localhost:15433` |
-| Redis (호스트 접속) | `localhost:6380` |
+| API documentation | http://localhost:8300/docs |
+| Health check | http://localhost:8300/health |
+| Qdrant dashboard | http://localhost:6335/dashboard |
+| PostgreSQL (host access) | `localhost:15433` |
+| Redis (host access) | `localhost:6380` |
 
-처음 실행할 때는 임베딩 모델 초기화 때문에 API가 준비 상태가 되기까지 잠시 걸릴 수 있습니다. 다음 명령으로 상태를 확인합니다.
+On the first run, API readiness can take some time while the embedding model initializes. Check it with:
 
 ```bash
 docker compose --env-file .env.local -f docker-compose.yml ps
 curl http://localhost:8300/health
 ```
 
-로컬에서 UI만 실행할 때는 API 주소를 지정할 수 있습니다.
+To run only the UI locally, specify the API address:
 
 ```bash
 pip install -r requirements.txt
 API_BASE_URL=http://localhost:8300 streamlit run streamlit_app.py
 ```
 
-### 4일 이론 페이지
+### Four-day theory pages
 
-4일 이론은 메인 화면의 **4일 이론** 메뉴에서 제공합니다. 일차별 콘텐츠는 메인 프런트엔드의 정적 자산과 함께 배포되며, 별도 이론 HTML 경로는 사용하지 않습니다.
+The main screen's **4일 이론** (Four-day theory) menu provides the theory content. Each day's material is deployed with the main frontend's static assets; there are no separate theory HTML routes.
 
-| 일자 | 학습 흐름 | 핵심 내용 |
+| Day | Learning path | Main topics |
 |---|---|---|
-| 1일차 | 금융상품과 계약의 기초 | 현물·선물·옵션, 주문 매칭과 거래소·청산기관, 콜·풋, 프리미엄·증거금, 만기·청산 |
-| 2일차 | 상품 비교와 거래 구조 | 펀드·ETF·리츠·ETN, ETF 기초자산·파생상품 ETF, 레버리지 ETF의 선물·스왑 활용과 일일 재설정, 이머징마켓, NAV·iNAV·괴리율, 숏 포지션·주식 대여, 거래소·청산기관, 한국 ETF 가상 포트폴리오·리밸런싱 실습 |
-| 3일차 | 금리와 실제 거래 준비 | 채권·금리, 파생상품의 목적과 위험, 사전교육·모의거래·기본예탁금 |
-| 4일차 | 위험 측정과 자산배분 | 선물·옵션 시장 심리와 헤지, 퀀트의 데이터·규칙·검증 관점, 에드워드 소프 교수·제임스 사이먼스·HMM·벰버거의 사례, 분산·변동성·옵션 체인, 증거금·마진콜·강제청산, 포지션과 포트폴리오, 올웨더 포트폴리오·리밸런싱·마켓 타이밍, MDD·샤프 비율 |
+| Day 1 | Financial products and contracts | Spot assets, futures, options, order matching, exchanges and clearinghouses, calls and puts, premiums and margins, expiration and settlement |
+| Day 2 | Product comparison and trading structure | Funds, ETFs, REITs, ETNs, ETF underlying assets, derivative ETFs, futures and swaps in leveraged ETFs, daily reset, emerging markets, NAV/iNAV and premium or discount, short positions and securities lending, exchanges and clearinghouses, simulated Korean ETF portfolios and rebalancing |
+| Day 3 | Interest rates and trading preparation | Bonds and interest rates, purposes and risks of derivatives, prerequisite education, simulated trading, and minimum deposits |
+| Day 4 | Risk measurement and asset allocation | Futures and options sentiment and hedging; data, rules, and validation in quant investing; examples from Edward Thorp, James Simons, HMM, and Bamberger; variance, volatility, and option chains; margin, margin calls, and forced liquidation; positions and portfolios; All Weather portfolios, rebalancing, and market timing; MDD and Sharpe ratio |
 
-1일차는 “선물 1계약의 매도 주문과 1계약의 매수 주문이 체결되면 계약이 생긴다”는 수준부터 설명합니다. 현물 주식처럼 기업 지분을 사는 것이 아니라, 기준 대상의 가격 변화에 따른 손익을 정산하는 표준 계약이라는 점을 다룹니다. 이후 2일차에서 거래소·청산기관과 익명의 반대편 거래자 구조, 헤지·투기·차익거래의 차이를 확장합니다.
+Day 1 starts with the idea that a contract is created when an order to sell one futures contract matches an order to buy one. Unlike buying equity in a company through spot shares, a futures contract is a standardized agreement whose gains and losses depend on changes in the underlying reference price. Day 2 extends this to exchanges, clearinghouses, anonymous counterparties, and the differences between hedging, speculation, and arbitrage.
 
-### 일자별 학습
+### Learning by day
 
-일자별 학습은 메인 화면의 4일 이론 메뉴에서 제공합니다. 핵심 개념은 정적 프런트엔드 자산으로 구성하고, `data` 아래의 모든 텍스트 학습 문서는 주제별로 1~4일차 페이지에 한 번씩 배정해 **DATA 원문 상세 학습 자료**로 표시합니다. 따라서 문서를 갱신하면 배정된 일차의 원문 학습 자료에도 반영됩니다.
+The main screen's Four-day theory menu organizes daily learning. Core concepts are static frontend assets. Every text learning document under `data` is assigned once to a topic on one of the Day 1–4 pages and displayed as **DATA original detailed learning material**. Updating a document therefore updates the source material shown on its assigned day.
 
-### 선물·옵션 교육용 시뮬레이터
+### Educational futures and options simulator
 
-메인 프런트엔드의 **자산배분 실습**에는 교육용 선물·풋옵션 헤지 모듈이 포함되어 있습니다.
+The main frontend's **자산배분 실습** (Asset allocation practice) includes a futures and put-option hedging module.
 
-- 포트폴리오 금액, 가정 지수 수준, 지수선물 매도 계약 수를 입력합니다.
-- 주식/ETF 노출 중 풋옵션으로 보호할 비중과 권리금 가정을 설정합니다.
-- 주식 급락·금리 급등·인플레이션 시나리오에서 현물 포트폴리오, 선물, 풋옵션의 손익을 분리해 보여 줍니다.
-- 콜·풋 옵션 체인 샘플 화면에서 행사가, 프리미엄, IV(내재변동성), OI(미결제약정)를 읽는 법을 설명합니다.
+- Enter a portfolio value, assumed index level, and number of short index-futures contracts.
+- Set the portion of stock/ETF exposure protected by put options and the assumed premium.
+- Examine separate gains and losses for the spot portfolio, futures, and puts under stock-market crash, rate-hike, and inflation scenarios.
+- Learn to read strike prices, premiums, implied volatility (IV), and open interest (OI) in a sample call and put option chain.
 
-이 모듈과 옵션 체인 표의 숫자는 학습을 위한 가정값입니다. 실시간 시세·호가·옵션가격·만기·증거금·수수료·세금·개별 상품의 거래 제약을 반영하지 않으며, 매매 신호나 투자 권유가 아닙니다.
+The numbers in this module and the option-chain table are educational assumptions. They do not reflect live prices or quotes, actual option prices, expirations, margins, fees, taxes, or product-specific trading restrictions. They are not trading signals or investment recommendations.
 
-### EDA · LightGBM 테스트 시뮬레이션
+### EDA and LightGBM test simulation
 
-메인 화면의 별도 **EDA · LightGBM** 메뉴 (`/?view=quant`)에서 실행합니다. 기본 데이터는 재현 가능한 가상 OHLCV 620거래일입니다. **삼성전자 최근 2년 일봉**을 선택하면 yfinance로 Yahoo Finance의 `005930.KS` 일간 OHLCV를 가져와 같은 분석·모델 테스트에 사용합니다. 중복 요청은 30분 동안 캐시하며, 배당 조정 종가(`Adj Close`) 대신 일반 `Close`를 사용하고 앱에서 추가 가격 조정을 하지 않습니다. 시가·고가·저가·종가의 범위가 맞지 않는 원본 행은 제외하고 화면에 건수를 표시합니다. [Yahoo Finance 종목 페이지](https://finance.yahoo.com/quote/005930.KS/) · [yfinance 기간 조회 문서](https://ranaroussi.github.io/yfinance/reference/api/yfinance.Ticker.history.html)
+Open the main screen's **EDA · LightGBM** menu at `/?view=quant`. The default dataset contains 620 trading days of reproducible synthetic OHLCV data. Choosing **삼성전자 최근 2년 일봉** (Samsung Electronics daily prices for the last two years) downloads daily OHLCV for Yahoo Finance symbol `005930.KS` through yfinance and uses it for the same analysis and model test. Duplicate requests are cached for 30 minutes. The app uses the regular `Close` price instead of the dividend-adjusted `Adj Close` and makes no additional price adjustments. It drops source rows with invalid open, high, low, or close ranges and displays the count. See the [Yahoo Finance symbol page](https://finance.yahoo.com/quote/005930.KS/) and [yfinance history documentation](https://ranaroussi.github.io/yfinance/reference/api/yfinance.Ticker.history.html).
 
-PostgreSQL에 이미 적재된 종목 일봉을 종목 코드로 선택하거나, `date,open,high,low,close,volume` 열이 있는 UTF-8 CSV(최대 1MB, 유효한 거래일 180행 이상)를 올려 테스트할 수도 있습니다. 저장된 종목은 기존 `/market/history` 조회 경로를 사용합니다. 업로드 파일과 분석 결과는 저장하지 않습니다.
+You can also select stored daily prices by symbol from PostgreSQL or upload a UTF-8 CSV with `date,open,high,low,close,volume` columns (up to 1 MB and at least 180 valid trading-day rows). Stored prices use the existing `/market/history` route. Uploaded files and analysis results are not saved.
 
-EDA는 종가·거래량 추이, 일간 수익률 분포·결측 건수·변동성·최대 낙폭을 보여 줍니다. LightGBM은 1·5·20일 수익률, 이동평균 이격, 변동성, 고저폭, 거래량 비율을 사용해 **다음 거래일 시가 대비 종가 상승 여부**를 분류합니다. 학습/테스트는 날짜순으로 분리하고 경계의 1행을 제외합니다. 테스트 화면에서 정확도와 다수 클래스 기준, 특징 중요도, 모의 전략과 매일 장중 보유의 성과를 비교할 수 있습니다. 장중 진입·청산마다 설정한 편도 비용을 반영합니다.
+EDA shows closing-price and volume trends, the distribution of daily returns, missing-value counts, volatility, and maximum drawdown. LightGBM uses 1-, 5-, and 20-day returns, distance from moving averages, volatility, high-low range, and volume ratios to classify **whether the next trading day's close exceeds its open**. Training and test data are separated chronologically, excluding one row at the boundary. The test screen compares accuracy with a majority-class baseline, feature importance, and the performance of a simulated strategy versus holding during every trading day. The configured one-way trading cost is applied at each intraday entry and exit.
 
-처음에는 기본값으로 실행하면 됩니다. EDA는 “어제 종가 100원, 오늘 103원이라면 하루에 3% 올랐다”처럼 데이터를 읽는 단계입니다. [LightGBM은 마이크로소프트가 개발해 공개한 오픈소스 머신러닝 라이브러리](https://www.microsoft.com/en-us/research/project/lightgbm/)입니다. 이 실습에서는 과거 날짜의 가격·거래량을 보고 다음 날 장중에 오를지 예상합니다. 예를 들어 다음 날 시가가 100원이고 종가가 103원이면 정답은 “상승”입니다. 화면의 정확도는 이런 정답을 몇 번 맞혔는지 보여 줍니다.
+Start with the defaults. EDA is the step of reading data—for example, interpreting a move from yesterday's close of KRW 100 to today's close of KRW 103 as a 3% daily gain. [LightGBM is an open-source machine-learning library developed and released by Microsoft](https://www.microsoft.com/en-us/research/project/lightgbm/). Here, it uses past price and volume data to predict whether a stock will rise during the next trading day. If the next day's open is KRW 100 and close is KRW 103, the correct label is “up.” The displayed accuracy is the share of such labels the model predicts correctly.
 
-예제 데이터는 실제 시장 시세가 아닙니다. CSV로 얻은 결과도 과거 구간의 교육용 실험이며 배당·세금·슬리피지·체결 실패를 반영하지 않습니다.
+Synthetic data is not actual market data. CSV results are also educational experiments on historical periods; they do not account for dividends, taxes, slippage, or failed fills.
 
-### Walk-Forward 검증 시뮬레이션
+### Walk-forward validation simulation
 
-GNB의 **Walk-Forward 검증** 메뉴 또는 독립 HTML 페이지 (`/walk-forward.html`)에서 실행합니다. 기존 `/?view=walk-forward` 주소도 계속 사용할 수 있습니다. 첨부된 Python 예제를 바탕으로 고정 시드 가상 시장 데이터 1,250거래일을 만들고, Expanding Window로 학습 구간을 늘리면서 테스트 직전 10거래일을 Purging으로 격리합니다. 기본값은 4개 폴드·격리 10거래일·시드 42이며, 화면에서 값을 바꿔 각 폴드의 날짜 범위, ROC-AUC·재현율·정밀도·F1, 실제 위험과 모델 경보의 날짜별 결과를 비교할 수 있습니다. API는 `GET /walk-forward/simulate`입니다.
+Open **Walk-Forward 검증** (Walk-forward validation) from the global navigation bar or visit the standalone `/walk-forward.html` page. The existing `/?view=walk-forward` URL also works. Based on the attached Python example, the simulator generates 1,250 trading days of synthetic market data with a fixed seed. It uses an expanding training window and purges the 10 trading days immediately before each test period. Defaults are four folds, a 10-day purge, and seed 42. You can change them to compare each fold's date range, ROC-AUC, recall, precision, F1, and daily results for actual risk versus model alerts. The API is `GET /walk-forward/simulate`.
 
-원본 예제에서 미래 10일의 정답을 계산할 수 없는 마지막 10행은 실제로 제거합니다. 또 ‘하위 10% 위험’ 기준을 전체 기간에서 미리 정하지 않고 **각 폴드의 학습 구간에서만** 계산해 테스트 분포가 학습에 섞이지 않게 합니다. 가상 입력값은 독립 난수이므로 높은 예측력을 보여 주기 위한 데이터가 아니라 검증 절차를 확인하기 위한 데이터입니다.
+The last 10 rows of the original example are removed because their future 10-day labels cannot be computed. The “bottom 10% risk” threshold is calculated **only from each fold's training data**, so the test distribution cannot leak into training. Synthetic inputs are independent random values; this dataset is designed to demonstrate validation procedure, not high predictive power.
 
-### 종목보기의 과거 데이터 차트
+### Historical data charts in the stock view
 
-`?view=stocks`에서 종목을 클릭하면 열리는 기업 매거진 모달에 **과거 데이터 보기** 버튼이 있습니다. 이 버튼은 PostgreSQL의 `stock_price_history` 테이블에 해당 종목의 일별 OHLCV가 저장되어 있을 때만 활성화되며, 클릭하면 캔들차트와 거래량, 기간(1개월·3개월·6개월·전체) 전환, 호버 툴팁을 보여 줍니다. `/market/history` API는 Yahoo Finance를 직접 조회하지 않고 이미 저장된 데이터만 읽으므로, 데이터가 없는 종목은 버튼이 비활성 상태로 남습니다.
+The company magazine modal that opens when you click a stock at `?view=stocks` has a **과거 데이터 보기** (View historical data) button. It is enabled only when that stock has daily OHLCV rows in PostgreSQL's `stock_price_history` table. Clicking it shows a candlestick chart and volume, a 1-month/3-month/6-month/all-time range selector, and hover tooltips. The `/market/history` API reads stored data only; it does not query Yahoo Finance directly. Stocks without stored data keep the button disabled.
 
-`stock_price_history`를 채우거나 갱신하려면 API 컨테이너 안에서 백필 스크립트를 실행합니다. 이 스크립트는 `frontend/app.js`의 종목 atlas(200개 종목)를 그대로 읽어 Yahoo Finance에서 1년치 일봉을 내려받아 upsert합니다.
+To populate or refresh `stock_price_history`, run the backfill script inside the API container. It reads the 200-stock atlas in `frontend/app.js`, downloads one year of daily prices from Yahoo Finance, and upserts them.
 
 ```bash
 docker compose exec api python -m app.ops.backfill_ohlcv
 ```
 
-### 02일차 ETF 탐색의 기간별 수익률
+### Period returns in Day 2 ETF exploration
 
-02일차 학습 자료의 "국내 주요 운용사 전체 ETF 탐색"에서 "수익률 기간"을 3개월 외의 값(1개월·6개월·1년·직접 설정)으로 바꾸면, `/market/period-return` API가 매번 Yahoo Finance를 실시간 조회하는 대신 `stock_price_history`에 이미 저장된 값만 읽어 계산합니다. 이 테이블에 해당 ETF의 최근 1년치 데이터가 없으면 화면에 "1년 전 가져오기" 버튼이 나타나며, 클릭하면 `POST /market/period-return/extend`가 그 ETF 하나만 온디맨드로 Yahoo Finance에서 내려받아 저장한 뒤 다시 조회합니다.
+In Day 2's **국내 주요 운용사 전체 ETF 탐색** (Explore all ETFs from major Korean asset managers), changing **수익률 기간** (Return period) from three months to one month, six months, one year, or a custom range makes the `/market/period-return` API calculate returns from `stock_price_history` instead of fetching Yahoo Finance data on every request. If the table lacks one year of data for an ETF, a **1년 전 가져오기** (Fetch one year) button appears. Clicking it calls `POST /market/period-return/extend` to download and store data for that ETF on demand, then queries again.
 
-ETF 목록 전체의 최근 1년치를 미리 채워두려면 아래 백필 스크립트를 실행합니다. `frontend/days/assets/etf-catalog.json`의 ETF 코드를 그대로 읽어 채우므로, 개별 종목 백필과 별도로 한 번 더 실행해야 합니다.
+To prefill one year of prices for the entire ETF catalog, run this separate backfill script. It reads ETF symbols from `frontend/days/assets/etf-catalog.json`.
 
 ```bash
 docker compose exec api python -m app.ops.backfill_etf_ohlcv
 ```
 
-### 3. AWS EC2에서 실행 (Production)
+### 3. Run on AWS EC2 (production)
 
-AWS 서버에서만 아래 명령을 실행합니다. 운영 Compose는 소스 바인드 마운트와 `--reload`를 쓰지 않고, PostgreSQL·Redis·Qdrant 포트를 외부에 노출하지 않습니다. 웹 트래픽은 Caddy가 FastAPI의 프론트엔드와 API로 전달합니다.
+Run these commands on the AWS server. The production Compose configuration does not use source bind mounts or `--reload`, and it does not expose PostgreSQL, Redis, or Qdrant ports externally. Caddy forwards web traffic to the FastAPI frontend and API.
 
 ```bash
 cp .env.prod.example .env.prod
-# .env.prod에서 강한 PostgreSQL 비밀번호, LLM 주소, 서버 내 PEM 경로를 설정
+# In .env.prod, set a strong PostgreSQL password, the LLM address, and the server-side PEM path
 chmod 600 /home/ubuntu/.ssh/pr-test.pem
 docker compose --env-file .env.prod -f docker-compose.prod.yml up --build -d
 docker compose --env-file .env.prod -f docker-compose.prod.yml ps
 ```
 
-### Caddy 운영 프록시
+### Caddy production proxy
 
-Caddy는 Python 모듈이 아니라 웹 서버이자 리버스 프록시입니다. 이 프로젝트에서는 외부 요청을 80/443 포트에서 받고, Docker 네트워크 내부의 FastAPI 컨테이너(`api:8000`)로 전달합니다.
+Caddy is a web server and reverse proxy, not a Python module. In this project, it accepts external requests on ports 80/443 and forwards them to the FastAPI container (`api:8000`) on the internal Docker network.
 
 ```text
-브라우저 → Caddy (HTTP/HTTPS, 압축) → FastAPI (api:8000)
+Browser → Caddy (HTTP/HTTPS, compression) → FastAPI (api:8000)
 ```
 
-현재 [Caddyfile](Caddyfile)은 아래처럼 도메인별 프록시를 간결하게 정의합니다. 도메인의 DNS가 서버를 가리키고 80/443 포트가 열려 있으면, Caddy는 기본 설정으로 HTTPS 인증서를 자동 발급·갱신합니다.
+The current [Caddyfile](Caddyfile) defines a domain-based proxy as follows. If the domain's DNS points to the server and ports 80/443 are open, Caddy issues and renews HTTPS certificates automatically with its default configuration.
 
 ```caddy
 pr.edumgt.co.kr {
@@ -245,32 +247,32 @@ pr.edumgt.co.kr {
 }
 ```
 
-#### Caddy와 Nginx 비교
+#### Caddy and Nginx
 
-둘 다 성능이 뛰어난 웹 서버·리버스 프록시입니다. Nginx는 세밀한 제어와 폭넓은 운영 사례에, Caddy는 HTTPS 자동화와 간결한 설정에 특히 강점이 있습니다.
+Both are capable web servers and reverse proxies. Nginx offers fine-grained control and a broad operational track record; Caddy emphasizes automatic HTTPS and concise configuration.
 
-| 비교 항목 | Caddy | Nginx |
+| Aspect | Caddy | Nginx |
 | --- | --- | --- |
-| 핵심 성격 | 자동화와 간결한 운영 경험 | 세밀한 제어와 폭넓은 프로덕션 활용 |
-| 개발 언어 | Go | C |
-| HTTPS (SSL/TLS) | 도메인 설정 시 자동 인증서 발급·갱신 지원 | 인증서 발급·갱신 및 서버 설정을 별도로 구성하는 경우가 일반적 |
-| 설정 방식 | `Caddyfile`로 짧게 작성 가능 | `nginx.conf`와 사이트별 설정으로 세부 항목을 명시 |
-| HTTP/3 | 지원하며 설정이 비교적 간단함 | 버전·빌드·배포 환경에 따라 별도 설정 또는 모듈 확인 필요 |
-| 성능 | 대부분의 웹 서비스에 충분한 높은 성능 | 고트래픽 및 복잡한 프록시 요구에 널리 검증됨 |
-| 생태계 | 성장 중이며 기본 기능의 자동화에 강점 | 오래된 업계 표준으로 자료·모듈·운영 사례가 매우 풍부함 |
+| Main approach | Automation and simple operations | Fine-grained control and broad production use |
+| Implementation language | Go | C |
+| HTTPS (SSL/TLS) | Automatic certificate issuance and renewal for configured domains | Certificates, renewal, and server configuration are commonly managed separately |
+| Configuration | Short `Caddyfile` | Detailed `nginx.conf` and site-specific configuration |
+| HTTP/3 | Supported with relatively simple setup | May require version, build, deployment, or module checks |
+| Performance | High performance suitable for most web services | Widely proven for high traffic and complex proxy requirements |
+| Ecosystem | Growing, with strong automation in built-in features | Long-established, with extensive documentation, modules, and operational examples |
 
-이 프로젝트는 단일 FastAPI 서비스의 HTTPS 공개가 주목적이므로 인증서 관리 부담을 줄이기 위해 Caddy를 사용합니다. 매우 높은 트래픽, 복잡한 L7 라우팅, 기존 Nginx 운영 표준과의 통합이 핵심이라면 Nginx를 검토할 수 있습니다.
+This project uses Caddy to expose a single FastAPI service over HTTPS while reducing certificate-management work. For very high traffic, complex Layer 7 routing, or integration with an existing Nginx operations standard, Nginx may be worth evaluating.
 
-운영 전 확인 사항:
+Before production deployment:
 
-- AWS 보안 그룹에는 웹 공개가 필요할 때만 TCP 80/443을 허용합니다. PostgreSQL(5432), Redis(6379), Qdrant(6333/6334)는 열지 않습니다.
-- [Caddyfile](/home/ubuntu/domain-rag-lab/Caddyfile)의 도메인이 EC2의 공인 IP 또는 로드밸런서를 가리키도록 DNS를 설정합니다.
-- AWS 서버에서 LEAN 컨테이너를 실행하는 경우 `.env.prod`의 `LEAN_SSH_HOST=host.docker.internal`을 사용하면 API 컨테이너가 같은 EC2 호스트의 SSH와 Docker에 연결합니다. 별도 LEAN 서버를 둘 때만 private IP 또는 private DNS로 바꿉니다. PEM 파일은 서버에만 두고 읽기 전용으로 마운트됩니다.
-- 배포 갱신은 `docker compose --env-file .env.prod -f docker-compose.prod.yml up --build -d`로 수행합니다.
+- Allow inbound TCP 80/443 in the AWS security group only when public web access is needed. Do not open PostgreSQL (5432), Redis (6379), or Qdrant (6333/6334).
+- Set DNS so the domain in the [Caddyfile](Caddyfile) points to the EC2 public IP or load balancer.
+- To run the LEAN container on the same EC2 host, set `LEAN_SSH_HOST=host.docker.internal` in `.env.prod` so the API container can reach the host's SSH service and Docker. Use a private IP or private DNS only for a separate LEAN server. Keep the PEM file on the server and mount it read-only.
+- Update the deployment with `docker compose --env-file .env.prod -f docker-compose.prod.yml up --build -d`.
 
-## 금융 지식 베이스 준비
+## Prepare the financial knowledge base
 
-기본 샘플은 `data/samples/finance_*.txt`에 포함되어 있습니다. 금융상품 분류, ETF 심화, 포트폴리오 이론, 자산배분 모델, 성과 분석, 재무제표·밸류에이션 자료를 한 번에 등록하려면 다음을 실행하세요.
+Sample files are included under `data/samples/finance_*.txt`. To ingest the financial-product classification, ETF deep dive, portfolio theory, asset allocation, performance analysis, and financial-statement and valuation samples at once, run:
 
 ```bash
 for f in ./data/samples/finance_*.txt; do
@@ -280,222 +282,201 @@ for f in ./data/samples/finance_*.txt; do
 done
 ```
 
-등록 가능한 파일 형식은 TXT와 PDF입니다. UI의 사이드바에서도 업로드하거나 텍스트를 직접 등록할 수 있습니다.
+TXT and PDF files are supported. You can also upload files or register text directly from the UI sidebar.
 
-### QuantConnect LEAN 백테스트 워크플로우
+### QuantConnect LEAN backtesting workflow
 
-상단의 **LEAN 백테스트** 메뉴는 종목·백테스트 기간·비교 기간을 입력받아 yfinance 일봉을 정리하고, `quantconnect/lean:latest` 컨테이너를 호출합니다. 실행 위치는 `LEAN_RUNNER`로 정합니다.
+The top-level **LEAN 백테스트** (LEAN backtest) menu accepts a security, backtest period, and comparison period; prepares yfinance daily prices; and calls a `quantconnect/lean:latest` container. Set the execution location with `LEAN_RUNNER`.
 
-| `LEAN_RUNNER` | 동작 | 필요한 설정 |
+| `LEAN_RUNNER` | Behavior | Required configuration |
 |---|---|---|
-| `local` (로컬 기본값) | API 컨테이너가 마운트된 `/var/run/docker.sock`으로 같은 호스트의 Docker에서 LEAN 컨테이너를 실행 | `LEAN_LOCAL_WORKDIR_HOST`(`./data/lean-workflows`의 호스트 절대 경로, compose가 `PWD` 기준으로 자동 지정) |
-| `remote` | SSH로 원격 서버에 파일을 올리고 그 서버의 Docker에서 실행 | `LEAN_SSH_HOST`, `LEAN_SSH_USER`, `LEAN_SSH_KEY_HOST_PATH`, `LEAN_SSH_KEY_PATH` |
-| `auto` | SSH 설정이 있으면 `remote`, 없고 Docker 소켓이 보이면 `local` | 위 조합 중 하나 |
-| `off` | 백테스트 API 비활성화 | 없음 |
+| `local` (local default) | The API container starts a LEAN container on the same host using the mounted `/var/run/docker.sock` | `LEAN_LOCAL_WORKDIR_HOST` (absolute host path to `./data/lean-workflows`; Compose sets it automatically from `PWD`) |
+| `remote` | Uploads files over SSH and runs Docker on a remote server | `LEAN_SSH_HOST`, `LEAN_SSH_USER`, `LEAN_SSH_KEY_HOST_PATH`, `LEAN_SSH_KEY_PATH` |
+| `auto` | Uses `remote` if SSH is configured; otherwise uses `local` if a Docker socket is available | One of the configurations above |
+| `off` | Disables the backtest API | None |
 
-AWS에서는 `.env.prod`에 원격 설정을 두고 `LEAN_RUNNER=remote`를 사용합니다. PEM 키는 저장소에 추가하지 않고 호스트의 절대 경로를 읽기 전용으로 마운트합니다.
+On AWS, put the remote settings in `.env.prod` and use `LEAN_RUNNER=remote`. Do not add the PEM key to the repository; mount it read-only from an absolute host path.
 
-결과는 교육용 매수·보유 예시입니다. 데이터 품질, 배당, 세금, 수수료, 슬리피지와 실제 체결은 별도 검토가 필요합니다.
+Results are educational buy-and-hold examples. Data quality, dividends, taxes, fees, slippage, and actual execution require separate review.
 
-### 핵심 샘플 문서
+### Key sample documents
 
-| 파일 | 활용 예 |
+| File | Example use |
 |---|---|
-| `finance_high_school_product_guide.txt` | 고등학생 눈높이의 예금·채권·주식·ETF·펀드·파생상품 설명 |
-| `finance_financial_products_classification.txt` | 금융투자상품 분류, 주식·ETF·펀드 기초 |
-| `finance_etf_deep_dive.txt` | 일반펀드와 ETF의 비용·유동성·추적오차 비교 |
-| `finance_portfolio_theory.txt` | MPT, 효율적 투자선, CAGR·MDD·샤프 비율 |
-| `finance_asset_allocation.txt` | 평균-분산, 블랙-리터만, Risk Parity, 자산배분 사례 및 증권사·HTS/MTS 주문 구조, KRX·NXT 통합시세·SOR |
-| `finance_stock_dividend_basics.txt` | 주식·배당 및 금융상품 기초 |
-| `finance_valuation_multiples.txt` | PER·PBR 등 상대가치 평가 |
-| `finance_quantopian_intro.txt` | 퀀토피안의 역사적 역할, Zipline 등 오픈소스 도구, LEAN과의 차이와 백테스트 유의사항 |
-| `finance_lending_sectors_guide.txt` | 제1·2금융권, 등록 대부업·사적 대출의 등록·규율·보호 범위 학습 |
-| `finance_aihub_rag_case.txt` | AI Hub 금융·법률 데이터를 정제·청킹·메타데이터화하여 RAG에 등록하는 사례 |
+| `finance_high_school_product_guide.txt` | Explains deposits, bonds, stocks, ETFs, funds, and derivatives at a high-school level |
+| `finance_financial_products_classification.txt` | Classifies financial investment products and introduces stocks, ETFs, and funds |
+| `finance_etf_deep_dive.txt` | Compares costs, liquidity, and tracking error of mutual funds and ETFs |
+| `finance_portfolio_theory.txt` | Covers modern portfolio theory, the efficient frontier, CAGR, MDD, and the Sharpe ratio |
+| `finance_asset_allocation.txt` | Covers mean-variance, Black-Litterman, Risk Parity, allocation cases, brokerage and HTS/MTS order structures, KRX/NXT consolidated quotes, and smart order routing (SOR) |
+| `finance_stock_dividend_basics.txt` | Introduces stocks, dividends, and financial products |
+| `finance_valuation_multiples.txt` | Introduces relative valuation using P/E, P/B, and related multiples |
+| `finance_quantopian_intro.txt` | Covers Quantopian's historical role, open-source tools such as Zipline, differences from LEAN, and backtesting cautions |
+| `finance_lending_sectors_guide.txt` | Explores the registration, rules, and protections for first- and second-tier financial institutions, registered lenders, and private loans |
+| `finance_aihub_rag_case.txt` | Demonstrates cleaning, chunking, adding metadata to, and ingesting AI Hub financial and legal data for RAG |
 
-## 사용 예시
+## Usage examples
 
-### 금융상품 비교
+### Compare financial products
 
 ```bash
 curl -X POST http://localhost:8300/chat \
   -H "Content-Type: application/json" \
   -d '{
-    "question": "일반펀드와 ETF를 비교할 때 비용과 유동성 측면에서 확인할 항목을 정리해 주세요.",
+    "question": "When comparing mutual funds and ETFs, which costs and liquidity factors should I check?",
     "domain": "finance",
     "session_id": "finance-study-001",
     "top_k": 4
   }'
 ```
 
-### 자산배분 질의
+### Ask about asset allocation
 
 ```bash
 curl -X POST http://localhost:8300/chat/orchestrate \
   -H "Content-Type: application/json" \
   -d '{
-    "question": "60/40 포트폴리오와 Risk Parity의 차이를 위험 기여도 관점에서 설명해 주세요.",
+    "question": "Explain the difference between a 60/40 portfolio and Risk Parity in terms of risk contribution.",
     "domain": "finance",
     "session_id": "allocation-study-001"
   }'
 ```
 
-### 직접 문서 등록
+### Register a document directly
 
 ```bash
 curl -X POST http://localhost:8300/ingest/text \
   -H "Content-Type: application/json" \
   -d '{
     "document_id": "allocation-policy-v1",
-    "title": "자산배분 정책 초안",
-    "content": "투자 목적, 투자 기간, 허용 가능한 손실 범위, 리밸런싱 기준을 기록합니다.",
+    "title": "Draft asset allocation policy",
+    "content": "Record investment goals, time horizon, acceptable loss range, and rebalancing rules.",
     "domain": "finance"
   }'
 ```
 
-## API 요약
+## API summary
 
-| 메서드 | 경로 | 설명 |
+| Method | Route | Description |
 |---|---|---|
-| `GET` | `/health` | 서비스 상태 확인 |
-| `POST` | `/ingest/text` | 텍스트 문서 등록 |
-| `POST` | `/ingest/file` | TXT/PDF 문서 업로드·등록 |
-| `POST` | `/chat` | 고정 RAG 파이프라인 질의 |
-| `POST` | `/chat/orchestrate` | 도구 호출 기반 질의 |
+| `GET` | `/health` | Check service health |
+| `POST` | `/ingest/text` | Register a text document |
+| `POST` | `/ingest/file` | Upload and ingest a TXT/PDF document |
+| `POST` | `/chat` | Query the fixed RAG pipeline |
+| `POST` | `/chat/orchestrate` | Query with tool-calling orchestration |
 
-`domain`에는 `finance`를 지정합니다. 구현상 `general`, `medical`, `english`도 선택할 수 있지만, 이 저장소의 주된 지식 베이스와 사용 목적은 금융상품 및 자산배분입니다.
+Set `domain` to `finance`. The implementation also accepts `general`, `medical`, and `english`, but this repository's primary knowledge base and purpose are financial products and asset allocation.
 
 ## Streamlit UI
 
-Streamlit(스트림릿)은 HTML, CSS, JavaScript를 직접 작성하지 않고도 Python 코드만으로 웹 인터페이스를 빠르게 만들 수 있는 오픈소스 프레임워크입니다. 데이터 분석 결과와 AI·머신러닝 모델을 웹 화면으로 구현해 다른 사람과 공유할 때 유용합니다.
+Streamlit is an open-source framework for building web interfaces quickly with Python, without writing HTML, CSS, or JavaScript directly. It is useful for presenting data analyses and AI or machine-learning models on a shareable web page.
 
-### 주요 특징과 활용
+### Features and uses
 
-- **순수 Python 기반**: `import streamlit as st`와 위젯 함수를 사용해 버튼, 입력 폼, 표, 차트 등을 구성합니다.
-- **빠른 프로토타이핑**: 별도의 프론트엔드나 복잡한 API 계층을 만들지 않고 대시보드와 AI 데모를 구현할 수 있습니다.
-- **자동 재실행**: 사용자가 입력을 바꾸거나 위젯을 조작하면 스크립트가 다시 실행되어 화면을 갱신합니다.
-- **다양한 위젯과 시각화 연동**: 텍스트 입력, 파일 업로드, 체크박스, 선택 상자, 슬라이더 등을 제공하며 Matplotlib, Plotly 등의 시각화 라이브러리도 사용할 수 있습니다.
-- **간편한 배포**: Streamlit Community Cloud 등을 이용하면 GitHub 저장소의 앱을 웹에 배포해 공유할 수 있습니다.
+- **Python-based:** Build buttons, forms, tables, and charts using `import streamlit as st` and widget functions.
+- **Rapid prototyping:** Build dashboards and AI demos without a separate frontend or complex API layer.
+- **Automatic reruns:** The script reruns and refreshes the page when users change inputs or interact with widgets.
+- **Widgets and visualizations:** Use text inputs, file uploads, checkboxes, select boxes, sliders, and libraries such as Matplotlib and Plotly.
+- **Simple deployment:** Share an app from a GitHub repository through services such as Streamlit Community Cloud.
 
-주요 활용 사례는 CSV 데이터 분석 대시보드, ChatGPT API 연동 챗봇이나 이미지 생성기 같은 AI 데모, 그리고 사용자 반응을 확인하기 위한 서비스 프로토타입입니다. 요약하면 Python으로 웹 앱이나 대시보드 UI를 빠르게 만들고 싶을 때 고려할 수 있는 도구입니다.
+Common uses include CSV analysis dashboards, AI demos such as chatbots connected to the ChatGPT API or image generators, and service prototypes for gathering user feedback. Streamlit is an option when you want to build a web app or dashboard UI quickly in Python.
 
-### 이 저장소의 UI
+### This repository's UI
 
-UI에서 도메인을 `금융·투자`로 선택한 뒤 다음 기능을 사용할 수 있습니다.
+Select `금융·투자` (Finance and investing) as the domain in the UI to use:
 
-- 오케스트레이터 채팅: 문서 검색·대화 기억 도구의 호출 이력까지 확인
-- 결과 리포트: 반복 횟수, 호출 도구, 도구별 입력·결과 미리보기 확인
-- 일반 RAG 채팅: Top-K를 조정하고 검색된 참고 문서를 확인
-- 문서 등록: 금융 리서치, 상품 설명서, 자산배분 정책 등 TXT/PDF 추가
+- **Orchestrator chat:** Inspect calls to document-search and conversation-memory tools.
+- **Result report:** See iteration counts, called tools, and previews of each tool's inputs and outputs.
+- **Standard RAG chat:** Adjust Top-K and inspect retrieved reference documents.
+- **Document registration:** Add TXT/PDF financial research, product descriptions, and asset allocation policies.
 
-질문 예시는 다음과 같습니다.
+Example questions:
 
-- “ETF의 총보수, 스프레드, 추적오차는 각각 왜 확인해야 하나요?”
-- “변동성과 MDD의 차이, 그리고 샤프 비율을 함께 보는 이유를 설명해 주세요.”
-- “평균-분산 최적화와 블랙-리터만 모델의 입력값과 한계를 비교해 주세요.”
-- “리밸런싱 규칙을 정할 때 비중 기준과 시간 기준의 장단점은 무엇인가요?”
+- “Why should I check an ETF's expense ratio, spread, and tracking error?”
+- “What is the difference between volatility and MDD, and why look at the Sharpe ratio alongside them?”
+- “Compare the inputs and limitations of mean-variance optimization and Black-Litterman.”
+- “What are the pros and cons of threshold-based and time-based rebalancing rules?”
 
-## 프로젝트 구조
+## Project structure
 
 ```text
 .
 ├── app/
-│   ├── api/routes/        # chat, ingest, health API
-│   ├── core/              # 환경 설정 및 DB 연결
-│   ├── models/            # 채팅 로그·문서 청크·장기 기억 모델
-│   ├── services/          # RAG, 검색, 임베딩, 오케스트레이터
+│   ├── api/routes/        # Chat, ingestion, and health APIs
+│   ├── core/              # Environment configuration and DB connections
+│   ├── models/            # Chat logs, document chunks, and long-term memory models
+│   ├── services/          # RAG, search, embedding, and orchestration
 │   └── main.py
 ├── data/
-│   ├── samples/           # 금융상품·자산배분 샘플 문서
-│   └── uploads/           # 업로드 파일 저장 경로
-├── frontend/              # 기본 정적 프론트엔드
-├── streamlit_app.py       # 데모 UI
+│   ├── samples/           # Sample financial-product and asset-allocation documents
+│   └── uploads/           # Uploaded file storage
+├── frontend/              # Main static frontend
+├── streamlit_app.py       # Demo UI
 ├── docker-compose.yml
 ├── Dockerfile
-├── init.sql               # pgvector 확장 초기화
+├── init.sql               # Initialize the pgvector extension
 └── requirements.txt
 ```
 
-## 기술 스택 및 오픈소스 구성요소
+## Technology stack and open-source components
 
-구현 코드, `requirements.txt`, Docker Compose 설정을 기준으로 정리한 목록입니다. 각 이름은 해당 프로젝트의 GitHub 저장소로 연결됩니다. 임베딩은 외부 `sentence-transformers` 모델이 아니라 이 저장소의 경량 해시 임베딩 구현을 사용합니다.
+This list reflects the implementation, `requirements.txt`, and Docker Compose configuration. Names link to the corresponding projects' GitHub repositories. Embeddings use this repository's lightweight hash-based implementation, not an external `sentence-transformers` model.
 
-| 구분 | 사용 기술·솔루션 | 용도 |
+| Category | Technologies | Purpose |
 |---|---|---|
-| 언어·컨테이너 | [Python](https://github.com/python/cpython) 3.11 · [Docker](https://github.com/docker/docker-ce) · [Docker Compose](https://github.com/docker/compose) | API/UI 실행 이미지와 로컬·운영 환경 구성 |
-| API·UI | [FastAPI](https://github.com/fastapi/fastapi) · [Uvicorn](https://github.com/encode/uvicorn) · [Streamlit](https://github.com/streamlit/streamlit) | REST API, ASGI 서버, 데모 UI |
-| 데이터 저장소 | [PostgreSQL](https://github.com/postgres/postgres) · [pgvector](https://github.com/pgvector/pgvector) · [Redis](https://github.com/redis/redis) · [Qdrant](https://github.com/qdrant/qdrant) | 문서·대화 데이터, 장기 기억 벡터, 캐시, 문서 유사도 검색 |
-| 데이터 접근 라이브러리 | [SQLAlchemy](https://github.com/sqlalchemy/sqlalchemy) · [psycopg2](https://github.com/psycopg/psycopg2) · [pgvector-python](https://github.com/pgvector/pgvector-python) · [redis-py](https://github.com/redis/redis-py) · [qdrant-client](https://github.com/qdrant/qdrant-client) | PostgreSQL/pgvector, Redis, Qdrant 연동 |
-| API·입력 처리 라이브러리 | [Pydantic](https://github.com/pydantic/pydantic) · [pydantic-settings](https://github.com/pydantic/pydantic-settings) · [HTTPX](https://github.com/encode/httpx) · [Requests](https://github.com/psf/requests) · [python-multipart](https://github.com/Kludex/python-multipart) · [pypdf](https://github.com/py-pdf/pypdf) | 환경·요청 검증, LLM/외부 API 호출, 파일 업로드 및 PDF 파싱 |
-| LLM 연동 | [vLLM](https://github.com/vllm-project/vllm) 또는 [Ollama](https://github.com/ollama/ollama) 등 OpenAI 호환 Chat Completions 서버 | RAG 답변과 도구 호출을 위한 외부 LLM 서버. 이 저장소는 서버 주소를 환경변수로 받아 연동합니다. |
-| 금융 백테스트·데이터 | [QuantConnect LEAN](https://github.com/QuantConnect/Lean) · [yfinance](https://github.com/ranaroussi/yfinance) | 원격 Docker 기반 백테스트 실행 및 일봉 데이터 조회 |
-| 운영 프록시 | [Caddy](https://github.com/caddyserver/caddy) | 운영 환경의 TLS 및 FastAPI 리버스 프록시 |
+| Language and containers | [Python](https://github.com/python/cpython) 3.11 · [Docker](https://github.com/docker/docker-ce) · [Docker Compose](https://github.com/docker/compose) | Build API/UI images and configure local and production environments |
+| API and UI | [FastAPI](https://github.com/fastapi/fastapi) · [Uvicorn](https://github.com/encode/uvicorn) · [Streamlit](https://github.com/streamlit/streamlit) | REST API, ASGI server, and demo UI |
+| Data stores | [PostgreSQL](https://github.com/postgres/postgres) · [pgvector](https://github.com/pgvector/pgvector) · [Redis](https://github.com/redis/redis) · [Qdrant](https://github.com/qdrant/qdrant) | Documents and conversations, long-term memory vectors, cache, and document similarity search |
+| Data access libraries | [SQLAlchemy](https://github.com/sqlalchemy/sqlalchemy) · [psycopg2](https://github.com/psycopg/psycopg2) · [pgvector-python](https://github.com/pgvector/pgvector-python) · [redis-py](https://github.com/redis/redis-py) · [qdrant-client](https://github.com/qdrant/qdrant-client) | Integrate PostgreSQL/pgvector, Redis, and Qdrant |
+| API and input libraries | [Pydantic](https://github.com/pydantic/pydantic) · [pydantic-settings](https://github.com/pydantic/pydantic-settings) · [HTTPX](https://github.com/encode/httpx) · [Requests](https://github.com/psf/requests) · [python-multipart](https://github.com/Kludex/python-multipart) · [pypdf](https://github.com/py-pdf/pypdf) | Validate settings and requests, call LLM/external APIs, upload files, and parse PDFs |
+| LLM integration | [vLLM](https://github.com/vllm-project/vllm), [Ollama](https://github.com/ollama/ollama), or another OpenAI-compatible Chat Completions server | External LLM for RAG answers and tool calls; its address is supplied through environment variables |
+| Financial backtesting and data | [QuantConnect LEAN](https://github.com/QuantConnect/Lean) · [yfinance](https://github.com/ranaroussi/yfinance) | Run Docker-based backtests and retrieve daily prices |
+| Production proxy | [Caddy](https://github.com/caddyserver/caddy) | TLS termination and reverse proxy for FastAPI in production |
 
-## 유의사항
+## Notes
 
-- 응답 품질은 등록 문서의 최신성·정확성·메타데이터에 직접 좌우됩니다. 상품설명서, 운용보고서, 자산배분 정책 등은 최신 버전으로 관리하세요.
-- 이 애플리케이션은 실시간 시세·공시·세법·규제 변경을 자동으로 조회하지 않습니다. 최신 정보가 필요한 판단은 원문과 공식 공시를 별도로 확인해야 합니다.
-- 특정 투자자에게 적합한 상품이나 비중을 자동으로 산정·보증하지 않습니다. 투자 목적, 기간, 위험 감수 수준, 유동성 필요를 바탕으로 별도의 검토가 필요합니다.
+- Response quality depends directly on the freshness, accuracy, and metadata of registered documents. Keep product descriptions, investment reports, and allocation policies current.
+- The application does not automatically retrieve live prices, disclosures, or changes in tax law and regulations. For decisions requiring current information, check source documents and official disclosures separately.
+- It does not automatically determine or guarantee products or weights suitable for a particular investor. Review investment goals, time horizon, risk tolerance, and liquidity needs separately.
 
-## 부록: 청킹과 JSONL의 관계
+## Appendix: Chunking and JSONL
 
-위 `POST /ingest/text`, `POST /ingest/file`이 내부적으로 수행하는 청킹과, 청킹 결과를 저장·유통하는 JSONL 포맷의 관계를 정리한 배경 지식입니다.
+This background section explains the relationship between the chunking performed internally by `POST /ingest/text` and `POST /ingest/file` and the JSONL format that can store or distribute chunks.
 
-청킹(Chunking)과 JSONL(JSON Lines)은 거대언어모델(LLM) 구축, RAG(검색 증강 생성) 시스템 구현, AI 파인튜닝(미세조정) 과정에서 **'데이터 전처리(청킹)'와 '데이터 저장 및 로딩(JSONL)'이라는 콤비로 작동하는 관계**입니다.
+In building large language models, RAG systems, and AI fine-tuning pipelines, chunking prepares the data and JSONL provides a format for storing and loading it.
 
-두 개념의 핵심 역할과 결합 형태는 다음과 같습니다.
+### 1. What each does
 
----
+- **Chunking:** Splits a large document or dataset into smaller units a model can process. For example, a 100-page PDF might be divided into chunks of 500 tokens, roughly two or three paragraphs each.
+- **JSONL (JSON Lines):** Stores one complete JSON object per line in a text file. Unlike a single large JSON document, it can be read line by line without loading the whole file into memory.
 
-### 1. 두 개념의 기본 역할
+### 2. How chunking and JSONL relate
 
-* **청킹(Chunking):** 방대한 텍스트나 데이터를 모델이 처리하기 적절한 **작은 단위(Chunk)로 잘라내는 과정**입니다.
-* 예: 100페이지짜리 PDF 문서를 500토큰(약 2~3문단) 단위로 분할
+Chunks produced during preprocessing must be passed to a database or model-training pipeline. JSONL is a common, efficient format for storing and transferring them.
 
-
-* **JSONL(JSON Lines):** 한 줄(Line)에 하나의 완전한 JSON 객체를 저장하는 **텍스트 데이터 포맷**입니다.
-* 기존 JSON과 달리 파일 전체를 메모리에 올리지 않고 **한 줄씩(Line by Line) 읽을 수 있는 구조**입니다.
-
-
-
----
-
-### 2. 청킹 작업과 JSONL의 관계
-
-청킹 작업을 거친 텍스트 파편들은 데이터베이스나 모델 학습 파이프라인으로 전달되어야 합니다. 이때 **청킹의 결과물을 저장하고 유통하는 가장 표준적이고 효율적인 규격이 바로 JSONL**입니다.
-
-| 관계 및 특징 | 설명 |
+| Relationship or feature | Description |
 | --- | --- |
-| **1줄 = 1청크 (1:1 매핑)** | 청킹 결과물 하나(Chunk)가 JSONL 파일의 **정확히 한 줄(Line)**로 변환됩니다. |
-| **메타데이터 패키징** | 청크 텍스트 본문뿐만 아니라 **출처, 생성일, 토큰 수, 임베딩 벡터 ID** 등 관련 정보(메타데이터)를 한 줄에 묶어 저장합니다. |
-| **대용량 스트리밍 처리** | 수백만 개의 청크가 생성되어도 파일 전체를 로딩할 필요 없이 **한 줄씩 실시간으로 Vector DB에 입고**하거나 모델에 주입할 수 있습니다. |
+| **One line per chunk** | Each chunk can become one JSONL line. |
+| **Metadata packaging** | A line can hold the chunk's text together with its source, creation date, token count, embedding vector ID, and other metadata. |
+| **Streaming at scale** | Even with millions of chunks, a pipeline can read one line at a time to ingest them into a vector database or pass them to a model. |
 
----
+### 3. Example data structure (chunks for RAG or fine-tuning)
 
-### 3. 실제 데이터 구조 예시 (RAG / 파인튜닝용 청크 저장)
-
-문서를 청킹한 뒤 JSONL로 작성하면 아래와 같은 형태가 됩니다.
+After chunking a document, the JSONL file could look like this:
 
 ```jsonl
-{"chunk_id": "doc_001_01", "text": "전환사채(CB)는 채권의 안전성과 주식의 수익성을 합쳐놓은 특수 채권입니다.", "metadata": {"source": "금융가이드.pdf", "page": 12}}
-{"chunk_id": "doc_001_02", "text": "금리가 오르면 기존 채권의 가격은 하락하고, 금리가 내리면 채권 가격은 상승합니다.", "metadata": {"source": "금융가이드.pdf", "page": 15}}
-
+{"chunk_id": "doc_001_01", "text": "A convertible bond (CB) combines characteristics of a bond and a stock.", "metadata": {"source": "finance-guide.pdf", "page": 12}}
+{"chunk_id": "doc_001_02", "text": "When interest rates rise, existing bond prices generally fall; when rates fall, bond prices generally rise.", "metadata": {"source": "finance-guide.pdf", "page": 15}}
 ```
 
-* **청킹 단계:** 긴 금융 문서를 의미 단위로 분할
-* **JSONL 변환 단계:** 각 분할본(Chunk)을 `chunk_id`, `text`, `metadata` Key를 가진 한 줄짜리 JSON으로 변환하여 저장
+- **Chunking:** Divide a long financial document into meaningful pieces.
+- **JSONL conversion:** Save each piece as a one-line JSON object with `chunk_id`, `text`, and `metadata` keys.
 
----
+In short, chunking cuts the source into pieces, and JSONL is a convenient format for carrying those pieces. A typical RAG or LLM training flow is `source document → chunking → JSONL conversion → vector database or training pipeline`.
 
-### 요약
+## KIS automated trading integration (three repositories)
 
-**청킹이 데이터의 '자르기 작업'이라면, JSONL은 자른 조각들을 '효율적으로 담아 나르는 규격화된 상자'입니다.**
+This repository provides a **strategy specification API** (`/backtests/strategies`) for LEAN-validated strategies to `lumina-invest`.
 
-RAG 파이프라인이나 LLM 학습 파이프라인을 구축할 때 **`[원문 문서] -> [청킹(Chunking)] -> [JSONL 포맷 변환] -> [Vector DB / 학습 모델 로드]`** 순서의 표준 흐름을 거치게 됩니다.
-
-
-## KIS 자동매매 연동 (3-repo)
-
-이 저장소는 LEAN 백테스트로 검증한 **전략 스펙 API**(`/backtests/strategies`)를 lumina-invest 에 제공한다.
-- 진행 상태·인수인계: [todo.md](todo.md) — 특히 6절 "작업 보고(AI 에이전트 인수인계용)"
-- 저장소 간 API 계약: [docs/contracts/kis-autotrade-api.md](docs/contracts/kis-autotrade-api.md) (세 저장소 동일 사본)
-- 테스트: `timeout 120 .venv/bin/python -m pytest -q`
+- Progress and handoff: [todo.md](todo.md), especially Section 6, “Work report (AI agent handoff)”
+- Cross-repository API contract: [docs/contracts/kis-autotrade-api.md](docs/contracts/kis-autotrade-api.md) (the same copy in all three repositories)
+- Tests: `timeout 120 .venv/bin/python -m pytest -q`
