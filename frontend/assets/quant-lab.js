@@ -126,7 +126,7 @@
           <label>매수할 최소 상승 예상치 <select name="threshold"><option value="0.45">45%</option><option value="0.5" selected>50%</option><option value="0.55">55%</option><option value="0.6">60%</option><option value="0.65">65%</option></select><small>예: 모델이 60%로 예상했고 기준이 50%라면 매수로 표시합니다.</small></label>
           <label>모델 학습 횟수 <select name="rounds"><option value="40">40회</option><option value="80" selected>80회</option><option value="120">120회</option><option value="160">160회</option></select><small>횟수를 바꿔 결과가 어떻게 달라지는지 비교해 보세요.</small></label>
           <label>매수·매도 각각의 비용 <select name="cost_bps"><option value="0">0bp</option><option value="10" selected>10bp</option><option value="25">25bp</option><option value="50">50bp</option></select><small>예: 10bp는 한 번 거래할 때 0.1%입니다. 사고팔면 약 0.2%입니다.</small></label>
-          <button type="submit" class="btn-primary" id="qlRun"><i class="fa-solid fa-play"></i> EDA · 모델 테스트 실행</button>
+          <div class="ql-form-action"><span>실행</span><button type="submit" class="btn-primary ql-submit-btn" id="qlRun"><i class="fa-solid fa-play"></i> EDA · 모델 테스트 실행</button><small>현재 파라미터로 EDA와 LightGBM 테스트를 순서대로 실행합니다.</small></div>
         </form>
         <p class="ql-help">처음에는 기본값으로 실행해 보세요. CSV를 올릴 때는 날짜별로 한 줄씩 입력합니다. 모델은 오래된 날짜로 배우고, 그보다 나중 날짜에서 실력을 확인합니다.</p>
         <div id="qlStatus" class="ql-status" role="status">설정을 고르고 실행해 보세요.</div>
