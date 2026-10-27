@@ -750,7 +750,7 @@ KOSDAQ|웹젠|게임`,
     state.leanExample = view === 'backtest' ? (options.example || 'all') : null;
     $viewButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
     document.querySelectorAll('[data-lean]').forEach(btn => btn.classList.toggle('active', view === 'backtest' && btn.dataset.lean === state.leanExample));
-    $openRightPanel?.classList.toggle('active', view === 'backtest');
+    $openRightPanel?.classList.toggle('active', false);
     $chatInputArea.classList.toggle('hidden', view !== 'learn');
     $clearChatBtn?.classList.toggle('hidden', view !== 'learn');
 
