@@ -13,6 +13,7 @@
 .wf-content .wf-guide { margin-top: 8px; }
 .wf-content :is(.wf-hero,.wf-setup-intro,.wf-preview,#wfResultArea) { scroll-margin-top: 18px; }
 .wf-content .wf-form button { margin-top: 4px; }
+.wf-content .wf-form .wf-submit-btn { margin-top: 0; }
 .wf-content .wf-guide :is(ul,ol), .wf-content .wf-howto :is(ul,ol) { padding-left: 20px; }
 .wf-content .wf-guide-more details { min-width: 0; }
 .wf-content :is(.wf-guide article,.wf-section,.wf-form,.wf-preview-fold) { min-width: 0; }
