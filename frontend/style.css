@@ -2003,10 +2003,7 @@ body.modal-open { overflow: hidden; }
 .calendar-page .calendar-agenda-body p { display: -webkit-box; overflow: hidden; font-size: 15.95px; line-height: 1.4; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 
 @media (min-width: 861px) {
-  .calendar-page .calendar-split { height: min(590px, calc(100dvh - 325px)); }
-  .calendar-page .calendar-board { display: flex; flex-direction: column; }
-  .calendar-page .calendar-grid { flex: 1 1 auto; grid-auto-rows: minmax(0, 1fr); }
-  .calendar-page .calendar-cell { min-height: 0; padding: 5px; }
+  .calendar-page .calendar-cell { padding: 5px; }
   .calendar-page .calendar-daynum { margin-bottom: 3px; font-size: 15.95px; }
   .calendar-page .calendar-cell.is-today .calendar-daynum { min-width: 18px; height: 18px; }
   .calendar-page .calendar-chips { gap: 2px; }
