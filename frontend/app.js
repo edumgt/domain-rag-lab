@@ -598,16 +598,7 @@ KOSDAQ|웹젠|게임`,
   const $questionInput = document.getElementById('questionInput');
   const $sendBtn = document.getElementById('sendBtn');
   const $topKLabel = document.getElementById('topKLabel');
-  const $refList = document.getElementById('refList');
-  const $fileInput = document.getElementById('fileInput');
-  const $uploadTrigger = document.getElementById('uploadTrigger');
-  const $uploadArea = document.getElementById('uploadArea');
-  const $uploadStatus = document.getElementById('uploadStatus');
-  const $ingestTextBtn = document.getElementById('ingestTextBtn');
-  const $textTitle = document.getElementById('textTitle');
-  const $textContent = document.getElementById('textContent');
   const $clearChatBtn = document.getElementById('clearChatBtn');
-  const $closeRefBtn = document.getElementById('closeRefBtn');
   const $theoryDayButtons = Array.from(document.querySelectorAll('[data-theory-day]'));
   const $simPromptBtn = document.getElementById('simPromptBtn');
   const $simScenarioResult = document.getElementById('simScenarioResult');
@@ -616,11 +607,8 @@ KOSDAQ|웹젠|게임`,
   const $viewButtons = Array.from(document.querySelectorAll('.brand-nav-btn'));
   const $offcanvasBackdrop = document.getElementById('offcanvasBackdrop');
   const $openLeftPanel = document.getElementById('openLeftPanel');
-  const $openRightPanel = document.getElementById('openRightPanel');
-  const $referencePanel = document.getElementById('referencePanel');
   const $closeLeftPanel = document.getElementById('closeLeftPanel');
   const $learningPanel = document.getElementById('learningPanel');
-  const $ragPanel = document.getElementById('ragPanel');
   const $simulationPanel = document.getElementById('simulationPanel');
   const $glossaryModal = document.getElementById('glossaryModal');
   const $glossaryTitle = document.getElementById('glossaryTitle');
@@ -636,9 +624,6 @@ KOSDAQ|웹젠|게임`,
   const $tickGuideModal = document.getElementById('tickGuideModal');
   const $tickGuideBody = document.getElementById('tickGuideBody');
 
-  // 좌측은 학습 메뉴, 우측은 RAG 자료와 참고 문서에만 집중합니다.
-  $referencePanel.insertBefore($ragPanel, $refList);
-
   $theoryDayButtons.forEach(btn => {
     btn.addEventListener('click', () => openTheoryDay(Number(btn.dataset.theoryDay)));
   });
@@ -648,7 +633,6 @@ KOSDAQ|웹젠|게임`,
   });
 
   $openLeftPanel.addEventListener('click', () => togglePanel('left'));
-  $openRightPanel?.addEventListener('click', () => togglePanel('right'));
   $closeLeftPanel.addEventListener('click', () => setPanel('left', false));
   $offcanvasBackdrop.addEventListener('click', () => closePanels());
   $messages.addEventListener('click', event => {
@@ -686,35 +670,8 @@ KOSDAQ|웹젠|게임`,
     state.chatHistory = [];
     state.sessionId = generateId();
     $messages.innerHTML = '';
-    updateRefPanel([]);
     showWelcome();
   });
-
-  $closeRefBtn.addEventListener('click', () => setPanel('right', false));
-
-  $uploadTrigger.addEventListener('click', () => $fileInput.click());
-  $uploadArea.addEventListener('click', (e) => {
-    if (e.target === $uploadArea || e.target.classList.contains('upload-icon')) {
-      $fileInput.click();
-    }
-  });
-  $uploadArea.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    $uploadArea.classList.add('drag-over');
-  });
-  $uploadArea.addEventListener('dragleave', () => $uploadArea.classList.remove('drag-over'));
-  $uploadArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    $uploadArea.classList.remove('drag-over');
-    const file = e.dataTransfer.files[0];
-    if (file) handleFileUpload(file);
-  });
-  $fileInput.addEventListener('change', () => {
-    if ($fileInput.files[0]) handleFileUpload($fileInput.files[0]);
-    $fileInput.value = '';
-  });
-
-  $ingestTextBtn.addEventListener('click', ingestText);
 
   $simScenarioButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -750,7 +707,6 @@ KOSDAQ|웹젠|게임`,
     state.leanExample = view === 'backtest' ? (options.example || 'all') : null;
     $viewButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
     document.querySelectorAll('[data-lean]').forEach(btn => btn.classList.toggle('active', view === 'backtest' && btn.dataset.lean === state.leanExample));
-    $openRightPanel?.classList.toggle('active', false);
     $chatInputArea.classList.toggle('hidden', view !== 'learn');
     $clearChatBtn?.classList.toggle('hidden', view !== 'learn');
 
@@ -810,7 +766,6 @@ KOSDAQ|웹젠|게임`,
     $offcanvasBackdrop.classList.toggle('visible', isOpen);
     $offcanvasBackdrop.setAttribute('aria-hidden', String(!isOpen));
     $openLeftPanel.setAttribute('aria-expanded', String(panel === 'left' && isOpen));
-    $openRightPanel?.setAttribute('aria-expanded', String(panel === 'right' && isOpen));
   }
 
   function closePanels() {
@@ -818,7 +773,6 @@ KOSDAQ|웹젠|게임`,
     $offcanvasBackdrop.classList.remove('visible');
     $offcanvasBackdrop.setAttribute('aria-hidden', 'true');
     $openLeftPanel.setAttribute('aria-expanded', 'false');
-    $openRightPanel?.setAttribute('aria-expanded', 'false');
   }
 
   function annotateGlossary(node) {
@@ -3657,7 +3611,6 @@ effective_date: [기준일]
 
       removeTyping(typingId);
       appendMessage('bot', data.answer, data.references || []);
-      updateRefPanel(data.references || []);
     } catch (err) {
       removeTyping(typingId);
       appendMessage('bot', `⚠️ 네트워크 오류: ${err.message}`);
@@ -3672,9 +3625,6 @@ effective_date: [기준일]
     const isUser = role === 'user';
     const id = `msg-${Date.now()}`;
     const time = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
-    const refBtnHtml = (!isUser && chunks.length)
-      ? `<button class="ref-btn" data-msgid="${id}"><i class="fa-solid fa-paperclip"></i> 참고 ${chunks.length}건</button>`
-      : '';
 
     const html = `
       <div class="msg ${role}" id="${id}">
@@ -3683,17 +3633,12 @@ effective_date: [기준일]
           <div class="msg-bubble">${formatContent(content)}</div>
           <div class="msg-meta">
             <span>${time}</span>
-            ${refBtnHtml}
           </div>
         </div>
       </div>
     `;
 
     $messages.insertAdjacentHTML('beforeend', html);
-    if (chunks.length) {
-      const btn = document.getElementById(id).querySelector('.ref-btn');
-      btn?.addEventListener('click', () => updateRefPanel(chunks));
-    }
     scrollToBottom();
     state.chatHistory.push({ role, content, chunks });
   }
@@ -3718,79 +3663,6 @@ effective_date: [기준일]
 
   function clearWelcome() {
     $messages.querySelector('.welcome-msg')?.remove();
-  }
-
-  function updateRefPanel(chunks) {
-    if (!chunks.length) {
-      $refList.innerHTML = '<p class="ref-empty">질문 후 참고 문서가 여기에 표시됩니다.</p>';
-      setPanel('right', false);
-      return;
-    }
-
-    $refList.innerHTML = chunks.map((chunk, idx) => `
-      <div class="ref-card">
-        <div class="ref-card-title">${idx + 1}. ${escHtml(chunk.title || '제목 없음')}</div>
-        <span class="ref-card-score">유사도 ${(chunk.score * 100).toFixed(1)}%</span>
-        <div class="ref-card-content">${escHtml(chunk.content || '')}</div>
-      </div>
-    `).join('');
-    setPanel('right', true);
-  }
-
-  async function handleFileUpload(file) {
-    const lowerName = file.name.toLowerCase();
-    const allowed = lowerName.endsWith('.txt') || lowerName.endsWith('.pdf');
-    if (!allowed) {
-      showUploadStatus('error', 'TXT 또는 PDF 파일만 지원합니다.');
-      return;
-    }
-
-    showUploadStatus('loading', `"${escHtml(file.name)}" 업로드 중…`);
-    const form = new FormData();
-    form.append('file', file);
-    form.append('domain', state.domain);
-
-    try {
-      const data = await fetchLocalBackendJson('/ingest/file', null, { method: 'POST', body: form });
-      showUploadStatus('success', `"${escHtml(data.title)}" 등록 완료 (${data.chunks}개 청크)`);
-    } catch (err) {
-      if (err && err.status != null) showUploadStatus('error', `오류: ${err.detail || err.statusText}`);
-      else showUploadStatus('error', `네트워크 오류: ${err.message}`);
-    }
-  }
-
-  async function ingestText() {
-    const title = $textTitle.value.trim();
-    const content = $textContent.value.trim();
-
-    if (!title || !content) {
-      showUploadStatus('error', '제목과 내용을 모두 입력하세요.');
-      return;
-    }
-
-    $ingestTextBtn.disabled = true;
-    showUploadStatus('loading', '등록 중…');
-
-    try {
-      const data = await fetchLocalBackendJson('/ingest/text', null, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          document_id: generateId(),
-          title,
-          content,
-          domain: state.domain,
-        }),
-      });
-      showUploadStatus('success', `"${escHtml(data.title || data.document_id)}" 등록 완료 (${data.chunks}개 청크)`);
-      $textTitle.value = '';
-      $textContent.value = '';
-    } catch (err) {
-      if (err && err.status != null) showUploadStatus('error', `오류: ${err.detail || err.statusText}`);
-      else showUploadStatus('error', `네트워크 오류: ${err.message}`);
-    } finally {
-      $ingestTextBtn.disabled = false;
-    }
   }
 
   const SHOCK_SCENARIOS = {
@@ -3900,15 +3772,6 @@ effective_date: [기준일]
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/\n/g, '<br>');
-  }
-
-  function showUploadStatus(type, msg) {
-    $uploadStatus.className = `upload-status ${type}`;
-    $uploadStatus.innerHTML = msg;
-    $uploadStatus.classList.remove('hidden');
-    if (type === 'success') {
-      setTimeout(() => $uploadStatus.classList.add('hidden'), 4000);
-    }
   }
 
   function setInputDisabled(disabled) {

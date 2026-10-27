@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="/static/assets/content-accordion.css?v=20261022-800-1">
 <script defer src="/static/assets/content-accordion.js?v=20261022-home-expanded-1"></script>
 <link rel="stylesheet" href="/static/assets/learning-panel.css?v=20261022-split-1">
+<link rel="icon" href="/favicon.ico?v=20261027-avatar" />
 </head>
 <body>
   <div class="offcanvas-backdrop" id="offcanvasBackdrop" aria-hidden="true"></div>
@@ -36,27 +37,6 @@
       <a class="topic-btn" href="/static/project-schedule.html" style="text-decoration:none"><i class="fa-solid fa-calendar-days"></i> 프로젝트 일정</a><a class="topic-btn" href="/static/project2-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트2 발표</a><a class="topic-btn" href="/static/project3-presentation.html" style="text-decoration:none"><i class="fa-solid fa-person-chalkboard"></i> 프로젝트3 발표</a>
 </nav>
 
-      <div class="sidebar-section rag-panel" id="ragPanel">
-        <p class="nav-label">RAG 자료 등록</p>
-        <p class="section-copy">예금·펀드·금·부동산·수집품·중고거래·보험·연금 등 생활 속 거래 교재를 TXT 또는 PDF로 등록하세요.</p>
-        <div class="upload-area" id="uploadArea">
-          <input type="file" id="fileInput" accept=".txt,.pdf" hidden />
-          <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-          <p>TXT / PDF 파일을 끌어다 놓거나<br /><span class="upload-link" id="uploadTrigger">클릭하여 선택</span></p>
-        </div>
-        <div id="uploadStatus" class="upload-status hidden"></div>
-
-        <div class="text-ingest">
-          <p class="nav-label" style="margin-top:20px">텍스트 직접 등록</p>
-          <input type="text" id="textTitle" placeholder="예: 블랙-리터만 모델 요약" class="input-field" />
-          <textarea id="textContent" placeholder="핵심 개념, 운용 전략, 사례 분석 메모를 입력하세요..." class="textarea-field" rows="5"></textarea>
-          <button class="btn-primary" id="ingestTextBtn">
-            <i class="fa-solid fa-plus"></i> 등록
-          </button>
-        </div>
-      </div>
-
-
     </aside>
 
     <main class="chat-area">
@@ -68,17 +48,11 @@
         <div class="brand-nav" aria-label="학습 서비스 메뉴">
           <button class="brand-nav-btn active" data-view="home"><i class="fa-solid fa-house"></i> 홈</button>
 
-          <button class="brand-nav-btn" data-view="learn"><i class="fa-solid fa-comments"></i> RAG 질문</button>
-
           <button class="brand-nav-btn" data-view="quant"><i class="fa-solid fa-chart-line"></i> EDA · LightGBM</button>
           <a class="brand-nav-btn" href="/walk-forward.html" style="text-decoration:none"><i class="fa-solid fa-arrows-left-right-to-line"></i> Walk-Forward 검증</a>
 
           <button class="brand-nav-btn" data-view="calendar"><i class="fa-solid fa-calendar-days"></i> 캘린더</button>
         </div>
-        <!-- 우측 offcanvas 는 RAG 자료와 참고 문서를 여는 보조 패널이다. -->
-        <button class="panel-toggle panel-toggle-right lean-toggle" id="openRightPanel" aria-controls="referencePanel" aria-expanded="false" aria-label="자료 메뉴 열기">
-          <i class="fa-solid fa-folder-open"></i><span>자료</span>
-        </button>
       </header>
 
       <div class="messages" id="messages">
@@ -108,23 +82,6 @@
       <footer class="site-footer-unified">© 2026 (주)에듀엠지티 All rights reserved.</footer>
     </main>
 
-    <aside class="ref-panel" id="referencePanel" aria-label="RAG 자료와 참고 문서">
-      <div class="ref-header">
-        <h3><i class="fa-solid fa-folder-open"></i> 자료</h3>
-        <button class="btn-ghost" id="closeRefBtn" aria-label="패널 닫기"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div id="refList" class="ref-list">
-        <p class="ref-empty">질문 후 참고 문서가 여기에 표시됩니다.</p>
-      </div>
-          <div class="sidebar-footer">
-        <a href="/docs" target="_blank" class="docs-link">
-          <i class="fa-solid fa-book-open"></i> API 문서 (Swagger)
-        </a>
-        <a href="/health" target="_blank" class="docs-link">
-          <i class="fa-solid fa-heart-pulse"></i> 상태 확인
-        </a>
-      </div>
-</aside>
 
     <div id="simulationStaging" hidden>
       <div class="simulation-panel" id="simulationPanel">
@@ -226,7 +183,7 @@
   <script src="/static/assets/walk-forward.js?v=20261001-8"></script>
   <script src="/static/assets/backtest-preconditions.js?v=20261015-research"></script>
   <script src="/static/assets/backtest-research.js?v=20261015-research"></script>
-  <script src="/static/app.js?v=20261022-atlas-numbers-1"></script>
+  <script src="/static/app.js?v=20261027-no-rag-menu-1"></script>
   <script src="/static/auth.js?v=20260905-gnb-unified"></script>
   <script src="/static/assets/modal-fit.js?v=20260905-simulator-specific-hints"></script>
   <script src="/static/assets/click-logger.js?v=20260905"></script>
