@@ -2,7 +2,7 @@
 id: HX-001
 title: Audit Guide 페이지의 버그 수정 및 테스트 추가
 priority: P1
-status: proposed
+status: todo
 area: frontend
 stages: [dev, qa]
 acceptance:
